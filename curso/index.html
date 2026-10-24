@@ -176,6 +176,10 @@ sup, sub { line-height: 0; }
 .opt[disabled] { cursor: default; }
 .expl { border-radius: 9px; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line); }
 .expl b.ok { color: var(--ok); } .expl b.bad { color: var(--bad); }
+.src { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.vlink { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; }
+.vlink::before { content: ""; flex: none; width: 0; height: 0; border-left: 11px solid var(--accent); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+.vlink:hover { border-color: var(--accent); }
 
 .score { font-family: var(--display); font-weight: 700; font-size: 3.2rem; line-height: 1; }
 .score small { font-size: 1.1rem; color: var(--muted); font-family: var(--body); font-weight: 500; }
@@ -208,6 +212,7 @@ sup, sub { line-height: 0; }
 .field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .field label, .field .lab { font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
 .field input, .field select { min-height: 42px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 6px 10px; width: 100%; }
+.field input:disabled { opacity: .55; cursor: not-allowed; }
 .wk { display: flex; gap: 6px; flex-wrap: wrap; }
 .wk label { position: relative; }
 .wk input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -247,6 +252,7 @@ details.rev[open] summary { margin-bottom: 8px; }
 <main class="wrap" id="app" aria-live="polite"></main>
 
 <script src="dados/base.js"></script>
+<script src="dados/videos.js"></script>
 <script src="dados/por1.js"></script>
 <script src="dados/por2.js"></script>
 <script src="dados/por3.js"></script>
