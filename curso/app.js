@@ -18,6 +18,23 @@
     const id = m.id + '~' + i;
     CARDS[id] = { id, mod: m.id, m: m.m, f: c[0], v: c[1] };
   }));
+  /* Provas anteriores oficiais: mantêm a ordem original das alternativas e o gabarito oficial. */
+  const PROVAS = (E.provas || []).slice().sort((a, b) => (b.data || '').localeCompare(a.data || ''));
+  const PROVA = {}, QO = { por: [], ing: [], mat: [], fis: [] }, OFI = {};
+  PROVAS.forEach(p => {
+    PROVA[p.id] = p;
+    p.ids = [];
+    (p.q || []).forEach(q => {
+      const id = 'P-' + p.id + '-' + q.n;
+      const mod = q.mod && MOD[q.mod] ? q.mod : null;
+      Q[id] = { id, mod, m: q.m, e: q.e, o: q.o, c: q.c, r: q.r || 'Gabarito oficial da EEAR.', src: p.nome + ' · questão ' + q.n, tx: q.t ? ((p.textos || {})[q.t] || '') : '', of: 1, anulada: !!q.anulada };
+      p.ids.push(id);
+      if (QO[q.m]) QO[q.m].push(id);
+      if (mod) (OFI[mod] = OFI[mod] || []).push(id);
+    });
+  });
+  const CAL = E.calendario || [];
+  const VID = E.videos || {};
 
   const app = document.getElementById('app');
   const LETRAS = ['A', 'B', 'C', 'D'];
@@ -58,14 +75,24 @@
       .map(m => ({ m, k: Math.pow(Math.random(), 1 / (m.peso || 1)) })).sort((a, b) => b.k - a.k).slice(0, n);
     return mods.map(x => x.m.id + '-' + Math.floor(Math.random() * x.m.q.length));
   }
-  const permutar = ids => { const p = {}; ids.forEach(id => { p[id] = shuffle([0, 1, 2, 3]); }); return p; };
+  const permutar = ids => { const p = {}; ids.forEach(id => { p[id] = Q[id].of ? [0, 1, 2, 3] : shuffle([0, 1, 2, 3]); }); return p; };
+  const acertou = (id, perm, pos) => pos !== undefined && pos !== null && (Q[id].anulada || perm[pos] === Q[id].c);
+  const rotulo = q => q.src || q.mod;
+  const enun = q => (q.src ? `<div class="src">${q.src}</div>` : '') + (q.tx || '') + q.e;
+  const yt = s => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s);
+  const CANAIS = {
+    por: ['Professor Noslen', 'Português com Letícia'],
+    ing: ['English in Brazil Carina Fragozo', 'Mairo Vergara inglês'],
+    mat: ['Matemática Rio Rafael Procopio', 'Professor Ferretto matemática'],
+    fis: ['Professor Boaro física', 'Professor Ferretto física']
+  };
 
   /* ---------- estado e persistência ---------- */
   const LS = 'missao-eear-v1', LS_ABA = 'missao-eear-aba';
   function novoEstado() {
     return {
       v: 1, t: 0,
-      cfg: { prova: '2026-11-22', inicio: hoje(), horas: 4, dias: [0, 1, 2, 3, 4, 5, 6], simDia: 0, tempoSim: 240, excl: [] },
+      cfg: { alvo: 'cfs1-2028', prova: '2027-05-30', inicio: hoje(), horas: 3, dias: [0, 1, 2, 3, 4, 5, 6], simDia: 0, tempoSim: 240, excl: [] },
       mod: {}, fc: {}, erros: {}, sims: [], diag: null, feito: {}, act: {}, ativo: null, ult: null
     };
   }
@@ -73,6 +100,11 @@
     const b = novoEstado();
     Object.keys(b).forEach(k => { if (o && Object.prototype.hasOwnProperty.call(o, k)) b[k] = o[k]; });
     b.cfg = Object.assign(novoEstado().cfg, (o && o.cfg) || {});
+    if (o && o.cfg && !o.cfg.alvo) {
+      /* Estado da 1ª versão: a data padrão antiga vira a nova meta de 2027. */
+      if (o.cfg.prova === '2026-11-22') { b.cfg.alvo = 'cfs1-2028'; b.cfg.prova = '2027-05-30'; }
+      else { const p = CAL.find(x => x.d === o.cfg.prova); b.cfg.alvo = p ? p.id : 'outra'; }
+    }
     ['mod', 'fc', 'erros', 'feito', 'act'].forEach(k => { if (!b[k] || typeof b[k] !== 'object') b[k] = {}; });
     if (!Array.isArray(b.sims)) b.sims = [];
     return b;
@@ -173,14 +205,22 @@
     if (fim < ini) return { dias: [], av: ['A data da prova precisa ser depois do início do plano.'], res: null };
     const est = [];
     for (let n = ini; n <= fim; n++) if (c.dias.indexOf(wday(n)) >= 0) est.push(n);
+    /* Provas reais antes da prova alvo entram no plano como dia de prova. */
+    const marcos = {};
+    CAL.forEach(p => { const n = dnum(p.d); if (n > ini && n < prova) { marcos[n] = p; if (est.indexOf(n) < 0) est.push(n); } });
+    est.sort((a, b) => a - b);
     if (!est.length) return { dias: [], av: ['Marque pelo menos um dia da semana para estudar.'], res: null };
     const H = Math.max(1, Number(c.horas) || 1), q4 = x => Math.round(x * 4) / 4;
     const tipo = {};
     let i = est.length - 1;
     if (est[i] === fim && est.length > 3) { tipo[est[i]] = 'vespera'; i--; }
-    const nR = est.length >= 8 ? Math.max(2, Math.min(10, Math.round(est.length * 0.12))) : (est.length >= 4 ? 1 : 0);
-    for (let k = 0; k < nR && i > 0; k++, i--) tipo[est[i]] = 'revisao';
-    est.forEach((n, j) => { if (!tipo[n]) tipo[n] = (j > 0 && wday(n) === Number(c.simDia)) ? 'simulado' : 'estudo'; });
+    const nR = est.length >= 8 ? Math.max(2, Math.min(21, Math.round(est.length * 0.12))) : (est.length >= 4 ? 1 : 0);
+    for (let k = 0; k < nR && i > 0; i--) { if (marcos[est[i]]) continue; tipo[est[i]] = 'revisao'; k++; }
+    est.forEach((n, j) => {
+      if (tipo[n]) return;
+      if (marcos[n]) tipo[n] = 'marco';
+      else tipo[n] = (j > 0 && wday(n) === Number(c.simDia)) ? 'simulado' : 'estudo';
+    });
     const cap = Math.max(0.75, H - 0.5);
     const diag = !S.diag;
     const dEst = est.filter(n => tipo[n] === 'estudo');
@@ -190,20 +230,35 @@
     const need = pend.reduce((a, m) => a + m.h, 0);
     const f = need ? Math.min(1, capTot / need) : 1;
     const retaFinal = f < 0.5;
-    const fila = {}, tot = {}, rest = {};
-    ORD.forEach(s => {
-      let lista = pend.filter(m => m.m === s);
-      if (retaFinal) lista = lista.slice().sort((a, b) => (b.peso - a.peso) || (a.n - b.n));
-      fila[s] = lista.map(m => ({ id: m.id, r: Math.max(0.5, q4(m.h * f)), p: 0 }));
-      tot[s] = fila[s].reduce((a, x) => a + x.r, 0) || 1;
-      rest[s] = tot[s];
-    });
+    const porPeso = (a, b) => (b.peso - a.peso) || (a.n - b.n);
+    /* Ciclo 1: teoria completa. Se sobrar tempo, ciclo 2 (revisão ativa de tudo) e ciclo 3 (o que mais cai). */
+    const ciclos = [
+      { pref: 'T', txt: '', mods: pend, fator: f, min: 0.5 },
+      { pref: 'T2', txt: 'Ciclo 2 · revisão ativa: ', mods: MODS.slice().sort(porPeso), fator: 0.5, min: 0.75 },
+      { pref: 'T3', txt: 'Ciclo 3 · o que mais cai: ', mods: MODS.filter(m => m.peso >= 2).sort(porPeso), fator: 0.3, min: 0.5 }
+    ];
+    const fila = {}, tot = {}, rest = {}, fimCiclo = [];
+    let ci = -1;
+    function carregar() {
+      ci++;
+      const cc = ciclos[ci];
+      ORD.forEach(s => {
+        let lista = cc.mods.filter(m => m.m === s);
+        if (ci === 0 && retaFinal) lista = lista.slice().sort(porPeso);
+        fila[s] = lista.map(m => ({ id: m.id, r: Math.max(cc.min, q4(m.h * cc.fator)), p: 0 }));
+        tot[s] = fila[s].reduce((a, x) => a + x.r, 0) || 1;
+        rest[s] = tot[s];
+      });
+    }
+    carregar();
     const w = pesos(), maxS = H >= 5 ? 3 : 2, revs = {};
-    let fimC = null;
     const sobra = () => ORD.some(s => fila[s].length);
-    function alocar(dia, left) {
+    const avancar = () => { if (!sobra() && ci < ciclos.length - 1) carregar(); return sobra(); };
+    function alocar(dia, left, mudarCiclo) {
       const usados = [];
       for (let g = 0; g < 30 && left >= 0.5; g++) {
+        if (!sobra() && !(mudarCiclo && avancar())) break;
+        const cc = ciclos[ci];
         const cand = ORD.filter(s => fila[s].length && (usados.indexOf(s) >= 0 || usados.length < maxS));
         if (!cand.length) break;
         const novos = cand.filter(s => usados.indexOf(s) < 0);
@@ -211,14 +266,18 @@
         const s = pool[0], it = fila[s][0];
         const a = q4(Math.min(it.r, left));
         if (a < it.r && a < 0.5) break;
-        dia.tar.push({ k: 'T:' + it.id + ':' + it.p, tipo: 'teoria', mod: it.id, h: a, txt: MOD[it.id].t + (it.p ? ' (continuação)' : '') });
+        dia.tar.push({ k: cc.pref + ':' + it.id + ':' + it.p, tipo: 'teoria', mod: it.id, h: a, txt: cc.txt + MOD[it.id].t + (it.p ? ' (continuação)' : '') });
         it.r = q4(it.r - a); rest[s] = q4(rest[s] - a); left = q4(left - a); it.p++;
         if (usados.indexOf(s) < 0) usados.push(s);
         if (it.r <= 0) {
           fila[s].shift();
-          dia.tar.push({ k: 'Q:' + it.id, tipo: 'quiz', mod: it.id, txt: 'Quiz ' + it.id + ': meta de 8 acertos em 10' });
-          (revs[dia.n + 7] = revs[dia.n + 7] || []).push(it.id);
-          fimC = dia.n;
+          if (ci === 0) {
+            dia.tar.push({ k: 'Q:' + it.id, tipo: 'quiz', mod: it.id, txt: 'Quiz ' + it.id + ': meta de 8 acertos em 10' });
+            (revs[dia.n + 7] = revs[dia.n + 7] || []).push(it.id);
+          } else {
+            dia.tar.push({ k: 'Q' + (ci + 1) + ':' + it.id, tipo: 'quiz2', mod: it.id, d: dia.d, txt: 'Refazer o quiz ' + it.id + ' e as questões de provas do tópico' });
+          }
+          if (!sobra()) fimCiclo[ci] = dia.n;
         }
       }
     }
@@ -230,16 +289,19 @@
         let left = cap;
         if (j === 0 && diag) { dia.tar.push({ k: 'D', tipo: 'diag', txt: 'Diagnóstico: 40 questões, 10 por matéria', h: 1.5 }); left = Math.max(0, cap - 1.5); }
         const antes = dia.tar.length;
-        if (sobra()) alocar(dia, left);
-        if (dia.tar.length === antes && antes === 0) dia.tar.push({ k: 'R:' + dia.d, tipo: 'reforco', txt: 'Reforço: refazer quizzes abaixo de 80% e o caderno de erros', h: cap });
+        alocar(dia, left, true);
+        if (dia.tar.length === antes && antes === 0) dia.tar.push({ k: 'R:' + dia.d, tipo: 'reforco', txt: 'Treino: caderno de erros, quizzes abaixo de 80% e questões de provas anteriores da matéria mais fraca', h: cap });
       } else if (t === 'simulado') {
         if (H >= 4) dia.tar.push({ k: 'S:' + dia.d, tipo: 'sim', txt: 'Simulado completo: 96 questões em ' + fh(c.tempoSim / 60), h: c.tempoSim / 60 });
         else dia.tar.push({ k: 'S:' + dia.d, tipo: 'simmat', txt: 'Simulado de uma matéria: 24 questões (comece pela mais fraca)', h: 1 });
         dia.tar.push({ k: 'C:' + dia.d, tipo: 'erros', txt: 'Correção: revisar cada erro no caderno de erros', h: 1 });
+      } else if (t === 'marco') {
+        const p = marcos[n];
+        dia.tar.push({ k: 'M:' + p.id, tipo: 'marco', d: dia.d, txt: p.nome + ': se você estiver inscrito, faça a prova real. Se não, faça um simulado completo no mesmo horário, como teste de prova.' });
       } else if (t === 'revisao') {
-        if (sobra()) { av.push('Parte do conteúdo foi para os dias de revisão final. Aumente as horas por dia para recuperar essa folga.'); alocar(dia, cap); }
+        if (ci === 0 && sobra()) { av.push('Parte do conteúdo foi para os dias de revisão final. Aumente as horas por dia para recuperar essa folga.'); alocar(dia, cap, false); }
         else {
-          if (nRev % 2 === 0 && H >= 4) dia.tar.push({ k: 'S:' + dia.d, tipo: 'sim', txt: 'Simulado completo de revisão: 96 questões', h: c.tempoSim / 60 });
+          if (nRev % 2 === 0 && H >= 3) dia.tar.push({ k: 'S:' + dia.d, tipo: 'sim', txt: 'Simulado completo de revisão (ou uma prova anterior oficial): 96 questões', h: c.tempoSim / 60 });
           else dia.tar.push({ k: 'S:' + dia.d, tipo: 'simmat', txt: 'Simulado da matéria mais fraca: 24 questões', h: 1 });
           dia.tar.push({ k: 'E:' + dia.d, tipo: 'erros', txt: 'Caderno de erros e quizzes abaixo de 80%', h: 1.5 });
           nRev++;
@@ -259,15 +321,17 @@
       av.unshift(`Ritmo acelerado: com ${fh(H)} por dia, cada módulo recebe cerca de ${pct(f)} do tempo ideal. Para o ritmo ideal até ${fdata(prova)} seriam necessárias cerca de ${fh(hd)} por dia de estudo.`);
     }
     if (retaFinal) av.push('Modo reta final: com pouco tempo até a prova, os módulos de maior incidência vêm primeiro em cada matéria.');
-    if (sobra()) av.push('Alguns módulos não couberam até a prova. Aumente as horas por dia ou marque mais dias de estudo.');
+    if (ci === 0 && sobra()) av.push('Alguns módulos não couberam até a prova. Aumente as horas por dia ou marque mais dias de estudo.');
     if (c.dias.indexOf(Number(c.simDia)) < 0) av.push('O dia do simulado semanal não é um dia de estudo marcado, então o plano ficou sem simulados semanais.');
-    return { dias, av: Array.from(new Set(av)), res: { est: est.length, dEst: dEst.length, prova, ini, f, need, capTot, fimC } };
+    return { dias, av: Array.from(new Set(av)), res: { est: est.length, dEst: dEst.length, prova, ini, f, need, capTot, fimC: fimCiclo[0] || null, fimCiclo, marcos } };
   }
   function feita(t) {
     if (S.feito[t.k]) return true;
     if (t.tipo === 'quiz') return ((S.mod[t.mod] || {}).best || 0) >= META;
+    if (t.tipo === 'quiz2') return ((S.mod[t.mod] || {}).quando || '') >= t.d;
     if (t.tipo === 'diag') return !!S.diag;
     if (t.tipo === 'sim' || t.tipo === 'simmat') { const d = t.k.slice(2); return S.sims.some(x => x.d === d && x.tipo !== 'diag'); }
+    if (t.tipo === 'marco') return S.sims.some(x => x.d === t.d && (x.tipo === 'completo' || x.tipo === 'prova' || x.tipo === 'oficial'));
     return false;
   }
   const AUTO = { quiz: 1, diag: 1, sim: 1, simmat: 1 };
@@ -293,6 +357,8 @@
       case 'teoria': sub = `${sig(m.m)} ${m.id} · ${fh(t.h)}`; bt = `<button class="btn sm" data-a="mod" data-id="${m.id}">Estudar</button>`; break;
       case 'quiz': sub = `${sig(m.m)} ${m.id} · 10 questões`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}">Fazer</button>`; break;
       case 'rev': sub = `${sig(m.m)} ${m.id} · flashcards + quiz`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}" data-rev="${t.k}">Revisar</button>`; break;
+      case 'quiz2': sub = `${sig(m.m)} ${m.id} · marca sozinha ao fazer o quiz`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}">Fazer</button>`; break;
+      case 'marco': sub = 'Prova real ou simulado completo no mesmo horário'; bt = `<button class="btn sm pri" data-a="tab" data-v="simulados">Simulados</button>`; break;
       case 'diag': sub = 'Sem cronômetro · mostra suas matérias mais fracas'; bt = `<button class="btn sm pri" data-a="simini" data-tipo="diag">Começar</button>`; break;
       case 'sim': sub = 'Condições de prova, com cronômetro'; bt = `<button class="btn sm pri" data-a="simini" data-tipo="completo">Começar</button>`; break;
       case 'simmat': sub = '24 questões · 1h'; bt = `<button class="btn sm" data-a="tab" data-v="simulados">Escolher</button>`; break;
@@ -325,13 +391,15 @@
         <div class="row"><button class="btn pri" data-a="simini" data-tipo="diag">Fazer o diagnóstico</button><button class="btn" data-a="tab" data-v="plano">Ajustar o plano</button></div></section>`;
     }
     if (S.ativo) h += `<div class="banner acc"><p>Você tem um simulado em andamento.</p><button class="btn sm pri" data-a="go" data-v="sim">Continuar</button></div>`;
-    const atr = p.dias.filter(x => x.n < hj).reduce((a, x) => a.concat(x.tar), []).filter(t => (t.tipo === 'teoria' || t.tipo === 'quiz' || t.tipo === 'diag') && !feita(t));
+    const prox = CAL.map(x => ({ x, n: dnum(x.d) })).filter(o => o.n >= hj && o.n < prova).sort((a, b) => a.n - b.n)[0];
+    if (prox) h += `<div class="banner acc"><p><b>${prox.x.nome}</b> em ${plural(prox.n - hj, 'dia', 'dias')} (${fdata(prox.n)}), antes da sua prova alvo. Se estiver inscrito, use como experiência real de prova.</p></div>`;
+    const atr =p.dias.filter(x => x.n < hj).reduce((a, x) => a.concat(x.tar), []).filter(t => (t.tipo === 'teoria' || t.tipo === 'quiz' || t.tipo === 'diag') && !feita(t));
     if (atr.length && hj < prova) h += `<div class="banner warn"><p><b>${plural(atr.length, 'tarefa atrasada', 'tarefas atrasadas')}</b> de dias anteriores. Replaneje para redistribuir o que falta até a prova.</p><button class="btn sm" data-a="replanejar">Replanejar a partir de hoje</button></div>`;
     if (hj === prova) h += `<section class="card"><p style="margin:0">Hoje não estude conteúdo novo. Coma bem, chegue cedo, leia cada enunciado até o fim e marque o gabarito com calma. Boa prova.</p></section>`;
     else if (hj > prova) h += `<section class="card"><p style="margin:0">A data da prova configurada já passou. Ajuste a nova data na aba Plano para gerar outro cronograma.</p><div class="row"><button class="btn" data-a="tab" data-v="plano">Ajustar o plano</button></div></section>`;
     else if (d) {
       const total = d.tar.reduce((a, t) => a + (t.h || 0), 0);
-      const tipoTxt = { estudo: 'Dia de estudo', simulado: 'Dia de simulado', revisao: 'Revisão final', vespera: 'Véspera da prova' }[d.tipo];
+      const tipoTxt = { estudo: 'Dia de estudo', simulado: 'Dia de simulado', revisao: 'Revisão final', vespera: 'Véspera da prova', marco: 'Dia de prova real' }[d.tipo];
       h += `<section class="card"><div class="row between"><h2 class="h2">${tipoTxt}</h2>${total ? `<span class="chip">${fh(total)} planejadas</span>` : ''}</div><div class="tasks">${d.tar.map(linhaTarefa).join('')}</div></section>`;
     } else if (hj < dnum(S.cfg.inicio)) h += `<section class="card"><p style="margin:0">Seu plano começa em ${fdata(dnum(S.cfg.inicio))}. Enquanto isso, faça o diagnóstico ou adiante um módulo.</p></section>`;
     else h += `<section class="card"><p style="margin:0">Hoje é folga no seu plano. Se quiser render mais, revise os flashcards pendentes.</p></section>`;
@@ -355,9 +423,14 @@
   function vPlano() {
     const p = plano(), c = S.cfg, hj = HJ();
     let h = `<div class="stack"><div class="eyebrow">Plano de voo</div><h1 class="h1">Cronograma até a prova</h1></div>`;
+    h += `<section class="card"><h2 class="h2">Meta: aprovação até 2027</h2>
+      <p class="small" style="margin:0">Até o fim de 2027 há três provas do CFS. Escolha a prova alvo; as anteriores entram no plano como dia de prova real.</p>
+      <div class="tasks">${CAL.map(x => { const n = dnum(x.d), alvo = c.alvo === x.id, passou = n < hj; return `<div class="task"><span class="sigla">${x.d.slice(0, 4)}</span><div class="tt"><b>${x.nome} · ${fdata(n)}/${x.d.slice(0, 4)}</b><div class="small muted">${x.st}</div></div><span class="chip ${alvo ? 'acc' : passou ? '' : 'ok'}">${alvo ? 'alvo' : passou ? 'já passou' : n < dnum(c.prova) ? 'no caminho' : 'segunda chance'}</span></div>`; }).join('')}</div>
+      <p class="small muted" style="margin:0">Datas de 2027 são estimativas feitas a partir dos editais anteriores. Quando sair o edital, ajuste em "Outra data".</p></section>`;
     h += `<section class="card"><h2 class="h2">Configuração</h2>
       <form class="form" id="cfg" onsubmit="return false">
-        <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${c.prova}"></div>
+        <div class="field"><label for="cfg-alvo">Prova alvo</label><select id="cfg-alvo">${CAL.map(x => `<option value="${x.id}" ${c.alvo === x.id ? 'selected' : ''}>${x.nome} (${fdata(dnum(x.d))}/${x.d.slice(0, 4)})</option>`).join('')}<option value="outra" ${c.alvo === 'outra' ? 'selected' : ''}>Outra data</option></select></div>
+        <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${c.prova}" ${c.alvo === 'outra' ? '' : 'disabled'}></div>
         <div class="field"><label for="cfg-inicio">Início do plano</label><input type="date" id="cfg-inicio" value="${c.inicio}"></div>
         <div class="field"><label for="cfg-horas">Horas por dia</label><select id="cfg-horas">${[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10].map(x => `<option value="${x}" ${Number(c.horas) === x ? 'selected' : ''}>${fh(x)}</option>`).join('')}</select></div>
         <div class="field"><label for="cfg-sim">Simulado semanal</label><select id="cfg-sim">${[0, 1, 2, 3, 4, 5, 6].map(x => `<option value="${x}" ${Number(c.simDia) === x ? 'selected' : ''}>${DIAS_L[x]}</option>`).join('')}</select></div>
@@ -372,13 +445,19 @@
       h += `<section class="card"><div class="grid2">
         <div><div class="eyebrow">Até a prova</div><div class="score num">${Math.max(0, r.prova - hj)}<small> dias</small></div><div class="small muted">prova em ${flonga(r.prova)}</div></div>
         <div><div class="eyebrow">Conteúdo</div><div class="score num">${MODS.length - (c.excl || []).length}<small> módulos</small></div><div class="small muted">${r.fimC ? 'teoria termina em ' + fdata(r.fimC) : 'tudo já coberto'} · ${plural(r.est, 'dia de estudo', 'dias de estudo')}</div></div>
+      </div>
+      <div class="tasks small">
+        <div class="task"><span class="sigla">C1</span><div class="tt"><b>Ciclo 1: teoria completa</b><div class="muted">todos os módulos, com quiz e revisão de 7 dias</div></div><span class="num">${r.fimCiclo[0] ? 'até ' + fdata(r.fimCiclo[0]) : '—'}</span></div>
+        <div class="task"><span class="sigla">C2</span><div class="tt"><b>Ciclo 2: revisão ativa</b><div class="muted">todos os módulos de novo, do que mais cai para o que menos cai</div></div><span class="num">${r.fimCiclo[1] ? 'até ' + fdata(r.fimCiclo[1]) : r.fimCiclo[0] ? 'parcial' : 'sem tempo'}</span></div>
+        <div class="task"><span class="sigla">C3</span><div class="tt"><b>Ciclo 3: o que mais cai</b><div class="muted">módulos de incidência média e alta</div></div><span class="num">${r.fimCiclo[2] ? 'até ' + fdata(r.fimCiclo[2]) : r.fimCiclo[1] ? 'parcial' : 'sem tempo'}</span></div>
       </div></section>`;
     }
     h += `<section class="card"><h2 class="h2">Como a prova funciona</h2>
       <ul class="stack small" style="margin:0;padding-left:1.2em">
         <li><b>96 questões objetivas</b>, 24 de cada matéria (Português, Inglês, Matemática e Física), com 4 alternativas.</li>
         <li><b>Eliminação</b>: nota abaixo de 5,0 em qualquer matéria ou média final abaixo de 5,0 (nota de 0 a 10). A classificação é pela média, então a meta do curso é 8,0: cerca de 19 acertos em 24 por matéria.</li>
-        <li><b>Próxima prova</b>: CFS 2/2027 previsto para 22/11/2026, segundo os sites de concursos. Confirme no edital oficial em ingresso.eear.fab.mil.br.</li>
+        <li><b>Questões oficiais</b>: as provas anteriores da EEAR, com gabarito oficial, ficam na aba Simulados e na aba Provas de cada módulo.</li>
+        <li><b>Datas</b>: confirme sempre no edital oficial, em ingresso.eear.fab.mil.br.</li>
         <li><b>Controle de Tráfego Aéreo (BCT)</b>: o inglês costuma ser cobrado em nível intermediário. Se for sua opção, dê peso extra a Inglês.</li>
       </ul></section>`;
     if (p.dias.length) {
@@ -387,7 +466,7 @@
       p.dias.forEach(d => {
         const ws = d.n - ((wday(d.n) + 6) % 7);
         if (ws !== semana) { semana = ws; ns++; h += `<div class="week">Semana ${ns} · ${fdata(ws)} a ${fdata(ws + 6)}</div>`; }
-        const tipoTxt = { estudo: 'estudo', simulado: 'simulado', revisao: 'revisão', vespera: 'véspera' }[d.tipo];
+        const tipoTxt = { estudo: 'estudo', simulado: 'simulado', revisao: 'revisão', vespera: 'véspera', marco: 'prova' }[d.tipo];
         h += `<div class="day ${d.n === hj ? 'today' : ''} ${d.n < hj ? 'past' : ''}" ${d.n === hj ? 'id="dia-hoje"' : ''}><div class="dd"><b>${fdata(d.n)}</b>${DIAS[wday(d.n)]}<br>${tipoTxt}</div><ul>${d.tar.map(t => `<li class="${feita(t) ? 'done' : ''}">${t.mod ? sig(MOD[t.mod].m) + ' ' : ''}${t.txt}${t.h && t.tipo === 'teoria' ? ` <span class="muted small">(${fh(t.h)})</span>` : ''}</li>`).join('')}</ul></div>`;
       });
       h += `</div>`;
@@ -406,6 +485,8 @@
     h += `<section class="card b-${s}"><div class="row between"><h2 class="h2">${MATS[s].nome}</h2><span class="small muted num">${p.dom} de ${p.tot} dominados</span></div><div class="meter"><i style="width:${(p.dom / p.tot) * 100}%"></i></div>
       <div class="mods">${ms.map(m => { const st = estMod(m.id); return `<button class="modrow" data-a="mod" data-id="${m.id}"><span class="sigla c-${s}">${m.id}</span><span><span class="mt">${m.t}</span><br><span class="peso" title="Incidência estimada">${bolinhas(m.peso)} · ${fh(m.h)}</span></span><span class="chip ${st.k}">${st.txt}</span></button>`; }).join('')}</div>
       <p class="small muted" style="margin:0">● incidência estimada na prova (●●● = cai muito). Horas = tempo ideal de estudo do módulo.</p></section>`;
+    h += `<section class="card"><h2 class="h2">Videoaulas de ${MATS[s].curto}</h2><p class="small muted" style="margin:0">Canais gratuitos para complementar a teoria. Os links abrem a busca do YouTube em outra aba; cada módulo também tem os vídeos do seu tópico.</p>
+      <div class="stack">${CANAIS[s].map(cn => `<a class="vlink" href="${yt(cn)}" target="_blank" rel="noopener">${cn}</a>`).join('')}<a class="vlink" href="${yt('EEAR ' + MATS[s].curto + ' questões resolvidas')}" target="_blank" rel="noopener">Questões de ${MATS[s].curto} da EEAR resolvidas</a></div></section>`;
     return h;
   }
 
@@ -417,10 +498,15 @@
     const nx = MODS[MODS.indexOf(m) + 1];
     let h = `<button class="btn ghost back" data-a="mat" data-s="${m.m}">← ${MATS[m.m].curto}</button>`;
     h += `<div class="stack"><div class="eyebrow">${sig(m.m)} ${m.id} · incidência ${bolinhas(m.peso)} · ${fh(m.h)} ideais</div><h1 class="h1">${m.t}</h1><div class="row"><span class="chip ${st.k}">${st.txt}</span>${r.tent ? `<span class="small muted">${plural(r.tent, 'tentativa', 'tentativas')} no quiz</span>` : ''}</div></div>`;
-    const abas = [['teoria', 'Teoria'], ['ex', 'Exemplos'], ['quiz', 'Quiz'], ['cards', 'Cartões']];
+    const ofi = OFI[m.id] || [];
+    const abas = [['teoria', 'Teoria'], ['ex', 'Exemplos'], ['quiz', 'Quiz'], ['prov', 'Provas'], ['cards', 'Cartões']];
     h += `<div class="seg" role="group" aria-label="Partes do módulo">${abas.map(a => `<button data-a="aba" data-aba="${a[0]}" aria-pressed="${a[0] === aba}">${a[1]}</button>`).join('')}</div>`;
     if (aba === 'teoria') {
       h += `<article class="card teoria b-${m.m}">${m.teoria}</article>`;
+      const busca = VID[m.id] || m.t;
+      h += `<section class="card"><h2 class="h2">Videoaulas do tópico</h2><p class="small muted" style="margin:0">Assista depois de ler a teoria. Os links abrem a busca do YouTube em outra aba.</p>
+        <div class="stack"><a class="vlink" href="${yt(busca + ' aula')}" target="_blank" rel="noopener">Aula: ${busca}</a><a class="vlink" href="${yt('EEAR ' + busca + ' questão resolvida')}" target="_blank" rel="noopener">Questões da EEAR resolvidas sobre o tema</a></div>
+        <div class="row small">${CANAIS[m.m].map(cn => `<a href="${yt(cn + ' ' + busca)}" target="_blank" rel="noopener">${cn}</a>`).join('<span class="muted">·</span>')}</div></section>`;
       h += `<div class="row"><button class="btn pri" data-a="quizmod" data-id="${m.id}">Fazer o quiz (meta 80%)</button><button class="btn" data-a="aba" data-aba="ex">Ver exemplos resolvidos</button></div>`;
     } else if (aba === 'ex') {
       h += (m.ex || []).map((x, i) => `<section class="card"><div class="eyebrow">Exemplo ${i + 1}</div><div class="q-enun">${x[0]}</div><details class="rev"><summary>Ver resolução</summary><div class="teoria">${x[1]}</div></details></section>`).join('') || '<p class="empty">Sem exemplos neste módulo.</p>';
@@ -429,6 +515,10 @@
       h += `<section class="card"><h2 class="h2">Quiz do módulo</h2><p style="margin:0">São ${m.q.length} questões no estilo da EEAR, com correção comentada logo após cada resposta. O módulo fica dominado com ${Math.ceil(m.q.length * META)} acertos ou mais.</p>
         ${r.best != null ? `<div class="row"><span class="chip ${r.best >= META ? 'ok' : 'warn'}">Melhor nota: ${pct(r.best)}</span><span class="chip">Última: ${pct(r.last)}</span></div>` : ''}
         <div class="row"><button class="btn pri" data-a="quizmod" data-id="${m.id}">${r.tent ? 'Refazer o quiz' : 'Começar o quiz'}</button></div></section>`;
+    } else if (aba === 'prov') {
+      h += `<section class="card"><h2 class="h2">Questões de provas anteriores</h2>${ofi.length
+        ? `<p style="margin:0">${plural(ofi.length, 'questão oficial', 'questões oficiais')} da EEAR sobre este tópico, com a ordem original das alternativas e o gabarito oficial.</p><div class="row"><button class="btn pri" data-a="oficiaismod" data-id="${m.id}">Resolver ${ofi.length > 20 ? '20 sorteadas' : 'todas'}</button></div>`
+        : `<p style="margin:0">Ainda não há questões oficiais deste tópico no curso. Elas entram aqui, com o gabarito oficial, quando as provas anteriores da EEAR forem carregadas.</p>`}</section>`;
     } else {
       h += `<section class="card"><h2 class="h2">Flashcards do módulo</h2><p style="margin:0">Estes cartões entram na sua revisão diária com repetição espaçada: quem você acerta volta depois de 1, 3, 7, 14, 30 e 60 dias; quem você erra volta amanhã.</p>
         <div class="row"><button class="btn pri" data-a="fcmod" data-id="${m.id}">Estudar os ${(m.fc || []).length} cartões</button></div></section>`;
@@ -458,12 +548,12 @@
     if (!z) return vHoje();
     if (z.fim) return vQuizFim();
     const id = z.ids[z.i], q = Q[id], perm = z.perms[id], r = z.resp[id], resp = r !== undefined;
-    const cp = perm.indexOf(q.c);
+    const cp = perm.indexOf(q.c), certo = resp && acertou(id, perm, r);
     let h = `<div class="row between"><button class="btn ghost back" data-a="sairquiz">← Sair</button><span class="small muted num">Questão ${z.i + 1} de ${z.ids.length}</span></div>`;
-    h += `<div class="stack"><div class="eyebrow">${sig(q.m)} ${q.mod} · ${z.titulo}</div><div class="meter b-${q.m}"><i style="width:${(z.i / z.ids.length) * 100}%"></i></div></div>`;
-    h += `<section class="card"><div class="q-enun">${q.e}</div>${opcoes(q, perm, r, resp, resp ? '' : 'qresp')}`;
+    h += `<div class="stack"><div class="eyebrow">${sig(q.m)} ${q.src ? 'Prova oficial' : q.mod} · ${z.titulo}</div><div class="meter b-${q.m}"><i style="width:${(z.i / z.ids.length) * 100}%"></i></div></div>`;
+    h += `<section class="card"><div class="q-enun">${enun(q)}</div>${opcoes(q, perm, r, resp, resp ? '' : 'qresp')}`;
     if (resp) {
-      h += `<div class="expl"><b class="${r === cp ? 'ok' : 'bad'}">${r === cp ? 'Correta.' : 'Incorreta. A resposta é a ' + LETRAS[cp] + '.'}</b> ${q.r}</div>`;
+      h += `<div class="expl"><b class="${certo ? 'ok' : 'bad'}">${q.anulada ? 'Questão anulada: vale ponto para todos.' : certo ? 'Correta.' : 'Incorreta. A resposta é a ' + LETRAS[cp] + '.'}</b> ${q.r}</div>`;
       h += `<div class="row"><button class="btn pri" data-a="qprox">${z.i + 1 < z.ids.length ? 'Próxima questão' : 'Ver resultado'}</button></div>`;
     }
     h += `</section>`;
@@ -471,7 +561,7 @@
   }
   function fecharQuiz() {
     const z = QZ;
-    const ac = z.ids.filter(id => z.resp[id] !== undefined && z.perms[id][z.resp[id]] === Q[id].c).length;
+    const ac = z.ids.filter(id => acertou(id, z.perms[id], z.resp[id])).length;
     const sc = ac / z.ids.length;
     z.ac = ac; z.sc = sc;
     if (z.origem.tipo === 'mod') {
@@ -480,6 +570,7 @@
       if (r.best == null || sc > r.best) r.best = sc;
       if (sc >= META && !r.ok) r.ok = hoje();
       if (!r.lido) r.lido = hoje();
+      r.quando = hoje();
       if (z.origem.rev) S.feito[z.origem.rev] = true;
     }
     marcarAtividade();
@@ -489,13 +580,13 @@
   function vQuizFim() {
     const z = QZ, mid = z.origem.tipo === 'mod' ? z.origem.id : null, m = mid && MOD[mid];
     const passou = z.sc >= META;
-    const erradas = z.ids.filter(id => z.perms[id][z.resp[id]] !== Q[id].c);
+    const erradas = z.ids.filter(id => !acertou(id, z.perms[id], z.resp[id]));
     let h = `<div class="stack"><div class="eyebrow">Debriefing · ${z.titulo}</div><h1 class="h1">${m ? (passou ? 'Módulo dominado' : 'Ainda não chegou aos 80%') : (z.ac === z.ids.length ? 'Tudo certo' : 'Rodada concluída')}</h1></div>`;
     h += `<section class="card"><div class="row between"><span class="score num">${z.ac}<small> de ${z.ids.length}</small></span><span class="chip ${passou ? 'ok' : 'warn'}">${pct(z.sc)}</span></div>
-      <p style="margin:0">${m ? (passou ? 'Você bateu a meta. O módulo entra nas revisões espaçadas pelos flashcards.' : `A meta é ${Math.ceil(z.ids.length * META)} acertos. Releia a teoria nos pontos das questões abaixo e refaça o quiz.`) : (z.origem.tipo === 'erros' ? 'As questões que você acertou saíram do caderno de erros.' : '')}</p>
-      <div class="row">${m ? `<button class="btn ${passou ? '' : 'pri'}" data-a="quizmod" data-id="${mid}">Refazer o quiz</button><button class="btn" data-a="mod" data-id="${mid}">Voltar à teoria</button>` : `<button class="btn pri" data-a="tab" data-v="treino">Voltar ao treino</button>`}
+      <p style="margin:0">${m ? (passou ? 'Você bateu a meta. O módulo entra nas revisões espaçadas pelos flashcards.' : `A meta é ${Math.ceil(z.ids.length * META)} acertos. Releia a teoria nos pontos das questões abaixo e refaça o quiz.`) : (z.origem.tipo === 'erros' ? 'As questões que você acertou saíram do caderno de erros.' : z.origem.tipo === 'oficial' ? 'Questões oficiais da EEAR, corrigidas pelo gabarito oficial. As erradas foram para o caderno de erros.' : '')}</p>
+      <div class="row">${m ? `<button class="btn ${passou ? '' : 'pri'}" data-a="quizmod" data-id="${mid}">Refazer o quiz</button><button class="btn" data-a="mod" data-id="${mid}">Voltar à teoria</button>` : z.origem.tipo === 'oficial' ? `<button class="btn pri" data-a="mod" data-id="${z.origem.id}">Voltar ao módulo</button>` : `<button class="btn pri" data-a="tab" data-v="treino">Voltar ao treino</button>`}
       ${m && passou && MODS[MODS.indexOf(m) + 1] ? `<button class="btn pri" data-a="mod" data-id="${MODS[MODS.indexOf(m) + 1].id}">Próximo módulo</button>` : ''}</div></section>`;
-    if (erradas.length) h += `<section class="card"><h2 class="h2">Revise os erros</h2>${erradas.map(id => { const q = Q[id]; return `<details class="rev"><summary>${q.mod} · ${resumo(q.e)}</summary><div class="q-enun">${q.e}</div><p><b>Resposta:</b> ${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</section>`;
+    if (erradas.length) h += `<section class="card"><h2 class="h2">Revise os erros</h2>${erradas.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)}</summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</section>`;
     return h;
   }
   function resumo(html) {
@@ -538,7 +629,7 @@
       h += ORD.map(s => {
         const ids = Object.keys(S.erros).filter(id => Q[id] && Q[id].m === s);
         if (!ids.length) return '';
-        return `<details class="rev"><summary>${MATS[s].curto} · ${ids.length}</summary>${ids.map(id => { const q = Q[id]; return `<details class="rev"><summary>${q.mod} · ${resumo(q.e)} <span class="chip bad">${S.erros[id]}x</span></summary><div class="q-enun">${q.e}</div><p><b>Resposta:</b> ${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</details>`;
+        return `<details class="rev"><summary>${MATS[s].curto} · ${ids.length}</summary>${ids.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)} <span class="chip bad">${S.erros[id]}x</span></summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</details>`;
       }).join('');
     }
     h += `</section>`;
@@ -552,25 +643,34 @@
     let ids = [], lim = 0;
     if (tipo === 'completo') { ORD.forEach(x => { ids = ids.concat(shuffle(amostraPeso(QS[x], 24))); }); lim = Number(S.cfg.tempoSim) || 240; }
     else if (tipo === 'materia') { ids = shuffle(amostraPeso(QS[s], 24)); lim = 60; }
+    else if (tipo === 'prova') { const p = PROVA[s]; if (!p) return; ids = p.ids.slice(); lim = p.min || 240; }
+    else if (tipo === 'oficial') { ORD.forEach(x => { ids = ids.concat(shuffle(QO[x].slice()).slice(0, 24)); }); lim = Number(S.cfg.tempoSim) || 240; }
     else { ORD.forEach(x => { ids = ids.concat(amostraDiag(x, 10)); }); lim = 0; }
-    S.ativo = { tipo, materia: s || null, ids, perms: permutar(ids), resp: {}, marc: {}, ini: Date.now(), lim, i: 0 };
+    S.ativo = { tipo, materia: tipo === 'materia' ? s : null, prova: tipo === 'prova' ? s : null, ids, perms: permutar(ids), resp: {}, marc: {}, ini: Date.now(), lim, i: 0 };
     salvar();
     mapa = false;
     go('sim');
   }
   function restante() { const a = S.ativo; return a && a.lim ? Math.max(0, a.lim * 60 - Math.floor((Date.now() - a.ini) / 1000)) : null; }
   function ftempo(s) { const H = Math.floor(s / 3600), M = Math.floor((s % 3600) / 60), Se = s % 60; return (H ? H + ':' + pad(M) : M) + ':' + pad(Se); }
+  function nomeSim(x, curto) {
+    if (x.tipo === 'diag') return curto ? 'diagnóstico' : 'Diagnóstico';
+    if (x.tipo === 'completo') return curto ? 'completo' : 'Simulado completo';
+    if (x.tipo === 'prova') return (PROVA[x.prova] && PROVA[x.prova].nome) || 'Prova oficial';
+    if (x.tipo === 'oficial') return curto ? 'oficial misto' : 'Simulado com questões oficiais';
+    return curto ? MATS[x.mat || x.materia].curto : 'Simulado de ' + MATS[x.mat || x.materia].curto;
+  }
   function vSim() {
     const a = S.ativo;
     if (!a) return vSimulados();
     const id = a.ids[a.i], q = Q[id], r = a.resp[id];
     const nResp = Object.keys(a.resp).length, rem = restante();
-    const nome = a.tipo === 'diag' ? 'Diagnóstico' : a.tipo === 'completo' ? 'Simulado completo' : 'Simulado de ' + MATS[a.materia].curto;
+    const nome = nomeSim(a);
     let h = `<div class="simbar">${rem != null ? `<span class="timer num ${rem < 600 ? 'low' : ''}" id="timer">${ftempo(rem)}</span>` : '<span class="small muted">sem cronômetro</span>'}<span class="small muted num">${nResp}/${a.ids.length} respondidas</span><span style="flex:1"></span><button class="btn sm" data-a="simmapa">${mapa ? 'Fechar mapa' : 'Mapa'}</button><button class="btn sm pri" data-a="entregar">Entregar</button></div>`;
     if (pedindo === 'entregar') h += `<div class="confirm"><p>${nResp < a.ids.length ? `Faltam ${a.ids.length - nResp} questões. ` : ''}Entregar agora e ver a correção?</p><button class="btn sm" data-a="cancelar">Continuar respondendo</button><button class="btn sm pri" data-a="entregarok">Entregar</button></div>`;
     if (mapa) h += `<section class="card"><div class="qmap">${a.ids.map((x, k) => `<button data-a="simir" data-i="${k}" class="${a.resp[x] !== undefined ? 'ans' : ''} ${a.marc[x] ? 'mk' : ''} ${k === a.i ? 'cur' : ''}" aria-label="Questão ${k + 1}">${k + 1}</button>`).join('')}</div><span class="small muted">Contorno laranja embaixo = marcada para revisar.</span></section>`;
     h += `<div class="stack"><div class="eyebrow">${nome} · ${sig(q.m)} ${MATS[q.m].curto}</div><div class="row between"><b class="num">Questão ${a.i + 1} de ${a.ids.length}</b>${a.marc[id] ? '<span class="chip warn">marcada</span>' : ''}</div></div>`;
-    h += `<section class="card"><div class="q-enun">${q.e}</div>${opcoes(q, a.perms[id], r, false, 'simresp')}</section>`;
+    h += `<section class="card"><div class="q-enun">${enun(q)}</div>${opcoes(q, a.perms[id], r, false, 'simresp')}</section>`;
     h += `<div class="row between"><button class="btn" data-a="simnav" data-d="-1" ${a.i === 0 ? 'disabled' : ''}>← Anterior</button><button class="btn sm" data-a="simmarc">${a.marc[id] ? 'Desmarcar' : 'Marcar para revisar'}</button><button class="btn ${r !== undefined ? 'pri' : ''}" data-a="simnav" data-d="1" ${a.i === a.ids.length - 1 ? 'disabled' : ''}>Próxima →</button></div>`;
     if (pedindo === 'descartar') h += `<div class="confirm"><p>Descartar este simulado? As respostas serão perdidas.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="descartarok">Descartar</button></div>`;
     else h += `<div class="row"><button class="btn ghost" data-a="descartar">Descartar simulado</button></div>`;
@@ -581,12 +681,12 @@
     if (!a) return;
     const r = {};
     a.ids.forEach(id => {
-      const q = Q[id], pos = a.resp[id], ok = pos !== undefined && a.perms[id][pos] === q.c;
+      const q = Q[id], pos = a.resp[id], ok = acertou(id, a.perms[id], pos);
       r[q.m] = r[q.m] || [0, 0];
       r[q.m][1]++;
       if (ok) r[q.m][0]++; else S.erros[id] = (S.erros[id] || 0) + 1;
     });
-    const reg = { d: hoje(), tipo: a.tipo, mat: a.materia, r, min: Math.round((Date.now() - a.ini) / 60000) };
+    const reg = { d: hoje(), tipo: a.tipo, mat: a.materia, prova: a.prova || null, r, min: Math.round((Date.now() - a.ini) / 60000) };
     S.sims.push(reg);
     if (a.tipo === 'diag') { S.diag = {}; ORD.forEach(s => { S.diag[s] = r[s] ? r[s][0] / r[s][1] : 0.5; }); }
     S.ult = { reg, ids: a.ids, perms: a.perms, resp: a.resp };
@@ -601,24 +701,24 @@
     const reg = u.reg, ks = ORD.filter(s => reg.r[s]);
     const med = media(reg);
     const elimina = ks.some(s => reg.r[s][0] / reg.r[s][1] < 0.5) || med < 0.5;
-    const nome = reg.tipo === 'diag' ? 'Diagnóstico' : reg.tipo === 'completo' ? 'Simulado completo' : 'Simulado de ' + MATS[reg.mat].curto;
+    const nome = nomeSim(reg);
     let h = `<div class="stack"><div class="eyebrow">Debriefing · ${nome} · ${fdata(dnum(reg.d))}</div><h1 class="h1">${reg.tipo === 'diag' ? 'Seu ponto de partida' : (med >= META && !ks.some(s => reg.r[s][0] / reg.r[s][1] < META) ? 'Meta de 80% batida' : 'Resultado do simulado')}</h1></div>`;
-    h += `<section class="card"><div class="row between"><div><div class="eyebrow">Média</div><span class="score num">${nota(med)}</span></div>${reg.tipo === 'completo' ? `<span class="chip ${elimina ? 'bad' : (med >= META ? 'ok' : 'warn')}">${elimina ? 'Abaixo do mínimo do edital' : (med >= META ? 'Na meta do curso' : 'Acima do mínimo, abaixo da meta')}</span>` : ''}</div>
+    h += `<section class="card"><div class="row between"><div><div class="eyebrow">Média</div><span class="score num">${nota(med)}</span></div>${reg.tipo === 'completo' || reg.tipo === 'prova' || reg.tipo === 'oficial' ? `<span class="chip ${elimina ? 'bad' : (med >= META ? 'ok' : 'warn')}">${elimina ? 'Abaixo do mínimo do edital' : (med >= META ? 'Na meta do curso' : 'Acima do mínimo, abaixo da meta')}</span>` : ''}</div>
       <div class="tbl tbl-res"><table><thead><tr><th>Matéria</th><th class="num">Acertos</th><th class="num">Nota</th><th>Situação</th></tr></thead><tbody>${ks.map(s => { const x = reg.r[s][0] / reg.r[s][1]; return `<tr><td>${sig(s)} ${MATS[s].curto}</td><td class="num">${reg.r[s][0]}/${reg.r[s][1]}</td><td class="num">${nota(x)}</td><td>${x >= META ? '<span class="chip ok">meta</span>' : x >= 0.5 ? '<span class="chip warn">abaixo da meta</span>' : '<span class="chip bad">abaixo de 5</span>'}</td></tr>`; }).join('')}</tbody></table></div>
       <p class="small muted" style="margin:0">${reg.tipo === 'diag' ? 'O plano agora dá mais tempo às matérias com nota menor. ' : ''}Meta do curso: nota 8,0 em cada matéria. Mínimo do edital: 5,0 em cada matéria e média 5,0.${reg.min ? ' Tempo usado: ' + fh(reg.min / 60) + '.' : ''}</p></section>`;
     const porMod = {};
-    u.ids.forEach(id => { if (u.perms[id][u.resp[id]] !== Q[id].c) porMod[Q[id].mod] = (porMod[Q[id].mod] || 0) + 1; });
+    u.ids.forEach(id => { if (Q[id].mod && !acertou(id, u.perms[id], u.resp[id])) porMod[Q[id].mod] = (porMod[Q[id].mod] || 0) + 1; });
     const top = Object.keys(porMod).sort((a, b) => porMod[b] - porMod[a]).slice(0, 6);
     if (top.length) h += `<section class="card"><h2 class="h2">Onde você mais errou</h2><div class="mods">${top.map(id => `<button class="modrow" data-a="mod" data-id="${id}"><span class="sigla c-${MOD[id].m}">${id}</span><span class="mt">${MOD[id].t}</span><span class="chip bad">${plural(porMod[id], 'erro', 'erros')}</span></button>`).join('')}</div></section>`;
     h += `<section class="card"><h2 class="h2">Correção completa</h2>${u.ids.map((id, k) => {
-      const q = Q[id], pos = u.resp[id], perm = u.perms[id], ok = pos !== undefined && perm[pos] === q.c;
-      return `<details class="rev"><summary>${k + 1}. ${sig(q.m)} ${ok ? '<span class="chip ok">certa</span>' : pos === undefined ? '<span class="chip">em branco</span>' : '<span class="chip bad">errada</span>'} ${resumo(q.e)}</summary><div class="q-enun">${q.e}</div>${opcoes(q, perm, pos, true, '')}<div class="expl">${q.r}</div></details>`;
+      const q = Q[id], pos = u.resp[id], perm = u.perms[id], ok = acertou(id, perm, pos);
+      return `<details class="rev"><summary>${q.src ? q.src.replace(/^.*· /, '') : k + 1}. ${sig(q.m)} ${q.anulada ? '<span class="chip">anulada</span>' : ok ? '<span class="chip ok">certa</span>' : pos === undefined ? '<span class="chip">em branco</span>' : '<span class="chip bad">errada</span>'} ${resumo(q.e)}</summary><div class="q-enun">${enun(q)}</div>${opcoes(q, perm, pos, true, '')}<div class="expl">${q.r}</div></details>`;
     }).join('')}</section>`;
     h += `<div class="row"><button class="btn pri" data-a="tab" data-v="treino">Ir para o caderno de erros</button><button class="btn" data-a="tab" data-v="simulados">Voltar aos simulados</button></div>`;
     return h;
   }
   function grafico() {
-    const ss = S.sims.filter(x => x.tipo === 'completo').slice(-12);
+    const ss = S.sims.filter(x => x.tipo === 'completo' || x.tipo === 'prova' || x.tipo === 'oficial').slice(-12);
     if (ss.length < 1) return '';
     const W = 640, H = 220, L = 34, R = 12, T = 14, B = 30;
     const x = i => L + (ss.length === 1 ? (W - L - R) / 2 : i * (W - L - R) / (ss.length - 1));
@@ -638,10 +738,15 @@
       <div class="card"><div class="eyebrow">Ponto de partida</div><h2 class="h2">Diagnóstico</h2><p class="small" style="margin:0">40 questões, 10 por matéria, sem cronômetro. Ajusta o peso de cada matéria no plano.</p><button class="btn ${S.diag ? '' : 'pri'}" data-a="simini" data-tipo="diag" ${S.ativo ? 'disabled' : ''}>${S.diag ? 'Refazer diagnóstico' : 'Começar'}</button></div>
       <div class="card"><div class="eyebrow">Como no dia da prova</div><h2 class="h2">Simulado completo</h2><p class="small" style="margin:0">96 questões, 24 por matéria, em ${fh((Number(S.cfg.tempoSim) || 240) / 60)}. Use folha de rascunho e nada de consulta.</p><button class="btn pri" data-a="simini" data-tipo="completo" ${S.ativo ? 'disabled' : ''}>Começar</button></div>
     </section>`;
+    const okOf = ORD.every(x => QO[x].length >= 24);
+    h += `<section class="card"><div class="eyebrow">100% fiel à prova</div><h2 class="h2">Provas anteriores oficiais</h2>${PROVAS.length
+      ? `<p class="small" style="margin:0">Provas reais da EEAR, na ordem original e com o gabarito oficial. Faça como no dia: tempo de prova, rascunho e nada de consulta.</p><div class="tasks">${PROVAS.map(p => { const feitas = S.sims.filter(x => x.prova === p.id); const ult = feitas[feitas.length - 1]; return `<div class="task"><span class="sigla">${(p.data || '').slice(0, 4)}</span><div class="tt"><b>${p.nome}</b><div class="small muted">${p.ids.length} questões · ${fh((p.min || 240) / 60)}${ult ? ' · última média ' + nota(media(ult)) : ''}</div></div><button class="btn sm pri" data-a="simini" data-tipo="prova" data-s="${p.id}" ${S.ativo ? 'disabled' : ''}>${ult ? 'Refazer' : 'Fazer'}</button></div>`; }).join('')}</div>
+        <div class="row"><button class="btn" data-a="simini" data-tipo="oficial" ${S.ativo || !okOf ? 'disabled' : ''}>Simulado misto com questões oficiais (96)</button></div>`
+      : `<p class="small" style="margin:0">As provas oficiais ainda não estão no curso. Elas entram aqui com a ordem original e o gabarito oficial assim que os PDFs da EEAR puderem ser baixados. Até lá, use os simulados do curso abaixo.</p>`}</section>`;
     h += `<section class="card"><div class="eyebrow">Treino focado</div><h2 class="h2">Simulado por matéria</h2><p class="small" style="margin:0">24 questões em 1 hora.</p><div class="row">${ORD.map(s => `<button class="btn" data-a="simini" data-tipo="materia" data-s="${s}" ${S.ativo ? 'disabled' : ''}>${MATS[s].curto}</button>`).join('')}</div></section>`;
     const hist = S.sims.slice().reverse();
     h += `<section class="card"><div class="row between"><h2 class="h2">Histórico</h2>${S.ult ? '<button class="btn sm" data-a="go" data-v="res">Correção do último</button>' : ''}</div>${grafico()}`;
-    h += hist.length ? `<div class="tbl tbl-res"><table><thead><tr><th>Data</th><th>Tipo</th>${ORD.map(s => `<th class="num">${MATS[s].sigla}</th>`).join('')}<th class="num">Média</th></tr></thead><tbody>${hist.map(r => `<tr><td class="num">${fdata(dnum(r.d))}</td><td>${r.tipo === 'diag' ? 'diagnóstico' : r.tipo === 'completo' ? 'completo' : MATS[r.mat].curto}</td>${ORD.map(s => `<td class="num">${r.r[s] ? nota(r.r[s][0] / r.r[s][1]) : '–'}</td>`).join('')}<td class="num"><b>${nota(media(r))}</b></td></tr>`).join('')}</tbody></table></div>` : '<p class="empty">Nenhum simulado feito ainda.</p>';
+    h += hist.length ? `<div class="tbl tbl-res"><table><thead><tr><th>Data</th><th>Tipo</th>${ORD.map(s => `<th class="num">${MATS[s].sigla}</th>`).join('')}<th class="num">Média</th></tr></thead><tbody>${hist.map(r => `<tr><td class="num">${fdata(dnum(r.d))}</td><td>${nomeSim(r, true)}</td>${ORD.map(s => `<td class="num">${r.r[s] ? nota(r.r[s][0] / r.r[s][1]) : '–'}</td>`).join('')}<td class="num"><b>${nota(media(r))}</b></td></tr>`).join('')}</tbody></table></div>` : '<p class="empty">Nenhum simulado feito ainda.</p>';
     h += `</section>`;
     return h;
   }
@@ -700,18 +805,19 @@
       case 'mat': go('materias', { s: d.s }); break;
       case 'mod': marcarLido(d.id); go('modulo', { id: d.id, aba: 'teoria' }); break;
       case 'aba': if (d.aba === 'teoria') marcarLido(V.id); V.aba = d.aba; render(); break;
+      case 'oficiaismod': { const m = MOD[d.id], ids = shuffle((OFI[m.id] || []).slice()).slice(0, 20); if (ids.length) iniciarQuiz(ids, 'Provas anteriores: ' + m.t, { tipo: 'oficial', id: m.id }); break; }
       case 'quizmod': { const m = MOD[d.id]; iniciarQuiz(m.q.map((_, i) => m.id + '-' + i), m.t, { tipo: 'mod', id: m.id, rev: d.rev || null }); break; }
       case 'qresp': {
         const z = QZ, id = z.ids[z.i], pos = Number(d.p);
         if (z.resp[id] !== undefined) return;
         z.resp[id] = pos;
-        const ok = z.perms[id][pos] === Q[id].c;
+        const ok = acertou(id, z.perms[id], pos);
         if (!ok) S.erros[id] = (S.erros[id] || 0) + 1;
         else if (z.origem.tipo === 'erros') delete S.erros[id];
         salvar(); render(); break;
       }
       case 'qprox': if (QZ.i + 1 < QZ.ids.length) QZ.i++; else fecharQuiz(); render(); window.scrollTo(0, 0); break;
-      case 'sairquiz': { const o = QZ && QZ.origem; QZ = null; if (o && o.tipo === 'mod') go('modulo', { id: o.id, aba: 'quiz' }); else go('treino'); break; }
+      case 'sairquiz': { const o = QZ && QZ.origem; QZ = null; if (o && (o.tipo === 'mod' || o.tipo === 'oficial')) go('modulo', { id: o.id, aba: o.tipo === 'mod' ? 'quiz' : 'prov' }); else go('treino'); break; }
       case 'marcar': if (S.feito[d.k]) delete S.feito[d.k]; else { S.feito[d.k] = true; marcarAtividade(); } salvar(); render(); break;
       case 'fcini': { const ids = devidos(d.s || null).map(c => c.id); if (ids.length) iniciarFC(ids, d.s ? MATS[d.s].curto : 'revisão do dia'); break; }
       case 'fcmod': { const m = MOD[d.id]; marcarLido(m.id); iniciarFC(m.fc.map((_, i) => m.id + '~' + i), m.id); break; }
@@ -758,7 +864,10 @@
     if (!f) return;
     const c = S.cfg;
     const g = id => document.getElementById(id);
-    if (g('cfg-prova').value) c.prova = g('cfg-prova').value;
+    c.alvo = g('cfg-alvo').value;
+    const alvo = CAL.find(x => x.id === c.alvo);
+    if (alvo) c.prova = alvo.d;
+    else if (g('cfg-prova').value) c.prova = g('cfg-prova').value;
     if (g('cfg-inicio').value) c.inicio = g('cfg-inicio').value;
     c.horas = Number(g('cfg-horas').value) || 4;
     c.simDia = Number(g('cfg-sim').value);
