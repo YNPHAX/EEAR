@@ -3,8 +3,8 @@ Uso: python3 web/build.py [pasta_de_saida] [--app]
   sem --app: site para o GitHub Pages (padrão: _site/)
   com --app: a mesma coisa para o app de Android (Capacitor), sem o service worker
 
-A versão pública não leva as páginas das apostilas (material com direitos autorais do curso):
-a folha de respostas de cada conjunto indica a página do PDF da apostila."""
+A versão pública não leva nada das apostilas (material com direitos autorais de outro curso):
+nem as páginas, nem os gabaritos, nem o índice. Elas ficam só na versão pessoal (artifact)."""
 import hashlib, json, os, re, shutil, sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,6 +58,8 @@ registro = '' if APP else '''
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 </script>
 '''
+corpo = corpo.replace('<script src="dados/apostila.js"></script>\n', '')
+assert 'apostila.js' not in corpo
 pos = corpo.index('<script src=')
 corpo = corpo[:pos] + antes + corpo[pos:]
 html = f'<!doctype html>\n<html lang="pt-BR">\n<head>\n{meta}{cab}\n</head>\n<body>\n{corpo.strip()}\n{registro}</body>\n</html>\n'
@@ -66,10 +68,8 @@ open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(html)
 # scripts e dados
 copiar(os.path.join(CURSO, 'app.js'), os.path.join(OUT, 'app.js'))
 for f in sorted(os.listdir(os.path.join(CURSO, 'dados'))):
-    if f.endswith('.js'):
+    if f.endswith('.js') and f != 'apostila.js':
         copiar(os.path.join(CURSO, 'dados', f), os.path.join(OUT, 'dados', f))
-with open(os.path.join(OUT, 'dados', 'apostila.js'), 'a', encoding='utf-8') as fh:
-    fh.write('\n/* Versão pública: sem as imagens das páginas das apostilas. */\nEEAR.apostila.paginas = false;\n')
 
 # provas oficiais (públicas), fontes e ícones
 imgs = []
@@ -86,13 +86,13 @@ for pasta, ext in (('fontes', ('.woff2', '.css', '.txt')), ('icones', ('.png',))
         if f.endswith(ext):
             copiar(os.path.join(WEB, pasta, f), os.path.join(OUT, pasta, f))
 
-# páginas da política de privacidade e dos termos de uso (web/legal/), com a marca
+# política de privacidade e termos de uso (web/legal/): valem para todos os cursos da INPHAX
 PAGINA = """<!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{titulo} · Missão EEAR · INPHAX</title>
+<title>{titulo} · INPHAX</title>
 <meta name="theme-color" content="#0C0C0C">
 <link rel="icon" href="icones/favicon.png" type="image/png">
 <link rel="stylesheet" href="fontes/fontes.css">
@@ -117,7 +117,7 @@ a {{ color: var(--accent); }}
 </style>
 </head>
 <body>
-<header><a class="topo" href="./"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="56" fill="#1A1918"/><g fill="#EFEAE0"><path d="M88 82H168L424 430H344Z"/><path d="M344 82H424L338 200H258Z"/><path d="M190 291H270L168 430H88Z"/></g></svg><span><span class="marca" role="img" aria-label="INPHAX"></span><small>Missão EEAR</small></span></a></header>
+<header><a class="topo" href="./"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="56" fill="#1A1918"/><g fill="#EFEAE0"><path d="M88 82H168L424 430H344Z"/><path d="M344 82H424L338 200H258Z"/><path d="M190 291H270L168 430H88Z"/></g></svg><span><span class="marca" role="img" aria-label="INPHAX"></span><small>Cursos on-line</small></span></a></header>
 <main>
 {conteudo}
 <p class="voltar"><a href="./">← Voltar ao curso</a></p>

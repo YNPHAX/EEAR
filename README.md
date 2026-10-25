@@ -12,27 +12,28 @@ Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em fo
 
 - `web/build.py` monta o site a partir de `curso/`: página completa, manifesto, ícones, fontes locais e service worker para uso offline. O workflow `Site` publica no GitHub Pages a cada push na `main`. Para isso, o Pages tem de estar ligado em Settings › Pages › Source: GitHub Actions.
 - `app/` é o app de Android (Capacitor) com o mesmo conteúdo. O workflow `App Android` compila o APK a cada push. Na `main`, ele publica o APK na página de Releases.
-- A versão pública não leva as imagens das páginas das apostilas, que são material com direitos autorais do curso. Nela, a folha de respostas de cada conjunto indica a página do PDF da apostila.
+- A versão pública (site e app) não leva nada das apostilas, que são material com direitos autorais de outro curso: nem as páginas, nem os gabaritos, nem o índice. A apostila digital existe só na versão pessoal (artifact).
 - O progresso fica salvo em cada aparelho. Para levar de um para outro, use Plano › Dados › Copiar meu progresso e, no outro aparelho, Colar progresso. Com o login ligado, ele fica salvo na conta do aluno.
-- Quem chega ao site pela primeira vez vê a página de entrada do curso. A aba Apostila fica escondida para quem não usa as apostilas, e dá para ligar em Plano › Configuração.
+- Quem chega ao site pela primeira vez vê a página de entrada do curso.
 
 ## Marca, contato e páginas legais
 
 - O curso é o **Missão EEAR, um curso da INPHAX**. O logotipo fica em `curso/marca/`, e os ícones do site e do app saem do X em vetor (`web/icones/gerar_icones.py`).
+- A INPHAX é a plataforma, e cada curso fica dentro dela: uma conta de aluno vale para todos os cursos, e o app (`com.inphax.app`) é um só. O Missão EEAR é o curso `eear` (constante `CURSO` em `curso/app.js`).
 - Contato: suporteinphax@gmail.com.
-- A Política de Privacidade e os Termos de Uso ficam em `web/legal/`. O `web/build.py` publica as duas como `privacidade.html` e `termos.html`, com links no rodapé, na aba Plano e no cartão de login. Pedidos de exclusão de conta chegam pelo e-mail de contato. Para atender, apague o usuário em Authentication e o documento `alunos/{uid}` no Firestore.
+- A Política de Privacidade e os Termos de Uso ficam em `web/legal/` e valem para todos os cursos da INPHAX. O `web/build.py` publica as duas como `privacidade.html` e `termos.html`, com links no rodapé, na aba Plano e no cartão de login. Pedidos de exclusão de conta chegam pelo e-mail de contato. Para atender, apague o usuário em Authentication e, no Firestore, os documentos em `alunos/{uid}/cursos` e depois o documento `alunos/{uid}`.
 
 ## Login dos alunos (Firebase)
 
 O site já tem login com Google ou e-mail e senha, com o progresso de cada aluno salvo na nuvem. Ele só aparece depois de criar o projeto no Firebase, que é gratuito para este uso:
 
-1. Em https://console.firebase.google.com, crie um projeto (pode deixar o Google Analytics desligado).
+1. Em https://console.firebase.google.com, crie um projeto chamado `inphax` (pode deixar o Google Analytics desligado). O mesmo projeto serve para todos os cursos.
 2. Em Authentication › Sign-in method, ative **E-mail/senha** e **Google**.
 3. Em Authentication › Settings › Domínios autorizados, adicione `ynphax.github.io`.
 4. Em Firestore Database, crie o banco em modo de produção (região `southamerica-east1`). Na aba Regras, cole o conteúdo de `web/firestore.rules` e publique.
 5. Em Configurações do projeto › Seus apps, adicione um app da Web (`</>`) e copie o objeto `firebaseConfig`. Salve-o como `web/firebase.json` (em JSON: `{"apiKey": "...", "authDomain": "...", "projectId": "...", "appId": "..."}`). Esses dados não são secretos: o acesso é controlado pelas regras do passo 4.
 
-No próximo push na `main`, o site sai com o login. O progresso de cada aluno fica no documento `alunos/{uid}` do Firestore.
+No próximo push na `main`, o site sai com o login. No Firestore, o documento `alunos/{uid}` guarda o nome e o e-mail do aluno, e o progresso de cada curso fica em `alunos/{uid}/cursos/{curso}` (o Missão EEAR é `eear`).
 
 ## O que tem no curso
 
@@ -49,7 +50,7 @@ No próximo push na `main`, o site sai com o login. O progresso de cada aluno fi
 - **Flashcards com repetição espaçada** (revisão em 1, 3, 7, 14, 30 e 60 dias).
 - **Caderno de erros**: toda questão errada volta para revisão até você acertar.
 
-- **Apostila digital**: as páginas originais das três apostilas do curso (CFS, CFS/BCT e CFS 2), organizadas em 309 conjuntos de exercícios (em sala, para casa, units e tests de Inglês, incluindo provas reais da EEAR). Cada conjunto tem folha de respostas A–D corrigida pelo gabarito impresso do livro (4.668 questões de múltipla escolha), meta de 80%, opção de refazer só as erradas e ligação com os módulos do curso. Os exercícios em sala e as units entram no ciclo 1 do plano, e os para casa e as provas reais entram no ciclo 2.
+- **Apostila digital** (só na versão pessoal): as páginas originais das três apostilas do curso (CFS, CFS/BCT e CFS 2), organizadas em 309 conjuntos de exercícios (em sala, para casa, units e tests de Inglês, incluindo provas reais da EEAR). Cada conjunto tem folha de respostas A–D corrigida pelo gabarito impresso do livro (4.668 questões de múltipla escolha), meta de 80%, opção de refazer só as erradas e ligação com os módulos do curso. Os exercícios em sala e as units entram no ciclo 1 do plano, e os para casa e as provas reais entram no ciclo 2.
 
 São 640 questões inéditas no estilo da EEAR, 498 flashcards e 192 exemplos resolvidos, além das questões da apostila.
 
@@ -65,7 +66,7 @@ curso/
     base.js       matérias, calendário de provas, EEAR.add e EEAR.addProva
     videos.js     termos de busca de videoaulas por módulo
     videoaulas.js vídeos do YouTube de cada aula (título, canal e tipo)
-    apostila.js   conjuntos de exercícios da apostila: gabarito, páginas e módulos
+    apostila.js   conjuntos de exercícios da apostila: gabarito, páginas e módulos (só na versão pessoal)
     provas.js     provas anteriores oficiais (EEAR.addProva)
     por*.js       Língua Portuguesa
     ing*.js       Língua Inglesa

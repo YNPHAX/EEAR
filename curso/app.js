@@ -119,6 +119,8 @@
   };
 
   /* ---------- estado e persistência ---------- */
+  /* Curso desta página dentro da plataforma INPHAX: separa o progresso de cada curso na conta do aluno. */
+  const CURSO = 'eear';
   const LS = 'missao-eear-v1', LS_ABA = 'missao-eear-aba';
   function novoEstado() {
     return {
@@ -235,13 +237,15 @@
     } catch (e) { conta.pronto = true; conta.msg = 'Não foi possível carregar o login agora. Verifique a internet.'; if (V.v === 'plano' || V.v === 'inicio') render(); }
   }
   function ligarNuvem(u) {
-    const fs = conta.api.fs, doc = fs.doc(conta.api.db, 'alunos', u.uid);
+    /* A conta é da INPHAX e vale para todos os cursos: o perfil fica em alunos/{uid} e o progresso deste curso em alunos/{uid}/cursos/{CURSO}. */
+    const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid, 'cursos', CURSO);
+    if (!S.cfg.nome && u.displayName) S.cfg.nome = u.displayName;
+    fs.setDoc(fs.doc(db, 'alunos', u.uid), { nome: S.cfg.nome || u.displayName || '', email: u.email || '', atualizado: fs.serverTimestamp() }, { merge: true }).catch(() => {});
     /* O progresso vai como texto: o Firestore não guarda listas dentro de listas. */
     const ref = {
       get: async () => { const s = await fs.getDoc(doc), x = s.exists() ? s.data() : null; return { exists: !!(x && x.dados), data: () => JSON.parse(x.dados) }; },
-      set: o => fs.setDoc(doc, { dados: JSON.stringify(o), t: o.t || 0, nome: (o.cfg && o.cfg.nome) || u.displayName || '', email: u.email || '', atualizado: fs.serverTimestamp() })
+      set: o => fs.setDoc(doc, { dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() })
     };
-    if (!S.cfg.nome && u.displayName) S.cfg.nome = u.displayName;
     nuvem.fb = true;
     sincronizar(ref);
   }
@@ -355,9 +359,6 @@
   /* A aba Apostila é para quem tem as apostilas do curso: no site ela começa escondida para quem ainda não usou. */
   const apVisivel = () => AP.sets.length > 0 && (S.cfg.apostila != null ? !!S.cfg.apostila : (!window.EEAR_SITE || Object.keys(S.ap).length > 0));
   const PG_TIRA = AP.porTira || 4;
-  /* Na versão pública (site e app) as páginas das apostilas não vão junto: a folha de respostas indica a página do PDF. */
-  const AP_PAG = AP.paginas !== false;
-  const apPdf = part => { const x = AP.partes[part] || {}; return LIVRO[x.livro] ? `${LIVRO[x.livro].nome} · ${MATS[x.m].curto}${x.parte ? ' · parte ' + x.parte : ''}` : ''; };
   const apCarregadas = new Set();
   function pgHtml(part, p) {
     const n = (AP.partes[part] || {}).n || 0;
@@ -910,7 +911,7 @@
         <div class="row"><button class="btn pri" data-a="quizmod" data-id="${m.id}">${r.tent ? 'Refazer o quiz' : 'Começar o quiz'}</button></div></section>`;
     } else if (aba === 'ap') {
       h += `<section class="card"><h2 class="h2">Exercícios da apostila</h2>${aps.length
-        ? `<p style="margin:0">${plural(aps.length, 'conjunto', 'conjuntos')} das suas apostilas sobre este tópico, com ${AP_PAG ? 'as páginas originais' : 'a página do PDF'} e correção pelo gabarito do livro. Meta: 80% em cada um.</p><div class="mods">${aps.map(id => apLinha(APS[id], 'mod')).join('')}</div>`
+        ? `<p style="margin:0">${plural(aps.length, 'conjunto', 'conjuntos')} das suas apostilas sobre este tópico, com as páginas originais e correção pelo gabarito do livro. Meta: 80% em cada um.</p><div class="mods">${aps.map(id => apLinha(APS[id], 'mod')).join('')}</div>`
         : '<p style="margin:0">As apostilas não têm um conjunto de exercícios específico deste tópico. Veja a aba Apostila para folhear o material.</p>'}</section>`;
     } else if (aba === 'prov') {
       h += `<section class="card"><h2 class="h2">Questões de provas anteriores</h2>${ofi.length
@@ -936,8 +937,7 @@
     if (!apVisivel()) return h + '<section class="card"><p style="margin:0">A aba Apostila é para quem estuda pelas apostilas do curso: ela traz a folha de respostas de cada conjunto de exercícios, corrigida pelo gabarito do livro.</p><div class="row"><button class="btn pri" data-a="apligar">Uso as apostilas: mostrar</button></div></section>';
     const l = V.l && LIVRO[V.l] ? V.l : (V.l = AP.livros[0].id);
     const s = V.s && MATS[V.s] ? V.s : (V.s = ORD[0]);
-    h += AP_PAG ? `<p class="small" style="margin:0">As páginas originais das suas apostilas, com folha de respostas corrigida pelo gabarito impresso do livro. A meta é 80% em cada conjunto.</p>`
-      : `<p class="small" style="margin:0">Folhas de respostas das suas apostilas, corrigidas pelo gabarito impresso do livro. Abra o PDF da apostila na página indicada em cada conjunto e marque as respostas aqui. A meta é 80% em cada conjunto.</p>`;
+    h += `<p class="small" style="margin:0">As páginas originais das suas apostilas, com folha de respostas corrigida pelo gabarito impresso do livro. A meta é 80% em cada conjunto.</p>`;
     h += `<div class="seg" role="group" aria-label="Livro">${AP.livros.map(x => `<button data-a="aplivro" data-l="${x.id}" aria-pressed="${x.id === l}">${x.curto}</button>`).join('')}</div>`;
     h += `<div class="seg" role="group" aria-label="Matéria">${ORD.map(x => `<button data-a="apmat" data-s="${x}" aria-pressed="${x === s}">${MATS[x].curto}</button>`).join('')}</div>`;
     const sets = AP.sets.filter(x => x.l === l && x.m === s);
@@ -949,7 +949,7 @@
     h += grupos.length ? grupos.map(g => `<div class="aphead">${g.k.replace(/^(Matemática|Física) · /, '')}</div><div class="mods">${g.sets.map(x => apLinha(x)).join('')}</div>`).join('') : '<p class="empty">Este livro não tem exercícios desta matéria.</p>';
     h += `</section>`;
     const partes = LIVRO[l].partes.filter(p => AP.partes[p] && AP.partes[p].m === s);
-    if (partes.length && AP_PAG) h += `<section class="card"><h2 class="h2">Folhear a apostila</h2><p class="small muted" style="margin:0">Teoria, exercícios comentados e exercícios na ordem do livro.</p><div class="row">${partes.map((p, i) => `<button class="btn" data-a="appags" data-part="${p}" data-p="1">${MATS[s].curto}${partes.length > 1 ? ' · parte ' + (i + 1) : ''} · ${AP.partes[p].n} págs.</button>`).join('')}</div></section>`;
+    if (partes.length) h += `<section class="card"><h2 class="h2">Folhear a apostila</h2><p class="small muted" style="margin:0">Teoria, exercícios comentados e exercícios na ordem do livro.</p><div class="row">${partes.map((p, i) => `<button class="btn" data-a="appags" data-part="${p}" data-p="1">${MATS[s].curto}${partes.length > 1 ? ' · parte ' + (i + 1) : ''} · ${AP.partes[p].n} págs.</button>`).join('')}</div></section>`;
     return h;
   }
   function fq(s, r, si, i, g) {
@@ -977,7 +977,7 @@
     if (s.abertas) h += `<details class="rev"><summary>Respostas das questões abertas</summary><ul class="small">${s.abertas.map(t => `<li>${t}</li>`).join('')}</ul></details>`;
     h += `<div class="row"><button class="btn pri" data-a="apcorr" ${pend ? '' : 'disabled'}>Corrigir${pend ? ' ' + pend : ''}</button>${err ? `<button class="btn" data-a="aperr">Refazer as ${err} erradas</button>` : ''}${marc ? '<button class="btn ghost" data-a="aplimpar">Recomeçar</button>' : ''}</div>`;
     if (pedindo === 'aplimpar') h += '<div class="confirm"><p>Apagar as respostas deste conjunto e começar de novo?</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="aplimparok">Apagar</button></div>';
-    h += `<p class="small muted" style="margin:0">Correção pelo gabarito impresso do livro. Dá para corrigir aos poucos: só as questões marcadas são corrigidas, e as erradas ficam guardadas para refazer.${s.gp ? (AP_PAG ? ` <button class="lnk" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver a página do gabarito</button>` : ` O gabarito impresso está na página ${s.gp[1]} do PDF ${apPdf(s.gp[0])}.`) : ''}</p></section>`;
+    h += `<p class="small muted" style="margin:0">Correção pelo gabarito impresso do livro. Dá para corrigir aos poucos: só as questões marcadas são corrigidas, e as erradas ficam guardadas para refazer.${s.gp ? ` <button class="lnk" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver a página do gabarito</button>` : ''}</p></section>`;
     return h;
   }
   function apItens(s) { return s.itens.filter(x => x.g !== '*'); }
@@ -1010,12 +1010,9 @@
     apAtual(s, r);
     let h = `<button class="btn ghost back" data-a="apvolta">← ${V.de === 'mod' && MOD[V.mod] ? MOD[V.mod].id : ({ hoje: 'Hoje', sim: 'Simulados', treino: 'Treino' })[V.de] || 'Apostila'}</button>`;
     h += `<div class="stack"><div class="eyebrow">${sig(s.m)} ${LIVRO[s.l].nome} · ${s.fr}</div><h1 class="h1">${apTitulo(s)}</h1><div class="row"><span class="chip">${apTipo(s)}</span>${apChip(s.id)}${s.mods.map(id => `<button class="chip lnkchip" data-a="mod" data-id="${id}" title="${MOD[id].t}">${id}</button>`).join('')}</div></div>`;
-    if (s.inc) h += `<div class="banner warn"><p>A página do gabarito deste conjunto está pouco nítida no livro, e B e D podem se confundir. Se uma correção parecer errada, confira o gabarito impresso${s.gp && !AP_PAG ? ` (página ${s.gp[1]} do PDF)` : ''}.</p>${s.gp && AP_PAG ? `<button class="btn sm" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver gabarito impresso</button>` : ''}</div>`;
+    if (s.inc) h += `<div class="banner warn"><p>A página do gabarito deste conjunto está pouco nítida no livro, e B e D podem se confundir. Se uma correção parecer errada, confira o gabarito impresso.</p>${s.gp ? `<button class="btn sm" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver gabarito impresso</button>` : ''}</div>`;
     h += '<div class="apgrid"><div class="appages">';
-    if (s.pg && AP.partes[s.pg[0]] && !AP_PAG) {
-      const part = s.pg[0], a = s.pg[1], b = s.pg[2];
-      h += `<section class="card pdfref"><div class="eyebrow">Abra o PDF</div><h2 class="h2">${apPdf(part)}</h2><p style="margin:0">${a === b ? `Exercícios na página <b class="num">${a}</b>` : `Exercícios nas páginas <b class="num">${a}</b> a <b class="num">${b}</b>`} do PDF.${s.ini ? ` Teoria da aula: página <b class="num">${s.ini[1]}</b>${s.ini[0] !== part ? ' do PDF ' + apPdf(s.ini[0]) : ''}.` : ''}</p>${m0 ? `<p class="small muted" style="margin:0">Teoria resumida no módulo <button class="lnk" data-a="mod" data-id="${m0.id}">${m0.id} · ${m0.t}</button>.</p>` : ''}</section>`;
-    } else if (s.pg && AP.partes[s.pg[0]]) {
+    if (s.pg && AP.partes[s.pg[0]]) {
       const part = s.pg[0], a = s.pg[1], n = AP.partes[part].n, fim = Math.min(n, s.pg[2] + (V.mais || 0));
       h += `<p class="small muted" style="margin:0">Toque numa página para ampliar.${m0 ? ` Teoria resumida no módulo ${m0.id}${s.ini ? ' e a do livro em "Ver a teoria da aula"' : ''}.` : ''}</p><div class="pgs">`;
       for (let p = a; p <= fim; p++) h += pgHtml(part, p);
@@ -1027,7 +1024,7 @@
   }
   function vApPags() {
     const info = AP.partes[V.part];
-    if (!info || !AP_PAG) return vApostila();
+    if (!info) return vApostila();
     const n = info.n, a = Math.max(1, Math.min(n, V.p || 1)), b = Math.min(n, a + 3);
     let h = '<button class="btn ghost back" data-a="apvolta">← Voltar</button>';
     h += `<div class="stack"><div class="eyebrow">${sig(info.m)} ${LIVRO[info.livro].nome}</div><h1 class="h1">${MATS[info.m].curto}${info.parte ? ' · parte ' + info.parte : ''}</h1></div>`;
@@ -1258,7 +1255,7 @@
         <div class="row"><button class="btn" data-a="simini" data-tipo="oficial" ${S.ativo || !okOf ? 'disabled' : ''}>Simulado misto com questões oficiais (96)</button></div>`
       : `<p class="small" style="margin:0">As provas completas das quatro matérias entram aqui, na ordem original e com o gabarito oficial, assim que os PDFs da EEAR forem carregados. Até lá, use os simulados do curso abaixo.</p>`}</section>`;
     const reais = !apVisivel() ? [] : AP.sets.filter(x => x.tipo === 'test' && /prova/i.test(x.t));
-    if (reais.length) h += `<section class="card"><div class="eyebrow">Provas reais da apostila</div><h2 class="h2">Inglês das provas da EEAR</h2><p class="small" style="margin:0">A parte de Inglês de ${plural(reais.length, 'prova real', 'provas reais')} da EEAR, com ${AP_PAG ? 'as páginas do livro' : 'a página do PDF da apostila'} e a folha de respostas corrigida pelo gabarito. Faça cada uma em 1 hora, como no dia.</p><div class="mods">${reais.map(x => apLinha(x)).join('')}</div></section>`;
+    if (reais.length) h += `<section class="card"><div class="eyebrow">Provas reais da apostila</div><h2 class="h2">Inglês das provas da EEAR</h2><p class="small" style="margin:0">A parte de Inglês de ${plural(reais.length, 'prova real', 'provas reais')} da EEAR, com as páginas do livro e a folha de respostas corrigida pelo gabarito. Faça cada uma em 1 hora, como no dia.</p><div class="mods">${reais.map(x => apLinha(x)).join('')}</div></section>`;
     h += `<section class="card"><div class="eyebrow">Treino focado</div><h2 class="h2">Simulado por matéria</h2><p class="small" style="margin:0">24 questões em 1 hora.</p><div class="row">${ORD.map(s => `<button class="btn" data-a="simini" data-tipo="materia" data-s="${s}" ${S.ativo ? 'disabled' : ''}>${MATS[s].curto}</button>`).join('')}</div></section>`;
     const hist = S.sims.slice().reverse();
     h += `<section class="card"><div class="row between"><h2 class="h2">Histórico</h2>${S.ult ? '<button class="btn sm" data-a="go" data-v="res">Correção do último</button>' : ''}</div>${grafico()}`;
