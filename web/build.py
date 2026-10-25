@@ -3,8 +3,8 @@ Uso: python3 web/build.py [pasta_de_saida] [--app]
   sem --app: site para o GitHub Pages (padrão: _site/)
   com --app: a mesma coisa para o app de Android (Capacitor), sem o service worker
 
-A versão pública não leva as páginas das apostilas (material com direitos autorais do curso):
-a folha de respostas de cada conjunto indica a página do PDF da apostila."""
+A versão pública não leva nada das apostilas (material com direitos autorais de outro curso):
+nem as páginas, nem os gabaritos, nem o índice. Elas ficam só na versão pessoal (artifact)."""
 import hashlib, json, os, re, shutil, sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,6 +58,8 @@ registro = '' if APP else '''
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 </script>
 '''
+corpo = corpo.replace('<script src="dados/apostila.js"></script>\n', '')
+assert 'apostila.js' not in corpo
 pos = corpo.index('<script src=')
 corpo = corpo[:pos] + antes + corpo[pos:]
 html = f'<!doctype html>\n<html lang="pt-BR">\n<head>\n{meta}{cab}\n</head>\n<body>\n{corpo.strip()}\n{registro}</body>\n</html>\n'
@@ -66,10 +68,8 @@ open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(html)
 # scripts e dados
 copiar(os.path.join(CURSO, 'app.js'), os.path.join(OUT, 'app.js'))
 for f in sorted(os.listdir(os.path.join(CURSO, 'dados'))):
-    if f.endswith('.js'):
+    if f.endswith('.js') and f != 'apostila.js':
         copiar(os.path.join(CURSO, 'dados', f), os.path.join(OUT, 'dados', f))
-with open(os.path.join(OUT, 'dados', 'apostila.js'), 'a', encoding='utf-8') as fh:
-    fh.write('\n/* Versão pública: sem as imagens das páginas das apostilas. */\nEEAR.apostila.paginas = false;\n')
 
 # provas oficiais (públicas), fontes e ícones
 imgs = []
