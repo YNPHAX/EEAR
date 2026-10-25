@@ -12,7 +12,7 @@ Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em fo
 - **Meta de aprovação até 2027**: a prova alvo pode ser o CFS 2/2027 (22/11/2026), o CFS 1/2028 (estimado para 30/05/2027) ou o CFS 2/2028 (estimado para 21/11/2027). As provas anteriores à prova alvo entram no plano como dia de prova real.
 - **Cronograma automático em ciclos**: ciclo 1 com a teoria completa, ciclo 2 de revisão ativa de todos os módulos, ciclo 3 com o que mais cai, simulados semanais e reta final de revisão. Ele se ajusta às horas por dia, aos dias da semana e ao resultado do diagnóstico.
 - **Videoaulas**: cada módulo tem links de busca no YouTube para a aula do tópico e para questões da EEAR resolvidas, além de canais sugeridos por matéria.
-- **Provas anteriores oficiais**: provas completas na ordem original, com o gabarito oficial, as questões anuladas valendo para todos e cronômetro de 4 horas. Cada questão é o recorte fiel da prova original (com sublinhados, fórmulas e figuras), e cada uma está ligada ao módulo do curso, na aba Provas. Já entrou a do **CFS 2/2025** (código 05). As próximas entram com `EEAR.addProva` em `dados/provas.js`.
+- **Provas anteriores oficiais**: provas completas na ordem original, com o gabarito oficial, as questões anuladas valendo para todos e cronômetro de 4 horas. Cada questão é o recorte fiel da prova original (com sublinhados, fórmulas e figuras), e cada uma está ligada ao módulo do curso, na aba Provas. Já entraram a do **CFS 1/2025** (código 62) e a do **CFS 2/2025** (código 05). As próximas entram com `EEAR.addProva` em `dados/provas.js`.
 - **Diagnóstico** (40 questões) para descobrir as matérias mais fracas.
 - **Simulado completo** (96 questões, 24 por matéria, com cronômetro) e simulado por matéria (24 questões em 1 h).
 - **Flashcards com repetição espaçada** (revisão em 1, 3, 7, 14, 30 e 60 dias).
@@ -35,11 +35,11 @@ curso/
     videos.js     termos de busca de videoaulas por módulo
     apostila.js   conjuntos de exercícios da apostila: gabarito, páginas e módulos
     provas.js     provas anteriores oficiais (EEAR.addProva)
-  provas/         recortes das questões de cada prova oficial
     por*.js       Língua Portuguesa
     ing*.js       Língua Inglesa
     mat*.js       Matemática
     fis*.js       Física
+  provas/         recortes das questões de cada prova oficial
 ```
 
 Cada módulo é um `EEAR.add({...})` com `id`, `t` (título), `peso` (incidência estimada de 1 a 3), `h` (horas ideais), `teoria` (HTML), `ex` (exemplos), `q` (questões `[enunciado, [A, B, C, D], índice da correta, comentário]`) e `fc` (flashcards `[frente, verso]`). Para acrescentar questões, basta incluir itens no array `q` do módulo.
