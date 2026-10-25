@@ -1,0 +1,62 @@
+# Gera o app de Android (APK) com o Capacitor a partir do mesmo site.
+# Na main, o APK vai para a página de downloads (Releases) do repositório.
+name: App Android
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Conteúdo do app
+        run: python3 web/build.py app/www --app
+      - name: Projeto Android
+        working-directory: app
+        run: |
+          npm ci
+          npx cap add android
+          npx capacitor-assets generate --android
+          npx cap sync android
+      - name: Versão do app
+        working-directory: app/android/app
+        run: |
+          sed -i "s/versionCode 1$/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"1.0.${{ github.run_number }}\"/" build.gradle
+          grep -n "versionCode\|versionName" build.gradle
+      - name: Compilar o APK
+        working-directory: app/android
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Separar o APK
+        run: cp app/android/app/build/outputs/apk/debug/app-debug.apk missao-eear.apk && ls -la missao-eear.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: missao-eear-apk
+          path: missao-eear.apk
+      - name: Publicar na página de downloads
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="android-1.0.${{ github.run_number }}"
+          gh release create "$TAG" missao-eear.apk --target "${{ github.sha }}" --latest \
+            --title "App Android 1.0.${{ github.run_number }}" \
+            --notes "Baixe o arquivo missao-eear.apk no celular Android e abra-o para instalar (o Android pede para permitir a instalação deste app). O progresso fica salvo no aparelho."

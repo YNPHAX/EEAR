@@ -250,6 +250,9 @@
   const apHoras = s => Math.max(0.25, Math.round(s.nmc * MIN_Q / 60 * 4) / 4);
   const nErrosAp = () => AP.sets.reduce((a, s) => { const r = S.ap[s.id]; return a + (r && r.ok ? Object.keys(r.ok).filter(k => r.ok[k] === 0).length : 0); }, 0);
   const PG_TIRA = AP.porTira || 4;
+  /* Na versão pública (site e app) as páginas das apostilas não vão junto: a folha de respostas indica a página do PDF. */
+  const AP_PAG = AP.paginas !== false;
+  const apPdf = part => { const x = AP.partes[part] || {}; return LIVRO[x.livro] ? `${LIVRO[x.livro].nome} · ${MATS[x.m].curto}${x.parte ? ' · parte ' + x.parte : ''}` : ''; };
   const apCarregadas = new Set();
   function pgHtml(part, p) {
     const n = (AP.partes[part] || {}).n || 0;
@@ -571,8 +574,30 @@
     }
     h += `<section class="card"><h2 class="h2">Dados</h2><p class="small muted" style="margin:0">Zerar apaga notas, flashcards, simulados e o caderno de erros. A configuração do plano é mantida.</p>
       ${pedindo === 'zerar' ? `<div class="confirm"><p>Apagar todo o progresso? Isso não pode ser desfeito.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="zerarok">Apagar</button></div>` : `<div class="row"><button class="btn" data-a="zerar">Zerar progresso</button></div>`}
+      <div class="aphead">Levar o progresso para outro aparelho</div>
+      <p class="small muted" style="margin:0">Copie o código do progresso aqui e cole no outro aparelho, em Plano › Dados › Colar progresso. Vale entre o site, o app e o link do curso.</p>
+      <div class="row"><button class="btn" data-a="expcopiar">Copiar meu progresso</button><button class="btn" data-a="impabrir">Colar progresso</button></div>
+      ${pedindo === 'exp' ? `<div class="field"><label for="exp-txt">Selecione e copie o código</label><textarea id="exp-txt" class="codigo" readonly rows="4">${esc(JSON.stringify(S))}</textarea></div>` : ''}
+      ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>Isso substitui o progresso deste aparelho.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
+      ${msgDados ? `<p class="small" role="status" style="margin:0">${msgDados}</p>` : ''}
       <div class="sync" id="sync"></div></section>`;
+    h += cartaoInstalar();
     return h;
+  }
+  /* Instalação como app: só no site (no app de Android e no link do curso ela não se aplica). */
+  let instalar = null, msgDados = '';
+  window.addEventListener('beforeinstallprompt', ev => { ev.preventDefault(); instalar = ev; if (V.v === 'plano') render(); });
+  function cartaoInstalar() {
+    if (window.EEAR_SITE !== 'site') return '';
+    const sozinho = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone;
+    const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    let h = '<section class="card"><h2 class="h2">Instalar no celular</h2>';
+    if (sozinho) h += '<p style="margin:0">O app está instalado neste aparelho e funciona sem internet.</p>';
+    else if (instalar) h += '<p style="margin:0">Instale o curso como app: ele ganha ícone na tela inicial e funciona sem internet.</p><div class="row"><button class="btn pri" data-a="instalar">Instalar o app</button></div>';
+    else if (ios) h += '<p style="margin:0">No iPhone ou iPad, abra este site no Safari, toque em Compartilhar e depois em <b>Adicionar à Tela de Início</b>. O curso ganha ícone e funciona sem internet.</p>';
+    else h += '<p style="margin:0">No Android, abra o menu do Chrome (⋮) e toque em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>. O curso ganha ícone e funciona sem internet.</p>';
+    if (!sozinho && !ios && window.EEAR_APK) h += `<p class="small muted" style="margin:0">Prefere o app de Android? <a href="${window.EEAR_APK}">Baixar o APK</a> e abrir o arquivo no celular.</p>`;
+    return h + '</section>';
   }
 
   function vMaterias() {
@@ -616,7 +641,7 @@
         <div class="row"><button class="btn pri" data-a="quizmod" data-id="${m.id}">${r.tent ? 'Refazer o quiz' : 'Começar o quiz'}</button></div></section>`;
     } else if (aba === 'ap') {
       h += `<section class="card"><h2 class="h2">Exercícios da apostila</h2>${aps.length
-        ? `<p style="margin:0">${plural(aps.length, 'conjunto', 'conjuntos')} das suas apostilas sobre este tópico, com as páginas originais e correção pelo gabarito do livro. Meta: 80% em cada um.</p><div class="mods">${aps.map(id => apLinha(APS[id], 'mod')).join('')}</div>`
+        ? `<p style="margin:0">${plural(aps.length, 'conjunto', 'conjuntos')} das suas apostilas sobre este tópico, com ${AP_PAG ? 'as páginas originais' : 'a página do PDF'} e correção pelo gabarito do livro. Meta: 80% em cada um.</p><div class="mods">${aps.map(id => apLinha(APS[id], 'mod')).join('')}</div>`
         : '<p style="margin:0">As apostilas não têm um conjunto de exercícios específico deste tópico. Veja a aba Apostila para folhear o material.</p>'}</section>`;
     } else if (aba === 'prov') {
       h += `<section class="card"><h2 class="h2">Questões de provas anteriores</h2>${ofi.length
@@ -641,7 +666,8 @@
     if (!AP.sets.length) return h + '<p class="empty">A apostila ainda não foi carregada.</p>';
     const l = V.l && LIVRO[V.l] ? V.l : (V.l = AP.livros[0].id);
     const s = V.s && MATS[V.s] ? V.s : (V.s = ORD[0]);
-    h += `<p class="small" style="margin:0">As páginas originais das suas apostilas, com folha de respostas corrigida pelo gabarito impresso do livro. A meta é 80% em cada conjunto.</p>`;
+    h += AP_PAG ? `<p class="small" style="margin:0">As páginas originais das suas apostilas, com folha de respostas corrigida pelo gabarito impresso do livro. A meta é 80% em cada conjunto.</p>`
+      : `<p class="small" style="margin:0">Folhas de respostas das suas apostilas, corrigidas pelo gabarito impresso do livro. Abra o PDF da apostila na página indicada em cada conjunto e marque as respostas aqui. A meta é 80% em cada conjunto.</p>`;
     h += `<div class="seg" role="group" aria-label="Livro">${AP.livros.map(x => `<button data-a="aplivro" data-l="${x.id}" aria-pressed="${x.id === l}">${x.curto}</button>`).join('')}</div>`;
     h += `<div class="seg" role="group" aria-label="Matéria">${ORD.map(x => `<button data-a="apmat" data-s="${x}" aria-pressed="${x === s}">${MATS[x].curto}</button>`).join('')}</div>`;
     const sets = AP.sets.filter(x => x.l === l && x.m === s);
@@ -653,7 +679,7 @@
     h += grupos.length ? grupos.map(g => `<div class="aphead">${g.k.replace(/^(Matemática|Física) · /, '')}</div><div class="mods">${g.sets.map(x => apLinha(x)).join('')}</div>`).join('') : '<p class="empty">Este livro não tem exercícios desta matéria.</p>';
     h += `</section>`;
     const partes = LIVRO[l].partes.filter(p => AP.partes[p] && AP.partes[p].m === s);
-    if (partes.length) h += `<section class="card"><h2 class="h2">Folhear a apostila</h2><p class="small muted" style="margin:0">Teoria, exercícios comentados e exercícios na ordem do livro.</p><div class="row">${partes.map((p, i) => `<button class="btn" data-a="appags" data-part="${p}" data-p="1">${MATS[s].curto}${partes.length > 1 ? ' · parte ' + (i + 1) : ''} · ${AP.partes[p].n} págs.</button>`).join('')}</div></section>`;
+    if (partes.length && AP_PAG) h += `<section class="card"><h2 class="h2">Folhear a apostila</h2><p class="small muted" style="margin:0">Teoria, exercícios comentados e exercícios na ordem do livro.</p><div class="row">${partes.map((p, i) => `<button class="btn" data-a="appags" data-part="${p}" data-p="1">${MATS[s].curto}${partes.length > 1 ? ' · parte ' + (i + 1) : ''} · ${AP.partes[p].n} págs.</button>`).join('')}</div></section>`;
     return h;
   }
   function fq(s, r, si, i, g) {
@@ -681,7 +707,7 @@
     if (s.abertas) h += `<details class="rev"><summary>Respostas das questões abertas</summary><ul class="small">${s.abertas.map(t => `<li>${t}</li>`).join('')}</ul></details>`;
     h += `<div class="row"><button class="btn pri" data-a="apcorr" ${pend ? '' : 'disabled'}>Corrigir${pend ? ' ' + pend : ''}</button>${err ? `<button class="btn" data-a="aperr">Refazer as ${err} erradas</button>` : ''}${marc ? '<button class="btn ghost" data-a="aplimpar">Recomeçar</button>' : ''}</div>`;
     if (pedindo === 'aplimpar') h += '<div class="confirm"><p>Apagar as respostas deste conjunto e começar de novo?</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="aplimparok">Apagar</button></div>';
-    h += `<p class="small muted" style="margin:0">Correção pelo gabarito impresso do livro. Dá para corrigir aos poucos: só as questões marcadas são corrigidas, e as erradas ficam guardadas para refazer.${s.gp ? ` <button class="lnk" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver a página do gabarito</button>` : ''}</p></section>`;
+    h += `<p class="small muted" style="margin:0">Correção pelo gabarito impresso do livro. Dá para corrigir aos poucos: só as questões marcadas são corrigidas, e as erradas ficam guardadas para refazer.${s.gp ? (AP_PAG ? ` <button class="lnk" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver a página do gabarito</button>` : ` O gabarito impresso está na página ${s.gp[1]} do PDF ${apPdf(s.gp[0])}.`) : ''}</p></section>`;
     return h;
   }
   function apItens(s) { return s.itens.filter(x => x.g !== '*'); }
@@ -714,9 +740,12 @@
     apAtual(s, r);
     let h = `<button class="btn ghost back" data-a="apvolta">← ${V.de === 'mod' && MOD[V.mod] ? MOD[V.mod].id : ({ hoje: 'Hoje', sim: 'Simulados', treino: 'Treino' })[V.de] || 'Apostila'}</button>`;
     h += `<div class="stack"><div class="eyebrow">${sig(s.m)} ${LIVRO[s.l].nome} · ${s.fr}</div><h1 class="h1">${apTitulo(s)}</h1><div class="row"><span class="chip">${apTipo(s)}</span>${apChip(s.id)}${s.mods.map(id => `<button class="chip lnkchip" data-a="mod" data-id="${id}" title="${MOD[id].t}">${id}</button>`).join('')}</div></div>`;
-    if (s.inc) h += `<div class="banner warn"><p>A página do gabarito deste conjunto está pouco nítida no livro, e B e D podem se confundir. Se uma correção parecer errada, confira o gabarito impresso.</p>${s.gp ? `<button class="btn sm" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver gabarito impresso</button>` : ''}</div>`;
+    if (s.inc) h += `<div class="banner warn"><p>A página do gabarito deste conjunto está pouco nítida no livro, e B e D podem se confundir. Se uma correção parecer errada, confira o gabarito impresso${s.gp && !AP_PAG ? ` (página ${s.gp[1]} do PDF)` : ''}.</p>${s.gp && AP_PAG ? `<button class="btn sm" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver gabarito impresso</button>` : ''}</div>`;
     h += '<div class="apgrid"><div class="appages">';
-    if (s.pg && AP.partes[s.pg[0]]) {
+    if (s.pg && AP.partes[s.pg[0]] && !AP_PAG) {
+      const part = s.pg[0], a = s.pg[1], b = s.pg[2];
+      h += `<section class="card pdfref"><div class="eyebrow">Abra o PDF</div><h2 class="h2">${apPdf(part)}</h2><p style="margin:0">${a === b ? `Exercícios na página <b class="num">${a}</b>` : `Exercícios nas páginas <b class="num">${a}</b> a <b class="num">${b}</b>`} do PDF.${s.ini ? ` Teoria da aula: página <b class="num">${s.ini[1]}</b>${s.ini[0] !== part ? ' do PDF ' + apPdf(s.ini[0]) : ''}.` : ''}</p>${m0 ? `<p class="small muted" style="margin:0">Teoria resumida no módulo <button class="lnk" data-a="mod" data-id="${m0.id}">${m0.id} · ${m0.t}</button>.</p>` : ''}</section>`;
+    } else if (s.pg && AP.partes[s.pg[0]]) {
       const part = s.pg[0], a = s.pg[1], n = AP.partes[part].n, fim = Math.min(n, s.pg[2] + (V.mais || 0));
       h += `<p class="small muted" style="margin:0">Toque numa página para ampliar.${m0 ? ` Teoria resumida no módulo ${m0.id}${s.ini ? ' e a do livro em "Ver a teoria da aula"' : ''}.` : ''}</p><div class="pgs">`;
       for (let p = a; p <= fim; p++) h += pgHtml(part, p);
@@ -728,7 +757,7 @@
   }
   function vApPags() {
     const info = AP.partes[V.part];
-    if (!info) return vApostila();
+    if (!info || !AP_PAG) return vApostila();
     const n = info.n, a = Math.max(1, Math.min(n, V.p || 1)), b = Math.min(n, a + 3);
     let h = '<button class="btn ghost back" data-a="apvolta">← Voltar</button>';
     h += `<div class="stack"><div class="eyebrow">${sig(info.m)} ${LIVRO[info.livro].nome}</div><h1 class="h1">${MATS[info.m].curto}${info.parte ? ' · parte ' + info.parte : ''}</h1></div>`;
@@ -959,7 +988,7 @@
         <div class="row"><button class="btn" data-a="simini" data-tipo="oficial" ${S.ativo || !okOf ? 'disabled' : ''}>Simulado misto com questões oficiais (96)</button></div>`
       : `<p class="small" style="margin:0">As provas completas das quatro matérias entram aqui, na ordem original e com o gabarito oficial, assim que os PDFs da EEAR forem carregados. Até lá, use os simulados do curso abaixo.</p>`}</section>`;
     const reais = AP.sets.filter(x => x.tipo === 'test' && /prova/i.test(x.t));
-    if (reais.length) h += `<section class="card"><div class="eyebrow">Provas reais da apostila</div><h2 class="h2">Inglês das provas da EEAR</h2><p class="small" style="margin:0">A parte de Inglês de ${plural(reais.length, 'prova real', 'provas reais')} da EEAR, com as páginas do livro e a folha de respostas corrigida pelo gabarito. Faça cada uma em 1 hora, como no dia.</p><div class="mods">${reais.map(x => apLinha(x)).join('')}</div></section>`;
+    if (reais.length) h += `<section class="card"><div class="eyebrow">Provas reais da apostila</div><h2 class="h2">Inglês das provas da EEAR</h2><p class="small" style="margin:0">A parte de Inglês de ${plural(reais.length, 'prova real', 'provas reais')} da EEAR, com ${AP_PAG ? 'as páginas do livro' : 'a página do PDF da apostila'} e a folha de respostas corrigida pelo gabarito. Faça cada uma em 1 hora, como no dia.</p><div class="mods">${reais.map(x => apLinha(x)).join('')}</div></section>`;
     h += `<section class="card"><div class="eyebrow">Treino focado</div><h2 class="h2">Simulado por matéria</h2><p class="small" style="margin:0">24 questões em 1 hora.</p><div class="row">${ORD.map(s => `<button class="btn" data-a="simini" data-tipo="materia" data-s="${s}" ${S.ativo ? 'disabled' : ''}>${MATS[s].curto}</button>`).join('')}</div></section>`;
     const hist = S.sims.slice().reverse();
     h += `<section class="card"><div class="row between"><h2 class="h2">Histórico</h2>${S.ult ? '<button class="btn sm" data-a="go" data-v="res">Correção do último</button>' : ''}</div>${grafico()}`;
@@ -1139,6 +1168,23 @@
       case 'qzoom': el.classList.toggle('zoom'); break;
       case 'pgzoom': { const b = el.closest('.pgbox'); if (b) b.classList.toggle('zoom'); break; }
       case 'zerar': pedindo = 'zerar'; render(); break;
+      case 'expcopiar': {
+        const txt = JSON.stringify(S);
+        const ok = () => { msgDados = 'Código copiado. Cole no outro aparelho em Plano › Dados › Colar progresso.'; pedindo = null; render(); };
+        const falha = () => { msgDados = ''; pedindo = 'exp'; render(); const t = document.getElementById('exp-txt'); if (t) { t.focus(); t.select(); } };
+        try { navigator.clipboard.writeText(txt).then(ok, falha); } catch (e) { falha(); }
+        break;
+      }
+      case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
+      case 'impok': {
+        const t = document.getElementById('imp-txt');
+        let o = null;
+        try { o = JSON.parse((t && t.value || '').trim()); } catch (e) { o = null; }
+        if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); break; }
+        S = mesclar(o); pedindo = null; msgDados = 'Progresso carregado.'; salvar(); render();
+        break;
+      }
+      case 'instalar': if (instalar) { const p = instalar; instalar = null; p.prompt(); p.userChoice.then(() => render(), () => render()); } break;
       case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; pedindo = null; salvar(); go('hoje'); break; }
       default: break;
     }
