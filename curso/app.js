@@ -256,6 +256,7 @@
       ${window.EEAR_SITE === 'site' ? '<div class="row"><button class="btn pri" data-a="fbgoogle">Entrar com Google</button></div>' : ''}
       <form class="form" onsubmit="return false"><div class="field"><label for="fb-email">E-mail</label><input type="email" id="fb-email" autocomplete="email" value="${esc(conta.email)}"></div><div class="field"><label for="fb-senha">Senha</label><input type="password" id="fb-senha" autocomplete="current-password"></div></form>
       <div class="row"><button class="btn" data-a="fbentrar">Entrar</button><button class="btn" data-a="fbcriar">Criar conta</button><button class="btn ghost" data-a="fbsenha">Esqueci a senha</button></div>
+      <p class="small muted" style="margin:0">Ao criar uma conta, você concorda com os <a href="termos.html" target="_blank" rel="noopener">Termos de uso</a> e a <a href="privacidade.html" target="_blank" rel="noopener">Política de privacidade</a>.</p>
       ${conta.msg ? `<p class="small" role="status" style="margin:0">${esc(conta.msg)}</p>` : ''}</section>`;
   }
   async function acaoConta(a) {
@@ -641,7 +642,7 @@
       <div class="card"><div class="eyebrow">Certificado</div><p style="margin:0">Ao concluir todas as aulas de uma matéria, você recebe o certificado de conclusão dela.</p></div>
     </section>`;
     h += cartaoConta();
-    h += `<p class="small muted" style="margin:0">Missão EEAR é um curso da INPHAX. Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira. As videoaulas são vídeos gratuitos do YouTube, com o crédito de cada canal.</p>`;
+    h += `<p class="small muted" style="margin:0">Missão EEAR é um curso da INPHAX. Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira. As videoaulas são vídeos gratuitos do YouTube, com o crédito de cada canal.<br>Contato: ${linkContato} · ${linksLegais}</p>`;
     return h;
   }
   /* Continuar de onde parei: a última aula aberta, ou a próxima do plano de hoje, ou a primeira ainda não concluída. */
@@ -729,6 +730,7 @@
       ${msgDados ? `<p class="small" role="status" style="margin:0">${msgDados}</p>` : ''}
       <div class="sync" id="sync"></div></section>`;
     h += cartaoInstalar();
+    h += cartaoSobre();
     return h;
   }
   /* Instalação como app: só no site (no app de Android e no link do curso ela não se aplica). */
@@ -785,6 +787,13 @@
   /* X da INPHAX, em vetor */
   const MARCA_X = '<svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="40" fill="#0C0C0C"/><g fill="#EFEAE0"><path d="M88 82H168L424 430H344Z"/><path d="M344 82H424L338 200H258Z"/><path d="M190 291H270L168 430H88Z"/></g></svg>';
   const MARCA = '<span class="marca" role="img" aria-label="INPHAX"></span>';
+  /* contato e páginas legais (privacidade.html e termos.html saem de web/legal/) */
+  const CONTATO = 'suporteinphax@gmail.com';
+  const linkContato = `<a href="mailto:${CONTATO}">${CONTATO}</a>`;
+  const linksLegais = '<a href="privacidade.html" target="_blank" rel="noopener">Política de privacidade</a> · <a href="termos.html" target="_blank" rel="noopener">Termos de uso</a>';
+  function cartaoSobre() {
+    return `<section class="card"><h2 class="h2">Sobre e contato</h2><p style="margin:0">Missão EEAR é um curso da INPHAX. Dúvidas, erros em alguma questão ou sugestões: ${linkContato}.</p><p class="small muted" style="margin:0">${linksLegais}. Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira.</p></section>`;
+  }
   function vCert() {
     const s = V.s, geral = s === 'geral', ms = geral ? MODS : (MATS[s] ? aulasDe(s) : []);
     let h = `<button class="btn ghost back no-print" ${geral ? 'data-a="tab" data-v="hoje"' : `data-a="mat" data-s="${s}"`}>← Voltar</button>`;

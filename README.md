@@ -16,6 +16,12 @@ Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em fo
 - O progresso fica salvo em cada aparelho. Para levar de um para outro, use Plano › Dados › Copiar meu progresso e, no outro aparelho, Colar progresso. Com o login ligado, ele fica salvo na conta do aluno.
 - Quem chega ao site pela primeira vez vê a página de entrada do curso. A aba Apostila fica escondida para quem não usa as apostilas, e dá para ligar em Plano › Configuração.
 
+## Marca, contato e páginas legais
+
+- O curso é o **Missão EEAR, um curso da INPHAX**. O logotipo fica em `curso/marca/`, e os ícones do site e do app saem do X em vetor (`web/icones/gerar_icones.py`).
+- Contato: suporteinphax@gmail.com.
+- A Política de Privacidade e os Termos de Uso ficam em `web/legal/`. O `web/build.py` publica as duas como `privacidade.html` e `termos.html`, com links no rodapé, na aba Plano e no cartão de login. Pedidos de exclusão de conta chegam pelo e-mail de contato. Para atender, apague o usuário em Authentication e o documento `alunos/{uid}` no Firestore.
+
 ## Login dos alunos (Firebase)
 
 O site já tem login com Google ou e-mail e senha, com o progresso de cada aluno salvo na nuvem. Ele só aparece depois de criar o projeto no Firebase, que é gratuito para este uso:
@@ -71,6 +77,7 @@ web/
   sw.js           service worker (uso offline)
   conferir_videos.py  confere no YouTube as videoaulas
   firestore.rules regras do banco do login
+  legal/          política de privacidade e termos de uso
   fontes/, icones/
 app/              app de Android (Capacitor)
 ```
