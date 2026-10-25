@@ -63,5 +63,6 @@ Object.assign(EEAR.videos, {
   FIS14: 'óptica geométrica espelhos lentes refração',
   FIS15: 'eletrostática lei de Coulomb campo elétrico',
   FIS16: 'eletrodinâmica resistores lei de Ohm circuitos',
-  FIS17: 'magnetismo eletromagnetismo indução'
+  FIS17: 'magnetismo eletromagnetismo indução',
+  FIS18: 'física moderna efeito fotoelétrico modelos atômicos radioatividade'
 });

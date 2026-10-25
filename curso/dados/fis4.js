@@ -237,3 +237,79 @@ EEAR.add({
     ['Transformador', 'U₁/U₂ = N₁/N₂; só com corrente alternada.']
   ]
 });
+
+EEAR.add({
+  id: 'FIS18', m: 'fis', n: 18, t: 'Física moderna: fóton, efeito fotoelétrico, modelos atômicos e radioatividade', peso: 2, h: 3,
+  teoria: `
+<h3>A luz é onda e partícula</h3>
+<ul>
+<li><b>Como onda</b>, a luz explica a difração, a interferência e a polarização.</li>
+<li><b>Como partícula</b> (o <b>fóton</b>), explica o efeito fotoelétrico. É a <b>dualidade onda-partícula</b>.</li>
+<li>A energia de cada fóton depende só da frequência: quanto maior a frequência (menor o comprimento de onda), maior a energia.</li>
+</ul>
+<div class="f">E = h·f = h·c/λ<br>h ≈ 6,6 × 10⁻³⁴ J·s ≈ 4,1 × 10⁻¹⁵ eV·s   ·   1 eV = 1,6 × 10⁻¹⁹ J</div>
+<p>Espectro eletromagnético, da menor para a maior energia: ondas de rádio, micro-ondas, infravermelho, luz visível (do vermelho ao violeta), ultravioleta, raios X e raios gama. Todas são ondas eletromagnéticas e andam a c = 3 × 10⁸ m/s no vácuo.</p>
+<h3>Efeito fotoelétrico (Einstein, 1905)</h3>
+<p>Luz incidindo num metal pode arrancar elétrons. Cada fóton entrega toda a sua energia a um único elétron.</p>
+<div class="f">Ec,máx = h·f − W     (W = função trabalho do metal)<br>Frequência de corte: f₀ = W/h</div>
+<ul>
+<li>Se f &lt; f₀, <b>nenhum</b> elétron sai, por mais intensa que seja a luz.</li>
+<li>Aumentar a <b>intensidade</b> aumenta o <b>número</b> de elétrons (a corrente), não a energia de cada um.</li>
+<li>Aumentar a <b>frequência</b> aumenta a energia cinética máxima dos elétrons.</li>
+<li>No gráfico Ec,máx × f, a reta corta o eixo f em f₀ e tem inclinação igual a h.</li>
+</ul>
+<h3>Modelos atômicos</h3>
+<ul>
+<li><b>Dalton</b>: esfera maciça e indivisível ("bola de bilhar").</li>
+<li><b>Thomson</b>: esfera positiva com elétrons espalhados ("pudim de passas"). Veio da descoberta do elétron nos raios catódicos (ampola de Crookes).</li>
+<li><b>Rutherford</b>: partículas α lançadas numa folha fina de ouro. A maioria atravessou sem desvio, porque o átomo é quase todo vazio. Poucas desviaram ou voltaram, porque há um <b>núcleo</b> pequeno, denso e positivo. Os elétrons giram em volta (modelo planetário).</li>
+<li><b>Bohr</b>: o elétron só ocupa órbitas permitidas (níveis de energia quantizados) e não emite energia enquanto está numa delas. Ao saltar para um nível mais interno, <b>emite</b> um fóton; para subir a um nível mais externo, <b>absorve</b>. Isso explica o espectro de linhas do hidrogênio.</li>
+</ul>
+<div class="f">Salto de nível: E_fóton = E_inicial − E_final = h·f</div>
+<h3>Radioatividade</h3>
+<ul>
+<li><b>Alfa (α)</b>: núcleo de hélio ⁴₂He, carga +2. Pouco penetrante: uma folha de papel detém.</li>
+<li><b>Beta (β⁻)</b>: elétron ⁰₋₁β que sai do núcleo quando um nêutron vira próton. Penetração média.</li>
+<li><b>Gama (γ)</b>: onda eletromagnética de altíssima energia, sem carga e sem massa. Muito penetrante.</li>
+</ul>
+<div class="f">Emissão α: A diminui 4 e Z diminui 2<br>Emissão β⁻: A não muda e Z aumenta 1<br>Emissão γ: A e Z não mudam<br>Meia-vida: m = m₀/2ⁿ, com n = t/T½</div>
+<h3>Fissão e fusão nuclear</h3>
+<ul>
+<li><b>Fissão</b>: um núcleo pesado (como o urânio-235), atingido por um nêutron, se divide em dois núcleos médios, libera 2 ou 3 nêutrons e muita energia. Os nêutrons podem gerar uma <b>reação em cadeia</b>, usada em usinas nucleares e na bomba atômica.</li>
+<li><b>Fusão</b>: núcleos leves (como os de hidrogênio) se unem num núcleo mais pesado. É a fonte de energia do Sol e das estrelas.</li>
+<li>Em toda reação nuclear, a soma dos números de massa (A) e a soma dos números atômicos (Z) se conservam. A energia liberada vem da massa que "some": E = m·c².</li>
+</ul>
+<p class="dica">Já caiu na EEAR: gráfico do efeito fotoelétrico, dualidade onda-partícula, raios X comparados ao infravermelho, modelos de Thomson, Rutherford e Bohr, fissão do urânio-235 e decaimento do césio-137. Cai de 1 a 3 questões por prova.</p>`,
+  ex: [
+    ['Qual a energia de um fóton de luz com frequência de 5 × 10¹⁴ Hz? (h = 6,6 × 10⁻³⁴ J·s)', '<p>E = h·f = 6,6×10⁻³⁴ · 5×10¹⁴ = <b>3,3 × 10⁻¹⁹ J</b>, cerca de 2,1 eV.</p>'],
+    ['Um metal tem função trabalho de 2,0 eV e recebe fótons de 3,5 eV. Qual a energia cinética máxima dos elétrons? E a frequência de corte? (h = 4 × 10⁻¹⁵ eV·s)', '<p>Ec,máx = 3,5 − 2,0 = <b>1,5 eV</b>.<br>f₀ = W/h = 2,0/(4×10⁻¹⁵) = <b>5 × 10¹⁴ Hz</b>.</p>'],
+    ['Na fissão ²³⁵₉₂U + ¹₀n → ¹⁴¹₅₆Ba + ⁹²₃₆Kr + x·¹₀n, quantos nêutrons são liberados?', '<p>Massa: 235 + 1 = 141 + 92 + x, logo <b>x = 3</b>.<br>Carga: 92 = 56 + 36 confere.</p>']
+  ],
+  q: [
+    ['No efeito fotoelétrico, aumentar a intensidade da luz, mantendo a frequência acima da frequência de corte, aumenta', ['a energia cinética máxima dos elétrons.', 'o número de elétrons emitidos por segundo.', 'a frequência de corte do metal.', 'a função trabalho do metal.'], 1, 'A intensidade muda a quantidade de fótons, e cada fóton arranca no máximo um elétron. A energia de cada elétron depende só da frequência.'],
+    ['Uma luz muito intensa, mas com frequência menor que a frequência de corte, incide num metal. Então', ['os elétrons saem com pouca energia.', 'nenhum elétron é arrancado.', 'os elétrons saem depois de algum tempo.', 'saem mais elétrons do que com luz fraca.'], 1, 'Abaixo de f₀ cada fóton tem energia menor que W, e nenhum elétron escapa, qualquer que seja a intensidade.'],
+    ['A energia de um fóton de frequência 1,0 × 10¹⁵ Hz é (h = 6,6 × 10⁻³⁴ J·s)', ['6,6 × 10⁻¹⁹ J', '6,6 × 10⁻⁴⁹ J', '1,5 × 10⁻¹⁹ J', '6,6 × 10⁻¹⁸ J'], 0, 'E = h·f = 6,6×10⁻³⁴ · 1,0×10¹⁵ = 6,6×10⁻¹⁹ J.'],
+    ['Um metal tem função trabalho de 2,5 eV. Fótons de 4,0 eV arrancam elétrons com energia cinética máxima de', ['6,5 eV', '1,5 eV', '2,5 eV', '4,0 eV'], 1, 'Ec,máx = h·f − W = 4,0 − 2,5 = 1,5 eV.'],
+    ['Entre as radiações a seguir, a que tem fótons de maior energia é', ['o infravermelho.', 'a luz vermelha.', 'o ultravioleta.', 'o raio X.'], 3, 'Maior frequência, maior energia: infravermelho < visível < ultravioleta < raios X.'],
+    ['No experimento de Rutherford, a maioria das partículas α atravessou a folha de ouro sem desvio. Isso mostrou que', ['o átomo é maciço.', 'o átomo tem grandes espaços vazios.', 'o elétron tem carga negativa.', 'os elétrons ficam no núcleo.'], 1, 'Se quase todas passam direto, o átomo é quase todo vazio. As poucas que desviam revelam o núcleo pequeno e positivo.'],
+    ['Segundo o modelo de Bohr, o elétron emite um fóton quando', ['permanece numa órbita estacionária.', 'salta para uma órbita mais externa.', 'salta de uma órbita mais externa para uma mais interna.', 'gira mais rápido na mesma órbita.'], 2, 'Descendo de nível, o elétron perde energia e emite um fóton com E = E_inicial − E_final. Para subir, ele absorve energia.'],
+    ['Na fissão ²³⁵₉₂U + ¹₀n → ⁹⁰₃₈Sr + ¹⁴³₅₄Xe + x·¹₀n, o número x de nêutrons liberados é', ['1', '2', '3', '4'], 2, 'Conservação do número de massa: 235 + 1 = 90 + 143 + x, logo x = 3. Os números atômicos conferem: 92 = 38 + 54.'],
+    ['Quando um núcleo emite uma partícula β⁻, o número de massa A e o número atômico Z', ['diminuem 4 e 2.', 'não muda A, e Z aumenta 1.', 'não muda A, e Z diminui 1.', 'A aumenta 1, e Z não muda.'], 1, 'Um nêutron vira próton e emite um elétron: A continua igual e Z sobe 1.'],
+    ['Um isótopo tem meia-vida de 8 dias. De uma amostra de 80 g, depois de 24 dias restam', ['40 g', '20 g', '10 g', '0 g'], 2, '24 dias são 3 meias-vidas: 80 → 40 → 20 → 10 g.']
+  ],
+  fc: [
+    ['Energia do fóton', 'E = h·f = h·c/λ'],
+    ['Efeito fotoelétrico', 'Ec,máx = h·f − W (Einstein)'],
+    ['Frequência de corte', 'f₀ = W/h. Abaixo dela nenhum elétron sai.'],
+    ['Mais intensidade no efeito fotoelétrico', 'Mais elétrons, mas a mesma energia por elétron.'],
+    ['Dualidade da luz', 'Onda: difração e interferência. Partícula: efeito fotoelétrico.'],
+    ['Modelo de Thomson', 'Pudim de passas; elétron descoberto nos raios catódicos.'],
+    ['Modelo de Rutherford', 'Núcleo pequeno, denso e positivo; átomo quase vazio.'],
+    ['Modelo de Bohr', 'Órbitas quantizadas; descer de nível emite fóton.'],
+    ['Emissão alfa', '⁴₂He: A − 4 e Z − 2'],
+    ['Emissão beta', '⁰₋₁β: A igual e Z + 1'],
+    ['Radiação gama', 'Onda eletromagnética sem carga e sem massa.'],
+    ['Fissão x fusão', 'Fissão: núcleo pesado se divide (usinas). Fusão: núcleos leves se unem (Sol).'],
+    ['Meia-vida', 'm = m₀/2ⁿ, com n = t/T½']
+  ]
+});

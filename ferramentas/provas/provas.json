@@ -1,0 +1,459 @@
+[
+ {
+  "id": "cfs2-2025",
+  "nome": "CFS 2/2025",
+  "data": "2024-12",
+  "min": 240,
+  "pasta": "cfs2_2025",
+  "fonte": "Prova oficial da EEAR, código 05, com o gabarito oficial",
+  "gab": "BCDABBABCDCADBBCDADACAAABDADBAABCDACDCCADADCDBCBBBABCBCBABBDADBBCCBBCCDXABACBBCDBDABCCDDBBAAAABD",
+  "textos": {
+   "por": [
+    1,
+    2
+   ],
+   "ing1": [
+    3
+   ],
+   "ing2": [
+    4
+   ],
+   "ing3": [
+    5
+   ]
+  },
+  "usa": {
+   "por": "1-4",
+   "ing1": "74-78",
+   "ing2": "79-82",
+   "ing3": "83-87"
+  },
+  "mods": {
+   "POR01": "1-4 24",
+   "POR03": "11 20",
+   "POR04": "6",
+   "POR05": "16 19",
+   "POR06": "17 18",
+   "POR07": "12",
+   "POR08": "23",
+   "POR09": "7 9 15 21",
+   "POR10": "10 14",
+   "POR11": "8",
+   "POR12": "5",
+   "POR13": "22",
+   "POR14": "13",
+   "MAT02": "35",
+   "MAT04": "48",
+   "MAT06": "39",
+   "MAT07": "27",
+   "MAT08": "41",
+   "MAT09": "42 47",
+   "MAT10": "26",
+   "MAT12": "37 44",
+   "MAT13": "33",
+   "MAT14": "43",
+   "MAT15": "25 38 46",
+   "MAT16": "30 31",
+   "MAT17": "29 36",
+   "MAT18": "28 32 40",
+   "MAT19": "45",
+   "MAT20": "34",
+   "FIS01": "49",
+   "FIS03": "57",
+   "FIS04": "69",
+   "FIS05": "72",
+   "FIS06": "66",
+   "FIS08": "52 59",
+   "FIS09": "61",
+   "FIS10": "64 71",
+   "FIS11": "54 60",
+   "FIS13": "65 67",
+   "FIS14": "56 70",
+   "FIS15": "53 58 62",
+   "FIS16": "55",
+   "FIS17": "50 63",
+   "ING01": "74 75 79 80 81 84 87 89",
+   "ING02": "88",
+   "ING03": "85 86 91 92",
+   "ING04": "73 76 90",
+   "ING05": "78",
+   "ING07": "95",
+   "ING09": "77 82",
+   "ING10": "83",
+   "ING11": "96",
+   "ING12": "93",
+   "ING13": "94",
+   "FIS18": "51 68"
+  }
+ },
+ {
+  "id": "cfs1-2025",
+  "nome": "CFS 1/2025",
+  "data": "2024-07",
+  "min": 240,
+  "pasta": "cfs1_2025",
+  "fonte": "Prova oficial da EEAR, código 62, com o gabarito oficial",
+  "gab": "CAADDCCCXDCXACCADBDBBAABDDCCAACBCCBCDCDABCABCDADBABAXBBCDCAAAXBBBBCCCCBCBDBCABABAAADADADDCCBBDAB",
+  "textos": {
+   "por": [
+    1
+   ],
+   "ing1": [
+    2
+   ],
+   "ing2": [
+    3
+   ],
+   "ing3": [
+    4
+   ],
+   "ing4": [
+    5
+   ]
+  },
+  "usa": {
+   "por": "1-3",
+   "ing1": "73-75",
+   "ing2": "76-79",
+   "ing3": "80-82",
+   "ing4": "83-86"
+  },
+  "mods": {
+   "POR01": "1-3 15 19",
+   "POR03": "11",
+   "POR04": "24",
+   "POR06": "23",
+   "POR07": "12",
+   "POR08": "16",
+   "POR09": "5 13 18 20",
+   "POR10": "4 14 17",
+   "POR11": "6 8",
+   "POR12": "7 9",
+   "POR13": "21 22",
+   "POR14": "10",
+   "MAT03": "45",
+   "MAT04": "31",
+   "MAT05": "32",
+   "MAT07": "33 41",
+   "MAT08": "43 44",
+   "MAT10": "34",
+   "MAT12": "38 46",
+   "MAT13": "27 35",
+   "MAT14": "25",
+   "MAT16": "29 36 47",
+   "MAT17": "39 42",
+   "MAT18": "26 28 48",
+   "MAT19": "30 40",
+   "MAT20": "37",
+   "FIS01": "68",
+   "FIS03": "62",
+   "FIS04": "71",
+   "FIS05": "57",
+   "FIS06": "54 64",
+   "FIS08": "66",
+   "FIS10": "52",
+   "FIS11": "49 53 56",
+   "FIS12": "70",
+   "FIS13": "58 69 72",
+   "FIS14": "55 61",
+   "FIS15": "65",
+   "FIS16": "59 67",
+   "FIS17": "50 60 63",
+   "ING01": "74-78 80 82 83 85 86 88 95",
+   "ING04": "73 89 96",
+   "ING07": "92",
+   "ING08": "93",
+   "ING09": "94",
+   "ING10": "87",
+   "ING12": "84 90 91",
+   "ING13": "79 81",
+   "FIS18": "51"
+  }
+ },
+ {
+  "id": "cfs1-2024-bct",
+  "nome": "CFS 1/2024 · BCT",
+  "data": "2023-07",
+  "min": 240,
+  "pasta": "cfs1_2024_bct",
+  "ordem": "por ing mat fis",
+  "fonte": "Prova oficial da EEAR, Controle de Tráfego Aéreo (BCT), código 23, com o gabarito oficial",
+  "gab": "DBCDXABCDCCCBCCCBAAACACXCCBCCADDBACDADBBCABAAADDDBACBBBBABCDBDCCDCCXBCCADDDBDDBCCXBCCDDBCADBCCBA",
+  "textos": {
+   "por": [
+    1
+   ],
+   "ing1": [
+    2
+   ],
+   "ing2": [
+    3
+   ],
+   "ing3": [
+    4
+   ]
+  },
+  "usa": {
+   "por": "1-4",
+   "ing1": "25-28",
+   "ing2": "29-30",
+   "ing3": "31-34"
+  },
+  "mods": {
+   "POR01": "1-4",
+   "POR03": "16",
+   "POR04": "24",
+   "POR05": "11 21",
+   "POR06": "13",
+   "POR07": "6",
+   "POR09": "5 8 10 17 18",
+   "POR10": "7 9 14",
+   "POR11": "20 23",
+   "POR12": "12 15",
+   "POR13": "19",
+   "POR14": "22",
+   "ING01": "26 27 29-34 38 39 41 45 46",
+   "ING04": "47",
+   "ING05": "35 37 43",
+   "ING07": "25 28",
+   "ING10": "48",
+   "ING12": "36 42",
+   "ING13": "40 44",
+   "MAT02": "51 71",
+   "MAT03": "49 63",
+   "MAT05": "58",
+   "MAT07": "62",
+   "MAT10": "70 72",
+   "MAT12": "56 66",
+   "MAT13": "57",
+   "MAT14": "53 55",
+   "MAT15": "52 60 65",
+   "MAT16": "59 67 68",
+   "MAT17": "50 64 69",
+   "MAT18": "54",
+   "MAT19": "61",
+   "FIS01": "74",
+   "FIS02": "78",
+   "FIS03": "88",
+   "FIS04": "76",
+   "FIS05": "83",
+   "FIS06": "82",
+   "FIS07": "86",
+   "FIS09": "80 93",
+   "FIS10": "92",
+   "FIS11": "94",
+   "FIS12": "96",
+   "FIS13": "75 81 84",
+   "FIS14": "77 90",
+   "FIS15": "91",
+   "FIS16": "73",
+   "FIS17": "85 87",
+   "FIS18": "79 89 95"
+  }
+ },
+ {
+  "id": "cfs1-2023-bct",
+  "nome": "CFS 1/2023 · BCT",
+  "data": "2022-07",
+  "min": 240,
+  "pasta": "cfs1_2023_bct",
+  "ordem": "por ing mat fis",
+  "fonte": "Prova oficial da EEAR, Controle de Tráfego Aéreo (BCT), código 92, com o gabarito oficial",
+  "gab": "BCAXABABADBCBBDACCCBADDCBACDADCBDACDCCBDAABBABCACXXACABDCCBBDDBCDDADXACABBBCCAADADBBBCBBDBABDCBB",
+  "textos": {
+   "por": [
+    1
+   ],
+   "ing1": [
+    2
+   ],
+   "ing2": [
+    3
+   ],
+   "ing3": [
+    4
+   ],
+   "ing4": [
+    5
+   ],
+   "ing5": [
+    6
+   ],
+   "ing6": [
+    7
+   ],
+   "ing7": [
+    8
+   ]
+  },
+  "usa": {
+   "por": "1-4",
+   "ing1": "25-26",
+   "ing2": "29-30",
+   "ing3": "33-34",
+   "ing4": "37-38",
+   "ing5": "39",
+   "ing6": "41-42",
+   "ing7": "45-46"
+  },
+  "mods": {
+   "POR01": "1-4 6",
+   "POR03": "13 15",
+   "POR04": "5",
+   "POR05": "14 20",
+   "POR07": "17 23 24",
+   "POR08": "16",
+   "POR09": "7 18",
+   "POR10": "11 22",
+   "POR11": "9",
+   "POR12": "8 12",
+   "POR13": "19",
+   "POR14": "10 21",
+   "ING01": "25 28 30 31 37 38 39 41 44 45 46 47",
+   "ING03": "36",
+   "ING07": "43",
+   "ING09": "32 34",
+   "ING10": "27 33 40",
+   "ING11": "26 35",
+   "ING12": "29 42",
+   "ING13": "48",
+   "MAT02": "50 52",
+   "MAT03": "66 68",
+   "MAT06": "62",
+   "MAT07": "58",
+   "MAT08": "59",
+   "MAT10": "54",
+   "MAT12": "63 64",
+   "MAT13": "65",
+   "MAT14": "60",
+   "MAT15": "49",
+   "MAT16": "51 56",
+   "MAT17": "53 57 72",
+   "MAT18": "55 61 71",
+   "MAT19": "67 70",
+   "MAT20": "69",
+   "FIS03": "73",
+   "FIS04": "74 81 85",
+   "FIS05": "76",
+   "FIS06": "90",
+   "FIS08": "75",
+   "FIS09": "79",
+   "FIS10": "78 92 93",
+   "FIS12": "96",
+   "FIS13": "80 83 86 88 91",
+   "FIS14": "94 95",
+   "FIS15": "82 84 87",
+   "FIS16": "77 89"
+  }
+ },
+ {
+  "id": "cfs1-2022-bct",
+  "nome": "CFS 1/2022 · BCT",
+  "data": "2021-07",
+  "min": 240,
+  "pasta": "cfs1_2022_bct",
+  "ordem": "por ing mat fis",
+  "fonte": "Prova oficial da EEAR, Controle de Tráfego Aéreo (BCT), código 05, com o gabarito oficial",
+  "gab": "CCABBDAADDCBCABADBDCCDABBBXCACDBADBCACCAADDXADBBBBACAACCADCABCDCDBBDCDABCDDBBCBCBCCBDADXBCCCCCBB",
+  "textos": {
+   "por": [
+    1
+   ],
+   "ing1": [
+    2
+   ],
+   "ing2": [
+    3
+   ],
+   "ing3": [
+    4
+   ],
+   "ing4": [
+    5
+   ],
+   "ing5": [
+    6
+   ],
+   "ing6": [
+    7
+   ],
+   "ing7": [
+    8
+   ],
+   "ing8": [
+    9
+   ],
+   "ing9": [
+    10
+   ],
+   "ing10": [
+    11
+   ]
+  },
+  "usa": {
+   "por": "1-4",
+   "ing1": "25-26",
+   "ing2": "28-29",
+   "ing3": "31-32",
+   "ing4": "34-35",
+   "ing5": "37-38",
+   "ing6": "40-41",
+   "ing7": "42",
+   "ing8": "43-45",
+   "ing9": "46",
+   "ing10": "47-48"
+  },
+  "mods": {
+   "POR01": "1-4",
+   "POR03": "11 24",
+   "POR04": "22",
+   "POR05": "23",
+   "POR06": "20 21",
+   "POR07": "15",
+   "POR09": "9 12 16 17 19",
+   "POR10": "8 14",
+   "POR11": "7 13",
+   "POR12": "5 10",
+   "POR13": "18",
+   "POR14": "6",
+   "ING01": "25 28 31 32 34 36 41 43 45 46 47",
+   "ING03": "44",
+   "ING04": "33",
+   "ING05": "30 40",
+   "ING07": "37 38",
+   "ING09": "35",
+   "ING12": "26 27 29 39",
+   "ING13": "42 48",
+   "MAT02": "66",
+   "MAT03": "69",
+   "MAT06": "54",
+   "MAT07": "55 64",
+   "MAT10": "53 65",
+   "MAT12": "52 62",
+   "MAT13": "68",
+   "MAT14": "50 61",
+   "MAT15": "71",
+   "MAT16": "56 63",
+   "MAT17": "49 57 67 72",
+   "MAT18": "58 59 70",
+   "MAT19": "60",
+   "MAT20": "51",
+   "FIS01": "73",
+   "FIS02": "78 90",
+   "FIS03": "93",
+   "FIS04": "75",
+   "FIS05": "88",
+   "FIS07": "76",
+   "FIS08": "89",
+   "FIS10": "80 86",
+   "FIS11": "74 77 92",
+   "FIS12": "85",
+   "FIS13": "79 81",
+   "FIS14": "84 95",
+   "FIS15": "87",
+   "FIS16": "94",
+   "FIS17": "91",
+   "FIS18": "82 83 96"
+  }
+ }
+]
