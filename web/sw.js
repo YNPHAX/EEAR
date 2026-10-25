@@ -20,8 +20,8 @@ self.addEventListener('fetch', ev => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
   if (req.mode === 'navigate') {
-    // a página abre do aparelho; sem cópia guardada, vem da rede
-    ev.respondWith(caches.match('./', { cacheName: CACHE }).then(r => r || fetch(req)));
+    // cada página abre do aparelho (o curso, a privacidade, os termos); sem cópia, vem da rede; sem rede, abre o curso
+    ev.respondWith(caches.match(req, { ignoreSearch: true }).then(r => r || fetch(req).catch(() => caches.match('./'))));
     return;
   }
   if (url.pathname.includes('/provas/')) {

@@ -13,7 +13,26 @@ Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em fo
 - `web/build.py` monta o site a partir de `curso/`: página completa, manifesto, ícones, fontes locais e service worker para uso offline. O workflow `Site` publica no GitHub Pages a cada push na `main`. Para isso, o Pages tem de estar ligado em Settings › Pages › Source: GitHub Actions.
 - `app/` é o app de Android (Capacitor) com o mesmo conteúdo. O workflow `App Android` compila o APK a cada push. Na `main`, ele publica o APK na página de Releases.
 - A versão pública não leva as imagens das páginas das apostilas, que são material com direitos autorais do curso. Nela, a folha de respostas de cada conjunto indica a página do PDF da apostila.
-- O progresso fica salvo em cada aparelho. Para levar de um para outro, use Plano › Dados › Copiar meu progresso e, no outro aparelho, Colar progresso.
+- O progresso fica salvo em cada aparelho. Para levar de um para outro, use Plano › Dados › Copiar meu progresso e, no outro aparelho, Colar progresso. Com o login ligado, ele fica salvo na conta do aluno.
+- Quem chega ao site pela primeira vez vê a página de entrada do curso. A aba Apostila fica escondida para quem não usa as apostilas, e dá para ligar em Plano › Configuração.
+
+## Marca, contato e páginas legais
+
+- O curso é o **Missão EEAR, um curso da INPHAX**. O logotipo fica em `curso/marca/`, e os ícones do site e do app saem do X em vetor (`web/icones/gerar_icones.py`).
+- Contato: suporteinphax@gmail.com.
+- A Política de Privacidade e os Termos de Uso ficam em `web/legal/`. O `web/build.py` publica as duas como `privacidade.html` e `termos.html`, com links no rodapé, na aba Plano e no cartão de login. Pedidos de exclusão de conta chegam pelo e-mail de contato. Para atender, apague o usuário em Authentication e o documento `alunos/{uid}` no Firestore.
+
+## Login dos alunos (Firebase)
+
+O site já tem login com Google ou e-mail e senha, com o progresso de cada aluno salvo na nuvem. Ele só aparece depois de criar o projeto no Firebase, que é gratuito para este uso:
+
+1. Em https://console.firebase.google.com, crie um projeto (pode deixar o Google Analytics desligado).
+2. Em Authentication › Sign-in method, ative **E-mail/senha** e **Google**.
+3. Em Authentication › Settings › Domínios autorizados, adicione `ynphax.github.io`.
+4. Em Firestore Database, crie o banco em modo de produção (região `southamerica-east1`). Na aba Regras, cole o conteúdo de `web/firestore.rules` e publique.
+5. Em Configurações do projeto › Seus apps, adicione um app da Web (`</>`) e copie o objeto `firebaseConfig`. Salve-o como `web/firebase.json` (em JSON: `{"apiKey": "...", "authDomain": "...", "projectId": "...", "appId": "..."}`). Esses dados não são secretos: o acesso é controlado pelas regras do passo 4.
+
+No próximo push na `main`, o site sai com o login. O progresso de cada aluno fica no documento `alunos/{uid}` do Firestore.
 
 ## O que tem no curso
 
@@ -22,7 +41,8 @@ Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em fo
 - **Regra dos 80%**: o módulo só conta como dominado com 8 acertos em 10. A meta nos simulados é nota 8,0 em cada matéria (o mínimo do edital é 5,0 em cada matéria e média 5,0).
 - **Meta de aprovação até 2027**: a prova alvo pode ser o CFS 2/2027 (22/11/2026), o CFS 1/2028 (estimado para 30/05/2027) ou o CFS 2/2028 (estimado para 21/11/2027). As provas anteriores à prova alvo entram no plano como dia de prova real.
 - **Cronograma automático em ciclos**: ciclo 1 com a teoria completa, ciclo 2 de revisão ativa de todos os módulos, ciclo 3 com o que mais cai, simulados semanais e reta final de revisão. Ele se ajusta às horas por dia, aos dias da semana e ao resultado do diagnóstico.
-- **Videoaulas**: cada módulo tem links de busca no YouTube para a aula do tópico e para questões da EEAR resolvidas, além de canais sugeridos por matéria.
+- **Aulas com vídeo**: cada módulo é uma aula com videoaula do YouTube tocando dentro do curso (162 vídeos gratuitos, com o crédito de cada canal), roteiro de estudo (vídeo, teoria, exemplos, quiz e flashcards) e botão para a próxima aula. Cada matéria tem a sua trilha de aulas, e a tela Hoje mostra "Continuar de onde parei". O workflow `Videoaulas` confere toda semana se os vídeos continuam no ar.
+- **Certificado de conclusão** por matéria e do curso completo, liberado quando todas as aulas têm 80% ou mais no quiz. É um curso livre, sem vínculo com a EEAR ou com a FAB.
 - **Provas anteriores oficiais**: provas completas na ordem original, com o gabarito oficial, as questões anuladas valendo para todos e cronômetro de 4 horas. Cada questão é o recorte fiel da prova original (com sublinhados, fórmulas e figuras), e cada uma está ligada ao módulo do curso, na aba Provas. Já entraram a do **CFS 1/2025** (código 62) e a do **CFS 2/2025** (código 05). As próximas entram com `EEAR.addProva` em `dados/provas.js`.
 - **Diagnóstico** (40 questões) para descobrir as matérias mais fracas.
 - **Simulado completo** (96 questões, 24 por matéria, com cronômetro) e simulado por matéria (24 questões em 1 h).
@@ -44,6 +64,7 @@ curso/
   dados/
     base.js       matérias, calendário de provas, EEAR.add e EEAR.addProva
     videos.js     termos de busca de videoaulas por módulo
+    videoaulas.js vídeos do YouTube de cada aula (título, canal e tipo)
     apostila.js   conjuntos de exercícios da apostila: gabarito, páginas e módulos
     provas.js     provas anteriores oficiais (EEAR.addProva)
     por*.js       Língua Portuguesa
@@ -51,6 +72,14 @@ curso/
     mat*.js       Matemática
     fis*.js       Física
   provas/         recortes das questões de cada prova oficial
+web/
+  build.py        monta o site e o conteúdo do app a partir de curso/
+  sw.js           service worker (uso offline)
+  conferir_videos.py  confere no YouTube as videoaulas
+  firestore.rules regras do banco do login
+  legal/          política de privacidade e termos de uso
+  fontes/, icones/
+app/              app de Android (Capacitor)
 ```
 
 Cada módulo é um `EEAR.add({...})` com `id`, `t` (título), `peso` (incidência estimada de 1 a 3), `h` (horas ideais), `teoria` (HTML), `ex` (exemplos), `q` (questões `[enunciado, [A, B, C, D], índice da correta, comentário]`) e `fc` (flashcards `[frente, verso]`). Para acrescentar questões, basta incluir itens no array `q` do módulo.

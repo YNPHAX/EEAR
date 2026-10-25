@@ -2,7 +2,7 @@
   "appId": "io.github.ynphax.eear",
   "appName": "Missão EEAR",
   "webDir": "www",
-  "backgroundColor": "#0E1F36",
+  "backgroundColor": "#0C0C0C",
   "android": {
     "allowMixedContent": false
   },
