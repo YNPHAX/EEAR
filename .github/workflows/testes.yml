@@ -1,0 +1,52 @@
+# Roda os testes automatizados (testes/) a cada envio, sem publicar nada.
+name: Testes
+
+on:
+  push:
+    branches: [main, 'claude/**', 'fase*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: testes-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  curso:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Playwright
+        run: |
+          npm install --no-save playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: Conteúdo, montagem, navegador e progresso
+        run: |
+          node testes/dados.test.js
+          node testes/montagem.test.js
+          node testes/navegador.test.js
+          node testes/progresso.test.js
+
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Geração do APK
+        run: |
+          (cd app && npm ci)
+          node testes/apk.test.js
