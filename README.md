@@ -18,7 +18,11 @@ Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em fo
 - **Flashcards com repetição espaçada** (revisão em 1, 3, 7, 14, 30 e 60 dias).
 - **Caderno de erros**: toda questão errada volta para revisão até você acertar.
 
-São 640 questões inéditas no estilo da EEAR, 498 flashcards e 192 exemplos resolvidos.
+- **Apostila digital**: as páginas originais das três apostilas do curso (CFS, CFS/BCT e CFS 2), organizadas em 309 conjuntos de exercícios (em sala, para casa, units e tests de Inglês, incluindo provas reais da EEAR). Cada conjunto tem folha de respostas A–D corrigida pelo gabarito impresso do livro (4.668 questões de múltipla escolha), meta de 80%, opção de refazer só as erradas e ligação com os módulos do curso. Os exercícios em sala e as units entram no ciclo 1 do plano, e os para casa e as provas reais entram no ciclo 2.
+
+São 640 questões inéditas no estilo da EEAR, 498 flashcards e 192 exemplos resolvidos, além das questões da apostila.
+
+As imagens das páginas da apostila não ficam neste repositório. Elas são publicadas só no artifact (privado), sem a marca do curso, a partir dos PDFs.
 
 ## Estrutura
 
@@ -29,6 +33,7 @@ curso/
   dados/
     base.js       matérias, calendário de provas, EEAR.add e EEAR.addProva
     videos.js     termos de busca de videoaulas por módulo
+    apostila.js   conjuntos de exercícios da apostila: gabarito, páginas e módulos
     por*.js       Língua Portuguesa
     ing*.js       Língua Inglesa
     mat*.js       Matemática
