@@ -1,0 +1,22 @@
+# Confere toda semana se as videoaulas do curso continuam no ar e podem tocar dentro do site.
+name: Videoaulas
+
+on:
+  push:
+    paths: ['curso/dados/videoaulas.js', 'web/conferir_videos.py', 'web/videos_candidatos.txt', '.github/workflows/videos.yml']
+  schedule:
+    - cron: '17 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Conferir os vídeos
+        run: |
+          if [ -f web/videos_candidatos.txt ]; then python3 web/conferir_videos.py web/videos_candidatos.txt; fi
+          if [ -f curso/dados/videoaulas.js ]; then python3 web/conferir_videos.py; fi
