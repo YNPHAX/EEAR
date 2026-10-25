@@ -1,0 +1,41 @@
+# Publica o curso como site (app instalável, funciona offline) no GitHub Pages.
+# Em outras branches só monta o site, para conferir que nada quebrou.
+name: Site
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  montar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Montar o site
+        run: python3 web/build.py _site
+      - name: Conferir o JavaScript
+        run: for f in _site/app.js _site/sw.js _site/dados/*.js; do node --check "$f"; done
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  publicar:
+    if: github.ref == 'refs/heads/main'
+    needs: montar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
