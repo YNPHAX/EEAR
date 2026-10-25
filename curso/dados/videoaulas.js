@@ -163,8 +163,8 @@ EEAR.videoaulas = {"POR01": [
  {"id": "DH2hF0Z9Yns","t": "Associação mista de resistores","c": "Maurício Física","k": "q"}],"FIS17": [
  {"id": "PlD0OTDrc8c","t": "Fluxo magnético e indução eletromagnética","c": "Professor Boaro","k": "a"},
  {"id": "u213SJFFDx4","t": "Força magnética e indução eletromagnética","c": "Idelfranio Moreira","k": "a"}],"FIS18": [
- {"id": "UdrSl3-hjLs","t": "Efeito fotoelétrico","c": "?","k": "a"},
- {"id": "GVoZ3WERohA","t": "Modelos atômicos: Dalton, Thomson, Rutherford e Bohr","c": "?","k": "a"},
- {"id": "3p1mthPcezU","t": "Emissões radioativas: alfa, beta e gama","c": "?","k": "a"},
- {"id": "kZbEgJpDsIs","t": "Efeito fotoelétrico na EEAR: questão 89 do CFS 1/2024","c": "?","k": "q"},
- {"id": "fmslzgny7JE","t": "Fissão e fusão nuclear: exercício resolvido","c": "?","k": "q"}]};
+ {"id": "UdrSl3-hjLs","t": "Efeito fotoelétrico","c": "Mundo Nonato","k": "a"},
+ {"id": "GVoZ3WERohA","t": "Modelos atômicos: Dalton, Thomson, Rutherford e Bohr","c": "EscolAnimada","k": "a"},
+ {"id": "3p1mthPcezU","t": "Emissões radioativas: alfa, beta e gama","c": "Vem de química bb","k": "a"},
+ {"id": "kZbEgJpDsIs","t": "Efeito fotoelétrico na EEAR: questão 89 do CFS 1/2024","c": "Física EEAr","k": "q"},
+ {"id": "fmslzgny7JE","t": "Fissão e fusão nuclear: exercício resolvido","c": "Exatasmente, com o Prof. Bruno Carvalho","k": "q"}]};
