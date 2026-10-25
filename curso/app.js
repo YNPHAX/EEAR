@@ -703,7 +703,7 @@
     const r = S.ap[s.id] ? apRegistro(s.id) : { r: {}, ok: {} };
     const m0 = s.mods[0] && MOD[s.mods[0]];
     apAtual(s, r);
-    let h = `<button class="btn ghost back" data-a="apvolta">← ${V.de === 'mod' && MOD[V.mod] ? MOD[V.mod].id : V.de === 'hoje' ? 'Hoje' : 'Apostila'}</button>`;
+    let h = `<button class="btn ghost back" data-a="apvolta">← ${V.de === 'mod' && MOD[V.mod] ? MOD[V.mod].id : ({ hoje: 'Hoje', sim: 'Simulados', treino: 'Treino' })[V.de] || 'Apostila'}</button>`;
     h += `<div class="stack"><div class="eyebrow">${sig(s.m)} ${LIVRO[s.l].nome} · ${s.fr}</div><h1 class="h1">${apTitulo(s)}</h1><div class="row"><span class="chip">${apTipo(s)}</span>${apChip(s.id)}${s.mods.map(id => `<button class="chip lnkchip" data-a="mod" data-id="${id}" title="${MOD[id].t}">${id}</button>`).join('')}</div></div>`;
     if (s.inc) h += `<div class="banner warn"><p>A página do gabarito deste conjunto está pouco nítida no livro, e B e D podem se confundir. Se uma correção parecer errada, confira o gabarito impresso.</p>${s.gp ? `<button class="btn sm" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver gabarito impresso</button>` : ''}</div>`;
     h += '<div class="apgrid"><div class="appages">';
@@ -948,7 +948,9 @@
     h += `<section class="card"><div class="eyebrow">100% fiel à prova</div><h2 class="h2">Provas anteriores oficiais</h2>${PROVAS.length
       ? `<p class="small" style="margin:0">Provas reais da EEAR, na ordem original e com o gabarito oficial. Faça como no dia: tempo de prova, rascunho e nada de consulta.</p><div class="tasks">${PROVAS.map(p => { const feitas = S.sims.filter(x => x.prova === p.id); const ult = feitas[feitas.length - 1]; return `<div class="task"><span class="sigla">${(p.data || '').slice(0, 4)}</span><div class="tt"><b>${p.nome}</b><div class="small muted">${p.ids.length} questões · ${fh((p.min || 240) / 60)}${ult ? ' · última média ' + nota(media(ult)) : ''}</div></div><button class="btn sm pri" data-a="simini" data-tipo="prova" data-s="${p.id}" ${S.ativo ? 'disabled' : ''}>${ult ? 'Refazer' : 'Fazer'}</button></div>`; }).join('')}</div>
         <div class="row"><button class="btn" data-a="simini" data-tipo="oficial" ${S.ativo || !okOf ? 'disabled' : ''}>Simulado misto com questões oficiais (96)</button></div>`
-      : `<p class="small" style="margin:0">As provas oficiais ainda não estão no curso. Elas entram aqui com a ordem original e o gabarito oficial assim que os PDFs da EEAR puderem ser baixados. Até lá, use os simulados do curso abaixo.</p>`}</section>`;
+      : `<p class="small" style="margin:0">As provas completas das quatro matérias entram aqui, na ordem original e com o gabarito oficial, assim que os PDFs da EEAR forem carregados. Até lá, use os simulados do curso abaixo.</p>`}</section>`;
+    const reais = AP.sets.filter(x => x.tipo === 'test' && /prova/i.test(x.t));
+    if (reais.length) h += `<section class="card"><div class="eyebrow">Provas reais da apostila</div><h2 class="h2">Inglês das provas da EEAR</h2><p class="small" style="margin:0">A parte de Inglês de ${plural(reais.length, 'prova real', 'provas reais')} da EEAR, com as páginas do livro e a folha de respostas corrigida pelo gabarito. Faça cada uma em 1 hora, como no dia.</p><div class="mods">${reais.map(x => apLinha(x)).join('')}</div></section>`;
     h += `<section class="card"><div class="eyebrow">Treino focado</div><h2 class="h2">Simulado por matéria</h2><p class="small" style="margin:0">24 questões em 1 hora.</p><div class="row">${ORD.map(s => `<button class="btn" data-a="simini" data-tipo="materia" data-s="${s}" ${S.ativo ? 'disabled' : ''}>${MATS[s].curto}</button>`).join('')}</div></section>`;
     const hist = S.sims.slice().reverse();
     h += `<section class="card"><div class="row between"><h2 class="h2">Histórico</h2>${S.ult ? '<button class="btn sm" data-a="go" data-v="res">Correção do último</button>' : ''}</div>${grafico()}`;
@@ -1067,7 +1069,7 @@
       case 'apset': {
         const st = APS[d.id];
         if (!st) break;
-        const de = d.de || (V.v === 'hoje' || V.v === 'plano' ? 'hoje' : 'ap');
+        const de = d.de || (V.v === 'hoje' || V.v === 'plano' ? 'hoje' : V.v === 'simulados' ? 'sim' : V.v === 'treino' ? 'treino' : 'ap');
         go('apset', { id: d.id, de, mod: de === 'mod' ? V.id : null, l: st.l, s: st.m });
         break;
       }
@@ -1075,6 +1077,8 @@
         if (V.v === 'appags' && V.volta) { const b = V.volta; go(b.v, b); break; }
         if (V.v === 'apset' && V.de === 'mod' && MOD[V.mod]) { go('modulo', { id: V.mod, aba: 'ap' }); break; }
         if (V.v === 'apset' && V.de === 'hoje') { go('hoje'); break; }
+        if (V.v === 'apset' && V.de === 'sim') { go('simulados'); break; }
+        if (V.v === 'apset' && V.de === 'treino') { go('treino'); break; }
         go('apostila', { l: V.l, s: V.s });
         break;
       }
