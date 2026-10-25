@@ -1,0 +1,5 @@
+# gerados por web/build.py e pelo Capacitor
+_site/
+app/www/
+app/android/
+app/node_modules/

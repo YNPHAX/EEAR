@@ -2,7 +2,18 @@
 
 Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em forma de app de estudo.
 
-**Abrir o curso:** https://claude.ai/artifact/9N6CGipsZWHRKANjcguf1k
+**Abrir o curso:** https://claude.ai/artifact/9N6CGipsZWHRKANjcguf1k (versão completa, com as páginas das apostilas, só para o dono)
+
+**Site próprio:** https://ynphax.github.io/EEAR/ (versão pública). Ele instala no celular, com ícone na tela inicial, e funciona sem internet.
+
+**App de Android:** https://github.com/YNPHAX/EEAR/releases/latest/download/missao-eear.apk
+
+## Site e app
+
+- `web/build.py` monta o site a partir de `curso/`: página completa, manifesto, ícones, fontes locais e service worker para uso offline. O workflow `Site` publica no GitHub Pages a cada push na `main`. Para isso, o Pages tem de estar ligado em Settings › Pages › Source: GitHub Actions.
+- `app/` é o app de Android (Capacitor) com o mesmo conteúdo. O workflow `App Android` compila o APK a cada push. Na `main`, ele publica o APK na página de Releases.
+- A versão pública não leva as imagens das páginas das apostilas, que são material com direitos autorais do curso. Nela, a folha de respostas de cada conjunto indica a página do PDF da apostila.
+- O progresso fica salvo em cada aparelho. Para levar de um para outro, use Plano › Dados › Copiar meu progresso e, no outro aparelho, Colar progresso.
 
 ## O que tem no curso
 
