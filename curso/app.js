@@ -627,7 +627,7 @@
   function vInicio() {
     const nQ = MODS.reduce((a, m) => a + m.q.length, 0), nV = Object.values(VA).reduce((a, v) => a + v.filter(x => x.k !== 'y').length, 0);
     const nOf = PROVAS.reduce((a, p) => a + p.ids.length, 0);
-    let h = `<section class="hero"><div class="hero-marca">${MARCA}<span>apresenta</span></div><div class="eyebrow">Curso preparatório gratuito</div>
+    let h = `<section class="hero"><div class="eyebrow">Missão EEAR · curso preparatório gratuito</div>
       <h1 class="hero-t">Sua aprovação no CFS da EEAR começa aqui</h1>
       <p class="hero-p">Aulas com vídeo, teoria resumida, questões comentadas, flashcards, simulados e as provas oficiais da EEAR com gabarito, num plano de estudos que vai até o dia da prova.</p>
       <form class="hero-f" onsubmit="return false"><div class="field"><label for="ini-nome">Como você quer ser chamado?</label><input id="ini-nome" maxlength="80" autocomplete="name" placeholder="Seu nome"></div><button class="btn pri" data-a="comecar">Começar o curso</button></form>
@@ -795,8 +795,8 @@
     const horas = Math.round(ms.reduce((a, m) => a + m.h, 0)), data = concluidoEm(ms);
     const cod = codigoCert([S.cfg.nome, s, data].join('|'));
     h += `<article class="cert" id="cert"><div class="cert-in">
-      <div class="cert-marca">${MARCA_X}<span>Missão EEAR</span></div>
-      <div class="cert-por">um curso ${MARCA}</div>
+      <div class="cert-marca">${MARCA_X}${MARCA}</div>
+      <div class="cert-por">Missão EEAR</div>
       <div class="eyebrow">Certificado de conclusão</div>
       <p class="cert-cert">Certificamos que</p>
       <h1 class="cert-nome">${esc(S.cfg.nome)}</h1>
