@@ -11,7 +11,7 @@ Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em fo
 ## Site e app
 
 - `web/build.py` monta o site a partir de `curso/`: página completa, manifesto, ícones, fontes locais e service worker para uso offline. O workflow `Site` publica no GitHub Pages a cada push na `main`. Para isso, o Pages tem de estar ligado em Settings › Pages › Source: GitHub Actions.
-- `app/` é o app de Android (Capacitor) com o mesmo conteúdo. O workflow `App Android` compila o APK a cada push. Na `main`, ele publica na página de Releases só o APK assinado com a chave fixa do app (veja `app/ASSINATURA.md`).
+- `app/` é o app de Android (Capacitor) com o mesmo conteúdo. O workflow `App Android` compila o APK a cada push. Ele só publica na página de Releases quando é rodado à mão na `main`, com "Publicar o APK" marcado, e só o APK assinado com a chave fixa do app (veja `app/ASSINATURA.md`).
 - A versão pública (site e app) não leva nada das apostilas, que são material com direitos autorais de outro curso: nem as páginas, nem os gabaritos, nem o índice. A apostila digital existe só na versão pessoal (artifact).
 - O progresso fica salvo em cada aparelho. Para levar de um para outro, use Plano › Dados › Copiar meu progresso e, no outro aparelho, Colar progresso. Com o login ligado, ele fica salvo na conta do aluno.
 - Quem chega ao site pela primeira vez vê a página de entrada do curso.

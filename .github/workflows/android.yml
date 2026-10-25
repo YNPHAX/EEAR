@@ -1,6 +1,6 @@
 # Gera o app de Android (APK) com o Capacitor a partir do mesmo site.
-# Na main, o APK assinado com a chave fixa vai para a página de downloads (Releases) do repositório;
-# nas outras branches, ou sem a chave, só é compilado.
+# A cada envio o APK só é compilado (e, com a chave fixa, assinado e conferido). Ele só vai para a página de
+# downloads (Releases) quando alguém roda este workflow à mão na main, marcando "Publicar o APK".
 # O versionCode é o número desta execução: não renomeie este workflow, senão a contagem recomeça
 # e o Android recusa a versão nova por ser "mais antiga".
 name: App Android
@@ -9,6 +9,11 @@ on:
   push:
     branches: [main, 'claude/**']
   workflow_dispatch:
+    inputs:
+      publicar:
+        description: 'Publicar o APK na página de downloads (só vale na main, com a chave fixa)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -56,7 +61,8 @@ jobs:
           CHAVE_SENHA_ALIAS: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           if [ -n "$CHAVE_BASE64" ]; then
-            echo "$CHAVE_BASE64" | base64 -d > "$RUNNER_TEMP/inphax.jks"
+            # tira quebras de linha e espaços que venham na colagem (por exemplo, do Windows)
+            printf '%s' "$CHAVE_BASE64" | tr -d '\r\n ' | base64 -d > "$RUNNER_TEMP/inphax.jks"
             ./gradlew assembleRelease --no-daemon --stacktrace \
               -Pandroid.injected.signing.store.file="$RUNNER_TEMP/inphax.jks" \
               -Pandroid.injected.signing.store.password="$CHAVE_SENHA" \
@@ -86,14 +92,14 @@ jobs:
           echo "SHA-256 do certificado: $SHA"
           if [ -z "$ESP" ]; then echo "::warning::Variável ANDROID_CERT_SHA256 não definida: a chave não foi comparada."
           elif [ "$ESP" != "$SHA" ]; then echo "::error::O APK foi assinado com outra chave ($SHA, esperado $ESP)"; exit 1; fi
-      # Só o APK com a chave fixa, feito na main, fica para baixar.
+      # Só fica para baixar o APK com a chave fixa, feito na main e publicado à mão.
       - uses: actions/upload-artifact@v4
-        if: github.ref == 'refs/heads/main' && env.ASSINADO == '1'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publicar && env.ASSINADO == '1'
         with:
           name: missao-eear-apk
           path: missao-eear.apk
       - name: Publicar na página de downloads
-        if: github.ref == 'refs/heads/main' && env.ASSINADO == '1'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publicar && env.ASSINADO == '1'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
