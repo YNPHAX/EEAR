@@ -2,7 +2,8 @@
 Uso: python3 web/conferir_videos.py [arquivo]
   sem arquivo: confere os vídeos de curso/dados/videoaulas.js e falha se algum saiu do ar
   com arquivo: linhas "MÓDULO id id ..." (candidatos); imprime título e canal de cada um
-Cada vídeo sai numa linha "VIDEO {json}" com id, módulo, situação, título e canal."""
+Cada vídeo sai numa linha "VIDEO {json}" com id, módulo, situação, título e canal. Para os vídeos que só
+  abrem no YouTube, o título e o canal vêm da própria página do vídeo."""
 import json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,6 +24,25 @@ def oembed(vid):
         time.sleep(2 * (tentativa + 1))
     return 'erro', '', ''
 
+def pagina(vid):
+    """Título e canal lidos da página do vídeo, para os que o dono não deixa tocar fora do YouTube
+    (o oEmbed não informa o canal desses)."""
+    req = urllib.request.Request(f'https://www.youtube.com/watch?v={vid}&hl=pt-BR', headers={'User-Agent': 'Mozilla/5.0', 'Accept-Language': 'pt-BR,pt;q=0.9'})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as r:
+            h = r.read().decode('utf-8', 'replace')
+    except Exception:
+        return '', '', ''
+    # os dados do próprio vídeo ficam em "videoDetails"; o resto da página traz outros vídeos e canais
+    i = h.find('"videoDetails":{')
+    d = h[i:i + 30000] if i >= 0 else ''
+    achar = lambda rx, t: (re.search(rx, t) or [None, ''])[1]
+    titulo = achar(r'"title":"((?:[^"\\]|\\.)*)"', d)
+    canal = achar(r'"author":"((?:[^"\\]|\\.)*)"', d) or achar(r'"ownerChannelName":"((?:[^"\\]|\\.)*)"', h)
+    canal_id = achar(r'"channelId":"(UC[\w-]+)"', d)
+    dec = lambda t: json.loads('"' + t + '"') if t else ''
+    return dec(titulo), dec(canal), canal_id
+
 if len(sys.argv) > 1:
     pares = []
     for linha in open(sys.argv[1], encoding='utf-8'):
@@ -36,9 +56,12 @@ else:
 ruins = 0
 for mod, vid, tipo in pares:
     sit, titulo, canal = oembed(vid)
+    canal_id = ''
+    if sit == 'sem_incorporar':
+        titulo, canal, canal_id = pagina(vid)
     # os de tipo "y" só abrem no YouTube: basta estarem no ar
     ruins += not (sit == 'ok' or (tipo == 'y' and sit == 'sem_incorporar'))
-    print('VIDEO ' + json.dumps({'mod': mod, 'id': vid, 'sit': sit, 'titulo': titulo, 'canal': canal}, ensure_ascii=False), flush=True)
+    print('VIDEO ' + json.dumps({'mod': mod, 'id': vid, 'sit': sit, 'titulo': titulo, 'canal': canal, 'canal_id': canal_id}, ensure_ascii=False), flush=True)
     time.sleep(0.3)
 print(f'{len(pares)} vídeos conferidos, {ruins} com problema')
 if len(sys.argv) == 1 and ruins:
