@@ -75,6 +75,16 @@ async function testarProgresso(fonte = RAIZ, fixtures = null) {
       r.ok(/24 por matéria, em 4h\./.test(await p.locator('main').innerText()), 'quem escolheu 4h depois da mudança para 4h20 continua com 4h');
       await ctx.close();
     });
+    // quem tinha a aba Apostila aberta (ela não existe na versão pública) volta para a tela Hoje
+    await r.etapa('última aba Apostila', async () => {
+      const fx = JSON.parse(fs.readFileSync(fixtures[0], 'utf8'));
+      const ctx = await b.newContext({ viewport: { width: 390, height: 860 } }); const p = await ctx.newPage(); const erros = [];
+      p.on('pageerror', e => erros.push(e.message));
+      await ctx.addInitScript(s => { if (!sessionStorage.getItem('fx')) { localStorage.setItem('missao-eear-v1', s); localStorage.setItem('missao-eear-aba', 'apostila'); sessionStorage.setItem('fx', '1'); } }, JSON.stringify(fx.estado));
+      await p.goto(srv.url); await p.waitForTimeout(400);
+      r.ok(/Missão de hoje/.test(await p.locator('main').innerText()) && !erros.length, 'quem tinha a aba Apostila aberta abre na tela Hoje');
+      await ctx.close();
+    });
   } finally { await b.close(); srv.fechar(); }
   return r;
 }
