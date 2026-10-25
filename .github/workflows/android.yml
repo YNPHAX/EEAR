@@ -1,5 +1,8 @@
 # Gera o app de Android (APK) com o Capacitor a partir do mesmo site.
-# Na main, o APK vai para a página de downloads (Releases) do repositório; nas outras branches só é compilado.
+# Na main, o APK assinado com a chave fixa vai para a página de downloads (Releases) do repositório;
+# nas outras branches, ou sem a chave, só é compilado.
+# O versionCode é o número desta execução: não renomeie este workflow, senão a contagem recomeça
+# e o Android recusa a versão nova por ser "mais antiga".
 name: App Android
 
 on:
@@ -42,19 +45,55 @@ jobs:
         run: |
           sed -i "s/versionCode 1$/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"1.0.${{ github.run_number }}\"/" build.gradle
           grep -n "versionCode\|versionName" build.gradle
+      # Com a chave fixa (segredos ANDROID_*, ver app/ASSINATURA.md) sai o APK de distribuição, que instala por
+      # cima da versão anterior sem perder o progresso. Sem ela, sai um APK de teste (debug), que nunca é publicado.
       - name: Compilar o APK
         working-directory: app/android
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
-      - name: Separar o APK
-        run: cp app/android/app/build/outputs/apk/debug/app-debug.apk missao-eear.apk && ls -la missao-eear.apk
-      # Nas outras branches o APK só é compilado, para conferir que nada quebrou: não fica para baixar.
+        env:
+          CHAVE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          CHAVE_SENHA: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          CHAVE_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          CHAVE_SENHA_ALIAS: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -n "$CHAVE_BASE64" ]; then
+            echo "$CHAVE_BASE64" | base64 -d > "$RUNNER_TEMP/inphax.jks"
+            ./gradlew assembleRelease --no-daemon --stacktrace \
+              -Pandroid.injected.signing.store.file="$RUNNER_TEMP/inphax.jks" \
+              -Pandroid.injected.signing.store.password="$CHAVE_SENHA" \
+              -Pandroid.injected.signing.key.alias="$CHAVE_ALIAS" \
+              -Pandroid.injected.signing.key.password="$CHAVE_SENHA_ALIAS"
+            rm -f "$RUNNER_TEMP/inphax.jks"
+            cp app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/missao-eear.apk"
+            echo "ASSINADO=1" >> "$GITHUB_ENV"
+          else
+            echo "::notice::Sem a chave fixa do app: APK de teste (debug), que não é publicado."
+            ./gradlew assembleDebug --no-daemon --stacktrace
+            cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/missao-eear.apk"
+            echo "ASSINADO=0" >> "$GITHUB_ENV"
+          fi
+          ls -la "$GITHUB_WORKSPACE/missao-eear.apk"
+      # A impressão digital esperada fica na variável ANDROID_CERT_SHA256 (não é segredo): se o APK vier com
+      # outra chave, para aqui, porque essa versão não instalaria por cima da anterior.
+      - name: Conferir a assinatura
+        if: env.ASSINADO == '1'
+        env:
+          ESPERADO: ${{ vars.ANDROID_CERT_SHA256 }}
+        run: |
+          APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+          "$APKSIGNER" verify --print-certs missao-eear.apk | tee certificado.txt
+          SHA=$(grep -m1 'SHA-256 digest' certificado.txt | awk '{print $NF}' | tr 'A-F' 'a-f')
+          ESP=$(echo "$ESPERADO" | tr -d ': ' | tr 'A-F' 'a-f')
+          echo "SHA-256 do certificado: $SHA"
+          if [ -z "$ESP" ]; then echo "::warning::Variável ANDROID_CERT_SHA256 não definida: a chave não foi comparada."
+          elif [ "$ESP" != "$SHA" ]; then echo "::error::O APK foi assinado com outra chave ($SHA, esperado $ESP)"; exit 1; fi
+      # Só o APK com a chave fixa, feito na main, fica para baixar.
       - uses: actions/upload-artifact@v4
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && env.ASSINADO == '1'
         with:
           name: missao-eear-apk
           path: missao-eear.apk
       - name: Publicar na página de downloads
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && env.ASSINADO == '1'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

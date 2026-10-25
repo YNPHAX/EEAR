@@ -9,7 +9,7 @@ site numa pasta temporária e abre num servidor local.
 | `montagem.test.js` | montagem do site e do app, JavaScript sem erro de sintaxe, arquivos citados, manifesto, modo offline, páginas legais, nada das apostilas no site público |
 | `navegador.test.js` | navegação, as aulas, quiz, flashcards, simulados (tamanho, tempo, retomada, descarte), provas oficiais respondidas pelo gabarito, certificados, progresso local (recarregar, copiar e colar), modo offline, telas de 320 a 1440 px no claro e no escuro |
 | `progresso.test.js` | progresso gravado por outra versão abre igual e não se perde ao gravar de novo (fixtures em `fixtures/`) |
-| `apk.test.js` | configuração do app Android, projeto Android gerado e, onde houver Android SDK, a compilação do APK |
+| `apk.test.js` | configuração do app Android (identificador definitivo, endereço interno), projeto Android gerado e, onde houver Android SDK, a compilação do APK de teste e do APK de distribuição assinado com uma chave fixa |
 | `rodar.js` | roda tudo e mostra o resumo |
 
 ## Como rodar
