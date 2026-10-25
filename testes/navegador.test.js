@@ -100,7 +100,7 @@ async function testarNavegador(fonte = RAIZ, { larguras = [320, 360, 390, 768, 1
     await r.etapa('simulados', async () => {
       const { ctx, p } = await nova();
       await comecar(p);
-      const casos = [['diag', null, 40, null], ['completo', null, 96, '4:00:00'], ['materia', 'mat', 24, '1:00:00']];
+      const casos = [['diag', null, 40, null], ['completo', null, 96, '4:20:00'], ['materia', 'mat', 24, '1:00:00']];
       for (const [tipo, s, n, tempo] of casos) {
         await clica(p, '[data-a="tab"][data-v="simulados"]', 100);
         await clica(p, `[data-a="simini"][data-tipo="${tipo}"]${s ? `[data-s="${s}"]` : ''}`, 250);

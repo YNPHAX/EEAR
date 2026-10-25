@@ -55,6 +55,7 @@ async function testarProgresso(fonte = RAIZ, fixtures = null) {
         if (JSON.stringify(depois.sims) !== JSON.stringify(fx.estado.sims)) perdidos.push('sims');
         ['nome', 'horas', 'prova', 'alvo', 'dias'].forEach(c => { if (JSON.stringify(depois.cfg[c]) !== JSON.stringify(fx.estado.cfg[c])) perdidos.push('cfg.' + c); });
         r.igual(perdidos, [], `${nome}: depois de gravar de novo, nada do progresso antigo se perdeu`);
+        if (Number(fx.estado.cfg.tempoSim) === 240 && !(fx.estado.cfg.cv >= 2)) r.igual(depois.cfg.tempoSim, 260, `${nome}: simulado completo no padrão antigo de 4h passa para 4h20`);
         const descartados = Object.keys(fx.estado).filter(k => !(k in depois));
         if (descartados.length) r.nota(`${nome}: campos que esta versão não conhece e descarta: ${descartados.join(', ')}`);
         const semAula = Object.keys(fx.estado.mod).filter(id => !ids.has(id));
@@ -63,6 +64,17 @@ async function testarProgresso(fonte = RAIZ, fixtures = null) {
         await ctx.close();
       });
     }
+    // quem escolhe 4h depois da mudança para 4h20 continua com 4h
+    await r.etapa('escolha de 4h mantida', async () => {
+      const fx = JSON.parse(fs.readFileSync(fixtures[0], 'utf8'));
+      const est = Object.assign({}, fx.estado, { cfg: Object.assign({}, fx.estado.cfg, { tempoSim: 240, cv: 2 }) });
+      const ctx = await b.newContext({ viewport: { width: 390, height: 860 } }); const p = await ctx.newPage();
+      await ctx.addInitScript(s => { if (!sessionStorage.getItem('fx')) { localStorage.setItem('missao-eear-v1', s); sessionStorage.setItem('fx', '1'); } }, JSON.stringify(est));
+      await p.goto(srv.url); await p.waitForTimeout(400);
+      await p.click('[data-a="tab"][data-v="simulados"]'); await p.waitForTimeout(150);
+      r.ok(/24 por matéria, em 4h\./.test(await p.locator('main').innerText()), 'quem escolheu 4h depois da mudança para 4h20 continua com 4h');
+      await ctx.close();
+    });
   } finally { await b.close(); srv.fechar(); }
   return r;
 }
