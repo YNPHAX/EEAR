@@ -21,13 +21,21 @@
   /* Provas anteriores oficiais: mantêm a ordem original das alternativas e o gabarito oficial. */
   const PROVAS = (E.provas || []).slice().sort((a, b) => (b.data || '').localeCompare(a.data || ''));
   const PROVA = {}, QO = { por: [], ing: [], mat: [], fis: [] }, OFI = {};
+  /* Questões em imagem: recorte fiel da prova original; o texto extraído fica oculto para busca e leitores de tela. */
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const figura = (p, x) => `<img class="qimg" data-a="qzoom" title="Toque para ampliar" src="${p.dir || ''}${x.img}" width="${x.w}" height="${x.h}" alt="" loading="lazy" decoding="async"><span class="sr">${esc(x.alt || '')}</span>`;
+  function textoProva(p, k) {
+    const t = (p.textos || {})[k];
+    if (!t) return '';
+    return Array.isArray(t) ? `<div class="txt txtimg">${t.map(x => figura(p, x)).join('')}</div>` : t;
+  }
   PROVAS.forEach(p => {
     PROVA[p.id] = p;
     p.ids = [];
     (p.q || []).forEach(q => {
       const id = 'P-' + p.id + '-' + q.n;
       const mod = q.mod && MOD[q.mod] ? q.mod : null;
-      Q[id] = { id, mod, m: q.m, e: q.e, o: q.o, c: q.c, r: q.r || 'Gabarito oficial da EEAR.', src: p.nome + ' · questão ' + q.n, tx: q.t ? ((p.textos || {})[q.t] || '') : '', of: 1, anulada: !!q.anulada };
+      Q[id] = { id, mod, m: q.m, e: q.e || (q.img ? figura(p, q) : ''), o: q.o || ['', '', '', ''], img: !!q.img && !q.o, c: q.c, r: q.r || 'Gabarito oficial da EEAR.', src: p.nome + ' · questão ' + q.n, tx: q.t ? textoProva(p, q.t) : '', of: 1, anulada: !!q.anulada };
       p.ids.push(id);
       if (QO[q.m]) QO[q.m].push(id);
       if (mod) (OFI[mod] = OFI[mod] || []).push(id);
@@ -90,7 +98,8 @@
     return mods.map(x => x.m.id + '-' + Math.floor(Math.random() * x.m.q.length));
   }
   const permutar = ids => { const p = {}; ids.forEach(id => { p[id] = Q[id].of ? [0, 1, 2, 3] : shuffle([0, 1, 2, 3]); }); return p; };
-  const acertou = (id, perm, pos) => pos !== undefined && pos !== null && (Q[id].anulada || perm[pos] === Q[id].c);
+  /* Questão anulada vale ponto para todos, mesmo sem resposta marcada. */
+  const acertou = (id, perm, pos) => !!Q[id].anulada || (pos !== undefined && pos !== null && perm[pos] === Q[id].c);
   const rotulo = q => q.src || q.mod;
   const enun = q => (q.src ? `<div class="src">${q.src}</div>` : '') + (q.tx || '') + q.e;
   const yt = s => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s);
@@ -734,11 +743,11 @@
 
   function opcoes(q, perm, resp, revelar, acao) {
     const cp = perm.indexOf(q.c);
-    return `<div class="opts">${perm.map((oi, pos) => {
+    return `<div class="opts ${q.img ? 'letras' : ''}">${perm.map((oi, pos) => {
       let cls = '';
       if (revelar) { if (pos === cp) cls = 'right'; else if (pos === resp) cls = 'wrong'; }
       else if (pos === resp) cls = 'sel';
-      return `<button class="opt ${cls}" ${acao ? `data-a="${acao}" data-p="${pos}"` : ''} ${revelar ? 'disabled' : ''}><span class="l">${LETRAS[pos]}</span><span>${q.o[oi]}</span></button>`;
+      return `<button class="opt ${cls}" ${acao ? `data-a="${acao}" data-p="${pos}"` : ''} ${revelar ? 'disabled' : ''} ${q.img ? `aria-label="Alternativa ${LETRAS[pos]}"` : ''}><span class="l">${LETRAS[pos]}</span>${q.img ? '' : `<span>${q.o[oi]}</span>`}</button>`;
     }).join('')}</div>`;
   }
 
@@ -946,7 +955,7 @@
     </section>`;
     const okOf = ORD.every(x => QO[x].length >= 24);
     h += `<section class="card"><div class="eyebrow">100% fiel à prova</div><h2 class="h2">Provas anteriores oficiais</h2>${PROVAS.length
-      ? `<p class="small" style="margin:0">Provas reais da EEAR, na ordem original e com o gabarito oficial. Faça como no dia: tempo de prova, rascunho e nada de consulta.</p><div class="tasks">${PROVAS.map(p => { const feitas = S.sims.filter(x => x.prova === p.id); const ult = feitas[feitas.length - 1]; return `<div class="task"><span class="sigla">${(p.data || '').slice(0, 4)}</span><div class="tt"><b>${p.nome}</b><div class="small muted">${p.ids.length} questões · ${fh((p.min || 240) / 60)}${ult ? ' · última média ' + nota(media(ult)) : ''}</div></div><button class="btn sm pri" data-a="simini" data-tipo="prova" data-s="${p.id}" ${S.ativo ? 'disabled' : ''}>${ult ? 'Refazer' : 'Fazer'}</button></div>`; }).join('')}</div>
+      ? `<p class="small" style="margin:0">Provas reais da EEAR, na ordem original e com o gabarito oficial. Faça como no dia: tempo de prova, rascunho e nada de consulta. Toque numa questão para ampliar.</p><div class="tasks">${PROVAS.map(p => { const feitas = S.sims.filter(x => x.prova === p.id); const ult = feitas[feitas.length - 1]; return `<div class="task"><span class="sigla">${(p.data || '').slice(0, 4)}</span><div class="tt"><b>${p.nome}</b><div class="small muted">${p.ids.length} questões · ${fh((p.min || 240) / 60)}${ult ? ' · última média ' + nota(media(ult)) : ''}</div></div><button class="btn sm pri" data-a="simini" data-tipo="prova" data-s="${p.id}" ${S.ativo ? 'disabled' : ''}>${ult ? 'Refazer' : 'Fazer'}</button></div>`; }).join('')}</div>
         <div class="row"><button class="btn" data-a="simini" data-tipo="oficial" ${S.ativo || !okOf ? 'disabled' : ''}>Simulado misto com questões oficiais (96)</button></div>`
       : `<p class="small" style="margin:0">As provas completas das quatro matérias entram aqui, na ordem original e com o gabarito oficial, assim que os PDFs da EEAR forem carregados. Até lá, use os simulados do curso abaixo.</p>`}</section>`;
     const reais = AP.sets.filter(x => x.tipo === 'test' && /prova/i.test(x.t));
@@ -1127,6 +1136,7 @@
       case 'apmais': V.mais = (V.mais || 0) + 1; render(); break;
       case 'appags': go('appags', { part: d.part, p: Number(d.p) || 1, volta: V.v === 'appags' ? V.volta : Object.assign({}, V) }); break;
       case 'appnav': V.p = Math.max(1, Number(d.p)); render(); window.scrollTo(0, 0); break;
+      case 'qzoom': el.classList.toggle('zoom'); break;
       case 'pgzoom': { const b = el.closest('.pgbox'); if (b) b.classList.toggle('zoom'); break; }
       case 'zerar': pedindo = 'zerar'; render(); break;
       case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; pedindo = null; salvar(); go('hoje'); break; }

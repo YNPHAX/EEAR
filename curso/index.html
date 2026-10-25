@@ -176,6 +176,16 @@ sup, sub { line-height: 0; }
 .opt[disabled] { cursor: default; }
 .expl { border-radius: 9px; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line); }
 .expl b.ok { color: var(--ok); } .expl b.bad { color: var(--bad); }
+.qimg { display: block; max-width: 100%; width: auto; height: auto; background: #fff; border-radius: 6px; padding: 4px; cursor: zoom-in; }
+.qimg.zoom { max-width: none; width: 180%; cursor: zoom-out; }
+.q-enun:has(.qimg) { overflow-x: auto; }
+.txtimg:has(.zoom) { overflow-x: auto; }
+.txtimg { padding: 6px; background: #fff; display: flex; flex-direction: column; gap: 8px; max-height: 60vh; overflow-y: auto; }
+.txtimg .qimg { padding: 0; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.opts.letras { display: grid; grid-template-columns: repeat(4, 1fr); }
+.opts.letras .opt { grid-template-columns: 1fr; justify-items: center; padding: 10px 6px; }
+.opts.letras .opt .l { width: 34px; height: 34px; font-size: 1rem; }
 .src { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
 .vlink { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; }
 .vlink::before { content: ""; flex: none; width: 0; height: 0; border-left: 11px solid var(--accent); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
@@ -315,4 +325,5 @@ details.rev[open] summary { margin-bottom: 8px; }
 <script src="dados/fis3.js"></script>
 <script src="dados/fis4.js"></script>
 <script src="dados/apostila.js"></script>
+<script src="dados/provas.js"></script>
 <script src="app.js"></script>
