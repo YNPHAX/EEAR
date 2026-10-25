@@ -627,7 +627,7 @@
   function vInicio() {
     const nQ = MODS.reduce((a, m) => a + m.q.length, 0), nV = Object.values(VA).reduce((a, v) => a + v.filter(x => x.k !== 'y').length, 0);
     const nOf = PROVAS.reduce((a, p) => a + p.ids.length, 0);
-    let h = `<section class="hero"><div class="eyebrow">Curso preparatório gratuito</div>
+    let h = `<section class="hero"><div class="hero-marca">${MARCA}<span>apresenta</span></div><div class="eyebrow">Curso preparatório gratuito</div>
       <h1 class="hero-t">Sua aprovação no CFS da EEAR começa aqui</h1>
       <p class="hero-p">Aulas com vídeo, teoria resumida, questões comentadas, flashcards, simulados e as provas oficiais da EEAR com gabarito, num plano de estudos que vai até o dia da prova.</p>
       <form class="hero-f" onsubmit="return false"><div class="field"><label for="ini-nome">Como você quer ser chamado?</label><input id="ini-nome" maxlength="80" autocomplete="name" placeholder="Seu nome"></div><button class="btn pri" data-a="comecar">Começar o curso</button></form>
@@ -641,7 +641,7 @@
       <div class="card"><div class="eyebrow">Certificado</div><p style="margin:0">Ao concluir todas as aulas de uma matéria, você recebe o certificado de conclusão dela.</p></div>
     </section>`;
     h += cartaoConta();
-    h += `<p class="small muted" style="margin:0">Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira. As videoaulas são vídeos gratuitos do YouTube, com o crédito de cada canal.</p>`;
+    h += `<p class="small muted" style="margin:0">Missão EEAR é um curso da INPHAX. Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira. As videoaulas são vídeos gratuitos do YouTube, com o crédito de cada canal.</p>`;
     return h;
   }
   /* Continuar de onde parei: a última aula aberta, ou a próxima do plano de hoje, ou a primeira ainda não concluída. */
@@ -782,7 +782,9 @@
       <p class="small" style="margin:0">${ok ? `Você concluiu ${s === 'geral' ? 'todas as aulas das quatro matérias' : 'todas as aulas desta matéria'} com 80% ou mais no quiz.` : `Conclua as ${ms.length} aulas ${s === 'geral' ? 'das quatro matérias ' : ''}com 80% ou mais no quiz para liberar o certificado. Faltam ${ms.length - feitas}.`}</p>
       ${ok ? `<div class="row"><button class="btn pri" data-a="cert" data-s="${s}">Ver o certificado</button></div>` : ''}</section>`;
   }
-  const DIVISAS = '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 30 32 14l24 16v8L32 22 8 38z"/><path d="M8 42l24-16 24 16v8L32 34 8 50z" opacity=".85"/><path d="M8 54l24-16 24 16v6L32 46 8 60z" opacity=".7"/></svg>';
+  /* X da INPHAX, em vetor */
+  const MARCA_X = '<svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="40" fill="#0C0C0C"/><g fill="#EFEAE0"><path d="M88 82H168L424 430H344Z"/><path d="M344 82H424L338 200H258Z"/><path d="M190 291H270L168 430H88Z"/></g></svg>';
+  const MARCA = '<span class="marca" role="img" aria-label="INPHAX"></span>';
   function vCert() {
     const s = V.s, geral = s === 'geral', ms = geral ? MODS : (MATS[s] ? aulasDe(s) : []);
     let h = `<button class="btn ghost back no-print" ${geral ? 'data-a="tab" data-v="hoje"' : `data-a="mat" data-s="${s}"`}>← Voltar</button>`;
@@ -793,12 +795,14 @@
     const horas = Math.round(ms.reduce((a, m) => a + m.h, 0)), data = concluidoEm(ms);
     const cod = codigoCert([S.cfg.nome, s, data].join('|'));
     h += `<article class="cert" id="cert"><div class="cert-in">
-      <div class="cert-marca">${DIVISAS}<span>Missão EEAR</span></div>
+      <div class="cert-marca">${MARCA_X}<span>Missão EEAR</span></div>
+      <div class="cert-por">um curso ${MARCA}</div>
       <div class="eyebrow">Certificado de conclusão</div>
       <p class="cert-cert">Certificamos que</p>
       <h1 class="cert-nome">${esc(S.cfg.nome)}</h1>
       <p class="cert-txt">concluiu ${geral ? 'o <b>curso preparatório completo para o CFS da EEAR</b>, nas quatro matérias da prova (Língua Portuguesa, Língua Inglesa, Matemática e Física)' : `a matéria <b>${MATS[s].nome}</b> do curso preparatório para o CFS da EEAR`}, com ${ms.length} aulas e nota de pelo menos 80% no quiz de cada uma.</p>
       <div class="cert-dados"><div><span class="lab">Carga horária</span><b>${horas} horas</b></div><div><span class="lab">Concluído em</span><b>${dataLonga(data)}</b></div><div><span class="lab">Código</span><b class="num">${cod}</b></div></div>
+      <div class="cert-ass"><span class="marca" role="img" aria-label="INPHAX"></span><span>emitido pela INPHAX</span></div>
       <p class="cert-nota">Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira. Não tem validade acadêmica.</p>
     </div></article>
     <div class="row no-print"><button class="btn pri" data-a="imprimir">Imprimir ou salvar em PDF</button><button class="btn" data-a="certnomeedit">Corrigir o nome</button></div>`;

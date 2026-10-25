@@ -15,9 +15,9 @@ OUT = os.path.abspath(args[0] if args else os.path.join(RAIZ, '_site'))
 REPO = os.environ.get('GITHUB_REPOSITORY', 'YNPHAX/EEAR')
 APK = f'https://github.com/{REPO}/releases/latest/download/missao-eear.apk'
 
-NOME, CURTO = 'Missão EEAR · curso CFS', 'Missão EEAR'
-DESC = 'Curso preparatório para o CFS da EEAR: plano de estudos até a prova, teoria, quizzes, flashcards, simulados e provas oficiais com gabarito.'
-TEMA_CLARO, TEMA_ESCURO, FUNDO = '#FFFFFF', '#111D31', '#EDF1F6'
+NOME, CURTO = 'Missão EEAR · INPHAX', 'Missão EEAR'
+DESC = 'Curso preparatório da INPHAX para o CFS da EEAR: aulas com vídeo, plano de estudos até a prova, quizzes, flashcards, simulados e provas oficiais com gabarito.'
+TEMA_CLARO, TEMA_ESCURO, FUNDO = '#0C0C0C', '#0C0C0C', '#0C0C0C'
 
 if os.path.exists(OUT):
     shutil.rmtree(OUT)
@@ -79,6 +79,8 @@ for raiz, _, fs in os.walk(os.path.join(CURSO, 'provas')):
             rel = os.path.relpath(os.path.join(raiz, f), CURSO)
             copiar(os.path.join(raiz, f), os.path.join(OUT, rel))
             imgs.append(rel)
+for f in sorted(os.listdir(os.path.join(CURSO, 'marca'))):
+    copiar(os.path.join(CURSO, 'marca', f), os.path.join(OUT, 'marca', f))
 for pasta, ext in (('fontes', ('.woff2', '.css', '.txt')), ('icones', ('.png',))):
     for f in sorted(os.listdir(os.path.join(WEB, pasta))):
         if f.endswith(ext):
