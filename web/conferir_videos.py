@@ -27,16 +27,17 @@ if len(sys.argv) > 1:
     pares = []
     for linha in open(sys.argv[1], encoding='utf-8'):
         p = linha.split()
-        pares += [(p[0], v) for v in p[1:]]
+        pares += [(p[0], v, None) for v in p[1:]]
 else:
     js = open(os.path.join(RAIZ, 'curso', 'dados', 'videoaulas.js'), encoding='utf-8').read()
     dados = json.loads(js[js.index('{'):js.rindex('}') + 1])
-    pares = [(m, v['id']) for m, vs in dados.items() for v in vs]
+    pares = [(m, v['id'], v.get('k')) for m, vs in dados.items() for v in vs]
 
 ruins = 0
-for mod, vid in pares:
+for mod, vid, tipo in pares:
     sit, titulo, canal = oembed(vid)
-    ruins += sit != 'ok'
+    # os de tipo "y" só abrem no YouTube: basta estarem no ar
+    ruins += not (sit == 'ok' or (tipo == 'y' and sit == 'sem_incorporar'))
     print('VIDEO ' + json.dumps({'mod': mod, 'id': vid, 'sit': sit, 'titulo': titulo, 'canal': canal}, ensure_ascii=False), flush=True)
     time.sleep(0.3)
 print(f'{len(pares)} vídeos conferidos, {ruins} com problema')
