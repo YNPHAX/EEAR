@@ -3,16 +3,21 @@
    Uso: node testes/apk.test.js [pasta_do_projeto]   (precisa de app/node_modules: cd app && npm ci) */
 const fs = require('fs'), path = require('path');
 const { execSync } = require('child_process');
-const { RAIZ, relatorio, montar, pastaTemp } = require('./lib/base');
+const { RAIZ, relatorio, montar, pastaTemp, publicavel, marcasRestritas, comMarcas } = require('./lib/base');
 
 /* Identificador do app na loja e no aparelho: uma vez distribuído, nunca mais muda (ver app/ASSINATURA.md). */
 const ID_DEFINITIVO = 'com.inphax.app';
 
-/* Arquivos dentro do APK: o curso está lá e nada das apostilas (índice, gabaritos ou páginas) foi junto. */
-function conferirConteudo(r, apk, nome) {
+/* Arquivos dentro do APK: o curso está lá, só com o que pode ser publicado, e nada das apostilas (índice, gabaritos
+   ou páginas) foi junto. */
+function conferirConteudo(r, apk, nome, marcas) {
   const lista = execSync(`python3 -c "import sys, zipfile; print('\\n'.join(zipfile.ZipFile(sys.argv[1]).namelist()))" "${apk}"`, { encoding: 'utf8' }).split('\n');
   r.ok(lista.includes('assets/public/index.html') && lista.includes('assets/public/app.js'), `${nome}: o curso está dentro do APK`);
   r.igual(lista.filter(f => /apostila|assets\/public\/ap\//i.test(f)), [], `${nome}: nada das apostilas dentro do APK`);
+  const publico = lista.filter(f => f.startsWith('assets/public/')).map(f => f.slice('assets/public/'.length)).filter(Boolean);
+  r.igual(publico.filter(f => !publicavel(f)), [], `${nome}: dentro do APK, só arquivos da lista do que pode ser publicado`);
+  const textos = JSON.parse(execSync(`python3 -c "import json, re, sys, zipfile; z = zipfile.ZipFile(sys.argv[1]); print(json.dumps({n: z.read(n).decode('utf-8', 'replace') for n in z.namelist() if n.startswith('assets/') and re.search(r'\\.(html|js|css|json|webmanifest|txt)$', n)}))" "${apk}"`, { encoding: 'utf8', maxBuffer: 1 << 28 }));
+  r.igual(comMarcas(textos, marcas), [], `${nome}: nenhum arquivo dentro do APK com dados das apostilas`);
 }
 
 function testarApk(fonte = RAIZ) {
@@ -49,7 +54,7 @@ function testarApk(fonte = RAIZ) {
   sh('./gradlew assembleDebug --no-daemon -q', path.join(t, 'android'));
   const apk = path.join(t, 'android', 'app', 'build', 'outputs', 'apk', 'debug', 'app-debug.apk');
   r.ok(fs.existsSync(apk) && fs.statSync(apk).size > 1e6, `APK compilado (${fs.existsSync(apk) ? (fs.statSync(apk).size / 1e6).toFixed(1) + ' MB' : 'não gerado'})`);
-  if (fs.existsSync(apk)) conferirConteudo(r, apk, 'APK de teste');
+  if (fs.existsSync(apk)) conferirConteudo(r, apk, 'APK de teste', marcasRestritas(fonte));
   r.nota('APK de teste (debug): assinado com uma chave criada na hora; o Android não instala um por cima do outro');
 
   // APK de distribuição, do mesmo jeito que o workflow App Android faz com a chave fixa (aqui, uma chave de teste)
@@ -59,7 +64,7 @@ function testarApk(fonte = RAIZ) {
   sh(`./gradlew assembleRelease --no-daemon -q ${props}`, path.join(t, 'android'));
   const rel = path.join(t, 'android', 'app', 'build', 'outputs', 'apk', 'release', 'app-release.apk');
   if (!r.ok(fs.existsSync(rel), 'APK de distribuição (release) compilado com a chave fixa')) return r;
-  conferirConteudo(r, rel, 'APK de distribuição');
+  conferirConteudo(r, rel, 'APK de distribuição', marcasRestritas(fonte));
   const sdk = process.env.ANDROID_HOME || process.env.ANDROID_SDK_ROOT;
   const bt = path.join(sdk, 'build-tools', fs.readdirSync(path.join(sdk, 'build-tools')).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).pop());
   const noApk = (sh(`"${path.join(bt, 'apksigner')}" verify --print-certs "${rel}"`).match(/SHA-256 digest: ([0-9a-f]+)/) || [])[1];

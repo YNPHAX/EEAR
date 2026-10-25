@@ -64,4 +64,26 @@ function servir(pasta, prefixo = '/EEAR/') {
   });
 }
 
-module.exports = { RAIZ, relatorio, pastaTemp, montar, carregarDados, servir };
+/* O que pode ir para o site e para dentro do app. Qualquer outro arquivo publicado faz o teste falhar. */
+const PUBLICAVEL = [/^index\.html$/, /^app\.js$/, /^sw\.js$/, /^manifest\.webmanifest$/, /^\.nojekyll$/, /^(privacidade|termos)\.html$/,
+  /^dados\/[a-z0-9-]+\.js$/, /^provas\/[a-z0-9_]+\/[a-z0-9_-]+\.webp$/, /^fontes\/[A-Za-z0-9_.-]+\.(woff2|css|txt)$/,
+  /^icones\/[a-z0-9_-]+\.png$/, /^marca\/[a-z0-9_-]+\.(svg|png)$/, /^cordova(_plugins)?\.js$/];
+const publicavel = f => PUBLICAVEL.some(rx => rx.test(f)) && !/apostila/i.test(f);
+
+/* Marcas do material de terceiros que não pode ser publicado (índice e gabaritos das apostilas de outro curso).
+   Vêm de curso/dados/apostila.js quando ele existe nesta cópia, mais algumas fixas para quando ele sair do repositório. */
+function marcasRestritas(fonte) {
+  const m = new Set(['EEAR.apostila', '"porTira"', 'build_apostila', 'Apostila CFS/BCT']);
+  const f = path.join(fonte, 'curso', 'dados', 'apostila.js');
+  if (fs.existsSync(f)) {
+    const s = fs.readFileSync(f, 'utf8');
+    (s.match(/"(CFS2?|BCT)_[A-Z]{3}_\d"/g) || []).forEach(x => m.add(x));
+    (s.match(/"id":"[A-Z0-9]+-[A-Z]{3}-[a-z]+-[^"]+"/g) || []).forEach(x => m.add(x));
+  }
+  return [...m];
+}
+
+/* Arquivos de texto (de uma lista {nome: conteúdo}) que contêm alguma marca do material restrito. */
+const comMarcas = (textos, marcas) => Object.keys(textos).filter(f => marcas.some(x => textos[f].includes(x)));
+
+module.exports = { RAIZ, relatorio, pastaTemp, montar, carregarDados, servir, publicavel, marcasRestritas, comMarcas };
