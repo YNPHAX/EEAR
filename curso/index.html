@@ -65,7 +65,7 @@ a { color: var(--accent); }
 .wrap { max-width: 760px; margin: 0 auto; padding-block: 18px calc(var(--nav-h) + 28px + env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 16px; }
 
 nav.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9; background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
-.tabs-in { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); height: var(--nav-h); }
+.tabs-in { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: repeat(6, 1fr); height: var(--nav-h); }
 .tab { background: none; border: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: .74rem; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
 .tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .tab[aria-current="page"] { color: var(--accent); }
@@ -229,6 +229,52 @@ details.rev[open] summary { margin-bottom: 8px; }
 .sync { font-size: .76rem; color: var(--muted); }
 .chart svg { width: 100%; height: auto; display: block; }
 .empty { text-align: center; color: var(--muted); padding: 20px 8px; }
+
+/* Apostila: páginas originais + folha de respostas */
+.aphead { font-family: var(--display); font-weight: 700; font-size: 1.02rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.lnk { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; font: inherit; }
+.lnkchip { cursor: pointer; }
+.pgs { display: flex; flex-direction: column; gap: 14px; }
+.pgbox { margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.pgbox figcaption { text-align: right; }
+.pg { width: 100%; aspect-ratio: 1100 / 1556; background-color: #fff; background-repeat: no-repeat; border: 1px solid var(--line); border-radius: 6px; cursor: zoom-in; }
+.pgbox.zoom { overflow-x: auto; }
+.pgbox.zoom .pg { width: 200%; cursor: zoom-out; }
+.folha { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px 10px; }
+.fq { display: flex; align-items: center; gap: 3px; padding: 3px 4px; border-radius: 7px; }
+.fq .n { font-family: var(--mono); font-size: .8rem; font-weight: 600; width: 26px; color: var(--muted); }
+.fq button { width: 27px; height: 27px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); font-family: var(--mono); font-size: .78rem; font-weight: 600; cursor: pointer; padding: 0; color: var(--ink); }
+.fq button.on { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.fq button[disabled] { cursor: default; }
+.fq.right { background: var(--ok-soft); }
+.fq.right button.on { background: var(--ok); border-color: var(--ok); color: var(--surface); }
+.fq.wrong { background: var(--bad-soft); }
+.fq.wrong button.on { background: var(--bad); border-color: var(--bad); color: var(--surface); }
+.fq.wrong button.gab { border: 2px solid var(--ok); color: var(--ok); }
+.fq.cur { box-shadow: inset 0 0 0 2px var(--accent); }
+.fq.open .small { font-size: .75rem; }
+.apgrid { display: flex; flex-direction: column; gap: 16px; }
+.appages { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.apbar { position: fixed; left: 0; right: 0; bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px)); z-index: 8; background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -2px 8px rgba(0, 0, 0, .07); }
+.apbar-in { max-width: 760px; margin: 0 auto; padding-block: 8px; padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); display: flex; align-items: center; gap: 4px; }
+.apq { font-weight: 600; min-width: 2.4em; text-align: center; white-space: nowrap; }
+.aplet { display: flex; gap: 6px; margin-left: auto; }
+.aplet button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); font-family: var(--mono); font-weight: 600; cursor: pointer; padding: 0; color: var(--ink); }
+.aplet button.on { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.aplet button.gab { border: 2px solid var(--ok); color: var(--ok); }
+.aplet button[disabled] { opacity: .6; cursor: default; }
+.apbar .fol { display: none; margin-left: 6px; }
+@media (min-width: 400px) { .apbar .fol { display: inline-flex; } }
+.wrap.combarra { padding-bottom: calc(var(--nav-h) + 96px + env(safe-area-inset-bottom, 0px)); }
+@media (min-width: 820px) { .apbar { bottom: 0; } .wrap.combarra { padding-bottom: 96px; } }
+@media (min-width: 1100px) {
+  .wrap.largo { max-width: 1240px; }
+  .apgrid { display: grid; grid-template-columns: minmax(0, 1fr) 390px; align-items: start; }
+  .apside { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 122px); max-height: calc(100vh - 140px); overflow-y: auto; }
+  .apbar { display: none; }
+  .wrap.largo.combarra { padding-bottom: 48px; }
+  .apside .folha { grid-template-columns: repeat(2, 1fr); }
+}
 @media (prefers-reduced-motion: no-preference) {
   .fc, .opt, .btn { transition: background-color .15s, border-color .15s, color .15s; }
 }
@@ -245,6 +291,7 @@ details.rev[open] summary { margin-bottom: 8px; }
     <button class="tab" data-a="tab" data-v="hoje"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Hoje</button>
     <button class="tab" data-a="tab" data-v="plano"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Plano</button>
     <button class="tab" data-a="tab" data-v="materias"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>Matérias</button>
+    <button class="tab" data-a="tab" data-v="apostila"><svg viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>Apostila</button>
     <button class="tab" data-a="tab" data-v="treino"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg>Treino</button>
     <button class="tab" data-a="tab" data-v="simulados"><svg viewBox="0 0 24 24"><path d="M9 4h6M12 4v3"/><circle cx="12" cy="14" r="7"/><path d="M12 14l3-3"/></svg>Simulados</button>
   </div>
@@ -267,4 +314,5 @@ details.rev[open] summary { margin-bottom: 8px; }
 <script src="dados/fis2.js"></script>
 <script src="dados/fis3.js"></script>
 <script src="dados/fis4.js"></script>
+<script src="dados/apostila.js"></script>
 <script src="app.js"></script>

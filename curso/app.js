@@ -35,6 +35,20 @@
   });
   const CAL = E.calendario || [];
   const VID = E.videos || {};
+  /* Apostila: exercícios das apostilas do curso, corrigidos pelo gabarito impresso do livro. */
+  const AP = E.apostila || { livros: [], partes: {}, sets: [] };
+  const APS = {}, APMOD = {}, APPLAN = {};
+  AP.sets.forEach(s => {
+    APS[s.id] = s;
+    s.itens = [];
+    s.sec.forEach((sec, si) => { if (sec.g) sec.g.split('').forEach((g, i) => s.itens.push({ k: si + ':' + i, si, n: i + 1, g })); });
+    s.nmc = s.itens.filter(x => x.g !== '*').length;
+    s.mods = (s.mods || []).filter(id => MOD[id]);
+    s.mods.forEach(id => (APMOD[id] = APMOD[id] || []).push(s.id));
+    if (s.mods.length && s.nmc) (APPLAN[s.mods[0]] = APPLAN[s.mods[0]] || []).push(s.id);
+  });
+  const LIVRO = {};
+  AP.livros.forEach(l => { LIVRO[l.id] = l; });
 
   const app = document.getElementById('app');
   const LETRAS = ['A', 'B', 'C', 'D'];
@@ -93,7 +107,7 @@
     return {
       v: 1, t: 0,
       cfg: { alvo: 'cfs1-2028', prova: '2027-05-30', inicio: hoje(), horas: 3, dias: [0, 1, 2, 3, 4, 5, 6], simDia: 0, tempoSim: 240, excl: [] },
-      mod: {}, fc: {}, erros: {}, sims: [], diag: null, feito: {}, act: {}, ativo: null, ult: null
+      mod: {}, fc: {}, erros: {}, sims: [], diag: null, feito: {}, act: {}, ativo: null, ult: null, ap: {}
     };
   }
   function mesclar(o) {
@@ -105,7 +119,7 @@
       if (o.cfg.prova === '2026-11-22') { b.cfg.alvo = 'cfs1-2028'; b.cfg.prova = '2027-05-30'; }
       else { const p = CAL.find(x => x.d === o.cfg.prova); b.cfg.alvo = p ? p.id : 'outra'; }
     }
-    ['mod', 'fc', 'erros', 'feito', 'act'].forEach(k => { if (!b[k] || typeof b[k] !== 'object') b[k] = {}; });
+    ['mod', 'fc', 'erros', 'feito', 'act', 'ap'].forEach(k => { if (!b[k] || typeof b[k] !== 'object') b[k] = {}; });
     if (!Array.isArray(b.sims)) b.sims = [];
     return b;
   }
@@ -186,6 +200,67 @@
   }
   function marcarAtividade() { const d = hoje(); S.act[d] = (S.act[d] || 0) + 1; }
 
+  /* ---------- apostila: status e páginas ---------- */
+  const TIPO_AP = { sala: 'Em sala', casa: 'Para casa', adicionais: 'Adicionais', unit: 'Unit', test: 'Test', exercises: 'Exercises' };
+  const MIN_Q = 2.5; /* minutos por questão da apostila no plano */
+  function aulaTxt(a) {
+    const p = String(a).split('-');
+    if (p.length < 2) return 'Aula ' + a;
+    return 'Aulas ' + p[0] + (Number(p[1]) - Number(p[0]) === 1 ? ' e ' : ' a ') + p[1];
+  }
+  function apSigla(s) {
+    if (s.tipo === 'unit') return 'U' + s.aula;
+    if (s.tipo === 'test') return 'T' + s.aula;
+    if (s.tipo === 'exercises') return 'EX';
+    if (s.tipo === 'adicionais') return 'AD';
+    return 'A' + s.aula;
+  }
+  function apTitulo(s) {
+    if (s.tipo === 'unit') return 'Unit ' + s.aula + (s.tema ? ': ' + s.tema : '');
+    if (s.tipo === 'sala' || s.tipo === 'casa') return aulaTxt(s.aula) + ' · ' + s.t;
+    return s.t;
+  }
+  const apTipo = s => s.tipo === 'sala' ? 'Exercícios em sala' : s.tipo === 'casa' ? 'Exercícios para casa' : s.tipo === 'adicionais' ? 'Exercícios adicionais' : s.tipo === 'unit' ? 'Unit completa' : s.tipo === 'test' ? (/prova/i.test(s.t) ? 'Prova real da EEAR' : 'Test') : 'Exercícios extras';
+  function apEst(id) {
+    const s = APS[id], r = S.ap[id], ok = (r && r.ok) || {};
+    let feitas = 0, certas = 0;
+    s.itens.forEach(x => { if (x.g === '*' || ok[x.k] === undefined) return; feitas++; if (ok[x.k] === 1) certas++; });
+    return { feitas, certas, total: s.nmc, fim: s.nmc > 0 && feitas === s.nmc, nota: s.nmc ? certas / s.nmc : 0 };
+  }
+  function apChip(id) {
+    const e = apEst(id), r = S.ap[id];
+    if (e.fim) return `<span class="chip ${e.nota >= META ? 'ok' : 'warn'}">${pct(e.nota)}</span>`;
+    if (e.feitas) return `<span class="chip acc">${e.feitas}/${e.total}</span>`;
+    if (r && r.r && Object.keys(r.r).length) return '<span class="chip">em andamento</span>';
+    return `<span class="chip">${e.total} questões</span>`;
+  }
+  /* Ciclo do plano: exercícios em sala e units no ciclo 1; para casa e provas reais no ciclo 2.
+     Matéria sem exercícios em sala no livro (Português): os para casa vão para o ciclo 1. */
+  const COM_SALA = new Set(AP.sets.filter(s => s.tipo === 'sala').map(s => s.l + s.m));
+  const apCiclo = s => (s.tipo === 'sala' || s.tipo === 'unit' || ((s.tipo === 'casa' || s.tipo === 'adicionais') && !COM_SALA.has(s.l + s.m))) ? 0 : 1;
+  const apHoras = s => Math.max(0.25, Math.round(s.nmc * MIN_Q / 60 * 4) / 4);
+  const nErrosAp = () => AP.sets.reduce((a, s) => { const r = S.ap[s.id]; return a + (r && r.ok ? Object.keys(r.ok).filter(k => r.ok[k] === 0).length : 0); }, 0);
+  const PG_TIRA = AP.porTira || 4;
+  const apCarregadas = new Set();
+  function pgHtml(part, p) {
+    const n = (AP.partes[part] || {}).n || 0;
+    if (p < 1 || p > n) return '';
+    const c = Math.floor((p - 1) / PG_TIRA), i = (p - 1) % PG_TIRA, cnt = Math.min(PG_TIRA, n - c * PG_TIRA);
+    const url = (AP.dir || 'ap/') + part + '_' + pad(c) + '.webp', pos = cnt > 1 ? (i / (cnt - 1)) * 100 : 0;
+    const bg = apCarregadas.has(url) ? `background-image:url(${url});` : '';
+    return `<figure class="pgbox"><div class="pg" data-a="pgzoom" ${bg ? '' : `data-bg="${url}"`} style="${bg}background-size:100% ${cnt * 100}%;background-position:0 ${pos}%" role="img" aria-label="Página ${p} da apostila"></div><figcaption class="small muted num">pág. ${p} do PDF</figcaption></figure>`;
+  }
+  let io = null;
+  function lazyPaginas() {
+    if (io) { io.disconnect(); io = null; }
+    const els = app.querySelectorAll('.pg[data-bg]');
+    if (!els.length) return;
+    const carregar = el => { const u = el.dataset.bg; el.style.backgroundImage = `url(${u})`; apCarregadas.add(u); el.removeAttribute('data-bg'); };
+    if (!('IntersectionObserver' in window)) { els.forEach(carregar); return; }
+    io = new IntersectionObserver(ents => ents.forEach(en => { if (en.isIntersecting) { carregar(en.target); io.unobserve(en.target); } }), { rootMargin: '900px 0px' });
+    els.forEach(el => io.observe(el));
+  }
+
   /* ---------- gerador do plano ---------- */
   let PL = null, PLK = '';
   function plano() { const k = JSON.stringify([S.cfg, S.diag]); if (k !== PLK) { PL = gerarPlano(); PLK = k; } return PL; }
@@ -227,7 +302,9 @@
     const capTot = dEst.reduce((a, n, j) => a + (j === 0 && diag ? Math.max(0, cap - 1.5) : cap), 0);
     const excl = new Set(c.excl || []);
     const pend = MODS.filter(m => !excl.has(m.id));
-    const need = pend.reduce((a, m) => a + m.h, 0);
+    /* Exercícios da apostila: os em sala e as units entram no ciclo 1; os para casa e as provas reais, no ciclo 2. */
+    const apDo = (id, k) => (APPLAN[id] || []).filter(sid => apCiclo(APS[sid]) === k);
+    const need = pend.reduce((a, m) => a + m.h + apDo(m.id, 0).reduce((b, sid) => b + apHoras(APS[sid]), 0), 0);
     const f = need ? Math.min(1, capTot / need) : 1;
     const retaFinal = f < 0.5;
     const porPeso = (a, b) => (b.peso - a.peso) || (a.n - b.n);
@@ -245,7 +322,11 @@
       ORD.forEach(s => {
         let lista = cc.mods.filter(m => m.m === s);
         if (ci === 0 && retaFinal) lista = lista.slice().sort(porPeso);
-        fila[s] = lista.map(m => ({ id: m.id, r: Math.max(cc.min, q4(m.h * cc.fator)), p: 0 }));
+        fila[s] = [];
+        lista.forEach(m => {
+          fila[s].push({ id: m.id, r: Math.max(cc.min, q4(m.h * cc.fator)), p: 0 });
+          if (ci < 2) apDo(m.id, ci).forEach(sid => { const r = Math.max(0.25, q4(apHoras(APS[sid]) * (ci === 0 ? f : 1))); fila[s].push({ id: m.id, ap: sid, r, t0: r, p: 0 }); });
+        });
         tot[s] = fila[s].reduce((a, x) => a + x.r, 0) || 1;
         rest[s] = tot[s];
       });
@@ -266,10 +347,16 @@
         const s = pool[0], it = fila[s][0];
         const a = q4(Math.min(it.r, left));
         if (a < it.r && a < 0.5) break;
-        dia.tar.push({ k: cc.pref + ':' + it.id + ':' + it.p, tipo: 'teoria', mod: it.id, h: a, txt: cc.txt + MOD[it.id].t + (it.p ? ' (continuação)' : '') });
+        if (it.ap) {
+          const st = APS[it.ap], resto = q4(it.r - a);
+          dia.tar.push({ k: 'A:' + it.ap + ':' + it.p, tipo: 'apost', set: it.ap, mod: it.id, h: a, ate: resto > 0 ? Math.round((1 - resto / it.t0) * 100) / 100 : 1, txt: 'Apostila ' + LIVRO[st.l].curto + ': ' + apTitulo(st) + (it.p ? ' (continuação)' : '') });
+        } else dia.tar.push({ k: cc.pref + ':' + it.id + ':' + it.p, tipo: 'teoria', mod: it.id, h: a, txt: cc.txt + MOD[it.id].t + (it.p ? ' (continuação)' : '') });
         it.r = q4(it.r - a); rest[s] = q4(rest[s] - a); left = q4(left - a); it.p++;
         if (usados.indexOf(s) < 0) usados.push(s);
-        if (it.r <= 0) {
+        if (it.r <= 0 && it.ap) {
+          fila[s].shift();
+          if (!sobra()) fimCiclo[ci] = dia.n;
+        } else if (it.r <= 0) {
           fila[s].shift();
           if (ci === 0) {
             dia.tar.push({ k: 'Q:' + it.id, tipo: 'quiz', mod: it.id, txt: 'Quiz ' + it.id + ': meta de 8 acertos em 10' });
@@ -332,16 +419,17 @@
     if (t.tipo === 'diag') return !!S.diag;
     if (t.tipo === 'sim' || t.tipo === 'simmat') { const d = t.k.slice(2); return S.sims.some(x => x.d === d && x.tipo !== 'diag'); }
     if (t.tipo === 'marco') return S.sims.some(x => x.d === t.d && (x.tipo === 'completo' || x.tipo === 'prova' || x.tipo === 'oficial'));
+    if (t.tipo === 'apost') { const e = APS[t.set] ? apEst(t.set) : null; return !e || !e.total || e.feitas / e.total >= (t.ate || 1) - 0.001; }
     return false;
   }
-  const AUTO = { quiz: 1, diag: 1, sim: 1, simmat: 1 };
+  const AUTO = { quiz: 1, diag: 1, sim: 1, simmat: 1, apost: 1 };
 
   /* ---------- navegação ---------- */
   let V = { v: 'hoje' };
-  try { const a = localStorage.getItem(LS_ABA); if (a && ['hoje', 'plano', 'materias', 'treino', 'simulados'].indexOf(a) >= 0) V = { v: a }; } catch (e) { /* ignora */ }
+  try { const a = localStorage.getItem(LS_ABA); if (a && ['hoje', 'plano', 'materias', 'apostila', 'treino', 'simulados'].indexOf(a) >= 0) V = { v: a }; } catch (e) { /* ignora */ }
   if (S.ativo) V = { v: 'sim' };
   let QZ = null, FC = null, timer = null, pedindo = null, mapa = false;
-  const ABA_DE = { hoje: 'hoje', plano: 'plano', materias: 'materias', modulo: 'materias', quiz: null, fc: 'treino', treino: 'treino', simulados: 'simulados', sim: 'simulados', res: 'simulados' };
+  const ABA_DE = { hoje: 'hoje', plano: 'plano', materias: 'materias', modulo: 'materias', quiz: null, fc: 'treino', treino: 'treino', simulados: 'simulados', sim: 'simulados', res: 'simulados', apostila: 'apostila', apset: 'apostila', appags: 'apostila' };
   function go(v, extra) { V = Object.assign({ v }, extra || {}); pedindo = null; render(); window.scrollTo(0, 0); }
 
   /* ---------- componentes ---------- */
@@ -363,6 +451,7 @@
       case 'sim': sub = 'Condições de prova, com cronômetro'; bt = `<button class="btn sm pri" data-a="simini" data-tipo="completo">Começar</button>`; break;
       case 'simmat': sub = '24 questões · 1h'; bt = `<button class="btn sm" data-a="tab" data-v="simulados">Escolher</button>`; break;
       case 'erros': case 'reforco': sub = plural(nErros(), 'questão', 'questões') + ' no caderno de erros'; bt = `<button class="btn sm" data-a="tab" data-v="treino">Abrir</button>`; break;
+      case 'apost': { const st = APS[t.set], e = apEst(t.set); sub = `${sig(st.m)} ${apTipo(st)} · ${e.feitas}/${e.total} corrigidas · ${fh(t.h)}`; bt = `<button class="btn sm" data-a="apset" data-id="${st.id}">Abrir</button>`; break; }
       default: sub = '';
     }
     return `<div class="task ${ok ? 'done' : ''}">${chk}<div class="tt"><b>${t.txt}</b>${sub ? `<div class="small muted">${sub}</div>` : ''}</div>${bt || '<span></span>'}</div>`;
@@ -447,8 +536,8 @@
         <div><div class="eyebrow">Conteúdo</div><div class="score num">${MODS.length - (c.excl || []).length}<small> módulos</small></div><div class="small muted">${r.fimC ? 'teoria termina em ' + fdata(r.fimC) : 'tudo já coberto'} · ${plural(r.est, 'dia de estudo', 'dias de estudo')}</div></div>
       </div>
       <div class="tasks small">
-        <div class="task"><span class="sigla">C1</span><div class="tt"><b>Ciclo 1: teoria completa</b><div class="muted">todos os módulos, com quiz e revisão de 7 dias</div></div><span class="num">${r.fimCiclo[0] ? 'até ' + fdata(r.fimCiclo[0]) : '—'}</span></div>
-        <div class="task"><span class="sigla">C2</span><div class="tt"><b>Ciclo 2: revisão ativa</b><div class="muted">todos os módulos de novo, do que mais cai para o que menos cai</div></div><span class="num">${r.fimCiclo[1] ? 'até ' + fdata(r.fimCiclo[1]) : r.fimCiclo[0] ? 'parcial' : 'sem tempo'}</span></div>
+        <div class="task"><span class="sigla">C1</span><div class="tt"><b>Ciclo 1: teoria completa</b><div class="muted">todos os módulos, com quiz, revisão de 7 dias${AP.sets.length ? ' e os exercícios de aula da apostila (em sala, units e o Português)' : ''}</div></div><span class="num">${r.fimCiclo[0] ? 'até ' + fdata(r.fimCiclo[0]) : '—'}</span></div>
+        <div class="task"><span class="sigla">C2</span><div class="tt"><b>Ciclo 2: revisão ativa</b><div class="muted">todos os módulos de novo, do que mais cai para o que menos cai${AP.sets.length ? ', com os exercícios para casa e as provas reais da apostila' : ''}</div></div><span class="num">${r.fimCiclo[1] ? 'até ' + fdata(r.fimCiclo[1]) : r.fimCiclo[0] ? 'parcial' : 'sem tempo'}</span></div>
         <div class="task"><span class="sigla">C3</span><div class="tt"><b>Ciclo 3: o que mais cai</b><div class="muted">módulos de incidência média e alta</div></div><span class="num">${r.fimCiclo[2] ? 'até ' + fdata(r.fimCiclo[2]) : r.fimCiclo[1] ? 'parcial' : 'sem tempo'}</span></div>
       </div></section>`;
     }
@@ -467,7 +556,7 @@
         const ws = d.n - ((wday(d.n) + 6) % 7);
         if (ws !== semana) { semana = ws; ns++; h += `<div class="week">Semana ${ns} · ${fdata(ws)} a ${fdata(ws + 6)}</div>`; }
         const tipoTxt = { estudo: 'estudo', simulado: 'simulado', revisao: 'revisão', vespera: 'véspera', marco: 'prova' }[d.tipo];
-        h += `<div class="day ${d.n === hj ? 'today' : ''} ${d.n < hj ? 'past' : ''}" ${d.n === hj ? 'id="dia-hoje"' : ''}><div class="dd"><b>${fdata(d.n)}</b>${DIAS[wday(d.n)]}<br>${tipoTxt}</div><ul>${d.tar.map(t => `<li class="${feita(t) ? 'done' : ''}">${t.mod ? sig(MOD[t.mod].m) + ' ' : ''}${t.txt}${t.h && t.tipo === 'teoria' ? ` <span class="muted small">(${fh(t.h)})</span>` : ''}</li>`).join('')}</ul></div>`;
+        h += `<div class="day ${d.n === hj ? 'today' : ''} ${d.n < hj ? 'past' : ''}" ${d.n === hj ? 'id="dia-hoje"' : ''}><div class="dd"><b>${fdata(d.n)}</b>${DIAS[wday(d.n)]}<br>${tipoTxt}</div><ul>${d.tar.map(t => `<li class="${feita(t) ? 'done' : ''}">${t.mod ? sig(MOD[t.mod].m) + ' ' : ''}${t.txt}${t.h && (t.tipo === 'teoria' || t.tipo === 'apost') ? ` <span class="muted small">(${fh(t.h)})</span>` : ''}</li>`).join('')}</ul></div>`;
       });
       h += `</div>`;
     }
@@ -499,7 +588,8 @@
     let h = `<button class="btn ghost back" data-a="mat" data-s="${m.m}">← ${MATS[m.m].curto}</button>`;
     h += `<div class="stack"><div class="eyebrow">${sig(m.m)} ${m.id} · incidência ${bolinhas(m.peso)} · ${fh(m.h)} ideais</div><h1 class="h1">${m.t}</h1><div class="row"><span class="chip ${st.k}">${st.txt}</span>${r.tent ? `<span class="small muted">${plural(r.tent, 'tentativa', 'tentativas')} no quiz</span>` : ''}</div></div>`;
     const ofi = OFI[m.id] || [];
-    const abas = [['teoria', 'Teoria'], ['ex', 'Exemplos'], ['quiz', 'Quiz'], ['prov', 'Provas'], ['cards', 'Cartões']];
+    const aps = APMOD[m.id] || [];
+    const abas = [['teoria', 'Teoria'], ['ex', 'Exemplos'], ['quiz', 'Quiz'], ['ap', 'Apostila'], ['prov', 'Provas'], ['cards', 'Cartões']];
     h += `<div class="seg" role="group" aria-label="Partes do módulo">${abas.map(a => `<button data-a="aba" data-aba="${a[0]}" aria-pressed="${a[0] === aba}">${a[1]}</button>`).join('')}</div>`;
     if (aba === 'teoria') {
       h += `<article class="card teoria b-${m.m}">${m.teoria}</article>`;
@@ -515,6 +605,10 @@
       h += `<section class="card"><h2 class="h2">Quiz do módulo</h2><p style="margin:0">São ${m.q.length} questões no estilo da EEAR, com correção comentada logo após cada resposta. O módulo fica dominado com ${Math.ceil(m.q.length * META)} acertos ou mais.</p>
         ${r.best != null ? `<div class="row"><span class="chip ${r.best >= META ? 'ok' : 'warn'}">Melhor nota: ${pct(r.best)}</span><span class="chip">Última: ${pct(r.last)}</span></div>` : ''}
         <div class="row"><button class="btn pri" data-a="quizmod" data-id="${m.id}">${r.tent ? 'Refazer o quiz' : 'Começar o quiz'}</button></div></section>`;
+    } else if (aba === 'ap') {
+      h += `<section class="card"><h2 class="h2">Exercícios da apostila</h2>${aps.length
+        ? `<p style="margin:0">${plural(aps.length, 'conjunto', 'conjuntos')} das suas apostilas sobre este tópico, com as páginas originais e correção pelo gabarito do livro. Meta: 80% em cada um.</p><div class="mods">${aps.map(id => apLinha(APS[id], 'mod')).join('')}</div>`
+        : '<p style="margin:0">As apostilas não têm um conjunto de exercícios específico deste tópico. Veja a aba Apostila para folhear o material.</p>'}</section>`;
     } else if (aba === 'prov') {
       h += `<section class="card"><h2 class="h2">Questões de provas anteriores</h2>${ofi.length
         ? `<p style="margin:0">${plural(ofi.length, 'questão oficial', 'questões oficiais')} da EEAR sobre este tópico, com a ordem original das alternativas e o gabarito oficial.</p><div class="row"><button class="btn pri" data-a="oficiaismod" data-id="${m.id}">Resolver ${ofi.length > 20 ? '20 sorteadas' : 'todas'}</button></div>`
@@ -525,6 +619,116 @@
       h += `<section class="card"><div class="tbl"><table><tbody>${(m.fc || []).map(c => `<tr><td>${c[0]}</td><td>${c[1]}</td></tr>`).join('')}</tbody></table></div></section>`;
     }
     if (nx && nx.m === m.m) h += `<div class="row between"><span class="small muted">Próximo: ${nx.id} · ${nx.t}</span><button class="btn sm" data-a="mod" data-id="${nx.id}">Abrir</button></div>`;
+    return h;
+  }
+
+  /* ---------- apostila ---------- */
+  const grupoAp = s => s.tipo === 'sala' ? 'exercícios em sala' : (s.tipo === 'casa' || s.tipo === 'adicionais') ? 'exercícios para casa' : s.tipo === 'unit' ? 'units' : 'tests e provas reais';
+  function apLinha(s, de) {
+    return `<button class="modrow" data-a="apset" data-id="${s.id}" ${de ? `data-de="${de}"` : ''}><span class="sigla c-${s.m}">${apSigla(s)}</span><span><span class="mt">${apTitulo(s)}</span><br><span class="peso">${apTipo(s)} · ${s.nmc} questões${s.inc ? ' · gabarito pouco nítido' : ''}</span></span>${apChip(s.id)}</button>`;
+  }
+  function vApostila() {
+    let h = `<div class="stack"><div class="eyebrow">Material do curso</div><h1 class="h1">Apostila</h1></div>`;
+    if (!AP.sets.length) return h + '<p class="empty">A apostila ainda não foi carregada.</p>';
+    const l = V.l && LIVRO[V.l] ? V.l : (V.l = AP.livros[0].id);
+    const s = V.s && MATS[V.s] ? V.s : (V.s = ORD[0]);
+    h += `<p class="small" style="margin:0">As páginas originais das suas apostilas, com folha de respostas corrigida pelo gabarito impresso do livro. A meta é 80% em cada conjunto.</p>`;
+    h += `<div class="seg" role="group" aria-label="Livro">${AP.livros.map(x => `<button data-a="aplivro" data-l="${x.id}" aria-pressed="${x.id === l}">${x.curto}</button>`).join('')}</div>`;
+    h += `<div class="seg" role="group" aria-label="Matéria">${ORD.map(x => `<button data-a="apmat" data-s="${x}" aria-pressed="${x === s}">${MATS[x].curto}</button>`).join('')}</div>`;
+    const sets = AP.sets.filter(x => x.l === l && x.m === s);
+    let tot = 0, fe = 0, ce = 0;
+    sets.forEach(x => { const e = apEst(x.id); tot += e.total; fe += e.feitas; ce += e.certas; });
+    h += `<section class="card b-${s}"><div class="row between"><h2 class="h2">${LIVRO[l].nome} · ${MATS[s].curto}</h2><span class="small muted num">${fe} de ${tot} corrigidas</span></div><div class="meter"><i style="width:${tot ? (fe / tot) * 100 : 0}%"></i></div>${fe ? `<span class="small muted">${pct(ce / fe)} de acerto nas questões corrigidas</span>` : ''}`;
+    const grupos = [];
+    sets.forEach(x => { const k = x.fr + ' · ' + grupoAp(x); let g = grupos.find(y => y.k === k); if (!g) grupos.push(g = { k, sets: [] }); g.sets.push(x); });
+    h += grupos.length ? grupos.map(g => `<div class="aphead">${g.k.replace(/^(Matemática|Física) · /, '')}</div><div class="mods">${g.sets.map(x => apLinha(x)).join('')}</div>`).join('') : '<p class="empty">Este livro não tem exercícios desta matéria.</p>';
+    h += `</section>`;
+    const partes = LIVRO[l].partes.filter(p => AP.partes[p] && AP.partes[p].m === s);
+    if (partes.length) h += `<section class="card"><h2 class="h2">Folhear a apostila</h2><p class="small muted" style="margin:0">Teoria, exercícios comentados e exercícios na ordem do livro.</p><div class="row">${partes.map((p, i) => `<button class="btn" data-a="appags" data-part="${p}" data-p="1">${MATS[s].curto}${partes.length > 1 ? ' · parte ' + (i + 1) : ''} · ${AP.partes[p].n} págs.</button>`).join('')}</div></section>`;
+    return h;
+  }
+  function fq(s, r, si, i, g) {
+    const k = si + ':' + i, n = pad(i + 1);
+    if (g === '*') return `<div class="fq open"><span class="n">${n}</span><span class="small muted">aberta</span></div>`;
+    const marc = r.r[k], ok = r.ok[k], corr = ok !== undefined, cur = V.qk === k;
+    return `<div class="fq ${corr ? (ok ? 'right' : 'wrong') : ''} ${cur ? 'cur' : ''}"><span class="n">${n}</span>${LETRAS.map(L => `<button class="${marc === L ? 'on' : ''} ${corr && L === g ? 'gab' : ''}" data-a="apm" data-k="${k}" data-l="${L}" ${corr ? 'disabled' : ''} aria-pressed="${marc === L}" aria-label="Questão ${i + 1}, ${L}">${L}</button>`).join('')}</div>`;
+  }
+  function folha(s, r) {
+    const e = apEst(s.id), marc = Object.keys(r.r).length;
+    const pend = s.itens.filter(x => x.g !== '*' && r.r[x.k] && r.ok[x.k] === undefined).length;
+    const err = Object.keys(r.ok).filter(k => r.ok[k] === 0).length;
+    let h = `<section class="card" id="folha"><div class="row between"><h2 class="h2">Folha de respostas</h2><span class="small muted num">${marc} de ${s.nmc} marcadas</span></div>`;
+    if (e.feitas) {
+      const tx = e.certas / e.feitas;
+      h += `<div class="row between"><span class="score num">${e.certas}<small> de ${e.feitas} corrigidas</small></span><span class="chip ${tx >= META ? 'ok' : 'warn'}">${pct(tx)}</span></div>`;
+      if (e.fim) h += `<p class="small" style="margin:0">${e.nota >= META ? 'Meta de 80% batida neste conjunto.' : 'Abaixo da meta de 80%. Releia a teoria da aula e refaça as erradas.'}${r.prim != null && r.tent > 1 ? ` Na primeira vez você fez ${pct(r.prim)}.` : ''}</p>`;
+    }
+    s.sec.forEach((sec, si) => {
+      if (sec.g) {
+        if (s.sec.length > 1 || sec.n !== s.t) h += `<div class="aphead">${sec.n}</div>`;
+        h += `<div class="folha">${sec.g.split('').map((g, i) => fq(s, r, si, i, g)).join('')}</div>`;
+      } else h += `<details class="rev"><summary>${sec.n}: respostas</summary><ol class="small">${sec.txt.map(t => `<li>${t}</li>`).join('')}</ol></details>`;
+    });
+    if (s.abertas) h += `<details class="rev"><summary>Respostas das questões abertas</summary><ul class="small">${s.abertas.map(t => `<li>${t}</li>`).join('')}</ul></details>`;
+    h += `<div class="row"><button class="btn pri" data-a="apcorr" ${pend ? '' : 'disabled'}>Corrigir${pend ? ' ' + pend : ''}</button>${err ? `<button class="btn" data-a="aperr">Refazer as ${err} erradas</button>` : ''}${marc ? '<button class="btn ghost" data-a="aplimpar">Recomeçar</button>' : ''}</div>`;
+    if (pedindo === 'aplimpar') h += '<div class="confirm"><p>Apagar as respostas deste conjunto e começar de novo?</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="aplimparok">Apagar</button></div>';
+    h += `<p class="small muted" style="margin:0">Correção pelo gabarito impresso do livro. Dá para corrigir aos poucos: só as questões marcadas são corrigidas, e as erradas ficam guardadas para refazer.${s.gp ? ` <button class="lnk" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver a página do gabarito</button>` : ''}</p></section>`;
+    return h;
+  }
+  function apItens(s) { return s.itens.filter(x => x.g !== '*'); }
+  /* Questão atual da barra de marcação: a escolhida ou a primeira ainda sem resposta. */
+  function apAtual(s, r) {
+    const its = apItens(s);
+    let it = its.find(x => x.k === V.qk);
+    if (!it) it = its.find(x => r.ok[x.k] === undefined && !r.r[x.k]) || its[0];
+    V.qk = it ? it.k : null;
+    return it;
+  }
+  function apBarra(s, r) {
+    const it = apAtual(s, r);
+    if (!it) return '';
+    const marc = r.r[it.k], corr = r.ok[it.k] !== undefined;
+    const sec = s.sec.length > 1 ? s.sec[it.si].n.split(' ')[0] + ' ' : '';
+    return `<div class="apbar"><div class="apbar-in"><button class="btn sm ghost" data-a="apqi" data-d="-1" aria-label="Questão anterior">‹</button><span class="apq num">${sec}${pad(it.n)}</span><button class="btn sm ghost" data-a="apqi" data-d="1" aria-label="Próxima questão">›</button><span class="aplet">${LETRAS.map(L => `<button class="${marc === L ? 'on' : ''} ${corr && L === it.g ? 'gab' : ''}" data-a="apm" data-k="${it.k}" data-l="${L}" data-bar="1" ${corr ? 'disabled' : ''} aria-label="Marcar ${L}">${L}</button>`).join('')}</span><button class="btn sm fol" data-a="apfolha">Folha</button></div></div>`;
+  }
+  function apRegistro(id) {
+    const r = S.ap[id] = S.ap[id] || {};
+    if (!r.r || typeof r.r !== 'object') r.r = {};
+    if (!r.ok || typeof r.ok !== 'object') r.ok = {};
+    return r;
+  }
+  function vApSet() {
+    const s = APS[V.id];
+    if (!s) return vApostila();
+    const r = S.ap[s.id] ? apRegistro(s.id) : { r: {}, ok: {} };
+    const m0 = s.mods[0] && MOD[s.mods[0]];
+    apAtual(s, r);
+    let h = `<button class="btn ghost back" data-a="apvolta">← ${V.de === 'mod' && MOD[V.mod] ? MOD[V.mod].id : V.de === 'hoje' ? 'Hoje' : 'Apostila'}</button>`;
+    h += `<div class="stack"><div class="eyebrow">${sig(s.m)} ${LIVRO[s.l].nome} · ${s.fr}</div><h1 class="h1">${apTitulo(s)}</h1><div class="row"><span class="chip">${apTipo(s)}</span>${apChip(s.id)}${s.mods.map(id => `<button class="chip lnkchip" data-a="mod" data-id="${id}" title="${MOD[id].t}">${id}</button>`).join('')}</div></div>`;
+    if (s.inc) h += `<div class="banner warn"><p>A página do gabarito deste conjunto está pouco nítida no livro, e B e D podem se confundir. Se uma correção parecer errada, confira o gabarito impresso.</p>${s.gp ? `<button class="btn sm" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver gabarito impresso</button>` : ''}</div>`;
+    h += '<div class="apgrid"><div class="appages">';
+    if (s.pg && AP.partes[s.pg[0]]) {
+      const part = s.pg[0], a = s.pg[1], n = AP.partes[part].n, fim = Math.min(n, s.pg[2] + (V.mais || 0));
+      h += `<p class="small muted" style="margin:0">Toque numa página para ampliar.${m0 ? ` Teoria resumida no módulo ${m0.id}${s.ini ? ' e a do livro em "Ver a teoria da aula"' : ''}.` : ''}</p><div class="pgs">`;
+      for (let p = a; p <= fim; p++) h += pgHtml(part, p);
+      h += `</div><div class="row">${fim < n ? '<button class="btn sm" data-a="apmais">Mostrar a página seguinte</button>' : ''}<button class="btn sm" data-a="appags" data-part="${s.ini ? s.ini[0] : part}" data-p="${s.ini ? s.ini[1] : a}">${s.ini ? 'Ver a teoria da aula' : 'Folhear a partir daqui'}</button></div>`;
+    } else h += '<p class="small muted">As páginas deste conjunto não foram localizadas automaticamente. Use "Folhear a apostila" na aba Apostila.</p>';
+    h += `</div><aside class="apside">${folha(s, r)}</aside></div>`;
+    h += apBarra(s, r);
+    return h;
+  }
+  function vApPags() {
+    const info = AP.partes[V.part];
+    if (!info) return vApostila();
+    const n = info.n, a = Math.max(1, Math.min(n, V.p || 1)), b = Math.min(n, a + 3);
+    let h = '<button class="btn ghost back" data-a="apvolta">← Voltar</button>';
+    h += `<div class="stack"><div class="eyebrow">${sig(info.m)} ${LIVRO[info.livro].nome}</div><h1 class="h1">${MATS[info.m].curto}${info.parte ? ' · parte ' + info.parte : ''}</h1></div>`;
+    const idx = (info.idx || []);
+    const nav = `<div class="row between"><button class="btn sm" data-a="appnav" data-p="${a - 4}" ${a > 1 ? '' : 'disabled'}>‹ Anteriores</button><span class="small muted num">${a === b ? a : a + '–' + b} de ${n}</span><button class="btn sm" data-a="appnav" data-p="${a + 4}" ${b < n ? '' : 'disabled'}>Próximas ›</button></div>`;
+    if (idx.length) h += `<div class="field"><label for="ap-ir">Ir para</label><select id="ap-ir">${idx.map(x => `<option value="${x[0]}" ${x[0] <= a && a < x[0] + 4 ? 'selected' : ''}>${x[1]}</option>`).join('')}</select></div>`;
+    h += nav + '<div class="pgs">';
+    for (let p = a; p <= b; p++) h += pgHtml(V.part, p);
+    h += '</div>' + nav;
     return h;
   }
 
@@ -633,6 +837,8 @@
       }).join('');
     }
     h += `</section>`;
+    const comErro = AP.sets.filter(s => { const r = S.ap[s.id]; return r && r.ok && Object.keys(r.ok).some(k => r.ok[k] === 0); });
+    if (AP.sets.length) h += `<section class="card"><div class="row between"><h2 class="h2">Erros da apostila</h2><span class="small muted">${plural(nErrosAp(), 'questão', 'questões')}</span></div>${comErro.length ? `<p style="margin:0">Conjuntos com questões erradas. Abra e use "Refazer as erradas" depois de rever a teoria.</p><div class="mods">${comErro.map(s => apLinha(s)).join('')}</div>` : '<p class="small muted" style="margin:0">Nenhum erro pendente nas folhas de respostas da apostila.</p>'}</section>`;
     const abaixo = MODS.filter(m => { const r = S.mod[m.id]; return r && r.best != null && r.best < META; });
     h += `<section class="card"><h2 class="h2">Módulos abaixo de 80%</h2>${abaixo.length ? `<div class="mods">${abaixo.map(m => `<button class="modrow" data-a="mod" data-id="${m.id}"><span class="sigla c-${m.m}">${m.id}</span><span class="mt">${m.t}</span><span class="chip warn">${pct(S.mod[m.id].best)}</span></button>`).join('')}</div>` : '<p class="small muted" style="margin:0">Nenhum. Todo quiz feito está na meta.</p>'}</section>`;
     return h;
@@ -781,9 +987,15 @@
       case 'simulados': h = vSimulados(); break;
       case 'sim': h = vSim(); break;
       case 'res': h = vRes(); break;
+      case 'apostila': h = vApostila(); break;
+      case 'apset': h = vApSet(); break;
+      case 'appags': h = vApPags(); break;
       default: h = vHoje();
     }
     app.innerHTML = h;
+    app.classList.toggle('largo', V.v === 'apset');
+    app.classList.toggle('combarra', V.v === 'apset' && !!app.querySelector('.apbar'));
+    lazyPaginas();
     let aba = ABA_DE[V.v];
     if (V.v === 'quiz' && QZ) aba = QZ.origem.tipo === 'mod' ? 'materias' : 'treino';
     document.querySelectorAll('.tab').forEach(b => { if (b.dataset.v === aba) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
@@ -850,6 +1062,68 @@
         S.cfg.excl = MODS.filter(m => ((S.mod[m.id] || {}).best || 0) >= META).map(m => m.id);
         salvar(); go('plano'); break;
       }
+      case 'aplivro': V.l = d.l; render(); break;
+      case 'apmat': V.s = d.s; render(); break;
+      case 'apset': {
+        const st = APS[d.id];
+        if (!st) break;
+        const de = d.de || (V.v === 'hoje' || V.v === 'plano' ? 'hoje' : 'ap');
+        go('apset', { id: d.id, de, mod: de === 'mod' ? V.id : null, l: st.l, s: st.m });
+        break;
+      }
+      case 'apvolta': {
+        if (V.v === 'appags' && V.volta) { const b = V.volta; go(b.v, b); break; }
+        if (V.v === 'apset' && V.de === 'mod' && MOD[V.mod]) { go('modulo', { id: V.mod, aba: 'ap' }); break; }
+        if (V.v === 'apset' && V.de === 'hoje') { go('hoje'); break; }
+        go('apostila', { l: V.l, s: V.s });
+        break;
+      }
+      case 'apm': {
+        const st = APS[V.id];
+        if (!st) break;
+        const r = apRegistro(st.id);
+        if (r.ok[d.k] !== undefined) break;
+        if (r.r[d.k] === d.l) delete r.r[d.k]; else r.r[d.k] = d.l;
+        V.qk = d.k;
+        if (d.bar && r.r[d.k]) {
+          /* Na barra, marcar já leva para a próxima questão ainda aberta. */
+          const its = apItens(st), at = its.findIndex(x => x.k === d.k);
+          const nx = its.slice(at + 1).find(x => r.ok[x.k] === undefined);
+          if (nx) V.qk = nx.k;
+        }
+        salvar(); render(); break;
+      }
+      case 'apqi': {
+        const st = APS[V.id], its = apItens(st), at = its.findIndex(x => x.k === V.qk);
+        const nx = its[Math.max(0, Math.min(its.length - 1, at + Number(d.d)))];
+        if (nx) V.qk = nx.k;
+        render(); break;
+      }
+      case 'apfolha': { const f = document.getElementById('folha'); if (f) f.scrollIntoView({ block: 'start' }); break; }
+      case 'apcorr': {
+        const st = APS[V.id];
+        if (!st) break;
+        const r = apRegistro(st.id), antes = apEst(st.id).fim;
+        st.itens.forEach(x => { if (x.g === '*' || !r.r[x.k] || r.ok[x.k] !== undefined) return; r.ok[x.k] = (x.g === 'X' || r.r[x.k] === x.g) ? 1 : 0; });
+        const e = apEst(st.id);
+        if (e.fim && !antes) { r.tent = (r.tent || 0) + 1; r.ult = e.nota; if (r.prim == null) r.prim = e.nota; r.best = Math.max(r.best || 0, e.nota); }
+        r.quando = hoje();
+        marcarAtividade(); salvar(); render();
+        const f = document.getElementById('folha'); if (f) f.scrollIntoView({ block: 'start' });
+        break;
+      }
+      case 'aperr': {
+        const st = APS[V.id], r = apRegistro(st.id);
+        let pri = null;
+        apItens(st).forEach(x => { if (r.ok[x.k] === 0) { delete r.ok[x.k]; delete r.r[x.k]; if (!pri) pri = x.k; } });
+        V.qk = pri; salvar(); render(); break;
+      }
+      case 'aplimpar': pedindo = 'aplimpar'; render(); break;
+      case 'aplimparok': { const r = apRegistro(V.id); r.r = {}; r.ok = {}; V.qk = null; pedindo = null; salvar(); render(); break; }
+      case 'apmais': V.mais = (V.mais || 0) + 1; render(); break;
+      case 'appags': go('appags', { part: d.part, p: Number(d.p) || 1, volta: V.v === 'appags' ? V.volta : Object.assign({}, V) }); break;
+      case 'appnav': V.p = Math.max(1, Number(d.p)); render(); window.scrollTo(0, 0); break;
+      case 'pgzoom': { const b = el.closest('.pgbox'); if (b) b.classList.toggle('zoom'); break; }
       case 'zerar': pedindo = 'zerar'; render(); break;
       case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; pedindo = null; salvar(); go('hoje'); break; }
       default: break;
@@ -860,6 +1134,7 @@
     if (!r.lido) { r.lido = hoje(); salvar(); }
   }
   document.addEventListener('change', ev => {
+    if (ev.target.id === 'ap-ir') { V.p = Number(ev.target.value) || 1; render(); window.scrollTo(0, 0); return; }
     const f = ev.target.closest('#cfg');
     if (!f) return;
     const c = S.cfg;
