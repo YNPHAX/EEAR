@@ -143,14 +143,14 @@ EEAR.videoaulas = {"POR01": [
  {"id": "fv9XsAm-rvA","t": "Pressão hidrostática: lei de Stevin","c": "Me Salva!","k": "a"},
  {"id": "y7Uokg9bXRE","t": "Hidrostática: densidade, pressão e empuxo","c": "Centro de Mídias","k": "a"}],"FIS11": [
  {"id": "sbXtxkGRKOo","t": "Termometria: calor, temperatura, escalas e dilatação","c": "Keyllor França","k": "a"},
- {"id": "7aA_rWut9XA","t": "Calorimetria: calor sensível, calor específico e capacidade térmica","c": "","k": "a"},
- {"id": "aRhaxqzpcKw","t": "Troca de calor com mudança de estado físico","c": "","k": "q"},
+ {"id": "7aA_rWut9XA","t": "Calorimetria: calor sensível, calor específico e capacidade térmica","c": "Física em Toda Parte","k": "a"},
+ {"id": "aRhaxqzpcKw","t": "Troca de calor com mudança de estado físico","c": "Carlos Eduardo Mainardes","k": "q"},
  {"id": "htZ5wOED9ZE","t": "Dilatação térmica","c": "Brasil Escola","k": "a"}],"FIS12": [
  {"id": "ncoBlPozSWE","t": "Estudo dos gases: equação de Clapeyron e transformações","c": "Não Perca a Cabeça","k": "a"},
  {"id": "yFnf4Xrf21o","t": "1ª lei da termodinâmica","c": "Davi Oliveira (Física 2.0)","k": "a"},
  {"id": "ugiPYPxXpXw","t": "Máquinas térmicas e ciclo de Carnot: teoria e exercícios","c": "Maurício Física","k": "q"}],"FIS13": [
  {"id": "nGG9L58X_eA","t": "Movimento harmônico simples (MHS)","c": "Professor Boaro","k": "a"},
- {"id": "nl7lKCY5Ed4","t": "Equação fundamental da ondulatória","c": "","k": "a"},
+ {"id": "nl7lKCY5Ed4","t": "Equação fundamental da ondulatória","c": "Professor Boaro","k": "a"},
  {"id": "Nlxs8r4xvpk","t": "Acústica: conceitos fundamentais","c": "Professor Boaro","k": "a"}],"FIS14": [
  {"id": "TwDUu4tyNtQ","t": "Óptica geométrica: espelhos planos e esféricos","c": "Físicadu","k": "a"},
  {"id": "-oHu7N1QCr0","t": "Espelhos esféricos e lentes esféricas","c": "Teoria em 5","k": "a"},

@@ -49,7 +49,10 @@ meta = f'''<meta charset="utf-8">
 <link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
 '''
 modo = 'app' if APP else 'site'
-antes = f'<script>window.EEAR_SITE = {json.dumps(modo)}; window.EEAR_APK = {json.dumps(APK)};</script>\n'
+# login dos alunos (Firebase): web/firebase.json com a configuração do app da web do projeto
+fb_cfg = os.path.join(WEB, 'firebase.json')
+fb = json.load(open(fb_cfg, encoding='utf-8')) if os.path.exists(fb_cfg) else None
+antes = f'<script>window.EEAR_SITE = {json.dumps(modo)}; window.EEAR_APK = {json.dumps(APK)};' + (f' window.EEAR_FIREBASE = {json.dumps(fb)};' if fb else '') + '</script>\n'
 registro = '' if APP else '''
 <script>
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
