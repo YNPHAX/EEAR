@@ -15,9 +15,9 @@ OUT = os.path.abspath(args[0] if args else os.path.join(RAIZ, '_site'))
 REPO = os.environ.get('GITHUB_REPOSITORY', 'YNPHAX/EEAR')
 APK = f'https://github.com/{REPO}/releases/latest/download/missao-eear.apk'
 
-NOME, CURTO = 'Missão EEAR · curso CFS', 'Missão EEAR'
-DESC = 'Curso preparatório para o CFS da EEAR: plano de estudos até a prova, teoria, quizzes, flashcards, simulados e provas oficiais com gabarito.'
-TEMA_CLARO, TEMA_ESCURO, FUNDO = '#FFFFFF', '#111D31', '#EDF1F6'
+NOME, CURTO = 'Missão EEAR · INPHAX', 'Missão EEAR'
+DESC = 'Curso preparatório da INPHAX para o CFS da EEAR: aulas com vídeo, plano de estudos até a prova, quizzes, flashcards, simulados e provas oficiais com gabarito.'
+TEMA_CLARO, TEMA_ESCURO, FUNDO = '#0C0C0C', '#0C0C0C', '#0C0C0C'
 
 if os.path.exists(OUT):
     shutil.rmtree(OUT)
@@ -49,7 +49,10 @@ meta = f'''<meta charset="utf-8">
 <link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
 '''
 modo = 'app' if APP else 'site'
-antes = f'<script>window.EEAR_SITE = {json.dumps(modo)}; window.EEAR_APK = {json.dumps(APK)};</script>\n'
+# login dos alunos (Firebase): web/firebase.json com a configuração do app da web do projeto
+fb_cfg = os.path.join(WEB, 'firebase.json')
+fb = json.load(open(fb_cfg, encoding='utf-8')) if os.path.exists(fb_cfg) else None
+antes = f'<script>window.EEAR_SITE = {json.dumps(modo)}; window.EEAR_APK = {json.dumps(APK)};' + (f' window.EEAR_FIREBASE = {json.dumps(fb)};' if fb else '') + '</script>\n'
 registro = '' if APP else '''
 <script>
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
@@ -76,10 +79,55 @@ for raiz, _, fs in os.walk(os.path.join(CURSO, 'provas')):
             rel = os.path.relpath(os.path.join(raiz, f), CURSO)
             copiar(os.path.join(raiz, f), os.path.join(OUT, rel))
             imgs.append(rel)
+for f in sorted(os.listdir(os.path.join(CURSO, 'marca'))):
+    copiar(os.path.join(CURSO, 'marca', f), os.path.join(OUT, 'marca', f))
 for pasta, ext in (('fontes', ('.woff2', '.css', '.txt')), ('icones', ('.png',))):
     for f in sorted(os.listdir(os.path.join(WEB, pasta))):
         if f.endswith(ext):
             copiar(os.path.join(WEB, pasta, f), os.path.join(OUT, pasta, f))
+
+# páginas da política de privacidade e dos termos de uso (web/legal/), com a marca
+PAGINA = """<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{titulo} · Missão EEAR · INPHAX</title>
+<meta name="theme-color" content="#0C0C0C">
+<link rel="icon" href="icones/favicon.png" type="image/png">
+<link rel="stylesheet" href="fontes/fontes.css">
+<style>
+:root {{ --bg: #F3F1EC; --ink: #0C0C0C; --muted: #5F5B54; --line: #DEDAD1; --accent: #C8102E; color-scheme: light; }}
+@media (prefers-color-scheme: dark) {{ :root {{ --bg: #0C0C0C; --ink: #EFEAE0; --muted: #A39E94; --line: #2B2926; --accent: #FF4D5A; color-scheme: dark; }} }}
+* {{ box-sizing: border-box; }}
+body {{ margin: 0; background: var(--bg); color: var(--ink); font-family: "Barlow", "Segoe UI", system-ui, sans-serif; font-size: 16px; line-height: 1.6; }}
+header {{ background: #0C0C0C; color: #EFEAE0; border-bottom: 1px solid #262421; }}
+.topo {{ max-width: 760px; margin: 0 auto; padding: 10px 16px; display: flex; gap: 12px; align-items: center; color: inherit; text-decoration: none; }}
+.topo svg {{ width: 30px; height: 30px; border-radius: 6px; flex: none; }}
+.topo span {{ display: flex; flex-direction: column; gap: 6px; line-height: 1; }}
+.marca {{ display: inline-block; height: 17px; aspect-ratio: 440 / 65; background: currentColor; -webkit-mask: url(marca/inphax.png) center / contain no-repeat; mask: url(marca/inphax.png) center / contain no-repeat; }}
+.topo small {{ font-family: "Saira Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; color: #A39E94; }}
+main {{ max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; }}
+h1 {{ font-family: "Saira Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 2.2rem; line-height: 1.05; margin: 0 0 4px; }}
+h2 {{ font-family: "Saira Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 1.35rem; margin: 28px 0 6px; }}
+.atual {{ color: var(--muted); font-size: .9rem; margin: 0 0 18px; }}
+ul {{ padding-left: 1.2em; }} li {{ margin: 6px 0; }}
+a {{ color: var(--accent); }}
+.voltar {{ margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--line); }}
+</style>
+</head>
+<body>
+<header><a class="topo" href="./"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="56" fill="#1A1918"/><g fill="#EFEAE0"><path d="M88 82H168L424 430H344Z"/><path d="M344 82H424L338 200H258Z"/><path d="M190 291H270L168 430H88Z"/></g></svg><span><span class="marca" role="img" aria-label="INPHAX"></span><small>Missão EEAR</small></span></a></header>
+<main>
+{conteudo}
+<p class="voltar"><a href="./">← Voltar ao curso</a></p>
+</main>
+</body>
+</html>
+"""
+for nome, titulo in (('privacidade', 'Política de Privacidade'), ('termos', 'Termos de Uso')):
+    conteudo = open(os.path.join(WEB, 'legal', nome + '.html'), encoding='utf-8').read().strip()
+    open(os.path.join(OUT, nome + '.html'), 'w', encoding='utf-8').write(PAGINA.format(titulo=titulo, conteudo=conteudo))
 
 # manifesto do app instalável
 manifesto = {
