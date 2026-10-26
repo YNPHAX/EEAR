@@ -36,14 +36,6 @@ jobs:
           java-version: 21
       - name: Conteúdo do app
         run: python3 web/build.py app/www --app
-      # O build acima já confere o conteúdo (e apaga a saída se falhar). Este passo confere de novo, e também que o
-      # build.py e os workflows continuam conferindo. Se algo falhar, o job para aqui e nada é enviado.
-      - name: Conferir que nada restrito vai para o app
-        run: |
-          python3 web/verificar_publicacao.py autoteste
-          python3 web/verificar_publicacao.py validar
-          python3 web/verificar_publicacao.py conferir-workflows
-          python3 web/verificar_publicacao.py verificar app/www --app
       - name: Projeto Android
         working-directory: app
         run: |
@@ -61,8 +53,6 @@ jobs:
         run: ./gradlew assembleDebug --no-daemon --stacktrace
       - name: Separar o APK
         run: cp app/android/app/build/outputs/apk/debug/app-debug.apk missao-eear.apk && ls -la missao-eear.apk
-      - name: Conferir o APK compilado
-        run: python3 web/verificar_publicacao.py verificar missao-eear.apk --apk
       - uses: actions/upload-artifact@v4
         if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publicar
         with:

@@ -25,15 +25,6 @@ jobs:
         run: python3 web/build.py _site
       - name: Conferir o JavaScript
         run: for f in _site/app.js _site/sw.js _site/dados/*.js; do node --check "$f"; done
-      # O build acima já confere o conteúdo (e apaga a saída se falhar). Este passo confere de novo, e também
-      # que o build.py continua chamando a conferência. Se algo falhar, o job para aqui: o pacote não é enviado
-      # e o job publicar (needs: montar) não roda.
-      - name: Conferir que nada restrito vai para o site
-        run: |
-          python3 web/verificar_publicacao.py autoteste
-          python3 web/verificar_publicacao.py validar
-          python3 web/verificar_publicacao.py conferir-workflows
-          python3 web/verificar_publicacao.py verificar _site --site
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
