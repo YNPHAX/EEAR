@@ -334,6 +334,14 @@ def verificar(alvo, modo, imp_arq=IMPRESSOES):
     except Exception as e:
         print(f'ERRO: o arquivo de impressões {os.path.basename(imp_arq)} está ausente ou com defeito ({e}); nada pode ser publicado')
         return 2
+    if os.path.abspath(imp_arq) == IMPRESSOES:
+        # com o arquivo do projeto, confere também que ele corresponde ao material (pega hash trocado por outro válido)
+        with contextlib.redirect_stdout(io.StringIO()) as buf:
+            r = validar(imp_arq)
+        if r:
+            print(buf.getvalue(), end='')
+            print('ERRO: nada pode ser publicado sem impressões válidas')
+            return 2
     if not os.path.exists(alvo):
         print(f'ERRO: {alvo} não existe')
         return 2
