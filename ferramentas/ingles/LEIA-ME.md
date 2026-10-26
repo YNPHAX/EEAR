@@ -84,9 +84,9 @@ com a sua revisão:
   - a aula INGI12 (discurso direto e indireto), separada de INGI11.
 
 **As condicionais ficam no intermediário.** A tabela aprovada tirava as condicionais do INGI10, mas as provas BCT
-cobram:
+cobram condicionais e wish:
 
-- CFS 1/2023 BCT, questões 27, 33 e 40;
+- CFS 1/2023 BCT, questões 27 e 40 (condicionais) e 33 (wish);
 - CFS 1/2024 BCT, questão 48;
 - CFS 2/2022 BCT, questão 31;
 - CFS 2/2024 BCT, questão 48.
