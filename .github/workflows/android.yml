@@ -1,11 +1,17 @@
 # Gera o app de Android (APK) com o Capacitor a partir do mesmo site.
-# Na main, o APK vai para a página de downloads (Releases) do repositório.
+# A cada envio o APK só é compilado, para conferir que nada quebrou. Ele só vai para a página de downloads
+# (Releases) quando alguém roda este workflow à mão na main, marcando "Publicar o APK".
 name: App Android
 
 on:
   push:
     branches: [main, 'claude/**']
   workflow_dispatch:
+    inputs:
+      publicar:
+        description: 'Publicar o APK na página de downloads (só vale na main)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -48,11 +54,12 @@ jobs:
       - name: Separar o APK
         run: cp app/android/app/build/outputs/apk/debug/app-debug.apk missao-eear.apk && ls -la missao-eear.apk
       - uses: actions/upload-artifact@v4
+        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publicar
         with:
           name: missao-eear-apk
           path: missao-eear.apk
       - name: Publicar na página de downloads
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publicar
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

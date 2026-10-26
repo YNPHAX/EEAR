@@ -544,7 +544,8 @@
 
   /* ---------- navegação ---------- */
   let V = { v: 'hoje' };
-  try { const a = localStorage.getItem(LS_ABA); if (a && ['hoje', 'plano', 'materias', 'apostila', 'treino', 'simulados'].indexOf(a) >= 0) V = { v: a }; } catch (e) { /* ignora */ }
+  /* A aba Apostila só volta aberta se existir nesta versão (a versão pública não tem a apostila). */
+  try { const a = localStorage.getItem(LS_ABA); if (a && ['hoje', 'plano', 'materias', 'apostila', 'treino', 'simulados'].indexOf(a) >= 0 && (a !== 'apostila' || apVisivel())) V = { v: a }; } catch (e) { /* ignora */ }
   if (S.ativo) V = { v: 'sim' };
   else if (mostrarInicio()) V = { v: 'inicio' };
   let QZ = null, FC = null, timer = null, pedindo = null, mapa = false;
