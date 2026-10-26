@@ -36,11 +36,13 @@ jobs:
           java-version: 21
       - name: Conteúdo do app
         run: python3 web/build.py app/www --app
-      # Se encontrar algo do material restrito, ou se não conseguir verificar, o job para aqui e nada é enviado.
+      # O build acima já confere o conteúdo (e apaga a saída se falhar). Este passo confere de novo, e também que o
+      # build.py e os workflows continuam conferindo. Se algo falhar, o job para aqui e nada é enviado.
       - name: Conferir que nada restrito vai para o app
         run: |
           python3 web/verificar_publicacao.py autoteste
           python3 web/verificar_publicacao.py validar
+          python3 web/verificar_publicacao.py conferir-workflows
           python3 web/verificar_publicacao.py verificar app/www --app
       - name: Projeto Android
         working-directory: app
