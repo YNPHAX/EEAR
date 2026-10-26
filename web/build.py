@@ -12,8 +12,8 @@ CURSO, WEB = os.path.join(RAIZ, 'curso'), os.path.join(RAIZ, 'web')
 args = [a for a in sys.argv[1:] if not a.startswith('--')]
 APP = '--app' in sys.argv
 OUT = os.path.abspath(args[0] if args else os.path.join(RAIZ, '_site'))
-REPO = os.environ.get('GITHUB_REPOSITORY', 'YNPHAX/EEAR')
-APK = f'https://github.com/{REPO}/releases/latest/download/missao-eear.apk'
+# link do botão "Baixar o APK": vazio esconde o botão. Fica vazio até existir um APK limpo, assinado com a chave definitiva.
+APK = os.environ.get('EEAR_APK_URL', '')
 
 NOME, CURTO = 'Missão EEAR · INPHAX', 'Missão EEAR'
 DESC = 'Curso preparatório da INPHAX para o CFS da EEAR: aulas com vídeo, plano de estudos até a prova, quizzes, flashcards, simulados e provas oficiais com gabarito.'

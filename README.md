@@ -6,12 +6,12 @@ Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em fo
 
 **Site próprio:** https://ynphax.github.io/EEAR/ (versão pública). Ele instala no celular, com ícone na tela inicial, e funciona sem internet.
 
-**App de Android:** https://github.com/YNPHAX/EEAR/releases/latest/download/missao-eear.apk
+**App de Android:** em preparação. O link volta aqui quando houver uma versão nova.
 
 ## Site e app
 
 - `web/build.py` monta o site a partir de `curso/`: página completa, manifesto, ícones, fontes locais e service worker para uso offline. O workflow `Site` publica no GitHub Pages a cada push na `main`. Para isso, o Pages tem de estar ligado em Settings › Pages › Source: GitHub Actions.
-- `app/` é o app de Android (Capacitor) com o mesmo conteúdo. O workflow `App Android` compila o APK a cada push. Na `main`, ele publica o APK na página de Releases.
+- `app/` é o app de Android (Capacitor) com o mesmo conteúdo. O workflow `App Android` compila o APK a cada push. Ele só publica o APK na página de Releases quando alguém roda o workflow à mão na `main`, marcando "Publicar o APK".
 - A versão pública não leva as imagens das páginas das apostilas, que são material com direitos autorais do curso. Nela, a folha de respostas de cada conjunto indica a página do PDF da apostila.
 - O progresso fica salvo em cada aparelho. Para levar de um para outro, use Plano › Dados › Copiar meu progresso e, no outro aparelho, Colar progresso. Com o login ligado, ele fica salvo na conta do aluno.
 - Quem chega ao site pela primeira vez vê a página de entrada do curso. A aba Apostila fica escondida para quem não usa as apostilas, e dá para ligar em Plano › Configuração.
