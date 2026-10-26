@@ -13,8 +13,9 @@ on:
         type: boolean
         default: false
 
+# O token só lê o repositório. Só o job publicar, que cria a Release, recebe permissão de escrita.
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: android-${{ github.ref }}
@@ -58,10 +59,23 @@ jobs:
         with:
           name: missao-eear-apk
           path: missao-eear.apk
+          retention-days: 7
+
+  # Só este job pode escrever no repositório (criar a Release), e só roda à mão na main com "Publicar o APK".
+  publicar:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publicar
+    needs: apk
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: missao-eear-apk
       - name: Publicar na página de downloads
-        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publicar
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
           TAG="android-1.0.${{ github.run_number }}"
           gh release create "$TAG" missao-eear.apk --target "${{ github.sha }}" --latest \
