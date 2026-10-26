@@ -7,6 +7,7 @@ const { testarDados } = require('./dados.test');
 const { testarMontagem } = require('./montagem.test');
 const { testarNavegador } = require('./navegador.test');
 const { testarProgresso } = require('./progresso.test');
+const { testarIngles } = require('./ingles.test');
 const { testarApk } = require('./apk.test');
 
 (async () => {
@@ -19,6 +20,7 @@ const { testarApk } = require('./apk.test');
     ['montagem', () => testarMontagem(fonte)],
     ['navegador', () => testarNavegador(fonte, rapido ? { larguras: [390, 1280] } : {})],
     ['progresso', () => testarProgresso(fonte)],
+    ['ingles', () => testarIngles(fonte)],
     ['apk', () => testarApk(fonte)]
   ]) {
     try { const r = await fn(); r.imprimir(); rs.push([nome, r.falhas()]); }

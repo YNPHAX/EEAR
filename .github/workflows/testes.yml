@@ -26,11 +26,11 @@ jobs:
         run: |
           npm install --no-save playwright@1.63.0
           npx playwright install --with-deps chromium
-      # Roda os quatro até o fim, mesmo que um falhe, para o resultado mostrar tudo de uma vez.
-      - name: Conteúdo, montagem, navegador e progresso
+      # Roda todos até o fim, mesmo que um falhe, para o resultado mostrar tudo de uma vez.
+      - name: Conteúdo, montagem, navegador, progresso e inglês por opção
         run: |
           falhou=0
-          for t in dados montagem navegador progresso; do node testes/$t.test.js || falhou=1; done
+          for t in dados montagem navegador progresso ingles; do node testes/$t.test.js || falhou=1; done
           exit $falhou
 
   apk:

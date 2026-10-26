@@ -15,6 +15,8 @@ async function testarProgresso(fonte = RAIZ, fixtures = null) {
   fixtures = fixtures && fixtures.length ? fixtures : fs.readdirSync(pasta).filter(f => f.endsWith('.json')).map(f => path.join(pasta, f));
   const { EEAR } = carregarDados(fonte);
   const ids = new Set(EEAR.modulos.map(m => m.id));
+  // o progresso de antes da separação do Inglês abre sem opção escolhida: aulas de Inglês sem "nivel"
+  const VISTAS = EEAR.modulos.filter(m => m.m !== 'ing' || !m.nivel);
   const site = montar(fonte);
   const srv = await servir(site.destino);
   const b = await chromium.launch();
@@ -32,14 +34,14 @@ async function testarProgresso(fonte = RAIZ, fixtures = null) {
         const primeiro = (fx.estado.cfg.nome || '').split(' ')[0];
         r.ok(!primeiro || hoje.includes('Missão de hoje, ' + primeiro), `${nome}: abre direto no curso com o nome do aluno`);
         for (const s of ['por', 'ing', 'mat', 'fis']) {
-          const dom = EEAR.modulos.filter(m => m.m === s && fx.estado.mod[m.id] && fx.estado.mod[m.id].best >= META).length;
-          r.ok(new RegExp(`${dom}/${EEAR.modulos.filter(m => m.m === s).length} dominados`).test(hoje), `${nome}: ${s} com ${dom} aulas dominadas`);
+          const dom = VISTAS.filter(m => m.m === s && fx.estado.mod[m.id] && fx.estado.mod[m.id].best >= META).length;
+          r.ok(new RegExp(`${dom}/${VISTAS.filter(m => m.m === s).length} dominados`).test(hoje), `${nome}: ${s} com ${dom} aulas dominadas`);
         }
         await p.click('[data-a="tab"][data-v="simulados"]'); await p.waitForTimeout(150);
         const linhas = await p.locator('table tr').count();
         r.ok(linhas >= fx.estado.sims.length, `${nome}: histórico mostra os ${fx.estado.sims.length} simulados`);
         // o app grava de novo (revisão de cartões de outra aula) e nada do progresso antigo se perde
-        const m = EEAR.modulos.find(x => !Object.keys(fx.estado.fc).some(k => k.startsWith(x.id + '~')));
+        const m = VISTAS.find(x => !Object.keys(fx.estado.fc).some(k => k.startsWith(x.id + '~')));
         await p.click('[data-a="tab"][data-v="materias"]'); await p.waitForTimeout(80);
         await p.click(`[data-a="mat"][data-s="${m.m}"]`); await p.waitForTimeout(80);
         await p.click(`[data-id="${m.id}"]`); await p.waitForTimeout(120);

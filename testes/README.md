@@ -9,6 +9,7 @@ site numa pasta temporária e abre num servidor local.
 | `montagem.test.js` | montagem do site e do app, JavaScript sem erro de sintaxe, arquivos citados, manifesto, modo offline, páginas legais, nada das apostilas no site público; só arquivos da lista do que pode ser publicado e nenhum dado das apostilas no site e no app (lista em `testes/lib/base.js`) |
 | `navegador.test.js` | navegação, as aulas, quiz, flashcards, simulados (tamanho, tempo, retomada, descarte), provas oficiais respondidas pelo gabarito, certificados, progresso local (recarregar, copiar e colar), modo offline, telas de 320 a 1440 px no claro e no escuro |
 | `progresso.test.js` | progresso gravado por outra versão abre igual e não se perde ao gravar de novo (fixtures em `fixtures/`) |
+| `ingles.test.js` | Inglês por opção do edital: cada opção vê só as próprias aulas, cartões, erros e provas; simulado misto sem misturar as opções nem repetir questão; trocar de opção não apaga nada; progresso de antes da separação (ING01 a ING13) guardado |
 | `apk.test.js` | configuração do app Android (identificador definitivo, endereço interno), projeto Android gerado e, onde houver Android SDK, a compilação do APK de teste e do APK de distribuição assinado com uma chave fixa |
 | `rodar.js` | roda tudo e mostra o resumo |
 

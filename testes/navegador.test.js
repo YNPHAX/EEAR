@@ -12,6 +12,8 @@ async function testarNavegador(fonte = RAIZ, { larguras = [320, 360, 390, 768, 1
   const r = relatorio('Curso no navegador');
   const { EEAR } = carregarDados(fonte);
   const M = EEAR.modulos, P = EEAR.provas || [];
+  // sem opção do edital escolhida, o Inglês é o de antes da separação (aulas sem "nivel"); veja ingles.test.js
+  const VISTAS = M.filter(m => m.m !== 'ing' || !m.nivel);
   const site = montar(fonte);
   const srv = await servir(site.destino);
   const b = await chromium.launch();
@@ -39,7 +41,7 @@ async function testarNavegador(fonte = RAIZ, { larguras = [320, 360, 390, 768, 1
       r.ok(/Missão de hoje, Aluna/.test(await texto(p)), 'depois do nome, abre a tela Hoje com o nome');
       for (const a of ABAS) { await clica(p, `[data-a="tab"][data-v="${a}"]`, 120); r.ok((await texto(p)).length > 50, `aba ${a} abre`); }
       await clica(p, '[data-a="tab"][data-v="materias"]');
-      for (const s of ['por', 'ing', 'mat', 'fis']) { await clica(p, `[data-a="mat"][data-s="${s}"]`); r.igual(await p.locator('.trow').count(), M.filter(m => m.m === s).length, `trilha de ${s} com todas as aulas`); }
+      for (const s of ['por', 'ing', 'mat', 'fis']) { await clica(p, `[data-a="mat"][data-s="${s}"]`); r.igual(await p.locator('.trow').count(), VISTAS.filter(m => m.m === s).length, `trilha de ${s} com todas as aulas`); }
       await ctx.close();
     });
 
@@ -48,7 +50,10 @@ async function testarNavegador(fonte = RAIZ, { larguras = [320, 360, 390, 768, 1
       const { ctx, p } = await nova();
       await comecar(p);
       const semTeoria = [], semVideo = [];
-      for (const m of M) {
+      // as aulas de cada opção do edital aparecem quando ela é escolhida
+      const porNivel = [[null, VISTAS], ...['basico', 'bct'].map(nv => [nv, M.filter(m => m.nivel === nv)])];
+      for (const [nv, ms] of porNivel) for (const m of ms) {
+        if (nv && m === ms[0]) { const s = await estado(p); s.cfg.modalidade = nv; s.t = Date.now(); await gravar(p, s); await p.reload(); await p.waitForTimeout(300); }
         await clica(p, '[data-a="tab"][data-v="materias"]', 30); await clica(p, `[data-a="mat"][data-s="${m.m}"]`, 30); await clica(p, `[data-id="${m.id}"]`, 60);
         if (!(await p.locator('#player').count())) semVideo.push(m.id);
         await clica(p, '[data-a="aba"][data-aba="teoria"]', 30);
