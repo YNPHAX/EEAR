@@ -92,3 +92,18 @@ cobram:
 - CFS 2/2024 BCT, questão 48.
 
 As videoaulas de cada aula nova são as mesmas da aula de origem.
+
+Cada cópia guarda a aula de origem no campo `de` (por exemplo, o INGI13 tem `de: 'ING12'`). Ele serve para duas
+coisas:
+- na versão pessoal, os exercícios da apostila continuam ligados à aula certa da opção;
+- se a opção A for aprovada, é por ele que as notas antigas seriam copiadas.
+
+## 4. Testes
+
+`testes/ingles.test.js` confere:
+- a separação: aulas, cartões, caderno de erros, provas, simulado completo e simulado misto;
+- a troca de opção, ida e volta;
+- o progresso de antes (notas, cartões, erros e vídeos de ING01 a ING13), que continua inteiro depois da escolha;
+- o certificado com o nível.
+
+Os testes de navegador e de progresso abrem as aulas das três situações: sem opção, básico e BCT.

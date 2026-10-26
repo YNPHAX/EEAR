@@ -50,7 +50,13 @@ for P in json.load(open(os.path.join(AQUI, 'provas.json'), encoding='utf-8')):
         if r == 'X':
             x['anulada'] = 1
         q.append(x)
-    prova = {k: P[k] for k in ('id', 'nome', 'data', 'min')}
+    # Opção do edital: "basico" (Opção 1, inglês básico) ou "bct" (Controle de Tráfego Aéreo, inglês intermediário).
+    # O inglês de cada prova vai para as aulas da opção dela: INGB no básico, INGI no intermediário.
+    assert P['modalidade'] in ('basico', 'bct'), P['id']
+    for n, m in mods.items():
+        if materia(n) == 'ing':
+            assert m[:4] == ('INGI' if P['modalidade'] == 'bct' else 'INGB'), (P['id'], n, m)
+    prova = {k: P[k] for k in ('id', 'nome', 'data', 'min', 'modalidade')}
     prova.update({'dir': 'provas/' + P['pasta'] + '/', 'fonte': P['fonte'], 'textos': textos, 'q': q})
     saida.append('EEAR.addProva(' + json.dumps(prova, ensure_ascii=False, separators=(',', ':')) + ');')
     print(P['nome'], 'gabarito', gab, 'anuladas', [n for n in range(1, 97) if gab[n - 1] == 'X'], 'imagens', len(itens))
