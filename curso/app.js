@@ -4,23 +4,23 @@
 
   const E = window.EEAR;
   const ORD = E.ordem, MATS = E.materias;
-  const MODS = E.modulos.slice().sort((a, b) => ORD.indexOf(a.m) - ORD.indexOf(b.m) || a.n - b.n);
+  /* Todas as aulas, de todas as opções do edital. As que o aluno vê ficam em MODS (veja ativar()). */
+  const TODAS = E.modulos.slice().sort((a, b) => ORD.indexOf(a.m) - ORD.indexOf(b.m) || a.n - b.n);
   const MOD = {};
-  MODS.forEach(m => { MOD[m.id] = m; });
-  const Q = {}, QS = { por: [], ing: [], mat: [], fis: [] };
-  MODS.forEach(m => (m.q || []).forEach((q, i) => {
+  TODAS.forEach(m => { MOD[m.id] = m; });
+  const Q = {};
+  TODAS.forEach(m => (m.q || []).forEach((q, i) => {
     const id = m.id + '-' + i;
     Q[id] = { id, mod: m.id, m: m.m, e: q[0], o: q[1], c: q[2], r: q[3] };
-    QS[m.m].push(id);
   }));
-  const CARDS = {};
-  MODS.forEach(m => (m.fc || []).forEach((c, i) => {
+  const CARTAS = {};
+  TODAS.forEach(m => (m.fc || []).forEach((c, i) => {
     const id = m.id + '~' + i;
-    CARDS[id] = { id, mod: m.id, m: m.m, f: c[0], v: c[1] };
+    CARTAS[id] = { id, mod: m.id, m: m.m, f: c[0], v: c[1] };
   }));
   /* Provas anteriores oficiais: mantêm a ordem original das alternativas e o gabarito oficial. */
-  const PROVAS = (E.provas || []).slice().sort((a, b) => (b.data || '').localeCompare(a.data || ''));
-  const PROVA = {}, QO = { por: [], ing: [], mat: [], fis: [] }, OFI = {};
+  const TODAS_PROVAS = (E.provas || []).slice().sort((a, b) => (b.data || '').localeCompare(a.data || ''));
+  const PROVA = {};
   /* Questões em imagem: recorte fiel da prova original; o texto extraído fica oculto para busca e leitores de tela. */
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
   const figura = (p, x) => `<img class="qimg" data-a="qzoom" title="Toque para ampliar" src="${p.dir || ''}${x.img}" width="${x.w}" height="${x.h}" alt="" loading="lazy" decoding="async"><span class="sr">${esc(x.alt || '')}</span>`;
@@ -29,7 +29,7 @@
     if (!t) return '';
     return Array.isArray(t) ? `<div class="txt txtimg">${t.map(x => figura(p, x)).join('')}</div>` : t;
   }
-  PROVAS.forEach(p => {
+  TODAS_PROVAS.forEach(p => {
     PROVA[p.id] = p;
     p.ids = [];
     (p.q || []).forEach(q => {
@@ -37,10 +37,37 @@
       const mod = q.mod && MOD[q.mod] ? q.mod : null;
       Q[id] = { id, mod, m: q.m, e: q.e || (q.img ? figura(p, q) : ''), o: q.o || ['', '', '', ''], img: !!q.img && !q.o, c: q.c, r: q.r || 'Gabarito oficial da EEAR.', src: p.nome + ' · questão ' + q.n, tx: q.t ? textoProva(p, q.t) : '', of: 1, anulada: !!q.anulada };
       p.ids.push(id);
-      if (QO[q.m]) QO[q.m].push(id);
-      if (mod) (OFI[mod] = OFI[mod] || []).push(id);
     });
   });
+  /* Inglês por opção do edital: as aulas INGB são do nível básico (Opção 1) e as INGI do intermediário (BCT).
+     As aulas ING01 a ING13, de antes da separação, valem só para quem ainda não escolheu a opção; o progresso delas
+     fica guardado depois da escolha. Português, Matemática e Física são iguais para todos. */
+  const NIVEL = {
+    basico: { nome: 'Opção 1 (demais especialidades): inglês básico', ing: 'nível básico' },
+    bct: { nome: 'Controle de Tráfego Aéreo (BCT): inglês intermediário', ing: 'nível intermediário, BCT' }
+  };
+  let MODS = [], QS = {}, CARDS = {}, PROVAS = [], QO = {}, OFI = {}, ATIVA = new Set();
+  const nivel = () => (NIVEL[S.cfg.modalidade] ? S.cfg.modalidade : null);
+  /* Monta o que o aluno vê na opção dele: aulas, questões, cartões e provas. Roda de novo quando a opção muda. */
+  function ativar() {
+    const nv = nivel();
+    MODS = TODAS.filter(m => m.m !== 'ing' || (nv ? m.nivel === nv : !m.nivel));
+    QS = { por: [], ing: [], mat: [], fis: [] }; QO = { por: [], ing: [], mat: [], fis: [] }; CARDS = {}; OFI = {}; ATIVA = new Set();
+    MODS.forEach(m => {
+      (m.q || []).forEach((_, i) => { const id = m.id + '-' + i; QS[m.m].push(id); ATIVA.add(id); });
+      (m.fc || []).forEach((_, i) => { const id = m.id + '~' + i; CARDS[id] = CARTAS[id]; });
+    });
+    /* Só as provas da opção. Cada edição tem uma prova por opção, então Português, Matemática e Física (iguais nas
+       duas opções da mesma edição) nunca entram duas vezes no simulado com questões oficiais. Sem opção escolhida, o
+       simulado misto fica fechado: ele misturaria o inglês das duas opções. */
+    PROVAS = TODAS_PROVAS.filter(p => !nv || p.modalidade === nv);
+    PROVAS.forEach(p => p.ids.forEach(id => {
+      const q = Q[id];
+      ATIVA.add(id);
+      if (nv && QO[q.m]) QO[q.m].push(id);
+      if (q.mod) (OFI[q.mod] = OFI[q.mod] || []).push(id);
+    }));
+  }
   const CAL = E.calendario || [];
   const VID = E.videos || {};
   /* Videoaulas do YouTube: no site e no app tocam dentro da aula; no link do curso abrem no YouTube. */
@@ -61,6 +88,16 @@
     s.mods.forEach(id => (APMOD[id] = APMOD[id] || []).push(s.id));
     if (s.mods.length && s.nmc) (APPLAN[s.mods[0]] = APPLAN[s.mods[0]] || []).push(s.id);
   });
+  /* Cada aula das opções do edital (INGB, INGI) é cópia de uma aula de antes (campo "de"): herda os exercícios da
+     apostila ligados a ela, e o link da apostila abre a aula da opção escolhida. */
+  const COPIA = {};
+  TODAS.forEach(m => {
+    if (!m.de) return;
+    (COPIA[m.de] = COPIA[m.de] || {})[m.nivel] = m.id;
+    if (APMOD[m.de]) APMOD[m.id] = APMOD[m.de];
+    if (APPLAN[m.de]) APPLAN[m.id] = APPLAN[m.de];
+  });
+  const naOpcao = id => (nivel() && COPIA[id] && COPIA[id][nivel()]) || id;
   const LIVRO = {};
   AP.livros.forEach(l => { LIVRO[l.id] = l; });
 
@@ -146,6 +183,7 @@
   }
   let S = novoEstado();
   try { const t = localStorage.getItem(LS); if (t) { const o = JSON.parse(t); if (o && o.v === 1) S = mesclar(o); } } catch (e) { /* sem armazenamento local */ }
+  ativar();
 
   const nuvem = { ref: null, on: false, busy: false, again: false, fb: false };
   let tSave = null;
@@ -180,6 +218,7 @@
           const nome = S.cfg.nome;
           S = mesclar(JSON.parse(JSON.stringify(o)));
           if (!S.cfg.nome && nome) S.cfg.nome = nome;
+          ativar();
           try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
           if (V.v === 'inicio') V = { v: 'hoje' };
           render();
@@ -308,7 +347,8 @@
     const dom = ms.filter(m => ((S.mod[m.id] || {}).best || 0) >= META).length;
     return { dom, tot: ms.length };
   }
-  const nErros = s => Object.keys(S.erros).filter(id => Q[id] && (!s || Q[id].m === s)).length;
+  /* Erros de aulas e provas de outra opção (ou das aulas antigas) ficam guardados, mas não aparecem. */
+  const nErros = s => Object.keys(S.erros).filter(id => ATIVA.has(id) && (!s || Q[id].m === s)).length;
   function liberados() { return Object.values(CARDS).filter(c => S.mod[c.mod] && (S.mod[c.mod].lido || S.mod[c.mod].tent)); }
   function devidos(s) { const hj = HJ(); return liberados().filter(c => (!s || c.m === s) && (!S.fc[c.id] || S.fc[c.id][1] <= hj)); }
   function avaliar(id, ok) {
@@ -579,6 +619,13 @@
     }
     return `<div class="task ${ok ? 'done' : ''}">${chk}<div class="tt"><b>${t.txt}</b>${sub ? `<div class="small muted">${sub}</div>` : ''}</div>${bt || '<span></span>'}</div>`;
   }
+  /* Escolha da opção do edital: muda só o Inglês e nunca é feita sozinha. */
+  function cartaoNivel() {
+    const antes = TODAS.some(m => m.m === 'ing' && !m.nivel && S.mod[m.id]);
+    return `<section class="card" id="opcao"><h2 class="h2">Qual é a sua opção no edital?</h2>
+      <p class="small" style="margin:0">A prova de Inglês muda com a opção: nível básico na Opção 1 (demais especialidades) e nível intermediário no Controle de Tráfego Aéreo (BCT). Escolha a sua para estudar as aulas, os cartões e as provas do seu nível.${antes ? ' Suas notas de Inglês de antes ficam guardadas; as aulas da sua opção começam do zero.' : ''} Dá para trocar depois em Plano › Configuração, sem perder nada.</p>
+      <div class="row"><button class="btn pri" data-a="nivel" data-n="basico">Opção 1: inglês básico</button><button class="btn pri" data-a="nivel" data-n="bct">BCT: inglês intermediário</button></div></section>`;
+  }
   function blocoMaterias() {
     return ORD.map(s => {
       const p = progMat(s);
@@ -593,6 +640,7 @@
     const novato = !S.diag && !Object.keys(S.mod).length && !S.sims.length;
     const primeiro = (S.cfg.nome || '').trim().split(/\s+/)[0];
     h += `<div class="stack"><div class="eyebrow">Briefing · ${flonga(hj)}</div><h1 class="h1">${hj >= prova ? (hj === prova ? 'Dia de prova' : 'Prova realizada') : (primeiro ? 'Missão de hoje, ' + esc(primeiro) : 'Missão de hoje')}</h1></div>`;
+    if (!nivel()) h += cartaoNivel();
     h += cartaoContinuar(d);
     if (novato) {
       h += `<section class="card"><h2 class="h2">Comece aqui</h2>
@@ -635,7 +683,7 @@
     let h = `<section class="hero"><div class="eyebrow">Missão EEAR · curso preparatório gratuito</div>
       <h1 class="hero-t">Sua aprovação no CFS da EEAR começa aqui</h1>
       <p class="hero-p">Aulas com vídeo, teoria resumida, questões comentadas, flashcards, simulados e as provas oficiais da EEAR com gabarito, num plano de estudos que vai até o dia da prova.</p>
-      <form class="hero-f" onsubmit="return false"><div class="field"><label for="ini-nome">Como você quer ser chamado?</label><input id="ini-nome" maxlength="80" autocomplete="name" placeholder="Seu nome"></div><button class="btn pri" data-a="comecar">Começar o curso</button></form>
+      <form class="hero-f" onsubmit="return false"><div class="field"><label for="ini-nome">Como você quer ser chamado?</label><input id="ini-nome" maxlength="80" autocomplete="name" placeholder="Seu nome"></div><div class="field"><label for="ini-nivel">Sua opção no edital (muda o Inglês)</label><select id="ini-nivel"><option value="">Ainda não sei</option>${Object.keys(NIVEL).map(k => `<option value="${k}">${NIVEL[k].nome}</option>`).join('')}</select></div><button class="btn pri" data-a="comecar">Começar o curso</button></form>
       <p class="small muted" style="margin:0">Grátis. Funciona no celular e no computador, e dá para instalar como app.</p></section>`;
     h += `<section class="nums">${[[MODS.length, 'aulas'], [nV, 'videoaulas'], [nQ, 'questões comentadas'], [nOf, 'questões de provas oficiais']].map(x => `<div><b class="num">${x[0]}</b><span>${x[1]}</span></div>`).join('')}</section>`;
     h += `<section class="card"><h2 class="h2">As quatro matérias da prova</h2><div class="stack">${ORD.map(s => `<div class="subj b-${s}">${sig(s)}<span>${MATS[s].nome}</span><span class="small muted num">${aulasDe(s).length} aulas</span></div>`).join('')}</div></section>`;
@@ -651,7 +699,7 @@
   }
   /* Continuar de onde parei: a última aula aberta, ou a próxima do plano de hoje, ou a primeira ainda não concluída. */
   function cartaoContinuar(d) {
-    let m = MOD[S.ultAula], de = 'Continuar de onde parei';
+    let m = MODS.indexOf(MOD[S.ultAula]) >= 0 ? MOD[S.ultAula] : null, de = 'Continuar de onde parei';
     if (!m || dominado(m)) {
       const t = d && d.tar.find(x => x.mod && MOD[x.mod] && !dominado(MOD[x.mod]));
       m = t ? MOD[t.mod] : MODS.find(x => !dominado(x));
@@ -680,6 +728,7 @@
       <p class="small muted" style="margin:0">Datas de 2027 são estimativas feitas a partir dos editais anteriores. Quando sair o edital, ajuste em "Outra data".</p></section>`;
     h += `<section class="card"><h2 class="h2">Configuração</h2>
       <form class="form" id="cfg" onsubmit="return false">
+        <div class="field"><label for="cfg-nivel">Opção do edital (muda o Inglês)</label><select id="cfg-nivel">${nivel() ? '' : '<option value="" selected>Ainda não escolhi</option>'}${Object.keys(NIVEL).map(k => `<option value="${k}" ${c.modalidade === k ? 'selected' : ''}>${NIVEL[k].nome}</option>`).join('')}</select></div>
         <div class="field"><label for="cfg-alvo">Prova alvo</label><select id="cfg-alvo">${CAL.map(x => `<option value="${x.id}" ${c.alvo === x.id ? 'selected' : ''}>${x.nome} (${fdata(dnum(x.d))}/${x.d.slice(0, 4)})</option>`).join('')}<option value="outra" ${c.alvo === 'outra' ? 'selected' : ''}>Outra data</option></select></div>
         <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${c.prova}" ${c.alvo === 'outra' ? '' : 'disabled'}></div>
         <div class="field"><label for="cfg-inicio">Início do plano</label><input type="date" id="cfg-inicio" value="${c.inicio}"></div>
@@ -710,7 +759,7 @@
         <li><b>Eliminação</b>: nota abaixo de 5,0 em qualquer matéria ou média final abaixo de 5,0 (nota de 0 a 10). A classificação é pela média, então a meta do curso é 8,0: cerca de 19 acertos em 24 por matéria.</li>
         <li><b>Questões oficiais</b>: as provas anteriores da EEAR, com gabarito oficial, ficam na aba Simulados e na aba Provas de cada módulo.</li>
         <li><b>Datas</b>: confirme sempre no edital oficial, em ingresso.eear.fab.mil.br.</li>
-        <li><b>Controle de Tráfego Aéreo (BCT)</b>: o inglês costuma ser cobrado em nível intermediário. Se for sua opção, dê peso extra a Inglês.</li>
+        <li><b>Inglês</b>: nível básico na Opção 1 (demais especialidades) e intermediário no Controle de Tráfego Aéreo (BCT). As aulas, os cartões e as provas de Inglês seguem a opção escolhida acima. No BCT, dê peso extra a Inglês.</li>
       </ul></section>`;
     if (p.dias.length) {
       h += `<div class="days">`;
@@ -760,7 +809,8 @@
     h += `<div class="seg" role="group" aria-label="Matéria">${ORD.map(x => `<button data-a="mat" data-s="${x}" aria-pressed="${x === s}">${MATS[x].curto}</button>`).join('')}</div>`;
     const p = progMat(s), ms = aulasDe(s), atual = ms.find(m => !dominado(m));
     const comecou = ms.some(m => S.mod[m.id] || S.aula[m.id]);
-    h += `<section class="card b-${s}"><div class="row between"><h2 class="h2">${MATS[s].nome}</h2><span class="small muted num">${p.dom} de ${p.tot} aulas concluídas</span></div><div class="meter"><i style="width:${(p.dom / p.tot) * 100}%"></i></div>
+    if (s === 'ing' && !nivel()) h += cartaoNivel();
+    h += `<section class="card b-${s}"><div class="row between"><h2 class="h2">${MATS[s].nome}</h2><span class="small muted num">${p.dom} de ${p.tot} aulas concluídas</span></div>${s === 'ing' && nivel() ? `<div class="row between small"><span class="muted">${NIVEL[nivel()].nome}</span><button class="btn sm ghost" data-a="tab" data-v="plano">Trocar a opção</button></div>` : ''}<div class="meter"><i style="width:${(p.dom / p.tot) * 100}%"></i></div>
       ${atual ? `<div class="row"><button class="btn pri" data-a="mod" data-id="${atual.id}">${comecou ? 'Continuar' : 'Começar'}: Aula ${nAula(atual)} · ${esc(atual.t)}</button></div>` : ''}
       <ol class="trilha">${ms.map((m, i) => {
         const st = estMod(m.id), ps = passos(m), f = ps.filter(x => x.ok).length, ok = dominado(m);
@@ -783,7 +833,7 @@
   }
   function cartaoCertificado(s) {
     const ms = s === 'geral' ? MODS : aulasDe(s), ok = certOk(ms), feitas = ms.filter(dominado).length;
-    const nome = s === 'geral' ? 'do curso completo' : 'de ' + MATS[s].curto;
+    const nome = s === 'geral' ? 'do curso completo' : 'de ' + MATS[s].curto + (s === 'ing' && nivel() ? ' (' + NIVEL[nivel()].ing + ')' : '');
     return `<section class="card cert-cta"><div class="row between"><h2 class="h2">Certificado ${nome}</h2><span class="chip ${ok ? 'ok' : ''}">${ok ? 'liberado' : feitas + '/' + ms.length}</span></div>
       <p class="small" style="margin:0">${ok ? `Você concluiu ${s === 'geral' ? 'todas as aulas das quatro matérias' : 'todas as aulas desta matéria'} com 80% ou mais no quiz.` : `Conclua as ${ms.length} aulas ${s === 'geral' ? 'das quatro matérias ' : ''}com 80% ou mais no quiz para liberar o certificado. Faltam ${ms.length - feitas}.`}</p>
       ${ok ? `<div class="row"><button class="btn pri" data-a="cert" data-s="${s}">Ver o certificado</button></div>` : ''}</section>`;
@@ -806,14 +856,15 @@
       return h + `<section class="card no-print"><h2 class="h2">Seu nome no certificado</h2><div class="field"><label for="cert-nome">Nome completo</label><input id="cert-nome" maxlength="80" value="${esc(S.cfg.nome || '')}" autocomplete="name"></div><div class="row"><button class="btn pri" data-a="certnome">Gerar o certificado</button></div></section>`;
     }
     const horas = Math.round(ms.reduce((a, m) => a + m.h, 0)), data = concluidoEm(ms);
-    const cod = codigoCert([S.cfg.nome, s, data].join('|'));
+    const nv = (geral || s === 'ing') ? nivel() : null;
+    const cod = codigoCert([S.cfg.nome, s, data].concat(nv ? [nv] : []).join('|'));
     h += `<article class="cert" id="cert"><div class="cert-in">
       <div class="cert-marca">${MARCA_X}${MARCA}</div>
       <div class="cert-por">Missão EEAR</div>
       <div class="eyebrow">Certificado de conclusão</div>
       <p class="cert-cert">Certificamos que</p>
       <h1 class="cert-nome">${esc(S.cfg.nome)}</h1>
-      <p class="cert-txt">concluiu ${geral ? 'o <b>curso preparatório completo para o CFS da EEAR</b>, nas quatro matérias da prova (Língua Portuguesa, Língua Inglesa, Matemática e Física)' : `a matéria <b>${MATS[s].nome}</b> do curso preparatório para o CFS da EEAR`}, com ${ms.length} aulas e nota de pelo menos 80% no quiz de cada uma.</p>
+      <p class="cert-txt">concluiu ${geral ? `o <b>curso preparatório completo para o CFS da EEAR</b>, nas quatro matérias da prova (Língua Portuguesa, Língua Inglesa${nv ? ' em ' + NIVEL[nv].ing : ''}, Matemática e Física)` : `a matéria <b>${MATS[s].nome}</b>${nv ? ' (' + NIVEL[nv].ing + ')' : ''} do curso preparatório para o CFS da EEAR`}, com ${ms.length} aulas e nota de pelo menos 80% no quiz de cada uma.</p>
       <div class="cert-dados"><div><span class="lab">Carga horária</span><b>${horas} horas</b></div><div><span class="lab">Concluído em</span><b>${dataLonga(data)}</b></div><div><span class="lab">Código</span><b class="num">${cod}</b></div></div>
       <div class="cert-ass"><span class="marca" role="img" aria-label="INPHAX"></span><span>emitido pela INPHAX</span></div>
       <p class="cert-nota">Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira. Não tem validade acadêmica.</p>
@@ -1009,10 +1060,10 @@
     const s = APS[V.id];
     if (!s) return vApostila();
     const r = S.ap[s.id] ? apRegistro(s.id) : { r: {}, ok: {} };
-    const m0 = s.mods[0] && MOD[s.mods[0]];
+    const m0 = s.mods[0] && MOD[naOpcao(s.mods[0])];
     apAtual(s, r);
     let h = `<button class="btn ghost back" data-a="apvolta">← ${V.de === 'mod' && MOD[V.mod] ? MOD[V.mod].id : ({ hoje: 'Hoje', sim: 'Simulados', treino: 'Treino' })[V.de] || 'Apostila'}</button>`;
-    h += `<div class="stack"><div class="eyebrow">${sig(s.m)} ${LIVRO[s.l].nome} · ${s.fr}</div><h1 class="h1">${apTitulo(s)}</h1><div class="row"><span class="chip">${apTipo(s)}</span>${apChip(s.id)}${s.mods.map(id => `<button class="chip lnkchip" data-a="mod" data-id="${id}" title="${MOD[id].t}">${id}</button>`).join('')}</div></div>`;
+    h += `<div class="stack"><div class="eyebrow">${sig(s.m)} ${LIVRO[s.l].nome} · ${s.fr}</div><h1 class="h1">${apTitulo(s)}</h1><div class="row"><span class="chip">${apTipo(s)}</span>${apChip(s.id)}${s.mods.map(naOpcao).map(id => `<button class="chip lnkchip" data-a="mod" data-id="${id}" title="${MOD[id].t}">${id}</button>`).join('')}</div></div>`;
     if (s.inc) h += `<div class="banner warn"><p>A página do gabarito deste conjunto está pouco nítida no livro, e B e D podem se confundir. Se uma correção parecer errada, confira o gabarito impresso.</p>${s.gp ? `<button class="btn sm" data-a="appags" data-part="${s.gp[0]}" data-p="${s.gp[1]}">Ver gabarito impresso</button>` : ''}</div>`;
     h += '<div class="apgrid"><div class="appages">';
     if (s.pg && AP.partes[s.pg[0]]) {
@@ -1118,7 +1169,7 @@
       h += `<div class="stack"><div class="eyebrow">Flashcards · ${f.titulo}</div><h1 class="h1">Revisão concluída</h1></div><section class="card"><p style="margin:0"><b>${f.ok}</b> ${f.ok === 1 ? 'acerto' : 'acertos'} e <b>${f.err}</b> ${f.err === 1 ? 'erro' : 'erros'}. Os cartões que você errou voltam amanhã.</p><div class="row"><button class="btn pri" data-a="tab" data-v="treino">Voltar ao treino</button></div></section>`;
       return h;
     }
-    const c = CARDS[f.fila[f.i]], m = MOD[c.mod];
+    const c = CARTAS[f.fila[f.i]], m = MOD[c.mod];
     h += `<div class="stack"><div class="eyebrow">Flashcards · ${f.titulo}</div><div class="meter b-${c.m}"><i style="width:${(f.i / f.fila.length) * 100}%"></i></div></div>`;
     h += `<div class="fc"><span class="chip tag">${sig(c.m)} ${m.id}</span><div>${c.f}</div>${f.virado ? `<div class="verso">${c.v}</div>` : ''}</div>`;
     h += f.virado
@@ -1139,7 +1190,7 @@
       <div class="row">${ne ? `<button class="btn pri" data-a="errosini">Refazer erros (${Math.min(ne, 20)})</button>` : ''}${ORD.map(s => { const n = nErros(s); return n ? `<button class="btn sm" data-a="errosini" data-s="${s}">${MATS[s].curto} (${n})</button>` : ''; }).join('')}</div>`;
     if (ne) {
       h += ORD.map(s => {
-        const ids = Object.keys(S.erros).filter(id => Q[id] && Q[id].m === s);
+        const ids = Object.keys(S.erros).filter(id => ATIVA.has(id) && Q[id].m === s);
         if (!ids.length) return '';
         return `<details class="rev"><summary>${MATS[s].curto} · ${ids.length}</summary>${ids.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)} <span class="chip bad">${S.erros[id]}x</span></summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</details>`;
       }).join('');
@@ -1221,7 +1272,7 @@
       <div class="tbl tbl-res"><table><thead><tr><th>Matéria</th><th class="num">Acertos</th><th class="num">Nota</th><th>Situação</th></tr></thead><tbody>${ks.map(s => { const x = reg.r[s][0] / reg.r[s][1]; return `<tr><td>${sig(s)} ${MATS[s].curto}</td><td class="num">${reg.r[s][0]}/${reg.r[s][1]}</td><td class="num">${nota(x)}</td><td>${x >= META ? '<span class="chip ok">meta</span>' : x >= 0.5 ? '<span class="chip warn">abaixo da meta</span>' : '<span class="chip bad">abaixo de 5</span>'}</td></tr>`; }).join('')}</tbody></table></div>
       <p class="small muted" style="margin:0">${reg.tipo === 'diag' ? 'O plano agora dá mais tempo às matérias com nota menor. ' : ''}Meta do curso: nota 8,0 em cada matéria. Mínimo do edital: 5,0 em cada matéria e média 5,0.${reg.min ? ' Tempo usado: ' + fh(reg.min / 60) + '.' : ''}</p></section>`;
     const porMod = {};
-    u.ids.forEach(id => { if (Q[id].mod && !acertou(id, u.perms[id], u.resp[id])) porMod[Q[id].mod] = (porMod[Q[id].mod] || 0) + 1; });
+    u.ids.forEach(id => { if (Q[id].mod && MODS.indexOf(MOD[Q[id].mod]) >= 0 && !acertou(id, u.perms[id], u.resp[id])) porMod[Q[id].mod] = (porMod[Q[id].mod] || 0) + 1; });
     const top = Object.keys(porMod).sort((a, b) => porMod[b] - porMod[a]).slice(0, 6);
     if (top.length) h += `<section class="card"><h2 class="h2">Onde você mais errou</h2><div class="mods">${top.map(id => `<button class="modrow" data-a="mod" data-id="${id}"><span class="sigla c-${MOD[id].m}">${id}</span><span class="mt">${MOD[id].t}</span><span class="chip bad">${plural(porMod[id], 'erro', 'erros')}</span></button>`).join('')}</div></section>`;
     h += `<section class="card"><h2 class="h2">Correção completa</h2>${u.ids.map((id, k) => {
@@ -1255,7 +1306,8 @@
     const okOf = ORD.every(x => QO[x].length >= 24);
     h += `<section class="card"><div class="eyebrow">100% fiel à prova</div><h2 class="h2">Provas anteriores oficiais</h2>${PROVAS.length
       ? `<p class="small" style="margin:0">Provas reais da EEAR, na ordem original e com o gabarito oficial. Faça como no dia: tempo de prova, rascunho e nada de consulta. Toque numa questão para ampliar.</p><div class="tasks">${PROVAS.map(p => { const feitas = S.sims.filter(x => x.prova === p.id); const ult = feitas[feitas.length - 1]; return `<div class="task"><span class="sigla">${(p.data || '').slice(0, 4)}</span><div class="tt"><b>${p.nome}</b><div class="small muted">${p.ids.length} questões · ${fh((p.min || 260) / 60)}${ult ? ' · última média ' + nota(media(ult)) : ''}</div></div><button class="btn sm pri" data-a="simini" data-tipo="prova" data-s="${p.id}" ${S.ativo ? 'disabled' : ''}>${ult ? 'Refazer' : 'Fazer'}</button></div>`; }).join('')}</div>
-        <div class="row"><button class="btn" data-a="simini" data-tipo="oficial" ${S.ativo || !okOf ? 'disabled' : ''}>Simulado misto com questões oficiais (96)</button></div>`
+        <div class="row"><button class="btn" data-a="simini" data-tipo="oficial" ${S.ativo || !okOf ? 'disabled' : ''}>Simulado misto com questões oficiais (96)</button></div>
+        <p class="small muted" style="margin:0">${nivel() ? `Provas da sua opção: ${NIVEL[nivel()].nome}. O simulado misto sorteia 24 questões por matéria só dessas provas.` : 'Para o simulado misto, escolha a sua opção do edital na tela Hoje ou em Plano › Configuração: o Inglês vem só das provas da sua opção.'}</p>`
       : `<p class="small" style="margin:0">As provas completas das quatro matérias entram aqui, na ordem original e com o gabarito oficial, assim que os PDFs da EEAR forem carregados. Até lá, use os simulados do curso abaixo.</p>`}</section>`;
     const reais = !apVisivel() ? [] : AP.sets.filter(x => x.tipo === 'test' && /prova/i.test(x.t));
     if (reais.length) h += `<section class="card"><div class="eyebrow">Provas reais da apostila</div><h2 class="h2">Inglês das provas da EEAR</h2><p class="small" style="margin:0">A parte de Inglês de ${plural(reais.length, 'prova real', 'provas reais')} da EEAR, com as páginas do livro e a folha de respostas corrigida pelo gabarito. Faça cada uma em 1 hora, como no dia.</p><div class="mods">${reais.map(x => apLinha(x)).join('')}</div></section>`;
@@ -1348,7 +1400,13 @@
       }
       case 'vext': if (MOD[d.id]) marcarAssistido(d.id); break;
       case 'apligar': S.cfg.apostila = true; salvar(); render(); break;
-      case 'comecar': { const n = document.getElementById('ini-nome'); S.cfg.nome = ((n && n.value) || '').trim().slice(0, 80); salvar(); go('hoje'); break; }
+      case 'comecar': {
+        const n = document.getElementById('ini-nome'), nv = document.getElementById('ini-nivel');
+        S.cfg.nome = ((n && n.value) || '').trim().slice(0, 80);
+        if (nv && NIVEL[nv.value]) { S.cfg.modalidade = nv.value; ativar(); }
+        salvar(); go('hoje'); break;
+      }
+      case 'nivel': if (NIVEL[d.n]) { S.cfg.modalidade = d.n; ativar(); salvar(); render(); } break;
       case 'cert': V.editNome = false; go('cert', { s: d.s }); break;
       case 'certnome': { const n = document.getElementById('cert-nome'); const v = ((n && n.value) || '').trim().slice(0, 80); if (!v) { if (n) n.focus(); break; } S.cfg.nome = v; V.editNome = false; salvar(); render(); break; }
       case 'certnomeedit': V.editNome = true; render(); break;
@@ -1384,7 +1442,7 @@
         FC.i++; FC.virado = false; salvar(); render(); break;
       }
       case 'errosini': {
-        let ids = Object.keys(S.erros).filter(id => Q[id] && (!d.s || Q[id].m === d.s));
+        let ids = Object.keys(S.erros).filter(id => ATIVA.has(id) && (!d.s || Q[id].m === d.s));
         ids = shuffle(ids).slice(0, 20);
         if (ids.length) iniciarQuiz(ids, 'Caderno de erros', { tipo: 'erros' });
         break;
@@ -1485,7 +1543,7 @@
         let o = null;
         try { o = JSON.parse((t && t.value || '').trim()); } catch (e) { o = null; }
         if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); break; }
-        S = mesclar(o); pedindo = null; msgDados = 'Progresso carregado.'; salvar(); render();
+        S = mesclar(o); ativar(); pedindo = null; msgDados = 'Progresso carregado.'; salvar(); render();
         break;
       }
       case 'instalar': if (instalar) { const p = instalar; instalar = null; p.prompt(); p.userChoice.then(() => render(), () => render()); } break;
@@ -1513,6 +1571,8 @@
     c.tempoSim = Number(g('cfg-tempo').value) || 260;
     c.dias = [0, 1, 2, 3, 4, 5, 6].filter(x => g('cfg-d' + x).checked);
     if (g('cfg-apostila')) c.apostila = g('cfg-apostila').checked;
+    /* trocar de opção não apaga nada: o progresso das duas fica guardado */
+    if (NIVEL[g('cfg-nivel').value] && g('cfg-nivel').value !== c.modalidade) { c.modalidade = g('cfg-nivel').value; ativar(); }
     salvar();
     const y = window.scrollY;
     render();
