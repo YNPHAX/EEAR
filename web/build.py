@@ -157,5 +157,20 @@ if not APP:
     sw = sw.replace('[/*__ARQUIVOS__*/]', json.dumps(['./'] + [a for a in nucleo if a != 'index.html']))
     open(os.path.join(OUT, 'sw.js'), 'w', encoding='utf-8').write(sw)
     open(os.path.join(OUT, '.nojekyll'), 'w').close()
+
+# o build só termina depois de conferir que nada do material restrito foi para a saída (web/verificar_publicacao.py):
+# se a conferência falhar ou não puder rodar, a saída é apagada, para que nada seja enviado nem por engano.
+# Depois deste ponto, nada pode escrever em OUT (a conferência dos workflows confere isso).
+try:
+    sys.path.insert(0, WEB)
+    sys.dont_write_bytecode = True  # não deixar web/__pycache__ para trás
+    from verificar_publicacao import conferir_build
+    r = conferir_build(OUT, 'app' if APP else 'site')
+except Exception as e:
+    print(f'ERRO: a conferência do conteúdo não pôde rodar ({type(e).__name__}); nada pode ser publicado')
+    r = 2
+if r:
+    shutil.rmtree(OUT, ignore_errors=True)
+    sys.exit(r)
 tam = sum(os.path.getsize(os.path.join(OUT, a)) for a in todos)
 print(f'{"app" if APP else "site"} em {OUT}: {len(todos)} arquivos, {tam / 1e6:.1f} MB ({len(imgs)} imagens de provas)')
