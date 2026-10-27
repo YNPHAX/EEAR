@@ -1279,6 +1279,7 @@ def autoteste(verboso=False):
             ('texto', 'entidades HTML (&#227; e &#xe3; em todas as letras)', lambda: verificar(site('ent', {'termos.html': '<p>' + ''.join(f'&#{ord(c)};' if k % 2 else f'&#x{ord(c):x};' for k, c in enumerate(trecho)) + '</p>'}), 'site', imp), 1),
             ('texto', 'atributo HTML', lambda: verificar(site('atrib', {'termos.html': '<span title="' + html.escape(trecho) + '">x</span>'}), 'site', imp), 1),
             ('texto', 'texto picado em pedaços de 7 caracteres', lambda: verificar(site('picado', {'dados/b.js': 'x=' + picado}), 'site', imp), 1),
+            ('texto', 'acentos e cedilha viram a letra simples (Ação Aérea = acao aerea)', lambda: 0 if fluxos('Ação Aérea, ÇÃO; ü') == fluxos('acao aerea cao u') else 1, 0),
             ('texto', 'sem acentos, em maiúsculas, espaços trocados', lambda: verificar(site('acento', {'dados/b.js': js(sem_acento)}), 'site', imp), 1),
             ('texto', 'caracteres invisíveis entre as letras', lambda: verificar(site('invis', {'dados/b.js': js('\u200b'.join(trecho))}), 'site', imp), 1),
             ('outros', 'cópia exata com outro nome', lambda: verificar(site('copia', {'dados/material.js': restrito}), 'site', imp), 1),
