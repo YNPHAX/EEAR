@@ -53,7 +53,7 @@ No próximo push na `main`, o site sai com o login. O progresso de cada aluno fi
 
 São 640 questões inéditas no estilo da EEAR, 498 flashcards e 192 exemplos resolvidos, além das questões da apostila.
 
-As imagens das páginas da apostila não ficam neste repositório. Elas são publicadas só no artifact (privado), sem a marca do curso, a partir dos PDFs.
+O material das apostilas (imagens das páginas, índice e gabarito) não fica neste repositório, só no artifact (privado), sem a marca do curso, a partir dos PDFs.
 
 ## Estrutura
 
@@ -65,7 +65,6 @@ curso/
     base.js       matérias, calendário de provas, EEAR.add e EEAR.addProva
     videos.js     termos de busca de videoaulas por módulo
     videoaulas.js vídeos do YouTube de cada aula (título, canal e tipo)
-    apostila.js   conjuntos de exercícios da apostila: gabarito, páginas e módulos
     provas.js     provas anteriores oficiais (EEAR.addProva)
     por*.js       Língua Portuguesa
     ing*.js       Língua Inglesa
