@@ -29,7 +29,7 @@ EEAR.add({
 <li>Causa e consequência: <i>because, since, due to, so, therefore, as a result</i>.</li>
 <li>Exemplo: <i>for example, for instance, such as</i>.</li>
 </ul>
-<h3>Vocabulário de aviação (útil para BCT)</h3>
+<h3>Vocabulário técnico e de aviação</h3>
 <p><i>aircraft</i> (aeronave), <i>runway</i> (pista), <i>take off</i> (decolar), <i>land</i> (pousar), <i>control tower</i> (torre de controle), <i>clearance</i> (autorização), <i>flight</i> (voo), <i>crew</i> (tripulação), <i>delay</i> (atraso), <i>fuel</i> (combustível), <i>weather</i> (tempo meteorológico).</p>
 <p class="dica">Leia as perguntas antes do texto. Nas questões de referência, volte ao trecho e substitua o pronome pelas alternativas: a que mantém o sentido é a correta.</p>`,
   ex: [
@@ -64,6 +64,8 @@ EEAR.add({
 EEAR.add({
   id: 'ING02', m: 'ing', n: 2, t: 'Substantivos e artigos', peso: 2, h: 2,
   teoria: `
+<h3>Gênero e substantivos compostos</h3>
+<p>Em inglês, muitos substantivos de profissão não mudam conforme o gênero: <i>pilot, teacher, doctor, student</i>. Quando a distinção é necessária, o contexto ou palavras como <i>man/woman</i> costumam resolver. Em substantivos compostos, o plural normalmente recai sobre o núcleo: <i>air traffic controllers, boarding passes</i>; em estruturas como <i>mother-in-law</i>, pluraliza-se o núcleo: <i>mothers-in-law</i>.</p>
 <h3>Plural dos substantivos</h3>
 <ul>
 <li>Regra geral: + <b>s</b> (book → books).</li>
@@ -155,6 +157,12 @@ EEAR.add({
 <li><b>where</b>: lugar. <b>when</b>: tempo.</li>
 <li>Em orações explicativas (entre vírgulas) não se usa <b>that</b>: <i>Paris, <b>which</b> is beautiful, …</i></li>
 </ul>
+<h3>Pronomes e advérbios interrogativos</h3>
+<ul>
+<li><b>who</b> (quem), <b>whom</b> (quem, objeto formal), <b>whose</b> (de quem), <b>what</b> (o quê/qual) e <b>which</b> (qual entre opções).</li>
+<li><b>where</b> (onde), <b>when</b> (quando), <b>why</b> (por quê) e <b>how</b> (como).</li>
+<li>Combinações frequentes: <b>how many</b> (contáveis), <b>how much</b> (incontáveis/preço), <b>how long</b> (duração/comprimento), <b>how often</b> (frequência) e <b>how far</b> (distância).</li>
+</ul>
 <p class="dica">Nas questões de pronome, olhe a função: antes de substantivo vai possessive adjective (my, your); sozinho no fim vai possessive pronoun (mine, yours).</p>`,
   ex: [
     ['Complete: "This is not my pen. ___ is on the table."', '<p><b>Mine</b>: o pronome substitui "my pen".</p>'],
@@ -171,7 +179,8 @@ EEAR.add({
     ['"Tell ___ the truth." (referring to Maria)', ['she', 'her', 'hers', 'herself'], 1, 'Depois do verbo, na função de objeto: her.'],
     ['"The two pilots greeted ___ before the flight."', ['themselves', 'each other', 'theirs', 'them'], 1, 'Ação recíproca (um cumprimentou o outro): each other.'],
     ['"This is the woman ___ son is a cadet."', ['who', 'whom', 'whose', 'which'], 2, 'Relação de posse (cujo filho): whose.'],
-    ['"I did the project by ___." means that', ['I did it with friends.', 'I did it alone.', 'I did it for myself only.', 'I did not do it.'], 1, '"By myself" = sozinho, sem ajuda.']
+    ['"I did the project by ___." means that', ['I did it with friends.', 'I did it alone.', 'I did it for myself only.', 'I did not do it.'], 1, '"By myself" = sozinho, sem ajuda.'],
+    ['"___ does the flight take from São Paulo to Recife?"', ['How long', 'How many', 'How much', 'How often'], 0, '"How long" pergunta duração.']
   ],
   fc: [
     ['my x mine', 'My + substantivo (my car). Mine sozinho (it is mine).'],
@@ -181,7 +190,8 @@ EEAR.add({
     ['some x any', 'Some: afirmativas e ofertas. Any: negativas e perguntas.'],
     ['each other', 'Reciprocidade: um ao outro.'],
     ['by myself', 'Sozinho, sem ajuda.'],
-    ['Reflexive de they', 'Themselves.']
+    ['Reflexive de they', 'Themselves.'],
+    ['How long / how often', 'Duração / frequência.']
   ]
 });
 
@@ -190,7 +200,8 @@ EEAR.add({
   teoria: `
 <h3>Adjetivos</h3>
 <p>Não variam em gênero nem número (<i>a tall man, tall women</i>) e vêm antes do substantivo. Ordem quando há vários: <b>opinião – tamanho – idade – forma – cor – origem – material – finalidade</b>: <i>a beautiful small old round red Brazilian wooden dining table</i>.</p>
-<p><b>-ed x -ing</b>: <i>bored</i> (entediado, como a pessoa se sente) x <i>boring</i> (entediante, o que causa). Também: interested/interesting, tired/tiring, excited/exciting.</p>
+<h3>Sinônimos e antônimos</h3>
+<p>A EEAR pode cobrar equivalência de sentido pelo contexto. Pares úteis: <i>big/large</i>, <i>begin/start</i>, <i>difficult/hard</i>, <i>quick/fast</i>; antônimos: <i>safe/dangerous</i>, <i>cheap/expensive</i>, <i>early/late</i>, <i>increase/decrease</i>. Confirme sempre pelo sentido da frase, não só por tradução isolada.</p>
 <h3>Comparativo e superlativo</h3>
 <div class="tbl"><table><thead><tr><th>Adjetivo</th><th>Comparativo</th><th>Superlativo</th></tr></thead><tbody>
 <tr><td>curto (1 sílaba): fast</td><td>fast<b>er</b> than</td><td>the fast<b>est</b></td></tr>
@@ -215,7 +226,6 @@ EEAR.add({
 <p class="dica">"Than" acompanha o comparativo; "the" acompanha o superlativo. "Good" é adjetivo (a good pilot); "well" é advérbio (he flies well).</p>`,
   ex: [
     ['Comparativo e superlativo de "heavy" e "bad".', '<p>heavy → <b>heavier</b> → <b>the heaviest</b>; bad → <b>worse</b> → <b>the worst</b>.</p>'],
-    ['Complete: "The movie was ___ (bore). I was ___ (bore)."', '<p>"The movie was <b>boring</b>" (causa). "I was <b>bored</b>" (sentimento).</p>'],
     ['Posicione "always": "He is late." / "He arrives late."', '<p>"He is <b>always</b> late" (depois do be). "He <b>always</b> arrives late" (antes do verbo principal).</p>']
   ],
   q: [
@@ -223,21 +233,21 @@ EEAR.add({
     ['"This is ___ exam I have ever taken."', ['the more difficult', 'the most difficult', 'most difficult', 'the difficultest'], 1, 'Adjetivo longo no superlativo: the most difficult.'],
     ['"My English is ___ than last year."', ['gooder', 'more good', 'better', 'best'], 2, 'Good é irregular: good → better → the best.'],
     ['Choose the correct sentence.', ['She speaks English very good.', 'She speaks English very well.', 'She speaks very well English.', 'She speaks English very goodly.'], 1, 'Para modificar o verbo "speaks" usa-se o advérbio "well", depois do objeto.'],
-    ['"The class was so ___ that everybody felt ___."', ['bored / boring', 'boring / bored', 'boring / boring', 'bored / bored'], 1, 'A aula causa tédio (boring); as pessoas sentem tédio (bored).'],
     ['"The more you practice, ___ you get."', ['the better', 'better', 'the best', 'more better'], 0, 'Estrutura de progressão: the + comparativo, the + comparativo.'],
     ['Choose the correct position of the adverb.', ['He never is late.', 'He is never late.', 'Never he is late.', 'He is late never.'], 1, 'Advérbios de frequência vêm depois do verbo to be.'],
     ['"She hardly studied for the test." This means that she', ['studied very hard.', 'almost didn\'t study.', 'studied every day.', 'studied a lot lately.'], 1, '"Hardly" = quase não. "Hard" é que significa "muito, com esforço".'],
     ['"Rio is not ___ cold ___ Curitiba in winter."', ['as / than', 'so / as', 'more / as', 'as / that'], 1, 'Igualdade negativa: not as/so … as.'],
-    ['Choose the correct order of adjectives.', ['a red old big car', 'a big old red car', 'an old red big car', 'a red big old car'], 1, 'Ordem: tamanho (big) – idade (old) – cor (red).']
+    ['Choose the correct order of adjectives.', ['a red old big car', 'a big old red car', 'an old red big car', 'a red big old car'], 1, 'Ordem: tamanho (big) – idade (old) – cor (red).'],
+    ['The word "dangerous" is the opposite of', ['safe', 'fast', 'large', 'late'], 0, '"Safe" é antônimo de "dangerous".']
   ],
   fc: [
     ['good / bad: comparativo e superlativo', 'Better, the best / worse, the worst.'],
     ['Comparativo de adjetivo longo', 'More … than (more important than).'],
     ['Igualdade', 'As … as (negativa: not as/so … as).'],
-    ['bored x boring', 'Bored: como a pessoa se sente. Boring: o que causa o tédio.'],
     ['hardly / lately', 'Quase não / ultimamente.'],
     ['Advérbio de good', 'Well.'],
     ['Posição do advérbio de frequência', 'Antes do verbo principal, depois do to be.'],
-    ['The more…, the…', 'Quanto mais…, mais…: The more you study, the better you get.']
+    ['The more…, the…', 'Quanto mais…, mais…: The more you study, the better you get.'],
+    ['safe / dangerous', 'Seguro / perigoso: antônimos.']
   ]
 });

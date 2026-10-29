@@ -1,28 +1,20 @@
-/* Língua Inglesa — módulos 10 a 13 */
+/* Língua Inglesa — módulos 10 a 16 */
 EEAR.add({
-  id: 'ING10', m: 'ing', n: 10, t: 'Conditionals e wish', peso: 3, h: 2.5,
+  id: 'ING10', m: 'ing', n: 10, t: 'Conditionals: zero, first e second', peso: 3, h: 2,
+  modalidades: ['normal'],
   teoria: `
 <div class="tbl"><table><thead><tr><th>Tipo</th><th>Estrutura</th><th>Uso</th><th>Exemplo</th></tr></thead><tbody>
 <tr><td>Zero</td><td>if + present, present</td><td>verdades gerais, ciência</td><td>If you heat ice, it melts.</td></tr>
 <tr><td>First</td><td>if + present, will + verbo</td><td>situação real ou provável no futuro</td><td>If it rains, the flight will be delayed.</td></tr>
 <tr><td>Second</td><td>if + past, would + verbo</td><td>situação hipotética ou improvável no presente/futuro</td><td>If I had wings, I would fly.</td></tr>
-<tr><td>Third</td><td>if + past perfect, would have + particípio</td><td>hipótese sobre o passado (que não aconteceu)</td><td>If I had studied, I would have passed.</td></tr>
 </tbody></table></div>
 <ul>
 <li>Na second conditional, com <i>to be</i>, usa-se <b>were</b> para todas as pessoas: <i>If I <b>were</b> you, I would study more.</i></li>
 <li>A oração com <b>if</b> pode vir depois: <i>I would travel if I had money</i> (sem vírgula).</li>
 <li>Nunca use <b>will</b> ou <b>would</b> na oração do <i>if</i>.</li>
 <li><b>Unless</b> = if not: <i><b>Unless</b> you hurry, you will miss the bus</i> (= If you don't hurry).</li>
-<li>Outras palavras: <b>provided (that), as long as</b> (desde que), <b>in case</b> (caso).</li>
 </ul>
-<h3>Wish e if only</h3>
-<ul>
-<li>Desejo sobre o <b>presente</b>: wish + <b>past</b>: <i>I wish I <b>had</b> a car</i> (não tenho). <i>I wish I <b>were</b> taller.</i></li>
-<li>Arrependimento sobre o <b>passado</b>: wish + <b>past perfect</b>: <i>I wish I <b>had studied</b> more</i> (não estudei).</li>
-<li>Reclamação de algo que incomoda: wish + <b>would</b>: <i>I wish you <b>would</b> stop talking.</i></li>
-<li><b>If only</b> = quem dera, com as mesmas regras: <i>If only I <b>had</b> more time!</i></li>
-</ul>
-<p class="dica">Ache primeiro o tempo do verbo do "if": presente → first (ou zero); passado → second; past perfect → third. A outra oração segue o par.</p>`,
+<p class="dica">Ache primeiro o tempo do verbo na oração com <i>if</i>: presente costuma indicar zero ou first conditional; passado costuma indicar second conditional.</p>`,
   ex: [
     ['Complete: "If I ___ (have) more time, I ___ (learn) to fly."', '<p>Hipótese no presente: "If I <b>had</b> more time, I <b>would learn</b> to fly." (second conditional)</p>'],
     ['Reescreva com unless: "If you don\'t practice, you won\'t improve."', '<p>"<b>Unless</b> you practice, you won\'t improve."</p>'],
@@ -31,29 +23,20 @@ EEAR.add({
   q: [
     ['"If it ___ tomorrow, we will cancel the training."', ['rains', 'will rain', 'rained', 'would rain'], 0, 'First conditional: if + present, will + verbo.'],
     ['"If I ___ you, I would accept the offer."', ['am', 'was being', 'were', 'will be'], 2, 'Second conditional com to be: were para todas as pessoas.'],
-    ['"If she had left earlier, she ___ the flight."', ['wouldn\'t miss', 'won\'t miss', 'wouldn\'t have missed', 'didn\'t miss'], 2, 'Third conditional: if + past perfect, would have + particípio.'],
     ['"If you heat water to 100°C, it ___."', ['boils', 'will boiled', 'would boil', 'boiled'], 0, 'Verdade científica: zero conditional (present + present).'],
     ['"___ you study, you won\'t pass the exam."', ['If', 'Unless', 'When', 'Because'], 1, 'Unless = if not: se você não estudar, não vai passar.'],
-    ['"I wish I ___ more money." (now)', ['have', 'had', 'will have', 'would had'], 1, 'Desejo sobre o presente: wish + past.'],
-    ['"I wish I ___ to the party last night. It was great!"', ['went', 'had gone', 'would go', 'have gone'], 1, 'Arrependimento sobre o passado: wish + past perfect.'],
     ['"What would you do if you ___ the lottery?"', ['win', 'won', 'will win', 'would win'], 1, 'Second conditional: if + past (won).'],
-    ['The sentence "If I had studied, I would have passed" means that the person', ['studied and passed.', 'didn\'t study and didn\'t pass.', 'will study and pass.', 'studied but didn\'t pass.'], 1, 'Third conditional fala de algo que não aconteceu no passado: não estudou e não passou.'],
-    ['"You can borrow my car ___ you drive carefully."', ['unless', 'as long as', 'in spite of', 'although'], 1, '"As long as" = desde que (condição).']
   ],
   fc: [
     ['First conditional', 'If + present, will + verbo.'],
     ['Second conditional', 'If + past, would + verbo (were para todos).'],
-    ['Third conditional', 'If + past perfect, would have + particípio.'],
     ['Zero conditional', 'If + present, present: verdades gerais.'],
     ['unless', 'If not.'],
-    ['wish + past', 'Desejo sobre o presente: I wish I had…'],
-    ['wish + past perfect', 'Arrependimento sobre o passado: I wish I had studied.'],
-    ['as long as / provided', 'Desde que.']
   ]
 });
 
 EEAR.add({
-  id: 'ING11', m: 'ing', n: 11, t: 'Passive voice e reported speech', peso: 3, h: 2.5,
+  id: 'ING11', m: 'ing', n: 11, t: 'Passive voice', peso: 3, h: 2,
   teoria: `
 <h3>Passive voice</h3>
 <p><b>to be (no tempo da ativa) + past participle</b>. O objeto da ativa vira sujeito; o agente aparece com <b>by</b> (quando importa).</p>
@@ -68,48 +51,21 @@ EEAR.add({
 <tr><td>Modal</td><td>You must check it.</td><td>It <b>must be checked</b>.</td></tr>
 </tbody></table></div>
 <p>Estruturas comuns: <i>English <b>is spoken</b> here. The 14-bis <b>was invented by</b> Santos Dumont. It <b>is said that</b>… / He <b>is said to be</b>…</i></p>
-<h3>Reported speech (discurso indireto)</h3>
-<p>Quando o verbo introdutor está no passado (<i>said, told</i>), os tempos recuam:</p>
-<div class="tbl"><table><thead><tr><th>Direto</th><th>Indireto</th></tr></thead><tbody>
-<tr><td>simple present ("I work")</td><td>simple past (he said he worked)</td></tr>
-<tr><td>present continuous ("I am working")</td><td>past continuous (he was working)</td></tr>
-<tr><td>simple past / present perfect ("I worked / have worked")</td><td>past perfect (he had worked)</td></tr>
-<tr><td>will ("I will go")</td><td>would (he would go)</td></tr>
-<tr><td>can / may / must</td><td>could / might / had to</td></tr>
-</tbody></table></div>
-<p>Também mudam pronomes e marcadores: <i>today → that day; tomorrow → the next day / the following day; yesterday → the day before; now → then; here → there; this → that; next week → the following week; ago → before</i>.</p>
-<ul>
-<li><b>say</b> (sem objeto pessoal) x <b>tell</b> (com objeto): <i>He <b>said</b> (that)… / He <b>told me</b> (that)…</i></li>
-<li>Perguntas viram afirmativas, sem do/did: <i>"Where do you live?" → She asked where I <b>lived</b>.</i> Sim/não: <b>if / whether</b>: <i>He asked <b>if</b> I was ready.</i></li>
-<li>Ordens e pedidos: <b>told/asked + objeto + to + verbo</b>: <i>"Sit down." → He told me <b>to sit</b> down. "Don't move." → He told us <b>not to move</b>.</i></li>
-</ul>
-<p class="dica">Na passiva, o tempo está no verbo <i>to be</i>; o verbo principal fica sempre no particípio. No indireto, pergunta não tem auxiliar e mantém a ordem sujeito + verbo.</p>`,
+<p class="dica">Na passiva, o tempo verbal aparece no verbo <i>to be</i>; o verbo principal permanece no particípio.</p>`,
   ex: [
     ['Passe para a passiva: "The mechanics are checking the engine."', '<p>"The engine <b>is being checked</b> by the mechanics."</p>'],
-    ['Passe para o indireto: She said, "I will travel tomorrow."', '<p>She said (that) she <b>would travel the next day</b>.</p>'],
-    ['Passe para o indireto: "Are you a cadet?" he asked me.', '<p>He asked me <b>if/whether I was</b> a cadet.</p>']
   ],
   q: [
     ['"The first airplane ___ by Santos Dumont."', ['flew', 'was flown', 'is flying', 'has flown'], 1, 'Passiva no passado: was + particípio (flown).'],
     ['Passive form of "They are painting the hangar":', ['The hangar is painted.', 'The hangar is being painted.', 'The hangar was painting.', 'The hangar has painted.'], 1, 'Present continuous na passiva: is being + particípio.'],
     ['"The tickets ___ already ___." (present perfect, passive)', ['have / sold', 'have / been sold', 'has / be sold', 'are / sold'], 1, 'Present perfect passivo: have been + particípio.'],
     ['"The report must ___ by Friday."', ['finish', 'be finished', 'finished', 'being finished'], 1, 'Modal na passiva: modal + be + particípio.'],
-    ['Direct: "I am tired." Reported: She said that she ___ tired.', ['is', 'was', 'has been', 'will be'], 1, 'Simple present recua para simple past: was.'],
-    ['Direct: "I will call you tomorrow." Reported: He said he ___ me ___.', ['will call / tomorrow', 'would call / the next day', 'would call / yesterday', 'called / tomorrow'], 1, 'Will → would; tomorrow → the next day.'],
-    ['Direct: "Where do you work?" Reported: She asked me ___.', ['where do I work', 'where I worked', 'where did I work', 'where I work did'], 1, 'Pergunta indireta: ordem afirmativa, tempo recuado, sem auxiliar.'],
-    ['Direct: "Don\'t open the door." Reported: He told me ___ the door.', ['don\'t open', 'not to open', 'to not opened', 'didn\'t open'], 1, 'Ordem negativa: told + objeto + not to + verbo.'],
-    ['Choose the correct sentence.', ['He said me that he was busy.', 'He told me that he was busy.', 'He told that he was busy me.', 'He said to me he is busy yesterday.'], 1, '"Tell" exige objeto pessoal (told me); "say" não leva objeto direto pessoal.'],
     ['"English ___ in many countries."', ['speaks', 'is spoken', 'is speaking', 'spoke'], 1, 'Passiva no presente: is + particípio.']
   ],
   fc: [
     ['Passiva: estrutura', 'To be no tempo da ativa + past participle.'],
     ['Passiva com modal', 'Modal + be + particípio: must be checked.'],
     ['Passiva do present continuous', 'Is/are being + particípio.'],
-    ['Reported: will vira…', 'Would.'],
-    ['Reported: tomorrow / yesterday', 'The next day / the day before.'],
-    ['say x tell', 'Tell exige objeto pessoal: told me. Say não.'],
-    ['Pergunta sim/não no indireto', 'If / whether + ordem afirmativa.'],
-    ['Ordem no indireto', 'Told + objeto + (not) to + verbo.']
   ]
 });
 
@@ -207,6 +163,12 @@ EEAR.add({
 <li>Advérbios: <b>-ly</b> (careful → carefully).</li>
 <li>Prefixos de negação: <b>un-</b> (unhappy), <b>in-/im-/il-/ir-</b> (impossible, illegal, irregular), <b>dis-</b> (disagree); repetição: <b>re-</b> (rewrite); erro: <b>mis-</b> (misunderstand); antes: <b>pre-</b>.</li>
 </ul>
+<h3>Imperativo e subjuntivo</h3>
+<ul>
+<li><b>Imperativo</b>: verbo na forma base para ordens, instruções e avisos: <i>Open the door. Check your answers.</i> Negativa: <i>Don't touch the equipment.</i></li>
+<li><b>Let's + verbo</b>: sugestão com inclusão do falante: <i>Let's review the lesson.</i></li>
+<li><b>Subjuntivo</b> em estruturas formais de exigência ou recomendação: <i>It is essential that every candidate <b>be</b> on time.</i> / <i>They suggested that he <b>study</b> more.</i> O verbo permanece na forma base.</li>
+</ul>
 <p class="dica">Depois de preposição, sempre -ing, inclusive em "look forward to seeing you" e "be used to working". Esse "to" é preposição, não infinitivo.</p>`,
   ex: [
     ['Complete: "I enjoy ___ (fly), but I want ___ (become) a controller."', '<p>"I enjoy <b>flying</b>" (enjoy + -ing) e "I want <b>to become</b>" (want + to).</p>'],
@@ -223,7 +185,9 @@ EEAR.add({
     ['"Don\'t give ___! You can pass the exam."', ['up', 'off', 'on', 'out'], 0, '"Give up" = desistir.'],
     ['The opposite of "careful" is', ['uncareful', 'careless', 'discareful', 'carefulness'], 1, 'O sufixo -less indica ausência: careless (descuidado).'],
     ['"I remember ___ the door, but now it\'s open!" (I have a memory of the action)', ['to lock', 'locking', 'lock', 'locked'], 1, '"Remember + -ing" = lembrar de ter feito.'],
-    ['"We have run ___ of fuel." means that', ['we have a lot of fuel.', 'we have no more fuel.', 'we are buying fuel.', 'the fuel is expensive.'], 1, '"Run out of" = ficar sem.']
+    ['"We have run ___ of fuel." means that', ['we have a lot of fuel.', 'we have no more fuel.', 'we are buying fuel.', 'the fuel is expensive.'], 1, '"Run out of" = ficar sem.'],
+    ['Choose the correct imperative form.', ['You to check your answers.', 'Check your answers.', 'Checking your answers.', 'Checked your answers.'], 1, 'O imperativo afirmativo usa o verbo na forma base.'],
+    ['"It is essential that every candidate ___ on time."', ['is', 'be', 'was', 'being'], 1, 'No subjuntivo formal, após expressões de necessidade/recomendação, usa-se a forma base: be.']
   ],
   fc: [
     ['Verbos + -ing', 'Enjoy, avoid, finish, mind, suggest, keep, practice, consider.'],
@@ -233,6 +197,144 @@ EEAR.add({
     ['Question tag: regra', 'Afirmativa → tag negativa; negativa → tag afirmativa; mesmo auxiliar.'],
     ['Tag de "I am…" e "Let\'s…"', 'Aren\'t I? / Shall we?'],
     ['take off / give up / run out of', 'Decolar (tirar) / desistir / ficar sem.'],
-    ['-ful x -less', 'Cheio de (useful) x sem (useless).']
+    ['-ful x -less', 'Cheio de (useful) x sem (useless).'],
+    ['Imperativo', 'Verbo na forma base: Check your answers. Negativa: Don\'t + verbo.'],
+    ['Subjuntivo formal', 'It is essential that he be… / They suggested that she study…']
+  ]
+});
+
+EEAR.add({
+  id: 'ING14', m: 'ing', n: 14, t: 'BCT · Perfect tenses e futuros avançados', peso: 2, h: 2,
+  modalidades: ['bct'],
+  teoria: `
+<h3>Perfect tenses além do nível básico</h3>
+<p>No BCT, o edital cobra <b>Perfect tenses</b> de forma ampla. O <b>present perfect</b> já foi estudado no núcleo comum; aqui entram as estruturas mais características do nível intermediário.</p>
+<div class="tbl"><table><thead><tr><th>Tempo</th><th>Estrutura</th><th>Uso principal</th></tr></thead><tbody>
+<tr><td>Past perfect</td><td>had + past participle</td><td>ação concluída antes de outra ação passada</td></tr>
+<tr><td>Present perfect continuous</td><td>have/has been + -ing</td><td>duração de ação iniciada no passado e ligada ao presente</td></tr>
+<tr><td>Past perfect continuous</td><td>had been + -ing</td><td>duração anterior a outro ponto no passado</td></tr>
+<tr><td>Future perfect</td><td>will have + past participle</td><td>ação concluída antes de um ponto futuro</td></tr>
+</tbody></table></div>
+<p><i>When we arrived, the aircraft <b>had already taken off</b>.</i> / <i>She <b>has been studying</b> for three hours.</i> / <i>By next year, he <b>will have completed</b> the course.</i></p>
+<h3>Future continuous</h3>
+<p><b>will be + -ing</b>: ação em andamento em determinado momento futuro: <i>This time tomorrow, we <b>will be flying</b>.</i></p>
+<p class="dica">Monte a linha do tempo. Se uma ação já tinha terminado antes de outra no passado, use past perfect. Se o marco é futuro e algo estará concluído antes dele, use future perfect.</p>`,
+  ex: [
+    ['Complete: "When I reached the gate, the aircraft ___ already ___."', '<p><b>had already departed</b>: a partida ocorreu antes de eu chegar ao portão.</p>'],
+    ['Complete: "By 2030, she ___ the required flight hours."', '<p><b>will have completed</b>: ação concluída antes de um marco futuro.</p>'],
+    ['"He was tired because he ___ all morning."', '<p><b>had been working</b>: duração anterior a outro ponto no passado.</p>']
+  ],
+  q: [
+    ['"When the controller called, the pilot ___ the message."', ['already received', 'had already received', 'has already received', 'will receive'], 1, 'A recepção aconteceu antes de outra ação passada: past perfect.'],
+    ['"She ___ for the EEAR for three hours, so she needs a break."', ['has been studying', 'had study', 'will have studied', 'studies'], 0, 'Duração ligada ao presente: present perfect continuous.'],
+    ['"By next Friday, we ___ the report."', ['finish', 'finished', 'will have finished', 'had finished'], 2, 'Conclusão antes de um marco futuro: future perfect.'],
+    ['"This time tomorrow, they ___ to Recife."', ['will be flying', 'have flown', 'had flown', 'fly'], 0, 'Ação em andamento em um momento futuro: future continuous.'],
+    ['"Before the inspection began, the team ___ for several hours."', ['has worked', 'had been working', 'will work', 'works'], 1, 'Duração anterior a um ponto passado: past perfect continuous.']
+  ],
+  fc: [
+    ['Past perfect', 'Had + participle: ação anterior a outra no passado.'],
+    ['Present perfect continuous', 'Have/has been + -ing: duração ligada ao presente.'],
+    ['Past perfect continuous', 'Had been + -ing: duração anterior a outro ponto passado.'],
+    ['Future perfect', 'Will have + participle: concluída antes de um marco futuro.'],
+    ['Future continuous', 'Will be + -ing: ação em andamento no futuro.']
+  ]
+});
+
+EEAR.add({
+  id: 'ING15', m: 'ing', n: 15, t: 'BCT · Reported speech, voz reflexiva e forma enfática', peso: 2, h: 2.5,
+  modalidades: ['bct'],
+  teoria: `
+<h3>Discurso direto e indireto</h3>
+<p>Quando o verbo introdutor está no passado, é comum ocorrer <b>backshift</b>:</p>
+<div class="tbl"><table><thead><tr><th>Direto</th><th>Indireto</th></tr></thead><tbody>
+<tr><td>simple present</td><td>simple past</td></tr>
+<tr><td>present continuous</td><td>past continuous</td></tr>
+<tr><td>simple past / present perfect</td><td>past perfect</td></tr>
+<tr><td>will</td><td>would</td></tr>
+<tr><td>can / may / must</td><td>could / might / had to</td></tr>
+</tbody></table></div>
+<p>Marcadores também podem mudar: <i>today → that day; tomorrow → the next day; yesterday → the day before; now → then; here → there; this → that.</i></p>
+<ul>
+<li><b>say</b> normalmente não recebe objeto pessoal direto; <b>tell</b> recebe: <i>He said that… / He told me that…</i></li>
+<li>Pergunta indireta usa ordem afirmativa: <i>"Where do you work?" → She asked where I worked.</i></li>
+<li>Perguntas sim/não usam <b>if/whether</b>. Ordens: <b>told/asked + objeto + (not) to + verbo</b>.</li>
+</ul>
+<h3>Voz reflexiva</h3>
+<p>Na construção reflexiva, sujeito e objeto representam a mesma pessoa ou coisa: <i>The pilot blamed <b>himself</b>.</i> Não confunda com o uso enfático do mesmo pronome: <i>The commander <b>himself</b> checked the report.</i></p>
+<h3>Forma verbal enfática</h3>
+<p><b>do / does / did + verbo base</b> pode reforçar uma afirmação: <i>I <b>do understand</b> the rule.</i> / <i>She <b>does know</b> the procedure.</i> / <i>He <b>did call</b> yesterday.</i></p>
+<p class="dica">No reported speech, observe primeiro quem fala, para quem fala e quando. Depois ajuste pronomes, tempo verbal e marcadores de tempo/lugar.</p>`,
+  ex: [
+    ['Passe para o indireto: She said, "I will travel tomorrow."', '<p>She said (that) she <b>would travel the next day</b>.</p>'],
+    ['Passe para o indireto: "Are you ready?" he asked me.', '<p>He asked me <b>if/whether I was ready</b>.</p>'],
+    ['Dê ênfase a "I understand the rule".', '<p><b>I do understand the rule.</b></p>']
+  ],
+  q: [
+    ['Direct: "I am tired." Reported: She said that she ___ tired.', ['is', 'was', 'has been', 'will be'], 1, 'Simple present recua para simple past.'],
+    ['Direct: "I will call you tomorrow." Reported: He said he ___ me ___.', ['will call / tomorrow', 'would call / the next day', 'would call / yesterday', 'called / tomorrow'], 1, 'Will → would; tomorrow → the next day.'],
+    ['Direct: "Where do you work?" Reported: She asked me ___.', ['where do I work', 'where I worked', 'where did I work', 'where I work did'], 1, 'Pergunta indireta usa ordem afirmativa e não usa do/did.'],
+    ['"The cadet blamed ___ for the mistake."', ['him', 'his', 'himself', 'he'], 2, 'Sujeito e objeto são a mesma pessoa: voz/construção reflexiva.'],
+    ['Choose the emphatic sentence.', ['She knows the rule.', 'She does know the rule.', 'She is knowing the rule.', 'She do knows the rule.'], 1, 'Ênfase no presente: does + verbo base.']
+  ],
+  fc: [
+    ['Reported: will', 'Vira would quando há backshift.'],
+    ['Reported: tomorrow / yesterday', 'The next day / the day before.'],
+    ['say x tell', 'Tell recebe objeto pessoal: told me.'],
+    ['Pergunta indireta', 'Ordem afirmativa; sim/não usa if/whether.'],
+    ['Voz reflexiva', 'Sujeito e objeto são a mesma pessoa: himself, herself etc.'],
+    ['Forma enfática', 'Do/does/did + verbo base: I do know; he did call.']
+  ]
+});
+
+EEAR.add({
+  id: 'ING16', m: 'ing', n: 16, t: 'BCT · Determiners, numerals e estrutura do período', peso: 2, h: 2.5,
+  modalidades: ['bct'],
+  teoria: `
+<h3>Determiners</h3>
+<p>Determinantes vêm antes do substantivo e limitam seu sentido. Além de artigos, possessivos e demonstrativos, o BCT exige atenção a:</p>
+<div class="tbl"><table><tbody>
+<tr><td><b>each</b></td><td>cada elemento individualmente; substantivo singular</td></tr>
+<tr><td><b>every</b></td><td>todos os elementos de um grupo, vistos em conjunto; singular</td></tr>
+<tr><td><b>both</b></td><td>os dois</td></tr>
+<tr><td><b>either</b></td><td>um ou outro de dois</td></tr>
+<tr><td><b>neither</b></td><td>nenhum dos dois</td></tr>
+<tr><td><b>all</b></td><td>todos / todo</td></tr>
+</tbody></table></div>
+<h3>Numerals</h3>
+<p>Cardinais indicam quantidade (<i>one, twenty, one hundred</i>); ordinais indicam ordem (<i>first, second, third, twenty-first</i>). Atenção a datas, frações, decimais e porcentagens em textos técnicos.</p>
+<h3>Adjetivos formados por -ing e -ed</h3>
+<p><b>-ing</b> descreve o que provoca a sensação (<i>a tiring flight</i>); <b>-ed</b> descreve quem sente (<i>tired passengers</i>). Exemplos: <i>interesting/interested, confusing/confused, exciting/excited</i>.</p>
+<h3>Período composto</h3>
+<ul>
+<li><b>Coordenação</b>: orações independentes ligadas por <i>and, but, or, so, yet</i>.</li>
+<li><b>Subordinação</b>: uma oração depende da outra: <i>because, although, if, when, while, since, unless, whereas</i>.</li>
+<li>Orações relativas: <i>who, which, that, whose, where, when</i>.</li>
+</ul>
+<h3>Marcadores do discurso</h3>
+<p>Eles organizam o raciocínio: adição (<i>moreover, furthermore, in addition</i>), contraste (<i>however, nevertheless, on the other hand</i>), consequência (<i>therefore, consequently, as a result</i>), exemplificação (<i>for example, for instance</i>) e sequência (<i>first, then, finally</i>).</p>
+<h3>Tag answers</h3>
+<p>Além de formar a question tag, saiba responder ao sentido real da frase: <i>You don't work here, do you? — No, I don't.</i> Em inglês, <b>yes</b> confirma a afirmação positiva e <b>no</b> confirma a negativa.</p>
+<p class="dica">Em conectivos, observe a relação lógica entre as duas ideias. Em determiners, observe se o substantivo é singular/plural e se o grupo tem dois ou mais elementos.</p>`,
+  ex: [
+    ['Complete: "___ candidate must show an ID." (cada candidato individualmente)', '<p><b>Each</b> candidate must show an ID.</p>'],
+    ['"The flight was exhausting. The passengers were ___."', '<p><b>exhausted</b>: -ed descreve quem sente o efeito.</p>'],
+    ['Escolha o conector: "The weather was poor; ___, the flight departed."', '<p><b>however</b> ou <b>nevertheless</b>, pois há contraste.</p>']
+  ],
+  q: [
+    ['"___ of the two routes is acceptable."', ['Every', 'Either', 'Much', 'Any of all'], 1, '"Either" = um ou outro de dois.'],
+    ['"___ student received the same instruction."', ['Every', 'Both', 'Neither of', 'Many of'], 0, '"Every" + substantivo singular refere-se a todos os membros do grupo.'],
+    ['"The briefing was so ___ that the cadets became ___."', ['confused / confusing', 'confusing / confused', 'confuse / confused', 'confusing / confuse'], 1, '-ing causa a sensação; -ed descreve quem a sente.'],
+    ['"The runway was wet; ___, the aircraft landed safely."', ['therefore', 'however', 'for example', 'because'], 1, 'Há contraste entre pista molhada e pouso seguro: however.'],
+    ['Which sentence contains coordination?', ['I stayed because it rained.', 'I studied, and I passed.', 'When he arrived, we left.', 'The pilot who called is here.'], 1, 'Duas orações independentes ligadas por "and": coordenação.'],
+    ['"You didn\'t miss the briefing, did you?" "___, I didn\'t."', ['Yes', 'No', 'So', 'Either'], 1, 'A resposta negativa é "No, I didn\'t".']
+  ],
+  fc: [
+    ['each x every', 'Each: individualmente. Every: todos do grupo, com singular.'],
+    ['both / either / neither', 'Os dois / um dos dois / nenhum dos dois.'],
+    ['-ing x -ed', 'Causa a sensação / sente a sensação.'],
+    ['Coordenação', 'Orações independentes ligadas por and, but, or, so, yet.'],
+    ['Discourse marker de contraste', 'However, nevertheless, on the other hand.'],
+    ['Discourse marker de consequência', 'Therefore, consequently, as a result.'],
+    ['Tag answer negativa', 'No, I don’t / No, I didn’t: confirma a negativa.']
   ]
 });

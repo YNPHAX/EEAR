@@ -49,7 +49,7 @@ EEAR.add({
 });
 
 EEAR.add({
-  id: 'ING06', m: 'ing', n: 6, t: 'Passado: simple past, past continuous e used to', peso: 3, h: 2.5,
+  id: 'ING06', m: 'ing', n: 6, t: 'Passado: simple past e past continuous', peso: 3, h: 2,
   teoria: `
 <h3>Simple past</h3>
 <p>Ação concluída em um momento definido do passado: <i>I <b>visited</b> the base <b>last year</b>.</i></p>
@@ -76,25 +76,19 @@ EEAR.add({
 <p><b>was/were + verbo-ing</b>: ação em andamento num momento do passado, muitas vezes interrompida por outra (simple past):</p>
 <p><i>I <b>was studying</b> when the phone <b>rang</b>.</i> <i><b>While</b> she <b>was flying</b>, the weather <b>changed</b>.</i></p>
 <p><b>When</b> costuma acompanhar a ação curta (simple past); <b>while</b>, a ação longa (continuous).</p>
-<h3>Used to</h3>
-<p>Hábito ou estado do passado que não existe mais: <i>I <b>used to</b> play soccer</i> (eu costumava jogar). Negativa e pergunta: <i>I <b>didn't use to</b>… / <b>Did</b> you <b>use to</b>…?</i></p>
-<p>Não confunda com <b>be used to + -ing</b> (estar acostumado): <i>I <b>am used to waking</b> up early.</i></p>
 <p class="dica">Depois de did/didn't o verbo volta para a forma base: "Did he went" está errado; o certo é "Did he go".</p>`,
   ex: [
     ['Passe para o passado: "They fly to Manaus."', '<p>"They <b>flew</b> to Manaus." Negativa: "They didn\'t fly". Pergunta: "Did they fly…?"</p>'],
     ['Complete: "We ___ (watch) TV when the lights ___ (go) out."', '<p>"We <b>were watching</b> TV when the lights <b>went</b> out." A ação longa é interrompida pela curta.</p>'],
-    ['Diferencie "I used to drive" e "I\'m used to driving".', '<p>"I used to drive" = eu costumava dirigir (não dirijo mais). "I\'m used to driving" = estou acostumado a dirigir.</p>']
   ],
   q: [
     ['"Yesterday the pilot ___ the plane to Brasília."', ['fly', 'flied', 'flew', 'flown'], 2, 'Fly é irregular: fly – flew – flown. "Yesterday" pede simple past.'],
     ['"___ you ___ the news last night?"', ['Did / saw', 'Did / see', 'Do / saw', 'Were / see'], 1, 'Pergunta no simple past: Did + verbo base (see).'],
     ['"She ___ dinner when I arrived."', ['cooked', 'was cooking', 'cooks', 'is cooking'], 1, 'Ação em andamento interrompida por outra: past continuous.'],
-    ['"I ___ live in São Paulo, but now I live in Guaratinguetá."', ['use to', 'used to', 'am used to', 'was used'], 1, 'Hábito/estado passado que acabou: used to.'],
     ['Choose the correct sentence.', ['He didn\'t went to class.', 'He didn\'t go to class.', 'He doesn\'t went to class.', 'He not went to class.'], 1, 'Depois de didn\'t o verbo fica na forma base: go.'],
     ['The past and past participle of "write" are', ['wrote / written', 'writed / writed', 'wrote / wrote', 'written / wrote'], 0, 'Write – wrote – written.'],
     ['"While I ___ the report, my computer crashed."', ['wrote', 'was writing', 'write', 'have written'], 1, '"While" introduz a ação longa em andamento: past continuous.'],
     ['"We ___ at the airport two hours ago."', ['are', 'were', 'was', 'have been'], 1, '"Two hours ago" pede simple past; com we: were.'],
-    ['"She is used to ___ early."', ['wake up', 'waking up', 'woke up', 'woken up'], 1, '"Be used to" (estar acostumado) é seguido de -ing.'],
     ['The past of "teach", "buy" and "think" is', ['teached, buyed, thinked', 'taught, bought, thought', 'taught, buyed, thought', 'teached, bought, thought'], 1, 'Os três são irregulares terminados em -ought/-aught: taught, bought, thought.']
   ],
   fc: [
@@ -103,13 +97,11 @@ EEAR.add({
     ['go / write / do (past e participle)', 'Went-gone / wrote-written / did-done.'],
     ['Past continuous', 'Was/were + -ing: ação em andamento no passado.'],
     ['When x while', 'When: ação curta (past). While: ação longa (continuous).'],
-    ['used to', 'Hábito do passado que acabou.'],
-    ['be used to + -ing', 'Estar acostumado a: I\'m used to waking up early.']
   ]
 });
 
 EEAR.add({
-  id: 'ING07', m: 'ing', n: 7, t: 'Tempos perfeitos: present perfect e past perfect', peso: 3, h: 2.5,
+  id: 'ING07', m: 'ing', n: 7, t: 'Present perfect', peso: 3, h: 2,
   teoria: `
 <h3>Present perfect</h3>
 <p><b>have/has + past participle</b>. Liga o passado ao presente:</p>
@@ -127,15 +119,10 @@ EEAR.add({
 </ul>
 <h3>Present perfect x simple past</h3>
 <p>Com tempo passado definido (<i>yesterday, last year, in 2015, ago</i>) usa-se o <b>simple past</b>: <i>I <b>visited</b> Paris in 2015.</i> Sem tempo definido, ou com período que ainda não terminou (<i>today, this week</i>), usa-se o <b>present perfect</b>: <i>I <b>have visited</b> Paris twice.</i></p>
-<h3>Present perfect continuous</h3>
-<p><b>have/has been + -ing</b>: enfatiza a duração de uma ação que continua: <i>I <b>have been studying</b> for three hours.</i></p>
-<h3>Past perfect</h3>
-<p><b>had + past participle</b>: ação anterior a outra ação passada (o "passado do passado"): <i>When we arrived, the plane <b>had</b> already <b>left</b>.</i></p>
 <p class="dica">Viu "for/since", "ever/never", "already/yet", "just"? Pense em present perfect. Viu uma data ou "ago"? Simple past.</p>`,
   ex: [
     ['Complete com for ou since: "He has worked here ___ 2018" e "___ eight years".', '<p><b>since</b> 2018 (ponto de início) e <b>for</b> eight years (duração).</p>'],
     ['"I ___ (see) that movie last week" ou "I ___ (see) that movie three times"?', '<p>"I <b>saw</b> that movie last week" (tempo definido) e "I <b>have seen</b> that movie three times" (experiência).</p>'],
-    ['Explique o tempo em "When I got home, my family had eaten".', '<p>Past perfect: a família comeu <b>antes</b> de eu chegar.</p>']
   ],
   q: [
     ['"She ___ in Brazil since 2015."', ['lives', 'lived', 'has lived', 'is living'], 2, '"Since 2015" indica ação que começou no passado e continua: present perfect.'],
@@ -143,9 +130,7 @@ EEAR.add({
     ['"I ___ my homework yesterday."', ['have finished', 'finished', 'have finish', 'had finish'], 1, '"Yesterday" é tempo definido: simple past.'],
     ['"The plane has ___ landed. The passengers are getting off now."', ['yet', 'just', 'ever', 'since'], 1, '"Just" = acabou de.'],
     ['"I haven\'t received the results ___."', ['already', 'yet', 'just', 'ever'], 1, 'Em negativas, no fim da frase, "yet" = ainda.'],
-    ['"When I arrived at the gate, the flight ___."', ['already left', 'has already left', 'had already left', 'leaves already'], 2, 'O voo partiu antes de eu chegar: past perfect.'],
     ['"They have been married ___ ten years."', ['since', 'for', 'ago', 'during'], 1, 'Duração de tempo: for.'],
-    ['"I ___ for two hours, so I\'m tired."', ['have been running', 'run', 'am run', 'had ran'], 0, 'Ênfase na duração de algo que vem acontecendo até agora: present perfect continuous.'],
     ['Choose the correct sentence.', ['I have seen him two days ago.', 'I saw him two days ago.', 'I have saw him two days ago.', 'I had see him two days ago.'], 1, '"Ago" exige simple past.'],
     ['The past participle of "go", "be" and "take" is', ['went, was, took', 'gone, been, taken', 'goed, been, took', 'gone, being, taken'], 1, 'Go – went – gone; be – was/were – been; take – took – taken.']
   ],
@@ -155,8 +140,6 @@ EEAR.add({
     ['already x yet', 'Already: afirmativas. Yet: perguntas e negativas (no fim).'],
     ['just + present perfect', 'Acabou de: The plane has just landed.'],
     ['Present perfect x simple past', 'Tempo definido (yesterday, ago): simple past.'],
-    ['Past perfect', 'Had + participle: ação anterior a outra no passado.'],
-    ['Present perfect continuous', 'Have/has been + -ing: duração até agora.']
   ]
 });
 
@@ -180,8 +163,6 @@ EEAR.add({
 <ul>
 <li><b>Present continuous</b>: compromissos marcados: <i>I<b>'m meeting</b> the captain at 3 p.m.</i></li>
 <li><b>Simple present</b>: horários e programações fixas: <i>The train <b>leaves</b> at 8.</i></li>
-<li><b>Future continuous</b> (<b>will be + -ing</b>): ação em andamento num momento futuro: <i>This time tomorrow I <b>will be flying</b> to Recife.</i></li>
-<li><b>Future perfect</b> (<b>will have + participle</b>): ação concluída antes de um momento futuro: <i>By 2030, I <b>will have finished</b> college.</i></li>
 </ul>
 <p>Depois de <b>when, as soon as, before, after, until, if</b>, em referência ao futuro, usa-se o <b>presente</b>: <i>I'll call you <b>when</b> I <b>arrive</b></i> (não "when I will arrive").</p>
 <p class="dica">Decisão na hora = will. Plano já decidido = going to. Evidência visível = going to.</p>`,
@@ -195,8 +176,6 @@ EEAR.add({
     ['"Someone is at the door." "OK, I ___ open it."', ['am going to', "'ll", 'open', 'have opened'], 1, 'Decisão tomada no momento da fala: will.'],
     ['"I ___ study engineering next year. I have already enrolled."', ['will', 'am going to', 'study', 'studied'], 1, 'Plano já decidido: going to.'],
     ['"I\'ll call you as soon as I ___ at the hotel."', ['will arrive', 'arrive', 'arrived', 'am going to arrive'], 1, 'Depois de "as soon as" com sentido de futuro usa-se o presente.'],
-    ['"This time next week we ___ on the beach."', ['will lie', 'will be lying', 'lie', 'will have lain'], 1, 'Ação em andamento num momento futuro: future continuous.'],
-    ['"By the end of the year, she ___ 200 flight hours."', ['will complete', 'will have completed', 'completes', 'is completing'], 1, 'Ação concluída antes de um momento futuro: future perfect.'],
     ['"The flight to Recife ___ at 6:45 every morning."', ['leaves', 'will leaving', 'is going leave', 'left'], 0, 'Horários fixos: simple present.'],
     ['The negative form of "will" is', ["willn't", "won't", "don't will", "not will"], 1, 'Will not = won\'t.'],
     ['"I promise I ___ tell anyone."', ['won\'t', 'am not going', 'don\'t', 'didn\'t'], 0, 'Promessas usam will: I won\'t tell anyone.'],
@@ -206,8 +185,6 @@ EEAR.add({
     ['will: usos', 'Previsões de opinião, decisões na hora, promessas e ofertas.'],
     ['going to: usos', 'Planos decididos e previsões com evidência.'],
     ['Futuro com present continuous', 'Compromissos marcados.'],
-    ['Future continuous', 'Will be + -ing: ação em andamento no futuro.'],
-    ['Future perfect', 'Will have + participle: concluída antes de um momento futuro.'],
     ['Depois de when / as soon as (futuro)', 'Presente: when I arrive.'],
     ['won\'t', 'Will not.']
   ]
@@ -235,18 +212,10 @@ EEAR.add({
 <li><b>be able to</b>: habilidade em qualquer tempo: <i>I <b>will be able to</b> fly next year.</i></li>
 <li><b>need to / needn't</b>: necessidade / não há necessidade.</li>
 </ul>
-<h3>Modal + have + particípio (passado)</h3>
-<ul>
-<li><b>should have done</b>: deveria ter feito (crítica, arrependimento).</li>
-<li><b>must have been</b>: deve ter sido (dedução sobre o passado).</li>
-<li><b>might/could have done</b>: pode ter feito (possibilidade passada).</li>
-<li><b>can't have done</b>: não pode ter feito (impossibilidade).</li>
-</ul>
 <p class="dica">A pegadinha favorita: "You mustn't" (proibido) x "You don't have to" (não precisa). E nada de "to" depois do modal: "can to swim" está errado.</p>`,
   ex: [
     ['Qual a diferença: "You mustn\'t wear a uniform" x "You don\'t have to wear a uniform"?', '<p>"Mustn\'t" = é <b>proibido</b> usar uniforme. "Don\'t have to" = <b>não é obrigatório</b> (pode usar se quiser).</p>'],
     ['"His lights are off. He ___ be sleeping." Qual modal?', '<p>Dedução forte: "He <b>must</b> be sleeping."</p>'],
-    ['"I failed the test. I ___ (study) more."', '<p>Arrependimento sobre o passado: "I <b>should have studied</b> more."</p>']
   ],
   q: [
     ['"You ___ smoke on board. It is forbidden."', ['don\'t have to', 'mustn\'t', 'shouldn\'t have', 'might not'], 1, 'Proibição: mustn\'t.'],
@@ -256,7 +225,6 @@ EEAR.add({
     ['"___ I use your phone, please?" (formal request)', ['Must', 'May', 'Should', 'Will'], 1, 'Pedido de permissão formal: May I…?'],
     ['"When I was five, I ___ read."', ['can', 'could', 'may', 'must'], 1, 'Habilidade no passado: could.'],
     ['"The lights are on. Someone ___ be at home."', ['must', 'mustn\'t', 'shouldn\'t', 'needn\'t'], 0, 'Dedução forte a partir de evidência: must.'],
-    ['"You failed because you didn\'t study. You ___ harder."', ['should study', 'should have studied', 'must study', 'can have studied'], 1, 'Crítica a algo que não foi feito no passado: should have + particípio.'],
     ['"Next year I ___ drive, because I will be 18."', ['can', 'will be able to', 'could', 'am able'], 1, 'Habilidade no futuro: will be able to.'],
     ['"He ___ come to the party. I\'m not sure." (weak possibility)', ['must', 'might', 'has to', 'should'], 1, 'Possibilidade incerta: might.']
   ],
@@ -264,7 +232,6 @@ EEAR.add({
     ['mustn\'t x don\'t have to', 'Mustn\'t: proibido. Don\'t have to: não é obrigatório.'],
     ['Regras dos modais', 'Verbo base sem "to", sem -s na 3ª pessoa, negativa e pergunta sem auxiliar.'],
     ['must (dedução)', 'Dedução forte: He must be tired.'],
-    ['should have + participle', 'Deveria ter feito (crítica, arrependimento).'],
     ['could', 'Habilidade no passado ou pedido educado.'],
     ['may x might', 'May: permissão formal ou possibilidade. Might: possibilidade remota.'],
     ['be able to', 'Habilidade em outros tempos: will be able to.']
