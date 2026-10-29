@@ -47,7 +47,7 @@
   const VA = E.videoaulas || {};
   const EMBED = !!window.EEAR_SITE;
   const ytUrl = id => 'https://www.youtube.com/watch?v=' + id;
-  const aulasDe = s => MODS.filter(m => m.m === s);
+  const aulasDe = s => modulosAtivos().filter(m => m.m === s);
   const nAula = m => aulasDe(m.m).indexOf(m) + 1;
   /* Apostila: exercícios das apostilas do curso, corrigidos pelo gabarito impresso do livro. */
   const AP = E.apostila || { livros: [], partes: {}, sets: [] };
@@ -97,11 +97,12 @@
   const bolinhas = p => '●'.repeat(p) + '○'.repeat(3 - p);
   const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
   function amostraPeso(ids, n) {
-    return ids.map(id => ({ id, k: Math.pow(Math.random(), 1 / (MOD[Q[id].mod].peso || 1)) }))
+    return ids.filter(id => Q[id] && Q[id].mod && moduloAtivo(MOD[Q[id].mod]))
+      .map(id => ({ id, k: Math.pow(Math.random(), 1 / (MOD[Q[id].mod].peso || 1)) }))
       .sort((a, b) => b.k - a.k).slice(0, n).map(x => x.id);
   }
   function amostraDiag(s, n) {
-    const mods = MODS.filter(m => m.m === s && m.q && m.q.length)
+    const mods = modulosAtivos().filter(m => m.m === s && m.q && m.q.length)
       .map(m => ({ m, k: Math.pow(Math.random(), 1 / (m.peso || 1)) })).sort((a, b) => b.k - a.k).slice(0, n);
     return mods.map(x => x.m.id + '-' + Math.floor(Math.random() * x.m.q.length));
   }
@@ -123,7 +124,7 @@
   function novoEstado() {
     return {
       v: 1, t: 0,
-      cfg: { alvo: 'cfs1-2028', prova: '2027-05-30', inicio: hoje(), horas: 3, dias: [0, 1, 2, 3, 4, 5, 6], simDia: 0, tempoSim: 240, excl: [] },
+      cfg: { modalidade: 'normal', alvo: 'cfs2-2027', prova: '2026-11-22', inicio: hoje(), horas: 3, dias: [0, 1, 2, 3, 4, 5, 6], simDia: 0, tempoSim: 240, excl: [] },
       mod: {}, fc: {}, erros: {}, sims: [], diag: null, feito: {}, act: {}, ativo: null, ult: null, ap: {}, aula: {}, ultAula: null
     };
   }
@@ -133,7 +134,7 @@
     b.cfg = Object.assign(novoEstado().cfg, (o && o.cfg) || {});
     if (o && o.cfg && !o.cfg.alvo) {
       /* Estado da 1ª versão: a data padrão antiga vira a nova meta de 2027. */
-      if (o.cfg.prova === '2026-11-22') { b.cfg.alvo = 'cfs1-2028'; b.cfg.prova = '2027-05-30'; }
+      if (o.cfg.prova === '2026-11-22') { b.cfg.alvo = 'cfs2-2027'; b.cfg.prova = '2026-11-22'; }
       else { const p = CAL.find(x => x.d === o.cfg.prova); b.cfg.alvo = p ? p.id : 'outra'; }
     }
     ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { if (!b[k] || typeof b[k] !== 'object') b[k] = {}; });
@@ -141,6 +142,12 @@
     return b;
   }
   let S = novoEstado();
+
+  function moduloAtivo(m) {
+    const modalidades = m && m.modalidades;
+    return !modalidades || modalidades.includes((S.cfg && S.cfg.modalidade) || 'normal');
+  }
+  const modulosAtivos = () => MODS.filter(moduloAtivo);
   try { const t = localStorage.getItem(LS); if (t) { const o = JSON.parse(t); if (o && o.v === 1) S = mesclar(o); } } catch (e) { /* sem armazenamento local */ }
 
   const nuvem = { ref: null, on: false, busy: false, again: false, fb: false };
@@ -298,12 +305,12 @@
     return { k: '', txt: 'Novo' };
   }
   function progMat(s) {
-    const ms = MODS.filter(m => m.m === s);
+    const ms = aulasDe(s);
     const dom = ms.filter(m => ((S.mod[m.id] || {}).best || 0) >= META).length;
     return { dom, tot: ms.length };
   }
-  const nErros = s => Object.keys(S.erros).filter(id => Q[id] && (!s || Q[id].m === s)).length;
-  function liberados() { return Object.values(CARDS).filter(c => S.mod[c.mod] && (S.mod[c.mod].lido || S.mod[c.mod].tent)); }
+  const nErros = s => Object.keys(S.erros).filter(id => Q[id] && (!Q[id].mod || moduloAtivo(MOD[Q[id].mod])) && (!s || Q[id].m === s)).length;
+  function liberados() { return Object.values(CARDS).filter(c => moduloAtivo(MOD[c.mod]) && S.mod[c.mod] && (S.mod[c.mod].lido || S.mod[c.mod].tent)); }
   function devidos(s) { const hj = HJ(); return liberados().filter(c => (!s || c.m === s) && (!S.fc[c.id] || S.fc[c.id][1] <= hj)); }
   function avaliar(id, ok) {
     const hj = HJ(), st = S.fc[id] || [0, hj];
@@ -418,7 +425,8 @@
     const dEst = est.filter(n => tipo[n] === 'estudo');
     const capTot = dEst.reduce((a, n, j) => a + (j === 0 && diag ? Math.max(0, cap - 1.5) : cap), 0);
     const excl = new Set(c.excl || []);
-    const pend = MODS.filter(m => !excl.has(m.id));
+    const ativos = modulosAtivos();
+    const pend = ativos.filter(m => !excl.has(m.id));
     /* Exercícios da apostila: os em sala e as units entram no ciclo 1; os para casa e as provas reais, no ciclo 2. */
     const apOn = apVisivel();
     const apDo = (id, k) => apOn ? (APPLAN[id] || []).filter(sid => apCiclo(APS[sid]) === k) : [];
@@ -429,8 +437,8 @@
     /* Ciclo 1: teoria completa. Se sobrar tempo, ciclo 2 (revisão ativa de tudo) e ciclo 3 (o que mais cai). */
     const ciclos = [
       { pref: 'T', txt: '', mods: pend, fator: f, min: 0.5 },
-      { pref: 'T2', txt: 'Ciclo 2 · revisão ativa: ', mods: MODS.slice().sort(porPeso), fator: 0.5, min: 0.75 },
-      { pref: 'T3', txt: 'Ciclo 3 · o que mais cai: ', mods: MODS.filter(m => m.peso >= 2).sort(porPeso), fator: 0.3, min: 0.5 }
+      { pref: 'T2', txt: 'Ciclo 2 · revisão ativa: ', mods: ativos.slice().sort(porPeso), fator: 0.5, min: 0.75 },
+      { pref: 'T3', txt: 'Ciclo 3 · o que mais cai: ', mods: ativos.filter(m => m.peso >= 2).sort(porPeso), fator: 0.3, min: 0.5 }
     ];
     const fila = {}, tot = {}, rest = {}, fimCiclo = [];
     let ci = -1;
@@ -615,7 +623,7 @@
     } else if (hj < dnum(S.cfg.inicio)) h += `<section class="card"><p style="margin:0">Seu plano começa em ${fdata(dnum(S.cfg.inicio))}. Enquanto isso, faça o diagnóstico ou adiante um módulo.</p></section>`;
     else h += `<section class="card"><p style="margin:0">Hoje é folga no seu plano. Se quiser render mais, revise os flashcards pendentes.</p></section>`;
     const dv = devidos().length, ne = nErros();
-    const abaixo = MODS.filter(m => { const r = S.mod[m.id]; return r && r.best != null && r.best < META; });
+    const abaixo = modulosAtivos().filter(m => { const r = S.mod[m.id]; return r && r.best != null && r.best < META; });
     h += `<section class="grid2">
       <div class="card"><div class="eyebrow">Flashcards</div><div class="row between"><span class="score num">${dv}</span><button class="btn sm" data-a="fcini" ${dv ? '' : 'disabled'}>Revisar</button></div><span class="small muted">${dv ? 'cartões para revisar hoje' : (liberados().length ? 'Nada pendente hoje.' : 'Abra a teoria de um módulo para liberar os cartões dele.')}</span></div>
       <div class="card"><div class="eyebrow">Caderno de erros</div><div class="row between"><span class="score num">${ne}</span><button class="btn sm" data-a="tab" data-v="treino" ${ne ? '' : 'disabled'}>Refazer</button></div><span class="small muted">${abaixo.length ? plural(abaixo.length, 'módulo abaixo de 80%', 'módulos abaixo de 80%') : 'questões para refazer'}</span></div>
@@ -627,14 +635,14 @@
   /* Página de entrada do site: aparece para quem chega pela primeira vez. */
   function mostrarInicio() { return window.EEAR_SITE === 'site' && !S.t && !S.cfg.nome; }
   function vInicio() {
-    const nQ = MODS.reduce((a, m) => a + m.q.length, 0), nV = Object.values(VA).reduce((a, v) => a + v.filter(x => x.k !== 'y').length, 0);
+    const nQ = modulosAtivos().reduce((a, m) => a + m.q.length, 0), nV = Object.values(VA).reduce((a, v) => a + v.filter(x => x.k !== 'y').length, 0);
     const nOf = PROVAS.reduce((a, p) => a + p.ids.length, 0);
     let h = `<section class="hero"><div class="eyebrow">Missão EEAR · curso preparatório gratuito</div>
       <h1 class="hero-t">Sua aprovação no CFS da EEAR começa aqui</h1>
       <p class="hero-p">Aulas com vídeo, teoria resumida, questões comentadas, flashcards, simulados e as provas oficiais da EEAR com gabarito, num plano de estudos que vai até o dia da prova.</p>
       <form class="hero-f" onsubmit="return false"><div class="field"><label for="ini-nome">Como você quer ser chamado?</label><input id="ini-nome" maxlength="80" autocomplete="name" placeholder="Seu nome"></div><button class="btn pri" data-a="comecar">Começar o curso</button></form>
       <p class="small muted" style="margin:0">Grátis. Funciona no celular e no computador, e dá para instalar como app.</p></section>`;
-    h += `<section class="nums">${[[MODS.length, 'aulas'], [nV, 'videoaulas'], [nQ, 'questões comentadas'], [nOf, 'questões de provas oficiais']].map(x => `<div><b class="num">${x[0]}</b><span>${x[1]}</span></div>`).join('')}</section>`;
+    h += `<section class="nums">${[[modulosAtivos().length, 'aulas'], [nV, 'videoaulas'], [nQ, 'questões comentadas'], [nOf, 'questões de provas oficiais']].map(x => `<div><b class="num">${x[0]}</b><span>${x[1]}</span></div>`).join('')}</section>`;
     h += `<section class="card"><h2 class="h2">As quatro matérias da prova</h2><div class="stack">${ORD.map(s => `<div class="subj b-${s}">${sig(s)}<span>${MATS[s].nome}</span><span class="small muted num">${aulasDe(s).length} aulas</span></div>`).join('')}</div></section>`;
     h += `<section class="grid2">
       <div class="card"><div class="eyebrow">Como funciona</div><p style="margin:0">Cada aula tem videoaula, resumo, exemplos resolvidos e um quiz de 10 questões no estilo da EEAR. A aula só conta como concluída com 80% de acerto.</p></div>
@@ -649,9 +657,10 @@
   /* Continuar de onde parei: a última aula aberta, ou a próxima do plano de hoje, ou a primeira ainda não concluída. */
   function cartaoContinuar(d) {
     let m = MOD[S.ultAula], de = 'Continuar de onde parei';
+    if (m && !moduloAtivo(m)) m = null;
     if (!m || dominado(m)) {
-      const t = d && d.tar.find(x => x.mod && MOD[x.mod] && !dominado(MOD[x.mod]));
-      m = t ? MOD[t.mod] : MODS.find(x => !dominado(x));
+      const t = d && d.tar.find(x => x.mod && MOD[x.mod] && moduloAtivo(MOD[x.mod]) && !dominado(MOD[x.mod]));
+      m = t ? MOD[t.mod] : modulosAtivos().find(x => !dominado(x));
       de = S.ultAula ? 'Próxima aula' : 'Sua primeira aula';
     }
     if (!m) return '';
@@ -678,6 +687,7 @@
     h += `<section class="card"><h2 class="h2">Configuração</h2>
       <form class="form" id="cfg" onsubmit="return false">
         <div class="field"><label for="cfg-alvo">Prova alvo</label><select id="cfg-alvo">${CAL.map(x => `<option value="${x.id}" ${c.alvo === x.id ? 'selected' : ''}>${x.nome} (${fdata(dnum(x.d))}/${x.d.slice(0, 4)})</option>`).join('')}<option value="outra" ${c.alvo === 'outra' ? 'selected' : ''}>Outra data</option></select></div>
+        <div class="field"><label for="cfg-modalidade">Modalidade</label><select id="cfg-modalidade"><option value="normal" ${c.modalidade !== 'bct' ? 'selected' : ''}>CFS normal · Inglês básico</option><option value="bct" ${c.modalidade === 'bct' ? 'selected' : ''}>CFS BCT · Inglês intermediário</option></select></div>
         <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${c.prova}" ${c.alvo === 'outra' ? '' : 'disabled'}></div>
         <div class="field"><label for="cfg-inicio">Início do plano</label><input type="date" id="cfg-inicio" value="${c.inicio}"></div>
         <div class="field"><label for="cfg-horas">Horas por dia</label><select id="cfg-horas">${[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10].map(x => `<option value="${x}" ${Number(c.horas) === x ? 'selected' : ''}>${fh(x)}</option>`).join('')}</select></div>
@@ -693,7 +703,7 @@
       const r = p.res;
       h += `<section class="card"><div class="grid2">
         <div><div class="eyebrow">Até a prova</div><div class="score num">${Math.max(0, r.prova - hj)}<small> dias</small></div><div class="small muted">prova em ${flonga(r.prova)}</div></div>
-        <div><div class="eyebrow">Conteúdo</div><div class="score num">${MODS.length - (c.excl || []).length}<small> módulos</small></div><div class="small muted">${r.fimC ? 'teoria termina em ' + fdata(r.fimC) : 'tudo já coberto'} · ${plural(r.est, 'dia de estudo', 'dias de estudo')}</div></div>
+        <div><div class="eyebrow">Conteúdo</div><div class="score num">${modulosAtivos().filter(m => !(c.excl || []).includes(m.id)).length}<small> módulos</small></div><div class="small muted">${r.fimC ? 'teoria termina em ' + fdata(r.fimC) : 'tudo já coberto'} · ${plural(r.est, 'dia de estudo', 'dias de estudo')}</div></div>
       </div>
       <div class="tasks small">
         <div class="task"><span class="sigla">C1</span><div class="tt"><b>Ciclo 1: teoria completa</b><div class="muted">todos os módulos, com quiz, revisão de 7 dias${apVisivel() ? ' e os exercícios de aula da apostila (em sala, units e o Português)' : ''}</div></div><span class="num">${r.fimCiclo[0] ? 'até ' + fdata(r.fimCiclo[0]) : '—'}</span></div>
@@ -779,7 +789,7 @@
     return parte(fnv(2166136261)) + '-' + parte(fnv(3735928559));
   }
   function cartaoCertificado(s) {
-    const ms = s === 'geral' ? MODS : aulasDe(s), ok = certOk(ms), feitas = ms.filter(dominado).length;
+    const ms = s === 'geral' ? modulosAtivos() : aulasDe(s), ok = certOk(ms), feitas = ms.filter(dominado).length;
     const nome = s === 'geral' ? 'do curso completo' : 'de ' + MATS[s].curto;
     return `<section class="card cert-cta"><div class="row between"><h2 class="h2">Certificado ${nome}</h2><span class="chip ${ok ? 'ok' : ''}">${ok ? 'liberado' : feitas + '/' + ms.length}</span></div>
       <p class="small" style="margin:0">${ok ? `Você concluiu ${s === 'geral' ? 'todas as aulas das quatro matérias' : 'todas as aulas desta matéria'} com 80% ou mais no quiz.` : `Conclua as ${ms.length} aulas ${s === 'geral' ? 'das quatro matérias ' : ''}com 80% ou mais no quiz para liberar o certificado. Faltam ${ms.length - feitas}.`}</p>
@@ -796,7 +806,7 @@
     return `<section class="card"><h2 class="h2">Sobre e contato</h2><p style="margin:0">Missão EEAR é um curso da INPHAX. Dúvidas, erros em alguma questão ou sugestões: ${linkContato}.</p><p class="small muted" style="margin:0">${linksLegais}. Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira.</p></section>`;
   }
   function vCert() {
-    const s = V.s, geral = s === 'geral', ms = geral ? MODS : (MATS[s] ? aulasDe(s) : []);
+    const s = V.s, geral = s === 'geral', ms = geral ? modulosAtivos() : (MATS[s] ? aulasDe(s) : []);
     let h = `<button class="btn ghost back no-print" ${geral ? 'data-a="tab" data-v="hoje"' : `data-a="mat" data-s="${s}"`}>← Voltar</button>`;
     if (!ms.length || !certOk(ms)) return h + '<p class="empty">Este certificado é liberado quando todas as aulas tiverem 80% ou mais no quiz.</p>';
     if (!S.cfg.nome || V.editNome) {
@@ -884,7 +894,7 @@
 
   function vModulo() {
     const m = MOD[V.id];
-    if (!m) return vMaterias();
+    if (!m || !moduloAtivo(m)) return vMaterias();
     const aba = V.aba || 'aula';
     const r = S.mod[m.id] || {}, st = estMod(m.id);
     let h = `<button class="btn ghost back" data-a="mat" data-s="${m.m}">← Trilha de ${MATS[m.m].curto}</button>`;
@@ -1093,12 +1103,13 @@
   function vQuizFim() {
     const z = QZ, mid = z.origem.tipo === 'mod' ? z.origem.id : null, m = mid && MOD[mid];
     const passou = z.sc >= META;
+    const ativos = modulosAtivos(), iAtivo = m ? ativos.indexOf(m) : -1, proxM = iAtivo >= 0 ? ativos[iAtivo + 1] : null;
     const erradas = z.ids.filter(id => !acertou(id, z.perms[id], z.resp[id]));
     let h = `<div class="stack"><div class="eyebrow">Debriefing · ${z.titulo}</div><h1 class="h1">${m ? (passou ? 'Módulo dominado' : 'Ainda não chegou aos 80%') : (z.ac === z.ids.length ? 'Tudo certo' : 'Rodada concluída')}</h1></div>`;
     h += `<section class="card"><div class="row between"><span class="score num">${z.ac}<small> de ${z.ids.length}</small></span><span class="chip ${passou ? 'ok' : 'warn'}">${pct(z.sc)}</span></div>
       <p style="margin:0">${m ? (passou ? 'Você bateu a meta. O módulo entra nas revisões espaçadas pelos flashcards.' : `A meta é ${Math.ceil(z.ids.length * META)} acertos. Releia a teoria nos pontos das questões abaixo e refaça o quiz.`) : (z.origem.tipo === 'erros' ? 'As questões que você acertou saíram do caderno de erros.' : z.origem.tipo === 'oficial' ? 'Questões oficiais da EEAR, corrigidas pelo gabarito oficial. As erradas foram para o caderno de erros.' : '')}</p>
       <div class="row">${m ? `<button class="btn ${passou ? '' : 'pri'}" data-a="quizmod" data-id="${mid}">Refazer o quiz</button><button class="btn" data-a="mod" data-id="${mid}">Voltar à teoria</button>` : z.origem.tipo === 'oficial' ? `<button class="btn pri" data-a="mod" data-id="${z.origem.id}">Voltar ao módulo</button>` : `<button class="btn pri" data-a="tab" data-v="treino">Voltar ao treino</button>`}
-      ${m && passou && MODS[MODS.indexOf(m) + 1] ? `<button class="btn pri" data-a="mod" data-id="${MODS[MODS.indexOf(m) + 1].id}">Próximo módulo</button>` : ''}</div></section>`;
+      ${m && passou && proxM ? `<button class="btn pri" data-a="mod" data-id="${proxM.id}">Próximo módulo</button>` : ''}</div></section>`;
     if (erradas.length) h += `<section class="card"><h2 class="h2">Revise os erros</h2>${erradas.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)}</summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</section>`;
     return h;
   }
@@ -1148,7 +1159,7 @@
     h += `</section>`;
     const comErro = AP.sets.filter(s => { const r = S.ap[s.id]; return r && r.ok && Object.keys(r.ok).some(k => r.ok[k] === 0); });
     if (apVisivel()) h += `<section class="card"><div class="row between"><h2 class="h2">Erros da apostila</h2><span class="small muted">${plural(nErrosAp(), 'questão', 'questões')}</span></div>${comErro.length ? `<p style="margin:0">Conjuntos com questões erradas. Abra e use "Refazer as erradas" depois de rever a teoria.</p><div class="mods">${comErro.map(s => apLinha(s)).join('')}</div>` : '<p class="small muted" style="margin:0">Nenhum erro pendente nas folhas de respostas da apostila.</p>'}</section>`;
-    const abaixo = MODS.filter(m => { const r = S.mod[m.id]; return r && r.best != null && r.best < META; });
+    const abaixo = modulosAtivos().filter(m => { const r = S.mod[m.id]; return r && r.best != null && r.best < META; });
     h += `<section class="card"><h2 class="h2">Módulos abaixo de 80%</h2>${abaixo.length ? `<div class="mods">${abaixo.map(m => `<button class="modrow" data-a="mod" data-id="${m.id}"><span class="sigla c-${m.m}">${m.id}</span><span class="mt">${m.t}</span><span class="chip warn">${pct(S.mod[m.id].best)}</span></button>`).join('')}</div>` : '<p class="small muted" style="margin:0">Nenhum. Todo quiz feito está na meta.</p>'}</section>`;
     return h;
   }
@@ -1222,7 +1233,7 @@
       <div class="tbl tbl-res"><table><thead><tr><th>Matéria</th><th class="num">Acertos</th><th class="num">Nota</th><th>Situação</th></tr></thead><tbody>${ks.map(s => { const x = reg.r[s][0] / reg.r[s][1]; return `<tr><td>${sig(s)} ${MATS[s].curto}</td><td class="num">${reg.r[s][0]}/${reg.r[s][1]}</td><td class="num">${nota(x)}</td><td>${x >= META ? '<span class="chip ok">meta</span>' : x >= 0.5 ? '<span class="chip warn">abaixo da meta</span>' : '<span class="chip bad">abaixo de 5</span>'}</td></tr>`; }).join('')}</tbody></table></div>
       <p class="small muted" style="margin:0">${reg.tipo === 'diag' ? 'O plano agora dá mais tempo às matérias com nota menor. ' : ''}Meta do curso: nota 8,0 em cada matéria. Mínimo do edital: 5,0 em cada matéria e média 5,0.${reg.min ? ' Tempo usado: ' + fh(reg.min / 60) + '.' : ''}</p></section>`;
     const porMod = {};
-    u.ids.forEach(id => { if (Q[id].mod && !acertou(id, u.perms[id], u.resp[id])) porMod[Q[id].mod] = (porMod[Q[id].mod] || 0) + 1; });
+    u.ids.forEach(id => { if (Q[id].mod && MOD[Q[id].mod] && moduloAtivo(MOD[Q[id].mod]) && !acertou(id, u.perms[id], u.resp[id])) porMod[Q[id].mod] = (porMod[Q[id].mod] || 0) + 1; });
     const top = Object.keys(porMod).sort((a, b) => porMod[b] - porMod[a]).slice(0, 6);
     if (top.length) h += `<section class="card"><h2 class="h2">Onde você mais errou</h2><div class="mods">${top.map(id => `<button class="modrow" data-a="mod" data-id="${id}"><span class="sigla c-${MOD[id].m}">${id}</span><span class="mt">${MOD[id].t}</span><span class="chip bad">${plural(porMod[id], 'erro', 'erros')}</span></button>`).join('')}</div></section>`;
     h += `<section class="card"><h2 class="h2">Correção completa</h2>${u.ids.map((id, k) => {
@@ -1330,7 +1341,7 @@
         go(d.v); break;
       case 'go': go(d.v); break;
       case 'mat': go('materias', { s: d.s }); break;
-      case 'mod': if (MOD[d.id] && S.ultAula !== d.id) { S.ultAula = d.id; salvar(); } go('modulo', { id: d.id, aba: 'aula' }); break;
+      case 'mod': if (!MOD[d.id] || !moduloAtivo(MOD[d.id])) break; if (S.ultAula !== d.id) { S.ultAula = d.id; salvar(); } go('modulo', { id: d.id, aba: 'aula' }); break;
       case 'aba':
         if (d.aba === 'teoria') marcarLido(V.id);
         if (d.aba === 'ex' && MOD[V.id]) { const a = S.aula[V.id] = S.aula[V.id] || {}; if (!a.e) { a.e = hoje(); salvar(); } }
@@ -1403,7 +1414,7 @@
       case 'cancelar': pedindo = null; render(); break;
       case 'replanejar': {
         S.cfg.inicio = hoje();
-        S.cfg.excl = MODS.filter(m => ((S.mod[m.id] || {}).best || 0) >= META).map(m => m.id);
+        S.cfg.excl = modulosAtivos().filter(m => ((S.mod[m.id] || {}).best || 0) >= META).map(m => m.id);
         salvar(); go('plano'); break;
       }
       case 'aplivro': V.l = d.l; render(); break;
@@ -1504,6 +1515,7 @@
     if (!f) return;
     const c = S.cfg;
     const g = id => document.getElementById(id);
+    c.modalidade = g('cfg-modalidade').value;
     c.alvo = g('cfg-alvo').value;
     const alvo = CAL.find(x => x.id === c.alvo);
     if (alvo) c.prova = alvo.d;

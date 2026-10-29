@@ -17,9 +17,9 @@ window.EEAR = {
     fis: { nome: "Física", curto: "Física", sigla: "FIS" }
   },
   ordem: ["por", "ing", "mat", "fis"],
-  /* Provas até a meta de 2027. Datas de 2027 são estimativas: os editais ainda não saíram. */
+  /* Calendário de provas: datas com edital publicado usam informação oficial; datas futuras sem edital permanecem estimativas. */
   calendario: [
-    { id: "cfs2-2027", nome: "CFS 2/2027", d: "2026-11-22", st: "data divulgada pelos sites de concursos" },
+    { id: "cfs2-2027", nome: "CFS 2/2027", d: "2026-11-22", st: "data oficial da EEAR" },
     { id: "cfs1-2028", nome: "CFS 1/2028", d: "2027-05-30", st: "estimativa: o edital ainda não saiu" },
     { id: "cfs2-2028", nome: "CFS 2/2028", d: "2027-11-21", st: "estimativa: o edital ainda não saiu" }
   ],
