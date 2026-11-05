@@ -12,6 +12,7 @@ Curso preparatório para o CFS (Curso de Formação de Sargentos) da EEAR, em fo
 
 - `web/build.py` monta o site a partir de `curso/`: página completa, manifesto, ícones, fontes locais e service worker para uso offline. O workflow `Site` publica no GitHub Pages a cada push na `main`. Para isso, o Pages tem de estar ligado em Settings › Pages › Source: GitHub Actions.
 - `app/` é o app de Android (Capacitor) com o mesmo conteúdo. O workflow `App Android` compila o APK a cada push. Ele só publica o APK na página de Releases quando alguém roda o workflow à mão na `main`, marcando "Publicar o APK".
+- O workflow `Testes` roda `node testes/plataforma.test.js` a cada push: confere os dados do curso (questões, gabaritos, provas oficiais) e o comportamento da página num Chromium, sem publicar nada.
 - A versão pública não leva as imagens das páginas das apostilas, que são material com direitos autorais do curso. Nela, a folha de respostas de cada conjunto indica a página do PDF da apostila.
 - O progresso fica salvo em cada aparelho. Para levar de um para outro, use Plano › Dados › Copiar meu progresso e, no outro aparelho, Colar progresso. Com o login ligado, ele fica salvo na conta do aluno.
 - Quem chega ao site pela primeira vez vê a página de entrada do curso. A aba Apostila fica escondida para quem não usa as apostilas, e dá para ligar em Plano › Configuração.
@@ -36,12 +37,12 @@ No próximo push na `main`, o site sai com o login. O progresso de cada aluno fi
 
 ## O que tem no curso
 
-- **67 módulos** seguindo o conteúdo programático da prova: Português (14), Inglês (16), Matemática (20) e Física (17). Em Inglês, o aluno escolhe a opção do edital em Plano › Configuração: o CFS normal (nível básico) mostra 13 aulas, e o BCT (nível intermediário) mostra 15.
-- Em cada módulo: teoria resumida com fórmulas e regras, o que mais cai na prova, exemplos resolvidos, **quiz** com correção comentada (10 questões na maioria das aulas; de 5 a 12 nas de Inglês) e flashcards.
+- **69 módulos** seguindo o conteúdo programático da prova: Português (15), Inglês (16), Matemática (20) e Física (18). Em Inglês, o aluno escolhe a opção do edital em Plano › Configuração: o CFS normal (nível básico) mostra 13 aulas, e o BCT (nível intermediário) mostra 15.
+- Em cada módulo: teoria resumida com fórmulas e regras, o que mais cai na prova, exemplos resolvidos, **quiz** com correção comentada (10 questões na maioria das aulas; de 5 a 14 nas demais) e flashcards.
 - **Regra dos 80%**: o módulo só conta como dominado com 80% de acerto no quiz (8 em 10 na maioria das aulas). A meta nos simulados é nota 8,0 em cada matéria (o mínimo do edital é 5,0 em cada matéria e média 5,0).
 - **Meta de aprovação até 2027**: a prova alvo pode ser o CFS 2/2027 (22/11/2026), o CFS 1/2028 (estimado para 30/05/2027) ou o CFS 2/2028 (estimado para 21/11/2027). As provas anteriores à prova alvo entram no plano como dia de prova real.
 - **Cronograma automático em ciclos**: ciclo 1 com a teoria completa, ciclo 2 de revisão ativa de todos os módulos, ciclo 3 com o que mais cai, simulados semanais e reta final de revisão. Ele se ajusta às horas por dia, aos dias da semana e ao resultado do diagnóstico.
-- **Aulas com vídeo**: 64 das 67 aulas têm videoaula do YouTube tocando dentro do curso (147 vídeos gratuitos, com o crédito de cada canal, mais 15 links para provas resolvidas no YouTube; as 3 aulas do BCT ainda não têm vídeo), roteiro de estudo (vídeo, teoria, exemplos, quiz e flashcards) e botão para a próxima aula. Cada matéria tem a sua trilha de aulas, e a tela Hoje mostra "Continuar de onde parei". O workflow `Videoaulas` confere toda semana se os vídeos continuam no ar.
+- **Aulas com vídeo**: 64 das 69 aulas têm videoaula do YouTube tocando dentro do curso (147 vídeos gratuitos, com o crédito de cada canal, mais 15 links para provas resolvidas no YouTube; as 3 aulas do BCT e as aulas FIS18 e POR15 ainda não têm vídeo), roteiro de estudo (vídeo, teoria, exemplos, quiz e flashcards) e botão para a próxima aula. Cada matéria tem a sua trilha de aulas, e a tela Hoje mostra "Continuar de onde parei". O workflow `Videoaulas` confere toda semana se os vídeos continuam no ar.
 - **Certificado de conclusão** por matéria e do curso completo, liberado quando todas as aulas têm 80% ou mais no quiz. É um curso livre, sem vínculo com a EEAR ou com a FAB.
 - **Provas anteriores oficiais**: provas completas na ordem original, com o gabarito oficial, as questões anuladas valendo para todos e cronômetro de 4 horas. Cada questão é o recorte fiel da prova original (com sublinhados, fórmulas e figuras), e cada uma está ligada ao módulo do curso, na aba Provas. Já entraram a do **CFS 1/2025** (código 62) e a do **CFS 2/2025** (código 05). As próximas entram com `EEAR.addProva` em `dados/provas.js`.
 - **Diagnóstico** (40 questões) para descobrir as matérias mais fracas.
@@ -51,7 +52,7 @@ No próximo push na `main`, o site sai com o login. O progresso de cada aluno fi
 
 - **Apostila digital**: as páginas originais das três apostilas do curso (CFS, CFS/BCT e CFS 2), organizadas em 309 conjuntos de exercícios (em sala, para casa, units e tests de Inglês, incluindo provas reais da EEAR). Cada conjunto tem folha de respostas A–D corrigida pelo gabarito impresso do livro (4.668 questões de múltipla escolha), meta de 80%, opção de refazer só as erradas e ligação com os módulos do curso. Os exercícios em sala e as units entram no ciclo 1 do plano, e os para casa e as provas reais entram no ciclo 2.
 
-São 642 questões inéditas no estilo da EEAR, 503 flashcards e 195 exemplos resolvidos. A apostila digital só existe na versão pessoal (artifact).
+São 689 questões inéditas no estilo da EEAR, 542 flashcards e 209 exemplos resolvidos. A apostila digital só existe na versão pessoal (artifact).
 
 O material das apostilas (imagens das páginas, índice e gabarito) não fica neste repositório, só no artifact (privado), sem a marca do curso, a partir dos PDFs.
 

@@ -27,6 +27,28 @@ function testarDados(E) {
     (m.q || []).forEach((q, i) => { if (!Array.isArray(q[1]) || q[1].length !== 4 || !(Number.isInteger(q[2]) && q[2] >= 0 && q[2] < 4) || !q[3]) ruins.push(`${m.id} q${i + 1}`); });
   }
   ok(!ruins.length, 'toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário' + (ruins.length ? ': ' + ruins.slice(0, 8).join(', ') : ''));
+  /* Duas alternativas com o mesmo valor (como 5/14 e 10/28) dão duas respostas certas. Quando o enunciado pede uma forma
+     de escrever (notação científica), as formas equivalentes são distratores de propósito. */
+  const exp = { '⁰': 0, '¹': 1, '²': 2, '³': 3, '⁴': 4, '⁵': 5, '⁶': 6, '⁷': 7, '⁸': 8, '⁹': 9, '⁻': '-' };
+  const valor = s => {
+    const t = s.replace(/<[^>]+>/g, '').trim(), sinal = /^[−-]/.test(t) ? -1 : 1, u = t.replace(/^[−-]\s*/, '');
+    let m = u.match(/^(\d+(?:,\d+)?)\s*×\s*10([⁻⁰-⁹¹²³]+)(.*)$/);
+    if (m) return [sinal * Number(m[1].replace(',', '.')) * 10 ** Number([...m[2]].map(c => exp[c]).join('')), m[3].trim()];
+    if ((m = u.match(/^(\d+)\s*\/\s*(\d+)(.*)$/))) return [sinal * m[1] / m[2], m[3].trim()];
+    if ((m = u.match(/^(\d+(?: \d{3})*(?:,\d+)?)(\s*[^\d√π/^,].*|)$/))) return [sinal * Number(m[1].replace(/ /g, '').replace(',', '.')), m[2].trim()];
+    return null;
+  };
+  const iguais = [], repetidas = [], semDestaque = [];
+  for (const m of E.modulos) (m.q || []).forEach((q, i) => {
+    if (new Set(q[1]).size !== q[1].length) repetidas.push(`${m.id} q${i + 1}`);
+    if (/destacad/i.test(q[0]) && ![q[0], ...q[1]].some(x => /<(u|b)>/.test(x))) semDestaque.push(`${m.id} q${i + 1}`);
+    if (/notação científica/i.test(q[0])) return;
+    const v = q[1].map(valor);
+    for (let a = 0; a < 4; a++) for (let b = a + 1; b < 4; b++)
+      if (v[a] && v[b] && v[a][1] === v[b][1] && Math.abs(v[a][0] - v[b][0]) <= 1e-9 * Math.max(Math.abs(v[a][0]), Math.abs(v[b][0]))) iguais.push(`${m.id} q${i + 1}`);
+  });
+  ok(!iguais.length && !repetidas.length, 'nenhuma questão tem duas alternativas iguais ou com o mesmo valor' + (iguais.length || repetidas.length ? ': ' + [...iguais, ...repetidas].join(', ') : ''));
+  ok(!semDestaque.length, 'todo enunciado que fala em termo "destacado" tem o destaque marcado' + (semDestaque.length ? ': ' + semDestaque.join(', ') : ''));
   for (const p of E.provas) {
     const dir = path.join(RAIZ, 'curso', 'provas', p.id.replace('-', '_'));
     const semImg = p.q.filter(q => !fs.existsSync(path.join(dir, `q${String(q.n).padStart(2, '0')}.webp`))).map(q => q.n);
@@ -34,6 +56,9 @@ function testarDados(E) {
     ok(p.q.length === 96 && !semImg.length && !semAula.length, `${p.nome}: 96 questões, cada uma com imagem e aula do curso` + (semImg.length || semAula.length ? ` (sem imagem: ${semImg}; sem aula: ${semAula})` : ''));
   }
   for (const mod of ['normal', 'bct']) ok(E.modulos.some(m => m.m === 'ing' && (!m.modalidades || m.modalidades.includes(mod))), `modalidade ${mod} tem aulas de Inglês`);
+  /* Questões oficiais de física moderna (efeito fotoelétrico, átomo de Bohr, fissão do urânio-235) ficam na aula FIS18. */
+  const fm = [['cfs2-2025', 51], ['cfs2-2025', 68], ['cfs1-2025', 51]].filter(([p, n]) => (E.provas.find(x => x.id === p) || { q: [] }).q.some(q => q.n === n && q.mod === 'FIS18'));
+  ok(fm.length === 3, `questões oficiais de física moderna ligadas à aula FIS18 (${fm.length} de 3)`);
 }
 
 /* Servidor estático que imita o GitHub Pages: o site fica em /EEAR/. */
@@ -123,6 +148,24 @@ async function testarNavegador(E) {
       ok(!erros.length, `${mod}: sem erro de JavaScript`);
       await ctx.close();
     }
+  }
+
+  console.log('\n== aulas novas (Física 5.8 do edital e tipos de discurso)');
+  for (const id of ['FIS18', 'POR15']) {
+    const m = E.modulos.find(x => x.id === id), n = E.modulos.filter(x => x.m === m.m).length;
+    const antes = base({});
+    const { ctx, p, salvo, erros } = await abrir(antes);
+    await p.click('[data-a="tab"][data-v="materias"]'); await p.waitForTimeout(100);
+    await p.click(`[data-a="mat"][data-s="${m.m}"]`); await p.waitForTimeout(150);
+    ok(new RegExp(`de ${n} aulas concluídas`).test(await p.locator('main').innerText()), `${id}: trilha da matéria com ${n} aulas`);
+    await p.click(`[data-a="mod"][data-id="${id}"]`); await p.waitForTimeout(150);
+    ok((await p.locator('main').innerText()).includes(m.t), `${id}: a aula abre pela trilha`);
+    await p.evaluate(i => document.querySelector(`[data-a="quizmod"][data-id="${i}"]`).click(), id); await p.waitForTimeout(150);
+    ok((await p.locator('main').innerText()).includes(`Questão 1 de ${m.q.length}`), `${id}: quiz com ${m.q.length} questões`);
+    const depois = await salvo();  // abrir a aula muda só ultAula ("Continuar de onde parei")
+    ok(intactos(antes, Object.assign({}, depois, { ultAula: antes.ultAula })) && depois.ultAula === id && !erros.length,
+      `${id}: notas, cartões, erros, simulados e atividade intactos; "continuar" aponta para a aula; sem erro de JavaScript` + (erros.length ? ': ' + erros[0] : ''));
+    await ctx.close();
   }
 
   console.log('\n== histórico de simulados vindo de outra versão');

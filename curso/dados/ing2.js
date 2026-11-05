@@ -35,7 +35,7 @@ EEAR.add({
     ['The -ing form of "run", "make" and "lie" is', ['runing, makeing, lieing', 'running, making, lying', 'running, makking, lying', 'runing, making, liing'], 1, 'run dobra o n (CVC), make perde o e, lie vira lying.'],
     ['"She doesn\'t ___ coffee in the morning."', ['drinks', 'drink', 'drinking', 'to drink'], 1, 'Depois de doesn\'t o verbo fica na forma base.'],
     ['"___ there any messages for me?"', ['Is', 'Are', 'Do', 'Does'], 1, '"Messages" é plural: Are there…?'],
-    ['"We ___ to Natal next Friday. We already have the tickets."', ['fly', 'are flying', 'flies', 'flown'], 1, 'Plano já combinado para o futuro: present continuous.']
+    ['"We ___ to Natal next Friday. We already have the tickets."', ['flew', 'are flying', 'flies', 'flown'], 1, 'Plano já combinado para o futuro: present continuous.']
   ],
   fc: [
     ['Simple present: uso', 'Hábitos, rotinas, verdades gerais, horários.'],
@@ -179,7 +179,7 @@ EEAR.add({
     ['"The flight to Recife ___ at 6:45 every morning."', ['leaves', 'will leaving', 'is going leave', 'left'], 0, 'Horários fixos: simple present.'],
     ['The negative form of "will" is', ["willn't", "won't", "don't will", "not will"], 1, 'Will not = won\'t.'],
     ['"I promise I ___ tell anyone."', ['won\'t', 'am not going', 'don\'t', 'didn\'t'], 0, 'Promessas usam will: I won\'t tell anyone.'],
-    ['"I ___ the captain at 3 p.m. tomorrow. It is already in my calendar."', ['meet', 'am meeting', 'met', 'have met'], 1, 'Compromisso já marcado para o futuro: present continuous.']
+    ['"I ___ the captain at 3 p.m. tomorrow. It is already in my calendar."', ['meets', 'am meeting', 'met', 'have met'], 1, 'Compromisso já marcado para o futuro: present continuous.']
   ],
   fc: [
     ['will: usos', 'Previsões de opinião, decisões na hora, promessas e ofertas.'],

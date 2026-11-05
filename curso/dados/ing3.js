@@ -54,18 +54,30 @@ EEAR.add({
 <p class="dica">Na passiva, o tempo verbal aparece no verbo <i>to be</i>; o verbo principal permanece no particípio.</p>`,
   ex: [
     ['Passe para a passiva: "The mechanics are checking the engine."', '<p>"The engine <b>is being checked</b> by the mechanics."</p>'],
+    ['Passe para a passiva: "The controller will close the runway."', '<p>"The runway <b>will be closed</b> (by the controller)." O tempo (futuro com will) passa para o <i>to be</i>: will be + particípio.</p>'],
+    ['Passe para a ativa: "The hangar was built by the engineers in 2010."', '<p>"The engineers <b>built</b> the hangar in 2010." O agente (by the engineers) volta a ser o sujeito, e was built (simple past) vira built.</p>'],
+    ['Quando omitir o agente? "Someone cleaned the cabin."', '<p>"The cabin <b>was cleaned</b>." Quando o agente é desconhecido ou óbvio (someone, people, they), ele costuma ser omitido.</p>']
   ],
   q: [
-    ['"The first airplane ___ by Santos Dumont."', ['flew', 'was flown', 'is flying', 'has flown'], 1, 'Passiva no passado: was + particípio (flown).'],
+    ['"The 14-bis ___ by Santos Dumont in 1906."', ['flew', 'was flown', 'is flying', 'has flown'], 1, 'Passiva no passado: was + particípio (flown).'],
     ['Passive form of "They are painting the hangar":', ['The hangar is painted.', 'The hangar is being painted.', 'The hangar was painting.', 'The hangar has painted.'], 1, 'Present continuous na passiva: is being + particípio.'],
     ['"The tickets ___ already ___." (present perfect, passive)', ['have / sold', 'have / been sold', 'has / be sold', 'are / sold'], 1, 'Present perfect passivo: have been + particípio.'],
     ['"The report must ___ by Friday."', ['finish', 'be finished', 'finished', 'being finished'], 1, 'Modal na passiva: modal + be + particípio.'],
-    ['"English ___ in many countries."', ['speaks', 'is spoken', 'is speaking', 'spoke'], 1, 'Passiva no presente: is + particípio.']
+    ['"English ___ in many countries."', ['speaks', 'is spoken', 'is speaking', 'spoke'], 1, 'Passiva no presente: is + particípio.'],
+    ['"The new radar ___ next month."', ['will install', 'will be installed', 'is installing', 'will been installed'], 1, 'Passiva com will: will + be + particípio. O radar não instala nada: ele é instalado.'],
+    ['"The documents ___ when the inspector arrived."', ['were checking', 'were being checked', 'had checked', 'are checked'], 1, 'Ação em andamento no passado, na passiva: were being + particípio. "Were checking" e "had checked" são ativas, e "are checked" está no presente.'],
+    ['Passive form of "Someone stole my wallet":', ['My wallet stole.', 'My wallet was stolen.', 'My wallet has stolen.', 'My wallet is stealing.'], 1, 'Simple past na passiva: was + particípio (stolen). O agente "someone" é omitido.'],
+    ['Active form of "The letter was written by the captain":', ['The captain writes the letter.', 'The captain wrote the letter.', 'The captain has written the letter.', 'The captain was writing the letter.'], 1, '"Was written" está no simple past, então a ativa usa o simple past: wrote.'],
+    ['"___ the flights cancelled because of the storm?"', ['Did', 'Were', 'Have', 'Was'], 1, 'Pergunta na passiva: o to be vai antes do sujeito, e "flights" é plural: Were. "Did" pediria verbo base, "Was" é singular e "Have" exigiria "been cancelled".']
   ],
   fc: [
     ['Passiva: estrutura', 'To be no tempo da ativa + past participle.'],
     ['Passiva com modal', 'Modal + be + particípio: must be checked.'],
     ['Passiva do present continuous', 'Is/are being + particípio.'],
+    ['Passiva do simple past', 'Was/were + particípio: was built.'],
+    ['Passiva com will', 'Will be + particípio: will be opened.'],
+    ['Agente da passiva', 'Vem com "by"; é omitido quando é desconhecido ou óbvio.'],
+    ['Pergunta na passiva', 'To be antes do sujeito: Were the flights cancelled?']
   ]
 });
 
@@ -222,21 +234,29 @@ EEAR.add({
   ex: [
     ['Complete: "When I reached the gate, the aircraft ___ already ___."', '<p><b>had already departed</b>: a partida ocorreu antes de eu chegar ao portão.</p>'],
     ['Complete: "By 2030, she ___ the required flight hours."', '<p><b>will have completed</b>: ação concluída antes de um marco futuro.</p>'],
-    ['"He was tired because he ___ all morning."', '<p><b>had been working</b>: duração anterior a outro ponto no passado.</p>']
+    ['"He was tired because he ___ all morning."', '<p><b>had been working</b>: duração anterior a outro ponto no passado.</p>'],
+    ['Compare: "I have lived here for five years." x "I had lived there for five years when I moved."', '<p><b>Present perfect</b>: eu ainda moro aqui (ligado ao presente). <b>Past perfect</b>: os cinco anos terminaram antes de outra ação passada (a mudança).</p>']
   ],
   q: [
     ['"When the controller called, the pilot ___ the message."', ['already received', 'had already received', 'has already received', 'will receive'], 1, 'A recepção aconteceu antes de outra ação passada: past perfect.'],
     ['"She ___ for the EEAR for three hours, so she needs a break."', ['has been studying', 'had study', 'will have studied', 'studies'], 0, 'Duração ligada ao presente: present perfect continuous.'],
     ['"By next Friday, we ___ the report."', ['finish', 'finished', 'will have finished', 'had finished'], 2, 'Conclusão antes de um marco futuro: future perfect.'],
     ['"This time tomorrow, they ___ to Recife."', ['will be flying', 'have flown', 'had flown', 'fly'], 0, 'Ação em andamento em um momento futuro: future continuous.'],
-    ['"Before the inspection began, the team ___ for several hours."', ['has worked', 'had been working', 'will work', 'works'], 1, 'Duração anterior a um ponto passado: past perfect continuous.']
+    ['"Before the inspection began, the team ___ for several hours."', ['has worked', 'had been working', 'will work', 'works'], 1, 'Duração anterior a um ponto passado: past perfect continuous.'],
+    ['"How long ___ English before you moved to London?"', ['have you studied', 'had you been studying', 'will you study', 'do you study'], 1, 'A duração termina num ponto do passado (a mudança): past perfect continuous. "Have you studied" ligaria a duração ao presente.'],
+    ['"I ___ this aircraft three times this month."', ['have flown', 'had flown', 'fly', 'will have fly'], 0, '"This month" é um período que ainda não terminou: present perfect. "Will have fly" está malformado (seria will have flown).'],
+    ['"By the time the rescue team arrived, the survivors ___ for two days."', ['waited', 'have waited', 'had been waiting', 'will have been waiting'], 2, '"By the time" + passado pede, na outra oração, uma duração anterior a esse ponto: past perfect continuous.'],
+    ['"Next June, she ___ here for ten years."', ['will have worked', 'has worked', 'had worked', 'worked'], 0, 'Duração completada até um marco futuro (next June): future perfect.'],
+    ['Choose the correct sentence.', ['I have seen that film yesterday.', 'I had seen that film before I read the book.', 'I have saw that film.', 'I will have see that film.'], 1, 'Past perfect para a ação anterior a outra no passado. "Yesterday" não combina com present perfect, "have saw" usa a forma errada e "will have see" deveria ser "will have seen".']
   ],
   fc: [
     ['Past perfect', 'Had + participle: ação anterior a outra no passado.'],
     ['Present perfect continuous', 'Have/has been + -ing: duração ligada ao presente.'],
     ['Past perfect continuous', 'Had been + -ing: duração anterior a outro ponto passado.'],
     ['Future perfect', 'Will have + participle: concluída antes de um marco futuro.'],
-    ['Future continuous', 'Will be + -ing: ação em andamento no futuro.']
+    ['Future continuous', 'Will be + -ing: ação em andamento no futuro.'],
+    ['By the time + passado', 'Pede past perfect: By the time we arrived, they had left.'],
+    ['By + marco futuro', 'Pede future perfect: By 2030, she will have finished.']
   ]
 });
 
@@ -267,14 +287,20 @@ EEAR.add({
   ex: [
     ['Passe para o indireto: She said, "I will travel tomorrow."', '<p>She said (that) she <b>would travel the next day</b>.</p>'],
     ['Passe para o indireto: "Are you ready?" he asked me.', '<p>He asked me <b>if/whether I was ready</b>.</p>'],
-    ['Dê ênfase a "I understand the rule".', '<p><b>I do understand the rule.</b></p>']
+    ['Dê ênfase a "I understand the rule".', '<p><b>I do understand the rule.</b></p>'],
+    ['Passe para o indireto: "Don\'t open the door," the sergeant said to me.', '<p>The sergeant told me <b>not to open</b> the door. Ordem negativa: told + objeto + not to + verbo.</p>']
   ],
   q: [
     ['Direct: "I am tired." Reported: She said that she ___ tired.', ['is', 'was', 'has been', 'will be'], 1, 'Simple present recua para simple past.'],
     ['Direct: "I will call you tomorrow." Reported: He said he ___ me ___.', ['will call / tomorrow', 'would call / the next day', 'would call / yesterday', 'called / tomorrow'], 1, 'Will → would; tomorrow → the next day.'],
     ['Direct: "Where do you work?" Reported: She asked me ___.', ['where do I work', 'where I worked', 'where did I work', 'where I work did'], 1, 'Pergunta indireta usa ordem afirmativa e não usa do/did.'],
     ['"The cadet blamed ___ for the mistake."', ['him', 'his', 'himself', 'he'], 2, 'Sujeito e objeto são a mesma pessoa: voz/construção reflexiva.'],
-    ['Choose the emphatic sentence.', ['She knows the rule.', 'She does know the rule.', 'She is knowing the rule.', 'She do knows the rule.'], 1, 'Ênfase no presente: does + verbo base.']
+    ['Choose the emphatic sentence.', ['She knows the rule.', 'She does know the rule.', 'She is knowing the rule.', 'She do knows the rule.'], 1, 'Ênfase no presente: does + verbo base.'],
+    ['Direct: "Close the door," the officer told me. Reported: The officer told me ___ the door.', ['close', 'to close', 'closing', 'closed'], 1, 'Ordem no discurso indireto: told + objeto + to + verbo.'],
+    ['Direct: "Don\'t touch the panel," she said to us. Reported: She told us ___ the panel.', ['not to touch', 'don\'t touch', 'to not touching', 'no touch'], 0, 'Ordem negativa: told + objeto + not to + verbo.'],
+    ['Direct: "Are you a cadet?" he asked her. Reported: He asked her ___ a cadet.', ['if she was', 'was she', 'that she is', 'are you'], 0, 'Pergunta de sim ou não vira oração com if/whether, em ordem afirmativa e com backshift (are → was).'],
+    ['Direct (said last week): "I finished the test yesterday." Reported: He said he ___ the test the day before.', ['finishes', 'had finished', 'will finish', 'has finished'], 1, 'Simple past recua para past perfect, e yesterday vira the day before. "Has finished" não combina com um tempo passado definido.'],
+    ['"You didn\'t lock the door!" "I ___ lock it! Check again."', ['did', 'do', 'was', 'have'], 0, 'Forma enfática no passado para contestar: did + verbo base (I did lock it).']
   ],
   fc: [
     ['Reported: will', 'Vira would quando há backshift.'],
@@ -282,7 +308,9 @@ EEAR.add({
     ['say x tell', 'Tell recebe objeto pessoal: told me.'],
     ['Pergunta indireta', 'Ordem afirmativa; sim/não usa if/whether.'],
     ['Voz reflexiva', 'Sujeito e objeto são a mesma pessoa: himself, herself etc.'],
-    ['Forma enfática', 'Do/does/did + verbo base: I do know; he did call.']
+    ['Forma enfática', 'Do/does/did + verbo base: I do know; he did call.'],
+    ['Ordem no reported speech', 'Told/asked + objeto + to + verbo: told me to wait.'],
+    ['Ordem negativa no reported speech', 'Told + objeto + not to + verbo: told us not to touch.']
   ]
 });
 
@@ -318,7 +346,8 @@ EEAR.add({
   ex: [
     ['Complete: "___ candidate must show an ID." (cada candidato individualmente)', '<p><b>Each</b> candidate must show an ID.</p>'],
     ['"The flight was exhausting. The passengers were ___."', '<p><b>exhausted</b>: -ed descreve quem sente o efeito.</p>'],
-    ['Escolha o conector: "The weather was poor; ___, the flight departed."', '<p><b>however</b> ou <b>nevertheless</b>, pois há contraste.</p>']
+    ['Escolha o conector: "The weather was poor; ___, the flight departed."', '<p><b>however</b> ou <b>nevertheless</b>, pois há contraste.</p>'],
+    ['Escreva por extenso a data 21/05 em inglês.', '<p><b>the twenty-first of May</b> (ou May twenty-first). Por escrito: May 21st. Datas usam numerais ordinais.</p>']
   ],
   q: [
     ['"___ of the two routes is acceptable."', ['Every', 'Either', 'Much', 'Any of all'], 1, '"Either" = um ou outro de dois.'],
@@ -326,7 +355,11 @@ EEAR.add({
     ['"The briefing was so ___ that the cadets became ___."', ['confused / confusing', 'confusing / confused', 'confuse / confused', 'confusing / confuse'], 1, '-ing causa a sensação; -ed descreve quem a sente.'],
     ['"The runway was wet; ___, the aircraft landed safely."', ['therefore', 'however', 'for example', 'because'], 1, 'Há contraste entre pista molhada e pouso seguro: however.'],
     ['Which sentence contains coordination?', ['I stayed because it rained.', 'I studied, and I passed.', 'When he arrived, we left.', 'The pilot who called is here.'], 1, 'Duas orações independentes ligadas por "and": coordenação.'],
-    ['"You didn\'t miss the briefing, did you?" "___, I didn\'t."', ['Yes', 'No', 'So', 'Either'], 1, 'A resposta negativa é "No, I didn\'t".']
+    ['"You didn\'t miss the briefing, did you?" "___, I didn\'t."', ['Yes', 'No', 'So', 'Either'], 1, 'A resposta negativa é "No, I didn\'t".'],
+    ['"I have two brothers. ___ of them is a pilot: one is a teacher and the other is a doctor."', ['Both', 'Either', 'Neither', 'All'], 2, 'Nenhum dos dois é piloto: neither. "Both" e "all" pediriam verbo no plural, e "all" não se usa para dois.'],
+    ['"The aircraft took off on the ___ of May."', ['twenty-one', 'twenty-first', 'twentieth-one', 'twenty-oneth'], 1, 'Datas usam ordinais: twenty-first (21st).'],
+    ['"The instructor spoke to ___ of the four cadets individually."', ['every', 'each', 'either', 'both'], 1, '"Each of" destaca cada um individualmente. "Every" não é seguido de "of", e "either" e "both" se referem a dois.'],
+    ['"The course is free. ___, it can be studied offline."', ['However', 'Therefore', 'Moreover', 'Although'], 2, 'A segunda frase acrescenta uma vantagem: adição (moreover). Não há contraste nem consequência, e "although" não inicia frase seguido de vírgula.']
   ],
   fc: [
     ['each x every', 'Each: individualmente. Every: todos do grupo, com singular.'],
@@ -335,6 +368,8 @@ EEAR.add({
     ['Coordenação', 'Orações independentes ligadas por and, but, or, so, yet.'],
     ['Discourse marker de contraste', 'However, nevertheless, on the other hand.'],
     ['Discourse marker de consequência', 'Therefore, consequently, as a result.'],
-    ['Tag answer negativa', 'No, I don’t / No, I didn’t: confirma a negativa.']
+    ['Tag answer negativa', 'No, I don’t / No, I didn’t: confirma a negativa.'],
+    ['Numerais ordinais', 'First, second, third, fourth… twenty-first: usados em datas e ordem.'],
+    ['Marcador de adição', 'Moreover, furthermore, in addition.']
   ]
 });
