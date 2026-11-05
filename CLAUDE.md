@@ -29,6 +29,7 @@ Comandos existentes (na raiz, salvo indicação):
 - Preparação Android (em `app/`, como no CI): `npm ci`, `npx cap add android`, `npx capacitor-assets generate --android`, `npx cap sync android`. Não repita `cap add` se o projeto Android já existir.
 - APK (em `app/android/`, no ambiente do CI): `./gradlew assembleDebug --no-daemon --stacktrace`; conferir o APK na raiz: `python3 -I web/verificar_publicacao.py verificar app/android/app/build/outputs/apk/debug/app-debug.apk --apk`.
 - Vídeos, quando pertinente (requer rede): `python3 web/conferir_videos.py`.
+- Testes da plataforma (dados do curso e comportamento no navegador; requer o pacote `playwright` com o Chromium): `node testes/plataforma.test.js`.
 - Scripts npm em `app/`: `npm run www` gera conteúdo; `npm run android` gera conteúdo e prepara o projeto Android, sem compilar o APK.
 - Não foram encontrados comandos dedicados de lint ou checagem de tipos. O CI Android usa Node 22 e Java 21; confirme ferramentas disponíveis no ambiente local.
 

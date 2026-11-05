@@ -96,6 +96,8 @@
   const sig = s => `<span class="sigla c-${s}">${MATS[s].sigla}</span>`;
   const bolinhas = p => '●'.repeat(p) + '○'.repeat(3 - p);
   const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
+  /* Acertos para dominar a aula: o menor número que chega a 80% das questões do quiz dela (nem toda aula tem 10). */
+  function metaQuiz(m) { const n = m && m.q ? m.q.length : 10; let k = 0; while (k < n && k / n < META) k++; return `meta de ${k} acertos em ${n}`; }
   function amostraPeso(ids, n) {
     return ids.filter(id => Q[id] && Q[id].mod && moduloAtivo(MOD[Q[id].mod]))
       .map(id => ({ id, k: Math.pow(Math.random(), 1 / (MOD[Q[id].mod].peso || 1)) }))
@@ -124,7 +126,7 @@
   function novoEstado() {
     return {
       v: 1, t: 0,
-      cfg: { modalidade: 'normal', alvo: 'cfs2-2027', prova: '2026-11-22', inicio: hoje(), horas: 3, dias: [0, 1, 2, 3, 4, 5, 6], simDia: 0, tempoSim: 240, excl: [] },
+      cfg: { modalidade: 'normal', alvo: 'cfs2-2027', prova: '2026-11-22', inicio: hoje(), horas: 3, dias: [0, 1, 2, 3, 4, 5, 6], simDia: 0, tempoSim: 260, excl: [], cv: 2 },
       mod: {}, fc: {}, erros: {}, sims: [], diag: null, feito: {}, act: {}, ativo: null, ult: null, ap: {}, aula: {}, ultAula: null
     };
   }
@@ -137,6 +139,8 @@
       if (o.cfg.prova === '2026-11-22') { b.cfg.alvo = 'cfs2-2027'; b.cfg.prova = '2026-11-22'; }
       else { const p = CAL.find(x => x.d === o.cfg.prova); b.cfg.alvo = p ? p.id : 'outra'; }
     }
+    /* O edital fixa a prova escrita em 4h20. Quem ainda tem o padrão antigo de 4h passa para 4h20; quem escolher 4h depois disso continua com 4h. */
+    if (o && o.cfg && !(o.cfg.cv >= 2) && Number(o.cfg.tempoSim) === 240) b.cfg.tempoSim = 260;
     ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { if (!b[k] || typeof b[k] !== 'object') b[k] = {}; });
     if (!Array.isArray(b.sims)) b.sims = [];
     return b;
@@ -485,7 +489,7 @@
         } else if (it.r <= 0) {
           fila[s].shift();
           if (ci === 0) {
-            dia.tar.push({ k: 'Q:' + it.id, tipo: 'quiz', mod: it.id, txt: 'Quiz ' + it.id + ': meta de 8 acertos em 10' });
+            dia.tar.push({ k: 'Q:' + it.id, tipo: 'quiz', mod: it.id, txt: 'Quiz ' + it.id + ': ' + metaQuiz(MOD[it.id]) });
             (revs[dia.n + 7] = revs[dia.n + 7] || []).push(it.id);
           } else {
             dia.tar.push({ k: 'Q' + (ci + 1) + ':' + it.id, tipo: 'quiz2', mod: it.id, d: dia.d, txt: 'Refazer o quiz ' + it.id + ' e as questões de provas do tópico' });
@@ -571,7 +575,7 @@
     let sub = '', bt = '';
     switch (t.tipo) {
       case 'teoria': sub = `${sig(m.m)} ${m.id} · ${fh(t.h)}`; bt = `<button class="btn sm" data-a="mod" data-id="${m.id}">Estudar</button>`; break;
-      case 'quiz': sub = `${sig(m.m)} ${m.id} · 10 questões`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}">Fazer</button>`; break;
+      case 'quiz': sub = `${sig(m.m)} ${m.id} · ${plural(m.q.length, 'questão', 'questões')}`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}">Fazer</button>`; break;
       case 'rev': sub = `${sig(m.m)} ${m.id} · flashcards + quiz`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}" data-rev="${t.k}">Revisar</button>`; break;
       case 'quiz2': sub = `${sig(m.m)} ${m.id} · marca sozinha ao fazer o quiz`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}">Fazer</button>`; break;
       case 'marco': sub = 'Prova real ou simulado completo no mesmo horário'; bt = `<button class="btn sm pri" data-a="tab" data-v="simulados">Simulados</button>`; break;
@@ -604,7 +608,7 @@
         <ol class="stack" style="margin:0;padding-left:1.2em">
           <li><b>Confira a data da prova e suas horas por dia</b> na aba Plano. O cronograma se ajusta sozinho.</li>
           <li><b>Faça o diagnóstico</b>: 40 questões, sem cronômetro. O plano dá mais tempo às matérias em que você for pior.</li>
-          <li><b>Siga o briefing do dia</b>: teoria, depois o quiz do módulo. O módulo só conta como dominado com 8 acertos em 10 (80%).</li>
+          <li><b>Siga o briefing do dia</b>: teoria, depois o quiz do módulo. O módulo só conta como dominado com 80% de acerto no quiz (8 em 10 na maioria das aulas).</li>
           <li><b>Revise os flashcards todo dia</b> e faça o simulado semanal em condições de prova.</li>
         </ol>
         <div class="row"><button class="btn pri" data-a="simini" data-tipo="diag">Fazer o diagnóstico</button><button class="btn" data-a="tab" data-v="plano">Ajustar o plano</button></div></section>`;
@@ -645,7 +649,7 @@
     h += `<section class="nums">${[[modulosAtivos().length, 'aulas'], [nV, 'videoaulas'], [nQ, 'questões comentadas'], [nOf, 'questões de provas oficiais']].map(x => `<div><b class="num">${x[0]}</b><span>${x[1]}</span></div>`).join('')}</section>`;
     h += `<section class="card"><h2 class="h2">As quatro matérias da prova</h2><div class="stack">${ORD.map(s => `<div class="subj b-${s}">${sig(s)}<span>${MATS[s].nome}</span><span class="small muted num">${aulasDe(s).length} aulas</span></div>`).join('')}</div></section>`;
     h += `<section class="grid2">
-      <div class="card"><div class="eyebrow">Como funciona</div><p style="margin:0">Cada aula tem videoaula, resumo, exemplos resolvidos e um quiz de 10 questões no estilo da EEAR. A aula só conta como concluída com 80% de acerto.</p></div>
+      <div class="card"><div class="eyebrow">Como funciona</div><p style="margin:0">Cada aula tem videoaula, resumo, exemplos resolvidos e um quiz de questões comentadas no estilo da EEAR. A aula só conta como concluída com 80% de acerto.</p></div>
       <div class="card"><div class="eyebrow">Plano até a prova</div><p style="margin:0">Você diz a prova alvo e quantas horas tem por dia. O cronograma se monta sozinho, com revisões e simulados semanais.</p></div>
       <div class="card"><div class="eyebrow">Provas oficiais</div><p style="margin:0">Provas anteriores da EEAR na ordem original, com o gabarito oficial e cronômetro de prova.</p></div>
       <div class="card"><div class="eyebrow">Certificado</div><p style="margin:0">Ao concluir todas as aulas de uma matéria, você recebe o certificado de conclusão dela.</p></div>
@@ -1167,10 +1171,10 @@
   /* ---------- simulados ---------- */
   function iniciarSim(tipo, s) {
     let ids = [], lim = 0;
-    if (tipo === 'completo') { ORD.forEach(x => { ids = ids.concat(shuffle(amostraPeso(QS[x], 24))); }); lim = Number(S.cfg.tempoSim) || 240; }
+    if (tipo === 'completo') { ORD.forEach(x => { ids = ids.concat(shuffle(amostraPeso(QS[x], 24))); }); lim = Number(S.cfg.tempoSim) || 260; }
     else if (tipo === 'materia') { ids = shuffle(amostraPeso(QS[s], 24)); lim = 60; }
     else if (tipo === 'prova') { const p = PROVA[s]; if (!p) return; ids = p.ids.slice(); lim = p.min || 240; }
-    else if (tipo === 'oficial') { ORD.forEach(x => { ids = ids.concat(shuffle(QO[x].slice()).slice(0, 24)); }); lim = Number(S.cfg.tempoSim) || 240; }
+    else if (tipo === 'oficial') { ORD.forEach(x => { ids = ids.concat(shuffle(QO[x].slice()).slice(0, 24)); }); lim = Number(S.cfg.tempoSim) || 260; }
     else { ORD.forEach(x => { ids = ids.concat(amostraDiag(x, 10)); }); lim = 0; }
     S.ativo = { tipo, materia: tipo === 'materia' ? s : null, prova: tipo === 'prova' ? s : null, ids, perms: permutar(ids), resp: {}, marc: {}, ini: Date.now(), lim, i: 0 };
     salvar();
@@ -1184,7 +1188,8 @@
     if (x.tipo === 'completo') return curto ? 'completo' : 'Simulado completo';
     if (x.tipo === 'prova') return (PROVA[x.prova] && PROVA[x.prova].nome) || 'Prova oficial';
     if (x.tipo === 'oficial') return curto ? 'oficial misto' : 'Simulado com questões oficiais';
-    return curto ? MATS[x.mat || x.materia].curto : 'Simulado de ' + MATS[x.mat || x.materia].curto;
+    const mt = MATS[x.mat || x.materia], nm = mt ? mt.curto : 'matéria';  // histórico colado de outra versão pode trazer matéria desconhecida
+    return curto ? nm : 'Simulado de ' + nm;
   }
   function vSim() {
     const a = S.ativo;
@@ -1262,7 +1267,7 @@
     if (S.ativo) h += `<div class="banner acc"><p>Simulado em andamento: ${Object.keys(S.ativo.resp).length} de ${S.ativo.ids.length} respondidas.</p><button class="btn sm pri" data-a="go" data-v="sim">Continuar</button></div>`;
     h += `<section class="grid2">
       <div class="card"><div class="eyebrow">Ponto de partida</div><h2 class="h2">Diagnóstico</h2><p class="small" style="margin:0">40 questões, 10 por matéria, sem cronômetro. Ajusta o peso de cada matéria no plano.</p><button class="btn ${S.diag ? '' : 'pri'}" data-a="simini" data-tipo="diag" ${S.ativo ? 'disabled' : ''}>${S.diag ? 'Refazer diagnóstico' : 'Começar'}</button></div>
-      <div class="card"><div class="eyebrow">Como no dia da prova</div><h2 class="h2">Simulado completo</h2><p class="small" style="margin:0">96 questões, 24 por matéria, em ${fh((Number(S.cfg.tempoSim) || 240) / 60)}. Use folha de rascunho e nada de consulta.</p><button class="btn pri" data-a="simini" data-tipo="completo" ${S.ativo ? 'disabled' : ''}>Começar</button></div>
+      <div class="card"><div class="eyebrow">Como no dia da prova</div><h2 class="h2">Simulado completo</h2><p class="small" style="margin:0">96 questões, 24 por matéria, em ${fh((Number(S.cfg.tempoSim) || 260) / 60)}. Use folha de rascunho e nada de consulta.</p><button class="btn pri" data-a="simini" data-tipo="completo" ${S.ativo ? 'disabled' : ''}>Começar</button></div>
     </section>`;
     const okOf = ORD.every(x => QO[x].length >= 24);
     h += `<section class="card"><div class="eyebrow">100% fiel à prova</div><h2 class="h2">Provas anteriores oficiais</h2>${PROVAS.length
@@ -1523,7 +1528,7 @@
     if (g('cfg-inicio').value) c.inicio = g('cfg-inicio').value;
     c.horas = Number(g('cfg-horas').value) || 4;
     c.simDia = Number(g('cfg-sim').value);
-    c.tempoSim = Number(g('cfg-tempo').value) || 240;
+    c.tempoSim = Number(g('cfg-tempo').value) || 260;
     c.dias = [0, 1, 2, 3, 4, 5, 6].filter(x => g('cfg-d' + x).checked);
     if (g('cfg-apostila')) c.apostila = g('cfg-apostila').checked;
     salvar();
