@@ -297,7 +297,7 @@ EEAR.add({
 });
 
 EEAR.add({
-  id: 'POR15', m: 'por', n: 15, t: 'Tipos de discurso: direto, indireto e indireto livre', peso: 2, h: 2,
+  id: 'POR15', m: 'por', n: 15, t: 'Tipos de discurso: direto, indireto e indireto livre', peso: 2, h: 2, desde: '2026-11',
   teoria: `
 <h3>Os três tipos de discurso</h3>
 <p>Numa narrativa, a fala ou o pensamento das personagens pode chegar ao leitor de três maneiras.</p>

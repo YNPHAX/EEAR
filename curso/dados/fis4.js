@@ -264,7 +264,7 @@ EEAR.add({
 });
 
 EEAR.add({
-  id: 'FIS18', m: 'fis', n: 18, t: 'Matéria e radiação: física moderna, espectro e radioatividade', peso: 2, h: 3,
+  id: 'FIS18', m: 'fis', n: 18, t: 'Matéria e radiação: física moderna, espectro e radioatividade', peso: 2, h: 3, desde: '2026-11',
   teoria: `
 <h3>A luz é onda e partícula</h3>
 <ul>
@@ -360,18 +360,18 @@ EEAR.add({
     ['Frequência de corte', 'f₀ = W/h. Abaixo dela nenhum elétron sai.'],
     ['Mais intensidade no efeito fotoelétrico', 'Mais elétrons, mas a mesma energia por elétron.'],
     ['Dualidade da luz', 'Onda: difração e interferência. Partícula: efeito fotoelétrico.'],
-    ['Espectro (menor → maior frequência)', 'Rádio, micro-ondas, infravermelho, visível, ultravioleta, raios X, gama.'],
-    ['Intensidade de onda', 'I = P/A; fonte puntiforme: I = P/(4πd²).'],
-    ['Radiografia', 'Raios X são mais absorvidos pelos ossos: eles aparecem claros.'],
     ['Modelo de Thomson', 'Pudim de passas; elétron descoberto nos raios catódicos.'],
     ['Modelo de Rutherford', 'Núcleo pequeno, denso e positivo; átomo quase vazio.'],
     ['Modelo de Bohr', 'Órbitas quantizadas; descer de nível emite fóton.'],
-    ['Ferromagnéticos', 'Ferro, níquel e cobalto: fortemente atraídos e imantáveis.'],
-    ['Semicondutores', 'Silício e germânio: base de LEDs, transistores e células solares.'],
     ['Emissão alfa', '⁴₂He: A − 4 e Z − 2'],
     ['Emissão beta', '⁰₋₁β: A igual e Z + 1'],
     ['Radiação gama', 'Onda eletromagnética sem carga e sem massa.'],
     ['Fissão x fusão', 'Fissão: núcleo pesado se divide (usinas). Fusão: núcleos leves se unem (Sol).'],
-    ['Meia-vida', 'm = m₀/2ⁿ, com n = t/T½']
+    ['Meia-vida', 'm = m₀/2ⁿ, com n = t/T½'],
+    ['Espectro (menor → maior frequência)', 'Rádio, micro-ondas, infravermelho, visível, ultravioleta, raios X, gama.'],
+    ['Intensidade de onda', 'I = P/A; fonte puntiforme: I = P/(4πd²).'],
+    ['Radiografia', 'Raios X são mais absorvidos pelos ossos: eles aparecem claros.'],
+    ['Ferromagnéticos', 'Ferro, níquel e cobalto: fortemente atraídos e imantáveis.'],
+    ['Semicondutores', 'Silício e germânio: base de LEDs, transistores e células solares.']
   ]
 });
