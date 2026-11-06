@@ -491,6 +491,36 @@ async function testarNavegador(E) {
       r = await abrirEm(srv.url, fim, T0 + 7 * DIA, tz); const v7 = await r.vencidos(); await r.ctx.close();
       ok(resto.length === 100 - dia0.length && resto.every(id => versao[id] === 2) && novos.every(id => JSON.stringify(st.cfg.fcv[id]) === JSON.stringify([2, st.fc[id][1]])) && v7 === dia0.length && !r.erros.length, `Português: cada reformulado volta uma única vez; no 7º dia só vencem os ${dia0.length} agendados`);
     }
+    for (const modalidade of ['normal', 'bct']) { // dados reais de Inglês: progresso antigo com todos os cartões dominados, nas duas modalidades
+      const tz = 'America/Sao_Paulo', T0 = Date.UTC(2026, 11, 1, 15), D = diaLocal(T0, tz);
+      const ING = E.modulos.filter(m => m.m === 'ing'), ativo = m => !m.modalidades || m.modalidades.includes(modalidade);
+      const versao = {}, aula = {}; ING.forEach(m => m.fc.forEach((c, i) => { const id = m.id + '~' + i; versao[id] = Number.isInteger(c[2]) && c[2] > 1 ? c[2] : 1; aula[id] = m; }));
+      const todos = Object.keys(versao), novos = todos.filter(id => versao[id] > 1 && ativo(aula[id])), fora = todos.filter(id => !ativo(aula[id]));
+      const fc = {}; todos.forEach(id => { fc[id] = [6, D + 50]; });
+      const mod = {}; ING.forEach(m => { mod[m.id] = { lido: dstr(D - 30), tent: 1, best: 0.9, ok: dstr(D - 30) }; });
+      const st0 = Object.assign(base({ modalidade }), { mod, fc, erros: {}, sims: [] }); st0.cfg.prova = '2027-05-30';
+      const antes = JSON.stringify(st0), ate = k => novos.filter(id => desvio(id) <= k).length;
+      if (modalidade === 'normal') ok(todos.length === 113 && todos.filter(id => versao[id] === 2).length === 86 && todos.filter(id => versao[id] === 1).length === 27, `Inglês: 113 cartões, 86 na versão 2 e 27 sem versão`);
+      let r = await abrirEm(srv.url, st0, T0, tz);
+      ok(await r.guardado() === antes && await r.vencidos() === ate(0), `Inglês ${modalidade}: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (${ate(0)} de ${novos.length})`);
+      await r.ctx.close();
+      const porDia = [];
+      for (let k = 1; k <= 6; k++) { r = await abrirEm(srv.url, st0, T0 + k * DIA, tz); porDia.push(await r.vencidos()); await r.ctx.close(); }
+      // sem estudar, a âncora não fica gravada: o espalhamento continua contado a partir do dia em que o aluno abrir
+      ok(porDia.every(n => n === ate(0)), `Inglês ${modalidade}: sem estudar, a fila não cresce sozinha (${porDia.join(', ')})`);
+      r = await abrirEm(srv.url, st0, T0, tz);
+      await r.p.click('[data-a="tab"][data-v="hoje"]'); await r.p.locator('[data-a="fcini"]').first().click(); await r.p.waitForTimeout(100);
+      const vistos = [];
+      while (await r.p.locator('[data-a="fcvirar"]').count()) {
+        vistos.push((await r.p.locator('.fc .tag').innerText()).trim().split(/\s+/).pop());
+        await r.p.click('[data-a="fcvirar"]'); await r.p.waitForTimeout(30); await r.p.click('[data-a="fcaval"][data-ok="1"]'); await r.p.waitForTimeout(40);
+      }
+      const salvo = await r.guardado(), st = JSON.parse(salvo); await r.ctx.close();
+      ok(vistos.length === ate(0) && vistos.every(id => ativo(ING.find(m => m.id === id))), `Inglês ${modalidade}: no 1º dia só aparecem cartões de aulas da modalidade`);
+      ok(fora.every(id => JSON.stringify(st.fc[id]) === JSON.stringify([6, D + 50]) && !(st.cfg.fcv || {})[id]) && todos.filter(id => versao[id] === 1).every(id => JSON.stringify(st.fc[id]) === JSON.stringify([6, D + 50])), `Inglês ${modalidade}: cartões da outra modalidade e os mantidos ficam intactos`);
+      r = await abrirEm(srv.url, salvo, T0 + 6 * DIA, tz); const v6 = await r.vencidos(); await r.ctx.close();
+      ok(v6 === novos.length - vistos.length && !r.erros.length, `Inglês ${modalidade}: até o 6º dia voltam todos os demais reformulados da modalidade (${v6})`);
+    }
     srv2.fechar(); srv0.fechar(); fs.rmSync(saida2, { recursive: true, force: true }); fs.rmSync(saida0, { recursive: true, force: true });
   }
 

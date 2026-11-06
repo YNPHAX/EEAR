@@ -28,10 +28,10 @@ EEAR.add({
     ['"What would you do if you ___ the lottery?"', ['win', 'won', 'will win', 'would win'], 1, 'Second conditional: if + past (won).'],
   ],
   fc: [
-    ['First conditional', 'If + present, will + verbo.'],
-    ['Second conditional', 'If + past, would + verbo (were para todos).'],
-    ['Zero conditional', 'If + present, present: verdades gerais.'],
-    ['unless', 'If not.'],
+    ['Corrija, se necessário: "If the weather will improve, we will take off at noon."', 'If the weather <b>improves</b>, we will take off at noon. Na first conditional, a oração com if fica no presente; will vai na outra oração.', 2],
+    ['Complete: "If she ___ (have) more free time, she ___ (join) the flying club." Que tipo de condicional é?', 'If she had more free time, she would join the flying club. Second conditional: situação hipotética (if + past, would + verbo). Com to be, usa-se were (was é comum na fala informal).', 2],
+    ['Qual é a diferença? "If you heat ice, it melts" x "If it rains, the parade will be cancelled."', 'A primeira é zero conditional: verdade geral (present + present). A segunda é first conditional: consequência provável no futuro (present + will).', 2],
+    ['Reescreva com unless: "If you don\'t check the fuel, you will have problems."', 'Unless you check the fuel, you will have problems. Unless = if not; por isso o verbo fica na afirmativa.', 2],
   ]
 });
 
@@ -71,13 +71,13 @@ EEAR.add({
     ['"___ the flights cancelled because of the storm?"', ['Did', 'Were', 'Have', 'Was'], 1, 'Pergunta na passiva: o to be vai antes do sujeito, e "flights" é plural: Were. "Did" pediria verbo base, "Was" é singular e "Have" exigiria "been cancelled".']
   ],
   fc: [
-    ['Passiva: estrutura', 'To be no tempo da ativa + past participle.'],
-    ['Passiva com modal', 'Modal + be + particípio: must be checked.'],
-    ['Passiva do present continuous', 'Is/are being + particípio.'],
-    ['Passiva do simple past', 'Was/were + particípio: was built.'],
-    ['Passiva com will', 'Will be + particípio: will be opened.'],
-    ['Agente da passiva', 'Vem com "by"; é omitido quando é desconhecido ou óbvio.'],
-    ['Pergunta na passiva', 'To be antes do sujeito: Were the flights cancelled?']
+    ['Passe para a voz passiva: "They clean the hangar every day." Que verbo mostra o tempo?', 'The hangar is cleaned every day. O tempo aparece no to be (is); o verbo principal vai para o particípio.', 2],
+    ['Corrija: "The engine must checked before every flight."', 'The engine must be checked before every flight. Modal + be + particípio.', 2],
+    ['Passe para a voz passiva: "The mechanics are repairing the radar right now."', 'The radar is being repaired (by the mechanics) right now. Present continuous na passiva: is/are being + particípio.', 2],
+    ['Passe para a voz passiva, mantendo o tempo: "The engineers <b>tested</b> the new radar last week."', 'The new radar <b>was tested</b> (by the engineers) last week. Simple past → was/were + particípio; o agente pode ser omitido quando é óbvio.', 2],
+    ['Passe para a voz passiva: "The Air Force will open a new school next year."', 'A new school will be opened (by the Air Force) next year. Will + be + particípio.', 2],
+    ['Em qual frase o agente (by…) deve ser mantido?<br>a) "The bridge was built by workers."<br>b) "Dom Casmurro was written by Machado de Assis."', 'b) O agente é a informação importante (o autor). Em a, "by workers" é óbvio e costuma ser omitido: The bridge was built.', 2],
+    ['Transforme em pergunta: "The documents were signed by the commander."', 'Were the documents signed by the commander? Na passiva, o to be vai antes do sujeito.', 2]
   ]
 });
 
@@ -128,13 +128,13 @@ EEAR.add({
   ],
   fc: [
     ['at / on / in (tempo)', 'At: horas. On: dias e datas. In: meses, anos, estações.'],
-    ['despite / in spite of', 'Seguidos de substantivo ou -ing.'],
-    ['although', 'Seguido de oração (sujeito + verbo).'],
-    ['because x because of', 'Because + oração. Because of + substantivo.'],
-    ['few x a few', 'Few: quase nenhum. A few: alguns.'],
-    ['little x a little', 'Little: quase nada. A little: um pouco (incontáveis).'],
-    ['how many x how much', 'Many: contáveis. Much: incontáveis.'],
-    ['too x enough', 'Too + adjetivo (demais). Adjetivo + enough (suficiente).']
+    ['Corrija: "Despite it was raining, the jump took place."', 'Despite the rain, the jump took place (ou: Although it was raining…). Despite vem com substantivo ou -ing (ou the fact that), não com oração.', 2],
+    ['Em "Although the runway was short, the pilot landed safely", que relação existe entre as ideias? Reescreva com but.', 'Contraste (concessão): a pista era curta, mas o pouso foi seguro. The runway was short, but the pilot landed safely.', 2],
+    ['Reescreva com because of: "The launch was delayed because the wind was strong."', 'The launch was delayed because of the strong wind. Because of + substantivo; because + oração.', 2],
+    ['Qual frase é mais positiva: "Few cadets passed the test" ou "A few cadets passed the test"?', 'A few: alguns passaram (tom positivo). Few: quase nenhum passou (tom negativo).', 2],
+    ['Complete com little ou a little: "Hurry! We have ___ time left." e "Relax, we still have ___ time."', 'Little time (quase nenhum: urgência) e a little time (um pouco: ainda há algum). Os dois com incontáveis.', 2],
+    ['Complete com How many ou How much: "___ fuel do we need?" e "___ passengers are on board?" E para perguntar o preço?', 'How much fuel (incontável) e how many passengers (contável). Preço também usa how much: How much is the ticket?', 2],
+    ['Corrija: "The runway is enough long, but the plane is too much heavy."', 'The runway is long enough, but the plane is too heavy. Adjetivo + enough; too + adjetivo (sem much).', 2]
   ]
 });
 
@@ -202,16 +202,16 @@ EEAR.add({
     ['"It is essential that every candidate ___ on time."', ['is', 'be', 'was', 'being'], 1, 'No subjuntivo formal, após expressões de necessidade/recomendação, usa-se a forma base: be.']
   ],
   fc: [
-    ['Verbos + -ing', 'Enjoy, avoid, finish, mind, suggest, keep, practice, consider.'],
-    ['Verbos + to', 'Want, decide, hope, plan, need, expect, agree, promise, refuse.'],
-    ['stop doing x stop to do', 'Parar de fazer x parar para fazer.'],
-    ['Depois de preposição', 'Sempre -ing (interested in learning).'],
-    ['Question tag: regra', 'Afirmativa → tag negativa; negativa → tag afirmativa; mesmo auxiliar.'],
+    ['Corrija, se necessário: "She enjoys to fly", "He avoided to answer" e "They finished checking the list."', 'She enjoys flying; he avoided answering. A terceira está correta. Enjoy, avoid e finish são seguidos de -ing.', 2],
+    ['Complete com a forma adequada de fly: "They decided ___", "We hope ___ next year" e "She refused ___ in bad weather."', 'To fly nas três: decide, hope e refuse são seguidos de to + verbo.', 2],
+    ['Qual é a diferença? "The pilot stopped <b>to check</b> the map." x "The pilot stopped <b>checking</b> the map."', 'Stopped to check: parou (o que fazia) para conferir o mapa. Stopped checking: deixou de conferir o mapa.', 2],
+    ['Corrija: "I\'m interested in learn to fly" e "Thank you for help me."', 'I\'m interested in learning to fly; thank you for helping me. Depois de preposição, o verbo vai para -ing.', 2],
+    ['Complete com a question tag: "The tower called us, ___?", "You can\'t see the runway, ___?" e "She has finished, ___?"', 'Didn\'t it? / can you? / hasn\'t she? Afirmativa → tag negativa; negativa → tag afirmativa; mesmo auxiliar e pronome.', 2],
     ['Tag de "I am…" e "Let\'s…"', 'Aren\'t I? / Shall we?'],
     ['take off / give up / run out of', 'Decolar (tirar) / desistir / ficar sem.'],
-    ['-ful x -less', 'Cheio de (useful) x sem (useless).'],
-    ['Imperativo', 'Verbo na forma base: Check your answers. Negativa: Don\'t + verbo.'],
-    ['Subjuntivo formal', 'It is essential that he be… / They suggested that she study…']
+    ['Complete com -ful ou -less: "The manual was ___ (use): it explained nothing." e "We are ___ (hope) about the results."', 'Useless (sem utilidade) e hopeful (esperançoso). -less = sem; -ful = cheio de.', 2],
+    ['Transforme em ordens no imperativo: "You must fasten your seat belt" e "You mustn\'t touch the panel."', 'Fasten your seat belt. / Don\'t touch the panel. Imperativo: verbo na forma base; negativa com don\'t.', 2],
+    ['Complete: "The instructor recommended that every cadet ___ (review) the checklist." Por que não "reviews"?', 'Review: em estruturas formais de recomendação ou exigência usa-se a forma base (subjuntivo), mesmo na 3ª pessoa. No inglês britânico também se usa should review.', 2]
   ]
 });
 
@@ -250,11 +250,11 @@ EEAR.add({
     ['Choose the correct sentence.', ['I have seen that film yesterday.', 'I had seen that film before I read the book.', 'I have saw that film.', 'I will have see that film.'], 1, 'Past perfect para a ação anterior a outra no passado. "Yesterday" não combina com present perfect, "have saw" usa a forma errada e "will have see" deveria ser "will have seen".']
   ],
   fc: [
-    ['Past perfect', 'Had + participle: ação anterior a outra no passado.'],
-    ['Present perfect continuous', 'Have/has been + -ing: duração ligada ao presente.'],
-    ['Past perfect continuous', 'Had been + -ing: duração anterior a outro ponto passado.'],
-    ['Future perfect', 'Will have + participle: concluída antes de um marco futuro.'],
-    ['Future continuous', 'Will be + -ing: ação em andamento no futuro.'],
+    ['Qual ação aconteceu primeiro? "When the doctor arrived, the patient had already woken up."', 'O paciente acordou primeiro (had woken up, past perfect); depois o médico chegou (arrived, simple past).', 2],
+    ['Complete: "You look tired." "I ___ (study) for six hours."', 'I have been studying for six hours: duração de uma ação que começou no passado e chega até agora (have/has been + -ing).', 2],
+    ['Complete: "The runway was wet because it ___ (rain) all morning."', 'Had been raining: duração anterior a outro ponto do passado (had been + -ing).', 2],
+    ['Complete: "By the end of this year, I ___ (complete) the course."', 'Will have completed: ação concluída antes de um marco futuro (will have + particípio).', 2],
+    ['Complete: "Don\'t call me at 9 tomorrow. I ___ (take) a test then."', 'I will be taking a test: ação em andamento num momento do futuro (will be + -ing).', 2],
     ['By the time + passado', 'Pede past perfect: By the time we arrived, they had left.'],
     ['By + marco futuro', 'Pede future perfect: By 2030, she will have finished.']
   ]
@@ -303,14 +303,14 @@ EEAR.add({
     ['"You didn\'t lock the door!" "I ___ lock it! Check again."', ['did', 'do', 'was', 'have'], 0, 'Forma enfática no passado para contestar: did + verbo base (I did lock it).']
   ],
   fc: [
-    ['Reported: will', 'Vira would quando há backshift.'],
+    ['Passe para o discurso indireto: "I will finish the report," she said.', 'She said (that) she would finish the report. Com o verbo introdutor no passado, will costuma passar a would.', 2],
     ['Reported: tomorrow / yesterday', 'The next day / the day before.'],
-    ['say x tell', 'Tell recebe objeto pessoal: told me.'],
-    ['Pergunta indireta', 'Ordem afirmativa; sim/não usa if/whether.'],
-    ['Voz reflexiva', 'Sujeito e objeto são a mesma pessoa: himself, herself etc.'],
-    ['Forma enfática', 'Do/does/did + verbo base: I do know; he did call.'],
-    ['Ordem no reported speech', 'Told/asked + objeto + to + verbo: told me to wait.'],
-    ['Ordem negativa no reported speech', 'Told + objeto + not to + verbo: told us not to touch.']
+    ['Corrija, se necessário: "The sergeant said me that the inspection was cancelled." e "She told that she was tired."', 'The sergeant <b>told me</b> (ou said to me) that… / She <b>said</b> that she was tired. Tell pede objeto pessoal (told me); say, em geral, não.', 2],
+    ['Passe para o discurso indireto: "Did you see the warning?" he asked me.', 'He asked me if (ou whether) I had seen the warning. Pergunta de sim ou não: if/whether, ordem afirmativa e recuo do tempo verbal.', 2],
+    ['Em qual frase há construção reflexiva?<br>a) "The pilot hurt himself."<br>b) "The pilot himself opened the door."', 'a) Sujeito e objeto são a mesma pessoa.<br>b) Uso enfático: himself reforça "o próprio piloto" e pode sair da frase sem mudar a estrutura.', 2],
+    ['Complete com a forma enfática: "You don\'t like flying." "I ___ flying! I\'m just tired."', 'I do like flying! Do/does/did + verbo base reforça a afirmação, muitas vezes para contestar o que foi dito.', 2],
+    ['Passe para o discurso indireto: "Wait here," the guard told us.', 'The guard told us to wait there. Ordem: told + objeto + to + verbo; here costuma passar a there.', 2],
+    ['Passe para o discurso indireto: "Don\'t open the hatch," the captain told the crew.', 'The captain told the crew not to open the hatch. Ordem negativa: not to + verbo (e não don\'t).', 2]
   ]
 });
 
@@ -362,14 +362,14 @@ EEAR.add({
     ['"The course is free. ___, it can be studied offline."', ['However', 'Therefore', 'Moreover', 'Although'], 2, 'A segunda frase acrescenta uma vantagem: adição (moreover). Não há contraste nem consequência, e "although" não inicia frase seguido de vírgula.']
   ],
   fc: [
-    ['each x every', 'Each: individualmente. Every: todos do grupo, com singular.'],
+    ['Complete com each ou every: "___ of the two engines was inspected" e "___ cadet in the school wears a uniform."', 'Each of the two engines (cada um, individualmente; every não vem seguido de of nem se usa para dois). Every cadet (todos do grupo).', 2],
     ['both / either / neither', 'Os dois / um dos dois / nenhum dos dois.'],
-    ['-ing x -ed', 'Causa a sensação / sente a sensação.'],
-    ['Coordenação', 'Orações independentes ligadas por and, but, or, so, yet.'],
-    ['Discourse marker de contraste', 'However, nevertheless, on the other hand.'],
-    ['Discourse marker de consequência', 'Therefore, consequently, as a result.'],
-    ['Tag answer negativa', 'No, I don’t / No, I didn’t: confirma a negativa.'],
+    ['Corrija: "The cadets were very interesting in the exciting flight, but the long briefing was bored."', 'The cadets were very interested in the exciting flight, but the long briefing was boring. -ed: quem sente; -ing: o que provoca a sensação.', 2],
+    ['Em "The weather was bad, so the drill was cancelled", há coordenação ou subordinação? Que relação "so" expressa?', 'Coordenação: duas orações independentes ligadas por so, que expressa consequência.', 2],
+    ['Complete com um marcador de contraste: "The aircraft is old. ___, it is very reliable." Por que therefore não serve?', 'However (ou nevertheless, on the other hand). Therefore indica consequência, e ser confiável não é consequência de ser velho.', 2],
+    ['Una as frases com um marcador de consequência: "The radio failed. The crew used hand signals."', 'The radio failed; therefore (ou consequently, as a result), the crew used hand signals.', 2],
+    ['"You don\'t smoke, do you?" "Yes, I do." O que a pessoa quis dizer?', 'Que ela fuma: yes acompanha a resposta afirmativa (I do). Para confirmar que não fuma, diria No, I don\'t.', 2],
     ['Numerais ordinais', 'First, second, third, fourth… twenty-first: usados em datas e ordem.'],
-    ['Marcador de adição', 'Moreover, furthermore, in addition.']
+    ['Una as frases com um marcador de adição: "The base has a gym. It has a pool."', 'The base has a gym. In addition (ou Moreover, Furthermore), it has a pool. O marcador acrescenta uma informação.', 2]
   ]
 });

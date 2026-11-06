@@ -38,13 +38,13 @@ EEAR.add({
     ['"We ___ to Natal next Friday. We already have the tickets."', ['flew', 'are flying', 'flies', 'flown'], 1, 'Plano já combinado para o futuro: present continuous.']
   ],
   fc: [
-    ['Simple present: uso', 'Hábitos, rotinas, verdades gerais, horários.'],
-    ['Simple present: 3ª pessoa', 'Recebe -s/-es/-ies: works, watches, studies.'],
-    ['Auxiliar do simple present', 'Do / does (o verbo volta para a forma base).'],
-    ['Present continuous: estrutura', 'Am/is/are + verbo-ing.'],
-    ['Stative verbs', 'Know, like, want, need, believe, understand: sem -ing.'],
-    ['There is x there are', 'Is: singular ou incontável. Are: plural.'],
-    ['Present continuous para o futuro', 'Planos já combinados: We are flying tomorrow.']
+    ['Por que o simple present em "The bus to the base leaves at 7 on weekdays" e em "Ice melts above 0 °C"?', 'A primeira é um horário fixo de rotina; a segunda, uma verdade geral. O simple present expressa hábitos, rotinas, horários e fatos permanentes.', 2],
+    ['Corrija: "The captain fly to Recife and watch the weather every day. She also studys at night."', 'The captain flies… and watches… She also studies at night. 3ª pessoa do singular: consoante + y → -ies; terminados em ch → -es.', 2],
+    ['Corrija: "Does the sergeant works on Sundays?" e "He don\'t speak Spanish."', 'Does the sergeant work on Sundays? (depois de does, verbo na forma base). He doesn\'t speak Spanish (3ª pessoa: doesn\'t).', 2],
+    ['Complete com o present continuous: "Look! The mechanics ___ (change) the tire, and the pilot ___ (wait) in the cabin."', 'Are changing / is waiting: am/is/are + -ing, concordando com o sujeito; change perde o e (changing).', 2],
+    ['Qual frase soa natural neste contexto e por quê?<br>a) "We are needing more fuel."<br>b) "We need more fuel."', 'b) Need indica estado, e com verbos de estado a forma natural costuma ser a simples. O continuous com eles é raro e depende de contexto especial; aqui, "We need more fuel" é o esperado.', 2],
+    ['Complete com there is ou there are: "___ some water on the runway, and ___ two trucks next to it."', 'There is some water (incontável: singular) e there are two trucks (plural).', 2],
+    ['"The squadron is leaving for Manaus on Monday." A frase fala do presente ou do futuro? Como se sabe?', 'Do futuro: um plano já combinado, indicado por "on Monday". O present continuous também expressa compromissos e planos acertados.', 2]
   ]
 });
 
@@ -92,11 +92,11 @@ EEAR.add({
     ['The past of "teach", "buy" and "think" is', ['teached, buyed, thinked', 'taught, bought, thought', 'taught, buyed, thought', 'teached, bought, thought'], 1, 'Os três são irregulares terminados em -ought/-aught: taught, bought, thought.']
   ],
   fc: [
-    ['Simple past: auxiliar', 'Did / didn\'t + verbo base.'],
+    ['Corrija: "Did the tower gave clearance?" e "The pilot didn\'t saw the warning."', 'Did the tower give clearance? / The pilot didn\'t see the warning. Depois de did/didn\'t, o verbo volta à forma base.', 2],
     ['fly / see / take (past e participle)', 'Flew-flown / saw-seen / took-taken.'],
     ['go / write / do (past e participle)', 'Went-gone / wrote-written / did-done.'],
-    ['Past continuous', 'Was/were + -ing: ação em andamento no passado.'],
-    ['When x while', 'When: ação curta (past). While: ação longa (continuous).'],
+    ['O que "At 8 p.m. yesterday, the crew was preparing the aircraft" diz sobre a ação?', 'Que ela estava em andamento naquele momento do passado (começou antes e seguiu depois das 20h). Past continuous: was/were + -ing.', 2],
+    ['Complete com <i>when</i> ou <i>while</i> e o tempo verbal adequado: "The pilot ___ (talk) to the tower ___ the alarm went off."', 'The pilot <b>was talking</b> to the tower <b>when</b> the alarm went off. Ação longa no past continuous; a curta, que interrompe, no simple past com when.', 2],
   ]
 });
 
@@ -111,7 +111,7 @@ EEAR.add({
 <li>Ação recente com efeito no presente: <i>I <b>have lost</b> my keys</i> (ainda estão perdidas).</li>
 </ul>
 <p><b>for</b> + período (for two hours, for ten years); <b>since</b> + ponto de início (since Monday, since 2019, since I was a child).</p>
-<p>Advérbios típicos: <b>ever</b> (alguma vez, em perguntas), <b>never</b>, <b>already</b> (já, afirmativas), <b>yet</b> (já, em perguntas; ainda, em negativas, no fim da frase), <b>just</b> (acabou de), <b>recently</b>, <b>so far</b>.</p>
+<p>Advérbios típicos: <b>ever</b> (alguma vez, em perguntas), <b>never</b>, <b>already</b> (já; em afirmativas e também em perguntas, quando indica surpresa: Have you already finished?), <b>yet</b> (já, em perguntas; ainda, em negativas, no fim da frase), <b>just</b> (acabou de), <b>recently</b>, <b>so far</b>.</p>
 <ul>
 <li><i>Have you <b>ever</b> been to Recife?</i></li>
 <li><i>I have <b>already</b> finished. / I haven't finished <b>yet</b>. / Have you finished <b>yet</b>?</i></li>
@@ -135,11 +135,11 @@ EEAR.add({
     ['The past participle of "go", "be" and "take" is', ['went, was, took', 'gone, been, taken', 'goed, been, took', 'gone, being, taken'], 1, 'Go – went – gone; be – was/were – been; take – took – taken.']
   ],
   fc: [
-    ['Present perfect: estrutura', 'Have/has + past participle.'],
-    ['for x since', 'For: duração (for 2 years). Since: ponto de início (since 2020).'],
-    ['already x yet', 'Already: afirmativas. Yet: perguntas e negativas (no fim).'],
+    ['Corrija: "She has fly that aircraft many times" e "They has finished the inspection."', 'She has flown (have/has + past participle: fly – flew – flown). They have finished (they pede have).', 2],
+    ['Complete com for ou since: "The base has been closed ___ Monday" e "The base has been closed ___ three days."', 'Since Monday (ponto de início) e for three days (duração).', 2],
+    ['Compare: "Have you finished <b>yet</b>?" e "Have you <b>already</b> finished?" O que a segunda sugere?', 'Surpresa ou expectativa de que a ação aconteceu cedo. Already aparece em afirmativas e também em perguntas; yet é a pergunta neutra e, em negativas, significa ainda.', 2],
     ['just + present perfect', 'Acabou de: The plane has just landed.'],
-    ['Present perfect x simple past', 'Tempo definido (yesterday, ago): simple past.'],
+    ['Qual frase está incorreta?<br>a) "I have visited the museum last Sunday."<br>b) "She has lived here since 2020."', 'a) Com tempo passado definido (last Sunday), usa-se o simple past: I visited the museum last Sunday.<br>b) Correta: ação que começou no passado e continua.', 2],
   ]
 });
 
@@ -182,10 +182,10 @@ EEAR.add({
     ['"I ___ the captain at 3 p.m. tomorrow. It is already in my calendar."', ['meets', 'am meeting', 'met', 'have met'], 1, 'Compromisso já marcado para o futuro: present continuous.']
   ],
   fc: [
-    ['will: usos', 'Previsões de opinião, decisões na hora, promessas e ofertas.'],
-    ['going to: usos', 'Planos decididos e previsões com evidência.'],
-    ['Futuro com present continuous', 'Compromissos marcados.'],
-    ['Depois de when / as soon as (futuro)', 'Presente: when I arrive.'],
+    ['Que uso de will há em cada frase?<br>a) "The phone is ringing. I\'ll get it."<br>b) "I think it will rain later."<br>c) "I\'ll help you with the bags."', 'a) Decisão tomada na hora.<br>b) Previsão baseada em opinião.<br>c) Oferta.', 2],
+    ['Complete com will ou going to: "Look at that smoke! The engine ___ fail." e "I\'ve already bought the ticket: I ___ visit my parents."', 'Is going to fail (previsão com evidência visível) e am going to visit (plano já decidido).', 2],
+    ['Para um compromisso já marcado na agenda, o que soa mais natural: "I will meet the major at 10 tomorrow" ou "I\'m meeting the major at 10 tomorrow"?', 'I\'m meeting…: o present continuous é o mais natural para compromissos combinados. Will não está errado, mas soa mais como decisão ou previsão.', 2],
+    ['Corrija: "I will call you when the plane will land."', 'I will call you when the plane lands. Depois de when, as soon as, before e until, com sentido de futuro, usa-se o presente.', 2],
     ['won\'t', 'Will not.']
   ]
 });
@@ -198,7 +198,7 @@ EEAR.add({
 <tr><td>can</td><td>habilidade, permissão informal, possibilidade</td><td>I can swim. Can I go?</td></tr>
 <tr><td>could</td><td>habilidade no passado, pedido educado, possibilidade</td><td>I could run fast as a child. Could you help me?</td></tr>
 <tr><td>may</td><td>permissão formal, possibilidade</td><td>May I come in? It may rain.</td></tr>
-<tr><td>might</td><td>possibilidade remota</td><td>He might be late.</td></tr>
+<tr><td>might</td><td>possibilidade, muitas vezes com um pouco menos de certeza que may (a diferença é pequena e depende do contexto)</td><td>He might be late.</td></tr>
 <tr><td>must</td><td>obrigação (interna, regra), dedução forte</td><td>You must wear a seatbelt. He must be tired.</td></tr>
 <tr><td>mustn't</td><td>proibição</td><td>You mustn't smoke here.</td></tr>
 <tr><td>should / ought to</td><td>conselho, recomendação</td><td>You should sleep more. You ought to rest.</td></tr>
@@ -229,11 +229,11 @@ EEAR.add({
     ['"He ___ come to the party. I\'m not sure." (weak possibility)', ['must', 'might', 'has to', 'should'], 1, 'Possibilidade incerta: might.']
   ],
   fc: [
-    ['mustn\'t x don\'t have to', 'Mustn\'t: proibido. Don\'t have to: não é obrigatório.'],
-    ['Regras dos modais', 'Verbo base sem "to", sem -s na 3ª pessoa, negativa e pergunta sem auxiliar.'],
-    ['must (dedução)', 'Dedução forte: He must be tired.'],
-    ['could', 'Habilidade no passado ou pedido educado.'],
-    ['may x might', 'May: permissão formal ou possibilidade. Might: possibilidade remota.'],
-    ['be able to', 'Habilidade em outros tempos: will be able to.']
+    ['Aviso no hangar: "Visitors <b>mustn\'t</b> enter without a badge. Pilots <b>don\'t have to</b> wear a helmet here." O que é proibido e o que é opcional?', 'Proibido: visitantes entrarem sem crachá (mustn\'t = proibição). Opcional: pilotos usarem capacete (don\'t have to = não é obrigatório, mas é permitido).', 2],
+    ['Corrija: "He shoulds to rest more" e "Does he must wear a helmet?"', 'He should rest more (sem -s e sem to). Must he wear a helmet? ou Does he have to wear a helmet? Modais fazem a pergunta sem do/does.', 2],
+    ['Em "He flew for ten hours today. He <b>must</b> be exhausted", must indica obrigação ou dedução?', 'Dedução forte a partir de evidência (dez horas de voo): com certeza ele está exausto. Não é obrigação.', 2],
+    ['Que sentido tem could em cada frase?<br>a) "Could you open the window, please?"<br>b) "When I was ten, I could swim very well."', 'a) Pedido educado.<br>b) Habilidade no passado.', 2],
+    ['Em "The flight <b>may</b> be delayed" e "The flight <b>might</b> be delayed", há diferença de sentido?', 'Pouca: as duas indicam possibilidade, e os próprios falantes nativos divergem sobre qual é mais provável. Might muitas vezes soa um pouco menos certo, conforme o contexto. Para permissão formal, use may: May I come in?', 2],
+    ['Complete: "After the course, you ___ (can) fly at night." Por que não "will can"?', 'You will be able to fly at night. Can não tem forma de futuro; em outros tempos usa-se be able to.', 2]
   ]
 });
