@@ -348,7 +348,11 @@ async function testarNavegador(E) {
     const saida2 = fs.mkdtempSync(path.join(os.tmpdir(), 'eear-site-v2-'));
     fs.cpSync(saida, saida2, { recursive: true });
     fs.appendFileSync(path.join(saida2, 'dados', 'por1.js'), "\nEEAR.modulos.find(m => m.id === 'POR02').fc.forEach(c => { c[2] = 2; });\n");
-    const srv2 = await servir(saida2), por02 = E.modulos.find(m => m.id === 'POR02').fc;
+    /* Outra cópia sem nenhuma versão nos cartões, como o site antes da reformulação. */
+    const saida0 = fs.mkdtempSync(path.join(os.tmpdir(), 'eear-site-v1-'));
+    fs.cpSync(saida, saida0, { recursive: true });
+    for (const f of fs.readdirSync(path.join(saida0, 'dados')).filter(f => /^(por|mat|fis|ing)\d\.js$/.test(f))) fs.appendFileSync(path.join(saida0, 'dados', f), '\nEEAR.modulos.forEach(m => (m.fc || []).forEach(c => { c.length = 2; }));\n');
+    const srv2 = await servir(saida2), srv0 = await servir(saida0), por02 = E.modulos.find(m => m.id === 'POR02').fc;
     const desvio = id => { let x = 2166136261; for (let i = 0; i < id.length; i++) { x ^= id.charCodeAt(i); x = Math.imul(x, 16777619) >>> 0; } return x % 7; };
     const ids2 = por02.map((_, i) => 'POR02~' + i), DIA = 864e5;
     /* Dia local (como o app calcula) de um instante num fuso. */
@@ -381,8 +385,8 @@ async function testarNavegador(E) {
       const st0 = Object.assign(base({}), { mod: { POR02: { lido: dstr(D - 20), tent: 1, best: 0.9, ok: dstr(D - 20) } }, fc, erros: {}, sims: [] });
       st0.cfg.prova = '2027-05-30';
       const antes = JSON.stringify(st0), ate = k => ids2.filter(id => desvio(id) <= k).length;
-      // a versão publicada (sem versões nos cartões) não devolve nenhum desses cartões
-      let r = await abrirEm(srv.url, st0, T0, tz);
+      // sem versões nos cartões (como antes da reformulação), nenhum desses cartões volta
+      let r = await abrirEm(srv0.url, st0, T0, tz);
       ok(await r.vencidos() === 0, `${tz}: sem versão nos dados, nenhum cartão dominado volta antes da hora`);
       await r.ctx.close();
       // com a versão 2: abrir não grava nada e devolve só os cartões de desvio 0; a âncora flutua até o aluno estudar
@@ -453,7 +457,41 @@ async function testarNavegador(E) {
       ok(!Object.keys(z.fc).length && !z.cfg.fcv && !z.cfg.fcAncora && !r.erros.length, 'zerar progresso apaga cartões, versões vistas e âncoras');
       await r.ctx.close();
     }
-    srv2.fechar(); fs.rmSync(saida2, { recursive: true, force: true });
+    { // dados reais: progresso antigo com todos os cartões de Português dominados, aberto no site com as reformulações
+      const tz = 'America/Sao_Paulo', T0 = Date.UTC(2026, 11, 1, 15), D = diaLocal(T0, tz);
+      const POR = E.modulos.filter(m => m.m === 'por'), todos = [], versao = {};
+      POR.forEach(m => m.fc.forEach((c, i) => { const id = m.id + '~' + i; todos.push(id); versao[id] = Number.isInteger(c[2]) && c[2] > 1 ? c[2] : 1; }));
+      const novos = todos.filter(id => versao[id] > 1), iguais = todos.filter(id => versao[id] === 1);
+      const frentes = {}; POR.forEach(m => m.fc.forEach((c, i) => { frentes[c[0].replace(/<br>/g, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()] = m.id + '~' + i; }));
+      const fc = {}; todos.forEach(id => { fc[id] = [6, D + 50]; });
+      const mod = {}; POR.forEach(m => { mod[m.id] = { lido: dstr(D - 30), tent: 1, best: 0.9, ok: dstr(D - 30) }; });
+      const st0 = Object.assign(base({}), { mod, fc, erros: {}, sims: [] }); st0.cfg.prova = '2027-05-30';
+      const antes = JSON.stringify(st0), ate = k => novos.filter(id => desvio(id) <= k).length;
+      const revisarTudo = async p => { // revisa pela tela a fila do dia e devolve os ids revisados
+        const feitos = []; await p.click('[data-a="tab"][data-v="hoje"]'); await p.waitForTimeout(80);
+        if (!(await p.locator('[data-a="fcini"]').first().isEnabled())) return feitos;
+        await p.locator('[data-a="fcini"]').first().click(); await p.waitForTimeout(100);
+        while (await p.locator('[data-a="fcvirar"]').count()) {
+          feitos.push(frentes[(await p.locator('.fc > div').first().innerText()).replace(/\s+/g, ' ').trim()]);
+          await p.click('[data-a="fcvirar"]'); await p.waitForTimeout(30); await p.click('[data-a="fcaval"][data-ok="1"]'); await p.waitForTimeout(40);
+        }
+        return feitos;
+      };
+      ok(POR.reduce((s, m) => s + m.fc.length, 0) === 117 && novos.length === 100 && iguais.length === 17 && novos.every(id => versao[id] === 2), `Português: 117 cartões, 100 na versão 2 e 17 sem versão (${novos.length}/${iguais.length})`);
+      let r = await abrirEm(srv.url, st0, T0, tz);
+      ok(await r.guardado() === antes && await r.vencidos() === ate(0), `Português: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (${ate(0)} de 100)`);
+      const dia0 = await revisarTudo(r.p); let st = JSON.parse(await r.guardado()); const salvo = await r.guardado(); await r.ctx.close();
+      ok(dia0.length === ate(0) && dia0.every(id => versao[id] === 2 && st.fc[id][0] === 3 && st.fc[id][1] === D + 7), 'Português: no 1º dia só voltam cartões reformulados, e o acerto os agenda para 7 dias');
+      ok(iguais.every(id => JSON.stringify(st.fc[id]) === JSON.stringify([6, D + 50]) && !(st.cfg.fcv || {})[id]) && JSON.stringify(st.mod) === JSON.stringify(st0.mod), 'Português: os 17 cartões mantidos e o registro das aulas ficam intactos');
+      const porDia = [], vistos = new Set(dia0);
+      for (let k = 1; k <= 6; k++) { r = await abrirEm(srv.url, salvo, T0 + k * DIA, tz); porDia.push(await r.vencidos()); await r.ctx.close(); }
+      const esperado = [1, 2, 3, 4, 5, 6].map(k => novos.filter(id => !vistos.has(id) && desvio(id) <= k).length);
+      ok(JSON.stringify(porDia) === JSON.stringify(esperado) && porDia[5] === 100 - dia0.length, `Português: os outros reformulados voltam distribuídos até o 6º dia (${porDia.join(', ')})`);
+      r = await abrirEm(srv.url, salvo, T0 + 6 * DIA, tz); const resto = await revisarTudo(r.p); const fim = await r.guardado(); st = JSON.parse(fim); await r.ctx.close();
+      r = await abrirEm(srv.url, fim, T0 + 7 * DIA, tz); const v7 = await r.vencidos(); await r.ctx.close();
+      ok(resto.length === 100 - dia0.length && resto.every(id => versao[id] === 2) && novos.every(id => JSON.stringify(st.cfg.fcv[id]) === JSON.stringify([2, st.fc[id][1]])) && v7 === dia0.length && !r.erros.length, `Português: cada reformulado volta uma única vez; no 7º dia só vencem os ${dia0.length} agendados`);
+    }
+    srv2.fechar(); srv0.fechar(); fs.rmSync(saida2, { recursive: true, force: true }); fs.rmSync(saida0, { recursive: true, force: true });
   }
 
   await b.close(); srv.fechar();

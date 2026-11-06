@@ -58,14 +58,14 @@ EEAR.add({
     ['Numa questão de interpretação, uma alternativa traz uma informação verdadeira no mundo real, mas que o texto não menciona. Essa alternativa deve ser considerada', ['correta, pois a informação é verdadeira.', 'incorreta, pois extrapola o texto.', 'correta, se tiver a palavra "sempre".', 'correta, se for a mais longa.'], 1, 'A resposta precisa estar apoiada no texto. Informação externa, mesmo verdadeira, é extrapolação.']
   ],
   fc: [
-    ['Diferença entre pressuposto e subentendido', 'Pressuposto: garantido por palavras do texto ("deixou de"). Subentendido: insinuação que depende do contexto ("Está frio aqui").'],
-    ['Texto com verbos no imperativo que orienta ações', 'Tipo injuntivo (instrucional): receitas, manuais, regras.'],
-    ['O que é coesão referencial?', 'Retomar ou antecipar termos com pronomes, sinônimos ou elipse.'],
-    ['Conectivos de conclusão', 'Logo, portanto, por isso, assim, então, por conseguinte.'],
-    ['Conectivos de concessão', 'Embora, ainda que, mesmo que, apesar de, conquanto, posto que.'],
-    ['Denotação x conotação', 'Denotação: sentido literal. Conotação: sentido figurado.'],
-    ['Três armadilhas das alternativas de interpretação', 'Extrapolar (dizer mais), reduzir (só um detalhe) e contradizer o texto.'],
-    ['Palavras que acendem alerta nas alternativas', 'Sempre, nunca, todos, apenas, somente, jamais.']
+    ['Em "O cabo <b>voltou a</b> chegar atrasado", o que está pressuposto? E o que pode estar subentendido se o sargento comenta "Já são oito horas, cabo"?', 'Pressuposto: ele já havia se atrasado antes (garantido por "voltou a"). Subentendido: uma cobrança pelo atraso, que depende do contexto e pode ser negada.', 2],
+    ['"Desligue o motor, retire a chave e mantenha o freio acionado." Qual é o tipo textual predominante e que marca linguística o denuncia?', 'Injuntivo (instrucional): orienta uma ação, com verbos no imperativo (desligue, retire, mantenha).', 2],
+    ['"A Aeronáutica abriu um concurso. A <b>instituição</b> oferece vagas em várias especialidades, e <b>elas</b> serão preenchidas por classificação." O que retomam os termos destacados?', '"A instituição" retoma "a Aeronáutica" (palavra de sentido equivalente); "elas" retoma "vagas" (pronome). Os dois são casos de coesão referencial.', 2],
+    ['Complete com um conectivo de <b>conclusão</b>: "O radar indicou tempestade na rota; ___, o voo foi cancelado." Por que "porém" mudaria o sentido?', 'Portanto (ou logo, por isso, por conseguinte). "Porém" é adversativo: apresentaria o cancelamento como oposição à tempestade, o que não faz sentido.', 2],
+    ['Reescreva com um conectivo <b>concessivo</b>, sem mudar o sentido: "Chovia muito, mas a formatura aconteceu no pátio."', 'Embora chovesse muito, a formatura aconteceu no pátio (ou: ainda que chovesse; apesar de chover). A concessão apresenta um fato contrário que não impede o principal.', 2],
+    ['Compare: "Quebrou <b>o gelo</b> do congelador com uma faca" e "Contou uma piada para <b>quebrar o gelo</b> na reunião." Em qual o sentido é conotativo?', 'Na segunda: "quebrar o gelo" é sentido figurado (desfazer o constrangimento). Na primeira, o sentido é literal (denotativo).', 2],
+    ['Texto: "O sono, a alimentação e o treino influenciam o desempenho do atleta." Que armadilha há em cada alternativa?<br>a) "Só o sono influencia o desempenho."<br>b) "O treino não influencia o desempenho."', 'a) Redução: toma um só fator como se fosse o único.<br>b) Contradição: nega o que o texto afirma. A terceira armadilha é a extrapolação: dizer mais do que o texto diz.', 2],
+    ['Texto: "Alguns candidatos chegaram atrasados por causa do trânsito." Por que descartar a alternativa "Todos os candidatos se atrasaram por causa do trânsito"?', '"Todos" generaliza o que o texto limita a "alguns": é extrapolação. Desconfie de sempre, nunca, todos, apenas, somente e jamais.', 2]
   ]
 });
 
@@ -118,13 +118,13 @@ EEAR.add({
     ['A palavra "psicologia" se divide em', ['p-si-co-lo-gi-a', 'psi-co-lo-gi-a', 'ps-i-co-lo-gi-a', 'psi-co-lo-gia'], 1, 'O encontro inicial ps fica na mesma sílaba: psi-co-lo-gi-a (o "ia" final é hiato).']
   ],
   fc: [
-    ['Dígrafos que se separam na divisão silábica', 'rr, ss, sc, sç, xc, xs (car-ro, nas-cer, ex-ce-ção).'],
-    ['Diferença entre ditongo e hiato', 'Ditongo: vogal + semivogal na mesma sílaba (pai). Hiato: vogais em sílabas diferentes (sa-ú-de).'],
-    ['Tritongo: estrutura e exemplo', 'Semivogal + vogal + semivogal na mesma sílaba: Paraguai, saguão.'],
-    ['Quando gu e qu são dígrafos?', 'Quando o u não é pronunciado: guerra, queijo. Em água e quando não são.'],
+    ['Separe as sílabas de "assessor", "descer" e "excesso". Que dígrafos ficam em sílabas diferentes?', 'As-ses-sor, des-cer, ex-ces-so. Os dígrafos ss, sc e xc se separam na divisão silábica (assim como rr, sç e xs).', 2],
+    ['Compare "pais" e "país": em qual há ditongo e em qual há hiato? Justifique pela divisão silábica.', 'Pais: ditongo (uma sílaba, vogal a + semivogal i). País: hiato (pa-ís): o i tônico fica sozinho na sílaba, por isso leva acento.', 2],
+    ['Em qual destas palavras há tritongo: iguais, viúva, caixa ou poema?', 'Iguais (i-guais): semivogal u + vogal a + semivogal i na mesma sílaba. Viúva e poema têm hiato; caixa tem ditongo (cai-xa).', 2],
+    ['Em quais palavras "gu" ou "qu" formam dígrafo: guerreiro, pinguim, quilo, quase?', 'Guerreiro e quilo: o u não soa, e as duas letras valem um só fonema (dígrafo). Em pinguim e quase o u é pronunciado: não há dígrafo.', 2],
     ['Letras x fonemas em "táxi"', '4 letras, 5 fonemas (x = /ks/).'],
-    ['Dígrafos vocálicos', 'am, an, em, en, im, in, om, on, um, un (vogal nasal).'],
-    ['Oxítona, paroxítona, proparoxítona', 'Tônica na última, na penúltima e na antepenúltima sílaba.']
+    ['Quantas letras e quantos fonemas há em "campo"? O que explica a diferença?', '5 letras e 4 fonemas (/k/ /ã/ /p/ /o/). "Am" é dígrafo vocálico: o m apenas indica que a vogal é nasal.', 2],
+    ['Na pronúncia-padrão, classifique pela sílaba tônica: "rubrica", "ruim" e "recorde".', 'Ru-BRI-ca: paroxítona. Ru-IM: oxítona. Re-COR-de: paroxítona. São palavras em que a fala cotidiana costuma deslocar a tônica.', 2]
   ]
 });
 
@@ -191,14 +191,14 @@ EEAR.add({
     ['Assinale a frase correta quanto ao uso de "onde/aonde".', ['Aonde você mora?', 'Onde você vai amanhã?', 'Aonde você vai amanhã?', 'Onde você foi ontem?'], 2, '"Aonde" acompanha verbos de movimento com a preposição a (ir a algum lugar). "Onde" indica lugar em que algo está: "Onde você mora?".']
   ],
   fc: [
-    ['Paroxítonas: terminações que levam acento', 'l, n, r, x, ps, ã(s), ão(s), i(s), u(s), um, uns, on(s), ei(s), ditongo oral.'],
-    ['Oxítonas: terminações que levam acento', 'a(s), e(s), o(s), em, ens.'],
-    ['Ideia, heroico, assembleia: por que sem acento?', 'Paroxítonas com ditongo aberto ei/oi perderam o acento no Acordo.'],
-    ['Acentos diferenciais que permanecem', 'pôr (verbo), pôde (passado), têm/vêm (plural) e derivados (mantêm).'],
-    ['Por que, por quê, porque, porquê', 'Pergunta ou "pelo qual" / fim de frase / explicação / substantivo.'],
+    ['Qual destas paroxítonas está acentuada <b>indevidamente</b>: tórax, órgão, hífens, ímã, álbum?', 'Hífens. Paroxítona terminada em -ens não leva acento: hifens (hífen, em -n, leva). Tórax (x), órgão (ão), ímã (ã) e álbum (um) estão corretas.', 2],
+    ['Por que "café" e "parabéns" têm acento, mas "caju" e "jardim" não?', 'Todas são oxítonas. Acentuam-se as terminadas em a(s), e(s), o(s), em, ens: café, parabéns. Caju e jardim terminam em u e im, que não pedem acento nas oxítonas (salvo hiato, como em baú).', 2],
+    ['Por que "herói" mantém o acento e "heroico" não?', 'Herói é oxítona com ditongo aberto "ói": continua acentuada. Heroico é paroxítona, e o Acordo eliminou o acento dos ditongos abertos ei/oi nas paroxítonas (como ideia e jiboia).', 2],
+    ['Complete com ou sem acento: "Ele não ___ (pode/pôde) vir ontem" e "Os cadetes ___ (vem/vêm) da base amanhã."', 'Pôde (pretérito; pode é presente) e vêm (plural; vem é singular). São acentos diferenciais que continuam no Acordo.', 2],
+    ['Complete com por que, por quê, porque ou porquê: "___ o voo atrasou? Ninguém explicou o ___. Atrasou ___ choveu. Você não sabe ___?"', 'Por que (pergunta) · porquê (substantivo, com artigo) · porque (causa) · por quê (fim de frase, antes da pontuação).', 2],
     ['Mau x mal', 'Mau = oposto de bom (adjetivo). Mal = oposto de bem (advérbio) ou substantivo.'],
     ['Há x a (tempo)', 'Há = passado (faz). A = futuro (daqui a) ou distância.'],
-    ['Hífen: micro-ondas x autoescola', 'Vogais iguais: hífen. Vogais diferentes: junto.']
+    ['Corrija o que for preciso: "anti-inflamatório", "auto-estima", "contra-senso", "super-homem".', 'Anti-inflamatório e super-homem estão certos (vogais iguais; palavra com h). Corrigem-se: autoestima (vogais diferentes, junto) e contrassenso (vogal + s: junta e dobra).', 2]
   ]
 });
 
@@ -253,13 +253,13 @@ EEAR.add({
     ['Em "cafeteira", o "t" é', ['parte do radical.', 'consoante de ligação.', 'desinência de gênero.', 'prefixo.'], 1, 'Café + t + eira: o t é consoante de ligação, usada para facilitar a pronúncia.']
   ],
   fc: [
-    ['Derivação parassintética', 'Prefixo e sufixo ao mesmo tempo, sem forma intermediária: entardecer, emudecer, amanhecer.'],
-    ['Derivação regressiva', 'Substantivo vindo de verbo com redução: ataque, pesca, choro, venda.'],
-    ['Derivação imprópria', 'Mudança de classe sem mudar a forma: o jantar, um não, o belo.'],
-    ['Justaposição x aglutinação', 'Justaposição: radicais inteiros (girassol). Aglutinação: há perda (planalto, embora).'],
-    ['Hibridismo', 'Elementos de línguas diferentes: automóvel, sociologia, televisão.'],
-    ['Vogal temática dos verbos', 'a (1ª conj.), e (2ª), i (3ª): cantar, vender, partir.'],
-    ['Desinências verbais', 'Modo-temporal (-va-, -ra-, -sse-) e número-pessoal (-mos, -is, -m).']
+    ['Qual destas palavras é formada por <b>parassíntese</b>: desigualdade, felizmente, entristecer ou reler?', 'Entristecer: nem "entriste" nem "tristecer" existem. Desigualdade é prefixal e sufixal (existem desigual e igualdade); felizmente é sufixal; reler é prefixal.', 2],
+    ['Em "A <b>busca</b> pelos sobreviventes durou dois dias", de que palavra vem "busca" e por qual processo?', 'Do verbo buscar, por derivação regressiva: o substantivo surge com redução da forma verbal (como ataque, pesca, venda).', 2],
+    ['Em "O <b>não</b> do comandante encerrou a discussão", qual é a classe de "não" e que processo explica isso?', 'Substantivo (vem com o artigo "o"). Derivação imprópria: a palavra muda de classe sem mudar de forma.', 2],
+    ['Classifique a composição de "beija-flor" e de "boquiaberto" e justifique.', 'Beija-flor: justaposição (os radicais ficam inteiros). Boquiaberto: aglutinação (boca + aberto, com alteração na forma de um dos elementos).', 2],
+    ['Por que "televisão" e "burocracia" são exemplos de hibridismo?', 'Juntam elementos de línguas diferentes: tele (grego) + visão (latim); bureau (francês) + cracia (grego).', 2],
+    ['Identifique a vogal temática e a conjugação de "falávamos", "escrevemos" e "dividimos".', 'Fal-a-va-mos: a (1ª). Escrev-e-mos: e (2ª). Divid-i-mos: i (3ª). A vogal temática liga o radical às desinências.', 2],
+    ['Separe e nomeie os elementos de "estudássemos".', 'Estud (radical) + a (vogal temática, 1ª conjugação) + sse (desinência modo-temporal: imperfeito do subjuntivo) + mos (desinência número-pessoal: 1ª pessoa do plural).', 2]
   ]
 });
 
@@ -318,12 +318,12 @@ EEAR.add({
     ['O plural de "surdo-mudo" é', ['surdo-mudos', 'surdos-mudos', 'surdos-mudo', 'surdo-mudo'], 1, 'Surdo-mudo é exceção à regra dos adjetivos compostos: os dois elementos variam.']
   ],
   fc: [
-    ['Sobrecomum x comum de dois gêneros', 'Sobrecomum: uma forma e um artigo (a criança). Comum de dois: o artigo muda (o/a estudante).'],
-    ['Plural de compostos com verbo', 'O verbo não varia: guarda-chuvas, beija-flores, para-raios.'],
-    ['Plural de compostos com preposição', 'Varia só o primeiro: pés de moleque, mulas sem cabeça.'],
-    ['Plural de adjetivo composto', 'Só o último varia (verde-claras). Exceções: surdos-mudos; azul-marinho invariável.'],
+    ['Classifique quanto ao gênero: cônjuge, colega e testemunha.', 'Cônjuge e testemunha: sobrecomuns (uma forma e um artigo para os dois sexos: o cônjuge, a testemunha). Colega: comum de dois gêneros (o/a colega).', 2],
+    ['Dê o plural de "porta-voz", "arranha-céu" e "bate-boca".', 'Porta-vozes, arranha-céus, bate-bocas: o primeiro elemento é verbo e não varia; o substantivo vai ao plural.', 2],
+    ['Qual é o plural de "pão de ló" e de "dor de cabeça"? Que regra se aplica?', 'Pães de ló e dores de cabeça: em composto ligado por preposição, só o primeiro elemento varia.', 2],
+    ['Complete com o plural adequado: "uniformes ___ (azul-marinho)", "olhos ___ (castanho-escuro)" e "camisas ___ (verde-limão)".', 'Azul-marinho (invariável), castanho-escuros (só o último elemento varia) e verde-limão (cor + substantivo não varia).', 2],
     ['Superlativos eruditos: pobre, célebre, magro', 'Paupérrimo, celebérrimo, macérrimo.'],
-    ['Numerais: até que número se lê ordinal?', 'Até dez: Pio X = décimo; século XXI = vinte e um.'],
+    ['Como se leem "capítulo IX", "século XVIII" e "Dom Pedro II"?', 'Capítulo nono, século dezoito, Dom Pedro segundo. Com o numeral depois do substantivo, lê-se ordinal até o décimo e cardinal a partir daí.', 2],
     ['De chuva, de fogo, de prata', 'Pluvial, ígneo, argênteo.'],
     ['O capital x a capital', 'O capital: dinheiro. A capital: cidade.']
   ]
