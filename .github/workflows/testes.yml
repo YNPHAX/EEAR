@@ -1,0 +1,33 @@
+# Roda os testes da plataforma (dados do curso e comportamento no navegador) a cada push.
+# Só lê o repositório e não publica nada.
+name: Testes
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: testes-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  plataforma:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # O Playwright fica fora da pasta do repositório, com versão fixa, para não entrar no build nem na verificação.
+      - name: Instalar o Playwright e o Chromium
+        run: |
+          npm install --prefix "$RUNNER_TEMP/pw" --no-save --no-audit --no-fund playwright@1.63.0
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Testes da plataforma
+        run: NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/plataforma.test.js

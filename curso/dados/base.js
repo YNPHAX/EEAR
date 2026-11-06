@@ -3,6 +3,10 @@
    id, m (matéria), n (ordem), t (título), peso (incidência estimada 1–3), h (horas ideais),
    teoria (HTML), ex (exemplos resolvidos [enunciado, resolução]), q (questões
    [enunciado, [A, B, C, D], índice da correta, comentário]) e fc (flashcards [frente, verso]).
+   Opcionais: modalidades (['normal'] ou ['bct'], quando a aula vale só para uma opção de Inglês do edital) e desde
+   ('aaaa-mm', quando a aula entrou depois do registro de certificados). Toda aula nova precisa de desde: um certificado
+   conquistado antes dela continua valendo, mas um progresso antigo nunca ganha certificado sem ela. Aulas novas e
+   questões novas entram sempre no fim das listas, porque o progresso guarda a posição de cada questão e cartão.
 
    Provas anteriores oficiais entram com EEAR.addProva({...}):
    id, nome ("CFS 1/2025"), data (aaaa-mm-dd), min (duração em minutos), fonte (URL do PDF),

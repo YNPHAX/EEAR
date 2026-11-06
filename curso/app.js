@@ -96,6 +96,8 @@
   const sig = s => `<span class="sigla c-${s}">${MATS[s].sigla}</span>`;
   const bolinhas = p => '●'.repeat(p) + '○'.repeat(3 - p);
   const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
+  /* Acertos para dominar a aula: o menor número que chega a 80% das questões do quiz dela (nem toda aula tem 10). */
+  function metaQuiz(m) { const n = m && m.q ? m.q.length : 10; let k = 0; while (k < n && k / n < META) k++; return `meta de ${k} acertos em ${n}`; }
   function amostraPeso(ids, n) {
     return ids.filter(id => Q[id] && Q[id].mod && moduloAtivo(MOD[Q[id].mod]))
       .map(id => ({ id, k: Math.pow(Math.random(), 1 / (MOD[Q[id].mod].peso || 1)) }))
@@ -124,7 +126,7 @@
   function novoEstado() {
     return {
       v: 1, t: 0,
-      cfg: { modalidade: 'normal', alvo: 'cfs2-2027', prova: '2026-11-22', inicio: hoje(), horas: 3, dias: [0, 1, 2, 3, 4, 5, 6], simDia: 0, tempoSim: 240, excl: [] },
+      cfg: { modalidade: 'normal', alvo: 'cfs2-2027', prova: '2026-11-22', inicio: hoje(), horas: 3, dias: [0, 1, 2, 3, 4, 5, 6], simDia: 0, tempoSim: 260, excl: [], cv: 2, certs: [] },
       mod: {}, fc: {}, erros: {}, sims: [], diag: null, feito: {}, act: {}, ativo: null, ult: null, ap: {}, aula: {}, ultAula: null
     };
   }
@@ -137,8 +139,17 @@
       if (o.cfg.prova === '2026-11-22') { b.cfg.alvo = 'cfs2-2027'; b.cfg.prova = '2026-11-22'; }
       else { const p = CAL.find(x => x.d === o.cfg.prova); b.cfg.alvo = p ? p.id : 'outra'; }
     }
+    /* O edital fixa a prova escrita em 4h20. Quem ainda tem o padrão antigo de 4h passa para 4h20; quem escolher 4h depois disso continua com 4h. */
+    if (o && o.cfg && !(o.cfg.cv >= 2) && Number(o.cfg.tempoSim) === 240) b.cfg.tempoSim = 260;
     ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { if (!b[k] || typeof b[k] !== 'object') b[k] = {}; });
     if (!Array.isArray(b.sims)) b.sims = [];
+    /* Certificados (veja "certificados conquistados"): um progresso sem cfg.certs veio de uma versão sem o registro e é
+       conferido uma única vez. Tudo aqui fica só na memória: nada é gravado até o aluno estudar. */
+    const temCerts = !!(o && o.cfg && Object.prototype.hasOwnProperty.call(o.cfg, 'certs'));
+    b.cfg.certs = Array.isArray(b.cfg.certs) ? b.cfg.certs.filter(certValido).map(r => Object.assign({}, r, { ids: r.ids.slice() })) : [];
+    if (b.cfg.certsZ != null && !(Number(b.cfg.certsZ) > 0)) delete b.cfg.certsZ;
+    if (o && !temCerts) b.cfg.certs = migrarCerts(b);
+    registrarCerts(b);
     return b;
   }
   let S = novoEstado();
@@ -148,6 +159,83 @@
     return !modalidades || modalidades.includes((S.cfg && S.cfg.modalidade) || 'normal');
   }
   const modulosAtivos = () => MODS.filter(moduloAtivo);
+
+  /* ---------- certificados conquistados ----------
+     O certificado de uma matéria sai quando todas as aulas dela têm 80% ou mais no quiz. Quando o curso ganha aulas,
+     quem já tinha o certificado não pode perdê-lo, e quem ainda não tinha precisa fazer as aulas novas. Por isso cada
+     certificado conquistado fica registrado em S.cfg.certs com o que valeu naquele momento. O registro fica dentro de
+     cfg porque todas as versões do app, desde a primeira, guardam os campos de cfg que não conhecem (Object.assign em
+     mesclar); um campo novo fora de cfg seria apagado por uma versão antiga (site em cache, APK) ao salvar.
+     Registro: s (matéria ou 'geral'), mod (modalidade, só em 'ing' e 'geral'), ids (aulas que valeram), h (carga
+     horária), d (data de conclusão, aaaa-mm-dd), c (código; null até o aluno informar o nome), o ('anterior': conquistado
+     numa versão sem registro; 'curso': conquistado com registro), t (quando foi registrado, em ms).
+     cfg.certsZ: quando o progresso foi zerado. Na nuvem, um registro anterior a isso só volta se o progresso o comprovar. */
+  const CERTS = ORD.concat('geral'), MODALIDADES = ['normal', 'bct'];
+  const certModal = s => s === 'ing' || s === 'geral';
+  const dataValida = d => typeof d === 'string' && !isNaN(dnum(d));
+  const certAulas = (s, mod) => MODS.filter(m => (s === 'geral' || m.m === s) && (!m.modalidades || m.modalidades.includes(mod)));
+  const certChave = r => [r.s, r.mod || '', r.ids.join()].join('|');
+  function certValido(r) {
+    return !!r && typeof r === 'object' && CERTS.includes(r.s) && Array.isArray(r.ids) && r.ids.length > 0 && r.ids.every(x => typeof x === 'string')
+      && dataValida(r.d) && typeof r.h === 'number' && typeof r.t === 'number' && (r.c == null || typeof r.c === 'string')
+      && (r.mod == null || MODALIDADES.includes(r.mod)) && (r.o === 'anterior' || r.o === 'curso');
+  }
+  /* A data e o código saem como a versão antiga calculava: a data é a última em que uma das aulas chegou a 80%. */
+  function certNovo(st, s, mod, ms, origem) {
+    const d = ms.map(m => (st.mod[m.id] || {}).ok).filter(dataValida).sort().pop() || hoje();
+    return { s, mod: certModal(s) ? mod : null, ids: ms.map(m => m.id), h: Math.round(ms.reduce((a, m) => a + m.h, 0)), d,
+      c: st.cfg.nome ? codigoCert([st.cfg.nome, s, d].join('|')) : null, o: origem, t: Date.now() };
+  }
+  /* Registra os certificados que as aulas atuais liberam, sem repetir, e completa os códigos que ainda faltavam. */
+  function registrarCerts(st) {
+    const mod = st.cfg.modalidade || 'normal';
+    CERTS.forEach(s => {
+      const ms = certAulas(s, mod);
+      if (!ms.length || !ms.every(m => ((st.mod[m.id] || {}).best || 0) >= META)) return;
+      const r = certNovo(st, s, mod, ms, 'curso');
+      if (!st.cfg.certs.some(x => certChave(x) === certChave(r))) st.cfg.certs.push(r);
+    });
+    if (st.cfg.nome) st.cfg.certs.forEach(r => { if (!r.c) r.c = codigoCert([st.cfg.nome, r.s, r.d].join('|')); });
+  }
+  /* Progresso de uma versão sem registro: registra uma única vez os certificados que aquela versão mostrava. Só vale o
+     que o progresso comprova: cada aula que já existia (sem o campo desde) com 80% ou mais e com a data em que chegou a
+     80% (todas as versões gravam essa data junto com a nota, e nunca no futuro). Se o progresso tem qualquer sinal de uma
+     aula que entrou depois (campo desde), ele foi feito numa versão que já exigia essa aula, e o certificado antigo
+     daquela matéria não vale. Notas sem data não bastam. */
+  function rastroDe(st, id) {
+    const re = new RegExp('(^|[^A-Za-z0-9])' + id + '(?![0-9])');
+    const chaves = [].concat(Object.keys(st.mod), Object.keys(st.aula), Object.keys(st.fc), Object.keys(st.erros), Object.keys(st.feito),
+      Array.isArray(st.cfg.excl) ? st.cfg.excl : [], [String(st.ultAula), JSON.stringify([st.diag, st.ativo, st.ult])]);
+    return chaves.some(k => re.test(String(k)));
+  }
+  function migrarCerts(st) {
+    const certs = [], hj = HJ();
+    const comprovada = m => { const r = st.mod[m.id]; return !!r && (r.best || 0) >= META && dataValida(r.ok) && dnum(r.ok) <= hj; };
+    const antigas = (s, mod) => certAulas(s, mod).filter(m => !m.desde);
+    const vale = (s, mod) => { const ms = antigas(s, mod); return ms.length > 0 && ms.every(comprovada) && !certAulas(s, mod).some(m => m.desde && rastroDe(st, m.id)); };
+    ORD.forEach(s => (certModal(s) ? MODALIDADES : ['normal']).forEach(mod => { if (vale(s, mod)) certs.push(certNovo(st, s, mod, antigas(s, mod), 'anterior')); }));
+    MODALIDADES.forEach(mod => { if (ORD.every(s => vale(s, mod))) certs.push(certNovo(st, 'geral', mod, antigas('geral', mod), 'anterior')); });
+    return certs;
+  }
+  /* Une os certificados de dois progressos do mesmo aluno, sem duplicar (o mesmo certificado fica com a data mais
+     antiga e com o código, se só um tiver). Ao colar progresso (st = null), nada se apaga. Na nuvem (st = progresso que
+     ficou), um registro feito antes do último "Zerar progresso" (certsZ) só fica se esse progresso ainda o comprovar.
+     Devolve true se cfg mudou. */
+  function juntarCerts(cfg, outro, st) {
+    const antes = JSON.stringify([cfg.certs, cfg.certsZ || 0]);
+    const z = Math.max(Number(cfg.certsZ) || 0, Number(outro && outro.certsZ) || 0);
+    const provado = r => r.ids.every(id => { const x = st.mod[id]; return !!x && (x.best || 0) >= META && dataValida(x.ok) && x.ok <= r.d; });
+    const fica = {};
+    [].concat(cfg.certs || [], (outro && outro.certs) || []).filter(certValido).forEach(r => {
+      if (st && r.t <= z && !provado(r)) return;
+      const k = certChave(r), a = fica[k];
+      if (!a || r.d < a.d || (r.d === a.d && !a.c && r.c)) fica[k] = Object.assign({}, r, { ids: r.ids.slice() });
+    });
+    cfg.certs = Object.keys(fica).map(k => fica[k]).sort((a, b) => a.t - b.t);
+    if (z) cfg.certsZ = z; else delete cfg.certsZ;
+    return JSON.stringify([cfg.certs, cfg.certsZ || 0]) !== antes;
+  }
+
   try { const t = localStorage.getItem(LS); if (t) { const o = JSON.parse(t); if (o && o.v === 1) S = mesclar(o); } } catch (e) { /* sem armazenamento local */ }
 
   const nuvem = { ref: null, on: false, busy: false, again: false, fb: false };
@@ -180,13 +268,25 @@
       if (snap.exists) {
         const o = snap.data();
         if (o && o.v === 1 && ((o.t || 0) > (S.t || 0) || semEstudo(S))) {
-          const nome = S.cfg.nome;
+          const nome = S.cfg.nome, local = S.cfg;
           S = mesclar(JSON.parse(JSON.stringify(o)));
           if (!S.cfg.nome && nome) S.cfg.nome = nome;
+          /* O progresso da nuvem fica, mas os certificados deste aparelho que ela ainda não tinha também ficam. */
+          const juntou = juntarCerts(S.cfg, local, S);
+          registrarCerts(S);
           try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
           if (V.v === 'inicio') V = { v: 'hoje' };
           render();
-        } else if (((o && o.t) || 0) < (S.t || 0)) gravar();
+          if (juntou) gravar();
+        } else if (((o && o.t) || 0) < (S.t || 0)) {
+          /* O progresso deste aparelho é mais novo e vai para a nuvem levando também os certificados que só ela tinha. */
+          if (o && o.v === 1 && juntarCerts(S.cfg, mesclar(JSON.parse(JSON.stringify(o))).cfg, S)) {
+            registrarCerts(S);
+            try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
+            render();
+          }
+          gravar();
+        }
       } else if (S.t) gravar();
       syncInfo();
     } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
@@ -485,7 +585,7 @@
         } else if (it.r <= 0) {
           fila[s].shift();
           if (ci === 0) {
-            dia.tar.push({ k: 'Q:' + it.id, tipo: 'quiz', mod: it.id, txt: 'Quiz ' + it.id + ': meta de 8 acertos em 10' });
+            dia.tar.push({ k: 'Q:' + it.id, tipo: 'quiz', mod: it.id, txt: 'Quiz ' + it.id + ': ' + metaQuiz(MOD[it.id]) });
             (revs[dia.n + 7] = revs[dia.n + 7] || []).push(it.id);
           } else {
             dia.tar.push({ k: 'Q' + (ci + 1) + ':' + it.id, tipo: 'quiz2', mod: it.id, d: dia.d, txt: 'Refazer o quiz ' + it.id + ' e as questões de provas do tópico' });
@@ -571,7 +671,7 @@
     let sub = '', bt = '';
     switch (t.tipo) {
       case 'teoria': sub = `${sig(m.m)} ${m.id} · ${fh(t.h)}`; bt = `<button class="btn sm" data-a="mod" data-id="${m.id}">Estudar</button>`; break;
-      case 'quiz': sub = `${sig(m.m)} ${m.id} · 10 questões`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}">Fazer</button>`; break;
+      case 'quiz': sub = `${sig(m.m)} ${m.id} · ${plural(m.q.length, 'questão', 'questões')}`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}">Fazer</button>`; break;
       case 'rev': sub = `${sig(m.m)} ${m.id} · flashcards + quiz`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}" data-rev="${t.k}">Revisar</button>`; break;
       case 'quiz2': sub = `${sig(m.m)} ${m.id} · marca sozinha ao fazer o quiz`; bt = `<button class="btn sm" data-a="quizmod" data-id="${m.id}">Fazer</button>`; break;
       case 'marco': sub = 'Prova real ou simulado completo no mesmo horário'; bt = `<button class="btn sm pri" data-a="tab" data-v="simulados">Simulados</button>`; break;
@@ -604,7 +704,7 @@
         <ol class="stack" style="margin:0;padding-left:1.2em">
           <li><b>Confira a data da prova e suas horas por dia</b> na aba Plano. O cronograma se ajusta sozinho.</li>
           <li><b>Faça o diagnóstico</b>: 40 questões, sem cronômetro. O plano dá mais tempo às matérias em que você for pior.</li>
-          <li><b>Siga o briefing do dia</b>: teoria, depois o quiz do módulo. O módulo só conta como dominado com 8 acertos em 10 (80%).</li>
+          <li><b>Siga o briefing do dia</b>: teoria, depois o quiz do módulo. O módulo só conta como dominado com 80% de acerto no quiz (8 em 10 na maioria das aulas).</li>
           <li><b>Revise os flashcards todo dia</b> e faça o simulado semanal em condições de prova.</li>
         </ol>
         <div class="row"><button class="btn pri" data-a="simini" data-tipo="diag">Fazer o diagnóstico</button><button class="btn" data-a="tab" data-v="plano">Ajustar o plano</button></div></section>`;
@@ -629,7 +729,7 @@
       <div class="card"><div class="eyebrow">Caderno de erros</div><div class="row between"><span class="score num">${ne}</span><button class="btn sm" data-a="tab" data-v="treino" ${ne ? '' : 'disabled'}>Refazer</button></div><span class="small muted">${abaixo.length ? plural(abaixo.length, 'módulo abaixo de 80%', 'módulos abaixo de 80%') : 'questões para refazer'}</span></div>
     </section>`;
     h += `<section class="card"><div class="row between"><h2 class="h2">Progresso</h2><span class="small muted">meta: 80% em cada aula</span></div><div class="stack">${blocoMaterias()}</div>${ultimoSimResumo()}<div class="sync" id="sync"></div></section>`;
-    if (ORD.some(s => certOk(aulasDe(s)))) h += cartaoCertificado('geral');
+    if (ORD.some(s => certOk(aulasDe(s))) || S.cfg.certs.length) h += cartaoCertificado('geral');
     return h;
   }
   /* Página de entrada do site: aparece para quem chega pela primeira vez. */
@@ -645,7 +745,7 @@
     h += `<section class="nums">${[[modulosAtivos().length, 'aulas'], [nV, 'videoaulas'], [nQ, 'questões comentadas'], [nOf, 'questões de provas oficiais']].map(x => `<div><b class="num">${x[0]}</b><span>${x[1]}</span></div>`).join('')}</section>`;
     h += `<section class="card"><h2 class="h2">As quatro matérias da prova</h2><div class="stack">${ORD.map(s => `<div class="subj b-${s}">${sig(s)}<span>${MATS[s].nome}</span><span class="small muted num">${aulasDe(s).length} aulas</span></div>`).join('')}</div></section>`;
     h += `<section class="grid2">
-      <div class="card"><div class="eyebrow">Como funciona</div><p style="margin:0">Cada aula tem videoaula, resumo, exemplos resolvidos e um quiz de 10 questões no estilo da EEAR. A aula só conta como concluída com 80% de acerto.</p></div>
+      <div class="card"><div class="eyebrow">Como funciona</div><p style="margin:0">Cada aula tem videoaula, resumo, exemplos resolvidos e um quiz de questões comentadas no estilo da EEAR. A aula só conta como concluída com 80% de acerto.</p></div>
       <div class="card"><div class="eyebrow">Plano até a prova</div><p style="margin:0">Você diz a prova alvo e quantas horas tem por dia. O cronograma se monta sozinho, com revisões e simulados semanais.</p></div>
       <div class="card"><div class="eyebrow">Provas oficiais</div><p style="margin:0">Provas anteriores da EEAR na ordem original, com o gabarito oficial e cronômetro de prova.</p></div>
       <div class="card"><div class="eyebrow">Certificado</div><p style="margin:0">Ao concluir todas as aulas de uma matéria, você recebe o certificado de conclusão dela.</p></div>
@@ -731,7 +831,7 @@
       h += `</div>`;
     }
     h += cartaoConta();
-    h += `<section class="card"><h2 class="h2">Dados</h2><p class="small muted" style="margin:0">Zerar apaga notas, flashcards, simulados e o caderno de erros. A configuração do plano é mantida.</p>
+    h += `<section class="card"><h2 class="h2">Dados</h2><p class="small muted" style="margin:0">Zerar apaga notas, flashcards, simulados, o caderno de erros e os certificados conquistados. A configuração do plano é mantida.</p>
       ${pedindo === 'zerar' ? `<div class="confirm"><p>Apagar todo o progresso? Isso não pode ser desfeito.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="zerarok">Apagar</button></div>` : `<div class="row"><button class="btn" data-a="zerar">Zerar progresso</button></div>`}
       <div class="aphead">Levar o progresso para outro aparelho</div>
       <p class="small muted" style="margin:0">Copie o código do progresso aqui e cole no outro aparelho, em Plano › Dados › Colar progresso. Vale entre o site, o app e o link do curso.</p>
@@ -782,18 +882,32 @@
 
   /* ---------- certificado de conclusão (por matéria e do curso completo) ---------- */
   const certOk = ms => ms.every(m => dominado(m));
-  const concluidoEm = ms => ms.map(m => (S.mod[m.id] || {}).ok).filter(Boolean).sort().pop() || hoje();
   function codigoCert(txt) {
     const fnv = semente => { let x = semente >>> 0; for (let i = 0; i < txt.length; i++) { x ^= txt.charCodeAt(i); x = Math.imul(x, 16777619) >>> 0; } return x; };
     const parte = x => (x % 1679616).toString(36).toUpperCase().padStart(4, '0');
     return parte(fnv(2166136261)) + '-' + parte(fnv(3735928559));
   }
+  /* Certificados registrados de uma matéria (com a posição em S.cfg.certs), do mais recente para o mais antigo. */
+  const certsDe = s => S.cfg.certs.map((r, i) => Object.assign({ i }, r)).filter(r => r.s === s).sort((a, b) => b.d.localeCompare(a.d) || b.ids.length - a.ids.length);
+  const MODAL_NOME = { normal: 'CFS normal', bct: 'CFS BCT' };
+  /* O registro do certificado que as aulas atuais liberam, se elas estiverem todas concluídas. */
+  function certAtual(s) {
+    const ms = s === 'geral' ? modulosAtivos() : aulasDe(s);
+    if (!ms.length || !certOk(ms)) return null;
+    const k = certChave({ s, mod: certModal(s) ? (S.cfg.modalidade || 'normal') : null, ids: ms.map(m => m.id) });
+    if (!S.cfg.certs.some(r => certChave(r) === k)) registrarCerts(S);  // só na memória; vai para o disco no próximo estudo
+    const i = S.cfg.certs.findIndex(r => certChave(r) === k);
+    return i < 0 ? null : Object.assign({ i }, S.cfg.certs[i]);
+  }
   function cartaoCertificado(s) {
     const ms = s === 'geral' ? modulosAtivos() : aulasDe(s), ok = certOk(ms), feitas = ms.filter(dominado).length;
-    const nome = s === 'geral' ? 'do curso completo' : 'de ' + MATS[s].curto;
-    return `<section class="card cert-cta"><div class="row between"><h2 class="h2">Certificado ${nome}</h2><span class="chip ${ok ? 'ok' : ''}">${ok ? 'liberado' : feitas + '/' + ms.length}</span></div>
-      <p class="small" style="margin:0">${ok ? `Você concluiu ${s === 'geral' ? 'todas as aulas das quatro matérias' : 'todas as aulas desta matéria'} com 80% ou mais no quiz.` : `Conclua as ${ms.length} aulas ${s === 'geral' ? 'das quatro matérias ' : ''}com 80% ou mais no quiz para liberar o certificado. Faltam ${ms.length - feitas}.`}</p>
-      ${ok ? `<div class="row"><button class="btn pri" data-a="cert" data-s="${s}">Ver o certificado</button></div>` : ''}</section>`;
+    const nome = s === 'geral' ? 'do curso completo' : 'de ' + MATS[s].curto, atual = ok ? certAtual(s) : null;
+    const regs = certsDe(s), outros = regs.filter(r => !atual || r.i !== atual.i);
+    let h = `<section class="card cert-cta"><div class="row between"><h2 class="h2">Certificado ${nome}</h2><span class="chip ${ok || regs.length ? 'ok' : ''}">${ok ? 'liberado' : regs.length ? 'conquistado' : feitas + '/' + ms.length}</span></div>
+      <p class="small" style="margin:0">${ok ? `Você concluiu ${s === 'geral' ? 'todas as aulas das quatro matérias' : 'todas as aulas desta matéria'} com 80% ou mais no quiz.` : `${regs.length ? 'O certificado que você já conquistou continua valendo e pode ser aberto e impresso abaixo. Para o certificado com as aulas atuais, conclua' : 'Conclua'} as ${ms.length} aulas ${s === 'geral' ? 'das quatro matérias ' : ''}com 80% ou mais no quiz${regs.length ? '' : ' para liberar o certificado'}. Faltam ${ms.length - feitas}.`}</p>
+      ${ok ? `<div class="row"><button class="btn pri" data-a="cert" data-s="${s}">Ver o certificado</button></div>` : ''}`;
+    if (outros.length) h += `<div class="stack">${outros.map(r => `<button class="btn" data-a="cert" data-s="${s}" data-i="${r.i}">Certificado de ${dataLonga(r.d)} · ${plural(r.ids.length, 'aula', 'aulas')}${r.mod ? ' · ' + MODAL_NOME[r.mod] : ''}</button>`).join('')}</div>`;
+    return h + '</section>';
   }
   /* X da INPHAX, em vetor */
   const MARCA_X = '<svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="40" fill="#0C0C0C"/><g fill="#EFEAE0"><path d="M88 82H168L424 430H344Z"/><path d="M344 82H424L338 200H258Z"/><path d="M190 291H270L168 430H88Z"/></g></svg>';
@@ -806,14 +920,20 @@
     return `<section class="card"><h2 class="h2">Sobre e contato</h2><p style="margin:0">Missão EEAR é um curso da INPHAX. Dúvidas, erros em alguma questão ou sugestões: ${linkContato}.</p><p class="small muted" style="margin:0">${linksLegais}. Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira.</p></section>`;
   }
   function vCert() {
-    const s = V.s, geral = s === 'geral', ms = geral ? modulosAtivos() : (MATS[s] ? aulasDe(s) : []);
+    const s = V.s, geral = s === 'geral';
     let h = `<button class="btn ghost back no-print" ${geral ? 'data-a="tab" data-v="hoje"' : `data-a="mat" data-s="${s}"`}>← Voltar</button>`;
-    if (!ms.length || !certOk(ms)) return h + '<p class="empty">Este certificado é liberado quando todas as aulas tiverem 80% ou mais no quiz.</p>';
+    /* Mostra um certificado registrado: o escolhido na lista (V.i), o das aulas atuais ou o mais recente conquistado. */
+    let r = null;
+    if (CERTS.includes(s)) {
+      const x = V.i != null ? S.cfg.certs[V.i] : null;
+      r = x && x.s === s ? x : certAtual(s) || certsDe(s)[0] || null;
+    }
+    if (!r) return h + '<p class="empty">Este certificado é liberado quando todas as aulas tiverem 80% ou mais no quiz.</p>';
     if (!S.cfg.nome || V.editNome) {
       return h + `<section class="card no-print"><h2 class="h2">Seu nome no certificado</h2><div class="field"><label for="cert-nome">Nome completo</label><input id="cert-nome" maxlength="80" value="${esc(S.cfg.nome || '')}" autocomplete="name"></div><div class="row"><button class="btn pri" data-a="certnome">Gerar o certificado</button></div></section>`;
     }
-    const horas = Math.round(ms.reduce((a, m) => a + m.h, 0)), data = concluidoEm(ms);
-    const cod = codigoCert([S.cfg.nome, s, data].join('|'));
+    const ms = r.ids, horas = r.h, data = r.d;
+    const cod = r.c || codigoCert([S.cfg.nome, s, data].join('|'));
     h += `<article class="cert" id="cert"><div class="cert-in">
       <div class="cert-marca">${MARCA_X}${MARCA}</div>
       <div class="cert-por">Missão EEAR</div>
@@ -1095,6 +1215,7 @@
       if (!r.lido) r.lido = hoje();
       r.quando = hoje();
       if (z.origem.rev) S.feito[z.origem.rev] = true;
+      registrarCerts(S);
     }
     marcarAtividade();
     z.fim = true;
@@ -1167,10 +1288,10 @@
   /* ---------- simulados ---------- */
   function iniciarSim(tipo, s) {
     let ids = [], lim = 0;
-    if (tipo === 'completo') { ORD.forEach(x => { ids = ids.concat(shuffle(amostraPeso(QS[x], 24))); }); lim = Number(S.cfg.tempoSim) || 240; }
+    if (tipo === 'completo') { ORD.forEach(x => { ids = ids.concat(shuffle(amostraPeso(QS[x], 24))); }); lim = Number(S.cfg.tempoSim) || 260; }
     else if (tipo === 'materia') { ids = shuffle(amostraPeso(QS[s], 24)); lim = 60; }
     else if (tipo === 'prova') { const p = PROVA[s]; if (!p) return; ids = p.ids.slice(); lim = p.min || 240; }
-    else if (tipo === 'oficial') { ORD.forEach(x => { ids = ids.concat(shuffle(QO[x].slice()).slice(0, 24)); }); lim = Number(S.cfg.tempoSim) || 240; }
+    else if (tipo === 'oficial') { ORD.forEach(x => { ids = ids.concat(shuffle(QO[x].slice()).slice(0, 24)); }); lim = Number(S.cfg.tempoSim) || 260; }
     else { ORD.forEach(x => { ids = ids.concat(amostraDiag(x, 10)); }); lim = 0; }
     S.ativo = { tipo, materia: tipo === 'materia' ? s : null, prova: tipo === 'prova' ? s : null, ids, perms: permutar(ids), resp: {}, marc: {}, ini: Date.now(), lim, i: 0 };
     salvar();
@@ -1184,7 +1305,8 @@
     if (x.tipo === 'completo') return curto ? 'completo' : 'Simulado completo';
     if (x.tipo === 'prova') return (PROVA[x.prova] && PROVA[x.prova].nome) || 'Prova oficial';
     if (x.tipo === 'oficial') return curto ? 'oficial misto' : 'Simulado com questões oficiais';
-    return curto ? MATS[x.mat || x.materia].curto : 'Simulado de ' + MATS[x.mat || x.materia].curto;
+    const mt = MATS[x.mat || x.materia], nm = mt ? mt.curto : 'matéria';  // histórico colado de outra versão pode trazer matéria desconhecida
+    return curto ? nm : 'Simulado de ' + nm;
   }
   function vSim() {
     const a = S.ativo;
@@ -1262,7 +1384,7 @@
     if (S.ativo) h += `<div class="banner acc"><p>Simulado em andamento: ${Object.keys(S.ativo.resp).length} de ${S.ativo.ids.length} respondidas.</p><button class="btn sm pri" data-a="go" data-v="sim">Continuar</button></div>`;
     h += `<section class="grid2">
       <div class="card"><div class="eyebrow">Ponto de partida</div><h2 class="h2">Diagnóstico</h2><p class="small" style="margin:0">40 questões, 10 por matéria, sem cronômetro. Ajusta o peso de cada matéria no plano.</p><button class="btn ${S.diag ? '' : 'pri'}" data-a="simini" data-tipo="diag" ${S.ativo ? 'disabled' : ''}>${S.diag ? 'Refazer diagnóstico' : 'Começar'}</button></div>
-      <div class="card"><div class="eyebrow">Como no dia da prova</div><h2 class="h2">Simulado completo</h2><p class="small" style="margin:0">96 questões, 24 por matéria, em ${fh((Number(S.cfg.tempoSim) || 240) / 60)}. Use folha de rascunho e nada de consulta.</p><button class="btn pri" data-a="simini" data-tipo="completo" ${S.ativo ? 'disabled' : ''}>Começar</button></div>
+      <div class="card"><div class="eyebrow">Como no dia da prova</div><h2 class="h2">Simulado completo</h2><p class="small" style="margin:0">96 questões, 24 por matéria, em ${fh((Number(S.cfg.tempoSim) || 260) / 60)}. Use folha de rascunho e nada de consulta.</p><button class="btn pri" data-a="simini" data-tipo="completo" ${S.ativo ? 'disabled' : ''}>Começar</button></div>
     </section>`;
     const okOf = ORD.every(x => QO[x].length >= 24);
     h += `<section class="card"><div class="eyebrow">100% fiel à prova</div><h2 class="h2">Provas anteriores oficiais</h2>${PROVAS.length
@@ -1361,8 +1483,8 @@
       case 'vext': if (MOD[d.id]) marcarAssistido(d.id); break;
       case 'apligar': S.cfg.apostila = true; salvar(); render(); break;
       case 'comecar': { const n = document.getElementById('ini-nome'); S.cfg.nome = ((n && n.value) || '').trim().slice(0, 80); salvar(); go('hoje'); break; }
-      case 'cert': V.editNome = false; go('cert', { s: d.s }); break;
-      case 'certnome': { const n = document.getElementById('cert-nome'); const v = ((n && n.value) || '').trim().slice(0, 80); if (!v) { if (n) n.focus(); break; } S.cfg.nome = v; V.editNome = false; salvar(); render(); break; }
+      case 'cert': V.editNome = false; go('cert', { s: d.s, i: d.i != null && d.i !== '' ? Number(d.i) : null }); break;
+      case 'certnome': { const n = document.getElementById('cert-nome'); const v = ((n && n.value) || '').trim().slice(0, 80); if (!v) { if (n) n.focus(); break; } S.cfg.nome = v; V.editNome = false; registrarCerts(S); salvar(); render(); break; }
       case 'certnomeedit': V.editNome = true; render(); break;
       case 'imprimir': try { window.print(); } catch (e) { /* sem impressão neste aparelho */ } break;
       case 'compartilhar': {
@@ -1497,11 +1619,17 @@
         let o = null;
         try { o = JSON.parse((t && t.value || '').trim()); } catch (e) { o = null; }
         if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); break; }
-        S = mesclar(o); pedindo = null; msgDados = 'Progresso carregado.'; salvar(); render();
+        /* O progresso colado substitui o deste aparelho, mas os certificados que este aparelho já tinha continuam:
+           eles entram como registrados agora, para um "zerar" antigo do outro aparelho não apagá-los na nuvem. */
+        const local = S.cfg, agora = Date.now();
+        S = mesclar(o);
+        juntarCerts(S.cfg, { certs: local.certs.map(r => Object.assign({}, r, { t: Math.max(r.t, agora) })), certsZ: local.certsZ }, null);
+        registrarCerts(S);
+        pedindo = null; msgDados = 'Progresso carregado.'; salvar(); render();
         break;
       }
       case 'instalar': if (instalar) { const p = instalar; instalar = null; p.prompt(); p.userChoice.then(() => render(), () => render()); } break;
-      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; pedindo = null; salvar(); go('hoje'); break; }
+      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Date.now(); pedindo = null; salvar(); go('hoje'); break; }
       default: break;
     }
   });
@@ -1523,9 +1651,10 @@
     if (g('cfg-inicio').value) c.inicio = g('cfg-inicio').value;
     c.horas = Number(g('cfg-horas').value) || 4;
     c.simDia = Number(g('cfg-sim').value);
-    c.tempoSim = Number(g('cfg-tempo').value) || 240;
+    c.tempoSim = Number(g('cfg-tempo').value) || 260;
     c.dias = [0, 1, 2, 3, 4, 5, 6].filter(x => g('cfg-d' + x).checked);
     if (g('cfg-apostila')) c.apostila = g('cfg-apostila').checked;
+    registrarCerts(S);  // a troca de modalidade pode liberar o certificado de Inglês da outra opção; nenhum registro sai
     salvar();
     const y = window.scrollY;
     render();

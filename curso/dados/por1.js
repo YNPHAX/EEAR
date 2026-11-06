@@ -308,7 +308,7 @@ EEAR.add({
   q: [
     ['O substantivo "criança" é classificado quanto ao gênero como', ['comum de dois gêneros.', 'sobrecomum.', 'epiceno.', 'biforme.'], 1, '"A criança" se refere a meninos e meninas com a mesma forma e o mesmo artigo: sobrecomum.'],
     ['O plural está correto em', ['guardas-chuvas', 'couve-flores', 'pés de moleque', 'abaixos-assinados'], 2, 'Com preposição, só o primeiro elemento varia: pés de moleque. O certo seria guarda-chuvas, couves-flores e abaixo-assinados.'],
-    ['A locução adjetiva "de ilha" corresponde ao adjetivo', ['insular.', 'ilhéu.', 'isolado.', 'litorâneo.'], 0, 'Insular significa "relativo a ilha".'],
+    ['A locução adjetiva "de ilha" corresponde ao adjetivo', ['insular.', 'fluvial.', 'isolado.', 'litorâneo.'], 0, 'Insular significa "relativo a ilha". Fluvial é relativo a rio, e litorâneo, ao litoral.'],
     ['Está correta a concordância do adjetivo composto em', ['camisas verdes-claras', 'camisas verde-claras', 'camisas verdes-clara', 'camisas verde-clara'], 1, 'Nos adjetivos compostos só o último elemento varia: verde-claras.'],
     ['O superlativo absoluto sintético de "amigo" é', ['amiguíssimo, apenas.', 'amicíssimo (forma erudita).', 'mais amigo.', 'amigão.'], 1, 'A forma erudita é amicíssimo. "Amiguíssimo" é usada na fala, mas a gramática registra amicíssimo como forma culta.'],
     ['Em "O amanhã a Deus pertence", a palavra "amanhã" é', ['advérbio.', 'substantivo, pela presença do artigo.', 'adjetivo.', 'numeral.'], 1, 'O artigo "o" substantiva o advérbio "amanhã": derivação imprópria.'],
