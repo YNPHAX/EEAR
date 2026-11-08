@@ -458,7 +458,6 @@
   function marcarAtividade() { const d = hoje(); S.act[d] = (S.act[d] || 0) + 1; }
 
   /* ---------- apostila: status e páginas ---------- */
-  const TIPO_AP = { sala: 'Em sala', casa: 'Para casa', adicionais: 'Adicionais', unit: 'Unit', test: 'Test', exercises: 'Exercises' };
   const MIN_Q = 2.5; /* minutos por questão da apostila no plano */
   function aulaTxt(a) {
     const p = String(a).split('-');
