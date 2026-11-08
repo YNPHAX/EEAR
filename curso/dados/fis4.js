@@ -55,14 +55,14 @@ EEAR.add({
     ['Uma lente de distância focal 0,5 m tem vergência de', ['0,5 di', '2 di', '5 di', '20 di'], 1, 'V = 1/f = 1/0,5 = 2 di.']
   ],
   fc: [
-    ['Imagem no espelho plano', 'Virtual, direita, mesmo tamanho, simétrica.'],
-    ['Imagens entre dois espelhos', 'n = 360°/α − 1'],
-    ['Equação de Gauss', '1/f = 1/p + 1/p\''],
+    ['Uma pessoa se aproxima de um espelho plano a 1 m/s. Com que velocidade ela se aproxima da própria imagem? A imagem é invertida?', 'A imagem também se aproxima do espelho a 1 m/s, então pessoa e imagem se aproximam a 2 m/s. A imagem é direita e do mesmo tamanho, mas troca direita e esquerda (enantiomorfa).', 2],
+    ['Dois espelhos planos formam 90°. Quantas imagens de um objeto colocado entre eles aparecem? E se o ângulo for 45°?', 'n = 360°/α − 1: com 90°, n = 3; com 45°, n = 7.', 2],
+    ['Uma lente convergente de foco 10 cm recebe um objeto a 15 cm dela. Onde se forma a imagem, e qual é a sua natureza?', '1/10 = 1/15 + 1/p\' → 1/p\' = 1/30 → p\' = 30 cm (positivo): imagem real e invertida, duas vezes maior (aumento −p\'/p = −2).', 2],
     ['Espelho convexo', 'Imagem sempre virtual, direita e menor.'],
     ['Índice de refração', 'n = c/v'],
     ['Lei de Snell', 'n₁ sen θ₁ = n₂ sen θ₂'],
-    ['Condição de reflexão total', 'Do meio mais refringente para o menos, ângulo > limite.'],
-    ['Correção da miopia e da hipermetropia', 'Divergente e convergente.']
+    ['A luz vai do vidro (n = 1,5) para o ar. Pode haver reflexão total? E do ar para o vidro?', 'Do vidro para o ar, sim: a luz passa do meio mais refringente para o menos, e há reflexão total se a incidência superar o ângulo limite (sen L = 1/1,5). Do ar para o vidro, nunca.', 2],
+    ['O míope enxerga mal de longe; o hipermetrope, de perto. Onde a imagem se forma em cada olho, e que lente corrige cada defeito?', 'Miopia: imagem antes da retina, corrigida com lente divergente. Hipermetropia: imagem depois da retina, corrigida com lente convergente.', 2]
   ]
 });
 
@@ -135,15 +135,15 @@ EEAR.add({
   ],
   fc: [
     ['Carga elementar', 'e = 1,6 × 10⁻¹⁹ C'],
-    ['Lei de Coulomb', 'F = k|Qq|/d²'],
-    ['Eletrização por contato (esferas iguais)', 'Mesmo sinal; dividem a soma das cargas.'],
-    ['Eletrização por indução', 'Induzido fica com sinal oposto ao do indutor.'],
+    ['Duas cargas se repelem com força F. Se uma das cargas dobrar e a distância cair pela metade, qual será a nova força?', 'F = k|Qq|/d²: dobrar uma carga multiplica por 2; a distância pela metade multiplica por 4. Nova força: 8F.', 2],
+    ['Esferas condutoras idênticas: A (+8 μC) toca B (neutra) e se separa; depois B toca C (neutra). Qual é a carga final de cada uma?', 'A e B: (8 + 0)/2 = +4 μC cada. B e C: (4 + 0)/2 = +2 μC cada. Final: A = +4 μC, B = +2 μC, C = +2 μC; a carga total de 8 μC se conserva.', 2],
+    ['Um bastão negativo é aproximado de uma esfera neutra ligada à terra. O fio é desligado e só então o bastão é afastado. Com que sinal fica a esfera?', 'Positivo: os elétrons da esfera, repelidos pelo bastão, escoam para a terra; com o fio desligado, eles não voltam. Na indução, o induzido fica com sinal oposto ao do indutor.', 2],
     ['Campo de carga puntiforme', 'E = k|Q|/d²'],
     ['Potencial de carga puntiforme', 'V = kQ/d (com sinal)'],
     ['Trabalho da força elétrica', 'τ = q(VA − VB)'],
     ['Campo uniforme', 'U = E·d'],
     ['Lei de Gauss', 'Fluxo por superfície fechada = Q interna/ε₀; carga de fora não conta.'],
-    ['Superfície equipotencial', 'Perpendicular às linhas de campo; trabalho nulo sobre ela.'],
+    ['Num campo elétrico uniforme, as linhas de campo são horizontais. Como são as superfícies equipotenciais? Qual é o trabalho para mover uma carga ao longo de uma delas?', 'São planos verticais, perpendiculares às linhas de campo. O trabalho é nulo, porque não há diferença de potencial entre pontos da mesma superfície.', 2],
     ['Esfera condutora carregada', 'Dentro: E = 0 e V = kQ/R. Fora: como carga puntiforme no centro.']
   ]
 });
@@ -197,10 +197,10 @@ EEAR.add({
     ['Corrente elétrica', 'i = Q/Δt'],
     ['1ª lei de Ohm', 'U = R·i'],
     ['2ª lei de Ohm', 'R = ρL/A'],
-    ['Potência elétrica', 'P = U·i = Ri² = U²/R'],
-    ['Resistores em série', 'Soma das resistências; mesma corrente.'],
-    ['Dois resistores em paralelo', 'Produto/soma; mesma tensão.'],
-    ['Lei de Pouillet', 'i = ε/(R + r)'],
+    ['Um chuveiro de 4400 W, feito para 220 V, é ligado por engano em 110 V. Supondo a resistência constante, qual será a potência?', 'R = U²/P = 220²/4400 = 11 Ω. Em 110 V: P = 110²/11 = 1100 W, um quarto da potência, porque P é proporcional a U².', 2],
+    ['Duas lâmpadas iguais estão ligadas em série a uma fonte. O que acontece com uma se a outra queimar? E se estivessem em paralelo?', 'Em série, a outra apaga: o circuito se abre e a corrente, que é a mesma nas duas, cai a zero. Em paralelo, a outra continua acesa, sob a mesma tensão.', 2],
+    ['Resistores de 12 Ω e 4 Ω em paralelo são ligados a 12 V. Qual é a resistência equivalente e a corrente em cada um?', 'Req = 12 · 4/(12 + 4) = 3 Ω; corrente total 4 A. Mesma tensão nos dois: 12/12 = 1 A e 12/4 = 3 A (1 + 3 = 4 A).', 2],
+    ['Um gerador de fem 9 V e resistência interna 0,5 Ω alimenta um resistor de 4 Ω. Qual é a corrente e a tensão nos terminais do gerador?', 'i = ε/(R + r) = 9/4,5 = 2 A. Tensão nos terminais: U = ε − r · i = 9 − 0,5 · 2 = 8 V, igual à do resistor (4 · 2 = 8 V).', 2],
     ['Amperímetro x voltímetro', 'Série (R = 0) x paralelo (R infinita).']
   ]
 });
@@ -252,13 +252,13 @@ EEAR.add({
     ['O fluxo magnético numa espira varia de 0,5 Wb para 0,1 Wb em 0,2 s. A fem induzida tem módulo', ['0,08 V', '2 V', '3 V', '0,4 V'], 1, '|ε| = ΔΦ/Δt = 0,4/0,2 = 2 V.']
   ],
   fc: [
-    ['Inseparabilidade dos polos', 'Partindo um ímã, cada pedaço tem norte e sul.'],
+    ['Um ímã em barra é cortado em três pedaços. Quantos polos norte existem no final? É possível obter um polo norte isolado?', 'Três: cada pedaço vira um ímã com norte e sul. Não existe polo magnético isolado; os polos são inseparáveis.', 2],
     ['Polo norte geográfico da Terra', 'Fica perto do polo sul magnético.'],
     ['Campo de fio longo', 'B = μ₀i/(2πd)'],
     ['Força sobre carga em movimento', 'F = |q|vB sen θ'],
     ['Força sobre fio', 'F = B·i·L·sen θ'],
     ['Lei de Faraday', '|ε| = ΔΦ/Δt'],
-    ['Lei de Lenz', 'A corrente induzida se opõe à variação do fluxo.'],
-    ['Transformador', 'U₁/U₂ = N₁/N₂; só com corrente alternada.']
+    ['Um ímã é aproximado de uma espira com o polo norte à frente. Que polo a espira forma na face voltada para o ímã? E quando o ímã é afastado?', 'Na aproximação, a face vira polo norte: a corrente induzida se opõe à variação do fluxo e repele o ímã. No afastamento, a face vira polo sul e atrai o ímã (lei de Lenz).', 2],
+    ['Um transformador ideal reduz 220 V para 11 V. Qual é a razão N₁/N₂? Se o secundário fornece 2 A, qual é a corrente no primário?', 'N₁/N₂ = U₁/U₂ = 220/11 = 20. Ideal: U₁ · i₁ = U₂ · i₂ → i₁ = 11 · 2/220 = 0,1 A.', 2]
   ]
 });
