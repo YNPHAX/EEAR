@@ -60,7 +60,8 @@ EEAR.add({
 </ul>
 <h3>Velocidade média</h3>
 <div class="f">v<sub>m</sub> = Δs / Δt</div>
-<p>Atenção: velocidade média <b>não</b> é a média das velocidades. Ida de 60 km a 60 km/h (1 h) e volta de 60 km a 30 km/h (2 h): v<sub>m</sub> = 120 km / 3 h = 40 km/h.</p>
+<p><b>Velocidade média</b> usa o <b>deslocamento</b> (Δs). <b>Rapidez média</b> usa a <b>distância percorrida</b>: distância ÷ tempo. As duas coincidem quando o móvel não muda de sentido.</p>
+<p>Atenção: nenhuma delas é a média das velocidades. Ida de 60 km a 60 km/h (1 h) e volta de 60 km a 30 km/h (2 h): rapidez média = 120 km / 3 h = 40 km/h; a velocidade média é nula, porque o carro volta ao ponto de partida (deslocamento zero).</p>
 <h3>Movimento uniforme (MU)</h3>
 <div class="f">v constante, a = 0     s = s₀ + v·t</div>
 <ul>
@@ -74,7 +75,7 @@ EEAR.add({
 <li>Mesmo sentido: v<sub>rel</sub> = v<sub>A</sub> − v<sub>B</sub>. Sentidos opostos: v<sub>rel</sub> = v<sub>A</sub> + v<sub>B</sub>.</li>
 <li>Trem atravessando ponte ou túnel: distância = comprimento do trem + comprimento da ponte.</li>
 </ul>
-<p class="dica">Numa questão de velocidade média com trechos diferentes, calcule o tempo de cada trecho e divida a distância total pelo tempo total.</p>`,
+<p class="dica">Numa questão de velocidade média com trechos diferentes no mesmo sentido, calcule o tempo de cada trecho e divida a distância total pelo tempo total. Se houver volta, essa conta dá a rapidez média.</p>`,
   ex: [
     ['Um carro percorre 150 km em 2 h e depois 90 km em 1 h. Qual a velocidade média total?', '<p>240 km / 3 h = <b>80 km/h</b>.</p>'],
     ['Dois carros partem um em direção ao outro, separados por 300 m, com velocidades de 20 m/s e 10 m/s. Quando se encontram?', '<p>v<sub>rel</sub> = 30 m/s: t = 300/30 = <b>10 s</b>.</p>'],
