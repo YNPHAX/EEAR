@@ -1292,9 +1292,17 @@
     h += `<div class="stack"><div class="eyebrow">Flashcards · ${f.titulo}</div><div class="meter b-${c.m}"><i style="width:${(f.i / f.fila.length) * 100}%"></i></div></div>`;
     h += `<div class="fc"><span class="chip tag">${sig(c.m)} ${m.id}</span><div>${c.f}</div>${f.virado ? `<div class="verso">${c.v}</div>` : ''}</div>`;
     h += f.virado
-      ? `<div class="row" style="justify-content:center"><button class="btn" data-a="fcaval" data-ok="0">Errei</button><button class="btn pri" data-a="fcaval" data-ok="1">Acertei</button></div>`
-      : `<div class="row" style="justify-content:center"><button class="btn pri" data-a="fcvirar">Mostrar resposta</button></div>`;
+      ? `<div class="row fc-acoes"><button class="btn" data-a="fcaval" data-ok="0">Errei</button><button class="btn pri" data-a="fcaval" data-ok="1">Acertei</button></div>`
+      : `<div class="row fc-acoes"><button class="btn pri" data-a="fcvirar">Mostrar resposta</button></div>`;
     return h;
+  }
+
+  // Depois de revelar: se o começo da resposta ficou atrás dos botões fixos (cartão longo em tela pequena), rola só o necessário para mostrá-lo.
+  function mostrarVerso() {
+    const v = document.querySelector('.fc .verso'), bar = document.querySelector('.fc-acoes');
+    if (!v || !bar) return;
+    const falta = v.getBoundingClientRect().top + 72 - bar.getBoundingClientRect().top;
+    if (falta > 0) window.scrollBy(0, falta);
   }
 
   function vTreino() {
@@ -1547,12 +1555,12 @@
       case 'marcar': if (S.feito[d.k]) delete S.feito[d.k]; else { S.feito[d.k] = true; marcarAtividade(); } salvar(); render(); break;
       case 'fcini': { const ids = devidos(d.s || null).map(c => c.id); if (ids.length) iniciarFC(ids, d.s ? MATS[d.s].curto : 'revisão do dia'); break; }
       case 'fcmod': { const m = MOD[d.id]; marcarLido(m.id); iniciarFC(m.fc.map((_, i) => m.id + '~' + i), m.id); break; }
-      case 'fcvirar': FC.virado = true; render(); break;
+      case 'fcvirar': FC.virado = true; render(); mostrarVerso(); break;
       case 'fcaval': {
         const id = FC.fila[FC.i], ok = d.ok === '1';
         avaliar(id, ok);
         if (ok) FC.ok++; else { FC.err++; if (!FC.rep[id]) { FC.rep[id] = 1; FC.fila.push(id); } }
-        FC.i++; FC.virado = false; salvar(); render(); break;
+        FC.i++; FC.virado = false; salvar(); render(); window.scrollTo(0, 0); break;
       }
       case 'errosini': {
         let ids = Object.keys(S.erros).filter(id => Q[id] && (!d.s || Q[id].m === d.s));
