@@ -41,12 +41,12 @@ EEAR.add({
   fc: [
     ['Densidade da água', '1 g/cm³ = 1000 kg/m³'],
     ['Pressão', 'p = F/A'],
-    ['Teorema de Stevin', 'p = p_atm + d·g·h'],
+    ['Num lago, qual é a diferença de pressão entre um ponto a 2 m e outro a 7 m de profundidade (d = 1000 kg/m³, g = 10 m/s²)?', 'Δp = d · g · Δh = 1000 · 10 · 5 = 5 × 10⁴ Pa. A pressão atmosférica se cancela na diferença.', 2],
     ['10 m de água equivalem a', 'Cerca de 1 atm (10⁵ Pa).'],
-    ['Prensa hidráulica', 'F₁/A₁ = F₂/A₂'],
+    ['Numa prensa hidráulica, A₁ = 5 cm² e A₂ = 100 cm². Para erguer o êmbolo maior em 1 cm, quanto o menor deve descer?', 'O volume de líquido deslocado é o mesmo: A₁ · d₁ = A₂ · d₂ → d₁ = 100 · 1/5 = 20 cm. A força fica 20 vezes maior, mas o deslocamento do êmbolo menor também é 20 vezes maior.', 2],
     ['Empuxo', 'E = d_líquido · V_submerso · g'],
-    ['Fração submersa de um corpo flutuante', 'd_corpo / d_líquido'],
-    ['Peso aparente', 'P − E']
+    ['Um bloco de gelo (d = 0,9 g/cm³) flutua em água doce (d = 1,0 g/cm³). Que fração do volume fica fora da água?', 'Fração submersa = d_corpo/d_líquido = 0,9/1,0 = 90%. Fica fora da água 10% do volume.', 2],
+    ['Um bloco de 2 kg e 500 cm³ está totalmente submerso em água (d = 1000 kg/m³, g = 10 m/s²). Qual é o seu peso aparente?', 'P = 20 N; E = 1000 · 5 × 10⁻⁴ · 10 = 5 N. Peso aparente = P − E = 15 N.', 2]
   ]
 });
 
@@ -92,14 +92,14 @@ EEAR.add({
     ['O congelador fica na parte de cima da geladeira para favorecer', ['a condução.', 'a convecção do ar.', 'a irradiação.', 'a dilatação.'], 1, 'O ar frio, mais denso, desce e o quente sobe: correntes de convecção.']
   ],
   fc: [
-    ['Conversão entre escalas', 'C/5 = (F − 32)/9 = (K − 273)/5'],
+    ['Em que temperatura as escalas Celsius e Fahrenheit marcam o mesmo número?', 'C/5 = (F − 32)/9 com C = F = x: 9x = 5x − 160 → x = −40. Ou seja, −40 °C = −40 °F.', 2],
     ['Variação 10 °C em °F e K', '18 °F e 10 K'],
-    ['Dilatação linear', 'ΔL = L₀·α·Δθ'],
+    ['Trilhos de 20 m (α = 1,2 × 10⁻⁵ °C⁻¹) são assentados a 10 °C. Que folga mínima deixar entre eles para que suportem 50 °C?', 'ΔL = L₀ · α · Δθ = 20 · 1,2 × 10⁻⁵ · 40 = 9,6 × 10⁻³ m, ou seja, 9,6 mm (cerca de 1 cm).', 2],
     ['β e γ em função de α', 'β = 2α; γ = 3α'],
     ['Calor sensível', 'Q = m·c·Δθ'],
     ['Calor latente', 'Q = m·L (temperatura constante)'],
     ['Calor latente de fusão do gelo', '80 cal/g'],
-    ['Única propagação no vácuo', 'Irradiação.']
+    ['Por que a garrafa térmica tem vácuo entre as paredes, e por que essas paredes são espelhadas?', 'O vácuo impede a condução e a convecção, que precisam de meio material. As paredes espelhadas refletem a radiação térmica e reduzem a irradiação, a única forma de propagação que atravessa o vácuo.', 2]
   ]
 });
 
@@ -148,13 +148,13 @@ EEAR.add({
   ],
   fc: [
     ['Equação de Clapeyron', 'pV = nRT (T em kelvin)'],
-    ['Lei geral dos gases', 'p₁V₁/T₁ = p₂V₂/T₂'],
-    ['1ª lei da termodinâmica', 'Q = τ + ΔU'],
+    ['Um gás ideal a 2 atm, 10 L e 300 K passa a 4 atm e 600 K. Qual é o novo volume?', 'p₁V₁/T₁ = p₂V₂/T₂ → 2 · 10/300 = 4 · V₂/600 → V₂ = 10 L: a pressão e a temperatura absoluta dobraram juntas.', 2],
+    ['Um gás é comprimido: recebe 300 J de trabalho e cede 100 J de calor. Qual é a variação da sua energia interna?', 'Q = τ + ΔU, com Q = −100 J (calor cedido) e τ = −300 J (trabalho recebido): ΔU = Q − τ = −100 + 300 = +200 J. A energia interna aumenta.', 2],
     ['Transformação isotérmica', 'ΔU = 0 → Q = τ'],
     ['Transformação isocórica', 'τ = 0 → Q = ΔU'],
     ['Transformação adiabática', 'Q = 0 → τ = −ΔU'],
     ['Rendimento de máquina térmica', 'η = τ/Q₁ = 1 − Q₂/Q₁'],
-    ['Rendimento de Carnot', '1 − T₂/T₁ (kelvin)']
+    ['Uma máquina de Carnot opera entre 327 °C e 27 °C. Qual é o rendimento máximo? Por que não se pode usar as temperaturas em °C?', 'Em kelvin: 600 K e 300 K → η = 1 − 300/600 = 50%. Com °C daria 1 − 27/327 ≈ 92%, valor errado: a fórmula exige temperaturas absolutas.', 2]
   ]
 });
 
@@ -209,12 +209,12 @@ EEAR.add({
   ],
   fc: [
     ['Equação fundamental da onda', 'v = λ·f'],
-    ['Período do pêndulo simples', 'T = 2π√(L/g)'],
+    ['Se o comprimento de um pêndulo simples for multiplicado por 4, o que acontece com o período? E se a massa dobrar?', 'T = 2π√(L/g): com 4L, o período dobra. A massa não aparece na fórmula, então o período não muda com ela.', 2],
     ['Período do massa-mola', 'T = 2π√(m/k)'],
-    ['O que não muda na refração', 'A frequência.'],
-    ['Altura do som', 'Frequência: agudo x grave.'],
+    ['Um som de 500 Hz passa do ar (340 m/s) para a água (1500 m/s). O que acontece com a frequência e com o comprimento de onda?', 'A frequência continua 500 Hz. O comprimento de onda passa de 0,68 m para 3 m (λ = v/f).', 2],
+    ['Uma nota de 440 Hz e outra de 880 Hz são tocadas com a mesma intensidade. Qual é a mais aguda? O que muda se uma delas for tocada mais forte?', 'A de 880 Hz: maior frequência, som mais agudo (altura). Tocar mais forte muda a intensidade (o volume), não a altura.', 2],
     ['Faixa audível humana', '20 Hz a 20 000 Hz.'],
     ['Efeito Doppler na aproximação', 'Frequência percebida maior (mais agudo).'],
-    ['Polarização', 'Só em ondas transversais.']
+    ['Por que óculos com filtro polarizador reduzem o brilho da luz refletida pela água, e por que não existe filtro polarizador para o som no ar?', 'A luz é onda transversal e pode ser polarizada; a luz refletida pela água vem parcialmente polarizada, e o filtro barra essa parte. O som no ar é onda longitudinal: não pode ser polarizado.', 2]
   ]
 });

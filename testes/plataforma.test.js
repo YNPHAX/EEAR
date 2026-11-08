@@ -9,7 +9,7 @@ let falhas = 0;
 const ok = (cond, msg) => { console.log(`${cond ? '  ✓' : '  ✗'} ${msg}`); if (!cond) falhas++; };
 
 const dados = require('./dados.js'), testarVersoes = require('./versoes.js');
-const { carregarDados, testarDados, testarContasMat } = dados;
+const { carregarDados, testarDados, testarContasMat, testarContasFis } = dados;
 dados.usar(ok);
 
 
@@ -290,6 +290,7 @@ async function testarNavegador(E) {
   const E = carregarDados();
   testarDados(E);
   testarContasMat(E);
+  testarContasFis(E);
   await testarNavegador(E);
   console.log(falhas ? `\n${falhas} falha(s)` : '\ntudo certo');
   process.exit(falhas ? 1 : 0);

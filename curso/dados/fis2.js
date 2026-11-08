@@ -34,14 +34,14 @@ EEAR.add({
     ['Um pêndulo é solto de uma altura de 0,8 m em relação ao ponto mais baixo (sem atrito, g = 10 m/s²). A velocidade no ponto mais baixo é', ['2 m/s', '4 m/s', '8 m/s', '16 m/s'], 1, 'v = √(2·10·0,8) = √16 = 4 m/s.']
   ],
   fc: [
-    ['Trabalho de uma força', 'τ = F·d·cos θ'],
+    ['Um garçom carrega uma bandeja de 20 N andando 5 m na horizontal, com velocidade constante. Qual é o trabalho da força que ele faz para sustentar a bandeja?', 'Zero: a força de sustentação é vertical e o deslocamento é horizontal (θ = 90°, cos 90° = 0 em τ = F · d · cos θ).', 2],
     ['Energia cinética', 'Ec = mv²/2'],
     ['Energia potencial gravitacional', 'Ep = mgh'],
     ['Energia potencial elástica', 'kx²/2'],
     ['Teorema da energia cinética', 'τ_resultante = ΔEc'],
-    ['Velocidade após queda de altura h', 'v = √(2gh)'],
-    ['Potência', 'P = τ/Δt = F·v'],
-    ['Consumo em kWh', 'P (kW) × t (h)']
+    ['De que altura um objeto deve cair, a partir do repouso e sem resistência do ar, para chegar ao solo a 30 m/s (g = 10 m/s²)?', 'v² = 2gh → h = 30²/(2 · 10) = 45 m. A relação vale partindo do repouso e sem perdas de energia.', 2],
+    ['Um carro mantém 20 m/s numa estrada, e a força motriz que equilibra as resistências é de 1500 N. Qual é a potência desenvolvida?', 'P = F · v = 1500 · 20 = 30 000 W = 30 kW.', 2],
+    ['Uma lâmpada de 15 W fica acesa 8 h por dia durante 30 dias. Qual é o consumo em kWh? E o custo, a R$ 0,80 por kWh?', '15 W · 8 h · 30 = 3600 Wh = 3,6 kWh. Custo: 3,6 · 0,80 = R$ 2,88.', 2]
   ]
 });
 
@@ -84,13 +84,13 @@ EEAR.add({
   ],
   fc: [
     ['Quantidade de movimento', 'Q = m·v (vetor)'],
-    ['Impulso', 'I = F·Δt = ΔQ'],
-    ['Área do gráfico F × t', 'Impulso.'],
+    ['Uma força média de 300 N age sobre uma bola de 0,5 kg, inicialmente parada. Quanto tempo de contato é necessário para ela sair a 12 m/s?', 'Impulso = variação da quantidade de movimento: I = 0,5 · 12 = 6 N·s. Δt = I/F = 6/300 = 0,02 s.', 2],
+    ['Num gráfico F × t, a força sobe em linha reta de 0 a 400 N em 0,01 s e volta a 0 em mais 0,01 s. Qual é o impulso?', 'É a área sob o gráfico: triângulo de base 0,02 s e altura 400 N, I = 0,02 · 400/2 = 4 N·s.', 2],
     ['Conservação de Q', 'Sistema isolado: Q antes = Q depois.'],
     ['Colisão elástica', 'e = 1; conserva Q e Ec.'],
-    ['Colisão perfeitamente inelástica', 'e = 0; corpos seguem juntos.'],
-    ['Coeficiente de restituição', 'v afastamento / v aproximação.'],
-    ['Massas iguais, choque elástico', 'Trocam de velocidade.']
+    ['Um vagão de 3000 kg a 4 m/s engata em outro de 1000 kg parado, e os dois seguem juntos. Qual é a velocidade final? A energia cinética se conserva?', 'Conservação da quantidade de movimento: 3000 · 4 = 4000 · v → v = 3 m/s. A energia cinética não se conserva: cai de 24 000 J para 18 000 J (colisão perfeitamente inelástica).', 2],
+    ['Uma bola chega ao chão a 10 m/s e volta a 6 m/s. Qual é o coeficiente de restituição? Que tipo de colisão é?', 'e = 6/10 = 0,6: colisão parcialmente elástica (0 < e < 1), com perda de energia cinética.', 2],
+    ['Numa mesma reta, a bola A (2 kg, 3 m/s) alcança por trás a bola B (2 kg, 1 m/s), que segue no mesmo sentido. A colisão é elástica e unidimensional. Quais são as velocidades depois?', 'Com massas iguais, numa colisão elástica unidimensional, as velocidades se trocam: A fica com 1 m/s e B com 3 m/s, ambas no sentido inicial. Conferência: Q = 8 kg·m/s e Ec = 10 J, antes e depois.', 2]
   ]
 });
 
@@ -135,11 +135,11 @@ EEAR.add({
     ['Dois satélites orbitam a Terra em raios diferentes. É mais rápido o satélite', ['de maior massa.', 'de menor massa.', 'de órbita mais próxima da Terra.', 'de órbita mais afastada.'], 2, 'v = √(GM/r): menor r, maior v. A massa do satélite não influi.']
   ],
   fc: [
-    ['1ª lei de Kepler', 'Órbitas elípticas, Sol num foco.'],
-    ['2ª lei de Kepler', 'Áreas iguais em tempos iguais: mais rápido no periélio.'],
-    ['3ª lei de Kepler', 'T²/R³ = constante.'],
+    ['Pela 1ª lei de Kepler, a distância entre a Terra e o Sol é constante ao longo do ano?', 'Não: a órbita é uma elipse com o Sol num dos focos, então a distância varia (mínima no periélio, máxima no afélio). A órbita da Terra é quase circular, por isso a variação é pequena.', 2],
+    ['Um cometa passa perto do Sol e depois se afasta muito. Em que trecho da órbita ele é mais lento, e por quê?', 'No afélio, o ponto mais distante do Sol. O raio vetor varre áreas iguais em tempos iguais; longe do Sol, um arco curto já varre a mesma área.', 2],
+    ['Dois satélites orbitam a Terra, e o período de B é 27 vezes o de A. Quantas vezes o raio da órbita de B é maior? A mesma constante vale para um satélite de Marte?', 'Mesmo corpo central: T²/R³ é igual para os dois, então (R_B/R_A)³ = 27² e R_B/R_A = 27^(2/3) = 9. Para Marte, não: a constante depende da massa do corpo central.', 2],
     ['Lei da gravitação', 'F = GMm/d²'],
-    ['Gravidade na superfície', 'g = GM/R²'],
+    ['Um planeta tem a mesma massa da Terra e metade do raio. Qual é a aceleração da gravidade na sua superfície (g na Terra = 10 m/s²)?', 'g = GM/R²: com o raio pela metade, g fica 4 vezes maior: 40 m/s².', 2],
     ['Velocidade orbital', 'v = √(GM/r), independe da massa do satélite.'],
     ['Satélite geoestacionário', 'Período de 24 h.'],
     ['Distância dobra', 'Força gravitacional cai para 1/4.']
@@ -188,11 +188,11 @@ EEAR.add({
   fc: [
     ['Momento de uma força', 'M = F·d (d perpendicular ao eixo).'],
     ['Equilíbrio do corpo extenso', 'ΣF = 0 e ΣM = 0.'],
-    ['Alavanca interfixa', 'Apoio no meio: gangorra, tesoura.'],
-    ['Alavanca inter-resistente', 'Resistência no meio: carrinho de mão.'],
-    ['Alavanca interpotente', 'Força no meio: pinça.'],
-    ['Gangorra em equilíbrio', 'F₁·d₁ = F₂·d₂'],
-    ['Centro de massa', 'Média ponderada das posições pelas massas.'],
+    ['Na tesoura e no alicate, onde fica o apoio em relação à força das mãos e à resistência? Que tipo de alavanca são?', 'O apoio (a articulação) fica entre a força das mãos e a resistência (o que é cortado ou apertado): alavanca interfixa, como a gangorra.', 2],
+    ['No quebra-nozes, a noz fica entre a articulação e as mãos. Que tipo de alavanca é? Por que ajuda a quebrar a noz?', 'Inter-resistente (resistência no meio). O braço da força é maior que o da resistência, então a força das mãos é menor que a força aplicada na noz.', 2],
+    ['Na pinça, a força dos dedos fica entre a articulação e as pontas. Que tipo de alavanca é? Ela aumenta a força ou a precisão?', 'Interpotente (força no meio). O braço da força é menor que o da resistência: não aumenta a força, mas dá precisão e amplitude de movimento às pontas.', 2],
+    ['Numa barra apoiada no meio, um peso de 60 N está a 1,2 m do apoio. Que força, a 0,8 m do outro lado, mantém a barra em equilíbrio?', 'Momentos iguais: F₁ · d₁ = F₂ · d₂ → 60 · 1,2 = F · 0,8 → F = 90 N.', 2],
+    ['Massas de 1 kg em x = 0, 2 kg em x = 3 m e 1 kg em x = 6 m. Onde fica o centro de massa?', 'x = (1 · 0 + 2 · 3 + 1 · 6)/(1 + 2 + 1) = 12/4 = 3 m. O sistema é simétrico em relação a x = 3 m.', 2],
     ['Dois fios simétricos sustentando P', '2T·cos θ = P (θ com a vertical).']
   ]
 });
