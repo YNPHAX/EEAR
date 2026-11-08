@@ -8,7 +8,7 @@ const RAIZ = path.resolve(__dirname, '..');
 let falhas = 0;
 const ok = (cond, msg) => { console.log(`${cond ? '  ✓' : '  ✗'} ${msg}`); if (!cond) falhas++; };
 
-const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js');
+const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js'), testarRobustez = require('./robustez.js');
 const { carregarDados, testarDados, testarContasMat, testarContasFis } = dados;
 dados.usar(ok);
 
@@ -282,6 +282,7 @@ async function testarNavegador(E) {
   }
   await testarVersoes({ E, b, srv, saida, base, servir, ok });
   await testarCelular({ E, b, srv, base, ok });
+  await testarRobustez({ b, srv, base, ok });
 
   await b.close(); srv.fechar();
   fs.rmSync(saida, { recursive: true, force: true });

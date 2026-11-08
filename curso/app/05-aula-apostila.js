@@ -67,7 +67,7 @@
     const aba = V.aba || 'aula';
     const r = S.mod[m.id] || {}, st = estMod(m.id);
     let h = `<button class="btn ghost back" data-a="mat" data-s="${m.m}">← Trilha de ${MATS[m.m].curto}</button>`;
-    h += `<div class="stack"><div class="eyebrow">${sig(m.m)} Aula ${nAula(m)} de ${aulasDe(m.m).length} · ${m.id} · incidência ${bolinhas(m.peso)} · ${fh(m.h)}</div><h1 class="h1">${m.t}</h1><div class="row"><span class="chip ${st.k}">${st.txt}</span>${r.tent ? `<span class="small muted">${plural(r.tent, 'tentativa', 'tentativas')} no quiz</span>` : ''}</div></div>`;
+    h += `<div class="stack"><div class="eyebrow">${sig(m.m)} Aula ${nAula(m)} de ${aulasDe(m.m).length} · ${m.id} · incidência ${bolinhas(m.peso)} · ${fh(m.h)}</div><h1 class="h1">${m.t}</h1><div class="row"><span class="chip ${st.k}">${st.txt}</span>${r.tent ? `<span class="small muted">${esc(plural(r.tent, 'tentativa', 'tentativas'))} no quiz</span>` : ''}</div></div>`;
     const ofi = OFI[m.id] || [];
     const aps = APMOD[m.id] || [];
     const abas = [['aula', 'Aula'], ['teoria', 'Teoria'], ['ex', 'Exemplos'], ['quiz', 'Quiz']].concat(apVisivel() ? [['ap', 'Apostila']] : [], [['prov', 'Provas'], ['cards', 'Cartões']]);
@@ -331,7 +331,7 @@
       h += ORD.map(s => {
         const ids = Object.keys(S.erros).filter(id => Q[id] && Q[id].m === s);
         if (!ids.length) return '';
-        return `<details class="rev"><summary>${MATS[s].curto} · ${ids.length}</summary>${ids.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)} <span class="chip bad">${S.erros[id]}x</span></summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</details>`;
+        return `<details class="rev"><summary>${MATS[s].curto} · ${ids.length}</summary>${ids.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)} <span class="chip bad">${esc(S.erros[id])}x</span></summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</details>`;
       }).join('');
     }
     h += `</section>`;

@@ -159,6 +159,13 @@
         try { navigator.clipboard.writeText(txt).then(ok, falha); } catch (e) { falha(); }
         break;
       }
+      case 'reccopiar': {
+        const ok = () => { msgRec = 'Cópia copiada.'; pedindo = null; render(); };
+        const falha = () => { pedindo = 'rec'; render(); const t = document.getElementById('rec-txt'); if (t) { t.focus(); t.select(); } };
+        try { navigator.clipboard.writeText(recuperar).then(ok, falha); } catch (e) { falha(); }
+        break;
+      }
+      case 'recdescartar': try { localStorage.removeItem(LS_REC); } catch (e) { /* ignora */ } recuperar = null; msgRec = ''; pedindo = null; render(); break;
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
       case 'impok': {
         const t = document.getElementById('imp-txt');
