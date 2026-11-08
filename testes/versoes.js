@@ -1,4 +1,4 @@
-/* Testes no navegador da versão dos flashcards (Lote 0) e dos cartões reformulados de Português, Inglês e Matemática
+/* Testes no navegador da versão dos flashcards (Lote 0) e dos cartões reformulados de Português, Inglês, Matemática e Física
    com progresso antigo. Usado por testes/plataforma.test.js, que monta o site e abre o navegador. */
 const fs = require('fs'), os = require('os'), path = require('path');
 
@@ -182,9 +182,9 @@ module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, 
       r = await abrirEm(srv.url, salvo, T0 + 6 * DIA, tz); const v6 = await r.vencidos(); await r.ctx.close();
       ok(v6 === novos.length - vistos.length && !r.erros.length, `Inglês ${modalidade}: até o 6º dia voltam todos os demais reformulados da modalidade (${v6})`);
     }
-    { // dados reais de Matemática: progresso antigo com todos os cartões dominados
+    for (const [mat, nome] of [['mat', 'Matemática'], ['fis', 'Física']]) { // dados reais: progresso antigo com todos os cartões da matéria dominados
       const tz = 'America/Sao_Paulo', T0 = Date.UTC(2026, 11, 1, 15), D = diaLocal(T0, tz);
-      const MAT = E.modulos.filter(m => m.m === 'mat'), versao = {};
+      const MAT = E.modulos.filter(m => m.m === mat), versao = {};
       MAT.forEach(m => m.fc.forEach((c, i) => { versao[m.id + '~' + i] = Number.isInteger(c[2]) && c[2] > 1 ? c[2] : 1; }));
       const todos = Object.keys(versao), novos = todos.filter(id => versao[id] > 1), iguais = todos.filter(id => versao[id] === 1);
       const fc = {}; todos.forEach(id => { fc[id] = [6, D + 50]; });
@@ -192,13 +192,13 @@ module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, 
       const st0 = Object.assign(base({}), { mod, fc, erros: {}, sims: [] }); st0.cfg.prova = '2027-05-30';
       const antes = JSON.stringify(st0), ate = k => novos.filter(id => desvio(id) <= k).length;
       let r = await abrirEm(srv.url, st0, T0, tz);
-      ok(await r.guardado() === antes && await r.vencidos() === ate(0), `Matemática: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (${ate(0)} de ${novos.length})`);
+      ok(await r.guardado() === antes && await r.vencidos() === ate(0), `${nome}: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (${ate(0)} de ${novos.length})`);
       await r.p.click('[data-a="tab"][data-v="hoje"]'); await r.p.locator('[data-a="fcini"]').first().click(); await r.p.waitForTimeout(100);
       let n = 0; while (await r.p.locator('[data-a="fcvirar"]').count()) { n++; await r.p.click('[data-a="fcvirar"]'); await r.p.waitForTimeout(30); await r.p.click('[data-a="fcaval"][data-ok="1"]'); await r.p.waitForTimeout(40); }
       const salvo = await r.guardado(), st = JSON.parse(salvo); await r.ctx.close();
-      ok(n === ate(0) && iguais.every(id => JSON.stringify(st.fc[id]) === JSON.stringify([6, D + 50]) && !(st.cfg.fcv || {})[id]), `Matemática: no 1º dia só voltam reformulados; os ${iguais.length} mantidos ficam intactos`);
+      ok(n === ate(0) && iguais.every(id => JSON.stringify(st.fc[id]) === JSON.stringify([6, D + 50]) && !(st.cfg.fcv || {})[id]), `${nome}: no 1º dia só voltam reformulados; os ${iguais.length} mantidos ficam intactos`);
       r = await abrirEm(srv.url, salvo, T0 + 6 * DIA, tz); const v6 = await r.vencidos(); await r.ctx.close();
-      ok(v6 === novos.length - n && !r.erros.length, `Matemática: até o 6º dia voltam os demais reformulados (${v6})`);
+      ok(v6 === novos.length - n && !r.erros.length, `${nome}: até o 6º dia voltam os demais reformulados (${v6})`);
     }
     srv2.fechar(); srv0.fechar(); fs.rmSync(saida2, { recursive: true, force: true }); fs.rmSync(saida0, { recursive: true, force: true });
   }

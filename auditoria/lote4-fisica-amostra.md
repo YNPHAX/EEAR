@@ -170,3 +170,24 @@ calor latente do gelo, faixa audível, prefixos) e as fórmulas que já se aplic
 2. Contagem: 157 cartões, 85 na versão 2 e 72 sem versão.
 3. Progresso antigo com os cartões versionados (abrir não altera nada; reformulados voltam espalhados em até 7 dias).
 4. Telas em 320×568, 360×740 e 390×844, builds, verificadores e ESLint.
+
+## Implementação (2026-11-08, branch `claude/lote4-fisica`)
+
+Autorizada pelo dono. Aplicada em quatro grupos por aula (FIS01–05, FIS06–09, FIS10–13, FIS14–18), com os testes de
+dados após cada grupo.
+
+- **84 cartões passaram à versão 2** (mesmo ID e posição; o progresso antigo continua valendo e o histórico não é
+  apagado: os reformulados voltam à revisão espalhados em até 7 dias).
+- **FIS17~1 ficou preservado** (73 cartões sem versão, em vez de 72): é um fato de memorização útil como está, e o
+  quiz 1 da FIS17 já cobra a aplicação. Reescrevê-lo duplicaria o quiz.
+- **Correção adicional encontrada na conferência individual:** FIS18~17 dizia que LEDs são de silício; LEDs usam
+  outros semicondutores (compostos de gálio, por exemplo). A teoria da FIS18 já estava correta.
+- **Teoria da FIS02 (autorizada):** distingue velocidade média (deslocamento ÷ tempo) e rapidez média (distância
+  percorrida ÷ tempo); o exemplo de ida e volta foi mantido, com a velocidade média nula e a rapidez média de 40 km/h.
+  Exemplos resolvidos e quizzes da aula não mudaram (são todos trechos no mesmo sentido).
+- **Testes novos:** recálculo de 48 cartões numéricos (`testes/dados.js`), contagem 157/84/73 e progresso antigo de
+  Física no navegador (`testes/versoes.js`).
+- **Telas:** sem rolagem lateral nem texto cortado nas três resoluções. Para chegar aos botões de avaliação, 83
+  cartões exigem rolar em 320×568 e 1 em 360×740 (FIS07~7); nenhum em 390×844. É o mesmo comportamento dos lotes
+  já aprovados (Português: 100 em 320×568 e 2 em 360×740). Com a página rolada até o fim, os botões ficam livres em
+  todas as resoluções.

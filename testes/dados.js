@@ -158,4 +158,65 @@ function testarContasMat(E) {
   ok(versoes.length === 155 && versoes.filter(v => v === 2).length === 88 && versoes.filter(v => v === 1).length === 67, `Matemática: 155 cartões, 88 na versão 2 e 67 sem versão`);
 }
 
-module.exports = { carregarDados, testarDados, testarContasMat, usar: f => { ok = f; } };
+/* Flashcards de Física com conta: o resultado é recalculado aqui, de forma independente, e precisa aparecer no verso. */
+function testarContasFis(E) {
+  console.log('\n== contas dos flashcards de Física (recalculadas)');
+  const card = id => { const [m, i] = id.split('~'); const c = (E.modulos.find(x => x.id === m) || { fc: [] }).fc[+i]; return c ? c[1].replace(/<\/?[a-z][^>]*>/gi, ' ') : ''; };
+  const perto = (a, b) => Math.abs(a - b) < 1e-9, g = 10;
+  const casos = [
+    ['FIS01~3', Math.abs(9 - 4) === 5 && 9 + 4 === 13, ['5 N ≤ R ≤ 13 N']],
+    ['FIS02~0', (60 - 30) / 1.5 === 20 && (60 + 30) / 1.5 === 60, ['20 km/h', '60 km/h']],
+    ['FIS02~1', 40 / 8 === 5, ['t = 5 s', 'retrógrado']],
+    ['FIS02~2', perto(2 / (90 - 70), 0.1), ['20 km/h', '6 min']],
+    ['FIS02~3', 25 / (60 + 40) === 0.25, ['100 km/h', '15 min']],
+    ['FIS02~5', (35 - 10) / 5 === 5, ['5 m/s']],
+    ['FIS03~2', 20 ** 2 / (2 * 5) === 40, ['40 m']],
+    ['FIS03~3', 10 * 2 + 4 * 10 / 2 === 40, ['40 m']],
+    ['FIS03~4', (8 - 24) / 4 === -4, ['−4 m/s²']],
+    ['FIS03~5', Math.sqrt(2 * g * 5) === 10, ['10 m/s']],
+    ['FIS04~2', perto(20 ** 2 * Math.sin(Math.PI / 3) / g, 20 * Math.sqrt(3)) && perto(Math.sin(Math.PI / 3), Math.sin(2 * Math.PI / 3)), ['20√3']],
+    ['FIS04~4', 1800 / 60 === 30, ['30 Hz', '1/30 s']],
+    ['FIS04~7', 90 * 20 / 6 === 300, ['300 rpm']],
+    ['FIS05~3', 0.25 * 200 === 50, ['50 N']],
+    ['FIS05~5', 50 * (g - 2) === 400, ['400 N']],
+    ['FIS05~7', perto(5 / (2 / 0.04), 0.1), ['10 cm']],
+    ['FIS06~5', 30 ** 2 / (2 * g) === 45, ['45 m']],
+    ['FIS06~6', 1500 * 20 === 30000, ['30 kW']],
+    ['FIS06~7', perto(15 * 8 * 30 / 1000, 3.6) && perto(3.6 * 0.8, 2.88), ['3,6 kWh', 'R$ 2,88']],
+    ['FIS07~1', 0.5 * 12 === 6 && 6 / 300 === 0.02, ['6 N·s', '0,02 s']],
+    ['FIS07~2', 0.02 * 400 / 2 === 4, ['4 N·s']],
+    ['FIS07~5', 3000 * 4 / 4000 === 3 && 3000 * 4 ** 2 / 2 === 24000 && 4000 * 3 ** 2 / 2 === 18000, ['3 m/s', '24 000 J', '18 000 J']],
+    ['FIS07~6', 6 / 10 === 0.6, ['0,6']],
+    ['FIS07~7', 2 * 3 + 2 * 1 === 2 * 1 + 2 * 3 && (2 * 9 + 2 * 1) / 2 === 10, ['8 kg·m/s', '10 J']],
+    ['FIS08~2', perto(Math.pow(27, 2 / 3), 9), ['= 9']],
+    ['FIS08~4', 10 * 2 ** 2 === 40, ['40 m/s²']],
+    ['FIS09~5', perto(60 * 1.2 / 0.8, 90), ['90 N']],
+    ['FIS09~6', (1 * 0 + 2 * 3 + 1 * 6) / 4 === 3, ['3 m']],
+    ['FIS10~2', 1000 * g * (7 - 2) === 5e4, ['5 × 10⁴ Pa']],
+    ['FIS10~4', 100 * 1 / 5 === 20, ['20 cm']],
+    ['FIS10~6', perto(1 - 0.9 / 1.0, 0.1), ['90%', '10%']],
+    ['FIS10~7', 2 * g - 1000 * 500e-6 * g === 15, ['15 N']],
+    ['FIS11~0', -40 / 5 === (-40 - 32) / 9, ['−40 °C = −40 °F']],
+    ['FIS11~2', perto(20 * 1.2e-5 * (50 - 10), 9.6e-3), ['9,6 mm']],
+    ['FIS12~1', perto(2 * 10 / 300 * 600 / 4, 10), ['10 L']],
+    ['FIS12~2', -100 - (-300) === 200, ['+200 J']],
+    ['FIS12~7', 1 - 300 / 600 === 0.5 && Math.round(100 * (1 - 27 / 327)) === 92, ['50%', '92%']],
+    ['FIS13~3', 340 / 500 === 0.68 && 1500 / 500 === 3, ['0,68 m', '3 m']],
+    ['FIS14~1', 360 / 90 - 1 === 3 && 360 / 45 - 1 === 7, ['n = 3', 'n = 7']],
+    ['FIS14~2', perto(1 / (1 / 10 - 1 / 15), 30), ['30 cm', '−2']],
+    ['FIS15~1', 2 * 2 ** 2 === 8, ['8F']],
+    ['FIS15~2', (8 + 0) / 2 === 4 && (4 + 0) / 2 === 2 && 4 + 2 + 2 === 8, ['+4 μC', '+2 μC']],
+    ['FIS16~3', 220 ** 2 / 4400 === 11 && 110 ** 2 / 11 === 1100, ['11 Ω', '1100 W']],
+    ['FIS16~5', 12 * 4 / (12 + 4) === 3 && 12 / 12 + 12 / 4 === 12 / 3, ['3 Ω', '1 A', '3 A']],
+    ['FIS16~6', 9 / (4 + 0.5) === 2 && 9 - 0.5 * 2 === 8 && 4 * 2 === 8, ['2 A', '8 V']],
+    ['FIS17~7', 220 / 11 === 20 && 11 * 2 / 220 === 0.1, ['= 20', '0,1 A']],
+    ['FIS18~1', 5 - 2 === 3 && 2.5 < 3, ['3,0 eV']],
+    ['FIS18~12', 64 / 2 ** 4 === 4 && 20 / 4 === 5, ['T½ = 5 h']]
+  ];
+  const ruins = casos.filter(([id, conta, txt]) => !conta || !txt.every(t => card(id).includes(t))).map(([id]) => id);
+  ok(!ruins.length, `${casos.length} cartões de Física: a conta recalculada confere com o verso` + (ruins.length ? ': ' + ruins.join(', ') : ''));
+  const versoes = E.modulos.filter(m => m.m === 'fis').flatMap(m => m.fc.map(c => c[2] || 1));
+  ok(versoes.length === 157 && versoes.filter(v => v === 2).length === 84 && versoes.filter(v => v === 1).length === 73, `Física: 157 cartões, 84 na versão 2 e 73 sem versão`);
+}
+
+module.exports = { carregarDados, testarDados, testarContasMat, testarContasFis, usar: f => { ok = f; } };
