@@ -67,6 +67,7 @@ open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(html)
 
 # scripts e dados: curso/app.js é montado a partir de curso/app/ (web/montar_app.py); se divergir, o build para
 sys.path.insert(0, WEB)
+sys.dont_write_bytecode = True  # não deixa web/__pycache__ no repositório
 import montar_app  # noqa: E402
 assert montar_app.confere(), 'curso/app.js difere de curso/app/: rode python3 web/montar_app.py'
 copiar(os.path.join(CURSO, 'app.js'), os.path.join(OUT, 'app.js'))
