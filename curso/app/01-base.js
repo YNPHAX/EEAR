@@ -142,6 +142,22 @@
     if (o && o.cfg && !(o.cfg.cv >= 2) && Number(o.cfg.tempoSim) === 240) b.cfg.tempoSim = 260;
     ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { if (!b[k] || typeof b[k] !== 'object') b[k] = {}; });
     if (!Array.isArray(b.sims)) b.sims = [];
+    /* Entradas que nenhuma versão grava (progresso colado malformado) ou questões que saíram do curso numa atualização
+       travariam as telas Hoje, Plano e Simulados sem volta: ficam de fora só na memória, como o resto desta função. */
+    const obj = x => !!x && typeof x === 'object' && !Array.isArray(x);
+    /* Placar de um simulado: matéria → [acertos, total], sempre com total ≥ 1 (como entregar() grava). */
+    const placar = r => { const o = {}; if (obj(r)) Object.keys(r).forEach(k => { const v = r[k]; if (Array.isArray(v) && typeof v[0] === 'number' && typeof v[1] === 'number' && v[1] >= 1) o[k] = v; }); return o; };
+    b.sims = b.sims.filter(obj).map(x => Object.assign({}, x, { r: placar(x.r) })).filter(x => Object.keys(x.r).length);
+    const questoes = a => { // simulado em andamento ou o último entregue: só questões que ainda existem no curso
+      ['resp', 'marc', 'perms'].forEach(k => { if (!obj(a[k])) a[k] = {}; });
+      a.ids = a.ids.filter(id => typeof id === 'string' && Q[id]);
+      a.ids.forEach(id => { if (!Array.isArray(a.perms[id])) a.perms[id] = [0, 1, 2, 3]; });
+      return a.ids.length > 0;
+    };
+    if (b.ativo != null && !(obj(b.ativo) && Array.isArray(b.ativo.ids) && questoes(b.ativo))) b.ativo = null;
+    if (b.ativo) b.ativo.i = Math.min(Math.max(0, Math.floor(Number(b.ativo.i)) || 0), b.ativo.ids.length - 1);
+    if (b.ult != null && !(obj(b.ult) && obj(b.ult.reg) && Array.isArray(b.ult.ids) && questoes(b.ult))) b.ult = null;
+    if (b.ult) { b.ult.reg = Object.assign({}, b.ult.reg, { r: placar(b.ult.reg.r) }); if (!Object.keys(b.ult.reg.r).length) b.ult = null; }
     /* Certificados (veja "certificados conquistados"): um progresso sem cfg.certs veio de uma versão sem o registro e é
        conferido uma única vez. Tudo aqui fica só na memória: nada é gravado até o aluno estudar. */
     const temCerts = !!(o && o.cfg && Object.prototype.hasOwnProperty.call(o.cfg, 'certs'));

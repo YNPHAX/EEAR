@@ -39,7 +39,52 @@ Análise de 2026-11-08. Nada aqui foi implementado: não há cobrança, gateway 
 - **Segurança**: o estado da assinatura e os dados de pagamento nunca podem depender só do aparelho; segredos de
   gateway ficam fora do repositório.
 
+## Conteúdo pago em arquivos estáticos: por que não funciona
+
+Tudo o que o GitHub Pages ou o APK publicam pode ser baixado por qualquer pessoa: `app.js`, `dados/*.js` e as
+imagens das provas. Esconder telas com JavaScript, ou exigir login só no app, não protege nada. Basta abrir o
+endereço do arquivo ou descompactar o APK. O conteúdo pago precisa ficar **fora** dos arquivos publicados e ser
+entregue só depois de o servidor conferir a assinatura. Por consequência:
+- **Service worker:** passa a guardar o conteúdo pago só para quem tem acesso, num cache separado, apagado ao sair
+  da conta ou quando a assinatura vence.
+- **APK:** leva só a parte gratuita e baixa o restante depois do login.
+- **Verificações do build:** as atuais (`verificar_publicacao.py`) ganham uma lista do que é pago, para impedir que
+  isso entre no site ou no APK, como já fazem com o material restrito.
+
+## Pontos técnicos levantados na auditoria de 2026-11-08
+
+- **Sincronização:** a nuvem resolve conflitos por "último a gravar vence", com o documento inteiro, e pode descartar
+  estudo feito offline. Precisa da união por campo antes de qualquer conta paga (`auditoria/engenharia-qualidade.md`,
+  achado 6).
+- **Segurança:** o XSS por progresso colado foi corrigido. Com contas pagas, um script injetado poderia agir na conta
+  do aluno; uma Content-Security-Policy deve entrar junto com o login (achado 10).
+- **Privacidade:** o documento da nuvem repete nome e e-mail (achado 9). Guardar só o necessário.
+- **Recuperação de conta:** existe a redefinição de senha por e-mail (Firebase). Faltam exclusão de conta pelo próprio
+  aluno e exportação dos dados, as duas exigidas pela LGPD.
+
+## Custos e escala (estimativa, a confirmar com os preços vigentes)
+
+- **GitHub Pages:** gratuito para o conteúdo público. O conteúdo pago vai para o Firestore (ou um armazenamento com
+  URL assinada), cobrado por leitura e por volume transferido.
+- **Firebase Auth e Firestore:** a cota gratuita cobre um piloto pequeno. Um aluno ativo faz poucas leituras por dia,
+  porque o progresso é um documento e o conteúdo vem por aula, com cache. Medir no piloto antes de projetar.
+- **Gateway de pagamento:** cobra taxa por transação (Pix e cartão têm taxas diferentes). Na Google Play, a compra de
+  conteúdo digital dentro do app segue a política e a comissão da loja.
+- **Suporte:** é o custo que mais cresce com o número de alunos (acesso, cobrança, reembolso). O painel de
+  administração da fase 5 reduz esse custo.
+
 ## Plano por fases (cada uma depende de autorização)
+
+| Fase | Depende de | Principais riscos | Critério de aprovação |
+|---|---|---|---|
+| 1. Decisões | — | Direitos de conteúdo; política da Google Play | Modelo, preço, gateway e parecer jurídico por escrito |
+| 2. Contas | 1 | Perda de progresso na sincronização | União por campo com testes de dois aparelhos e offline; exclusão e exportação de dados; CSP; nenhum progresso perdido num piloto sem cobrança |
+| 3. Separar o conteúdo | 1, 2 | Quebrar o uso offline e o APK | O build falha se conteúdo pago entrar no site ou no APK; offline funciona para quem tem acesso; a parte gratuita fica igual |
+| 4. Assinatura em teste | 3 | Liberar sem pagamento ou bloquear quem pagou | Vigência gravada só pelo servidor (webhook); regras do Firestore testadas no emulador para assinante, vencido e sem conta |
+| 5. Administração e suporte | 4 | Erros manuais de acesso | Liberar e revogar com registro; cancelamento e reembolso em 7 dias (CDC) funcionando |
+| 6. Lançamento controlado | 5 | Falhas em escala | Grupo pequeno, monitoramento de erros e pagamentos, revisão antes da abertura |
+
+Detalhe de cada fase:
 
 1. **Decisões de negócio e jurídicas**: modelo (assinatura, acesso por prova, gratuito com extras), preço, gateway,
    termos de uso e política de privacidade revisados, direitos de conteúdo.

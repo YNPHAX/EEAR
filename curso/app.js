@@ -144,6 +144,22 @@
     if (o && o.cfg && !(o.cfg.cv >= 2) && Number(o.cfg.tempoSim) === 240) b.cfg.tempoSim = 260;
     ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { if (!b[k] || typeof b[k] !== 'object') b[k] = {}; });
     if (!Array.isArray(b.sims)) b.sims = [];
+    /* Entradas que nenhuma versão grava (progresso colado malformado) ou questões que saíram do curso numa atualização
+       travariam as telas Hoje, Plano e Simulados sem volta: ficam de fora só na memória, como o resto desta função. */
+    const obj = x => !!x && typeof x === 'object' && !Array.isArray(x);
+    /* Placar de um simulado: matéria → [acertos, total], sempre com total ≥ 1 (como entregar() grava). */
+    const placar = r => { const o = {}; if (obj(r)) Object.keys(r).forEach(k => { const v = r[k]; if (Array.isArray(v) && typeof v[0] === 'number' && typeof v[1] === 'number' && v[1] >= 1) o[k] = v; }); return o; };
+    b.sims = b.sims.filter(obj).map(x => Object.assign({}, x, { r: placar(x.r) })).filter(x => Object.keys(x.r).length);
+    const questoes = a => { // simulado em andamento ou o último entregue: só questões que ainda existem no curso
+      ['resp', 'marc', 'perms'].forEach(k => { if (!obj(a[k])) a[k] = {}; });
+      a.ids = a.ids.filter(id => typeof id === 'string' && Q[id]);
+      a.ids.forEach(id => { if (!Array.isArray(a.perms[id])) a.perms[id] = [0, 1, 2, 3]; });
+      return a.ids.length > 0;
+    };
+    if (b.ativo != null && !(obj(b.ativo) && Array.isArray(b.ativo.ids) && questoes(b.ativo))) b.ativo = null;
+    if (b.ativo) b.ativo.i = Math.min(Math.max(0, Math.floor(Number(b.ativo.i)) || 0), b.ativo.ids.length - 1);
+    if (b.ult != null && !(obj(b.ult) && obj(b.ult.reg) && Array.isArray(b.ult.ids) && questoes(b.ult))) b.ult = null;
+    if (b.ult) { b.ult.reg = Object.assign({}, b.ult.reg, { r: placar(b.ult.reg.r) }); if (!Object.keys(b.ult.reg.r).length) b.ult = null; }
     /* Certificados (veja "certificados conquistados"): um progresso sem cfg.certs veio de uma versão sem o registro e é
        conferido uma única vez. Tudo aqui fica só na memória: nada é gravado até o aluno estudar. */
     const temCerts = !!(o && o.cfg && Object.prototype.hasOwnProperty.call(o.cfg, 'certs'));
@@ -237,14 +253,26 @@
     return JSON.stringify([cfg.certs, cfg.certsZ || 0]) !== antes;
   }
 
-  try { const t = localStorage.getItem(LS); if (t) { const o = JSON.parse(t); if (o && o.v === 1) S = mesclar(o); } } catch (e) { /* sem armazenamento local */ }
+  /* Progresso que este app não consegue ler (corrompido, ou gravado por uma versão futura com outro formato): antes que o
+     primeiro salvar() grave por cima, uma cópia fica em LS_REC, e a tela Hoje oferece copiá-la. */
+  const LS_REC = 'missao-eear-v1-recuperar';
+  let recuperar = null, gravouLocal = true;
+  try {
+    const t = localStorage.getItem(LS);
+    if (t) {
+      let lido = false;
+      try { const o = JSON.parse(t); if (o && o.v === 1) { S = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
+      if (!lido) try { localStorage.setItem(LS_REC, t); } catch (e) { /* sem espaço para a cópia */ }
+    }
+    recuperar = localStorage.getItem(LS_REC);
+  } catch (e) { /* sem armazenamento local */ }
 
   const nuvem = { ref: null, on: false, busy: false, again: false, fb: false };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
     fixarAncoras();
-    try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
+    try { localStorage.setItem(LS, JSON.stringify(S)); gravouLocal = true; } catch (e) { gravouLocal = false; } // o aviso aparece no próximo render()
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
   }
@@ -393,7 +421,7 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.on ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho.';
+    if (el) el.textContent = nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 
   /* ---------- status ---------- */
@@ -747,6 +775,11 @@
         <div class="row"><button class="btn pri" data-a="simini" data-tipo="diag">Fazer o diagnóstico</button><button class="btn" data-a="tab" data-v="plano">Ajustar o plano</button></div></section>`;
     }
     if (S.ativo) h += `<div class="banner acc"><p>Você tem um simulado em andamento.</p><button class="btn sm pri" data-a="go" data-v="sim">Continuar</button></div>`;
+    if (!gravouLocal) h += `<div class="banner warn" role="alert"><p><b>Seu progresso não está sendo salvo neste aparelho</b> (armazenamento cheio ou bloqueado, como na navegação anônima). Para não perder o que estudou, copie o progresso em Plano › Dados.</p><button class="btn sm" data-a="tab" data-v="plano">Abrir o Plano</button></div>`;
+    if (recuperar) {
+      h += `<div class="banner warn"><p>Um progresso salvo antes neste aparelho não pôde ser aberto por esta versão do app. Guardamos uma cópia: copie e guarde antes de descartar.${msgRec ? ' ' + msgRec : ''}</p><button class="btn sm" data-a="reccopiar">Copiar</button><button class="btn sm" data-a="recdescartar">Descartar</button></div>`;
+      if (pedindo === 'rec') h += `<div class="field"><label for="rec-txt">Selecione e copie a cópia do progresso</label><textarea id="rec-txt" class="codigo" readonly rows="4">${esc(recuperar)}</textarea></div>`;
+    }
     const prox = CAL.map(x => ({ x, n: dnum(x.d) })).filter(o => o.n >= hj && o.n < prova).sort((a, b) => a.n - b.n)[0];
     if (prox) h += `<div class="banner acc"><p><b>${prox.x.nome}</b> em ${plural(prox.n - hj, 'dia', 'dias')} (${fdata(prox.n)}), antes da sua prova alvo. Se estiver inscrito, use como experiência real de prova.</p></div>`;
     const atr =p.dias.filter(x => x.n < hj).reduce((a, x) => a.concat(x.tar), []).filter(t => (t.tipo === 'teoria' || t.tipo === 'quiz' || t.tipo === 'diag') && !feita(t));
@@ -825,8 +858,8 @@
       <form class="form" id="cfg" onsubmit="return false">
         <div class="field"><label for="cfg-alvo">Prova alvo</label><select id="cfg-alvo">${CAL.map(x => `<option value="${x.id}" ${c.alvo === x.id ? 'selected' : ''}>${x.nome} (${fdata(dnum(x.d))}/${x.d.slice(0, 4)})</option>`).join('')}<option value="outra" ${c.alvo === 'outra' ? 'selected' : ''}>Outra data</option></select></div>
         <div class="field"><label for="cfg-modalidade">Modalidade</label><select id="cfg-modalidade"><option value="normal" ${c.modalidade !== 'bct' ? 'selected' : ''}>CFS normal · Inglês básico</option><option value="bct" ${c.modalidade === 'bct' ? 'selected' : ''}>CFS BCT · Inglês intermediário</option></select></div>
-        <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${c.prova}" ${c.alvo === 'outra' ? '' : 'disabled'}></div>
-        <div class="field"><label for="cfg-inicio">Início do plano</label><input type="date" id="cfg-inicio" value="${c.inicio}"></div>
+        <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${esc(c.prova)}" ${c.alvo === 'outra' ? '' : 'disabled'}></div>
+        <div class="field"><label for="cfg-inicio">Início do plano</label><input type="date" id="cfg-inicio" value="${esc(c.inicio)}"></div>
         <div class="field"><label for="cfg-horas">Horas por dia</label><select id="cfg-horas">${[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10].map(x => `<option value="${x}" ${Number(c.horas) === x ? 'selected' : ''}>${fh(x)}</option>`).join('')}</select></div>
         <div class="field"><label for="cfg-sim">Simulado semanal</label><select id="cfg-sim">${[0, 1, 2, 3, 4, 5, 6].map(x => `<option value="${x}" ${Number(c.simDia) === x ? 'selected' : ''}>${DIAS_L[x]}</option>`).join('')}</select></div>
         <div class="field"><label for="cfg-tempo">Tempo do simulado completo</label><select id="cfg-tempo">${[180, 210, 240, 260].map(x => `<option value="${x}" ${Number(c.tempoSim) === x ? 'selected' : ''}>${fh(x / 60)}</option>`).join('')}</select></div>
@@ -882,7 +915,7 @@
     return h;
   }
   /* Instalação como app: só no site (no app de Android e no link do curso ela não se aplica). */
-  let instalar = null, msgDados = '';
+  let instalar = null, msgDados = '', msgRec = '';
   window.addEventListener('beforeinstallprompt', ev => { ev.preventDefault(); instalar = ev; if (V.v === 'plano') render(); });
   function cartaoInstalar() {
     if (window.EEAR_SITE !== 'site') return '';
@@ -978,7 +1011,7 @@
       <p class="cert-cert">Certificamos que</p>
       <h1 class="cert-nome">${esc(S.cfg.nome)}</h1>
       <p class="cert-txt">concluiu ${geral ? 'o <b>curso preparatório completo para o CFS da EEAR</b>, nas quatro matérias da prova (Língua Portuguesa, Língua Inglesa, Matemática e Física)' : `a matéria <b>${MATS[s].nome}</b> do curso preparatório para o CFS da EEAR`}, com ${ms.length} aulas e nota de pelo menos 80% no quiz de cada uma.</p>
-      <div class="cert-dados"><div><span class="lab">Carga horária</span><b>${horas} horas</b></div><div><span class="lab">Concluído em</span><b>${dataLonga(data)}</b></div><div><span class="lab">Código</span><b class="num">${cod}</b></div></div>
+      <div class="cert-dados"><div><span class="lab">Carga horária</span><b>${horas} horas</b></div><div><span class="lab">Concluído em</span><b>${dataLonga(data)}</b></div><div><span class="lab">Código</span><b class="num">${esc(cod)}</b></div></div>
       <div class="cert-ass"><span class="marca" role="img" aria-label="INPHAX"></span><span>emitido pela INPHAX</span></div>
       <p class="cert-nota">Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira. Não tem validade acadêmica.</p>
     </div></article>
@@ -1055,7 +1088,7 @@
     const aba = V.aba || 'aula';
     const r = S.mod[m.id] || {}, st = estMod(m.id);
     let h = `<button class="btn ghost back" data-a="mat" data-s="${m.m}">← Trilha de ${MATS[m.m].curto}</button>`;
-    h += `<div class="stack"><div class="eyebrow">${sig(m.m)} Aula ${nAula(m)} de ${aulasDe(m.m).length} · ${m.id} · incidência ${bolinhas(m.peso)} · ${fh(m.h)}</div><h1 class="h1">${m.t}</h1><div class="row"><span class="chip ${st.k}">${st.txt}</span>${r.tent ? `<span class="small muted">${plural(r.tent, 'tentativa', 'tentativas')} no quiz</span>` : ''}</div></div>`;
+    h += `<div class="stack"><div class="eyebrow">${sig(m.m)} Aula ${nAula(m)} de ${aulasDe(m.m).length} · ${m.id} · incidência ${bolinhas(m.peso)} · ${fh(m.h)}</div><h1 class="h1">${m.t}</h1><div class="row"><span class="chip ${st.k}">${st.txt}</span>${r.tent ? `<span class="small muted">${esc(plural(r.tent, 'tentativa', 'tentativas'))} no quiz</span>` : ''}</div></div>`;
     const ofi = OFI[m.id] || [];
     const aps = APMOD[m.id] || [];
     const abas = [['aula', 'Aula'], ['teoria', 'Teoria'], ['ex', 'Exemplos'], ['quiz', 'Quiz']].concat(apVisivel() ? [['ap', 'Apostila']] : [], [['prov', 'Provas'], ['cards', 'Cartões']]);
@@ -1319,7 +1352,7 @@
       h += ORD.map(s => {
         const ids = Object.keys(S.erros).filter(id => Q[id] && Q[id].m === s);
         if (!ids.length) return '';
-        return `<details class="rev"><summary>${MATS[s].curto} · ${ids.length}</summary>${ids.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)} <span class="chip bad">${S.erros[id]}x</span></summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</details>`;
+        return `<details class="rev"><summary>${MATS[s].curto} · ${ids.length}</summary>${ids.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)} <span class="chip bad">${esc(S.erros[id])}x</span></summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</details>`;
       }).join('');
     }
     h += `</section>`;
@@ -1397,7 +1430,7 @@
     const nome = nomeSim(reg);
     let h = `<div class="stack"><div class="eyebrow">Debriefing · ${nome} · ${fdata(dnum(reg.d))}</div><h1 class="h1">${reg.tipo === 'diag' ? 'Seu ponto de partida' : (med >= META && !ks.some(s => reg.r[s][0] / reg.r[s][1] < META) ? 'Meta de 80% batida' : 'Resultado do simulado')}</h1></div>`;
     h += `<section class="card"><div class="row between"><div><div class="eyebrow">Média</div><span class="score num">${nota(med)}</span></div>${reg.tipo === 'completo' || reg.tipo === 'prova' || reg.tipo === 'oficial' ? `<span class="chip ${elimina ? 'bad' : (med >= META ? 'ok' : 'warn')}">${elimina ? 'Abaixo do mínimo do edital' : (med >= META ? 'Na meta do curso' : 'Acima do mínimo, abaixo da meta')}</span>` : ''}</div>
-      <div class="tbl tbl-res"><table><thead><tr><th>Matéria</th><th class="num">Acertos</th><th class="num">Nota</th><th>Situação</th></tr></thead><tbody>${ks.map(s => { const x = reg.r[s][0] / reg.r[s][1]; return `<tr><td>${sig(s)} ${MATS[s].curto}</td><td class="num">${reg.r[s][0]}/${reg.r[s][1]}</td><td class="num">${nota(x)}</td><td>${x >= META ? '<span class="chip ok">meta</span>' : x >= 0.5 ? '<span class="chip warn">abaixo da meta</span>' : '<span class="chip bad">abaixo de 5</span>'}</td></tr>`; }).join('')}</tbody></table></div>
+      <div class="tbl tbl-res" tabindex="0" role="region" aria-label="Notas por matéria"><table><thead><tr><th>Matéria</th><th class="num">Acertos</th><th class="num">Nota</th><th>Situação</th></tr></thead><tbody>${ks.map(s => { const x = reg.r[s][0] / reg.r[s][1]; return `<tr><td>${sig(s)} ${MATS[s].curto}</td><td class="num">${reg.r[s][0]}/${reg.r[s][1]}</td><td class="num">${nota(x)}</td><td>${x >= META ? '<span class="chip ok">meta</span>' : x >= 0.5 ? '<span class="chip warn">abaixo da meta</span>' : '<span class="chip bad">abaixo de 5</span>'}</td></tr>`; }).join('')}</tbody></table></div>
       <p class="small muted" style="margin:0">${reg.tipo === 'diag' ? 'O plano agora dá mais tempo às matérias com nota menor. ' : ''}Meta do curso: nota 8,0 em cada matéria. Mínimo do edital: 5,0 em cada matéria e média 5,0.${reg.min ? ' Tempo usado: ' + fh(reg.min / 60) + '.' : ''}</p></section>`;
     const porMod = {};
     u.ids.forEach(id => { if (Q[id].mod && MOD[Q[id].mod] && moduloAtivo(MOD[Q[id].mod]) && !acertou(id, u.perms[id], u.resp[id])) porMod[Q[id].mod] = (porMod[Q[id].mod] || 0) + 1; });
@@ -1441,7 +1474,7 @@
     h += `<section class="card"><div class="eyebrow">Treino focado</div><h2 class="h2">Simulado por matéria</h2><p class="small" style="margin:0">24 questões em 1 hora.</p><div class="row">${ORD.map(s => `<button class="btn" data-a="simini" data-tipo="materia" data-s="${s}" ${S.ativo ? 'disabled' : ''}>${MATS[s].curto}</button>`).join('')}</div></section>`;
     const hist = S.sims.slice().reverse();
     h += `<section class="card"><div class="row between"><h2 class="h2">Histórico</h2>${S.ult ? '<button class="btn sm" data-a="go" data-v="res">Correção do último</button>' : ''}</div>${grafico()}`;
-    h += hist.length ? `<div class="tbl tbl-res"><table><thead><tr><th>Data</th><th>Tipo</th>${ORD.map(s => `<th class="num">${MATS[s].sigla}</th>`).join('')}<th class="num">Média</th></tr></thead><tbody>${hist.map(r => `<tr><td class="num">${fdata(dnum(r.d))}</td><td>${nomeSim(r, true)}</td>${ORD.map(s => `<td class="num">${r.r[s] ? nota(r.r[s][0] / r.r[s][1]) : '–'}</td>`).join('')}<td class="num"><b>${nota(media(r))}</b></td></tr>`).join('')}</tbody></table></div>` : '<p class="empty">Nenhum simulado feito ainda.</p>';
+    h += hist.length ? `<div class="tbl tbl-res" tabindex="0" role="region" aria-label="Histórico de simulados"><table><thead><tr><th>Data</th><th>Tipo</th>${ORD.map(s => `<th class="num">${MATS[s].sigla}</th>`).join('')}<th class="num">Média</th></tr></thead><tbody>${hist.map(r => `<tr><td class="num">${fdata(dnum(r.d))}</td><td>${nomeSim(r, true)}</td>${ORD.map(s => `<td class="num">${r.r[s] ? nota(r.r[s][0] / r.r[s][1]) : '–'}</td>`).join('')}<td class="num"><b>${nota(media(r))}</b></td></tr>`).join('')}</tbody></table></div>` : '<p class="empty">Nenhum simulado feito ainda.</p>';
     h += `</section>`;
     return h;
   }
@@ -1658,6 +1691,13 @@
         try { navigator.clipboard.writeText(txt).then(ok, falha); } catch (e) { falha(); }
         break;
       }
+      case 'reccopiar': {
+        const ok = () => { msgRec = 'Cópia copiada.'; pedindo = null; render(); };
+        const falha = () => { pedindo = 'rec'; render(); const t = document.getElementById('rec-txt'); if (t) { t.focus(); t.select(); } };
+        try { navigator.clipboard.writeText(recuperar).then(ok, falha); } catch (e) { falha(); }
+        break;
+      }
+      case 'recdescartar': try { localStorage.removeItem(LS_REC); } catch (e) { /* ignora */ } recuperar = null; msgRec = ''; pedindo = null; render(); break;
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
       case 'impok': {
         const t = document.getElementById('imp-txt');

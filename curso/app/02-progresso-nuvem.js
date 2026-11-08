@@ -74,14 +74,26 @@
     return JSON.stringify([cfg.certs, cfg.certsZ || 0]) !== antes;
   }
 
-  try { const t = localStorage.getItem(LS); if (t) { const o = JSON.parse(t); if (o && o.v === 1) S = mesclar(o); } } catch (e) { /* sem armazenamento local */ }
+  /* Progresso que este app não consegue ler (corrompido, ou gravado por uma versão futura com outro formato): antes que o
+     primeiro salvar() grave por cima, uma cópia fica em LS_REC, e a tela Hoje oferece copiá-la. */
+  const LS_REC = 'missao-eear-v1-recuperar';
+  let recuperar = null, gravouLocal = true;
+  try {
+    const t = localStorage.getItem(LS);
+    if (t) {
+      let lido = false;
+      try { const o = JSON.parse(t); if (o && o.v === 1) { S = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
+      if (!lido) try { localStorage.setItem(LS_REC, t); } catch (e) { /* sem espaço para a cópia */ }
+    }
+    recuperar = localStorage.getItem(LS_REC);
+  } catch (e) { /* sem armazenamento local */ }
 
   const nuvem = { ref: null, on: false, busy: false, again: false, fb: false };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
     fixarAncoras();
-    try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
+    try { localStorage.setItem(LS, JSON.stringify(S)); gravouLocal = true; } catch (e) { gravouLocal = false; } // o aviso aparece no próximo render()
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
   }
@@ -230,6 +242,6 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.on ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho.';
+    if (el) el.textContent = nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 

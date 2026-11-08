@@ -58,6 +58,11 @@
         <div class="row"><button class="btn pri" data-a="simini" data-tipo="diag">Fazer o diagnóstico</button><button class="btn" data-a="tab" data-v="plano">Ajustar o plano</button></div></section>`;
     }
     if (S.ativo) h += `<div class="banner acc"><p>Você tem um simulado em andamento.</p><button class="btn sm pri" data-a="go" data-v="sim">Continuar</button></div>`;
+    if (!gravouLocal) h += `<div class="banner warn" role="alert"><p><b>Seu progresso não está sendo salvo neste aparelho</b> (armazenamento cheio ou bloqueado, como na navegação anônima). Para não perder o que estudou, copie o progresso em Plano › Dados.</p><button class="btn sm" data-a="tab" data-v="plano">Abrir o Plano</button></div>`;
+    if (recuperar) {
+      h += `<div class="banner warn"><p>Um progresso salvo antes neste aparelho não pôde ser aberto por esta versão do app. Guardamos uma cópia: copie e guarde antes de descartar.${msgRec ? ' ' + msgRec : ''}</p><button class="btn sm" data-a="reccopiar">Copiar</button><button class="btn sm" data-a="recdescartar">Descartar</button></div>`;
+      if (pedindo === 'rec') h += `<div class="field"><label for="rec-txt">Selecione e copie a cópia do progresso</label><textarea id="rec-txt" class="codigo" readonly rows="4">${esc(recuperar)}</textarea></div>`;
+    }
     const prox = CAL.map(x => ({ x, n: dnum(x.d) })).filter(o => o.n >= hj && o.n < prova).sort((a, b) => a.n - b.n)[0];
     if (prox) h += `<div class="banner acc"><p><b>${prox.x.nome}</b> em ${plural(prox.n - hj, 'dia', 'dias')} (${fdata(prox.n)}), antes da sua prova alvo. Se estiver inscrito, use como experiência real de prova.</p></div>`;
     const atr =p.dias.filter(x => x.n < hj).reduce((a, x) => a.concat(x.tar), []).filter(t => (t.tipo === 'teoria' || t.tipo === 'quiz' || t.tipo === 'diag') && !feita(t));
@@ -136,8 +141,8 @@
       <form class="form" id="cfg" onsubmit="return false">
         <div class="field"><label for="cfg-alvo">Prova alvo</label><select id="cfg-alvo">${CAL.map(x => `<option value="${x.id}" ${c.alvo === x.id ? 'selected' : ''}>${x.nome} (${fdata(dnum(x.d))}/${x.d.slice(0, 4)})</option>`).join('')}<option value="outra" ${c.alvo === 'outra' ? 'selected' : ''}>Outra data</option></select></div>
         <div class="field"><label for="cfg-modalidade">Modalidade</label><select id="cfg-modalidade"><option value="normal" ${c.modalidade !== 'bct' ? 'selected' : ''}>CFS normal · Inglês básico</option><option value="bct" ${c.modalidade === 'bct' ? 'selected' : ''}>CFS BCT · Inglês intermediário</option></select></div>
-        <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${c.prova}" ${c.alvo === 'outra' ? '' : 'disabled'}></div>
-        <div class="field"><label for="cfg-inicio">Início do plano</label><input type="date" id="cfg-inicio" value="${c.inicio}"></div>
+        <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${esc(c.prova)}" ${c.alvo === 'outra' ? '' : 'disabled'}></div>
+        <div class="field"><label for="cfg-inicio">Início do plano</label><input type="date" id="cfg-inicio" value="${esc(c.inicio)}"></div>
         <div class="field"><label for="cfg-horas">Horas por dia</label><select id="cfg-horas">${[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10].map(x => `<option value="${x}" ${Number(c.horas) === x ? 'selected' : ''}>${fh(x)}</option>`).join('')}</select></div>
         <div class="field"><label for="cfg-sim">Simulado semanal</label><select id="cfg-sim">${[0, 1, 2, 3, 4, 5, 6].map(x => `<option value="${x}" ${Number(c.simDia) === x ? 'selected' : ''}>${DIAS_L[x]}</option>`).join('')}</select></div>
         <div class="field"><label for="cfg-tempo">Tempo do simulado completo</label><select id="cfg-tempo">${[180, 210, 240, 260].map(x => `<option value="${x}" ${Number(c.tempoSim) === x ? 'selected' : ''}>${fh(x / 60)}</option>`).join('')}</select></div>
@@ -193,7 +198,7 @@
     return h;
   }
   /* Instalação como app: só no site (no app de Android e no link do curso ela não se aplica). */
-  let instalar = null, msgDados = '';
+  let instalar = null, msgDados = '', msgRec = '';
   window.addEventListener('beforeinstallprompt', ev => { ev.preventDefault(); instalar = ev; if (V.v === 'plano') render(); });
   function cartaoInstalar() {
     if (window.EEAR_SITE !== 'site') return '';
@@ -289,7 +294,7 @@
       <p class="cert-cert">Certificamos que</p>
       <h1 class="cert-nome">${esc(S.cfg.nome)}</h1>
       <p class="cert-txt">concluiu ${geral ? 'o <b>curso preparatório completo para o CFS da EEAR</b>, nas quatro matérias da prova (Língua Portuguesa, Língua Inglesa, Matemática e Física)' : `a matéria <b>${MATS[s].nome}</b> do curso preparatório para o CFS da EEAR`}, com ${ms.length} aulas e nota de pelo menos 80% no quiz de cada uma.</p>
-      <div class="cert-dados"><div><span class="lab">Carga horária</span><b>${horas} horas</b></div><div><span class="lab">Concluído em</span><b>${dataLonga(data)}</b></div><div><span class="lab">Código</span><b class="num">${cod}</b></div></div>
+      <div class="cert-dados"><div><span class="lab">Carga horária</span><b>${horas} horas</b></div><div><span class="lab">Concluído em</span><b>${dataLonga(data)}</b></div><div><span class="lab">Código</span><b class="num">${esc(cod)}</b></div></div>
       <div class="cert-ass"><span class="marca" role="img" aria-label="INPHAX"></span><span>emitido pela INPHAX</span></div>
       <p class="cert-nota">Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira. Não tem validade acadêmica.</p>
     </div></article>
