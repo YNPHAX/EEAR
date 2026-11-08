@@ -65,7 +65,10 @@ corpo = corpo[:pos] + antes + corpo[pos:]
 html = f'<!doctype html>\n<html lang="pt-BR">\n<head>\n{meta}{cab}\n</head>\n<body>\n{corpo.strip()}\n{registro}</body>\n</html>\n'
 open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(html)
 
-# scripts e dados
+# scripts e dados: curso/app.js é montado a partir de curso/app/ (web/montar_app.py); se divergir, o build para
+sys.path.insert(0, WEB)
+import montar_app  # noqa: E402
+assert montar_app.confere(), 'curso/app.js difere de curso/app/: rode python3 web/montar_app.py'
 copiar(os.path.join(CURSO, 'app.js'), os.path.join(OUT, 'app.js'))
 for f in sorted(os.listdir(os.path.join(CURSO, 'dados'))):
     if f.endswith('.js') and f != 'apostila.js':
