@@ -56,12 +56,12 @@
       case 'marcar': if (S.feito[d.k]) delete S.feito[d.k]; else { S.feito[d.k] = true; marcarAtividade(); } salvar(); render(); break;
       case 'fcini': { const ids = devidos(d.s || null).map(c => c.id); if (ids.length) iniciarFC(ids, d.s ? MATS[d.s].curto : 'revisão do dia'); break; }
       case 'fcmod': { const m = MOD[d.id]; marcarLido(m.id); iniciarFC(m.fc.map((_, i) => m.id + '~' + i), m.id); break; }
-      case 'fcvirar': FC.virado = true; render(); break;
+      case 'fcvirar': FC.virado = true; render(); mostrarVerso(); break;
       case 'fcaval': {
         const id = FC.fila[FC.i], ok = d.ok === '1';
         avaliar(id, ok);
         if (ok) FC.ok++; else { FC.err++; if (!FC.rep[id]) { FC.rep[id] = 1; FC.fila.push(id); } }
-        FC.i++; FC.virado = false; salvar(); render(); break;
+        FC.i++; FC.virado = false; salvar(); render(); window.scrollTo(0, 0); break;
       }
       case 'errosini': {
         let ids = Object.keys(S.erros).filter(id => Q[id] && (!d.s || Q[id].m === d.s));

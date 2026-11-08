@@ -304,9 +304,17 @@
     h += `<div class="stack"><div class="eyebrow">Flashcards · ${f.titulo}</div><div class="meter b-${c.m}"><i style="width:${(f.i / f.fila.length) * 100}%"></i></div></div>`;
     h += `<div class="fc"><span class="chip tag">${sig(c.m)} ${m.id}</span><div>${c.f}</div>${f.virado ? `<div class="verso">${c.v}</div>` : ''}</div>`;
     h += f.virado
-      ? `<div class="row" style="justify-content:center"><button class="btn" data-a="fcaval" data-ok="0">Errei</button><button class="btn pri" data-a="fcaval" data-ok="1">Acertei</button></div>`
-      : `<div class="row" style="justify-content:center"><button class="btn pri" data-a="fcvirar">Mostrar resposta</button></div>`;
+      ? `<div class="row fc-acoes"><button class="btn" data-a="fcaval" data-ok="0">Errei</button><button class="btn pri" data-a="fcaval" data-ok="1">Acertei</button></div>`
+      : `<div class="row fc-acoes"><button class="btn pri" data-a="fcvirar">Mostrar resposta</button></div>`;
     return h;
+  }
+
+  // Depois de revelar: se o começo da resposta ficou atrás dos botões fixos (cartão longo em tela pequena), rola só o necessário para mostrá-lo.
+  function mostrarVerso() {
+    const v = document.querySelector('.fc .verso'), bar = document.querySelector('.fc-acoes');
+    if (!v || !bar) return;
+    const falta = v.getBoundingClientRect().top + 72 - bar.getBoundingClientRect().top;
+    if (falta > 0) window.scrollBy(0, falta);
   }
 
   function vTreino() {

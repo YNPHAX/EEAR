@@ -203,6 +203,9 @@ sup, sub { line-height: 0; }
 .fc { min-height: 220px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); padding: 22px 18px; display: flex; flex-direction: column; gap: 14px; justify-content: center; text-align: center; font-size: 1.12rem; line-height: 1.5; }
 .fc .verso { border-top: 1px dashed var(--line); padding-top: 14px; color: var(--ink); }
 .fc .tag { align-self: center; }
+/* Botões do flashcard fixos acima da barra de abas: no celular o aluno revela e avalia sem precisar rolar um cartão longo. */
+.fc-acoes { justify-content: center; position: sticky; bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px)); z-index: 5; background: var(--bg); padding-block: 8px; margin-block: -8px; }
+@media (min-width: 820px) { .fc-acoes { bottom: 0; } }
 
 .simbar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 61px); z-index: 5; background: var(--bg); padding-block: 8px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
 @media (min-width: 820px) { .simbar { top: calc(env(safe-area-inset-top, 0px) + 110px); } }
