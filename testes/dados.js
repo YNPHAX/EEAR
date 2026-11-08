@@ -69,6 +69,10 @@ function testarDados(E) {
   /* Questões oficiais de física moderna (efeito fotoelétrico, átomo de Bohr, fissão do urânio-235) ficam na aula FIS18. */
   const fm = [['cfs2-2025', 51], ['cfs2-2025', 68], ['cfs1-2025', 51]].filter(([p, n]) => (E.provas.find(x => x.id === p) || { q: [] }).q.some(q => q.n === n && q.mod === 'FIS18'));
   ok(fm.length === 3, `questões oficiais de física moderna ligadas à aula FIS18 (${fm.length} de 3)`);
+  /* curso/app.js é a montagem de curso/app/ (web/montar_app.py): os dois não podem divergir. */
+  const pasta = path.join(RAIZ, 'curso', 'app'), partes = fs.readdirSync(pasta).filter(f => f.endsWith('.js')).sort();
+  const montado = '/* Missão EEAR — app do curso (sem dependências). */\n(function () {\n' + partes.map(f => fs.readFileSync(path.join(pasta, f), 'utf8')).join('') + '})();\n';
+  ok(fs.readFileSync(path.join(RAIZ, 'curso', 'app.js'), 'utf8') === montado, `curso/app.js igual à montagem dos ${partes.length} arquivos de curso/app/`);
 }
 
 /* Flashcards de Matemática com conta: o resultado é recalculado aqui, de forma independente, e precisa aparecer no verso. */

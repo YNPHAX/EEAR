@@ -161,7 +161,7 @@ module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, 
       const mod = {}; ING.forEach(m => { mod[m.id] = { lido: dstr(D - 30), tent: 1, best: 0.9, ok: dstr(D - 30) }; });
       const st0 = Object.assign(base({ modalidade }), { mod, fc, erros: {}, sims: [] }); st0.cfg.prova = '2027-05-30';
       const antes = JSON.stringify(st0), ate = k => novos.filter(id => desvio(id) <= k).length;
-      if (modalidade === 'normal') ok(todos.length === 113 && todos.filter(id => versao[id] === 2).length === 86 && todos.filter(id => versao[id] === 1).length === 27, `Inglês: 113 cartões, 86 na versão 2 e 27 sem versão`);
+      if (modalidade === 'normal') ok(todos.length === 113 && todos.filter(id => versao[id] === 2).length === 87 && todos.filter(id => versao[id] === 1).length === 26, `Inglês: 113 cartões, 87 na versão 2 (86 do Lote 2 e ING14~5) e 26 sem versão`);
       let r = await abrirEm(srv.url, st0, T0, tz);
       ok(await r.guardado() === antes && await r.vencidos() === ate(0), `Inglês ${modalidade}: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (${ate(0)} de ${novos.length})`);
       await r.ctx.close();

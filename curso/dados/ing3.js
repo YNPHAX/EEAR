@@ -255,7 +255,7 @@ EEAR.add({
     ['Complete: "The runway was wet because it ___ (rain) all morning."', 'Had been raining: duração anterior a outro ponto do passado (had been + -ing).', 2],
     ['Complete: "By the end of this year, I ___ (complete) the course."', 'Will have completed: ação concluída antes de um marco futuro (will have + particípio).', 2],
     ['Complete: "Don\'t call me at 9 tomorrow. I ___ (take) a test then."', 'I will be taking a test: ação em andamento num momento do futuro (will be + -ing).', 2],
-    ['By the time + passado', 'Pede past perfect: By the time we arrived, they had left.'],
+    ['By the time + passado: que tempo costuma vir na outra oração?', 'Past perfect, para a ação concluída antes daquele ponto: By the time we arrived, they had left. É o uso esperado em provas e textos formais; na fala, o simple past às vezes aparece quando a sequência já está clara.', 2],
     ['By + marco futuro', 'Pede future perfect: By 2030, she will have finished.']
   ]
 });
