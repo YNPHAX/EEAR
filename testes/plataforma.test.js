@@ -75,6 +75,90 @@ function testarDados(E) {
   ok(fm.length === 3, `questões oficiais de física moderna ligadas à aula FIS18 (${fm.length} de 3)`);
 }
 
+/* Flashcards de Matemática com conta: o resultado é recalculado aqui, de forma independente, e precisa aparecer no verso. */
+function testarContasMat(E) {
+  console.log('\n== contas dos flashcards de Matemática (recalculadas)');
+  const card = id => { const [m, i] = id.split('~'); const c = (E.modulos.find(x => x.id === m) || { fc: [] }).fc[+i]; return c ? c[1].replace(/<\/?[a-z][^>]*>/gi, ' ') : ''; };
+  const num = x => (Math.round(x * 1e6) / 1e6).toString().replace('-', '−').replace('.', ',');
+  const perto = (a, b) => Math.abs(a - b) < 1e-9;
+  const fat = n => n <= 1 ? 1 : n * fat(n - 1), comb = (n, p) => fat(n) / (fat(p) * fat(n - p));
+  const mdc = (a, b) => b ? mdc(b, a % b) : Math.abs(a), frac = (a, b) => { const g = mdc(a, b); return `${a / g}/${b / g}`; };
+  const media = v => v.reduce((s, x) => s + x, 0) / v.length, dp = v => Math.sqrt(media(v.map(x => (x - media(v)) ** 2)));
+  const raizes = (a, b, c) => { const d = b * b - 4 * a * c; return d < 0 ? [] : [(-b - Math.sqrt(d)) / (2 * a), (-b + Math.sqrt(d)) / (2 * a)]; };
+  const cpx = { mul: ([a, b], [c, d]) => [a * c - b * d, a * d + b * c], div: (z, [c, d]) => cpx.mul(z, [c / (c * c + d * d), -d / (c * c + d * d)]) };
+  const r1 = raizes(2, -6, 3), [x5a, x5b] = raizes(1, -6, 8).map(Math.log2), z = cpx.div([1, 3], [1, 1]);
+  const lg2 = 0.30, lg3 = 0.48, dados5 = [4.5, 7.5];
+  const casos = [
+    ['MAT01~0', Math.log2(32) === 5 && 2 ** 5 - 1 === 31, ['n = 5', '31']],
+    ['MAT01~1', 25 + 18 - 7 === 36, ['36', '40 − 36 = 4']],
+    ['MAT01~2', frac(27, 99) === '3/11', ['3/11']],
+    ['MAT02~2', (5 * 2) - 3 === 7 && (5 - 3) * 2 === 4, ['= 7', '= 4']],
+    ['MAT02~3', ((3 * 4 - 6) + 6) / 3 === 4, ['(x + 6)/3']],
+    ['MAT03~3', r1.length === 2 && perto(1 / r1[0] + 1 / r1[1], 2), ['S/P = 2', 'Δ = 12']],
+    ['MAT03~4', 2 * 4 - 16 + 3 === -5 && 8 / 4 === 2, ['−5', 'x = 2']],
+    ['MAT03~5', raizes(1, -6, 9.0001).length === 0 && raizes(1, -6, 9).length === 2, ['k > 9']],
+    ['MAT03~6', -2 + 4 + 1 === 3, ['máximo 3']],
+    ['MAT04~2', raizes(1, -4, -5).join() === [-1, 5].join(), ['{−1, 5}']],
+    ['MAT04~3', [...Array(21)].map((_, i) => i - 10).filter(x => Math.abs(x - 3) < 2).join() === '2,3,4', ['2, 3 e 4']],
+    ['MAT05~5', perto(2000 * 1.05 ** 2, 2205) && 2000 * 1.1 === 2200, ['2.205,00']],
+    ['MAT05~6', 80 * 0.5 ** 3 === 10, ['10 g']],
+    ['MAT05~7', perto(x5a, 1) && perto(x5b, 2) && 4 ** 1 - 6 * 2 + 8 === 0 && 4 ** 2 - 6 * 4 + 8 === 0, ['{1, 2}']],
+    ['MAT06~1', perto(2 * lg2 + lg3, 1.08) && perto(lg3 - lg2, 0.18), ['1,08', '0,18']],
+    ['MAT06~3', perto(Math.log(32) / Math.log(8), 5 / 3), ['5/3']],
+    ['MAT06~5', perto(2 - lg2, 1.7), ['1,70']],
+    ['MAT06~7', perto(Math.log(9) / Math.log(3) + Math.log(1) / Math.log(3), 2) && raizes(1, -8, -9).join() === '-1,9', ['x = 9', 'x > 8']],
+    ['MAT07~1', [...Array(50)].reduce((s, _, i) => s + 2 * i + 1, 0) === 2500, ['2500']],
+    ['MAT07~4', perto(6 / (1 - 1 / 3), 9), ['= 9', '|q| < 1']],
+    ['MAT07~5', 6 * 6 === 12 * 3 && 6 === (0 + 12) / 2, ['x = 3', 'x = 0']],
+    ['MAT07~6', 3 + 7 + 11 === 21 && 3 * 11 === 33, ['3, 7 e 11']],
+    ['MAT07~7', 2 * 6 * 18 === 216 && 6 / 2 === 18 / 6, ['2, 6 e 18']],
+    ['MAT08~3', 3 ** 2 * -3 === -27, ['−27']],
+    ['MAT08~7', 4 * -2 === -8, ['−8', '1/4']],
+    ['MAT09~4', 2 * 3 - (-1) * 1 === 7, ['= 7']],
+    ['MAT09~5', 4 - 2 * 2 === 0, ['k = 2', 'SI']],
+    ['MAT09~6', 7 + 3 === 10 && 7 - 3 === 4, ['x = 7', 'y = 3']],
+    ['MAT10~0', comb(10, 3) === 120 && 10 * 9 * 8 === 720, ['120', '720']],
+    ['MAT10~3', fat(6) / (fat(3) * fat(2)) === 60, ['= 60']],
+    ['MAT10~5', (3 - 1) ** 4 === 16, ['16']],
+    ['MAT10~7', 8 + 1 === 9, ['9 termos', '5º']],
+    ['MAT11~0', [...Array(30)].filter((_, i) => (i + 1) % 4 === 0).length === 7, ['7/30']],
+    ['MAT11~2', [1, 2, 3, 4, 5, 6].filter(x => x % 2 === 0 || x > 3).length === 4, ['2/3']],
+    ['MAT11~4', perto(0.2 / 0.6, 1 / 3), ['1/3']],
+    ['MAT11~5', 1 - 0.5 ** 3 === 7 / 8, ['7/8']],
+    ['MAT11~7', perto(3 / 5 * 2 / 4, 0.3) && perto((3 / 5) ** 2, 9 / 25), ['3/10', '9/25']],
+    ['MAT12~0', media([7, 9]) === 8 && [12, 4, 9, 7, 2, 15].sort((a, b) => a - b)[2] === 7, ['= 8']],
+    ['MAT12~3', media([2, 5, 8].map(x => (x - 5) ** 2)) === 6, ['= 6']],
+    ['MAT12~5', media(dados5) === 6 && dp(dados5) === 1.5 && media(dados5.map(x => x + 1)) === 7 && dp(dados5.map(x => x + 1)) === 1.5 && media(dados5.map(x => 2 * x)) === 12 && dp(dados5.map(x => 2 * x)) === 3, ['média 7', 'média 12', 'desvio 3']],
+    ['MAT12~6', 45 / 120 * 360 === 135, ['135°']],
+    ['MAT13~6', perto(Math.acos((9 + 25 - 49) / 30) * 180 / Math.PI, 120), ['120°']],
+    ['MAT14~0', 225 / 180 === 5 / 4 && perto(5 / 6 * 180, 150), ['5π/4', '150°']],
+    ['MAT14~3', 3 - 2 * -1 === 5 && 3 - 2 * 1 === 1, ['[1, 5]']],
+    ['MAT15~1', 35 + 70 === 105 && 180 - 105 === 75, ['105°']],
+    ['MAT15~2', (8 - 2) * 180 / 8 === 135, ['135°']],
+    ['MAT15~3', 8 * 5 / 2 === 20 && raizes(1, -3, -40).join() === '-5,8', ['n = 8']],
+    ['MAT15~5', 10 * 2 ** 2 === 40, ['40 cm²']],
+    ['MAT16~0', 110 / 2 === 55 && (360 - 110) / 2 === 125, ['55°', '125°']],
+    ['MAT16~4', 90 / 360 * 16 === 4 && 90 / 360 * 2 * 4 === 2, ['4π cm²', '2π cm']],
+    ['MAT17~6', 2 * 10 ** 3 === 2000, ['2000 L']],
+    ['MAT18~4', Math.abs(3 * 2 + 4 * 1 + 5) / Math.hypot(3, 4) === 3, ['= 3']],
+    ['MAT18~6', 6 / 2 === 3 && -4 / 2 === -2 && (6 / 2) ** 2 + (4 / 2) ** 2 + 12 === 25, ['(3, −2)', 'raio 5']],
+    ['MAT19~1', 3 + 3 === 6 && 9 + 16 === 25, ['= 6', '= 25']],
+    ['MAT19~3', perto(z[0], 2) && perto(z[1], 1), ['2 + i']],
+    ['MAT19~5', perto(6 * Math.cos(Math.PI / 2), 0) && perto(6 * Math.sin(Math.PI / 2), 6), ['6i']],
+    ['MAT20~0', 8 - 4 + 5 === 9, ['= 9']],
+    ['MAT20~2', (1 - 2) ** 5 === -1 && (0 - 2) ** 5 === -32, ['−1', '−32']],
+    ['MAT20~3', [-1, 2, 4].every(x => x ** 3 - 5 * x ** 2 + 2 * x + 8 === 0) && -1 + 2 + 4 === 5, ['= 5']],
+    ['MAT20~4', -6 / 3 === -2, ['= −2']],
+    ['MAT20~5', (-1 * 2) + (-1 * 4) + (2 * 4) === 2, ['= 2']],
+    ['MAT01~5', [2, 4, 6, 8].filter(x => ![6, 8, 10].includes(x)).join() === '2,4', ['{2, 4}', '{10}']],
+    ['MAT20~7', 4 + 4 === 8, ['4 + 4 = 8', 'x + 1']]
+  ];
+  const ruins = casos.filter(([id, conta, txt]) => !conta || !txt.every(t => card(id).includes(t))).map(([id]) => id);
+  ok(!ruins.length, `${casos.length} cartões de Matemática: a conta recalculada confere com o verso` + (ruins.length ? ': ' + ruins.join(', ') : ''));
+  const versoes = E.modulos.filter(m => m.m === 'mat').flatMap(m => m.fc.map(c => c[2] || 1));
+  ok(versoes.length === 155 && versoes.filter(v => v === 2).length === 88 && versoes.filter(v => v === 1).length === 67, `Matemática: 155 cartões, 88 na versão 2 e 67 sem versão`);
+}
+
 /* Servidor estático que imita o GitHub Pages: o site fica em /EEAR/. */
 function servir(raiz) {
   const tipos = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2', '.svg': 'image/svg+xml' };
@@ -521,6 +605,24 @@ async function testarNavegador(E) {
       r = await abrirEm(srv.url, salvo, T0 + 6 * DIA, tz); const v6 = await r.vencidos(); await r.ctx.close();
       ok(v6 === novos.length - vistos.length && !r.erros.length, `Inglês ${modalidade}: até o 6º dia voltam todos os demais reformulados da modalidade (${v6})`);
     }
+    { // dados reais de Matemática: progresso antigo com todos os cartões dominados
+      const tz = 'America/Sao_Paulo', T0 = Date.UTC(2026, 11, 1, 15), D = diaLocal(T0, tz);
+      const MAT = E.modulos.filter(m => m.m === 'mat'), versao = {};
+      MAT.forEach(m => m.fc.forEach((c, i) => { versao[m.id + '~' + i] = Number.isInteger(c[2]) && c[2] > 1 ? c[2] : 1; }));
+      const todos = Object.keys(versao), novos = todos.filter(id => versao[id] > 1), iguais = todos.filter(id => versao[id] === 1);
+      const fc = {}; todos.forEach(id => { fc[id] = [6, D + 50]; });
+      const mod = {}; MAT.forEach(m => { mod[m.id] = { lido: dstr(D - 30), tent: 1, best: 0.9, ok: dstr(D - 30) }; });
+      const st0 = Object.assign(base({}), { mod, fc, erros: {}, sims: [] }); st0.cfg.prova = '2027-05-30';
+      const antes = JSON.stringify(st0), ate = k => novos.filter(id => desvio(id) <= k).length;
+      let r = await abrirEm(srv.url, st0, T0, tz);
+      ok(await r.guardado() === antes && await r.vencidos() === ate(0), `Matemática: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (${ate(0)} de ${novos.length})`);
+      await r.p.click('[data-a="tab"][data-v="hoje"]'); await r.p.locator('[data-a="fcini"]').first().click(); await r.p.waitForTimeout(100);
+      let n = 0; while (await r.p.locator('[data-a="fcvirar"]').count()) { n++; await r.p.click('[data-a="fcvirar"]'); await r.p.waitForTimeout(30); await r.p.click('[data-a="fcaval"][data-ok="1"]'); await r.p.waitForTimeout(40); }
+      const salvo = await r.guardado(), st = JSON.parse(salvo); await r.ctx.close();
+      ok(n === ate(0) && iguais.every(id => JSON.stringify(st.fc[id]) === JSON.stringify([6, D + 50]) && !(st.cfg.fcv || {})[id]), `Matemática: no 1º dia só voltam reformulados; os ${iguais.length} mantidos ficam intactos`);
+      r = await abrirEm(srv.url, salvo, T0 + 6 * DIA, tz); const v6 = await r.vencidos(); await r.ctx.close();
+      ok(v6 === novos.length - n && !r.erros.length, `Matemática: até o 6º dia voltam os demais reformulados (${v6})`);
+    }
     srv2.fechar(); srv0.fechar(); fs.rmSync(saida2, { recursive: true, force: true }); fs.rmSync(saida0, { recursive: true, force: true });
   }
 
@@ -531,6 +633,7 @@ async function testarNavegador(E) {
 (async () => {
   const E = carregarDados();
   testarDados(E);
+  testarContasMat(E);
   await testarNavegador(E);
   console.log(falhas ? `\n${falhas} falha(s)` : '\ntudo certo');
   process.exit(falhas ? 1 : 0);

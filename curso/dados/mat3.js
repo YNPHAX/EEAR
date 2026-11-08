@@ -32,14 +32,14 @@ EEAR.add({
     ['Lançando um dado duas vezes, a probabilidade de sair pelo menos um 6 é', ['1/3', '11/36', '1/6', '25/36'], 1, '1 − (5/6)² = 1 − 25/36 = 11/36.']
   ],
   fc: [
-    ['Probabilidade clássica', 'Favoráveis / possíveis.'],
+    ['Escolhendo ao acaso um número de 1 a 30, qual é a probabilidade de ele ser múltiplo de 4?', 'Múltiplos de 4: 4, 8, …, 28 → 7 casos favoráveis em 30. P = 7/30.', 2],
     ['Complementar', 'P(não A) = 1 − P(A).'],
-    ['P(A ∪ B)', 'P(A) + P(B) − P(A ∩ B).'],
+    ['Num lançamento de dado, qual é a probabilidade de sair um número par ou maior que 3?', 'Par: {2, 4, 6}; maior que 3: {4, 5, 6}; os dois: {4, 6}. P = 3/6 + 3/6 − 2/6 = 4/6 = 2/3.', 2],
     ['Eventos independentes', 'P(A ∩ B) = P(A)·P(B).'],
-    ['Condicional', 'P(A|B) = P(A ∩ B)/P(B): o espaço vira B.'],
-    ['"Pelo menos um"', '1 − P(nenhum).'],
+    ['Num grupo, 60% das pessoas são homens, e 20% do grupo são homens fumantes. Escolhido um homem ao acaso, qual é a probabilidade de ele fumar?', 'P(fuma | homem) = P(fuma e homem)/P(homem) = 0,20/0,60 = 1/3.', 2],
+    ['Lançando 3 moedas, qual é a probabilidade de sair pelo menos uma cara?', '1 − P(nenhuma cara) = 1 − (1/2)³ = 7/8.', 2],
     ['Soma 7 com dois dados', '6/36 = 1/6.'],
-    ['Sem reposição', 'O total diminui a cada retirada.']
+    ['Uma urna tem 3 bolas azuis e 2 vermelhas. Retiram-se 2. Qual é a probabilidade de ambas serem azuis sem reposição? E com reposição?', 'Sem reposição: 3/5 · 2/4 = 3/10. Com reposição: 3/5 · 3/5 = 9/25. Sem reposição, o total e os casos favoráveis diminuem na 2ª retirada.', 2]
   ]
 });
 
@@ -81,13 +81,13 @@ EEAR.add({
     ['Numa turma de 40 alunos, 10 tiraram conceito A. A frequência relativa desse conceito é', ['10%', '25%', '40%', '4%'], 1, '10/40 = 0,25 = 25%.']
   ],
   fc: [
-    ['Mediana com quantidade par', 'Média dos dois valores centrais (dados em ordem).'],
+    ['Qual é a mediana de 12, 4, 9, 7, 2, 15?', 'Em ordem: 2, 4, 7, 9, 12, 15. Quantidade par: média dos dois centrais, (7 + 9)/2 = 8.', 2],
     ['Média ponderada', 'Σ(valor·peso)/Σpesos'],
-    ['Moda', 'Valor mais frequente.'],
-    ['Variância', 'Média dos quadrados dos desvios em relação à média.'],
-    ['Desvio padrão', 'Raiz quadrada da variância.'],
-    ['Somar constante aos dados', 'Média muda; desvio e variância não.'],
-    ['Ângulo no gráfico de setores', 'Frequência relativa × 360°.']
+    ['Qual é a moda de 3, 5, 5, 8, 8, 9? E de 2, 4, 6?', '5 e 8 (bimodal: os dois aparecem duas vezes). Em 2, 4, 6 não há moda, porque todos aparecem uma vez.', 2],
+    ['Calcule a variância populacional de 2, 5 e 8.', 'Média 5; desvios −3, 0 e 3; quadrados 9, 0 e 9. Variância = 18/3 = 6.', 2],
+    ['A variância das alturas de um grupo é 16 cm². Qual é o desvio padrão, e em que unidade?', 'σ = √16 = 4 cm. O desvio padrão volta à unidade dos dados; a variância fica em unidade ao quadrado.', 2],
+    ['As notas 4,5 e 7,5 têm média 6 e desvio padrão populacional 1,5. Como ficam média e desvio se o professor:<br>a) somar 1 ponto a cada nota;<br>b) dobrar as notas?', 'a) 5,5 e 8,5: média 7 e desvio 1,5 (somar uma constante não muda a dispersão).<br>b) 9 e 15: média 12 e desvio 3 (multiplicar por k multiplica média e desvio por k).', 2],
+    ['Num gráfico de setores, 45 de 120 entrevistados escolheram a opção A. Qual é o ângulo do setor A?', '45/120 = 0,375; 0,375 · 360° = 135°.', 2]
   ]
 });
 
@@ -134,7 +134,7 @@ EEAR.add({
     ['sen, cos e tg de 60°', '√3/2, 1/2, √3'],
     ['Relação fundamental', 'sen² θ + cos² θ = 1'],
     ['Lei dos senos', 'a/sen A = b/sen B = c/sen C = 2R'],
-    ['Lei dos cossenos', 'a² = b² + c² − 2bc·cos A'],
+    ['Um triângulo tem lados 3, 5 e 7. Quanto mede o maior ângulo?', 'O maior ângulo fica oposto ao maior lado. Lei dos cossenos: 7² = 3² + 5² − 2 · 3 · 5 · cos A → 49 = 34 − 30 cos A → cos A = −1/2 → A = 120°.', 2],
     ['Área com dois lados e o ângulo', 'S = (1/2)·a·b·sen C']
   ]
 });
@@ -183,11 +183,11 @@ EEAR.add({
     ['Numa circunferência de raio 10 cm, um arco de 2 rad mede', ['5 cm', '10 cm', '20 cm', '20π cm'], 2, 'ℓ = α·r = 2 · 10 = 20 cm.']
   ],
   fc: [
-    ['Conversão graus → radianos', 'Multiplique por π/180.'],
-    ['Sinais no 2º quadrante', 'sen +, cos −, tg −.'],
-    ['Sinais no 3º quadrante', 'sen −, cos −, tg +.'],
-    ['Imagem de a + b·sen(cx)', '[a − |b|, a + |b|]'],
-    ['Período de sen(cx) e de tg(cx)', '2π/|c| e π/|c|'],
+    ['Converta 225° para radianos e 5π/6 rad para graus.', '225 · π/180 = 5π/4 rad. 5π/6 · 180/π = 150°.', 2],
+    ['Sem calculadora, dê o sinal e o valor de sen 150°, cos 150° e tg 150°.', '150° está no 2º quadrante (180° − 30°): sen 150° = 1/2 (+), cos 150° = −√3/2 (−), tg 150° = −√3/3 (−).', 2],
+    ['Calcule sen 210° e tg 210°.', '210° = 180° + 30° (3º quadrante): sen 210° = −1/2; tg 210° = tg 30° = √3/3 (a tangente é positiva no 3º quadrante).', 2],
+    ['Quais são o maior e o menor valor de f(x) = 3 − 2 sen x?', 'sen x varia de −1 a 1: máximo 3 + 2 = 5 (com sen x = −1) e mínimo 3 − 2 = 1 (com sen x = 1). Imagem [1, 5].', 2],
+    ['Qual é o período de f(x) = sen(4x) e de g(x) = tg(x/2)?', 'sen(4x): 2π/4 = π/2. tg(x/2): π/(1/2) = 2π.', 2],
     ['sen(a + b)', 'sen a·cos b + sen b·cos a'],
     ['cos(a + b)', 'cos a·cos b − sen a·sen b'],
     ['sen 2a e cos 2a', '2 sen a cos a; cos² a − sen² a']
@@ -244,11 +244,11 @@ EEAR.add({
   ],
   fc: [
     ['Complementares e suplementares', 'Somam 90° e 180°.'],
-    ['Ângulo externo do triângulo', 'Soma dos dois internos não adjacentes.'],
-    ['Soma dos ângulos internos de um polígono', '(n − 2)·180°'],
-    ['Número de diagonais', 'n(n − 3)/2'],
+    ['Num triângulo, dois ângulos internos medem 35° e 70°. Quanto mede o ângulo externo adjacente ao terceiro ângulo?', 'O externo é a soma dos dois internos não adjacentes: 35° + 70° = 105°. (Conferência: o terceiro interno mede 75°, e 75° + 105° = 180°.)', 2],
+    ['Quanto mede cada ângulo interno de um octógono regular?', 'Soma = (8 − 2) · 180° = 1080°. Cada ângulo: 1080°/8 = 135°.', 2],
+    ['Que polígono tem 20 diagonais?', 'n(n − 3)/2 = 20 → n² − 3n − 40 = 0 → n = 8 (a raiz −5 não serve): octógono.', 2],
     ['Relações métricas: altura', 'h² = m·n e a·h = b·c'],
-    ['Semelhança: razão das áreas', 'k²'],
+    ['Dois triângulos semelhantes têm lados correspondentes de 3 cm e 6 cm. Se o menor tem área de 10 cm², qual é a área do maior?', 'Razão de semelhança k = 2; as áreas ficam na razão k² = 4: 40 cm².', 2],
     ['Baricentro', 'Divide a mediana em 2:1 a partir do vértice.'],
     ['Ternos pitagóricos', '3-4-5, 5-12-13, 8-15-17.']
   ]
