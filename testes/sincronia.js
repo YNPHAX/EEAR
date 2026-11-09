@@ -18,7 +18,9 @@ module.exports = async function testarSincronia({ b, srv, base, ok }) {
       const fora = () => { const e = new Error('sem rede'); e.code = 'unavailable'; throw e; };
       window.claude = { use: async k => (k === 'user' ? { id: () => window.__nuvemUsuario() } : { doc: () => ({
         get: async () => { const r = await window.__nuvemGet(); if (r.off) fora(); return { exists: !!r.doc, data: () => r.doc }; },
-        set: async o => { const r = await window.__nuvemSet(o); if (r.off) fora(); }
+        set: async o => { const r = await window.__nuvemSet(o); if (r.off) fora(); },
+        // trava da API real (doc.acquire); aqui sempre concedida: a disputa pela trava fica em testes/nuvem-claude.js
+        acquire: async o => { const r = await window.__nuvemGet(); if (r.off) fora(); return { acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + (o.ttlMs || 30000)).toISOString() }; }
       }) }) };
     });
     const p = await ctx.newPage(); p.on('pageerror', e => erros.push(e.message));

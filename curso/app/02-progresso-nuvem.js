@@ -104,7 +104,9 @@
   } catch (e) { /* sem armazenamento local */ }
   S = carregar();
 
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null };
+  /* pendente: há estudo deste aparelho que a nuvem ainda não confirmou; semRede: a última tentativa falhou por falta de rede.
+     O aviso nunca diz "salvo na sua conta" enquanto houver algo pendente. */
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
@@ -112,6 +114,7 @@
     try { localStorage.setItem(chave(LS), JSON.stringify(S)); gravouLocal = true; } catch (e) { gravouLocal = false; } // o aviso aparece no próximo render()
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
+    if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
   async function gravar() {
     if (!nuvem.ref) return;
@@ -119,7 +122,8 @@
     nuvem.busy = true;
     try { await conciliar(nuvem.ref); }
     catch (e) {
-      if (e && e.code === 'unavailable') setTimeout(gravar, 2500 + Math.random() * 2500);
+      if (e && e.code === 'unavailable' && e.espera === undefined) nuvem.semRede = true;
+      if (e && e.code === 'unavailable') setTimeout(gravar, e.espera !== undefined ? Math.max(0, e.espera) + 200 + Math.random() * 1000 : 2500 + Math.random() * 2500); // nuvem travada por outro aparelho, ou sem rede
       else { nuvem.ref = null; nuvem.on = false; }
     }
     nuvem.busy = false;
@@ -146,14 +150,15 @@
     return { local, u, perdido, gravar: !c || !uIgual(u, c) };
   }
   /* Lê a nuvem, une e grava. Com transação (Firebase), a leitura e a gravação são atômicas: se outro aparelho gravar no
-     meio, a união é refeita sobre o que ele gravou. Sem transação (link do curso no Claude), lê e grava em seguida.
+     meio, a união é refeita sobre o que ele gravou. Sem transação (link do curso no Claude), veja lerUnirGravar
+     (10-nuvem-claude.js): com a trava da nuvem, a gravação é conferida; sem ela, a união segue sem base.
      O resultado só é aplicado aqui depois que a nuvem confirmou, e só se a conta continuar a mesma. */
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
-    let p = null;
+    let p = null, modo = 'ok';
     const planejar = o => { p = planejarUniao(o); return p.gravar ? JSON.parse(JSON.stringify(p.u)) : null; };
     if (ref.transacao) await ref.transacao(planejar);
-    else { const snap = await ref.get(); if (planejar(snap.exists ? snap.data() : null)) await ref.set(JSON.parse(JSON.stringify(p.u))); }
+    else modo = await lerUnirGravar(ref, planejar);
     if (nuvem.conta !== conta0 || !p || p.nada) return;
     if (p.futura) { nuvem.ref = null; nuvem.on = false; nuvem.futura = true; return; }
     if (p.perdido) { recuperar = JSON.stringify(p.perdido); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
@@ -165,12 +170,12 @@
       if (V.v === 'inicio') V = { v: 'hoje' };
       render();
     }
-    nuvem.on = true;
-    gravarBase(p.u);
+    nuvem.on = true; nuvem.semRede = false; nuvem.pendente = modo === 'conferir' || !uIgual(S, p.u);
+    depoisDeGravar(modo, p);
     if (!uIgual(u, p.u)) gravar(); // a união com o que veio depois ainda não está na nuvem
   }
   async function sincronizar(ref, conta) {
-    nuvem.ref = ref; nuvem.futura = false; nuvem.conta = String(conta || '');
+    nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.conta = String(conta || '');
     await gravar();
   }
   async function conectar() {
@@ -283,6 +288,6 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
+    if (el) el.textContent = nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 

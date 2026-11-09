@@ -81,6 +81,9 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
   ok(!!docA && Object.keys(docA).sort().join() === 'atualizado,dados,t,v' && !JSON.stringify(docA).includes('ana@exemplo.test') && !(await progresso(uidA)).mod.POR01, 'conta nova: o documento só tem v, dados, t e atualizado (sem e-mail), e o progresso sem conta não foi levado sozinho');
   ok(JSON.stringify(await A.ler('missao-eear-v1')) === JSON.stringify(anon) && (await A.p.locator('[data-a="contalevar"]').count()) > 0, 'o progresso sem conta continua intacto e o aluno pode levá-lo para a conta');
 
+  // importação voluntária: só quando o aluno pede; o progresso sem conta continua guardado
+  await A.plano(); await A.clicar('contalevar'); await ate(async () => { const x = await progresso(uidA); return x && x.mod.POR01; });
+  ok(!!(await progresso(uidA)).mod.POR01 && JSON.stringify(await A.ler('missao-eear-v1')) === JSON.stringify(anon) && !(await A.p.locator('[data-a="contalevar"]').count()), 'levar para a conta (pedido pelo aluno): o progresso sem conta vai para a nuvem da conta e continua guardado sem conta');
   // sair mantendo; outra pessoa entra no mesmo aparelho
   await A.plano(); await A.clicar('contasair'); await A.p.waitForTimeout(100); await A.clicar('contasairmanter'); await A.p.waitForSelector('#fb-email', { timeout: 15000 });
   const cacheA = await A.ler('missao-eear-v1@firebase:' + uidA);
@@ -88,7 +91,7 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
   await A.conectar('bia@exemplo.test', 'senha-bia-1', true); const uidB = await A.uid();
   await marcar(A, 'T:bia1'); await ate(async () => { const x = await progresso(uidB); return x && x.feito && x.feito['T:bia1']; });
   const pB = await progresso(uidB), localB = await A.ler('missao-eear-v1@firebase:' + uidB);
-  ok(!pB.feito['T:ana1'] && !pB.mod.POR01 && !localB.feito['T:ana1'] && !(await progresso(uidA)).feito['T:bia1'], 'conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A');
+  ok(!pB.feito['T:ana1'] && !pB.mod.POR01 && !localB.mod.POR01 && !localB.feito['T:ana1'] && !(await progresso(uidA)).feito['T:bia1'], 'conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A');
 
   // sessão reaproveitada: estudo pendente da conta B no momento da troca
   await marcar(A, 'T:bia-pendente'); await A.plano(); await A.clicar('contasair'); await A.p.waitForTimeout(50); await A.clicar('contasairmanter'); await A.p.waitForSelector('#fb-email', { timeout: 15000 });
@@ -170,6 +173,84 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     const fimDoc = await docAdmin(uidD), fimLocal = await E.ler('missao-eear-v1@firebase:' + uidD), fimAnon = await E.ler('missao-eear-v1'), fimTela = await E.p.locator('main').innerText();
     ok(!fimDoc && login.error && (await E.ler('missao-eear-v1@firebase:' + uidD)) === null && JSON.stringify(await E.ler('missao-eear-v1')) === JSON.stringify(anon2) && /foram excluídos/.test(await E.p.locator('main').innerText()) && !E.erros.length, 'excluir a conta: apaga o documento, o login e a cópia local da conta; o progresso sem conta fica; a mensagem diz o que foi apagado' + (fimDoc || !login.error || fimLocal || !/foram excluídos/.test(fimTela) ? ` [doc ${!!fimDoc} login ${!login.error} local ${!!fimLocal} anon ${JSON.stringify(fimAnon) === JSON.stringify(anon2)} msg ${/foram excluídos/.test(fimTela)}]` : ''));
     await E.ctx.close(); } catch (e) { ok(false, 'excluir a conta: o fluxo não terminou — ' + e.message.split('\n')[0] + (E ? ' | conta: ' + (await E.p.evaluate(() => [...document.querySelectorAll('section.card')].filter(x => /conta/i.test((x.querySelector('h2') || {}).textContent || '')).map(x => x.innerText).join(' || ')).catch(() => '')).replace(/\s+/g, ' ').slice(0, 600) : '')); }
+
+  console.log('\n== sessão, interrupções e recuperação');
+  { // sessão encerrada em outra aba do mesmo aparelho: esta aba volta ao progresso sem conta e não grava nada na conta
+    const F = await aparelho(); await F.conectar('eva@exemplo.test', 'senha-eva-1', true); const uidF = await F.uid();
+    await marcar(F, 'T:eva1'); await ate(async () => { const x = await progresso(uidF); return x && x.feito['T:eva1']; });
+    const P2 = await F.ctx.newPage(); await P2.goto(srv.url); await P2.waitForTimeout(1500);
+    await P2.evaluate(() => { const c = (a, d) => { const x = document.createElement('button'); x.dataset.a = a; Object.assign(x.dataset, d || {}); document.body.appendChild(x); x.click(); x.remove(); }; c('tab', { v: 'plano' }); c('contasair'); c('contasairmanter'); });
+    await F.p.waitForTimeout(2500); await marcar(F, 'T:depois-da-saida'); await espera(3000);
+    const nuvemF = await progresso(uidF), anonF = await F.ler('missao-eear-v1'), contaF = await F.ler('missao-eear-v1@firebase:' + uidF);
+    ok(!nuvemF.feito['T:depois-da-saida'] && !!(anonF && anonF.feito && anonF.feito['T:depois-da-saida']) && !!(contaF && contaF.feito['T:eva1']) && !(contaF.feito || {})['T:depois-da-saida'], 'conta encerrada em outra aba: esta aba passa ao progresso sem conta; o que se estuda depois não vai para a conta, e a cópia da conta fica intacta');
+    // gravação interrompida: a página fecha antes de gravar; ao abrir de novo, o estudo vai para a nuvem
+    await P2.close(); await F.conectar('eva@exemplo.test', 'senha-eva-1', false);
+    await marcar(F, 'T:interrompida'); await F.p.close();
+    const F2 = await F.ctx.newPage(); await F2.goto(srv.url);
+    const chegou = await ate(async () => { const x = await progresso(uidF); return x && x.feito['T:interrompida']; }, 20000);
+    ok(chegou, 'página fechada antes de gravar na nuvem: o estudo ficou no aparelho e vai para a nuvem quando o app abre de novo');
+    // sessão invalidada no servidor (conta desativada): ao abrir, o app sai da conta sem apagar a cópia dela
+    await req(`${AU}/identitytoolkit.googleapis.com/v1/projects/${PROJ}/accounts:update`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ localId: uidF, disableUser: true }) });
+    await F2.reload(); await F2.waitForTimeout(3000);
+    const lembrada = await F2.evaluate(() => localStorage.getItem('missao-eear-conta') || '');
+    const copia2 = await F2.evaluate(k => JSON.parse(localStorage.getItem(k)), 'missao-eear-v1@firebase:' + uidF);
+    ok(!lembrada && !!(copia2 && copia2.feito['T:interrompida']) && (await progresso(uidF)).feito['T:interrompida'] === true, 'sessão invalidada no servidor: o app volta ao progresso sem conta, e a cópia da conta neste aparelho e a nuvem continuam com tudo');
+    await F.ctx.close(); }
+
+  { // conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha e nada é excluído
+    const K = await aparelho(); await K.conectar('ivo@exemplo.test', 'senha-ivo-1', true); const uidK = await K.uid();
+    await K.plano(); await K.clicar('contaexcluir'); await K.p.waitForSelector('#conta-confirma');
+    const K2 = await K.ctx.newPage(); await K2.goto(srv.url); await K2.waitForTimeout(1500);
+    await K2.evaluate(() => { const c = a => { const x = document.createElement('button'); x.dataset.a = a; document.body.appendChild(x); x.click(); x.remove(); }; c('contasair'); c('contasairmanter'); });
+    await K2.waitForSelector('#fb-email'); await K2.fill('#fb-email', 'jai@exemplo.test'); await K2.fill('#fb-senha', 'senha-jai-1');
+    await K2.evaluate(() => { const x = document.createElement('button'); x.dataset.a = 'fbcriar'; document.body.appendChild(x); x.click(); x.remove(); });
+    await ate(async () => (await K.uid()) && (await K.uid()) !== uidK); await K.p.waitForTimeout(1500);
+    const uidJ = await K.uid(), aberto = await K.p.locator('#conta-confirma').count();
+    const vivos = await req(`${AU}/identitytoolkit.googleapis.com/v1/projects/${PROJ}/accounts:query`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: '{}' });
+    const ids = ((vivos.j && vivos.j.userInfo) || []).map(u => u.localId);
+    ok(uidJ !== uidK && aberto === 0 && ids.includes(uidK) && ids.includes(uidJ), 'conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha, e nenhuma das duas contas é excluída');
+    await K.ctx.close(); }
+
+  { // exclusão parcial: o progresso na nuvem é apagado, mas apagar o login falha (rede); depois, a nova tentativa termina
+    const G = await aparelho(); await G.conectar('gui@exemplo.test', 'senha-gui-1', true); const uidG = await G.uid();
+    await marcar(G, 'T:gui1'); await ate(async () => { const x = await progresso(uidG); return x && x.feito['T:gui1']; });
+    await G.ctx.route(/accounts:delete/, r => r.abort());
+    await G.plano(); await G.clicar('contaexcluir'); await G.p.waitForTimeout(100);
+    await G.p.fill('#conta-senha', 'senha-gui-1'); await G.p.fill('#conta-confirma', 'EXCLUIR'); await G.clicar('contaexcluirok'); await G.p.waitForTimeout(3000);
+    const meio = await G.p.locator('main').innerText(), loginMeio = await entrar('gui@exemplo.test', 'senha-gui-1');
+    ok(/apagado, mas a conta não/.test(meio) && !(await docAdmin(uidG)) && !!loginMeio.localId && !!(await G.ler('missao-eear-v1@firebase:' + uidG)), 'exclusão parcial: a mensagem diz que o progresso na nuvem foi apagado e a conta não; o login e a cópia deste aparelho continuam');
+    await G.ctx.unroute(/accounts:delete/);
+    await G.p.fill('#conta-senha', 'senha-gui-1'); await G.p.fill('#conta-confirma', 'EXCLUIR'); await G.clicar('contaexcluirok'); await G.p.waitForSelector('#fb-email', { timeout: 15000 }); await G.p.waitForTimeout(500);
+    ok(!!(await entrar('gui@exemplo.test', 'senha-gui-1')).error && !(await docAdmin(uidG)) && (await G.ler('missao-eear-v1@firebase:' + uidG)) === null && !G.erros.length, 'exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos');
+    await G.ctx.close(); }
+
+  /* Login com o Google (janela do emulador no lugar do Google) e exclusão com reautenticação pelo Google. O SDK carrega
+     apis.google.com/js/api.js para o fluxo de janela, também com o emulador: sem acesso a esse endereço, a janela não
+     abre. Fora do CI, isso vira "NÃO TESTADO" com o motivo; no CI (CI=true), é falha. */
+  const H = await aparelho(), semGoogle = [];
+  H.ctx.on('requestfailed', r => { if (/apis\.google\.com/.test(r.url())) semGoogle.push(r.url()); });
+  await H.plano(); await H.p.waitForSelector('[data-a="fbgoogle"]', { timeout: 15000 });
+  const pop = await Promise.all([H.p.waitForEvent('popup', { timeout: 20000 }), H.p.click('[data-a="fbgoogle"]')]).then(r => r[0]).catch(() => null);
+  if (!pop && semGoogle.length && !process.env.CI) console.log('  – NÃO TESTADO aqui: login e reautenticação com o Google (apis.google.com inacessível neste ambiente; roda no CI)');
+  else if (!pop) ok(false, 'login com o Google (emulador): a janela do Google não abriu' + (semGoogle.length ? ' — apis.google.com inacessível' : ''));
+  else {
+    // a janela do emulador só reage ao clique depois de carregar o script dela (material-components-web, do unpkg)
+    await pop.waitForLoadState('networkidle'); await pop.click('#add-account-button button'); await pop.waitForSelector('#email-input', { state: 'visible' });
+    await pop.fill('#email-input', 'hugo@exemplo.test'); await pop.fill('#display-name-input', 'Hugo Teste'); await pop.click('#sign-in');
+    await H.p.waitForSelector('[data-a="contasair"]', { timeout: 15000 }); const uidH = await H.uid();
+    await marcar(H, 'T:hugo1'); await ate(async () => { const x = await progresso(uidH); return x && x.feito['T:hugo1']; });
+    const docH = await docAdmin(uidH); await H.plano();
+    ok(!!docH && !JSON.stringify(docH).includes('hugo@exemplo.test') && /Hugo Teste/.test(await H.p.locator('main').innerText()), 'login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail');
+    await H.plano(); await H.clicar('contaexcluir'); await H.p.waitForTimeout(100);
+    const semSenha = (await H.p.locator('#conta-senha').count()) === 0;
+    await H.p.fill('#conta-confirma', 'EXCLUIR');
+    const [pop2] = await Promise.all([H.p.waitForEvent('popup'), H.p.click('[data-a="contaexcluirok"]')]);
+    await pop2.waitForLoadState('networkidle'); await pop2.locator('#accounts-list li', { hasText: 'hugo@exemplo.test' }).click();
+    await H.p.waitForSelector('#fb-email', { timeout: 15000 });
+    const contas = await req(`${AU}/identitytoolkit.googleapis.com/v1/projects/${PROJ}/accounts:query`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: '{}' });
+    ok(semSenha && !(await docAdmin(uidH)) && !((contas.j && contas.j.userInfo) || []).some(u => u.localId === uidH) && !H.erros.length, 'excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem');
+  }
+  await H.ctx.close();
 
   await b.close(); srv.fechar(); fs.rmSync(saida, { recursive: true, force: true });
   console.log(falhas ? `\n${falhas} falha(s)` : '\ntudo certo');
