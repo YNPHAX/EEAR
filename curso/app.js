@@ -256,23 +256,39 @@
   /* Progresso que este app não consegue ler (corrompido, ou gravado por uma versão futura com outro formato): antes que o
      primeiro salvar() grave por cima, uma cópia fica em LS_REC, e a tela Hoje oferece copiá-la. */
   const LS_REC = 'missao-eear-v1-recuperar';
-  let recuperar = null, gravouLocal = true;
+  /* Contas (veja "contas neste aparelho"): cada identidade tem as próprias chaves (chave@identidade). Sem conta, valem as
+     chaves de sempre, onde já está o progresso de quem nunca entrou numa conta. LS_CONTA lembra a conta em uso. */
+  const LS_CONTA = 'missao-eear-conta', BASE_K = 'missao-eear-v1-base';
+  const contaUI = { msg: '', adiado: false, ocupado: false }; // estado da tela da conta (veja "contas neste aparelho")
+  let identidade = '', recuperar = null, gravouLocal = true;
+  const chave = (k, id) => { const i = id === undefined ? identidade : id; return i ? k + '@' + i : k; };
+  /* Lê o progresso da identidade em uso; se for ilegível, guarda uma cópia antes que alguma gravação o cubra. */
+  function carregar() {
+    let st = novoEstado();
+    try {
+      const t = localStorage.getItem(chave(LS));
+      if (t) {
+        let lido = false;
+        try { const o = JSON.parse(t); if (o && o.v === 1) { st = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
+        if (!lido) try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* sem espaço para a cópia */ }
+      }
+      recuperar = localStorage.getItem(chave(LS_REC));
+    } catch (e) { /* sem armazenamento local */ }
+    return st;
+  }
   try {
-    const t = localStorage.getItem(LS);
-    if (t) {
-      let lido = false;
-      try { const o = JSON.parse(t); if (o && o.v === 1) { S = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
-      if (!lido) try { localStorage.setItem(LS_REC, t); } catch (e) { /* sem espaço para a cópia */ }
-    }
-    recuperar = localStorage.getItem(LS_REC);
+    /* A conta lembrada só vale onde ela pode ser confirmada (Firebase configurado, ou o link do curso no Claude). */
+    const c = localStorage.getItem(LS_CONTA) || '';
+    if ((c.indexOf('firebase:') === 0 && window.EEAR_FIREBASE) || (c.indexOf('claude:') === 0 && window.claude)) identidade = c;
   } catch (e) { /* sem armazenamento local */ }
+  S = carregar();
 
   const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
     fixarAncoras();
-    try { localStorage.setItem(LS, JSON.stringify(S)); gravouLocal = true; } catch (e) { gravouLocal = false; } // o aviso aparece no próximo render()
+    try { localStorage.setItem(chave(LS), JSON.stringify(S)); gravouLocal = true; } catch (e) { gravouLocal = false; } // o aviso aparece no próximo render()
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
   }
@@ -289,14 +305,13 @@
     syncInfo();
     if (nuvem.again) { nuvem.again = false; gravar(); }
   }
-  /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. */
-  const semEstudo = o => !Object.keys(o.mod).length && !o.sims.length && !Object.keys(o.fc).length && !Object.keys(o.ap).length && !o.diag && !Object.keys(o.aula || {}).length;
-  /* Lê a nuvem, une com este aparelho (veja "união do progresso entre aparelhos") e grava nos dois lados o que mudou.
-     A união é calculada logo depois da leitura, sem pausa: o que o aluno fizer enquanto a gravação viaja dispara outra
-     união em seguida. Nuvem com progresso de uma versão futura do app (v diferente de 1): nada é lido nem gravado. */
-  async function conciliar(ref) {
-    const snap = await ref.get(), o = snap.exists ? snap.data() : null;
-    if (o && (typeof o !== 'object' || o.v !== 1)) { nuvem.ref = null; nuvem.on = false; nuvem.futura = true; return; }
+  /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. Tarefas marcadas, caderno
+     de erros e atividade também contam como estudo (antes não contavam, e um aparelho que só tinha marcado tarefas perdia as marcações). */
+  const semEstudo = o => !Object.keys(o.mod).length && !o.sims.length && !Object.keys(o.fc).length && !Object.keys(o.ap).length && !o.diag && !Object.keys(o.aula || {}).length && !Object.keys(o.feito || {}).length && !Object.keys(o.erros || {}).length && !Object.keys(o.act || {}).length;
+  /* Calcula a união deste aparelho com o progresso da nuvem (o), sem efeito nenhum: dentro de uma transação, pode rodar
+     de novo com uma leitura mais nova. Devolve o que gravar na nuvem (ou null) e o que aplicar aqui depois. */
+  function planejarUniao(o) {
+    if (o && (typeof o !== 'object' || o.v !== 1)) return { futura: true };
     const local = mesclar(JSON.parse(JSON.stringify(S)));
     let u = local, perdido = null, c = null;
     if (o) {
@@ -306,17 +321,32 @@
       /* Aparelho que nunca sincronizou e não tem estudo: fica com a nuvem. Um aparelho zerado depois dela passa pela união. */
       if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
       if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
-    } else if (!S.t) return; // aparelho e nuvem sem progresso: nada a gravar
-    if (perdido) { recuperar = JSON.stringify(perdido); try { localStorage.setItem(LS_REC, recuperar); } catch (e) { /* sem espaço */ } }
+    } else if (!S.t) return { nada: true }; // aparelho e nuvem sem progresso: nada a gravar
+    return { local, u, perdido, gravar: !c || !uIgual(u, c) };
+  }
+  /* Lê a nuvem, une e grava. Com transação (Firebase), a leitura e a gravação são atômicas: se outro aparelho gravar no
+     meio, a união é refeita sobre o que ele gravou. Sem transação (link do curso no Claude), lê e grava em seguida.
+     O resultado só é aplicado aqui depois que a nuvem confirmou, e só se a conta continuar a mesma. */
+  async function conciliar(ref) {
+    const conta0 = nuvem.conta;
+    let p = null;
+    const planejar = o => { p = planejarUniao(o); return p.gravar ? JSON.parse(JSON.stringify(p.u)) : null; };
+    if (ref.transacao) await ref.transacao(planejar);
+    else { const snap = await ref.get(); if (planejar(snap.exists ? snap.data() : null)) await ref.set(JSON.parse(JSON.stringify(p.u))); }
+    if (nuvem.conta !== conta0 || !p || p.nada) return;
+    if (p.futura) { nuvem.ref = null; nuvem.on = false; nuvem.futura = true; return; }
+    if (p.perdido) { recuperar = JSON.stringify(p.perdido); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
+    /* O que o aluno fez enquanto a gravação viajava também fica: união da cópia usada no cálculo com o estado atual. */
+    const u = uIgual(S, p.local) ? p.u : unirProgresso(p.local, mesclar(JSON.parse(JSON.stringify(S))), p.u).st;
     if (!uIgual(u, S)) {
       S = u;
-      try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
+      try { localStorage.setItem(chave(LS), JSON.stringify(S)); } catch (e) { /* ignora */ }
       if (V.v === 'inicio') V = { v: 'hoje' };
       render();
     }
-    if (!c || !uIgual(u, c)) await ref.set(JSON.parse(JSON.stringify(u)));
     nuvem.on = true;
-    gravarBase(u);
+    gravarBase(p.u);
+    if (!uIgual(u, p.u)) gravar(); // a união com o que veio depois ainda não está na nuvem
   }
   async function sincronizar(ref, conta) {
     nuvem.ref = ref; nuvem.futura = false; nuvem.conta = String(conta || '');
@@ -331,6 +361,7 @@
       if (!db || !user) return;
       const id = await user.id();
       if (!id) return;
+      usarIdentidade('claude:' + id); // o progresso local passa a ser o desta conta
       await sincronizar(db.doc('progresso/' + id), 'claude:' + id);
     } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
   }
@@ -359,43 +390,52 @@
     try {
       const base = 'https://www.gstatic.com/firebasejs/' + FB_VERSAO + '/';
       const mods = await Promise.all(['firebase-app', 'firebase-auth', 'firebase-firestore'].map(n => import(base + n + '.js')));
-      const app0 = mods[0].initializeApp(FB), au = mods[1], fs = mods[2];
-      const auth = au.getAuth(app0);
+      const opcoes = Object.assign({}, FB); delete opcoes.sincronizar; delete opcoes.emuladores;
+      const app0 = mods[0].initializeApp(opcoes), au = mods[1], fs = mods[2];
+      const auth = au.getAuth(app0), db = fs.getFirestore(app0);
       auth.languageCode = 'pt';
-      conta.api = { au, fs, auth, db: fs.getFirestore(app0) };
+      /* Emuladores do Firebase (só para testes, e só quando o app roda em localhost). */
+      if (FB.emuladores && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { au.connectAuthEmulator(auth, FB.emuladores.auth, { disableWarnings: true }); fs.connectFirestoreEmulator(db, FB.emuladores.firestore[0], FB.emuladores.firestore[1]); }
+      conta.api = { au, fs, auth, db };
       au.getRedirectResult(auth).catch(e => { conta.msg = erroConta(e); render(); });
       au.onAuthStateChanged(auth, u => {
         conta.user = u; conta.pronto = true;
         if (u) ligarNuvem(u);
-        else if (nuvem.fb) { nuvem.ref = null; nuvem.on = false; nuvem.fb = false; }
+        else { nuvem.fb = false; if (identidade.indexOf('firebase:') === 0) usarIdentidade(''); } // sessão encerrada: volta ao progresso sem conta, sem apagar nada
         if (V.v === 'plano' || V.v === 'inicio') render(); else syncInfo();
       });
     } catch (e) { conta.pronto = true; conta.msg = 'Não foi possível carregar o login agora. Verifique a internet.'; if (V.v === 'plano' || V.v === 'inicio') render(); }
   }
+  /* Conta conectada: o aparelho passa a usar o progresso local desta conta. A nuvem só é usada com a configuração
+     "sincronizar": true, a ser ligada depois de validar as regras e as transações no projeto real (veja
+     auditoria/contas-e-sincronizacao.md). O documento guarda só o progresso, a versão e as datas: nada de nome ou e-mail. */
   function ligarNuvem(u) {
-    const fs = conta.api.fs, doc = fs.doc(conta.api.db, 'alunos', u.uid);
-    /* O progresso vai como texto: o Firestore não guarda listas dentro de listas. */
-    const ref = {
-      get: async () => { const s = await fs.getDoc(doc), x = s.exists() ? s.data() : null; return { exists: !!(x && x.dados), data: () => JSON.parse(x.dados) }; },
-      set: o => fs.setDoc(doc, { dados: JSON.stringify(o), t: o.t || 0, nome: (o.cfg && o.cfg.nome) || u.displayName || '', email: u.email || '', atualizado: fs.serverTimestamp() })
-    };
+    const id = 'firebase:' + u.uid;
+    usarIdentidade(id);
     if (!S.cfg.nome && u.displayName) S.cfg.nome = u.displayName;
     nuvem.fb = true;
-    sincronizar(ref, 'firebase:' + u.uid);
+    if (FB.sincronizar !== true) { nuvem.bloqueada = true; syncInfo(); return; }
+    const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid);
+    const paraDoc = o => ({ v: 1, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
+    /* Documento de uma versão futura (v > 1): devolve só a versão, para a união recusar e nada ser gravado por cima. */
+    const deDoc = x => (!x ? null : Number(x.v) > 1 ? { v: Number(x.v) } : JSON.parse(x.dados));
+    const ref = {
+      get: async () => { const s = await fs.getDoc(doc), x = s.exists() ? s.data() : null; return { exists: !!x, data: () => deDoc(x) }; },
+      set: o => fs.setDoc(doc, paraDoc(o)),
+      transacao: f => fs.runTransaction(db, async tx => { const s = await tx.get(doc), novo = f(deDoc(s.exists() ? s.data() : null)); if (novo) tx.set(doc, paraDoc(novo)); })
+    };
+    sincronizar(ref, id);
   }
   function cartaoConta() {
     if (!FB) return '';
     if (!conta.pronto) return '<section class="card"><h2 class="h2">Sua conta</h2><p class="small muted" style="margin:0">Carregando o login…</p></section>';
-    if (conta.user) {
-      const u = conta.user;
-      return `<section class="card"><h2 class="h2">Sua conta</h2><p style="margin:0">Conectado como <b>${esc(u.displayName || u.email || 'aluno')}</b>${u.displayName && u.email ? ` (${esc(u.email)})` : ''}. Seu progresso fica salvo na nuvem e continua em qualquer aparelho em que você entrar.</p><div class="row"><button class="btn" data-a="fbsair">Sair desta conta</button></div></section>`;
-    }
+    if (conta.user) return cartaoContaLogada(conta.user);
     return `<section class="card" id="conta"><h2 class="h2">Entrar ou criar conta</h2><p class="small" style="margin:0">Com uma conta grátis, seu progresso fica salvo na nuvem e você continua no celular, no computador ou no app.</p>
       ${window.EEAR_SITE === 'site' ? '<div class="row"><button class="btn pri" data-a="fbgoogle">Entrar com Google</button></div>' : ''}
       <form class="form" onsubmit="return false"><div class="field"><label for="fb-email">E-mail</label><input type="email" id="fb-email" autocomplete="email" value="${esc(conta.email)}"></div><div class="field"><label for="fb-senha">Senha</label><input type="password" id="fb-senha" autocomplete="current-password"></div></form>
       <div class="row"><button class="btn" data-a="fbentrar">Entrar</button><button class="btn" data-a="fbcriar">Criar conta</button><button class="btn ghost" data-a="fbsenha">Esqueci a senha</button></div>
       <p class="small muted" style="margin:0">Ao criar uma conta, você concorda com os <a href="termos.html" target="_blank" rel="noopener">Termos de uso</a> e a <a href="privacidade.html" target="_blank" rel="noopener">Política de privacidade</a>.</p>
-      ${conta.msg ? `<p class="small" role="status" style="margin:0">${esc(conta.msg)}</p>` : ''}</section>`;
+      ${conta.msg || contaUI.msg ? `<p class="small" role="status" style="margin:0">${esc(conta.msg || contaUI.msg)}</p>` : ''}</section>`; // contaUI.msg: o resultado de sair ou de excluir a conta
   }
   async function acaoConta(a) {
     if (!conta.api) return;
@@ -422,7 +462,7 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
+    if (el) el.textContent = nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 
   /* ---------- status ---------- */
@@ -776,6 +816,7 @@
         <div class="row"><button class="btn pri" data-a="simini" data-tipo="diag">Fazer o diagnóstico</button><button class="btn" data-a="tab" data-v="plano">Ajustar o plano</button></div></section>`;
     }
     if (S.ativo) h += `<div class="banner acc"><p>Você tem um simulado em andamento.</p><button class="btn sm pri" data-a="go" data-v="sim">Continuar</button></div>`;
+    h += avisoContas();
     if (!gravouLocal) h += `<div class="banner warn" role="alert"><p><b>Seu progresso não está sendo salvo neste aparelho</b> (armazenamento cheio ou bloqueado, como na navegação anônima). Para não perder o que estudou, copie o progresso em Plano › Dados.</p><button class="btn sm" data-a="tab" data-v="plano">Abrir o Plano</button></div>`;
     if (recuperar) {
       h += `<div class="banner warn"><p>Um progresso salvo antes neste aparelho não pôde ser aberto por esta versão do app. Guardamos uma cópia: copie e guarde antes de descartar.${msgRec ? ' ' + msgRec : ''}</p><button class="btn sm" data-a="reccopiar">Copiar</button><button class="btn sm" data-a="recdescartar">Descartar</button></div>`;
@@ -909,6 +950,7 @@
       <div class="row"><button class="btn" data-a="expcopiar">Copiar meu progresso</button><button class="btn" data-a="impabrir">Colar progresso</button></div>
       ${pedindo === 'exp' ? `<div class="field"><label for="exp-txt">Selecione e copie o código</label><textarea id="exp-txt" class="codigo" readonly rows="4">${esc(JSON.stringify(S))}</textarea></div>` : ''}
       ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>Isso substitui o progresso deste aparelho.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
+      ${blocoDados()}
       ${msgDados ? `<p class="small" role="status" style="margin:0">${msgDados}</p>` : ''}
       <div class="sync" id="sync"></div></section>`;
     h += cartaoInstalar();
@@ -1698,7 +1740,7 @@
         try { navigator.clipboard.writeText(recuperar).then(ok, falha); } catch (e) { falha(); }
         break;
       }
-      case 'recdescartar': try { localStorage.removeItem(LS_REC); } catch (e) { /* ignora */ } recuperar = null; msgRec = ''; pedindo = null; render(); break;
+      case 'recdescartar': try { localStorage.removeItem(chave(LS_REC)); } catch (e) { /* ignora */ } recuperar = null; msgRec = ''; pedindo = null; render(); break;
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
       case 'impok': {
         const t = document.getElementById('imp-txt');
@@ -1774,8 +1816,8 @@
      Sem base (primeira sincronização deste aparelho), nada é tratado como apagado. Se for impossível separar o que veio
      antes e depois de um "Zerar" feito em outro aparelho, o progresso deste aparelho vira uma cópia de recuperação. */
   /* A base pertence a uma conta (nuvem.conta): se outra conta entrar neste aparelho, a base é ignorada (união sem base). */
-  function lerBase() { try { const t = localStorage.getItem('missao-eear-v1-base'); const o = t && JSON.parse(t); return o && o.conta === nuvem.conta && o.st && o.st.v === 1 ? mesclar(o.st) : null; } catch (e) { return null; } }
-  function gravarBase(st) { try { localStorage.setItem('missao-eear-v1-base', JSON.stringify({ conta: nuvem.conta, st })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
+  function lerBase() { try { const t = localStorage.getItem(chave(BASE_K)); const o = t && JSON.parse(t); return o && o.conta === nuvem.conta && o.st && o.st.v === 1 ? mesclar(o.st) : null; } catch (e) { return null; } }
+  function gravarBase(st) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
   function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
   /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
   function uTres(tb, b, l, c, conflito) {
@@ -1795,10 +1837,10 @@
     });
     return out;
   }
-  const uMin = (a, b) => (dataValida(a) && dataValida(b) ? (a < b ? a : b) : dataValida(a) ? a : b);
-  const uNum = x => (typeof x === 'number' && isFinite(x) ? x : 0);
+  function uMin(a, b) { return dataValida(a) && dataValida(b) ? (a < b ? a : b) : dataValida(a) ? a : b; }
+  function uNum(x) { return typeof x === 'number' && isFinite(x) ? x : 0; }
   /* Contagem que cada lado aumentou desde a base: base + (local − base) + (nuvem − base); sem base, a maior. */
-  const uSoma = (b, l, c, tb) => (tb ? Math.max(uNum(l), uNum(c), uNum(l) + uNum(c) - uNum(b)) : Math.max(uNum(l), uNum(c)));
+  function uSoma(b, l, c, tb) { return tb ? Math.max(uNum(l), uNum(c), uNum(l) + uNum(c) - uNum(b)) : Math.max(uNum(l), uNum(c)); }
   function uAula(b, l, c, tb, novoL) { // registro de aula (mod) ou passos da aula (aula): só cresce
     if (!l || !c) return l || c;
     const r = Object.assign({}, novoL ? c : l, novoL ? l : c), bb = (tb && b) || {};
@@ -1874,4 +1916,154 @@
     juntarCerts(u.cfg, c.cfg, u);
     return { st: mesclar(u), perdido: null };
   }
+  /* ---------- contas neste aparelho ----------
+     Cada conta tem o próprio progresso local (missao-eear-v1@firebase:uid ou @claude:id); sem conta, vale o de sempre.
+     Ao entrar, o aparelho passa a mostrar só o progresso daquela conta. O progresso feito sem conta fica guardado à parte
+     e só vai para a conta se o aluno pedir ("Levar para a conta"). Ao sair, o aluno escolhe manter ou apagar deste
+     aparelho o progresso da conta; apagar só é possível depois que a nuvem confirmou tudo (nada some antes de estar
+     salvo em outro lugar). Toda exclusão pede confirmação e diz exatamente o que foi apagado. */
+  function copiar(x) { return JSON.parse(JSON.stringify(x)); }
+  function usarIdentidade(id) {
+    id = id || '';
+    if (id === identidade) return false;
+    clearTimeout(tSave);
+    nuvem.ref = null; nuvem.on = false; nuvem.again = false; nuvem.futura = false; nuvem.bloqueada = false; nuvem.conta = id;
+    identidade = id;
+    try { if (id) localStorage.setItem(LS_CONTA, id); else localStorage.removeItem(LS_CONTA); } catch (e) { /* sem armazenamento */ }
+    S = carregar(); QZ = null; FC = null; pedindo = null; msgRec = ''; contaUI.adiado = false;
+    V = mostrarInicio() ? { v: 'inicio' } : V.v === 'plano' ? V : { v: 'hoje' }; // a tela inicial depende do progresso da conta que entrou
+    render();
+    return true;
+  }
+  /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
+  function apagarLocal(id) {
+    [LS, LS_REC, BASE_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
+    if (id === identidade) { S = novoEstado(); recuperar = null; }
+  }
+  function contasGuardadas() {
+    const ids = new Set();
+    try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i) || ''; const m = k.match(/^missao-eear-v1(?:-base|-recuperar)?@(.+)$/); if (m && m[1] !== identidade) ids.add(m[1]); } } catch (e) { /* ignora */ }
+    return [...ids];
+  }
+  function progressoSemConta() { try { const t = localStorage.getItem(LS); const o = t && JSON.parse(t); return o && o.v === 1 ? mesclar(o) : null; } catch (e) { return null; } }
+  /* O progresso desta conta unido ao feito sem conta. Os "Zerar" de cada lado não se cruzam e a configuração da conta fica. */
+  function unirImportacao(a) {
+    const l = copiar(S), c = copiar(a); delete l.cfg.certsZ; delete c.cfg.certsZ;
+    const u = unirProgresso(null, mesclar(l), mesclar(c)).st;
+    Object.keys(S.cfg).forEach(k => { if (!['certs', 'fcv', 'fcAncora'].includes(k)) u.cfg[k] = copiar(S.cfg[k]); });
+    return mesclar(u);
+  }
+  /* Há estudo sem conta neste aparelho que a conta em uso ainda não tem? */
+  function novidadeSemConta() {
+    if (!identidade) return null;
+    const a = progressoSemConta();
+    if (!a || semEstudo(a)) return null;
+    const u = unirImportacao(a);
+    return ['mod', 'fc', 'sims', 'erros', 'ap', 'aula'].some(k => !uIgual(u[k], S[k])) ? a : null;
+  }
+  /* A nuvem já tem tudo o que está neste aparelho (a última sincronização gravou exatamente o progresso atual)? */
+  function sincronizado() { const b = lerBase(); return !!b && uIgual(b, mesclar(copiar(S))); }
+  function resumoProg(st) { return `${plural(Object.keys(st.mod).length, 'aula estudada', 'aulas estudadas')}, ${plural(Object.keys(st.fc).length, 'flashcard visto', 'flashcards vistos')} e ${plural(st.sims.length, 'simulado', 'simulados')}`; }
+
+  /* Aviso na tela Hoje: progresso sem conta que a conta ainda não tem. */
+  function avisoContas() {
+    if (contaUI.adiado || !identidade) return '';
+    const a = novidadeSemConta();
+    return a ? `<div class="banner acc"><p>Este aparelho tem progresso feito sem conta (${resumoProg(a)}) que ainda não está nesta conta. Ele só vai para a conta se você pedir.</p><button class="btn sm pri" data-a="contalevar">Levar para a conta</button><button class="btn sm" data-a="contaadiar">Agora não</button></div>` : '';
+  }
+  /* Cartão da conta conectada (Firebase): sair com escolha, excluir a conta. */
+  function cartaoContaLogada(u) {
+    let h = `<section class="card"><h2 class="h2">Sua conta</h2><p style="margin:0">Conectado como <b>${esc(u.displayName || u.email || 'aluno')}</b>${u.displayName && u.email ? ` (${esc(u.email)})` : ''}. Este aparelho mostra só o progresso desta conta.${nuvem.bloqueada ? ' A sincronização com a nuvem ainda não está liberada: por enquanto, o progresso desta conta fica só neste aparelho.' : ''}</p>`;
+    const a = novidadeSemConta();
+    if (a) h += `<p class="small" style="margin:0">Progresso feito sem conta neste aparelho: ${resumoProg(a)}. <button class="btn sm" data-a="contalevar">Levar para a conta</button></p>`;
+    if (pedindo === 'sair') {
+      const ok = sincronizado();
+      h += `<div class="confirm"><p>Sair da conta. O que fazer com o progresso desta conta neste aparelho?${ok ? ' Ele está salvo na nuvem.' : ' Atenção: parte dele ainda não está salva na nuvem, então só dá para sair mantendo os dados aqui.'}</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="contasairmanter">Sair e manter aqui</button>${ok ? '<button class="btn sm" data-a="contasairapagar">Sair e apagar deste aparelho</button>' : ''}</div>`;
+    } else if (pedindo === 'excluirconta') {
+      const senha = (u.providerData || []).some(p => p && p.providerId === 'password');
+      h += `<div class="confirm"><p><b>Excluir a conta</b> apaga para sempre a conta, o progresso dela na nuvem e a cópia dela neste aparelho. Baixe seus dados antes, se quiser guardar. Isso não pode ser desfeito.</p>
+        ${senha ? '<div class="field"><label for="conta-senha">Sua senha</label><input type="password" id="conta-senha" autocomplete="current-password"></div>' : '<p class="small" style="margin:0">Você vai confirmar com o Google.</p>'}
+        <div class="field"><label for="conta-confirma">Digite EXCLUIR para confirmar</label><input id="conta-confirma" autocomplete="off"></div>
+        <button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="contaexcluirok">Excluir a conta</button></div>`;
+    } else h += `<div class="row"><button class="btn" data-a="contasair">Sair desta conta</button><button class="btn ghost" data-a="contaexcluir">Excluir minha conta</button></div>`;
+    if (contaUI.msg) h += `<p class="small" role="status" style="margin:0">${esc(contaUI.msg)}</p>`;
+    return h + '</section>';
+  }
+  /* Bloco "Seus dados" em Plano › Dados: baixar, consultar e apagar o que este aparelho guarda. */
+  function blocoDados() {
+    const outras = contasGuardadas().length;
+    let h = `<div class="aphead">Seus dados</div><div class="row"><button class="btn" data-a="dadosbaixar">Baixar meus dados</button><button class="btn" data-a="dadosver">O que está guardado</button><button class="btn ghost" data-a="dadosapagar">Apagar os dados deste aparelho</button></div>`;
+    if (pedindo === 'dadosver') {
+      h += `<ul class="small" style="margin:0"><li>Neste aparelho, ${identidade ? 'nesta conta' : 'sem conta'}: ${resumoProg(S)}${S.cfg.nome ? ', o nome do certificado' : ''} e a configuração do plano.</li>${recuperar ? '<li>Uma cópia de recuperação de um progresso que não pôde ser aberto.</li>' : ''}${lerBase() ? '<li>Uma cópia da última sincronização com a nuvem (para unir o estudo feito em outros aparelhos).</li>' : ''}${outras ? `<li>Progresso de ${plural(outras, 'outra conta', 'outras contas')} que já entraram neste aparelho (não aparece aqui).</li>` : ''}${identidade && !identidade.indexOf('firebase:') ? '<li>Na nuvem (Firebase): o seu login (e-mail) e um documento só com o progresso e a data da última gravação.</li>' : ''}</ul>`;
+    } else if (pedindo === 'dadosapagar') {
+      const bloq = identidade && !sincronizado();
+      h += `<div class="confirm"><p>${bloq ? 'Não dá para apagar agora: parte do progresso desta conta ainda não está salva na nuvem e seria perdida. Conecte-se à internet e tente de novo, ou baixe seus dados antes.' : `Apagar deste aparelho ${identidade ? 'o progresso desta conta (a nuvem continua com ele)' : 'todo o progresso feito sem conta, incluindo o nome e a configuração do plano'}? Isso não pode ser desfeito.`}</p><button class="btn sm" data-a="cancelar">Cancelar</button>${bloq ? '' : '<button class="btn sm pri" data-a="dadosapagarok">Apagar deste aparelho</button>'}${!identidade && outras ? `<button class="btn sm" data-a="dadosapagartudo">Apagar também ${plural(outras, 'a outra conta guardada', 'as outras contas guardadas')} aqui</button>` : ''}</div>`;
+    }
+    return h;
+  }
+  function baixarDados() {
+    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: S, copiaDeRecuperacao: recuperar };
+    if (window.EEAR_APK) { pedindo = 'exp'; render(); return; } // no app Android não há download de arquivo: mostra o código para copiar
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' }));
+    a.download = 'missao-eear-meus-dados-' + hoje() + '.json';
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  }
+  async function sairConta(apagar) {
+    if (!conta.api || contaUI.ocupado) return;
+    const id = identidade;
+    if (apagar && !sincronizado()) { contaUI.msg = 'Parte do progresso ainda não está na nuvem: nada foi apagado.'; pedindo = null; render(); return; }
+    contaUI.ocupado = true;
+    try {
+      await conta.api.au.signOut(conta.api.auth);
+      usarIdentidade('');
+      if (apagar) apagarLocal(id);
+      contaUI.msg = apagar ? 'Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem.' : 'Você saiu. O progresso da conta continua neste aparelho, guardado à parte, e na nuvem.';
+    } catch (e) { contaUI.msg = 'Não foi possível sair agora. Nada foi apagado.'; }
+    contaUI.ocupado = false; pedindo = null; render();
+  }
+  async function excluirConta() {
+    const api = conta.api, u = api && api.auth.currentUser, val = id => ((document.getElementById(id) || {}).value || '').trim();
+    if (!u || contaUI.ocupado) return;
+    if (val('conta-confirma') !== 'EXCLUIR') { contaUI.msg = 'Digite EXCLUIR para confirmar. Nada foi excluído.'; render(); return; }
+    contaUI.ocupado = true;
+    const id = identidade, { au, fs } = api;
+    let passo = 'confirmar';
+    try {
+      if ((u.providerData || []).some(p => p && p.providerId === 'password')) await au.reauthenticateWithCredential(u, au.EmailAuthProvider.credential(u.email, (document.getElementById('conta-senha') || {}).value || ''));
+      else await au.reauthenticateWithPopup(u, new au.GoogleAuthProvider());
+      passo = 'nuvem'; nuvem.ref = null; clearTimeout(tSave);
+      await fs.deleteDoc(fs.doc(api.db, 'alunos', u.uid));
+      passo = 'conta';
+      await au.deleteUser(u);
+      usarIdentidade(''); apagarLocal(id);
+      contaUI.msg = 'Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos.';
+      pedindo = null;
+    } catch (e) {
+      contaUI.msg = passo === 'confirmar' ? 'Não foi possível confirmar sua identidade (senha incorreta ou janela fechada). Nada foi excluído.'
+        : passo === 'nuvem' ? 'Não foi possível apagar o progresso na nuvem agora. Nada foi excluído.'
+          : 'O progresso na nuvem foi apagado, mas a conta não pôde ser excluída agora. A cópia deste aparelho continua aqui. Tente de novo.';
+    }
+    contaUI.ocupado = false; render();
+  }
+  document.addEventListener('click', ev => {
+    const b = ev.target.closest('[data-a]');
+    if (!b) return;
+    switch (b.dataset.a) {
+      case 'contalevar': { const a = novidadeSemConta(); if (a) { S = unirImportacao(a); salvar(); contaUI.msg = 'O progresso feito sem conta foi levado para esta conta. Ele continua guardado também sem conta neste aparelho.'; } render(); break; }
+      case 'contaadiar': contaUI.adiado = true; render(); break;
+      case 'contasair': contaUI.msg = ''; pedindo = 'sair'; render(); break;
+      case 'contasairmanter': sairConta(false); break;
+      case 'contasairapagar': sairConta(true); break;
+      case 'contaexcluir': contaUI.msg = ''; pedindo = 'excluirconta'; render(); break;
+      case 'contaexcluirok': excluirConta(); break;
+      case 'dadosbaixar': baixarDados(); break;
+      case 'dadosver': pedindo = pedindo === 'dadosver' ? null : 'dadosver'; render(); break;
+      case 'dadosapagar': pedindo = 'dadosapagar'; render(); break;
+      case 'dadosapagarok': if (identidade && !sincronizado()) break; apagarLocal(identidade); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados.'; render(); break;
+      case 'dadosapagartudo': if (identidade) break; contasGuardadas().forEach(apagarLocal); apagarLocal(''); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados, de todas as contas.'; render(); break;
+      default: break;
+    }
+  });
 })();

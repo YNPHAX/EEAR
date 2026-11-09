@@ -58,6 +58,7 @@
         <div class="row"><button class="btn pri" data-a="simini" data-tipo="diag">Fazer o diagnóstico</button><button class="btn" data-a="tab" data-v="plano">Ajustar o plano</button></div></section>`;
     }
     if (S.ativo) h += `<div class="banner acc"><p>Você tem um simulado em andamento.</p><button class="btn sm pri" data-a="go" data-v="sim">Continuar</button></div>`;
+    h += avisoContas();
     if (!gravouLocal) h += `<div class="banner warn" role="alert"><p><b>Seu progresso não está sendo salvo neste aparelho</b> (armazenamento cheio ou bloqueado, como na navegação anônima). Para não perder o que estudou, copie o progresso em Plano › Dados.</p><button class="btn sm" data-a="tab" data-v="plano">Abrir o Plano</button></div>`;
     if (recuperar) {
       h += `<div class="banner warn"><p>Um progresso salvo antes neste aparelho não pôde ser aberto por esta versão do app. Guardamos uma cópia: copie e guarde antes de descartar.${msgRec ? ' ' + msgRec : ''}</p><button class="btn sm" data-a="reccopiar">Copiar</button><button class="btn sm" data-a="recdescartar">Descartar</button></div>`;
@@ -191,6 +192,7 @@
       <div class="row"><button class="btn" data-a="expcopiar">Copiar meu progresso</button><button class="btn" data-a="impabrir">Colar progresso</button></div>
       ${pedindo === 'exp' ? `<div class="field"><label for="exp-txt">Selecione e copie o código</label><textarea id="exp-txt" class="codigo" readonly rows="4">${esc(JSON.stringify(S))}</textarea></div>` : ''}
       ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>Isso substitui o progresso deste aparelho.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
+      ${blocoDados()}
       ${msgDados ? `<p class="small" role="status" style="margin:0">${msgDados}</p>` : ''}
       <div class="sync" id="sync"></div></section>`;
     h += cartaoInstalar();

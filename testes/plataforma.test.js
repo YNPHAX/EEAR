@@ -8,7 +8,7 @@ const RAIZ = path.resolve(__dirname, '..');
 let falhas = 0;
 const ok = (cond, msg) => { console.log(`${cond ? '  ✓' : '  ✗'} ${msg}`); if (!cond) falhas++; };
 
-const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js'), testarRobustez = require('./robustez.js'), testarSincronia = require('./sincronia.js');
+const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js'), testarRobustez = require('./robustez.js'), testarSincronia = require('./sincronia.js'), testarContas = require('./contas.js');
 const { carregarDados, testarDados, testarContasMat, testarContasFis } = dados;
 dados.usar(ok);
 
@@ -245,8 +245,9 @@ async function testarNavegador(E) {
           window.__nuvem = { doc: d, gravados: [] };
           window.claude = { use: async k => k === 'user' ? { id: async () => 'aluno-1' } : { doc: () => ({ get: async () => ({ exists: !!window.__nuvem.doc, data: () => JSON.parse(JSON.stringify(window.__nuvem.doc)) }), set: async o => { window.__nuvem.gravados.push(JSON.parse(JSON.stringify(o))); } }) } };
         }, doc);
-        await p.goto(srv.url); await p.evaluate(s => localStorage.setItem('missao-eear-v1', JSON.stringify(s)), estado); await p.goto(srv.url); await p.waitForTimeout(500);
-        const res = { st: await p.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1'))), gravados: await p.evaluate(() => window.__nuvem.gravados), erros };
+        // aparelho já conectado à conta: o progresso local dela fica na chave da conta (veja testes/contas.js)
+        await p.goto(srv.url); await p.evaluate(s => localStorage.setItem('missao-eear-v1@claude:aluno-1', JSON.stringify(s)), estado); await p.goto(srv.url); await p.waitForTimeout(500);
+        const res = { st: await p.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1@claude:aluno-1'))), gravados: await p.evaluate(() => window.__nuvem.gravados), erros };
         await ctx.close(); return res;
       };
       const semCerts = JSON.parse(JSON.stringify(local)); semCerts.cfg.certs = []; semCerts.t = local.t + 1000;
@@ -284,6 +285,7 @@ async function testarNavegador(E) {
   await testarCelular({ E, b, srv, base, ok });
   await testarRobustez({ b, srv, base, ok });
   await testarSincronia({ b, srv, base, ok });
+  await testarContas({ b, srv, base, ok });
 
   await b.close(); srv.fechar();
   fs.rmSync(saida, { recursive: true, force: true });
