@@ -11,7 +11,7 @@ module.exports = async function testarExclusaoNuvem({ b, srv, base, ok }) {
   const espera = ms => new Promise(r => setTimeout(r, ms));
   const ate = async (f, ms = 15000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await f()) return true; await espera(150); } return false; };
   const LS = u => 'missao-eear-v1@claude:' + u;
-  async function aparelho(usuario) {
+  async function aparelho(usuario, liberada = true) {
     const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 844 } }), erros = [];
     await ctx.exposeFunction('__u', () => usuario);
     await ctx.exposeFunction('__g', async u => { await espera(60); return copia(N.docs[u]); });
@@ -24,7 +24,8 @@ module.exports = async function testarExclusaoNuvem({ b, srv, base, ok }) {
       return '';
     });
     await ctx.exposeFunction('__a', async (u, h, ttl) => { const t = N.travas[u], ag = Date.now(); if (t && t.ate > ag && t.h !== h) return { acquired: false, expiresAt: new Date(t.ate).toISOString() }; N.travas[u] = { h, ate: ag + ttl }; return { acquired: true, holder: h, expiresAt: new Date(ag + ttl).toISOString() }; });
-    await ctx.addInitScript(() => {
+    await ctx.addInitScript(liberada => {
+      if (liberada) window.EEAR_EXCLUSAO_NUVEM = true; // a exclusão está bloqueada no app; só os testes a ligam
       window.claude = { use: async k => {
         const u = await window.__u();
         if (k === 'user') return { id: async () => u };
@@ -34,7 +35,7 @@ module.exports = async function testarExclusaoNuvem({ b, srv, base, ok }) {
           acquire: o => window.__a(dono, o.holder, o.ttlMs)
         }; } };
       } };
-    });
+    }, liberada);
     const p = await ctx.newPage(); p.on('pageerror', e => erros.push(e.message));
     const clicar = (a, d) => p.evaluate(([a, d]) => { const x = document.createElement('button'); x.dataset.a = a; Object.assign(x.dataset, d || {}); document.body.appendChild(x); x.click(); x.remove(); }, [a, d || {}]);
     const ler = () => p.evaluate(k => JSON.parse(localStorage.getItem(k)), LS(usuario));
@@ -46,6 +47,15 @@ module.exports = async function testarExclusaoNuvem({ b, srv, base, ok }) {
   }
   const P = nome => Object.assign(base({ nome }), { t: Date.now() - 60000, feito: { 'T:base': true } });
   N.docs.ana = P('Ana'); N.docs.bia = P('Bia'); const biaAntes = JSON.stringify(N.docs.bia);
+
+  // 0. bloqueada por padrão: sem a liberação, o botão não aparece e a ação não apaga nada (verificação final, seção 5)
+  { const Z = await aparelho('ana', false); await espera(1500); await Z.dados();
+    const semBotao = (await Z.p.locator('[data-a="nuvemapagar"]').count()) === 0;
+    await Z.clicar('nuvemapagar'); await Z.p.waitForTimeout(150); const semConfirma = (await Z.p.locator('#nuvem-confirma').count()) === 0;
+    await Z.p.evaluate(() => { const i = document.createElement('input'); i.id = 'nuvem-confirma'; i.value = 'APAGAR'; document.body.appendChild(i); });
+    await Z.clicar('nuvemapagarok'); await espera(3000);
+    ok(semBotao && semConfirma && N.docs.ana.v === 1 && !N.docs.ana.apagado && !Z.erros.length, 'exclusão da nuvem bloqueada por padrão: sem botão, sem confirmação, e a ação forçada não apaga nada');
+    await Z.ctx.close(); await espera(5500); }
 
   // 1. confirmação explícita; a exclusão grava só a marca; a cópia deste aparelho e a outra conta ficam
   const A = await aparelho('ana'); await A.clicar('marcar', { k: 'T:ana1' });
