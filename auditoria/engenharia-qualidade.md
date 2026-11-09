@@ -32,25 +32,25 @@ os testes usam dados fictícios.
 | 3 | **Média** | Integridade | Progresso ilegível (JSON corrompido, ou formato de uma versão futura aberto por um app antigo em cache) era apagado no primeiro salvamento. | **Corrigido:** uma cópia exata fica em `missao-eear-v1-recuperar`, e a tela Hoje oferece copiá-la ou descartá-la |
 | 4 | **Média** | Integridade | Com o armazenamento cheio ou bloqueado, o app dizia "Progresso salvo neste aparelho" sem salvar nada. | **Corrigido:** aviso em Hoje e em Plano › Dados |
 | 5 | **Média** | Acessibilidade | As tabelas de notas e do histórico de simulados rolam na horizontal, mas não recebiam foco pelo teclado (axe: `scrollable-region-focusable`). | **Corrigido** (`7384575`) |
-| 6 | **Alta (latente)** | Sincronização | A nuvem resolve conflitos por "último a gravar vence" com o documento inteiro. Exemplo: o aluno estuda offline no celular, depois estuda no computador; quando o celular conecta, o progresso offline dele é descartado (só os certificados são unidos). Hoje não afeta ninguém, porque o Firebase está desligado. | **Documentado:** proposta abaixo; muda a sincronização e precisa de autorização |
-| 7 | Média | Acessibilidade | Com a fonte do sistema ampliada a partir de 130% (em 320 px) ou de 175% (em 360 px), a página rola para o lado. A causa principal é a contagem "T−N DIAS" no topo, que não quebra linha; a barra de abas também não encolhe. Em 320 px com fonte normal, a contagem já ocupa 11 px da margem. | **Documentado:** as correções testadas mudavam o visual em 100% (até 23 px no topo, ou sobreposição na lista de matérias) e foram revertidas. Precisa de uma decisão de design: topo em duas linhas ou contagem menor em telas estreitas |
-| 8 | Baixa | Dependências | `npm audit` em `app/`: 0 vulnerabilidades em produção; 3 moderadas (glob e minimatch, via `@capacitor/assets`), usadas só no CI para gerar ícones. | **Documentado:** atualizar dependência requer autorização |
+| 6 | **Alta (latente)** | Sincronização | A nuvem resolve conflitos por "último a gravar vence" com o documento inteiro. Exemplo: o aluno estuda offline no celular, depois estuda no computador; quando o celular conecta, o progresso offline dele é descartado (só os certificados são unidos). Hoje não afeta ninguém, porque o Firebase está desligado. | **Corrigido** na branch `claude/sync-acessibilidade` (união em três vias; veja `curso/app/08-uniao-nuvem.js`) |
+| 7 | Média | Acessibilidade | Com a fonte do sistema ampliada a partir de 130% (em 320 px) ou de 175% (em 360 px), a página rola para o lado. A causa principal é a contagem "T−N DIAS" no topo, que não quebra linha; a barra de abas também não encolhe. Em 320 px com fonte normal, a contagem já ocupa 11 px da margem. | **Corrigido** na branch `claude/sync-acessibilidade` com consultas de contêiner em rem, sem mudar a aparência com a fonte padrão |
+| 8 | Baixa | Dependências | `npm audit` em `app/`: 0 vulnerabilidades em produção; 3 moderadas (glob e minimatch, via `@capacitor/assets`), usadas só no CI para gerar ícones. | **Mantido:** a única correção sobe glob (13 → 14) e minimatch (10 → 11) de versão principal; o código vulnerável (rimraf em `cap migrate` e no build de iOS) não roda no fluxo do projeto. Detalhes no relatório da branch `claude/sync-acessibilidade` |
 | 9 | Baixa | Privacidade | Com a nuvem ligada, o documento `alunos/{uid}` guarda nome e e-mail em campos separados, além do progresso. O e-mail já está no Firebase Auth; repetir no documento não é necessário. | **Documentado** para a revisão de LGPD |
 | 10 | Baixa | Segurança | Não há Content-Security-Policy. Depois do item 1, nenhum vetor de injeção conhecido permanece, mas uma CSP seria a segunda barreira. Ela precisa liberar o gstatic (Firebase), o YouTube (nocookie) e as fontes. | **Documentado:** mexe no carregamento do Firebase e do YouTube; testar com o Firebase real |
 | 11 | Baixa | Integridade | Quiz interrompido (app fechado no meio) não guarda as respostas parciais. Flashcards e simulados guardam a cada resposta. | Comportamento atual mantido (quiz curto); documentado |
 
-### Proposta para o achado 6 (não implementada)
+### Achado 6: união implementada (branch `claude/sync-acessibilidade`)
 
-Trocar "último vence" por uma união campo a campo:
-- **Aulas:** melhor nota e data mais antiga de domínio.
-- **Flashcards:** o registro revisado mais recentemente.
-- **Caderno de erros:** união.
-- **Simulados:** união por data e tipo.
-- **Configuração:** a mais recente.
+A sincronização une os dois lados em três vias. A base é a última versão em comum, guardada por conta em
+`missao-eear-v1-base`. As regras por tipo de dado estão no comentário de `curso/app/08-uniao-nuvem.js`, e
+`testes/sincronia.js` usa dois aparelhos e uma nuvem fictícia.
 
-Requisitos antes de ligar o Firebase:
-- testes com dois aparelhos simulados e cenários offline;
-- autorização, porque altera como o progresso é gravado.
+**Risco restante:** a leitura e a gravação na nuvem não são atômicas. Se dois aparelhos gravarem no mesmo intervalo
+de milissegundos, a gravação de um pode cobrir a do outro, e a próxima união não recupera o que foi coberto.
+Para reduzir o estrago, a ausência de um item nunca apaga aulas, cartões, simulados ou atividade.
+
+**Recomendação ao ligar o Firebase:** usar `runTransaction` do Firestore em `ligarNuvem`. Isso não foi feito
+porque não pode ser testado sem um projeto Firebase (o emulador não está disponível aqui).
 
 ## Desempenho (medido, sem otimização necessária)
 

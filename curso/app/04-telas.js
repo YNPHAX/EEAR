@@ -169,7 +169,7 @@
         <li><b>96 questões objetivas</b>, 24 de cada matéria (Português, Inglês, Matemática e Física), com 4 alternativas.</li>
         <li><b>Eliminação</b>: nota abaixo de 5,0 em qualquer matéria ou média final abaixo de 5,0 (nota de 0 a 10). A classificação é pela média, então a meta do curso é 8,0: cerca de 19 acertos em 24 por matéria.</li>
         <li><b>Questões oficiais</b>: as provas anteriores da EEAR, com gabarito oficial, ficam na aba Simulados e na aba Provas de cada módulo.</li>
-        <li><b>Datas</b>: confirme sempre no edital oficial, em ingresso.eear.fab.mil.br.</li>
+        <li style="overflow-wrap:break-word"><b>Datas</b>: confirme sempre no edital oficial, em ingresso.eear.fab.mil.br.</li>
         <li><b>Controle de Tráfego Aéreo (BCT)</b>: o inglês costuma ser cobrado em nível intermediário. Se for sua opção, dê peso extra a Inglês.</li>
       </ul></section>`;
     if (p.dias.length) {

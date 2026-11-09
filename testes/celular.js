@@ -76,4 +76,25 @@ module.exports = async function testarCelular({ E, b, srv, base, ok }) {
     ok(fim === 'Revisão concluída' && /\b1\b erro/.test(resumo) && ids.every(id => Array.isArray(salvo.fc[id])) && !erros.length, `${nome}: a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript`);
     await ctx.close();
   }
+
+  console.log('\n== fonte ampliada (tamanho de fonte padrão do navegador, pelo Chromium)');
+  const clicar = (p, a, attrs) => p.evaluate(([a, attrs]) => { const x = document.createElement('button'); x.dataset.a = a; Object.assign(x.dataset, attrs); document.body.appendChild(x); x.click(); x.remove(); }, [a, attrs]);
+  const passos = [['hoje', 'tab', { v: 'hoje' }], ['plano', 'tab', { v: 'plano' }], ['materias', 'tab', { v: 'materias' }], ['aula', 'mod', { id: 'POR01' }], ['quiz', 'quizmod', { id: 'POR01' }],
+    ['treino', 'tab', { v: 'treino' }], ['flashcards', 'fcmod', { id: 'POR01' }], ['simulados', 'tab', { v: 'simulados' }], ['certificado', 'cert', { s: 'por' }]];
+  for (const [w, px] of [[320, 24], [320, 32], [360, 32]]) {
+    const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: w, height: 640 }, isMobile: true, hasTouch: true }), p = await ctx.newPage(), erros = [];
+    p.on('pageerror', e => erros.push(e.message));
+    const cdp = await ctx.newCDPSession(p); await cdp.send('Page.enable'); await cdp.send('Page.setFontSizes', { fontSizes: { standard: px } });
+    const st = Object.assign(base({ modalidade: 'normal' }), { sims: [{ d: '2026-10-03', tipo: 'completo', r: { por: [18, 24], ing: [15, 24], mat: [12, 24], fis: [10, 24] }, min: 200 }] });
+    await p.goto(srv.url); await p.evaluate(s => localStorage.setItem('missao-eear-v1', s), JSON.stringify(st)); await p.goto(srv.url); await p.waitForTimeout(200);
+    const rolam = [];
+    for (const [nome, a, attrs] of passos) {
+      await clicar(p, a, attrs); await p.waitForTimeout(80);
+      if (await p.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1)) rolam.push(nome);
+      if (nome === 'quiz') await clicar(p, 'sairquiz', {});
+    }
+    const corpo = await p.evaluate(() => parseFloat(getComputedStyle(document.body).fontSize));
+    ok(!rolam.length && corpo === px && !erros.length, `fonte do navegador em ${px} px (${Math.round(px / 16 * 100)}%), ${w} px: o texto acompanha a fonte escolhida e nenhuma das ${passos.length} telas rola para o lado${rolam.length ? ' — rolam: ' + rolam.join(', ') : ''}${corpo !== px ? ` — texto em ${corpo} px` : ''}`);
+    await ctx.close();
+  }
 };
