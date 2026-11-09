@@ -34,9 +34,9 @@ substitui o Google Fonts), e os vídeos usam `youtube-nocookie.com`.
 |---|---|---|---|---|
 | 1 | Progresso de um aluno sobrescrito por outro aparelho (perda de dado) | Alta | União em três vias | **Feito nesta branch** (`curso/app/08-uniao-nuvem.js`, `testes/sincronia.js`) |
 | 2 | Script injetado por progresso colado (exposição do progresso e da sessão) | Alta | Escapar dados no HTML | **Feito no PR #19**; CSP recomendada antes do login |
-| 3 | Campos `email` e `nome` duplicados no Firestore | Média | Gravar só `dados`, `t` e `atualizado` | Pendente: muda o que o Firebase grava; fazer junto com a ativação |
-| 4 | Falta de exclusão de conta e de exportação pelo próprio aluno (direitos do art. 18) | Alta, quando houver conta | "Excluir minha conta" (Auth e documento) e "Baixar meus dados" (o JSON) | Pendente: depende de ligar o Firebase |
-| 5 | Troca de conta no mesmo aparelho: o progresso local (de quem saiu) é unido à conta de quem entra, como já acontecia antes; cópias locais ficam depois de "Zerar" ou de sair | Média | Ao sair da conta, perguntar se o progresso deste aparelho deve ser apagado; "Zerar" e "Sair" apagarem a base | Parcial: a base agora pertence à conta e é ignorada por outra conta (teste em `testes/sincronia.js`); a pergunta ao sair depende de decisão |
+| 3 | Campos `email` e `nome` duplicados no Firestore | Média | Gravar só `dados`, `t` e `atualizado` | **Feito** (branch `claude/contas-privacidade`): documento com `v`, `dados`, `t` e `atualizado`; as regras recusam campos a mais |
+| 4 | Falta de exclusão de conta e de exportação pelo próprio aluno (direitos do art. 18) | Alta, quando houver conta | "Excluir minha conta" (Auth e documento) e "Baixar meus dados" (o JSON) | **Feito** e testado nos emuladores oficiais; falta a garantia no servidor (Cloud Function) |
+| 5 | Troca de conta no mesmo aparelho e cópias locais | Média | Progresso local por conta; ao sair, escolher manter ou apagar | **Feito** (veja `auditoria/contas-e-sincronizacao.md`) |
 | 6 | Adolescentes (o público inclui menores de 18 anos) | Alta | Revisar base legal e consentimento (art. 14), linguagem e coleta mínima | A política tem uma seção; precisa de revisão jurídica |
 | 7 | Retenção na nuvem sem prazo definido | Média | Definir prazo para contas inativas e exclusão automática | Pendente: decisão do controlador |
 | 8 | Transferência internacional (Firebase/Google, Gmail) | Média | Confirmar o enquadramento (Res. CD/ANPD nº 19/2024) e o mecanismo (arts. 33 a 36) | Pendente: a política já registra isso |
