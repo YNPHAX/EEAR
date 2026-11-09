@@ -44,6 +44,9 @@ commits: a branch já partia da main, e o PR #16 continua com ela como base.
 
 ## 2. Exclusão do progresso na nuvem do curso no Claude
 
+> **Atualização (verificação final):** com o build real da versão publicada, uma aba antiga recolocou o progresso
+> depois da exclusão. A função foi **bloqueada** (PR #26) até a estratégia de `auditoria/verificacao-final.md`, seção 5.
+
 **Implementado** (`curso/app/11-exclusao-nuvem.js`, testes em `testes/exclusao-nuvem.js`), com um limite que a API
 não permite resolver.
 

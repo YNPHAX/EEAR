@@ -13,6 +13,11 @@
   function chaveApagado() { return chave('missao-eear-v1-apagado'); }
   function apagadoAqui() { try { return !!localStorage.getItem(chaveApagado()); } catch (e) { return false; } }
   function podeApagarNuvem() { return identidade.indexOf('claude:') === 0 && !!(nuvem.ref || nuvem.refPausada); }
+  /* BLOQUEADA (verificação final, 2026-11-09): com o build real da versão publicada, uma aba antiga aberta antes da
+     exclusão recolocou o progresso na nuvem. Fica desligada até o caminho novo com o antigo trancado nas regras
+     (auditoria/verificacao-final.md, seção 5) ser implementado e validado no serviço real. Só os testes a ligam.
+     O reconhecimento da marca de exclusão continua ativo. */
+  function exclusaoLiberada() { return window.EEAR_EXCLUSAO_NUVEM === true; }
   /* A nuvem tem a marca de exclusão, ou regravaram depois de este aparelho apagar: nada é unido nem gravado. */
   function exclusaoNaNuvem(o) {
     if (o && typeof o === 'object' && o.apagado) return nuvem.reenviar ? { ignorar: true } : { apagado: String(o.apagado) };
@@ -25,6 +30,7 @@
   }
   async function apagarNuvem() {
     const ref = nuvem.ref || nuvem.refPausada, id = identidade;
+    if (!exclusaoLiberada()) return;
     if (!ref || contaUI.ocupado || id.indexOf('claude:') !== 0) return;
     contaUI.ocupado = true; clearTimeout(tSave); nuvem.ref = null; // nada mais desta conta é enviado daqui
     for (let i = 0; nuvem.busy && i < 40; i++) await new Promise(r => setTimeout(r, 250)); // espera a gravação em curso
@@ -68,21 +74,21 @@
   function blocoNuvemClaude() {
     if (!podeApagarNuvem()) return '';
     const data = q => { const d = new Date(q); return isNaN(d) ? '' : ' em ' + d.toLocaleDateString('pt-BR'); };
-    if (pedindo === 'nuvemapagar') {
+    if (pedindo === 'nuvemapagar' && exclusaoLiberada()) {
       return `<div class="confirm"><p><b>Apagar meu progresso da nuvem do curso</b> apaga a cópia guardada na sua conta. Este aparelho mantém a cópia dele. Feche o curso nos outros aparelhos antes: uma versão antiga aberta pode gravar de novo.</p>
         <div class="field"><label for="nuvem-confirma">Digite APAGAR para confirmar</label><input id="nuvem-confirma" autocomplete="off"></div>
         <button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="nuvemapagarok">Apagar da nuvem</button></div>`;
     }
     if (nuvem.apagado || nuvem.reapareceu) {
-      return `<div class="confirm"><p>${nuvem.apagado ? `O progresso desta conta foi apagado da nuvem do curso${data(nuvem.apagado)}. O que você estudar aqui fica só neste aparelho.` : 'Depois que você apagou o progresso da nuvem, uma versão antiga do curso, aberta em outro aparelho, gravou de novo. Feche ou recarregue o curso nos outros aparelhos e apague de novo.'}</p>${nuvem.reapareceu ? '<button class="btn sm" data-a="nuvemapagar">Apagar de novo da nuvem</button>' : ''}<button class="btn sm" data-a="nuvemreenviar">Enviar de novo para a nuvem</button></div>`;
+      return `<div class="confirm"><p>${nuvem.apagado ? `O progresso desta conta foi apagado da nuvem do curso${data(nuvem.apagado)}. O que você estudar aqui fica só neste aparelho.` : 'Depois que você apagou o progresso da nuvem, uma versão antiga do curso, aberta em outro aparelho, gravou de novo. Feche ou recarregue o curso nos outros aparelhos e apague de novo.'}</p>${nuvem.reapareceu && exclusaoLiberada() ? '<button class="btn sm" data-a="nuvemapagar">Apagar de novo da nuvem</button>' : ''}<button class="btn sm" data-a="nuvemreenviar">Enviar de novo para a nuvem</button></div>`;
     }
-    return '<div class="row"><button class="btn ghost" data-a="nuvemapagar">Apagar meu progresso da nuvem do curso</button></div>';
+    return exclusaoLiberada() ? '<div class="row"><button class="btn ghost" data-a="nuvemapagar">Apagar meu progresso da nuvem do curso</button></div>' : '';
   }
   document.addEventListener('click', ev => {
     const b = ev.target.closest('[data-a]');
     if (!b) return;
     switch (b.dataset.a) {
-      case 'nuvemapagar': msgDados = ''; pedindo = 'nuvemapagar'; render(); break;
+      case 'nuvemapagar': if (!exclusaoLiberada()) break; msgDados = ''; pedindo = 'nuvemapagar'; render(); break;
       case 'nuvemapagarok': {
         const t = ((document.getElementById('nuvem-confirma') || {}).value || '').trim();
         if (t !== 'APAGAR') { msgDados = 'Digite APAGAR para confirmar. Nada foi apagado.'; render(); break; }
