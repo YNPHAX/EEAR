@@ -317,16 +317,19 @@
   function planejarUniao(o) {
     if (o && (typeof o !== 'object' || o.v !== 1)) return { futura: true };
     const local = mesclar(JSON.parse(JSON.stringify(S)));
-    let u = local, perdido = null, c = null;
+    let u = local, perdido = null, c = null, assinado = true;
     if (o) {
-      c = mesclar(JSON.parse(JSON.stringify(o)));
-      /* A base só vale se for anterior aos dois lados: um progresso colado ou restaurado mais antigo que ela não descende dela. */
-      const b = lerBase(), base = b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
+      assinado = assinaturaOk(o); // sem assinatura válida: gravado (ou alterado) por uma versão antiga do app
+      c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
+      /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
+         dela) e se a nuvem foi gravada por esta versão: uma versão antiga grava o progresso inteiro dela por cima, sem
+         trava, e o que ela não tinha pareceria apagado do outro lado. */
+      const b = lerBase(), base = assinado && b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
       /* Aparelho que nunca sincronizou e não tem estudo: fica com a nuvem. Um aparelho zerado depois dela passa pela união. */
       if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
       if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
     } else if (!S.t) return { nada: true }; // aparelho e nuvem sem progresso: nada a gravar
-    return { local, u, perdido, gravar: !c || !uIgual(u, c) };
+    return { local, u, perdido, gravar: !c || !assinado || !uIgual(u, c) }; // sem assinatura: grava a versão assinada
   }
   /* Lê a nuvem, une e grava. Com transação (Firebase), a leitura e a gravação são atômicas: se outro aparelho gravar no
      meio, a união é refeita sobre o que ele gravou. Sem transação (link do curso no Claude), veja lerUnirGravar
@@ -335,7 +338,7 @@
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
     let p = null, modo = 'ok';
-    const planejar = o => { p = planejarUniao(o); return p.gravar ? JSON.parse(JSON.stringify(p.u)) : null; };
+    const planejar = o => { p = planejarUniao(o); return p.gravar ? assinar(JSON.parse(JSON.stringify(p.u))) : null; };
     if (ref.transacao) await ref.transacao(planejar);
     else modo = await lerUnirGravar(ref, planejar);
     if (nuvem.conta !== conta0 || !p || p.nada) return;
@@ -1824,6 +1827,18 @@
   function lerBase() { try { const t = localStorage.getItem(chave(BASE_K)); const o = t && JSON.parse(t); return o && o.conta === nuvem.conta && o.st && o.st.v === 1 ? mesclar(o.st) : null; } catch (e) { return null; } }
   function gravarBase(st) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
   function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+  /* Assinatura do documento da nuvem (sinc): resumo FNV-1a do conteúdo sem ela, em ordem fixa de chaves. Só esta versão
+     do app grava assinado. Documento sem assinatura, ou com assinatura que não bate (uma versão antiga gravou por cima,
+     ou mudou algo e manteve o campo), não serve de referência para apagar: a união é feita sem base. Não é proteção
+     contra quem quer forjar; é detecção de gravação de outra versão. */
+  function resumoDoc(o) {
+    const t = JSON.stringify(canonico(o)); let h = 0x811c9dc5;
+    for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+    return h.toString(36) + '.' + t.length.toString(36);
+  }
+  function semAssinatura(o) { const x = Object.assign({}, o); delete x.sinc; return x; }
+  function assinar(o) { o.sinc = resumoDoc(semAssinatura(o)); return o; }
+  function assinaturaOk(o) { return !!o && typeof o === 'object' && typeof o.sinc === 'string' && o.sinc === resumoDoc(semAssinatura(o)); }
   /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
   function uTres(tb, b, l, c, conflito) {
     if (uIgual(l, c)) return l;
