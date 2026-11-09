@@ -30,7 +30,8 @@ function servir(raiz) {
   return new Promise(res => srv.listen(0, '127.0.0.1', () => res({ url: `http://127.0.0.1:${srv.address().port}/`, fechar: () => srv.close() })));
 }
 /* Site montado com uma configuração de teste do Firebase (emuladores, sincronização liberada). semTransacao: variante
-   só para comparação, com a gravação antiga (ler e gravar sem transação). */
+   só para comparação, sem runTransaction. Desde o PR #22, sem transação o app usa a gravação de reserva (sem trava e
+   sem base, que não apaga nada por ausência); até o PR #21, lia e gravava em seguida e perdia de 5 a 6 de 12. */
 function montar(semTransacao) {
   const saida = fs.mkdtempSync(path.join(os.tmpdir(), 'eear-fb-'));
   execFileSync('python3', ['web/build.py', saida], { cwd: RAIZ, stdio: 'ignore' });
@@ -125,7 +126,7 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
   ok(!faltam.length, `com transação: 12 marcações feitas ao mesmo tempo em dois aparelhos, nenhuma perdida na nuvem${faltam.length ? ' — faltam ' + faltam.join(', ') : ''}`);
   const saida0 = montar(true), srv0 = await servir(saida0);
   const faltam0 = await concorrencia(srv0.url, 'sem');
-  console.log(`  (comparação, sem transação: ${faltam0.length} de 12 marcações perdidas${faltam0.length ? ' — ' + faltam0.join(', ') : ''})`);
+  console.log(`  (comparação, sem transação, com a gravação de reserva: ${faltam0.length} de 12 marcações perdidas${faltam0.length ? ' — ' + faltam0.join(', ') : ''})`);
   srv0.fechar(); fs.rmSync(saida0, { recursive: true, force: true });
 
   console.log('\n== versão futura, regras e exclusão de conta');
