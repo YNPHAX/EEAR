@@ -48,7 +48,7 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
   fs.copyFileSync(path.join(RAIZ, 'web', 'firestore.rules'), path.join(dir, 'firestore.rules'));
   fs.writeFileSync(path.join(dir, 'firebase.json'), JSON.stringify({ firestore: { rules: 'firestore.rules' }, emulators: { auth: { host: '127.0.0.1', port: 9099 }, firestore: { host: '127.0.0.1', port: 8080 }, ui: { enabled: false }, singleProjectMode: true } }));
   const cli = process.env.EEAR_FIREBASE_CLI || 'firebase';
-  try { execFileSync(cli, ['emulators:exec', '--config', path.join(dir, 'firebase.json'), '--project', PROJ, '--only', 'auth,firestore', `node "${path.join(RAIZ, 'testes', 'firebase-emulador.test.js')}"`], { cwd: RAIZ, stdio: 'inherit' }); process.exitCode = 0; }
+  try { execFileSync(cli, ['emulators:exec', '--config', path.join(dir, 'firebase.json'), '--project', PROJ, '--only', 'auth,firestore', `node "${path.join(RAIZ, 'testes', 'firebase-emulador.test.js')}"`], { cwd: dir, stdio: 'inherit' }); process.exitCode = 0; } // cwd temporário: os logs do emulador ficam fora do repositório
   catch (e) { process.exitCode = 1; }
   fs.rmSync(dir, { recursive: true, force: true });
 } else (async () => {
@@ -131,7 +131,13 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     await req(`${DOCS}/alunos/${uidC}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: { v: { integerValue: '2' }, dados: { stringValue: '{"formato":"novo"}' }, t: { integerValue: '1' } } }) });
     await marcar(C, 'T:caio2'); await espera(3500);
     const f = await docAdmin(uidC); await C.plano();
-    ok(f.v.integerValue === '2' && f.dados.stringValue === '{"formato":"novo"}' && /versão mais nova/.test(await C.p.locator('#sync').innerText()) && (await C.ler('missao-eear-v1@firebase:' + uidC)).feito['T:caio2'], 'documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho');
+    const futuraOk = f.v.integerValue === '2' && f.dados.stringValue === '{"formato":"novo"}' && /versão mais nova/.test(await C.p.locator('#sync').innerText()) && (await C.ler('missao-eear-v1@firebase:' + uidC)).feito['T:caio2'];
+    ok(futuraOk, 'documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho');
+    // documento corrompido (dados ilegíveis): nada é gravado por cima e o app continua funcionando com o progresso local
+    await req(`${DOCS}/alunos/${uidC}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: { v: { integerValue: '1' }, dados: { stringValue: '{{{ não é JSON' }, t: { integerValue: '1' } } }) });
+    await C.p.reload(); await C.p.waitForTimeout(2500); await marcar(C, 'T:caio3'); await espera(3000);
+    const g = await docAdmin(uidC);
+    ok(g.dados.stringValue === '{{{ não é JSON' && (await C.ler('missao-eear-v1@firebase:' + uidC)).feito['T:caio3'] === true && !C.erros.length, 'documento corrompido na nuvem: o app não grava por cima, não trava e guarda o estudo no aparelho');
     await C.ctx.close(); }
 
   { const ana = await entrar('ana@exemplo.test', 'senha-ana-1'), bia = await entrar('bia@exemplo.test', 'senha-bia-1');

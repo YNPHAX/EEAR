@@ -73,6 +73,10 @@ module.exports = async function testarContas({ b, srv, base, ok }) {
     ok(sobrou[0] === null && sobrou[1] !== null && !A.erros.length, 'apagar os dados sem conta, com confirmação, apaga só o progresso sem conta; o de outra conta fica');
     await A.p.evaluate(() => { const x = document.createElement('button'); x.dataset.a = 'dadosapagarok'; document.body.appendChild(x); x.click(); x.click(); x.remove(); });
     ok(!A.erros.length && (await A.p.evaluate(() => localStorage.getItem('missao-eear-v1@claude:outra'))) !== null, 'repetir a confirmação não apaga mais nada nem dá erro');
+    await A.gravar('missao-eear-v1', anon); await A.abrir(); await A.p.click('[data-a="tab"][data-v="plano"]'); await A.p.click('[data-a="dadosapagar"]');
+    await A.p.click('[data-a="dadosapagartudo"]'); await A.p.waitForTimeout(100);
+    const resto = await A.p.evaluate(() => Object.keys(localStorage).filter(k => k.indexOf('missao-eear-v1') === 0));
+    ok(!resto.length && /todas as contas/.test(await A.p.locator('main').innerText()), '"Apagar também as outras contas" (só sem conta em uso, com confirmação) apaga o progresso de todas as contas deste aparelho e diz isso');
 
     // com conta: apagar só depois que a nuvem tem tudo
     usuario = 'davi'; nuvens.davi = null; await A.gravar('missao-eear-conta', 'claude:davi'); await A.abrir(); await A.p.waitForTimeout(1500);
