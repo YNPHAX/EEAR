@@ -39,18 +39,18 @@ os testes usam dados fictícios.
 | 10 | Baixa | Segurança | Não há Content-Security-Policy. Depois do item 1, nenhum vetor de injeção conhecido permanece, mas uma CSP seria a segunda barreira. Ela precisa liberar o gstatic (Firebase), o YouTube (nocookie) e as fontes. | **Documentado:** mexe no carregamento do Firebase e do YouTube; testar com o Firebase real |
 | 11 | Baixa | Integridade | Quiz interrompido (app fechado no meio) não guarda as respostas parciais. Flashcards e simulados guardam a cada resposta. | Comportamento atual mantido (quiz curto); documentado |
 
-### Proposta para o achado 6 (não implementada)
+### Achado 6: união implementada (branch `claude/sync-acessibilidade`)
 
-Trocar "último vence" por uma união campo a campo:
-- **Aulas:** melhor nota e data mais antiga de domínio.
-- **Flashcards:** o registro revisado mais recentemente.
-- **Caderno de erros:** união.
-- **Simulados:** união por data e tipo.
-- **Configuração:** a mais recente.
+A sincronização une os dois lados em três vias. A base é a última versão em comum, guardada por conta em
+`missao-eear-v1-base`. As regras por tipo de dado estão no comentário de `curso/app/08-uniao-nuvem.js`, e
+`testes/sincronia.js` usa dois aparelhos e uma nuvem fictícia.
 
-Requisitos antes de ligar o Firebase:
-- testes com dois aparelhos simulados e cenários offline;
-- autorização, porque altera como o progresso é gravado.
+**Risco restante:** a leitura e a gravação na nuvem não são atômicas. Se dois aparelhos gravarem no mesmo intervalo
+de milissegundos, a gravação de um pode cobrir a do outro, e a próxima união não recupera o que foi coberto.
+Para reduzir o estrago, a ausência de um item nunca apaga aulas, cartões, simulados ou atividade.
+
+**Recomendação ao ligar o Firebase:** usar `runTransaction` do Firestore em `ligarNuvem`. Isso não foi feito
+porque não pode ser testado sem um projeto Firebase (o emulador não está disponível aqui).
 
 ## Desempenho (medido, sem otimização necessária)
 
