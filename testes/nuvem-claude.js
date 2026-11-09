@@ -6,7 +6,7 @@
 
 module.exports = async function testarNuvemClaude({ b, srv, base, ok }) {
   console.log('\n== link do curso no Claude: gravações simultâneas (nuvem fictícia com latência e trava)');
-  const N = { doc: null, trava: null, gravacoes: 0, atrasoGet: 120, atrasoSet: 700, semTrava: false, criaVazio: true, erroTrava: '', intruso: null, usuario: 'aluno-concorrente' };
+  const N = { doc: null, trava: null, gravacoes: 0, atrasoGet: 120, atrasoSet: 700, semTrava: false, criaVazio: true, erroTrava: '', intruso: null, erroSet: '', recusadas: 0, foraDoAr: false, usuario: 'aluno-concorrente' };
   const LS = () => 'missao-eear-v1@claude:' + N.usuario, LS_BASE = () => 'missao-eear-v1-base@claude:' + N.usuario;
   const copia = x => (x == null ? x : JSON.parse(JSON.stringify(x)));
   const espera = ms => new Promise(r => setTimeout(r, ms));
@@ -15,9 +15,9 @@ module.exports = async function testarNuvemClaude({ b, srv, base, ok }) {
     const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 844 } }), erros = [];
     await ctx.exposeFunction('__cCfg', () => ({ usuario: N.usuario, semTrava: N.semTrava, erroTrava: N.erroTrava }));
     await ctx.exposeFunction('__cGet', async () => { await espera(N.atrasoGet); return copia(N.doc); });
-    await ctx.exposeFunction('__cSet', async o => { const x = copia(o); await espera(N.atrasoSet); N.doc = x; N.gravacoes++; if (N.intruso) { const f = N.intruso; N.intruso = null; N.doc = f(x); } return true; });
+    await ctx.exposeFunction('__cSet', async o => { if (N.erroSet) { N.recusadas++; return N.erroSet; } const x = copia(o); await espera(N.atrasoSet); N.doc = x; N.gravacoes++; if (N.intruso) { const f = N.intruso; N.intruso = null; N.doc = f(x); } return true; });
     await ctx.exposeFunction('__cAcquire', async (holder, ttl) => {
-      await espera(40); const agora = Date.now(), t = N.trava;
+      await espera(40); if (N.foraDoAr) return { off: true }; const agora = Date.now(), t = N.trava;
       if (t && t.ate > agora && t.holder !== holder) return { acquired: false, expiresAt: new Date(t.ate).toISOString() };
       N.trava = { holder, ate: agora + Math.min(Math.max(ttl || 30000, 1000), 600000) };
       if (N.doc == null && N.criaVazio) N.doc = {}; // a API real pode criar o documento, vazio, ao conceder a trava
@@ -29,8 +29,8 @@ module.exports = async function testarNuvemClaude({ b, srv, base, ok }) {
         if (k === 'user') return { id: async () => cfg.usuario };
         return { doc: () => { const d = {
           get: async () => { const x = await window.__cGet(); return { exists: x != null, data: () => x }; },
-          set: async o => { await window.__cSet(o); }
-        }; if (cfg.erroTrava) d.acquire = async () => { const e = new Error('recusada'); e.code = cfg.erroTrava; throw e; }; else if (!cfg.semTrava) d.acquire = o => window.__cAcquire(o.holder, o.ttlMs); return d; } };
+          set: async o => { const r = await window.__cSet(o); if (typeof r === 'string') { const e = new Error('recusado'); e.code = r; throw e; } }
+        }; if (cfg.erroTrava) d.acquire = async () => { const e = new Error('recusada'); e.code = cfg.erroTrava; throw e; }; else if (!cfg.semTrava) d.acquire = async o => { const r = await window.__cAcquire(o.holder, o.ttlMs); if (r.off) { const e = new Error('sem rede'); e.code = 'unavailable'; throw e; } return r; }; return d; } };
       } };
     });
     const p = await ctx.newPage(); p.on('pageerror', e => erros.push(e.message));
@@ -111,6 +111,34 @@ module.exports = async function testarNuvemClaude({ b, srv, base, ok }) {
     await ate(async () => { const x = await A.ler(), y = await A.ler(LS_BASE()); return x.feito['T:antigo'] && y && y.st.feito['T:novo']; }, 15000);
     const a = await A.ler(), base0 = await A.ler(LS_BASE());
     ok(!!(N.doc.feito['T:novo'] && N.doc.feito['T:antigo'] && a.feito['T:novo'] && a.feito['T:antigo']) && !!(base0 && base0.st.feito['T:novo']), 'gravação de um app antigo por cima: a conferência percebe, a união é refeita e a marcação deste aparelho e a do outro ficam');
+    await A.ctx.close();
+  }
+  { // 7. base corrompida, e base de outra conta copiada para a chave desta: são ignoradas, e a união sem base não apaga nada
+    N.doc = P0(); N.trava = null; N.usuario = 'aluno-base'; const A = await aparelho(); await espera(1500);
+    await A.p.evaluate(k => localStorage.setItem(k, '{{ corrompida'), LS_BASE());
+    await A.marcar('T:b1'); await ate(async () => N.doc.feito && N.doc.feito['T:b1']);
+    const ok1 = !!N.doc.feito['T:b1'] && !!N.doc.erros['MAT03-2'] && !A.erros.length;
+    // outra conta: a base dela não tem o erro MAT03-2 nem a marcação T:b1; se fosse usada, a união apagaria os dois
+    await A.p.evaluate(k => localStorage.setItem(k, JSON.stringify({ conta: 'claude:outra-conta', st: { v: 1, t: 1, cfg: {}, mod: {}, fc: {}, sims: [], erros: {}, feito: {} } })), LS_BASE());
+    await A.marcar('T:b2'); await ate(async () => N.doc.feito && N.doc.feito['T:b2']);
+    ok(ok1 && !!(N.doc.feito['T:b1'] && N.doc.feito['T:b2'] && N.doc.erros['MAT03-2']) && !A.erros.length, 'base corrompida ou de outra conta: é ignorada, a sincronização continua e nada é apagado');
+    await A.ctx.close();
+  }
+  { // 8. a nuvem recusa a gravação de vez (sem permissão): o aluno não vê "salvo na sua conta", e o estudo fica no aparelho
+    N.doc = P0(); N.trava = null; N.usuario = 'aluno-recusado'; const A = await aparelho(); await espera(1500);
+    N.erroSet = 'permission-denied'; N.recusadas = 0; await A.marcar('T:r1'); await ate(async () => N.recusadas > 0, 15000); await espera(500); await A.plano();
+    const aviso = await A.p.locator('#sync').innerText();
+    ok(!/na sua conta/.test(aviso) && /neste aparelho/.test(aviso) && (await A.ler()).feito['T:r1'] === true && !(N.doc.feito || {})['T:r1'], 'gravação recusada pela nuvem: o aviso diz que o progresso está salvo neste aparelho (e não na conta), e o estudo fica aqui' + ` [aviso: ${aviso}]`);
+    N.erroSet = ''; await A.ctx.close();
+  }
+  { // 9. sem conexão: o aviso não diz "salvo na sua conta" enquanto o estudo novo não chegou; quando a conexão volta, chega
+    N.doc = P0(); N.trava = null; N.usuario = 'aluno-offline'; const A = await aparelho(); await espera(1500); await A.plano();
+    const antes = await A.p.locator('#sync').innerText();
+    N.foraDoAr = true; await A.marcar('T:off1'); await espera(6000); await A.plano();
+    const durante = await A.p.locator('#sync').innerText();
+    N.foraDoAr = false; await ate(async () => N.doc.feito && N.doc.feito['T:off1'], 20000); await espera(500); await A.plano();
+    const depois = await A.p.locator('#sync').innerText();
+    ok(/na sua conta\.$/.test(antes) && /Sem conexão/.test(durante) && !/salvo na sua conta/.test(durante) && /^Progresso salvo na sua conta\.$/.test(depois) && !A.erros.length, 'sem conexão: o aviso diz que o estudo novo está só neste aparelho e vai para a conta quando a conexão voltar; depois, que está salvo na conta' + ` [${antes} | ${durante} | ${depois}]`);
     await A.ctx.close();
   }
 };
