@@ -55,14 +55,14 @@ EEAR.add({
     ['"O piloto e a comissária ___ ___." Completam a frase com correção:', ['chegou / cansado', 'chegaram / cansados', 'chegaram / cansadas', 'chegou / cansadas'], 1, 'Sujeito composto anteposto: plural. Adjetivo referente a masculino e feminino: masculino plural (cansados).']
   ],
   fc: [
-    ['Sujeito composto posposto', 'Verbo no plural ou concordando com o núcleo mais próximo.'],
+    ['"Chegou o piloto e o mecânico" ou "Chegaram o piloto e o mecânico": qual está de acordo com a norma-padrão?', 'As duas. Com sujeito composto depois do verbo, o verbo vai ao plural ou concorda com o núcleo mais próximo. Antes do verbo, só o plural: O piloto e o mecânico chegaram.', 2],
     ['"Mais de um aluno ___"', 'Singular: faltou.'],
     ['Fui eu que… / Fui eu quem…', 'Que: concorda com eu (fiz). Quem: 3ª pessoa (fez) ou eu (fiz).'],
-    ['Ser com horas', 'Concorda com o numeral: são dez horas; é uma hora.'],
-    ['Anexo, obrigado, mesmo, próprio, quite', 'Variam com o substantivo: anexas, obrigada, mesmas.'],
-    ['Meio adjetivo x advérbio', 'Adjetivo (metade) varia: meia hora. Advérbio (um pouco) não: meio cansada.'],
+    ['Complete com o verbo ser no presente: "___ uma hora da tarde" e "Da base até a cidade ___ doze quilômetros."', 'É uma hora (concorda com o numeral "uma") e são doze quilômetros (em distâncias, também concorda com o numeral).', 2],
+    ['Corrija a concordância: "Estamos quite com a tesouraria" e "Seguem incluso os recibos."', 'Estamos quites (concorda com "nós") e seguem inclusos os recibos. Quite, incluso, anexo, mesmo, próprio e obrigado concordam com o nome a que se referem.', 2],
+    ['Complete com meio ou meia: "A porta estava ___ aberta" e "Bebeu ___ garrafa de água."', 'Meio aberta (advérbio, = um pouco: não varia) e meia garrafa (= metade: concorda com "garrafa").', 2],
     ['É proibido entrada x é proibida a entrada', 'Sem artigo: invariável. Com artigo: concorda.'],
-    ['Bastante adjetivo x advérbio', 'Adjetivo (= muitos) varia: bastantes livros. Advérbio (= muito) não: bastante nervosos.']
+    ['Por que "bastante" varia em "Houve <b>bastantes</b> reclamações" e não varia em "As reclamações eram <b>bastante</b> justas"?', 'No 1º caso é adjetivo (= muitas) e concorda com "reclamações". No 2º é advérbio (= muito): intensifica o adjetivo "justas" e não varia.', 2]
   ]
 });
 
@@ -130,14 +130,14 @@ EEAR.add({
     ['"O médico assistiu o paciente." Nessa frase, "assistir" significa', ['ver.', 'ajudar, dar assistência.', 'caber.', 'morar.'], 1, 'No sentido de ajudar, prestar assistência, "assistir" é transitivo direto.']
   ],
   fc: [
-    ['Assistir (ver)', 'VTI com a: assisti ao filme.'],
-    ['Preferir', 'Preferir algo a algo, sem "mais" e sem "do que".'],
-    ['Implicar (acarretar)', 'VTD: implica riscos (sem "em").'],
-    ['Aspirar (desejar) e visar (pretender)', 'VTI com a: aspira ao cargo; visa ao lucro.'],
-    ['Truque da crase', 'Troque por palavra masculina: se virar "ao", há crase.'],
+    ['Corrija, se necessário: "Todos assistiram o desfile" e "O enfermeiro assistiu o ferido."', 'Todos assistiram ao desfile (assistir = ver: VTI com a). A segunda está correta: assistir = ajudar é VTD (assistiu o ferido).', 2],
+    ['Reescreva de acordo com a norma-padrão: "Prefiro mais viajar de avião do que de ônibus."', 'Prefiro viajar de avião a viajar de ônibus. Preferir pede "algo a algo", sem "mais" e sem "do que".', 2],
+    ['Pela gramática tradicional, qual forma é recomendada: "A mudança implicará <b>em</b> custos" ou "A mudança implicará custos"?', '"Implicará custos": no sentido de acarretar, implicar é VTD na gramática tradicional. A forma com "em" é comum no Brasil e registrada por dicionários, mas não é a recomendada pela tradição.', 2],
+    ['Complete com ou sem preposição: "O cabo aspira ___ promoção" (deseja) e "O atirador visou ___ alvo" (mirou).', 'Aspira à promoção (aspirar = desejar: VTI com a; a + a = crase). Visou o alvo (visar = mirar: VTD).', 2],
+    ['Use a troca por palavra masculina para decidir a crase: "Fui ___ biblioteca" e "Comprei ___ revista."', 'Fui à biblioteca (fui ao museu: preposição + artigo). Comprei a revista (comprei o jornal: só artigo, sem preposição).', 2],
     ['Crase com cidades', 'Volto da → à (Bahia). Volto de → a (Roma).'],
-    ['Quando a crase é proibida', 'Masculino, verbo, pronome pessoal, "uma", palavras repetidas, a + plural.'],
-    ['Crase facultativa', 'Possessivo feminino, nome próprio feminino, até a.']
+    ['Em qual frase o acento grave está <b>correto</b>?<br>a) Ficaram frente à frente.<br>b) Dirijo-me à Vossa Senhoria.<br>c) Saiu à uma hora da manhã.<br>d) Entregou o prêmio à todos.', 'c) Hora determinada: "à uma hora" (a + a). É proibida em palavras repetidas (frente a frente), antes de pronome de tratamento (a Vossa Senhoria) e antes de "todos".', 2],
+    ['Classifique a crase como obrigatória ou facultativa: "Escrevi ___ Juliana", "Cheguei ___ noite" e "Andei até ___ praia."', 'À/a Juliana: facultativa (nome próprio feminino). À noite: obrigatória (locução feminina). Até à/a praia: facultativa (depois de "até").', 2]
   ]
 });
 
@@ -196,13 +196,13 @@ EEAR.add({
     ['Na frase "Não, quero café", a vírgula', ['é desnecessária.', 'muda o sentido: a pessoa recusa algo e quer café.', 'indica que a pessoa não quer café.', 'separa sujeito e verbo.'], 1, 'Com a vírgula, o "não" responde a outra coisa, e a pessoa afirma que quer café.']
   ],
   fc: [
-    ['Duas proibições básicas da vírgula', 'Não separar sujeito de verbo nem verbo de complemento.'],
-    ['Vírgula obrigatória: 5 casos', 'Vocativo, aposto explicativo, oração adjetiva explicativa, enumeração, elipse do verbo.'],
-    ['Adjunto adverbial deslocado', 'Pede vírgula (opcional se for curto).'],
-    ['Conjunção adversativa deslocada', 'Fica entre vírgulas: não venceu, porém, a prova.'],
-    ['Dois-pontos', 'Antes de citação, enumeração ou explicação.'],
-    ['Zeugma e vírgula', 'A vírgula marca o verbo omitido: Eu fui ao treino; ela, à aula.'],
-    ['Vírgula na oração adjetiva', 'Com vírgula: explicativa (todos). Sem: restritiva (alguns).']
+    ['Retire as vírgulas indevidas: "Os passageiros do voo atrasado, receberam, um vale-refeição."', 'Os passageiros do voo atrasado receberam um vale-refeição. A vírgula não separa o sujeito do verbo nem o verbo do complemento.', 2],
+    ['Onde faltam vírgulas obrigatórias? "Cabo traga o rádio a lanterna e o mapa."', 'Cabo, traga o rádio, a lanterna e o mapa. A primeira isola o vocativo; a segunda separa os itens da enumeração.', 2],
+    ['Em qual frase a vírgula é facultativa e em qual é exigida pelos manuais de redação?<br>a) "Hoje(,) estudarei."<br>b) "Durante a longa viagem de volta à base(,) os cadetes dormiram."', 'a) Facultativa: adjunto adverbial curto deslocado.<br>b) Exigida: adjunto adverbial longo deslocado para o início. O limite entre curto e longo varia entre as fontes (duas ou três palavras).', 2],
+    ['Pontue: "O avião decolou no horário chegou entretanto com atraso."', 'O avião decolou no horário; chegou, entretanto, com atraso. A adversativa deslocada fica entre vírgulas, e o ponto e vírgula (ou o ponto) separa as orações.', 2],
+    ['Qual é a função dos dois-pontos?<br>a) "Leve o essencial: água, mapa e lanterna."<br>b) "O motivo era simples: faltava combustível."<br>c) "O piloto avisou: — Preparar para pouso."', 'a) Enumeração.<br>b) Explicação.<br>c) Introdução da fala (discurso direto).', 2],
+    ['Reescreva sem repetir o verbo: "Eu estudei física; meu irmão estudou química." Que sinal marca a omissão?', 'Eu estudei física; meu irmão, química. A vírgula marca o verbo omitido (zeugma).', 2],
+    ['Pontue de modo que a informação valha para todos os passageiros: "Os passageiros que estavam no voo noturno desembarcaram cansados."', 'Os passageiros, que estavam no voo noturno, desembarcaram cansados. Com vírgulas, a oração é explicativa (vale para todos); sem elas, seria restritiva (só os do voo noturno).', 2]
   ]
 });
 
@@ -285,71 +285,13 @@ EEAR.add({
     ['Na frase "— Alô? Está me ouvindo?", predomina a função', ['referencial.', 'fática.', 'conativa.', 'poética.'], 1, 'Testa se o canal de comunicação está funcionando: função fática.']
   ],
   fc: [
-    ['Metáfora x comparação', 'Comparação tem conectivo (como). Metáfora é implícita.'],
-    ['Metonímia: 4 tipos comuns', 'Autor pela obra, parte pelo todo, continente pelo conteúdo, marca pelo produto.'],
-    ['Antítese x paradoxo', 'Antítese opõe ideias. Paradoxo funde opostos numa afirmação ilógica.'],
+    ['Classifique a figura:<br>a) "O sargento é <b>uma muralha</b>."<br>b) "O sargento é forte <b>como uma muralha</b>." O que as diferencia?', 'a) Metáfora (comparação implícita).<br>b) Comparação (tem o conectivo "como").', 2],
+    ['Que tipo de metonímia há em cada frase?<br>a) "Bebeu dois copos de suco."<br>b) "Leu Clarice nas férias."<br>c) "Há muitas bocas para alimentar."', 'a) Continente pelo conteúdo.<br>b) Autor pela obra.<br>c) Parte pelo todo (bocas = pessoas).', 2],
+    ['Antítese ou paradoxo?<br>a) "Na vitória e na derrota, manteve a calma."<br>b) "Fez-se um silêncio ensurdecedor."', 'a) Antítese: opõe ideias (vitória x derrota) sem contradição lógica.<br>b) Paradoxo: funde opostos numa afirmação aparentemente absurda.', 2],
     ['Eminente x iminente', 'Eminente: ilustre. Iminente: prestes a acontecer.'],
     ['Ratificar x retificar', 'Ratificar: confirmar. Retificar: corrigir.'],
     ['Tráfego x tráfico', 'Tráfego: trânsito. Tráfico: comércio ilegal.'],
-    ['Função fática', 'Testa o canal: alô, câmbio, entendeu?'],
-    ['Silepse', 'Concordância com a ideia, não com a forma (gênero, número ou pessoa).']
-  ]
-});
-
-EEAR.add({
-  id: 'POR15', m: 'por', n: 15, t: 'Tipos de discurso: direto, indireto e indireto livre', peso: 2, h: 2, desde: '2026-11',
-  teoria: `
-<h3>Os três tipos de discurso</h3>
-<p>Numa narrativa, a fala ou o pensamento das personagens pode chegar ao leitor de três maneiras.</p>
-<ul>
-<li><b>Discurso direto</b>: a fala da personagem é reproduzida com as palavras dela. Costuma vir depois de dois-pontos, com travessão ou aspas, e acompanhada de um <b>verbo de elocução</b> (dizer, perguntar, responder, exclamar, ordenar, pedir).<br><i>O sargento perguntou: — Vocês trouxeram os documentos?</i></li>
-<li><b>Discurso indireto</b>: o narrador conta, com as palavras dele, o que a personagem disse. A fala vira uma oração subordinada, em geral introduzida por <b>que</b> ou <b>se</b>, e passa para a 3ª pessoa. Não há travessão nem aspas.<br><i>O sargento perguntou se nós tínhamos trazido os documentos.</i></li>
-<li><b>Discurso indireto livre</b>: a voz do narrador se mistura com a da personagem, sem verbo de elocução, sem travessão e sem conjunção. Pensamentos e perguntas da personagem aparecem no meio da narração.<br><i>O cadete olhou o relógio. Será que ainda dava tempo? Tinha de correr para a formatura.</i></li>
-</ul>
-<h3>Do direto para o indireto (verbo de elocução no passado)</h3>
-<div class="tbl"><table><thead><tr><th>Discurso direto</th><th>Discurso indireto</th></tr></thead><tbody>
-<tr><td>1ª e 2ª pessoas (eu, nós, você, meu)</td><td>3ª pessoa (ele, eles, dele, seu)</td></tr>
-<tr><td>presente: <i>estou</i></td><td>pretérito imperfeito: <i>estava</i></td></tr>
-<tr><td>pretérito perfeito: <i>fiz</i></td><td>mais-que-perfeito: <i>tinha feito / fizera</i></td></tr>
-<tr><td>futuro do presente: <i>farei</i></td><td>futuro do pretérito: <i>faria</i></td></tr>
-<tr><td>imperativo: <i>Saia!</i></td><td>pretérito imperfeito do subjuntivo: <i>que saísse</i></td></tr>
-<tr><td>este, esse, isto</td><td>aquele, aquilo</td></tr>
-<tr><td>aqui, hoje, amanhã, ontem</td><td>ali/lá, naquele dia, no dia seguinte, na véspera (no dia anterior)</td></tr>
-<tr><td>pergunta direta: <i>— Você vem?</i></td><td>pergunta indireta com <b>se</b> ou com palavra interrogativa, sem ponto de interrogação: <i>perguntou se ele vinha</i></td></tr>
-</tbody></table></div>
-<p>As mudanças de tempo e de advérbio dependem de quando e de onde a fala é relatada. Se alguém relata no mesmo dia uma fala sobre o dia seguinte, "amanhã" pode continuar. Nas questões, observe as pistas de tempo do enunciado.</p>
-<h3>Para que serve cada um</h3>
-<ul>
-<li>O direto dá vivacidade e mostra o jeito de falar da personagem (gírias, interjeições, vocativos).</li>
-<li>O indireto resume e organiza as falas, com a voz do narrador no controle.</li>
-<li>O indireto livre aproxima o leitor do pensamento da personagem. É comum em romances do século XX.</li>
-</ul>
-<p class="dica">Para reconhecer o indireto livre, procure perguntas, exclamações ou dúvidas da personagem soltas no meio da narração, sem "disse que" e sem travessão.</p>`,
-  ex: [
-    ['Passe para o discurso indireto: — Eu vou fazer a prova amanhã — disse Pedro. (relato feito dias depois)', '<p>Pedro disse que <b>ia fazer a prova no dia seguinte</b>. Mudaram a pessoa (eu → ele, implícito), o tempo (vou → ia) e o advérbio (amanhã → no dia seguinte).</p>'],
-    ['Passe para o discurso indireto: — Feche a porta! — ordenou o tenente ao soldado.', '<p>O tenente ordenou ao soldado <b>que fechasse a porta</b>. O imperativo vira pretérito imperfeito do subjuntivo.</p>'],
-    ['Identifique o tipo de discurso: "Maria guardou o celular. Por que ninguém respondia? Ia tentar de novo depois do almoço."', '<p><b>Discurso indireto livre</b>: a pergunta é da personagem, mas aparece na voz do narrador, sem verbo de elocução e sem travessão.</p>']
-  ],
-  q: [
-    ['Assinale a alternativa em discurso direto.', ['O instrutor disse que a prova seria adiada.', 'O instrutor disse: — A prova será adiada.', 'O instrutor comentou o adiamento da prova.', 'A prova seria adiada? O instrutor ainda não sabia.'], 1, 'A fala é reproduzida com as palavras do instrutor, depois de dois-pontos e travessão. A é indireto; C apenas narra; D é indireto livre.'],
-    ['"— Eu estou cansado — disse o soldado." Em discurso indireto, fica:', ['O soldado disse que eu estou cansado.', 'O soldado disse que estava cansado.', 'O soldado disse: estava cansado.', 'O soldado disse que estivera cansado.'], 1, 'A 1ª pessoa passa para a 3ª e o presente (estou) vira pretérito imperfeito (estava). "Estivera" corresponderia a "estive"; C mistura as duas formas.'],
-    ['Dias depois, alguém relatou esta fala do tenente: "— Farei a inspeção amanhã." A forma correta em discurso indireto é:', ['O tenente afirmou que fará a inspeção amanhã.', 'O tenente afirmou que faria a inspeção no dia seguinte.', 'O tenente afirmou que fez a inspeção no dia seguinte.', 'O tenente afirmou que faria a inspeção amanhã.'], 1, 'Futuro do presente (farei) vira futuro do pretérito (faria), e, num relato feito dias depois, "amanhã" vira "no dia seguinte".'],
-    ['Há discurso indireto livre em:', ['A aluna olhou a lista de aprovados. Seu nome estaria ali? Respirou fundo e procurou de novo.', 'A aluna perguntou: — Meu nome está na lista?', 'A aluna perguntou se o nome dela estava na lista.', 'A aluna procurou o nome na lista e o encontrou.'], 0, 'A pergunta "Seu nome estaria ali?" é da personagem, mas aparece na narração sem verbo de elocução e sem travessão. B é direto; C é indireto; D é só narração.'],
-    ['"— Saiam da pista! — ordenou o controlador." Em discurso indireto:', ['O controlador ordenou que saíram da pista.', 'O controlador ordenou que saíssem da pista.', 'O controlador ordenou que sairão da pista.', 'O controlador ordenou saiam da pista.'], 1, 'O imperativo (saiam) vira pretérito imperfeito do subjuntivo (saíssem), introduzido por "que".'],
-    ['"— Você trouxe o documento? — perguntou o sargento ao recruta." Em discurso indireto:', ['O sargento perguntou ao recruta se ele tinha trazido o documento.', 'O sargento perguntou ao recruta que você trouxe o documento?', 'O sargento perguntou ao recruta se você trouxe o documento?', 'O sargento perguntou ao recruta se ele traria o documento.'], 0, 'Pergunta de sim ou não vira oração com "se", sem ponto de interrogação; "você" passa a "ele" e o pretérito perfeito (trouxe) vira mais-que-perfeito (tinha trazido).'],
-    ['Em "— Silêncio! — exclamou o professor", o verbo "exclamou" é', ['um verbo de elocução, que introduz a fala da personagem.', 'um verbo de ligação.', 'um verbo auxiliar.', 'um verbo impessoal.'], 0, 'Verbos como dizer, perguntar, responder e exclamar introduzem falas: são verbos de elocução (dicendi).'],
-    ['"— Este relatório é meu — disse Ana." Em discurso indireto:', ['Ana disse que este relatório é meu.', 'Ana disse que aquele relatório era dela.', 'Ana disse que esse relatório era meu.', 'Ana disse que este relatório será dela.'], 1, 'Este → aquele; é → era; meu → dela (3ª pessoa).'],
-    ['Caracteriza o discurso indireto:', ['reproduzir literalmente as palavras da personagem, com travessão.', 'relatar, com as palavras do narrador, o que a personagem disse, em geral numa oração introduzida por "que" ou "se".', 'misturar a fala da personagem com a do narrador sem nenhuma marca.', 'ocorrer apenas em poemas.'], 1, 'A descreve o direto; C, o indireto livre. O discurso indireto aparece em qualquer texto narrativo.'],
-    ['"O piloto disse que tinha visto a pista." Em discurso direto, a fala do piloto é:', ['— Ele tinha visto a pista — disse o piloto.', '— Eu vi a pista — disse o piloto.', '— Eu verei a pista — disse o piloto.', '— Ele vê a pista — disse o piloto.'], 1, 'Fazendo o caminho inverso: 3ª pessoa volta à 1ª (eu) e o mais-que-perfeito (tinha visto) volta ao pretérito perfeito (vi).']
-  ],
-  fc: [
-    ['Discurso direto', 'Fala reproduzida com as palavras da personagem; dois-pontos, travessão ou aspas.'],
-    ['Discurso indireto', 'O narrador relata a fala; oração com "que" ou "se"; 3ª pessoa.'],
-    ['Discurso indireto livre', 'Fala ou pensamento da personagem na voz do narrador, sem verbo de elocução nem travessão.'],
-    ['Verbo de elocução', 'Introduz a fala: dizer, perguntar, responder, exclamar, ordenar.'],
-    ['Direto → indireto: tempos', 'Presente → imperfeito; perfeito → mais-que-perfeito; futuro → futuro do pretérito.'],
-    ['Direto → indireto: imperativo', 'Vira imperfeito do subjuntivo: "Saia!" → que saísse.'],
-    ['Direto → indireto: advérbios', 'Aqui → ali; hoje → naquele dia; amanhã → no dia seguinte; ontem → na véspera.'],
-    ['Pergunta indireta', 'Com "se" ou palavra interrogativa, sem ponto de interrogação.']
+    ['Qual função da linguagem predomina?<br>a) "Torre, está me copiando? Câmbio."<br>b) "Aliste-se já!"<br>c) "O voo 302 pousou às 14h."', 'a) Fática (testa o canal).<br>b) Conativa ou apelativa (imperativo, foco no receptor).<br>c) Referencial (foco na informação).', 2],
+    ['Que tipo de silepse há em cada frase?<br>a) "Vossa Excelência está preocupado."<br>b) "Os candidatos ficamos ansiosos."<br>c) "A turma chegou e logo foram para o pátio."', 'a) De gênero (concorda com o sexo da pessoa, não com "Excelência").<br>b) De pessoa (o falante se inclui: nós).<br>c) De número (o plural segue a ideia de vários em "turma"); na escrita formal, prefere-se o singular.', 2]
   ]
 });

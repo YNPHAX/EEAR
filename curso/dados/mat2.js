@@ -42,13 +42,13 @@ EEAR.add({
   ],
   fc: [
     ['Definição de logaritmo', 'logₐ b = x ⇔ aˣ = b (a > 0, a ≠ 1, b > 0).'],
-    ['log do produto e do quociente', 'Soma e subtração dos logs.'],
+    ['Sendo log 2 = 0,30 e log 3 = 0,48, calcule log 12 e log 1,5.', 'log 12 = log(2² · 3) = 0,60 + 0,48 = 1,08. log 1,5 = log(3/2) = 0,48 − 0,30 = 0,18.', 2],
     ['log de potência', 'logₐ bⁿ = n · logₐ b'],
-    ['Mudança de base', 'logₐ b = log b / log a'],
+    ['Calcule log<sub>8</sub> 32.', 'Mudando para a base 2: log₂ 32 / log₂ 8 = 5/3.', 2],
     ['log 2 e log 3 (aprox.)', '0,30 e 0,48'],
-    ['log 5 a partir de log 2', '1 − log 2 = 0,70'],
+    ['Sendo log 2 = 0,30, calcule log 50.', 'log 50 = log(100/2) = 2 − 0,30 = 1,70.', 2],
     ['logₐ 1 e logₐ a', '0 e 1'],
-    ['Último passo da equação logarítmica', 'Verificar a condição de existência.']
+    ['Resolva log₃ x + log₃(x − 8) = 2. Por que uma das raízes encontradas deve ser descartada?', 'x(x − 8) = 9 → x² − 8x − 9 = 0 → x = 9 ou x = −1. O domínio exige ao mesmo tempo x > 0 e x − 8 > 0, ou seja, x > 8. Por isso −1 é descartado: solução x = 9.', 2]
   ]
 });
 
@@ -88,13 +88,13 @@ EEAR.add({
   ],
   fc: [
     ['Termo geral da PA', 'aₙ = a₁ + (n − 1)r'],
-    ['Soma da PA', 'Sₙ = (a₁ + aₙ)n/2'],
+    ['Qual é a soma dos números ímpares de 1 a 99?', 'São 50 termos (1 + (n − 1) · 2 = 99 → n = 50). S = (1 + 99) · 50/2 = 2500.', 2],
     ['Termo geral da PG', 'aₙ = a₁ · qⁿ⁻¹'],
-    ['Soma finita da PG', 'Sₙ = a₁(qⁿ − 1)/(q − 1)'],
-    ['Soma infinita da PG', 'S = a₁/(1 − q), com |q| < 1.'],
-    ['Termo médio na PA e na PG', 'PA: média aritmética. PG: b² = a·c.'],
-    ['Três termos em PA (notação)', 'x − r, x, x + r'],
-    ['Três termos em PG (notação)', 'x/q, x, xq']
+    ['Soma finita da PG', 'Sₙ = a₁(qⁿ − 1)/(q − 1), com q ≠ 1. Se q = 1, todos os termos são iguais e Sₙ = n · a₁.', 2],
+    ['Calcule, se existir:<br>a) 6 + 2 + 2/3 + …<br>b) 1 + 2 + 4 + …', 'a) q = 1/3 (|q| < 1): S = 6/(1 − 1/3) = 9.<br>b) q = 2: a soma infinita não existe (cresce sem limite). A fórmula S = a₁/(1 − q) só vale para |q| < 1.', 2],
+    ['Para que (x, 6, 12) seja uma PG, quanto vale x? E para que seja uma PA?', 'PG: 6² = 12x → x = 3. PA: 6 = (x + 12)/2 → x = 0.', 2],
+    ['Três números em PA somam 21, e o produto do primeiro pelo último é 33. Quais são?', 'Use (x − r, x, x + r): 3x = 21 → x = 7. (7 − r)(7 + r) = 33 → 49 − r² = 33 → r = ±4. Números: 3, 7 e 11 (com r = −4, a mesma PA em ordem decrescente).', 2],
+    ['Três números em PG têm produto 216, e o primeiro é 2. Quais são?', 'Use (x/q, x, xq): o produto é x³ = 216 → x = 6. 6/q = 2 → q = 3. Números: 2, 6 e 18.', 2]
   ]
 });
 
@@ -144,11 +144,11 @@ EEAR.add({
     ['Condição para existir AB', 'Colunas de A = linhas de B.'],
     ['Ordem de A(m×n)·B(n×p)', 'm × p'],
     ['det 2×2', 'ad − bc'],
-    ['det(kA) com A de ordem n', 'kⁿ · det A'],
-    ['Quando det = 0', 'Fila nula, filas iguais ou proporcionais.'],
-    ['Trocar duas filas', 'Troca o sinal do determinante.'],
+    ['A é uma matriz 2 × 2 com det A = −3. Um aluno calculou det(3A) = −9. Onde está o erro?', 'Multiplicar a matriz por 3 multiplica cada uma das 2 linhas por 3: det(3A) = 3² · det A = 9 · (−3) = −27. O aluno usou k em vez de kⁿ.', 2],
+    ['Sem fazer contas, por que det [1 2 3; 2 4 6; 5 1 0] = 0?', 'A 2ª linha é o dobro da 1ª (filas proporcionais); por isso o determinante é zero.', 2],
+    ['det A = 7, com A de ordem 3. Quanto vale o determinante da matriz obtida trocando a 1ª e a 3ª linhas de A?', '−7: cada troca de duas filas inverte o sinal do determinante.', 2],
     ['Inversa 2×2', '(1/det)·[d −b; −c a]'],
-    ['det(AB) e det(A⁻¹)', 'det A · det B e 1/det A']
+    ['A e B são matrizes 2 × 2, com det A = 4 e det B = −2. Calcule det(AB) e det(A⁻¹).', 'det(AB) = det A · det B = 4 · (−2) = −8. det(A⁻¹) = 1/det A = 1/4 (A tem inversa porque det A ≠ 0).', 2]
   ]
 });
 
@@ -194,12 +194,12 @@ EEAR.add({
   ],
   fc: [
     ['SPD', 'Solução única; D ≠ 0.'],
-    ['SPI', 'Infinitas soluções; equações proporcionais.'],
-    ['SI', 'Sem solução; retas paralelas.'],
+    ['Classifique o sistema {x + 2y = 3; 2x + 4y = 6}.', 'A 2ª equação é o dobro da 1ª: as duas representam a mesma reta. Infinitas soluções: sistema possível e indeterminado (SPI).', 2],
+    ['Classifique {2x − y = 1; 4x − 2y = 6}. O que isso significa no gráfico?', 'Dividindo a 2ª equação por 2: 2x − y = 3, que contradiz 2x − y = 1. Sistema impossível (SI): no gráfico, duas retas paralelas distintas.', 2],
     ['Regra de Cramer', 'x = Dx/D, y = Dy/D.'],
-    ['Sistema homogêneo', 'Sempre possível (solução trivial).'],
-    ['Discussão: D = 0', 'SPI ou SI, verificar as equações.'],
-    ['Método da adição', 'Deixe coeficientes opostos e some as equações.']
+    ['O sistema {2x − y = 0; x + 3y = 0} pode ser impossível? Que solução ele sempre tem?', 'Não: todo sistema homogêneo admite a solução (0, 0). Aqui D = 2 · 3 − (−1) · 1 = 7 ≠ 0, então ela é a única (SPD).', 2],
+    ['Para que valor de k o sistema {x + ky = 1; 2x + 4y = 3} deixa de ser SPD? Nesse caso, ele é SPI ou SI?', 'D = 4 − 2k = 0 → k = 2. Com k = 2: x + 2y = 1 e x + 2y = 3/2 (dividindo a 2ª por 2). As equações se contradizem: SI.', 2],
+    ['Resolva pelo método da adição: {x + y = 10; x − y = 4}.', 'Somando as equações: 2x = 14 → x = 7; então y = 3. Conferência: 7 + 3 = 10 e 7 − 3 = 4.', 2]
   ]
 });
 
@@ -238,13 +238,13 @@ EEAR.add({
     ['O valor de 8!/6! é', ['2', '48', '56', '336'], 2, '8 · 7 = 56.']
   ],
   fc: [
-    ['Arranjo x combinação', 'Arranjo: a ordem importa. Combinação: não importa.'],
+    ['Entre 10 cadetes, de quantas formas se escolhem:<br>a) uma comissão de 3;<br>b) presidente, vice e secretário?', 'a) A ordem não importa: C₁₀,₃ = 120.<br>b) A ordem importa (cargos diferentes): A₁₀,₃ = 10 · 9 · 8 = 720 (= 120 · 3!).', 2],
     ['Fórmula do arranjo', 'Aₙ,ₚ = n!/(n − p)!'],
     ['Fórmula da combinação', 'Cₙ,ₚ = n!/[p!(n − p)!]'],
-    ['Anagramas com letras repetidas', 'n!/(a!·b!·…)'],
+    ['Quantos anagramas tem a palavra BANANA?', '6 letras, com A repetida 3 vezes e N repetida 2 vezes: 6!/(3! · 2!) = 720/12 = 60.', 2],
     ['Termo geral do binômio', 'Tₚ₊₁ = Cₙ,ₚ · aⁿ⁻ᵖ · bᵖ'],
-    ['Soma dos coeficientes de um binômio', 'Substitua as variáveis por 1.'],
+    ['Qual é a soma dos coeficientes de (3x − 1)⁴?', 'Substituindo x = 1: (3 − 1)⁴ = 2⁴ = 16.', 2],
     ['0!', '1'],
-    ['Número de termos de (a + b)ⁿ', 'n + 1']
+    ['Quantos termos tem o desenvolvimento de (x + 2)⁸? Qual é a posição do termo do meio?', '8 + 1 = 9 termos. O termo do meio é o 5º (Tₚ₊₁ com p = 4).', 2]
   ]
 });

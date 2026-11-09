@@ -16,7 +16,8 @@
   const CARDS = {};
   MODS.forEach(m => (m.fc || []).forEach((c, i) => {
     const id = m.id + '~' + i;
-    CARDS[id] = { id, mod: m.id, m: m.m, f: c[0], v: c[1] };
+    /* ver: versão do conteúdo do cartão. Sem o 3º campo é 1; um número 2 ou maior marca uma reformulação substancial. */
+    CARDS[id] = { id, mod: m.id, m: m.m, f: c[0], v: c[1], ver: Number.isInteger(c[2]) && c[2] > 1 ? c[2] : 1 };
   }));
   /* Provas anteriores oficiais: mantêm a ordem original das alternativas e o gabarito oficial. */
   const PROVAS = (E.provas || []).slice().sort((a, b) => (b.data || '').localeCompare(a.data || ''));
@@ -242,6 +243,7 @@
   let tSave = null;
   function salvar() {
     S.t = Date.now();
+    fixarAncoras();
     try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
@@ -411,16 +413,51 @@
   }
   const nErros = s => Object.keys(S.erros).filter(id => Q[id] && (!Q[id].mod || moduloAtivo(MOD[Q[id].mod])) && (!s || Q[id].m === s)).length;
   function liberados() { return Object.values(CARDS).filter(c => moduloAtivo(MOD[c.mod]) && S.mod[c.mod] && (S.mod[c.mod].lido || S.mod[c.mod].tent)); }
-  function devidos(s) { const hj = HJ(); return liberados().filter(c => (!s || c.m === s) && (!S.fc[c.id] || S.fc[c.id][1] <= hj)); }
+  /* ---------- versão dos flashcards ----------
+     Cada cartão é identificado pela aula e pela posição (POR02~1) e o progresso guarda [caixa, próxima data]. Quando o
+     texto de um cartão muda de forma substancial, ele ganha uma versão (3º campo nos dados). O registro de qual versão o
+     aluno já revisou fica em cfg.fcv[id] = [versão, data marcada]: dentro de cfg porque as versões antigas do app guardam
+     os campos de cfg que não conhecem. As versões antigas regravam S.fc[id] = [caixa, data] ao revisar o texto antigo,
+     sem saber da versão; por isso a data marcada é conferida: se S.fc[id][1] não é mais a data que esta versão gravou,
+     outro app mexeu no cartão e a versão nova ainda não foi vista.
+     Um cartão desatualizado volta à revisão sem apagar o histórico: vence na data original ou no dia âncora + 0 a 6 dias,
+     o que vier antes. O dia âncora (cfg.fcAncora['AULA:versão']) é o primeiro dia em que o aluno estudou com a versão
+     nova; até ele estudar, vale hoje e nada é gravado. */
+  function fcDesvio(id) { let x = 2166136261; for (let i = 0; i < id.length; i++) { x ^= id.charCodeAt(i); x = Math.imul(x, 16777619) >>> 0; } return x % 7; }
+  function fcDesatualizado(id) {
+    const c = CARDS[id], r = S.fc[id];
+    if (!c || c.ver < 2 || !Array.isArray(r)) return false;
+    const g = (S.cfg.fcv || {})[id];
+    return !(Array.isArray(g) && g[0] >= c.ver && g[1] === r[1]);
+  }
+  const fcChave = c => c.mod + ':' + c.ver;
+  function fcVence(id) {
+    const r = S.fc[id];
+    if (!fcDesatualizado(id)) return r[1];
+    const a = (S.cfg.fcAncora || {})[fcChave(CARDS[id])];
+    return Math.min(r[1], (dataValida(a) ? dnum(a) : HJ()) + fcDesvio(id));
+  }
+  /* Grava o dia âncora das versões novas ainda não revisadas: só quando o aluno estuda (chamado por salvar). */
+  function fixarAncoras() {
+    let ancora = S.cfg.fcAncora;
+    Object.keys(S.fc).forEach(id => {
+      if (!fcDesatualizado(id)) return;
+      const k = fcChave(CARDS[id]);
+      if (!ancora || !dataValida(ancora[k])) { ancora = S.cfg.fcAncora = Object.assign({}, ancora); ancora[k] = hoje(); }
+    });
+  }
+  function devidos(s) { const hj = HJ(); return liberados().filter(c => (!s || c.m === s) && (!S.fc[c.id] || fcVence(c.id) <= hj)); }
   function avaliar(id, ok) {
-    const hj = HJ(), st = S.fc[id] || [0, hj];
-    const b = ok ? Math.min(st[0] + 1, INT.length - 1) : 0;
+    const hj = HJ(), st = S.fc[id] || [0, hj], c = CARDS[id];
+    /* Versão nova de um cartão já estudado: recomeça perto do início (no máximo a caixa 2, ou seja, volta em até 7 dias). */
+    const base = fcDesatualizado(id) ? Math.min(st[0], 2) : st[0];
+    const b = ok ? Math.min(base + 1, INT.length - 1) : 0;
     S.fc[id] = [b, hj + (ok ? INT[b] : 1)];
+    if (c && c.ver > 1) S.cfg.fcv = Object.assign({}, S.cfg.fcv, { [id]: [c.ver, S.fc[id][1]] });
   }
   function marcarAtividade() { const d = hoje(); S.act[d] = (S.act[d] || 0) + 1; }
 
   /* ---------- apostila: status e páginas ---------- */
-  const TIPO_AP = { sala: 'Em sala', casa: 'Para casa', adicionais: 'Adicionais', unit: 'Unit', test: 'Test', exercises: 'Exercises' };
   const MIN_Q = 2.5; /* minutos por questão da apostila no plano */
   function aulaTxt(a) {
     const p = String(a).split('-');
@@ -1629,7 +1666,7 @@
         break;
       }
       case 'instalar': if (instalar) { const p = instalar; instalar = null; p.prompt(); p.userChoice.then(() => render(), () => render()); } break;
-      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Date.now(); pedindo = null; salvar(); go('hoje'); break; }
+      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Date.now(); delete S.cfg.fcv; delete S.cfg.fcAncora; pedindo = null; salvar(); go('hoje'); break; }
       default: break;
     }
   });

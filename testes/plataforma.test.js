@@ -1,70 +1,17 @@
 /* Testes da plataforma: integridade dos dados do curso e comportamentos que o aluno vê no navegador.
    Monta o site numa pasta temporária (web/build.py) e abre num servidor local em /EEAR/; não grava nada no repositório.
    Uso (na raiz): node testes/plataforma.test.js        Requer Python 3, Node e o pacote playwright com o Chromium. */
-const fs = require('fs'), os = require('os'), path = require('path'), http = require('http'), vm = require('vm');
+const fs = require('fs'), os = require('os'), path = require('path'), http = require('http');
 const { execFileSync } = require('child_process');
 
 const RAIZ = path.resolve(__dirname, '..');
 let falhas = 0;
 const ok = (cond, msg) => { console.log(`${cond ? '  ✓' : '  ✗'} ${msg}`); if (!cond) falhas++; };
 
-/* Os mesmos arquivos de dados que a página carrega, fora do navegador. */
-function carregarDados() {
-  const html = fs.readFileSync(path.join(RAIZ, 'curso', 'index.html'), 'utf8');
-  const ctx = { console }; ctx.window = ctx; vm.createContext(ctx);
-  for (const m of html.matchAll(/src="dados\/([^"]+)"/g)) vm.runInContext(fs.readFileSync(path.join(RAIZ, 'curso', 'dados', m[1]), 'utf8'), ctx, { filename: m[1] });
-  return ctx.EEAR;
-}
+const dados = require('./dados.js'), testarVersoes = require('./versoes.js');
+const { carregarDados, testarDados, testarContasMat } = dados;
+dados.usar(ok);
 
-function testarDados(E) {
-  console.log('\n== dados do curso');
-  const ids = new Set(E.modulos.map(m => m.id));
-  ok(ids.size === E.modulos.length, `${E.modulos.length} aulas, sem id repetido`);
-  const ruins = [];
-  for (const m of E.modulos) {
-    if (!E.materias[m.m] || !m.t || !m.teoria) ruins.push(m.id + ' (campos)');
-    if ((m.modalidades || []).some(x => !['normal', 'bct'].includes(x))) ruins.push(m.id + ' (modalidade)');
-    (m.q || []).forEach((q, i) => { if (!Array.isArray(q[1]) || q[1].length !== 4 || !(Number.isInteger(q[2]) && q[2] >= 0 && q[2] < 4) || !q[3]) ruins.push(`${m.id} q${i + 1}`); });
-  }
-  ok(!ruins.length, 'toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário' + (ruins.length ? ': ' + ruins.slice(0, 8).join(', ') : ''));
-  /* Duas alternativas com o mesmo valor (como 5/14 e 10/28) dão duas respostas certas. Quando o enunciado pede uma forma
-     de escrever (notação científica), as formas equivalentes são distratores de propósito. */
-  const exp = { '⁰': 0, '¹': 1, '²': 2, '³': 3, '⁴': 4, '⁵': 5, '⁶': 6, '⁷': 7, '⁸': 8, '⁹': 9, '⁻': '-' };
-  const valor = s => {
-    const t = s.replace(/<[^>]+>/g, '').trim(), sinal = /^[−-]/.test(t) ? -1 : 1, u = t.replace(/^[−-]\s*/, '');
-    let m = u.match(/^(\d+(?:,\d+)?)\s*×\s*10([⁻⁰-⁹¹²³]+)(.*)$/);
-    if (m) return [sinal * Number(m[1].replace(',', '.')) * 10 ** Number([...m[2]].map(c => exp[c]).join('')), m[3].trim()];
-    if ((m = u.match(/^(\d+)\s*\/\s*(\d+)(.*)$/))) return [sinal * m[1] / m[2], m[3].trim()];
-    if ((m = u.match(/^(\d+(?: \d{3})*(?:,\d+)?)(\s*[^\d√π/^,].*|)$/))) return [sinal * Number(m[1].replace(/ /g, '').replace(',', '.')), m[2].trim()];
-    return null;
-  };
-  const iguais = [], repetidas = [], semDestaque = [];
-  for (const m of E.modulos) (m.q || []).forEach((q, i) => {
-    if (new Set(q[1]).size !== q[1].length) repetidas.push(`${m.id} q${i + 1}`);
-    if (/destacad/i.test(q[0]) && ![q[0], ...q[1]].some(x => /<(u|b)>/.test(x))) semDestaque.push(`${m.id} q${i + 1}`);
-    if (/notação científica/i.test(q[0])) return;
-    const v = q[1].map(valor);
-    for (let a = 0; a < 4; a++) for (let b = a + 1; b < 4; b++)
-      if (v[a] && v[b] && v[a][1] === v[b][1] && Math.abs(v[a][0] - v[b][0]) <= 1e-9 * Math.max(Math.abs(v[a][0]), Math.abs(v[b][0]))) iguais.push(`${m.id} q${i + 1}`);
-  });
-  ok(!iguais.length && !repetidas.length, 'nenhuma questão tem duas alternativas iguais ou com o mesmo valor' + (iguais.length || repetidas.length ? ': ' + [...iguais, ...repetidas].join(', ') : ''));
-  ok(!semDestaque.length, 'todo enunciado que fala em termo "destacado" tem o destaque marcado' + (semDestaque.length ? ': ' + semDestaque.join(', ') : ''));
-  for (const p of E.provas) {
-    const dir = path.join(RAIZ, 'curso', 'provas', p.id.replace('-', '_'));
-    const semImg = p.q.filter(q => !fs.existsSync(path.join(dir, `q${String(q.n).padStart(2, '0')}.webp`))).map(q => q.n);
-    const semAula = p.q.filter(q => !ids.has(q.mod)).map(q => q.n);
-    ok(p.q.length === 96 && !semImg.length && !semAula.length, `${p.nome}: 96 questões, cada uma com imagem e aula do curso` + (semImg.length || semAula.length ? ` (sem imagem: ${semImg}; sem aula: ${semAula})` : ''));
-  }
-  for (const mod of ['normal', 'bct']) ok(E.modulos.some(m => m.m === 'ing' && (!m.modalidades || m.modalidades.includes(mod))), `modalidade ${mod} tem aulas de Inglês`);
-  /* As 67 aulas que existiam antes do registro de certificados não têm desde; toda aula que entrou depois tem. */
-  const antigas = new Set([['POR', 14], ['ING', 16], ['MAT', 20], ['FIS', 17]].flatMap(([p, n]) => [...Array(n)].map((_, i) => p + String(i + 1).padStart(2, '0'))));
-  const semDesde = E.modulos.filter(m => !m.desde).map(m => m.id), novas = E.modulos.filter(m => m.desde).map(m => m.id);
-  ok(semDesde.length === antigas.size && semDesde.every(id => antigas.has(id)) && novas.every(id => !antigas.has(id)),
-    `só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: ${novas.join(', ')})`);
-  /* Questões oficiais de física moderna (efeito fotoelétrico, átomo de Bohr, fissão do urânio-235) ficam na aula FIS18. */
-  const fm = [['cfs2-2025', 51], ['cfs2-2025', 68], ['cfs1-2025', 51]].filter(([p, n]) => (E.provas.find(x => x.id === p) || { q: [] }).q.some(q => q.n === n && q.mod === 'FIS18'));
-  ok(fm.length === 3, `questões oficiais de física moderna ligadas à aula FIS18 (${fm.length} de 3)`);
-}
 
 /* Servidor estático que imita o GitHub Pages: o site fica em /EEAR/. */
 function servir(raiz) {
@@ -333,6 +280,8 @@ async function testarNavegador(E) {
     ok(!erros.length, 'matéria desconhecida no histórico não quebra a aba Simulados' + (erros.length ? ': ' + erros[0] : ''));
     await ctx.close();
   }
+  await testarVersoes({ E, b, srv, saida, base, servir, ok });
+
   await b.close(); srv.fechar();
   fs.rmSync(saida, { recursive: true, force: true });
 }
@@ -340,6 +289,7 @@ async function testarNavegador(E) {
 (async () => {
   const E = carregarDados();
   testarDados(E);
+  testarContasMat(E);
   await testarNavegador(E);
   console.log(falhas ? `\n${falhas} falha(s)` : '\ntudo certo');
   process.exit(falhas ? 1 : 0);

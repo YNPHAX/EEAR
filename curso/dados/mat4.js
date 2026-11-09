@@ -32,11 +32,11 @@ EEAR.add({
     ['A área de um hexágono regular de lado 2 é', ['6√3', '12√3', '3√3', '24'], 0, '6 · (4√3/4) = 6√3.']
   ],
   fc: [
-    ['Ângulo inscrito', 'Metade do arco correspondente.'],
+    ['Numa circunferência de centro O, o ângulo central AÔB mede 110°. Quanto mede o ângulo inscrito ACB, com C no arco maior AB?', 'O arco menor AB mede 110°, e o inscrito vale a metade: ACB = 55°. (Se C estivesse no arco menor, enxergaria o arco de 250° e mediria 125°.)', 2],
     ['Inscrito no semicírculo', '90°'],
     ['Cordas que se cruzam', 'PA·PB = PC·PD'],
     ['Tangente e secante', 'PT² = PA·PB'],
-    ['Área do setor', '(α/360°)·πr²'],
+    ['Qual é a área de um setor de 90° num círculo de raio 4 cm? E o comprimento do arco?', 'Área = (90/360) · π · 4² = 4π cm². Arco = (90/360) · 2π · 4 = 2π cm.', 2],
     ['Área do triângulo equilátero', 'l²√3/4'],
     ['Fórmula de Heron', '√[p(p − a)(p − b)(p − c)]'],
     ['Área do trapézio e do losango', '(B + b)h/2 e D·d/2']
@@ -87,7 +87,7 @@ EEAR.add({
     ['Diagonal do cubo e do paralelepípedo', 'a√3 e √(a² + b² + c²)'],
     ['Esfera: volume e área', '(4/3)πr³ e 4πr²'],
     ['Geratriz do cone', 'g² = r² + h²'],
-    ['Semelhança de sólidos: volumes', 'Razão k³'],
+    ['A maquete de um tanque, na escala 1 : 10, tem volume de 2 L. Qual é o volume do tanque real?', 'Razão linear 10 → razão de volumes 10³ = 1000. 2 L · 1000 = 2000 L (2 m³).', 2],
     ['1 m³ em litros', '1000 L']
   ]
 });
@@ -98,9 +98,9 @@ EEAR.add({
 <h3>Ponto</h3>
 <div class="f">Distância: d<sub>AB</sub> = √[(x<sub>B</sub> − x<sub>A</sub>)² + (y<sub>B</sub> − y<sub>A</sub>)²]<br>Ponto médio: M = ((x<sub>A</sub> + x<sub>B</sub>)/2, (y<sub>A</sub> + y<sub>B</sub>)/2)<br>Baricentro: G = ((x<sub>A</sub> + x<sub>B</sub> + x<sub>C</sub>)/3, (y<sub>A</sub> + y<sub>B</sub> + y<sub>C</sub>)/3)<br>Área do triângulo: A = |D|/2, com D = det [x<sub>A</sub> y<sub>A</sub> 1; x<sub>B</sub> y<sub>B</sub> 1; x<sub>C</sub> y<sub>C</sub> 1]<br>Três pontos alinhados ⇔ D = 0</div>
 <h3>Reta</h3>
-<div class="f">Coeficiente angular: m = tg θ = (y<sub>B</sub> − y<sub>A</sub>)/(x<sub>B</sub> − x<sub>A</sub>)<br>Equação por um ponto: y − y₀ = m(x − x₀)<br>Reduzida: y = mx + n  (n = onde corta o eixo y)<br>Geral: ax + by + c = 0  →  m = −a/b<br>Paralelas: m₁ = m₂     Perpendiculares: m₁ · m₂ = −1<br>Distância de ponto à reta: d = |a·x₀ + b·y₀ + c| / √(a² + b²)</div>
+<div class="f">Coeficiente angular: m = tg θ = (y<sub>B</sub> − y<sub>A</sub>)/(x<sub>B</sub> − x<sub>A</sub>)<br>Equação por um ponto: y − y₀ = m(x − x₀)<br>Reduzida: y = mx + n  (n = onde corta o eixo y)<br>Geral: ax + by + c = 0  →  m = −a/b<br>Paralelas: m₁ = m₂     Perpendiculares: m₁ · m₂ = −1 (quando as duas retas têm coeficiente angular definido, isto é, nenhuma é vertical)<br>Distância de ponto à reta: d = |a·x₀ + b·y₀ + c| / √(a² + b²)</div>
 <h3>Circunferência</h3>
-<div class="f">Equação reduzida: (x − a)² + (y − b)² = r²   (centro (a, b), raio r)<br>Equação geral: x² + y² + Dx + Ey + F = 0<br>Centro = (−D/2, −E/2)     r² = a² + b² − F</div>
+<div class="f">Equação reduzida: (x − a)² + (y − b)² = r²   (centro (a, b), raio r)<br>Equação geral: x² + y² + Dx + Ey + F = 0<br>Centro (a, b) = (−D/2, −E/2)     r² = a² + b² − F, em que a e b são as coordenadas do centro</div>
 <p>Posição de um ponto: substitua na equação reduzida e compare com r² (menor: interno; igual: na circunferência; maior: externo). Posição de uma reta: compare a distância do centro à reta com r.</p>
 <p class="dica">Na equação geral, os coeficientes de x² e y² precisam ser iguais (e iguais a 1 depois de dividir) para ser circunferência, e não pode haver termo xy.</p>`,
   ex: [
@@ -123,11 +123,11 @@ EEAR.add({
   fc: [
     ['Distância entre dois pontos', '√(Δx² + Δy²)'],
     ['Coeficiente angular', 'm = Δy/Δx = tg θ'],
-    ['Retas perpendiculares', 'm₁ · m₂ = −1'],
+    ['Retas perpendiculares: relação entre os coeficientes angulares', 'm₁ · m₂ = −1, quando nenhuma das retas é vertical. Se uma reta é vertical (sem coeficiente angular), a perpendicular a ela é horizontal (m = 0).', 2],
     ['Equação da reta por um ponto', 'y − y₀ = m(x − x₀)'],
-    ['Distância ponto-reta', '|ax₀ + by₀ + c|/√(a² + b²)'],
+    ['Qual é a distância do ponto (2, 1) à reta 3x + 4y + 5 = 0?', '|3 · 2 + 4 · 1 + 5|/√(3² + 4²) = 15/5 = 3.', 2],
     ['Circunferência reduzida', '(x − a)² + (y − b)² = r²'],
-    ['Centro e raio pela equação geral', 'Centro (−D/2, −E/2); r² = a² + b² − F'],
+    ['Encontre o centro e o raio de x² + y² − 6x + 4y − 12 = 0.', '(x − 3)² + (y + 2)² = 25: centro (3, −2) e raio 5. Atalho para x² + y² + Dx + Ey + F = 0 (coeficientes 1 em x² e y², sem termo xy): centro (−D/2, −E/2) e r² = (D/2)² + (E/2)² − F. Se r² > 0, é circunferência; se r² = 0, um ponto; se r² < 0, nenhum ponto real.', 2],
     ['Pontos alinhados', 'Determinante dos pontos = 0']
   ]
 });
@@ -173,13 +173,13 @@ EEAR.add({
   ],
   fc: [
     ['Potências de i', 'i⁰ = 1, i¹ = i, i² = −1, i³ = −i (ciclo de 4).'],
-    ['Conjugado de a + bi', 'a − bi'],
+    ['Sendo z = 3 − 4i, calcule z + z̄ e z · z̄.', 'z̄ = 3 + 4i. z + z̄ = 6 (o dobro da parte real); z · z̄ = 9 + 16 = 25 (o quadrado do módulo).', 2],
     ['Módulo de a + bi', '√(a² + b²)'],
-    ['Como dividir complexos', 'Multiplique pelo conjugado do denominador.'],
+    ['Calcule (1 + 3i)/(1 + i).', 'Multiplicando numerador e denominador pelo conjugado 1 − i: (1 + 3i)(1 − i)/2 = (4 + 2i)/2 = 2 + i. Conferência: (2 + i)(1 + i) = 1 + 3i.', 2],
     ['Forma trigonométrica', 'z = ρ(cos θ + i sen θ)'],
-    ['Produto na forma trigonométrica', 'Multiplica módulos e soma argumentos.'],
+    ['z₁ tem módulo 2 e argumento 30°; z₂ tem módulo 3 e argumento 60°. Escreva z₁ · z₂ na forma algébrica.', 'Módulo 2 · 3 = 6 e argumento 30° + 60° = 90°: z₁z₂ = 6(cos 90° + i sen 90°) = 6i.', 2],
     ['Fórmula de Moivre', 'zⁿ = ρⁿ(cos nθ + i sen nθ)'],
-    ['Imaginário puro', 'Parte real zero e imaginária diferente de zero.']
+    ['Para que valor de m o número z = (m − 2) + (m + 3)i é imaginário puro?', 'Parte real nula: m − 2 = 0 → m = 2. A parte imaginária fica 5 ≠ 0, então z = 5i é imaginário puro.', 2]
   ]
 });
 
@@ -225,13 +225,13 @@ EEAR.add({
     ['Sabendo que 1 é raiz de x³ − 7x + 6 = 0, as outras raízes são', ['2 e 3', '−2 e 3', '2 e −3', '−1 e 6'], 2, 'Quociente x² + x − 6 = 0 → x = 2 ou x = −3.']
   ],
   fc: [
-    ['Teorema do resto', 'Resto de P(x) ÷ (x − a) = P(a).'],
+    ['Qual é o resto da divisão de P(x) = x³ − 2x + 5 por (x − 2)?', 'Pelo teorema do resto: P(2) = 8 − 4 + 5 = 9.', 2],
     ['D\'Alembert', 'P divisível por (x − a) ⇔ P(a) = 0.'],
-    ['P(1) e P(0)', 'Soma dos coeficientes e termo independente.'],
-    ['Girard (grau 3): soma', '−b/a'],
-    ['Girard (grau 3): produto', '−d/a'],
-    ['Girard (grau 3): soma dos produtos dois a dois', 'c/a'],
-    ['Raiz complexa com coeficientes reais', 'O conjugado também é raiz.'],
-    ['Grau do produto', 'Soma dos graus.']
+    ['Sem desenvolver P(x) = (x − 2)⁵, calcule a soma dos coeficientes e o termo independente.', 'Soma dos coeficientes = P(1) = (−1)⁵ = −1. Termo independente = P(0) = (−2)⁵ = −32.', 2],
+    ['Sem resolver, qual é a soma das raízes de x³ − 5x² + 2x + 8 = 0?', 'Girard: −b/a = −(−5)/1 = 5. (Conferência: as raízes são −1, 2 e 4.)', 2],
+    ['Sem resolver, qual é o produto das raízes de 3x³ + 2x² − x + 6 = 0?', 'Girard (grau 3): produto = −d/a = −6/3 = −2.', 2],
+    ['Sem resolver, quanto vale x₁x₂ + x₁x₃ + x₂x₃ para x³ − 5x² + 2x + 8 = 0?', 'Girard: c/a = 2/1 = 2. (Conferência com as raízes −1, 2 e 4: −2 − 4 + 8 = 2.)', 2],
+    ['Um polinômio de grau 3 com coeficientes reais tem raízes 2 e 1 + i. Qual é a terceira raiz?', '1 − i: com coeficientes reais, as raízes complexas não reais aparecem em pares conjugados.', 2],
+    ['P e Q têm grau 4. Qual é o grau de P · Q? O grau de P + Q é sempre 4?', 'P · Q: 4 + 4 = 8. P + Q não: tem grau no máximo 4 e pode ter grau menor se os termos de grau 4 se cancelarem (ex.: x⁴ + x e −x⁴ + 1 somam x + 1).', 2]
   ]
 });

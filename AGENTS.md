@@ -31,7 +31,8 @@ Comandos existentes (na raiz, salvo indicação):
 - Vídeos, quando pertinente (requer rede): `python3 web/conferir_videos.py`.
 - Testes da plataforma (dados do curso e comportamento no navegador; requer o pacote `playwright` com o Chromium): `node testes/plataforma.test.js`. O workflow `Testes` roda o mesmo comando a cada push, com `playwright@1.63.0` instalado fora do repositório.
 - Scripts npm em `app/`: `npm run www` gera conteúdo; `npm run android` gera conteúdo e prepara o projeto Android, sem compilar o APK.
-- Não foram encontrados comandos dedicados de lint ou checagem de tipos. O CI Android usa Node 22 e Java 21; confirme ferramentas disponíveis no ambiente local.
+- Lint (JavaScript, sem dependência no repositório; usa `eslint.config.mjs`, com `max-lines` de 350): `npx --yes eslint@9.17.0 curso/app.js curso/dados web/sw.js testes`. Os testes da plataforma ficam em `testes/plataforma.test.js` (entrada), `testes/dados.js` e `testes/versoes.js`.
+- Não há checagem de tipos (o projeto não usa TypeScript). O CI Android usa Node 22 e Java 21; confirme ferramentas disponíveis no ambiente local.
 
 Os builds recriam a pasta de saída: confira o destino antes de executá-los. Executar verificações não autoriza publicação.
 
