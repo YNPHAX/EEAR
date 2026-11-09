@@ -107,7 +107,7 @@ module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, 
       const nuvem = JSON.parse(JSON.stringify(origem)); nuvem.t = Date.now() + 60000;
       const ctx = await b.newContext({ serviceWorkers: 'block', timezoneId: tz }), p = await ctx.newPage();
       await p.clock.setFixedTime(new Date(T0 + DIA));
-      await ctx.addInitScript(d => { window.claude = { use: async k => k === 'user' ? { id: async () => 'aluno-1' } : { doc: () => ({ get: async () => ({ exists: true, data: () => JSON.parse(JSON.stringify(d)) }), set: async () => {} }) } }; }, nuvem);
+      await ctx.addInitScript(d => { window.claude = { use: async k => k === 'user' ? { id: async () => 'aluno-1' } : { doc: () => ({ get: async () => ({ exists: true, data: () => JSON.parse(JSON.stringify(d)) }), set: async () => {}, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + o.ttlMs).toISOString() }) }) } }; }, nuvem);
       await p.goto(srv2.url); await p.evaluate(s => localStorage.setItem('missao-eear-v1@claude:aluno-1', JSON.stringify(s)), st0); await p.goto(srv2.url); await p.waitForTimeout(500);
       const sinc = await p.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1@claude:aluno-1')));
       ok(JSON.stringify([sinc.fc, sinc.cfg.fcv, sinc.cfg.fcAncora]) === JSON.stringify([nuvem.fc, nuvem.cfg.fcv, nuvem.cfg.fcAncora]), 'sincronização simulada: cartões e versões vêm juntos da nuvem mais nova');
