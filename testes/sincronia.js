@@ -5,16 +5,17 @@ const LS = 'missao-eear-v1', LS_BASE = 'missao-eear-v1-base', LS_REC = 'missao-e
 
 module.exports = async function testarSincronia({ b, srv, base, ok }) {
   console.log('\n== sincronização entre aparelhos (nuvem fictícia)');
-  const nuvem = { doc: null, gravacoes: 0, offline: {}, falhas: 0 };
+  const nuvem = { doc: null, gravacoes: 0, offline: {}, falhas: 0, usuario: 'aluno-ficticio' };
   const copia = x => JSON.parse(JSON.stringify(x));
   const esperar = async (f, ms = 9000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await f()) return true; await new Promise(r => setTimeout(r, 150)); } return false; };
   async function aparelho(nome) {
     const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 844 } }), erros = [];
+    await ctx.exposeFunction('__nuvemUsuario', () => nuvem.usuario);
     await ctx.exposeFunction('__nuvemGet', () => (nuvem.offline[nome] ? { off: true } : { doc: nuvem.doc ? copia(nuvem.doc) : null }));
     await ctx.exposeFunction('__nuvemSet', o => { if (nuvem.offline[nome]) return { off: true }; if (nuvem.falhas > 0) { nuvem.falhas--; return { off: true }; } nuvem.doc = copia(o); nuvem.gravacoes++; return {}; });
     await ctx.addInitScript(() => {
       const fora = () => { const e = new Error('sem rede'); e.code = 'unavailable'; throw e; };
-      window.claude = { use: async k => (k === 'user' ? { id: async () => 'aluno-ficticio' } : { doc: () => ({
+      window.claude = { use: async k => (k === 'user' ? { id: () => window.__nuvemUsuario() } : { doc: () => ({
         get: async () => { const r = await window.__nuvemGet(); if (r.off) fora(); return { exists: !!r.doc, data: () => r.doc }; },
         set: async o => { const r = await window.__nuvemSet(o); if (r.off) fora(); }
       }) }) };
@@ -94,6 +95,18 @@ module.exports = async function testarSincronia({ b, srv, base, ok }) {
     await A.abrir(local);
     const st = await A.ler(); await A.p.click('[data-a="tab"][data-v="plano"]');
     ok(nuvem.doc.v === 2 && nuvem.gravacoes === 0 && JSON.stringify(st.mod) === JSON.stringify(local.mod) && /versão mais nova/.test(await A.p.locator('#sync').innerText()), 'nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado');
+    await A.ctx.close();
+  }
+
+  { // 7. outra conta entra no mesmo aparelho: a base da conta anterior não é usada (nada é apagado por engano)
+    nuvem.doc = P0(); nuvem.offline = {}; nuvem.usuario = 'conta-a';
+    const A = await aparelho('A'); await A.abrir(copia(nuvem.doc));
+    const baseA = await A.ler(LS_BASE);
+    nuvem.usuario = 'conta-b'; nuvem.doc = Object.assign(base({}), { t: Date.now(), mod: { MAT05: { lido: hj, best: 0.5, tent: 1 } }, fc: {}, erros: {}, sims: [] });
+    await A.p.reload(); await A.p.waitForTimeout(600);
+    const st = await A.ler(), baseB = await A.ler(LS_BASE);
+    ok(baseA && baseA.conta === 'claude:conta-a' && st.erros['MAT03-2'] === 1 && st.erros['POR01-3'] === 2 && !!st.mod.MAT05 && baseB.conta === 'claude:conta-b', 'outra conta no mesmo aparelho: a base da conta anterior é ignorada e nenhum erro do caderno é apagado por engano');
+    nuvem.usuario = 'aluno-ficticio';
     await A.ctx.close();
   }
 

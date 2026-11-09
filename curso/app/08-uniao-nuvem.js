@@ -14,8 +14,9 @@
        - certificados: juntarCerts, como antes; "Zerar progresso" (cfg.certsZ) vale para o que existia antes dele.
      Sem base (primeira sincronização deste aparelho), nada é tratado como apagado. Se for impossível separar o que veio
      antes e depois de um "Zerar" feito em outro aparelho, o progresso deste aparelho vira uma cópia de recuperação. */
-  function lerBase() { try { const t = localStorage.getItem('missao-eear-v1-base'); const o = t && JSON.parse(t); return o && o.v === 1 ? mesclar(o) : null; } catch (e) { return null; } }
-  function gravarBase(st) { try { localStorage.setItem('missao-eear-v1-base', JSON.stringify(st)); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
+  /* A base pertence a uma conta (nuvem.conta): se outra conta entrar neste aparelho, a base é ignorada (união sem base). */
+  function lerBase() { try { const t = localStorage.getItem('missao-eear-v1-base'); const o = t && JSON.parse(t); return o && o.conta === nuvem.conta && o.st && o.st.v === 1 ? mesclar(o.st) : null; } catch (e) { return null; } }
+  function gravarBase(st) { try { localStorage.setItem('missao-eear-v1-base', JSON.stringify({ conta: nuvem.conta, st })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
   function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
   /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
   function uTres(tb, b, l, c, conflito) {

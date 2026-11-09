@@ -88,7 +88,7 @@
     recuperar = localStorage.getItem(LS_REC);
   } catch (e) { /* sem armazenamento local */ }
 
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false };
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
@@ -139,8 +139,8 @@
     nuvem.on = true;
     gravarBase(u);
   }
-  async function sincronizar(ref) {
-    nuvem.ref = ref; nuvem.futura = false;
+  async function sincronizar(ref, conta) {
+    nuvem.ref = ref; nuvem.futura = false; nuvem.conta = String(conta || '');
     await gravar();
   }
   async function conectar() {
@@ -152,7 +152,7 @@
       if (!db || !user) return;
       const id = await user.id();
       if (!id) return;
-      await sincronizar(db.doc('progresso/' + id));
+      await sincronizar(db.doc('progresso/' + id), 'claude:' + id);
     } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
   }
 
@@ -202,7 +202,7 @@
     };
     if (!S.cfg.nome && u.displayName) S.cfg.nome = u.displayName;
     nuvem.fb = true;
-    sincronizar(ref);
+    sincronizar(ref, 'firebase:' + u.uid);
   }
   function cartaoConta() {
     if (!FB) return '';

@@ -267,7 +267,7 @@
     recuperar = localStorage.getItem(LS_REC);
   } catch (e) { /* sem armazenamento local */ }
 
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false };
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
@@ -318,8 +318,8 @@
     nuvem.on = true;
     gravarBase(u);
   }
-  async function sincronizar(ref) {
-    nuvem.ref = ref; nuvem.futura = false;
+  async function sincronizar(ref, conta) {
+    nuvem.ref = ref; nuvem.futura = false; nuvem.conta = String(conta || '');
     await gravar();
   }
   async function conectar() {
@@ -331,7 +331,7 @@
       if (!db || !user) return;
       const id = await user.id();
       if (!id) return;
-      await sincronizar(db.doc('progresso/' + id));
+      await sincronizar(db.doc('progresso/' + id), 'claude:' + id);
     } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
   }
 
@@ -381,7 +381,7 @@
     };
     if (!S.cfg.nome && u.displayName) S.cfg.nome = u.displayName;
     nuvem.fb = true;
-    sincronizar(ref);
+    sincronizar(ref, 'firebase:' + u.uid);
   }
   function cartaoConta() {
     if (!FB) return '';
@@ -1773,8 +1773,9 @@
        - certificados: juntarCerts, como antes; "Zerar progresso" (cfg.certsZ) vale para o que existia antes dele.
      Sem base (primeira sincronização deste aparelho), nada é tratado como apagado. Se for impossível separar o que veio
      antes e depois de um "Zerar" feito em outro aparelho, o progresso deste aparelho vira uma cópia de recuperação. */
-  function lerBase() { try { const t = localStorage.getItem('missao-eear-v1-base'); const o = t && JSON.parse(t); return o && o.v === 1 ? mesclar(o) : null; } catch (e) { return null; } }
-  function gravarBase(st) { try { localStorage.setItem('missao-eear-v1-base', JSON.stringify(st)); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
+  /* A base pertence a uma conta (nuvem.conta): se outra conta entrar neste aparelho, a base é ignorada (união sem base). */
+  function lerBase() { try { const t = localStorage.getItem('missao-eear-v1-base'); const o = t && JSON.parse(t); return o && o.conta === nuvem.conta && o.st && o.st.v === 1 ? mesclar(o.st) : null; } catch (e) { return null; } }
+  function gravarBase(st) { try { localStorage.setItem('missao-eear-v1-base', JSON.stringify({ conta: nuvem.conta, st })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
   function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
   /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
   function uTres(tb, b, l, c, conflito) {
