@@ -53,6 +53,10 @@ entregue só depois de o servidor conferir a assinatura. Por consequência:
 
 ## Pontos técnicos levantados na auditoria de 2026-11-08
 
+> Situação em 2026-11-09 (PRs #20 a #22 e `auditoria/auditoria-consolidada.md`): união por campo, transações no
+> Firestore, documento sem nome e e-mail, exclusão de conta e exportação dos dados foram feitos e testados (navegador
+> simulado e emuladores). A CSP continua pendente. O plano atualizado está na seção 7 da auditoria consolidada.
+
 - **Sincronização:** a nuvem resolve conflitos por "último a gravar vence", com o documento inteiro, e pode descartar
   estudo feito offline. Precisa da união por campo antes de qualquer conta paga (`auditoria/engenharia-qualidade.md`,
   achado 6).
