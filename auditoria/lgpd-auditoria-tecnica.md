@@ -42,6 +42,7 @@ substitui o Google Fonts), e os vídeos usam `youtube-nocookie.com`.
 | 8 | Transferência internacional (Firebase/Google, Gmail) | Média | Confirmar o enquadramento (Res. CD/ANPD nº 19/2024) e o mecanismo (arts. 33 a 36) | Pendente: a política já registra isso |
 | 9 | Dados de pagamento (versão paga) | Alta | Nunca guardar cartão; usar o gateway; guardar só a vigência no servidor | Ver `auditoria/plano-monetizacao.md` |
 | 10 | Encarregado (DPO) e canal para os direitos | Média | Indicar encarregado e prazo de resposta | Pendente: decisão do controlador |
+| 11 | Link do curso no Claude: o dono do curso pode ler o progresso de todos os alunos (regra `progresso` com leitura `owner`); cada aluno só lê e grava o próprio | Média | Informar isso na política; avaliar se o dono precisa dessa leitura (a regra pode ser `self`, mas então nem o dono lê) | Pendente: decisão do controlador (veja `auditoria/contas-e-sincronizacao.md`) |
 
 ## Bases legais (hipóteses para revisão)
 

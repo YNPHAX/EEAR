@@ -234,7 +234,8 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
   if (!pop && semGoogle.length && !process.env.CI) console.log('  – NÃO TESTADO aqui: login e reautenticação com o Google (apis.google.com inacessível neste ambiente; roda no CI)');
   else if (!pop) ok(false, 'login com o Google (emulador): a janela do Google não abriu' + (semGoogle.length ? ' — apis.google.com inacessível' : ''));
   else {
-    await pop.waitForSelector('#add-account-button button'); await pop.click('#add-account-button button');
+    // a janela do emulador só reage ao clique depois de carregar o script dela (material-components-web, do unpkg)
+    await pop.waitForLoadState('networkidle'); await pop.click('#add-account-button button'); await pop.waitForSelector('#email-input', { state: 'visible' });
     await pop.fill('#email-input', 'hugo@exemplo.test'); await pop.fill('#display-name-input', 'Hugo Teste'); await pop.click('#sign-in');
     await H.p.waitForSelector('[data-a="contasair"]', { timeout: 15000 }); const uidH = await H.uid();
     await marcar(H, 'T:hugo1'); await ate(async () => { const x = await progresso(uidH); return x && x.feito['T:hugo1']; });
@@ -244,7 +245,7 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     const semSenha = (await H.p.locator('#conta-senha').count()) === 0;
     await H.p.fill('#conta-confirma', 'EXCLUIR');
     const [pop2] = await Promise.all([H.p.waitForEvent('popup'), H.p.click('[data-a="contaexcluirok"]')]);
-    await pop2.waitForSelector('text=hugo@exemplo.test'); await pop2.click('text=hugo@exemplo.test');
+    await pop2.waitForLoadState('networkidle'); await pop2.locator('#accounts-list li', { hasText: 'hugo@exemplo.test' }).click();
     await H.p.waitForSelector('#fb-email', { timeout: 15000 });
     const contas = await req(`${AU}/identitytoolkit.googleapis.com/v1/projects/${PROJ}/accounts:query`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: '{}' });
     ok(semSenha && !(await docAdmin(uidH)) && !((contas.j && contas.j.userInfo) || []).some(u => u.localId === uidH) && !H.erros.length, 'excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem');
