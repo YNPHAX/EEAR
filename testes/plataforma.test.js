@@ -8,7 +8,7 @@ const RAIZ = path.resolve(__dirname, '..');
 let falhas = 0;
 const ok = (cond, msg) => { console.log(`${cond ? '  ✓' : '  ✗'} ${msg}`); if (!cond) falhas++; };
 
-const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js'), testarRobustez = require('./robustez.js'), testarSincronia = require('./sincronia.js'), testarContas = require('./contas.js'), testarNuvemClaude = require('./nuvem-claude.js');
+const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js'), testarRobustez = require('./robustez.js'), testarSincronia = require('./sincronia.js'), testarContas = require('./contas.js'), testarNuvemClaude = require('./nuvem-claude.js'), testarExclusaoNuvem = require('./exclusao-nuvem.js');
 const { carregarDados, testarDados, testarContasMat, testarContasFis } = dados;
 dados.usar(ok);
 
@@ -287,6 +287,7 @@ async function testarNavegador(E) {
   await testarSincronia({ b, srv, base, ok });
   await testarContas({ b, srv, base, ok });
   await testarNuvemClaude({ b, srv, base, ok });
+  await testarExclusaoNuvem({ b, srv, base, ok });
 
   await b.close(); srv.fechar();
   fs.rmSync(saida, { recursive: true, force: true });

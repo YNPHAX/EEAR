@@ -18,6 +18,18 @@
   function lerBase() { try { const t = localStorage.getItem(chave(BASE_K)); const o = t && JSON.parse(t); return o && o.conta === nuvem.conta && o.st && o.st.v === 1 ? mesclar(o.st) : null; } catch (e) { return null; } }
   function gravarBase(st) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
   function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+  /* Assinatura do documento da nuvem (sinc): resumo FNV-1a do conteúdo sem ela, em ordem fixa de chaves. Só esta versão
+     do app grava assinado. Documento sem assinatura, ou com assinatura que não bate (uma versão antiga gravou por cima,
+     ou mudou algo e manteve o campo), não serve de referência para apagar: a união é feita sem base. Não é proteção
+     contra quem quer forjar; é detecção de gravação de outra versão. */
+  function resumoDoc(o) {
+    const t = JSON.stringify(canonico(o)); let h = 0x811c9dc5;
+    for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+    return h.toString(36) + '.' + t.length.toString(36);
+  }
+  function semAssinatura(o) { const x = Object.assign({}, o); delete x.sinc; return x; }
+  function assinar(o) { o.sinc = resumoDoc(semAssinatura(o)); return o; }
+  function assinaturaOk(o) { return !!o && typeof o === 'object' && typeof o.sinc === 'string' && o.sinc === resumoDoc(semAssinatura(o)); }
   /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
   function uTres(tb, b, l, c, conflito) {
     if (uIgual(l, c)) return l;

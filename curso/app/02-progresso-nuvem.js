@@ -106,7 +106,7 @@
 
   /* pendente: há estudo deste aparelho que a nuvem ainda não confirmou; semRede: a última tentativa falhou por falta de rede.
      O aviso nunca diz "salvo na sua conta" enquanto houver algo pendente. */
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false };
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
@@ -136,18 +136,24 @@
   /* Calcula a união deste aparelho com o progresso da nuvem (o), sem efeito nenhum: dentro de uma transação, pode rodar
      de novo com uma leitura mais nova. Devolve o que gravar na nuvem (ou null) e o que aplicar aqui depois. */
   function planejarUniao(o) {
+    const ex = exclusaoNaNuvem(o); // marca de exclusão (11-exclusao-nuvem.js): nada é unido nem gravado
+    if (ex && !ex.ignorar) return ex;
+    if (ex) o = null; // o aluno pediu para enviar de novo: a marca é substituída pelo progresso deste aparelho
     if (o && (typeof o !== 'object' || o.v !== 1)) return { futura: true };
     const local = mesclar(JSON.parse(JSON.stringify(S)));
-    let u = local, perdido = null, c = null;
+    let u = local, perdido = null, c = null, assinado = true;
     if (o) {
-      c = mesclar(JSON.parse(JSON.stringify(o)));
-      /* A base só vale se for anterior aos dois lados: um progresso colado ou restaurado mais antigo que ela não descende dela. */
-      const b = lerBase(), base = b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
+      assinado = assinaturaOk(o); // sem assinatura válida: gravado (ou alterado) por uma versão antiga do app
+      c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
+      /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
+         dela) e se a nuvem foi gravada por esta versão: uma versão antiga grava o progresso inteiro dela por cima, sem
+         trava, e o que ela não tinha pareceria apagado do outro lado. */
+      const b = lerBase(), base = assinado && b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
       /* Aparelho que nunca sincronizou e não tem estudo: fica com a nuvem. Um aparelho zerado depois dela passa pela união. */
       if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
       if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
     } else if (!S.t) return { nada: true }; // aparelho e nuvem sem progresso: nada a gravar
-    return { local, u, perdido, gravar: !c || !uIgual(u, c) };
+    return { local, u, perdido, gravar: !c || !assinado || !uIgual(u, c) }; // sem assinatura: grava a versão assinada
   }
   /* Lê a nuvem, une e grava. Com transação (Firebase), a leitura e a gravação são atômicas: se outro aparelho gravar no
      meio, a união é refeita sobre o que ele gravou. Sem transação (link do curso no Claude), veja lerUnirGravar
@@ -156,10 +162,12 @@
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
     let p = null, modo = 'ok';
-    const planejar = o => { p = planejarUniao(o); return p.gravar ? JSON.parse(JSON.stringify(p.u)) : null; };
+    const planejar = o => { p = planejarUniao(o); return p.gravar ? assinar(JSON.parse(JSON.stringify(p.u))) : null; };
     if (ref.transacao) await ref.transacao(planejar);
     else modo = await lerUnirGravar(ref, planejar);
     if (nuvem.conta !== conta0 || !p || p.nada) return;
+    if (p.apagado || p.reapareceu) { pausarPorExclusao(ref, p); render(); return; }
+    nuvem.reenviar = false; // "Enviar de novo" atendido: a nuvem tem o progresso deste aparelho
     if (p.futura) { nuvem.ref = null; nuvem.on = false; nuvem.futura = true; return; }
     if (p.perdido) { recuperar = JSON.stringify(p.perdido); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
     /* O que o aluno fez enquanto a gravação viajava também fica: união da cópia usada no cálculo com o estado atual. */
@@ -175,7 +183,7 @@
     if (!uIgual(u, p.u)) gravar(); // a união com o que veio depois ainda não está na nuvem
   }
   async function sincronizar(ref, conta) {
-    nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.conta = String(conta || '');
+    nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.conta = String(conta || '');
     await gravar();
   }
   async function conectar() {
@@ -288,6 +296,6 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
+    if (el) el.textContent = nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 

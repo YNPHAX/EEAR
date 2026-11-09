@@ -141,4 +141,17 @@ module.exports = async function testarNuvemClaude({ b, srv, base, ok }) {
     ok(/na sua conta\.$/.test(antes) && /Sem conexão/.test(durante) && !/salvo na sua conta/.test(durante) && /^Progresso salvo na sua conta\.$/.test(depois) && !A.erros.length, 'sem conexão: o aviso diz que o estudo novo está só neste aparelho e vai para a conta quando a conexão voltar; depois, que está salvo na conta' + ` [${antes} | ${durante} | ${depois}]`);
     await A.ctx.close();
   }
+  { // 10. sobrescrita tardia de uma versão antiga do app ("último vence", sem trava): ela leu a nuvem antes, estudou e
+    // grava o progresso inteiro dela por cima, depois que este aparelho já tinha confirmado a gravação (e a base)
+    N.doc = P0(); N.trava = null; N.usuario = 'aluno-versao-antiga'; const A = await aparelho(); await espera(1500);
+    const leituraAntiga = copia(N.doc);
+    await A.marcar('T:novo-1'); await ate(async () => N.doc.feito && N.doc.feito['T:novo-1']);
+    await ate(async () => { const b0 = await A.ler(LS_BASE()); return b0 && b0.st.feito['T:novo-1']; });
+    N.doc = Object.assign(copia(leituraAntiga), { t: Date.now(), feito: Object.assign({}, leituraAntiga.feito, { 'T:antigo': true }) });
+    await espera(5500); await A.marcar('T:novo-2');
+    await ate(async () => N.doc.feito && N.doc.feito['T:novo-2'], 20000); await espera(1500);
+    const a = await A.ler(), n = N.doc;
+    ok(!!(a.feito['T:novo-1'] && a.feito['T:novo-2'] && a.feito['T:antigo'] && n.feito['T:novo-1'] && n.feito['T:novo-2'] && n.feito['T:antigo']) && !A.erros.length, 'versão antiga grava por cima depois (sem trava): o estudo deste aparelho que ela não tinha não é apagado, e o dela fica' + ` [aparelho: ${Object.keys(a.feito)} | nuvem: ${Object.keys(n.feito)}]`);
+    await A.ctx.close();
+  }
 };
