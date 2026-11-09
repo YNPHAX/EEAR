@@ -27,6 +27,17 @@
     try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i) || ''; const m = k.match(/^missao-eear-v1(?:-base|-recuperar)?@(.+)$/); if (m && m[1] !== identidade) ids.add(m[1]); } } catch (e) { /* ignora */ }
     return [...ids];
   }
+  /* A cópia desta conta neste aparelho já está na nuvem dela? Só quando é igual à última versão que a nuvem confirmou
+     (a base), ou quando não tem estudo. Cópia de recuperação ou ilegível: não está (é o que pode ser perdido). */
+  function sincronizadoDe(id) {
+    try {
+      if (localStorage.getItem(chave(LS_REC, id))) return false;
+      const t = localStorage.getItem(chave(LS, id)); if (!t) return true;
+      const st = mesclar(JSON.parse(t)); if (semEstudo(st)) return true;
+      const b = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null');
+      return !!(b && b.conta === id && b.st && b.st.v === 1 && uIgual(mesclar(b.st), st));
+    } catch (e) { return false; }
+  }
   function progressoSemConta() { try { const t = localStorage.getItem(LS); const o = t && JSON.parse(t); return o && o.v === 1 ? mesclar(o) : null; } catch (e) { return null; } }
   /* O progresso desta conta unido ao feito sem conta. Os "Zerar" de cada lado não se cruzam e a configuração da conta fica. */
   function unirImportacao(a) {
@@ -73,13 +84,13 @@
   }
   /* Bloco "Seus dados" em Plano › Dados: baixar, consultar e apagar o que este aparelho guarda. */
   function blocoDados() {
-    const outras = contasGuardadas().length;
+    const outras = contasGuardadas().length, pendentes = contasGuardadas().filter(id => !sincronizadoDe(id)).length;
     let h = `<div class="aphead">Seus dados</div><div class="row"><button class="btn" data-a="dadosbaixar">Baixar meus dados</button><button class="btn" data-a="dadosver">O que está guardado</button><button class="btn ghost" data-a="dadosapagar">Apagar os dados deste aparelho</button></div>`;
     if (pedindo === 'dadosver') {
       h += `<ul class="small" style="margin:0"><li>Neste aparelho, ${identidade ? 'nesta conta' : 'sem conta'}: ${resumoProg(S)}${S.cfg.nome ? ', o nome do certificado' : ''} e a configuração do plano.</li>${recuperar ? '<li>Uma cópia de recuperação de um progresso que não pôde ser aberto.</li>' : ''}${lerBase() ? '<li>Uma cópia da última sincronização com a nuvem (para unir o estudo feito em outros aparelhos).</li>' : ''}${outras ? `<li>Progresso de ${plural(outras, 'outra conta', 'outras contas')} que já entraram neste aparelho (não aparece aqui).</li>` : ''}${identidade && !identidade.indexOf('firebase:') ? '<li>Na nuvem (Firebase): o seu login (e-mail) e um documento só com o progresso e a data da última gravação.</li>' : ''}</ul>`;
     } else if (pedindo === 'dadosapagar') {
       const bloq = identidade && !sincronizado();
-      h += `<div class="confirm"><p>${bloq ? (nuvem.semTrava ? 'Não dá para apagar agora: neste ambiente a nuvem não tem a trava que garante que ela guardou tudo, então a cópia deste aparelho é necessária. Baixe seus dados, se precisar.' : 'Não dá para apagar agora: parte do progresso desta conta ainda não está salva na nuvem e seria perdida. Conecte-se à internet e tente de novo, ou baixe seus dados antes.') : `Apagar deste aparelho ${identidade ? 'o progresso desta conta (a nuvem continua com ele)' : 'todo o progresso feito sem conta, incluindo o nome e a configuração do plano'}? Isso não pode ser desfeito.`}</p><button class="btn sm" data-a="cancelar">Cancelar</button>${bloq ? '' : '<button class="btn sm pri" data-a="dadosapagarok">Apagar deste aparelho</button>'}${!identidade && outras ? `<button class="btn sm" data-a="dadosapagartudo">Apagar também ${plural(outras, 'a outra conta guardada', 'as outras contas guardadas')} aqui</button>` : ''}</div>`;
+      h += `<div class="confirm"><p>${bloq ? (nuvem.semTrava ? 'Não dá para apagar agora: neste ambiente a nuvem não tem a trava que garante que ela guardou tudo, então a cópia deste aparelho é necessária. Baixe seus dados, se precisar.' : 'Não dá para apagar agora: parte do progresso desta conta ainda não está salva na nuvem e seria perdida. Conecte-se à internet e tente de novo, ou baixe seus dados antes.') : `Apagar deste aparelho ${identidade ? 'o progresso desta conta (a nuvem continua com ele)' : 'todo o progresso feito sem conta, incluindo o nome e a configuração do plano'}? Isso não pode ser desfeito.`}</p><button class="btn sm" data-a="cancelar">Cancelar</button>${bloq ? '' : '<button class="btn sm pri" data-a="dadosapagarok">Apagar deste aparelho</button>'}${!identidade && outras ? `<button class="btn sm" data-a="dadosapagartudo">Apagar também ${plural(outras, 'a outra conta guardada', 'as outras contas guardadas')} aqui</button>${pendentes ? `<p class="small" style="margin:0;flex-basis:100%">${plural(pendentes, 'conta tem', 'contas têm')} progresso que a nuvem ainda não confirmou e não ${pendentes === 1 ? 'será apagada' : 'serão apagadas'}: entre nela para enviá-lo.</p>` : ''}` : ''}</div>`;
     }
     return h;
   }
@@ -144,7 +155,13 @@
       case 'dadosver': pedindo = pedindo === 'dadosver' ? null : 'dadosver'; render(); break;
       case 'dadosapagar': pedindo = 'dadosapagar'; render(); break;
       case 'dadosapagarok': if (identidade && !sincronizado()) break; apagarLocal(identidade); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados.'; render(); break;
-      case 'dadosapagartudo': if (identidade) break; contasGuardadas().forEach(apagarLocal); apagarLocal(''); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados, de todas as contas.'; render(); break;
+      case 'dadosapagartudo': { // só as contas cuja nuvem já tem tudo: o estudo não enviado de outra conta não é apagado
+        if (identidade) break;
+        const ficam = contasGuardadas().filter(id => !sincronizadoDe(id));
+        contasGuardadas().filter(id => !ficam.includes(id)).forEach(apagarLocal); apagarLocal(''); pedindo = null;
+        msgDados = ficam.length ? `Os dados deste aparelho foram apagados, menos ${ficam.length === 1 ? 'a cópia de uma conta' : 'as cópias de ' + ficam.length + ' contas'} com progresso que a nuvem ainda não confirmou. Entre nessa conta para enviá-lo.` : 'Os dados deste aparelho foram apagados, de todas as contas.';
+        render(); break;
+      }
       default: break;
     }
   });
