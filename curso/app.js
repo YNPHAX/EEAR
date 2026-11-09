@@ -267,7 +267,7 @@
     recuperar = localStorage.getItem(LS_REC);
   } catch (e) { /* sem armazenamento local */ }
 
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false };
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
@@ -280,7 +280,7 @@
     if (!nuvem.ref) return;
     if (nuvem.busy) { nuvem.again = true; return; }
     nuvem.busy = true;
-    try { await nuvem.ref.set(JSON.parse(JSON.stringify(S))); nuvem.on = true; }
+    try { await conciliar(nuvem.ref); }
     catch (e) {
       if (e && e.code === 'unavailable') setTimeout(gravar, 2500 + Math.random() * 2500);
       else { nuvem.ref = null; nuvem.on = false; }
@@ -291,35 +291,36 @@
   }
   /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. */
   const semEstudo = o => !Object.keys(o.mod).length && !o.sims.length && !Object.keys(o.fc).length && !Object.keys(o.ap).length && !o.diag && !Object.keys(o.aula || {}).length;
+  /* Lê a nuvem, une com este aparelho (veja "união do progresso entre aparelhos") e grava nos dois lados o que mudou.
+     A união é calculada logo depois da leitura, sem pausa: o que o aluno fizer enquanto a gravação viaja dispara outra
+     união em seguida. Nuvem com progresso de uma versão futura do app (v diferente de 1): nada é lido nem gravado. */
+  async function conciliar(ref) {
+    const snap = await ref.get(), o = snap.exists ? snap.data() : null;
+    if (o && (typeof o !== 'object' || o.v !== 1)) { nuvem.ref = null; nuvem.on = false; nuvem.futura = true; return; }
+    const local = mesclar(JSON.parse(JSON.stringify(S)));
+    let u = local, perdido = null, c = null;
+    if (o) {
+      c = mesclar(JSON.parse(JSON.stringify(o)));
+      /* A base só vale se for anterior aos dois lados: um progresso colado ou restaurado mais antigo que ela não descende dela. */
+      const b = lerBase(), base = b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
+      /* Aparelho que nunca sincronizou e não tem estudo: fica com a nuvem. Um aparelho zerado depois dela passa pela união. */
+      if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
+      if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
+    } else if (!S.t) return; // aparelho e nuvem sem progresso: nada a gravar
+    if (perdido) { recuperar = JSON.stringify(perdido); try { localStorage.setItem(LS_REC, recuperar); } catch (e) { /* sem espaço */ } }
+    if (!uIgual(u, S)) {
+      S = u;
+      try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
+      if (V.v === 'inicio') V = { v: 'hoje' };
+      render();
+    }
+    if (!c || !uIgual(u, c)) await ref.set(JSON.parse(JSON.stringify(u)));
+    nuvem.on = true;
+    gravarBase(u);
+  }
   async function sincronizar(ref) {
-    try {
-      const snap = await ref.get();
-      nuvem.ref = ref; nuvem.on = true;
-      if (snap.exists) {
-        const o = snap.data();
-        if (o && o.v === 1 && ((o.t || 0) > (S.t || 0) || semEstudo(S))) {
-          const nome = S.cfg.nome, local = S.cfg;
-          S = mesclar(JSON.parse(JSON.stringify(o)));
-          if (!S.cfg.nome && nome) S.cfg.nome = nome;
-          /* O progresso da nuvem fica, mas os certificados deste aparelho que ela ainda não tinha também ficam. */
-          const juntou = juntarCerts(S.cfg, local, S);
-          registrarCerts(S);
-          try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
-          if (V.v === 'inicio') V = { v: 'hoje' };
-          render();
-          if (juntou) gravar();
-        } else if (((o && o.t) || 0) < (S.t || 0)) {
-          /* O progresso deste aparelho é mais novo e vai para a nuvem levando também os certificados que só ela tinha. */
-          if (o && o.v === 1 && juntarCerts(S.cfg, mesclar(JSON.parse(JSON.stringify(o))).cfg, S)) {
-            registrarCerts(S);
-            try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
-            render();
-          }
-          gravar();
-        }
-      } else if (S.t) gravar();
-      syncInfo();
-    } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
+    nuvem.ref = ref; nuvem.futura = false;
+    await gravar();
   }
   async function conectar() {
     const cl = window.claude;
@@ -421,7 +422,7 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
+    if (el) el.textContent = nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 
   /* ---------- status ---------- */
@@ -1756,4 +1757,120 @@
     contaIniciar();
   }
   if (hot && typeof hot.ready === 'function') hot.ready(iniciar); else iniciar((hot && hot.data) || {});
+  /* ---------- união do progresso entre aparelhos ----------
+     A nuvem guardava o progresso inteiro do último aparelho que gravou: quem estudava offline em dois aparelhos perdia o
+     que fez num deles. Agora cada sincronização une os dois lados em três vias. A base é a última versão que este
+     aparelho e a nuvem tinham em comum; fica numa chave própria (missao-eear-v1-base), então o formato do progresso não
+     muda e as versões antigas do app a ignoram. Para cada item: igual nos dois lados, fica; mudou só de um lado, vale a
+     mudança; mudou dos dois lados, vale a regra do tipo de dado. Regra geral: a sincronização nunca apaga estudo.
+       - aulas (mod), passos da aula (aula), simulados (sims) e atividade (act) só crescem: notas pela maior, tentativas e
+         atividade somando o que cada lado fez desde a base, datas de conclusão pela mais antiga, simulados unidos;
+       - flashcards (fc): se os dois lados revisaram o mesmo cartão, vale a revisão do lado gravado por último, e a versão
+         vista (cfg.fcv) acompanha o cartão escolhido; um cartão nunca some por ausência do outro lado;
+       - caderno de erros, tarefas marcadas e folhas da apostila aceitam apagamento (erro corrigido, tarefa desmarcada,
+         folha limpa) só quando o outro lado não mexeu no item; erro corrigido de um lado e errado de novo do outro fica;
+       - simulado em andamento: o deste aparelho; demais campos e configuração: o lado gravado por último;
+       - certificados: juntarCerts, como antes; "Zerar progresso" (cfg.certsZ) vale para o que existia antes dele.
+     Sem base (primeira sincronização deste aparelho), nada é tratado como apagado. Se for impossível separar o que veio
+     antes e depois de um "Zerar" feito em outro aparelho, o progresso deste aparelho vira uma cópia de recuperação. */
+  function lerBase() { try { const t = localStorage.getItem('missao-eear-v1-base'); const o = t && JSON.parse(t); return o && o.v === 1 ? mesclar(o) : null; } catch (e) { return null; } }
+  function gravarBase(st) { try { localStorage.setItem('missao-eear-v1-base', JSON.stringify(st)); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
+  function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+  /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
+  function uTres(tb, b, l, c, conflito) {
+    if (uIgual(l, c)) return l;
+    if (tb && uIgual(l, b)) return c;
+    if (tb && uIgual(c, b)) return l;
+    return conflito(l, c, b);
+  }
+  function uMapa(bm, lm, cm, conflito, apaga) {
+    const tb = !!bm, out = {};
+    [...new Set(Object.keys(lm || {}).concat(Object.keys(cm || {})))].sort().forEach(k => { // ordem fixa: os dois aparelhos chegam ao mesmo texto
+      const b = tb ? bm[k] : undefined, l = (lm || {})[k], c = (cm || {})[k];
+      /* Sem apagamento: um item que sumiu de um lado sem estar na base continua (a ausência não apaga estudo). */
+      let v = uTres(tb, b, l, c, conflito);
+      if (v === undefined && !apaga) v = l !== undefined ? l : c;
+      if (v !== undefined) out[k] = v;
+    });
+    return out;
+  }
+  const uMin = (a, b) => (dataValida(a) && dataValida(b) ? (a < b ? a : b) : dataValida(a) ? a : b);
+  const uNum = x => (typeof x === 'number' && isFinite(x) ? x : 0);
+  /* Contagem que cada lado aumentou desde a base: base + (local − base) + (nuvem − base); sem base, a maior. */
+  const uSoma = (b, l, c, tb) => (tb ? Math.max(uNum(l), uNum(c), uNum(l) + uNum(c) - uNum(b)) : Math.max(uNum(l), uNum(c)));
+  function uAula(b, l, c, tb, novoL) { // registro de aula (mod) ou passos da aula (aula): só cresce
+    if (!l || !c) return l || c;
+    const r = Object.assign({}, novoL ? c : l, novoL ? l : c), bb = (tb && b) || {};
+    if ('best' in l || 'best' in c) r.best = Math.max(uNum(l.best), uNum(c.best));
+    if ('tent' in l || 'tent' in c) r.tent = uSoma(bb.tent, l.tent, c.tent, tb && !!b);
+    ['lido', 'ok', 'v', 'e'].forEach(k => { const m = uMin(l[k], c[k]); if (dataValida(m)) r[k] = m; });
+    return r;
+  }
+  function uSims(bs, ls, cs) { // simulados: une sem duplicar; o mesmo resultado nos dois lados conta uma vez (sem base, a maior contagem)
+    const conta = a => a.reduce((m, x) => { const k = JSON.stringify(x); m[k] = (m[k] || 0) + 1; return m; }, {});
+    const B = conta(bs || []), L = conta(ls), C = conta(cs), out = ls.slice();
+    Object.keys(C).forEach(k => { const extra = (bs ? Math.max(L[k] || 0, (L[k] || 0) + C[k] - (B[k] || 0)) : Math.max(L[k] || 0, C[k])) - (L[k] || 0); for (let i = 0; i < extra; i++) out.push(JSON.parse(k)); });
+    return out.map(x => [x, JSON.stringify(x)]).sort((a, b) => String(a[0].d).localeCompare(String(b[0].d)) || (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0)).map(x => x[0]);
+  }
+  function uApostila(b, l, c, tb, novoL) {
+    if (!l || !c) return l || c;
+    const r = Object.assign({}, novoL ? c : l, novoL ? l : c), bb = (tb && b) || {}, nv = (x, y) => (novoL ? x : y);
+    ['r', 'ok'].forEach(k => { r[k] = uMapa(tb ? bb[k] || {} : null, l[k], c[k], (x, y) => (x === undefined ? y : y === undefined ? x : nv(x, y)), true); });
+    r.tent = uSoma(bb.tent, l.tent, c.tent, tb && !!b);
+    if ('best' in l || 'best' in c) r.best = Math.max(uNum(l.best), uNum(c.best));
+    return r;
+  }
+  /* Une dois progressos já lidos por mesclar(). base: a última versão comum, ou null. Devolve { st, perdido }: perdido
+     é o progresso que não pôde ser unido (só no caso do "Zerar" sem base), para virar cópia de recuperação. */
+  function unirProgresso(base, l, c) {
+    const zl = uNum(l.cfg.certsZ), zc = uNum(c.cfg.certsZ), zb = base ? uNum(base.cfg.certsZ) : 0;
+    /* "Zerar progresso" que este aparelho ainda não conhecia (ou o inverso): sem base, só dá para separar pelo horário. */
+    if (!base && zc > zl && (l.t || 0) > zc) return { st: c, perdido: l };
+    if (!base && zc > zl) return { st: c, perdido: null };
+    if (!base && zl > zc && (c.t || 0) > zl) return { st: l, perdido: c };
+    if (!base && zl > zc) return { st: l, perdido: null };
+    /* Com base, o lado que zerou depois dela apaga só o que já existia na base; o que o outro lado estudou depois fica. */
+    if (base && (zl > zb || zc > zb)) {
+      const zerou = zc > zb ? c : l, outro = zerou === c ? l : c;
+      const novo = (bm, om) => { const o = {}; Object.keys(om || {}).forEach(k => { if (!uIgual((bm || {})[k], om[k])) o[k] = om[k]; }); return o; };
+      const so = JSON.parse(JSON.stringify(outro));
+      ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { so[k] = novo(base[k], outro[k]); });
+      so.sims = uSims(base.sims, outro.sims, []).filter(x => !base.sims.some(y => uIgual(x, y)));
+      so.cfg = Object.assign({}, zerou.cfg);
+      return unirProgresso(zerou, zerou, so);
+    }
+    const tb = !!base, B = base || {}, novoL = (l.t || 0) >= (c.t || 0), nv = (x, y) => (novoL ? x : y);
+    const u = JSON.parse(JSON.stringify(novoL ? l : c));
+    u.t = Math.max(l.t || 0, c.t || 0);
+    u.mod = uMapa(tb ? B.mod : null, l.mod, c.mod, (x, y, b) => uAula(b, x, y, tb, novoL));
+    u.aula = uMapa(tb ? B.aula : null, l.aula, c.aula, (x, y, b) => uAula(b, x, y, tb, novoL));
+    u.act = uMapa(tb ? B.act : null, l.act, c.act, (x, y, b) => uSoma(b, x, y, tb));
+    u.sims = uSims(tb ? B.sims : null, l.sims, c.sims);
+    /* Flashcards: a revisão gravada por último vence; a versão vista acompanha o cartão escolhido. */
+    const lado = {};
+    u.fc = uMapa(tb ? B.fc : null, l.fc, c.fc, (x, y) => (x === undefined ? y : y === undefined ? x : nv(x, y)));
+    Object.keys(u.fc).forEach(id => { lado[id] = uIgual(u.fc[id], l.fc[id]) ? l : c; });
+    u.erros = uMapa(tb ? B.erros : null, l.erros, c.erros, (x, y, b) => (x === undefined ? y : y === undefined ? x : uSoma(b, x, y, tb)), true);
+    u.feito = uMapa(tb ? B.feito : null, l.feito, c.feito, (x, y) => (x !== undefined ? x : y), true);
+    u.ap = uMapa(tb ? B.ap : null, l.ap, c.ap, (x, y, b) => uApostila(b, x, y, tb, novoL));
+    ['diag', 'ult', 'ultAula'].forEach(k => { u[k] = uTres(tb, B[k], l[k], c[k], (x, y) => (nv(x, y) != null ? nv(x, y) : nv(y, x))); });
+    u.ativo = uTres(tb, B.ativo, l.ativo, c.ativo, (x, y) => (x != null ? x : y));
+    /* Configuração: campo a campo; certificados, versões vistas e âncoras têm regra própria. */
+    const ESP = ['certs', 'certsZ', 'fcv', 'fcAncora'], bc = (tb && B.cfg) || {};
+    u.cfg = {};
+    new Set(Object.keys(l.cfg).concat(Object.keys(c.cfg))).forEach(k => {
+      if (ESP.includes(k)) return;
+      const v = uTres(tb, bc[k], l.cfg[k], c.cfg[k], (x, y) => (nv(x, y) !== undefined ? nv(x, y) : nv(y, x)));
+      if (v !== undefined) u.cfg[k] = v;
+    });
+    const fcv = {};
+    Object.keys(u.fc).forEach(id => { const g = (lado[id].cfg.fcv || {})[id] || (l.cfg.fcv || {})[id] || (c.cfg.fcv || {})[id]; if (g) fcv[id] = g; });
+    if (Object.keys(fcv).length) u.cfg.fcv = fcv;
+    const anc = uMapa(tb ? bc.fcAncora || {} : null, l.cfg.fcAncora, c.cfg.fcAncora, (x, y) => uMin(x, y));
+    if (Object.keys(anc).length) u.cfg.fcAncora = anc;
+    u.cfg.certs = (l.cfg.certs || []).slice();
+    if (l.cfg.certsZ) u.cfg.certsZ = l.cfg.certsZ;
+    juntarCerts(u.cfg, c.cfg, u);
+    return { st: mesclar(u), perdido: null };
+  }
 })();

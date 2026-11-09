@@ -88,7 +88,7 @@
     recuperar = localStorage.getItem(LS_REC);
   } catch (e) { /* sem armazenamento local */ }
 
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false };
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
@@ -101,7 +101,7 @@
     if (!nuvem.ref) return;
     if (nuvem.busy) { nuvem.again = true; return; }
     nuvem.busy = true;
-    try { await nuvem.ref.set(JSON.parse(JSON.stringify(S))); nuvem.on = true; }
+    try { await conciliar(nuvem.ref); }
     catch (e) {
       if (e && e.code === 'unavailable') setTimeout(gravar, 2500 + Math.random() * 2500);
       else { nuvem.ref = null; nuvem.on = false; }
@@ -112,35 +112,36 @@
   }
   /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. */
   const semEstudo = o => !Object.keys(o.mod).length && !o.sims.length && !Object.keys(o.fc).length && !Object.keys(o.ap).length && !o.diag && !Object.keys(o.aula || {}).length;
+  /* Lê a nuvem, une com este aparelho (veja "união do progresso entre aparelhos") e grava nos dois lados o que mudou.
+     A união é calculada logo depois da leitura, sem pausa: o que o aluno fizer enquanto a gravação viaja dispara outra
+     união em seguida. Nuvem com progresso de uma versão futura do app (v diferente de 1): nada é lido nem gravado. */
+  async function conciliar(ref) {
+    const snap = await ref.get(), o = snap.exists ? snap.data() : null;
+    if (o && (typeof o !== 'object' || o.v !== 1)) { nuvem.ref = null; nuvem.on = false; nuvem.futura = true; return; }
+    const local = mesclar(JSON.parse(JSON.stringify(S)));
+    let u = local, perdido = null, c = null;
+    if (o) {
+      c = mesclar(JSON.parse(JSON.stringify(o)));
+      /* A base só vale se for anterior aos dois lados: um progresso colado ou restaurado mais antigo que ela não descende dela. */
+      const b = lerBase(), base = b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
+      /* Aparelho que nunca sincronizou e não tem estudo: fica com a nuvem. Um aparelho zerado depois dela passa pela união. */
+      if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
+      if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
+    } else if (!S.t) return; // aparelho e nuvem sem progresso: nada a gravar
+    if (perdido) { recuperar = JSON.stringify(perdido); try { localStorage.setItem(LS_REC, recuperar); } catch (e) { /* sem espaço */ } }
+    if (!uIgual(u, S)) {
+      S = u;
+      try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
+      if (V.v === 'inicio') V = { v: 'hoje' };
+      render();
+    }
+    if (!c || !uIgual(u, c)) await ref.set(JSON.parse(JSON.stringify(u)));
+    nuvem.on = true;
+    gravarBase(u);
+  }
   async function sincronizar(ref) {
-    try {
-      const snap = await ref.get();
-      nuvem.ref = ref; nuvem.on = true;
-      if (snap.exists) {
-        const o = snap.data();
-        if (o && o.v === 1 && ((o.t || 0) > (S.t || 0) || semEstudo(S))) {
-          const nome = S.cfg.nome, local = S.cfg;
-          S = mesclar(JSON.parse(JSON.stringify(o)));
-          if (!S.cfg.nome && nome) S.cfg.nome = nome;
-          /* O progresso da nuvem fica, mas os certificados deste aparelho que ela ainda não tinha também ficam. */
-          const juntou = juntarCerts(S.cfg, local, S);
-          registrarCerts(S);
-          try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
-          if (V.v === 'inicio') V = { v: 'hoje' };
-          render();
-          if (juntou) gravar();
-        } else if (((o && o.t) || 0) < (S.t || 0)) {
-          /* O progresso deste aparelho é mais novo e vai para a nuvem levando também os certificados que só ela tinha. */
-          if (o && o.v === 1 && juntarCerts(S.cfg, mesclar(JSON.parse(JSON.stringify(o))).cfg, S)) {
-            registrarCerts(S);
-            try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
-            render();
-          }
-          gravar();
-        }
-      } else if (S.t) gravar();
-      syncInfo();
-    } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
+    nuvem.ref = ref; nuvem.futura = false;
+    await gravar();
   }
   async function conectar() {
     const cl = window.claude;
@@ -242,6 +243,6 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
+    if (el) el.textContent = nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 
