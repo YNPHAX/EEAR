@@ -50,12 +50,12 @@ EEAR.add({
     ['<div class="txt">Drones are becoming popular. For instance, farmers use them to monitor crops.</div>"For instance" introduces', ['a conclusion.', 'a contrast.', 'an example.', 'a cause.'], 2, '"For instance" = por exemplo.']
   ],
   fc: [
-    ['Skimming x scanning', 'Skimming: ideia geral. Scanning: informação específica.'],
+    ['Você tem 1 minuto e a questão pergunta <i>em que ano</i> o aeroporto foi inaugurado. Que estratégia de leitura usar e o que procurar no texto?', 'Scanning: busca de informação específica. Procure números com cara de ano e palavras-chave como <i>opened</i> ou <i>inaugurated</i>. Skimming serve para a ideia geral.', 2],
     ['actually / eventually', 'Na verdade / finalmente, por fim.'],
     ['pretend / intend', 'Fingir / pretender.'],
     ['library / bookstore', 'Biblioteca / livraria.'],
     ['realize / attend', 'Perceber / frequentar, comparecer.'],
-    ['Conectivos de contraste', 'But, however, although, though, whereas, nevertheless.'],
+    ['Complete com <i>although</i> ou <i>however</i>:<br>1) "___ the forecast was bad, the flight left on time."<br>2) "The forecast was bad. ___, the flight left on time."', '1) Although: liga as duas orações na mesma frase.<br>2) However: abre a nova frase, seguido de vírgula. Os dois expressam contraste.', 2],
     ['runway / take off / land', 'Pista / decolar / pousar.'],
     ['sensible / sensitive', 'Sensato / sensível.']
   ]
@@ -112,11 +112,11 @@ EEAR.add({
   fc: [
     ['Plural de man, woman, child', 'Men, women, children.'],
     ['Plural de foot, tooth, mouse', 'Feet, teeth, mice.'],
-    ['Substantivos iguais no plural', 'Sheep, fish, deer, aircraft, series.'],
-    ['Incontáveis comuns', 'Information, advice, news, money, furniture, luggage, equipment.'],
-    ['a ou an?', 'Pelo som: a university, an hour.'],
-    ['Genitivo no plural com s', 'Só o apóstrofo: the pilots\' room.'],
-    ['Quando não usar artigo', 'Generalizações no plural, idiomas, esportes, refeições, a maioria dos países.']
+    ['Complete com o plural: "two ___ (aircraft) on the runway", "fifty ___ (sheep)" e "The lake has many ___ (fish)." Alguma admite outra forma?', 'Aircraft, sheep e fish: a forma não muda no plural. "Fishes" também existe, mas é usado sobretudo para várias espécies (many different fishes); para quantidade, o comum é fish.', 2],
+    ['Corrija: "The instructor gave us three advices and some useful equipments."', 'The instructor gave us three <b>pieces of advice</b> and some useful <b>equipment</b>. Advice e equipment são incontáveis: sem plural e sem a/an; para contar, use a piece of.', 2],
+    ['Complete com a ou an: "___ honest mistake", "___ one-way ticket" e "___ MBA student". O que decide a escolha?', 'An honest mistake (h mudo), a one-way ticket (som /w/), an MBA student (som /em/). Decide o som inicial, não a letra.', 2],
+    ['Corrija: "The cadets\'s rooms are clean" e "The childrens\' toys are in the hangar."', 'The cadets\' rooms (plural terminado em s: só o apóstrofo) e the children\'s toys (plural irregular, sem s: \'s).', 2],
+    ['Corrija os artigos, se necessário: "The English is spoken in the Canada" e "She plays the guitar after the lunch."', 'English is spoken in Canada (idiomas e a maioria dos países, sem artigo). She plays the guitar after lunch (instrumento musical leva the; refeição, em geral, não).', 2]
   ]
 });
 
@@ -183,13 +183,13 @@ EEAR.add({
     ['"___ does the flight take from São Paulo to Recife?"', ['How long', 'How many', 'How much', 'How often'], 0, '"How long" pergunta duração.']
   ],
   fc: [
-    ['my x mine', 'My + substantivo (my car). Mine sozinho (it is mine).'],
-    ['its x it\'s', 'Its = dele/dela (coisa). It\'s = it is.'],
+    ['Complete com my ou mine: "This is not ___ helmet. ___ is the blue one."', 'My (antes do substantivo helmet) e Mine (sozinho, no lugar de my helmet).', 2],
+    ['Complete com its ou it\'s: "___ raining, so the aircraft will stay in ___ hangar."', 'It\'s (= it is) raining… in its hangar (possessivo de it, sem apóstrofo).', 2],
     ['who / which / whose', 'Pessoas / coisas / posse (cujo).'],
-    ['Quando não usar "that"?', 'Em orações explicativas (com vírgulas) e depois de preposição.'],
-    ['some x any', 'Some: afirmativas e ofertas. Any: negativas e perguntas.'],
-    ['each other', 'Reciprocidade: um ao outro.'],
-    ['by myself', 'Sozinho, sem ajuda.'],
+    ['Corrija, se necessário: "The EEAR, that is in Guaratinguetá, trains sergeants" e "This is the room in that we study."', 'The EEAR, which is in Guaratinguetá… (oração explicativa, entre vírgulas: which). This is the room in which we study (ou the room we study in). Depois de preposição não se usa that.', 2],
+    ['Complete com some ou any: "Would you like ___ coffee?", "We don\'t have ___ fuel left" e "Take ___ seat; they are all free."', 'Some (oferta), any (negativa) e any (afirmativa com sentido de qualquer um, não importa qual). Any não se limita a negativas e perguntas.', 2],
+    ['Qual é a diferença? "The pilots blamed themselves" x "The pilots blamed each other."', 'Themselves: cada um culpou a si mesmo (reflexivo). Each other: um culpou o outro (recíproco).', 2],
+    ['O que significa "She repaired the radio by herself"? E "She herself repaired the radio"?', 'By herself: sozinha, sem ajuda. She herself: ênfase, ela mesma (e não outra pessoa) consertou.', 2],
     ['Reflexive de they', 'Themselves.'],
     ['How long / how often', 'Duração / frequência.']
   ]
@@ -242,11 +242,11 @@ EEAR.add({
   ],
   fc: [
     ['good / bad: comparativo e superlativo', 'Better, the best / worse, the worst.'],
-    ['Comparativo de adjetivo longo', 'More … than (more important than).'],
-    ['Igualdade', 'As … as (negativa: not as/so … as).'],
+    ['Corrija: "This route is more safer and more cheap than the old one."', 'This route is safer and cheaper than the old one. Adjetivos curtos recebem -er; more … than é para adjetivos longos (more dangerous). Nunca os dois juntos.', 2],
+    ['Reescreva com as … as, sem mudar o sentido: "The new radar is less precise than the old one."', 'The new radar is not as (ou not so) precise as the old one. Not as … as expressa inferioridade.', 2],
     ['hardly / lately', 'Quase não / ultimamente.'],
-    ['Advérbio de good', 'Well.'],
-    ['Posição do advérbio de frequência', 'Antes do verbo principal, depois do to be.'],
+    ['Complete com good ou well: "She is a ___ pilot and lands very ___." E em "I don\'t feel ___ today" (saúde)?', 'Good pilot (adjetivo + substantivo) e lands well (advérbio, modifica o verbo). I don\'t feel well: well também é adjetivo quando significa "com boa saúde".', 2],
+    ['Coloque "usually" na posição correta: "The briefing starts at 7" e "The briefing is short."', 'The briefing usually starts at 7 (antes do verbo principal). The briefing is usually short (depois do to be).', 2],
     ['The more…, the…', 'Quanto mais…, mais…: The more you study, the better you get.'],
     ['safe / dangerous', 'Seguro / perigoso: antônimos.']
   ]

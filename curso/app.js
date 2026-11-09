@@ -16,7 +16,8 @@
   const CARDS = {};
   MODS.forEach(m => (m.fc || []).forEach((c, i) => {
     const id = m.id + '~' + i;
-    CARDS[id] = { id, mod: m.id, m: m.m, f: c[0], v: c[1] };
+    /* ver: versão do conteúdo do cartão. Sem o 3º campo é 1; um número 2 ou maior marca uma reformulação substancial. */
+    CARDS[id] = { id, mod: m.id, m: m.m, f: c[0], v: c[1], ver: Number.isInteger(c[2]) && c[2] > 1 ? c[2] : 1 };
   }));
   /* Provas anteriores oficiais: mantêm a ordem original das alternativas e o gabarito oficial. */
   const PROVAS = (E.provas || []).slice().sort((a, b) => (b.data || '').localeCompare(a.data || ''));
@@ -143,6 +144,22 @@
     if (o && o.cfg && !(o.cfg.cv >= 2) && Number(o.cfg.tempoSim) === 240) b.cfg.tempoSim = 260;
     ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { if (!b[k] || typeof b[k] !== 'object') b[k] = {}; });
     if (!Array.isArray(b.sims)) b.sims = [];
+    /* Entradas que nenhuma versão grava (progresso colado malformado) ou questões que saíram do curso numa atualização
+       travariam as telas Hoje, Plano e Simulados sem volta: ficam de fora só na memória, como o resto desta função. */
+    const obj = x => !!x && typeof x === 'object' && !Array.isArray(x);
+    /* Placar de um simulado: matéria → [acertos, total], sempre com total ≥ 1 (como entregar() grava). */
+    const placar = r => { const o = {}; if (obj(r)) Object.keys(r).forEach(k => { const v = r[k]; if (Array.isArray(v) && typeof v[0] === 'number' && typeof v[1] === 'number' && v[1] >= 1) o[k] = v; }); return o; };
+    b.sims = b.sims.filter(obj).map(x => Object.assign({}, x, { r: placar(x.r) })).filter(x => Object.keys(x.r).length);
+    const questoes = a => { // simulado em andamento ou o último entregue: só questões que ainda existem no curso
+      ['resp', 'marc', 'perms'].forEach(k => { if (!obj(a[k])) a[k] = {}; });
+      a.ids = a.ids.filter(id => typeof id === 'string' && Q[id]);
+      a.ids.forEach(id => { if (!Array.isArray(a.perms[id])) a.perms[id] = [0, 1, 2, 3]; });
+      return a.ids.length > 0;
+    };
+    if (b.ativo != null && !(obj(b.ativo) && Array.isArray(b.ativo.ids) && questoes(b.ativo))) b.ativo = null;
+    if (b.ativo) b.ativo.i = Math.min(Math.max(0, Math.floor(Number(b.ativo.i)) || 0), b.ativo.ids.length - 1);
+    if (b.ult != null && !(obj(b.ult) && obj(b.ult.reg) && Array.isArray(b.ult.ids) && questoes(b.ult))) b.ult = null;
+    if (b.ult) { b.ult.reg = Object.assign({}, b.ult.reg, { r: placar(b.ult.reg.r) }); if (!Object.keys(b.ult.reg.r).length) b.ult = null; }
     /* Certificados (veja "certificados conquistados"): um progresso sem cfg.certs veio de uma versão sem o registro e é
        conferido uma única vez. Tudo aqui fica só na memória: nada é gravado até o aluno estudar. */
     const temCerts = !!(o && o.cfg && Object.prototype.hasOwnProperty.call(o.cfg, 'certs'));
@@ -236,60 +253,117 @@
     return JSON.stringify([cfg.certs, cfg.certsZ || 0]) !== antes;
   }
 
-  try { const t = localStorage.getItem(LS); if (t) { const o = JSON.parse(t); if (o && o.v === 1) S = mesclar(o); } } catch (e) { /* sem armazenamento local */ }
+  /* Progresso que este app não consegue ler (corrompido, ou gravado por uma versão futura com outro formato): antes que o
+     primeiro salvar() grave por cima, uma cópia fica em LS_REC, e a tela Hoje oferece copiá-la. */
+  const LS_REC = 'missao-eear-v1-recuperar';
+  /* Contas (veja "contas neste aparelho"): cada identidade tem as próprias chaves (chave@identidade). Sem conta, valem as
+     chaves de sempre, onde já está o progresso de quem nunca entrou numa conta. LS_CONTA lembra a conta em uso. */
+  const LS_CONTA = 'missao-eear-conta', BASE_K = 'missao-eear-v1-base';
+  const contaUI = { msg: '', adiado: false, ocupado: false }; // estado da tela da conta (veja "contas neste aparelho")
+  let identidade = '', recuperar = null, gravouLocal = true;
+  const chave = (k, id) => { const i = id === undefined ? identidade : id; return i ? k + '@' + i : k; };
+  /* Lê o progresso da identidade em uso; se for ilegível, guarda uma cópia antes que alguma gravação o cubra. */
+  function carregar() {
+    let st = novoEstado();
+    try {
+      const t = localStorage.getItem(chave(LS));
+      if (t) {
+        let lido = false;
+        try { const o = JSON.parse(t); if (o && o.v === 1) { st = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
+        if (!lido) try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* sem espaço para a cópia */ }
+      }
+      recuperar = localStorage.getItem(chave(LS_REC));
+    } catch (e) { /* sem armazenamento local */ }
+    return st;
+  }
+  try {
+    /* A conta lembrada só vale onde ela pode ser confirmada (Firebase configurado, ou o link do curso no Claude). */
+    const c = localStorage.getItem(LS_CONTA) || '';
+    if ((c.indexOf('firebase:') === 0 && window.EEAR_FIREBASE) || (c.indexOf('claude:') === 0 && window.claude)) identidade = c;
+  } catch (e) { /* sem armazenamento local */ }
+  S = carregar();
 
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false };
+  /* pendente: há estudo deste aparelho que a nuvem ainda não confirmou; semRede: a última tentativa falhou por falta de rede.
+     O aviso nunca diz "salvo na sua conta" enquanto houver algo pendente. */
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false };
   let tSave = null;
   function salvar() {
     S.t = Date.now();
-    try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
+    fixarAncoras();
+    try { localStorage.setItem(chave(LS), JSON.stringify(S)); gravouLocal = true; } catch (e) { gravouLocal = false; } // o aviso aparece no próximo render()
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
+    if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
   async function gravar() {
     if (!nuvem.ref) return;
     if (nuvem.busy) { nuvem.again = true; return; }
     nuvem.busy = true;
-    try { await nuvem.ref.set(JSON.parse(JSON.stringify(S))); nuvem.on = true; }
+    try { await conciliar(nuvem.ref); }
     catch (e) {
-      if (e && e.code === 'unavailable') setTimeout(gravar, 2500 + Math.random() * 2500);
+      if (e && e.code === 'unavailable' && e.espera === undefined) nuvem.semRede = true;
+      if (e && e.code === 'unavailable') setTimeout(gravar, e.espera !== undefined ? Math.max(0, e.espera) + 200 + Math.random() * 1000 : 2500 + Math.random() * 2500); // nuvem travada por outro aparelho, ou sem rede
       else { nuvem.ref = null; nuvem.on = false; }
     }
     nuvem.busy = false;
     syncInfo();
     if (nuvem.again) { nuvem.again = false; gravar(); }
   }
-  /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. */
-  const semEstudo = o => !Object.keys(o.mod).length && !o.sims.length && !Object.keys(o.fc).length && !Object.keys(o.ap).length && !o.diag && !Object.keys(o.aula || {}).length;
-  async function sincronizar(ref) {
-    try {
-      const snap = await ref.get();
-      nuvem.ref = ref; nuvem.on = true;
-      if (snap.exists) {
-        const o = snap.data();
-        if (o && o.v === 1 && ((o.t || 0) > (S.t || 0) || semEstudo(S))) {
-          const nome = S.cfg.nome, local = S.cfg;
-          S = mesclar(JSON.parse(JSON.stringify(o)));
-          if (!S.cfg.nome && nome) S.cfg.nome = nome;
-          /* O progresso da nuvem fica, mas os certificados deste aparelho que ela ainda não tinha também ficam. */
-          const juntou = juntarCerts(S.cfg, local, S);
-          registrarCerts(S);
-          try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
-          if (V.v === 'inicio') V = { v: 'hoje' };
-          render();
-          if (juntou) gravar();
-        } else if (((o && o.t) || 0) < (S.t || 0)) {
-          /* O progresso deste aparelho é mais novo e vai para a nuvem levando também os certificados que só ela tinha. */
-          if (o && o.v === 1 && juntarCerts(S.cfg, mesclar(JSON.parse(JSON.stringify(o))).cfg, S)) {
-            registrarCerts(S);
-            try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { /* ignora */ }
-            render();
-          }
-          gravar();
-        }
-      } else if (S.t) gravar();
-      syncInfo();
-    } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
+  /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. Tarefas marcadas, caderno
+     de erros e atividade também contam como estudo (antes não contavam, e um aparelho que só tinha marcado tarefas perdia as marcações). */
+  const semEstudo = o => !Object.keys(o.mod).length && !o.sims.length && !Object.keys(o.fc).length && !Object.keys(o.ap).length && !o.diag && !Object.keys(o.aula || {}).length && !Object.keys(o.feito || {}).length && !Object.keys(o.erros || {}).length && !Object.keys(o.act || {}).length;
+  /* Calcula a união deste aparelho com o progresso da nuvem (o), sem efeito nenhum: dentro de uma transação, pode rodar
+     de novo com uma leitura mais nova. Devolve o que gravar na nuvem (ou null) e o que aplicar aqui depois. */
+  function planejarUniao(o) {
+    const ex = exclusaoNaNuvem(o); // marca de exclusão (11-exclusao-nuvem.js): nada é unido nem gravado
+    if (ex && !ex.ignorar) return ex;
+    if (ex) o = null; // o aluno pediu para enviar de novo: a marca é substituída pelo progresso deste aparelho
+    if (o && (typeof o !== 'object' || o.v !== 1)) return { futura: true };
+    const local = mesclar(JSON.parse(JSON.stringify(S)));
+    let u = local, perdido = null, c = null, assinado = true;
+    if (o) {
+      assinado = assinaturaOk(o); // sem assinatura válida: gravado (ou alterado) por uma versão antiga do app
+      c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
+      /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
+         dela) e se a nuvem foi gravada por esta versão: uma versão antiga grava o progresso inteiro dela por cima, sem
+         trava, e o que ela não tinha pareceria apagado do outro lado. */
+      const b = lerBase(), base = assinado && b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
+      /* Aparelho que nunca sincronizou e não tem estudo: fica com a nuvem. Um aparelho zerado depois dela passa pela união. */
+      if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
+      if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
+    } else if (!S.t) return { nada: true }; // aparelho e nuvem sem progresso: nada a gravar
+    return { local, u, perdido, gravar: !c || !assinado || !uIgual(u, c) }; // sem assinatura: grava a versão assinada
+  }
+  /* Lê a nuvem, une e grava. Com transação (Firebase), a leitura e a gravação são atômicas: se outro aparelho gravar no
+     meio, a união é refeita sobre o que ele gravou. Sem transação (link do curso no Claude), veja lerUnirGravar
+     (10-nuvem-claude.js): com a trava da nuvem, a gravação é conferida; sem ela, a união segue sem base.
+     O resultado só é aplicado aqui depois que a nuvem confirmou, e só se a conta continuar a mesma. */
+  async function conciliar(ref) {
+    const conta0 = nuvem.conta;
+    let p = null, modo = 'ok';
+    const planejar = o => { p = planejarUniao(o); return p.gravar ? assinar(JSON.parse(JSON.stringify(p.u))) : null; };
+    if (ref.transacao) await ref.transacao(planejar);
+    else modo = await lerUnirGravar(ref, planejar);
+    if (nuvem.conta !== conta0 || !p || p.nada) return;
+    if (p.apagado || p.reapareceu) { pausarPorExclusao(ref, p); render(); return; }
+    nuvem.reenviar = false; // "Enviar de novo" atendido: a nuvem tem o progresso deste aparelho
+    if (p.futura) { nuvem.ref = null; nuvem.on = false; nuvem.futura = true; return; }
+    if (p.perdido) { recuperar = JSON.stringify(p.perdido); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
+    /* O que o aluno fez enquanto a gravação viajava também fica: união da cópia usada no cálculo com o estado atual. */
+    const u = uIgual(S, p.local) ? p.u : unirProgresso(p.local, mesclar(JSON.parse(JSON.stringify(S))), p.u).st;
+    if (!uIgual(u, S)) {
+      S = u;
+      try { localStorage.setItem(chave(LS), JSON.stringify(S)); } catch (e) { /* ignora */ }
+      if (V.v === 'inicio') V = { v: 'hoje' };
+      render();
+    }
+    nuvem.on = true; nuvem.semRede = false; nuvem.pendente = modo === 'conferir' || !uIgual(S, p.u);
+    depoisDeGravar(modo, p);
+    if (!uIgual(u, p.u)) gravar(); // a união com o que veio depois ainda não está na nuvem
+  }
+  async function sincronizar(ref, conta) {
+    nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.conta = String(conta || '');
+    await gravar();
   }
   async function conectar() {
     const cl = window.claude;
@@ -300,7 +374,8 @@
       if (!db || !user) return;
       const id = await user.id();
       if (!id) return;
-      await sincronizar(db.doc('progresso/' + id));
+      usarIdentidade('claude:' + id); // o progresso local passa a ser o desta conta
+      await sincronizar(db.doc('progresso/' + id), 'claude:' + id);
     } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
   }
 
@@ -328,43 +403,52 @@
     try {
       const base = 'https://www.gstatic.com/firebasejs/' + FB_VERSAO + '/';
       const mods = await Promise.all(['firebase-app', 'firebase-auth', 'firebase-firestore'].map(n => import(base + n + '.js')));
-      const app0 = mods[0].initializeApp(FB), au = mods[1], fs = mods[2];
-      const auth = au.getAuth(app0);
+      const opcoes = Object.assign({}, FB); delete opcoes.sincronizar; delete opcoes.emuladores;
+      const app0 = mods[0].initializeApp(opcoes), au = mods[1], fs = mods[2];
+      const auth = au.getAuth(app0), db = fs.getFirestore(app0);
       auth.languageCode = 'pt';
-      conta.api = { au, fs, auth, db: fs.getFirestore(app0) };
+      /* Emuladores do Firebase (só para testes, e só quando o app roda em localhost). */
+      if (FB.emuladores && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { au.connectAuthEmulator(auth, FB.emuladores.auth, { disableWarnings: true }); fs.connectFirestoreEmulator(db, FB.emuladores.firestore[0], FB.emuladores.firestore[1]); }
+      conta.api = { au, fs, auth, db };
       au.getRedirectResult(auth).catch(e => { conta.msg = erroConta(e); render(); });
       au.onAuthStateChanged(auth, u => {
         conta.user = u; conta.pronto = true;
         if (u) ligarNuvem(u);
-        else if (nuvem.fb) { nuvem.ref = null; nuvem.on = false; nuvem.fb = false; }
+        else { nuvem.fb = false; if (identidade.indexOf('firebase:') === 0) usarIdentidade(''); } // sessão encerrada: volta ao progresso sem conta, sem apagar nada
         if (V.v === 'plano' || V.v === 'inicio') render(); else syncInfo();
       });
     } catch (e) { conta.pronto = true; conta.msg = 'Não foi possível carregar o login agora. Verifique a internet.'; if (V.v === 'plano' || V.v === 'inicio') render(); }
   }
+  /* Conta conectada: o aparelho passa a usar o progresso local desta conta. A nuvem só é usada com a configuração
+     "sincronizar": true, a ser ligada depois de validar as regras e as transações no projeto real (veja
+     auditoria/contas-e-sincronizacao.md). O documento guarda só o progresso, a versão e as datas: nada de nome ou e-mail. */
   function ligarNuvem(u) {
-    const fs = conta.api.fs, doc = fs.doc(conta.api.db, 'alunos', u.uid);
-    /* O progresso vai como texto: o Firestore não guarda listas dentro de listas. */
-    const ref = {
-      get: async () => { const s = await fs.getDoc(doc), x = s.exists() ? s.data() : null; return { exists: !!(x && x.dados), data: () => JSON.parse(x.dados) }; },
-      set: o => fs.setDoc(doc, { dados: JSON.stringify(o), t: o.t || 0, nome: (o.cfg && o.cfg.nome) || u.displayName || '', email: u.email || '', atualizado: fs.serverTimestamp() })
-    };
+    const id = 'firebase:' + u.uid;
+    usarIdentidade(id);
     if (!S.cfg.nome && u.displayName) S.cfg.nome = u.displayName;
     nuvem.fb = true;
-    sincronizar(ref);
+    if (FB.sincronizar !== true) { nuvem.bloqueada = true; syncInfo(); return; }
+    const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid);
+    const paraDoc = o => ({ v: 1, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
+    /* Documento de uma versão futura (v > 1): devolve só a versão, para a união recusar e nada ser gravado por cima. */
+    const deDoc = x => (!x ? null : Number(x.v) > 1 ? { v: Number(x.v) } : JSON.parse(x.dados));
+    const ref = {
+      get: async () => { const s = await fs.getDoc(doc), x = s.exists() ? s.data() : null; return { exists: !!x, data: () => deDoc(x) }; },
+      set: o => fs.setDoc(doc, paraDoc(o)),
+      transacao: f => fs.runTransaction(db, async tx => { const s = await tx.get(doc), novo = f(deDoc(s.exists() ? s.data() : null)); if (novo) tx.set(doc, paraDoc(novo)); })
+    };
+    sincronizar(ref, id);
   }
   function cartaoConta() {
     if (!FB) return '';
     if (!conta.pronto) return '<section class="card"><h2 class="h2">Sua conta</h2><p class="small muted" style="margin:0">Carregando o login…</p></section>';
-    if (conta.user) {
-      const u = conta.user;
-      return `<section class="card"><h2 class="h2">Sua conta</h2><p style="margin:0">Conectado como <b>${esc(u.displayName || u.email || 'aluno')}</b>${u.displayName && u.email ? ` (${esc(u.email)})` : ''}. Seu progresso fica salvo na nuvem e continua em qualquer aparelho em que você entrar.</p><div class="row"><button class="btn" data-a="fbsair">Sair desta conta</button></div></section>`;
-    }
+    if (conta.user) return cartaoContaLogada(conta.user);
     return `<section class="card" id="conta"><h2 class="h2">Entrar ou criar conta</h2><p class="small" style="margin:0">Com uma conta grátis, seu progresso fica salvo na nuvem e você continua no celular, no computador ou no app.</p>
       ${window.EEAR_SITE === 'site' ? '<div class="row"><button class="btn pri" data-a="fbgoogle">Entrar com Google</button></div>' : ''}
       <form class="form" onsubmit="return false"><div class="field"><label for="fb-email">E-mail</label><input type="email" id="fb-email" autocomplete="email" value="${esc(conta.email)}"></div><div class="field"><label for="fb-senha">Senha</label><input type="password" id="fb-senha" autocomplete="current-password"></div></form>
       <div class="row"><button class="btn" data-a="fbentrar">Entrar</button><button class="btn" data-a="fbcriar">Criar conta</button><button class="btn ghost" data-a="fbsenha">Esqueci a senha</button></div>
       <p class="small muted" style="margin:0">Ao criar uma conta, você concorda com os <a href="termos.html" target="_blank" rel="noopener">Termos de uso</a> e a <a href="privacidade.html" target="_blank" rel="noopener">Política de privacidade</a>.</p>
-      ${conta.msg ? `<p class="small" role="status" style="margin:0">${esc(conta.msg)}</p>` : ''}</section>`;
+      ${conta.msg || contaUI.msg ? `<p class="small" role="status" style="margin:0">${esc(conta.msg || contaUI.msg)}</p>` : ''}</section>`; // contaUI.msg: o resultado de sair ou de excluir a conta
   }
   async function acaoConta(a) {
     if (!conta.api) return;
@@ -391,7 +475,7 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.on ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho.';
+    if (el) el.textContent = nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 
   /* ---------- status ---------- */
@@ -411,16 +495,51 @@
   }
   const nErros = s => Object.keys(S.erros).filter(id => Q[id] && (!Q[id].mod || moduloAtivo(MOD[Q[id].mod])) && (!s || Q[id].m === s)).length;
   function liberados() { return Object.values(CARDS).filter(c => moduloAtivo(MOD[c.mod]) && S.mod[c.mod] && (S.mod[c.mod].lido || S.mod[c.mod].tent)); }
-  function devidos(s) { const hj = HJ(); return liberados().filter(c => (!s || c.m === s) && (!S.fc[c.id] || S.fc[c.id][1] <= hj)); }
+  /* ---------- versão dos flashcards ----------
+     Cada cartão é identificado pela aula e pela posição (POR02~1) e o progresso guarda [caixa, próxima data]. Quando o
+     texto de um cartão muda de forma substancial, ele ganha uma versão (3º campo nos dados). O registro de qual versão o
+     aluno já revisou fica em cfg.fcv[id] = [versão, data marcada]: dentro de cfg porque as versões antigas do app guardam
+     os campos de cfg que não conhecem. As versões antigas regravam S.fc[id] = [caixa, data] ao revisar o texto antigo,
+     sem saber da versão; por isso a data marcada é conferida: se S.fc[id][1] não é mais a data que esta versão gravou,
+     outro app mexeu no cartão e a versão nova ainda não foi vista.
+     Um cartão desatualizado volta à revisão sem apagar o histórico: vence na data original ou no dia âncora + 0 a 6 dias,
+     o que vier antes. O dia âncora (cfg.fcAncora['AULA:versão']) é o primeiro dia em que o aluno estudou com a versão
+     nova; até ele estudar, vale hoje e nada é gravado. */
+  function fcDesvio(id) { let x = 2166136261; for (let i = 0; i < id.length; i++) { x ^= id.charCodeAt(i); x = Math.imul(x, 16777619) >>> 0; } return x % 7; }
+  function fcDesatualizado(id) {
+    const c = CARDS[id], r = S.fc[id];
+    if (!c || c.ver < 2 || !Array.isArray(r)) return false;
+    const g = (S.cfg.fcv || {})[id];
+    return !(Array.isArray(g) && g[0] >= c.ver && g[1] === r[1]);
+  }
+  const fcChave = c => c.mod + ':' + c.ver;
+  function fcVence(id) {
+    const r = S.fc[id];
+    if (!fcDesatualizado(id)) return r[1];
+    const a = (S.cfg.fcAncora || {})[fcChave(CARDS[id])];
+    return Math.min(r[1], (dataValida(a) ? dnum(a) : HJ()) + fcDesvio(id));
+  }
+  /* Grava o dia âncora das versões novas ainda não revisadas: só quando o aluno estuda (chamado por salvar). */
+  function fixarAncoras() {
+    let ancora = S.cfg.fcAncora;
+    Object.keys(S.fc).forEach(id => {
+      if (!fcDesatualizado(id)) return;
+      const k = fcChave(CARDS[id]);
+      if (!ancora || !dataValida(ancora[k])) { ancora = S.cfg.fcAncora = Object.assign({}, ancora); ancora[k] = hoje(); }
+    });
+  }
+  function devidos(s) { const hj = HJ(); return liberados().filter(c => (!s || c.m === s) && (!S.fc[c.id] || fcVence(c.id) <= hj)); }
   function avaliar(id, ok) {
-    const hj = HJ(), st = S.fc[id] || [0, hj];
-    const b = ok ? Math.min(st[0] + 1, INT.length - 1) : 0;
+    const hj = HJ(), st = S.fc[id] || [0, hj], c = CARDS[id];
+    /* Versão nova de um cartão já estudado: recomeça perto do início (no máximo a caixa 2, ou seja, volta em até 7 dias). */
+    const base = fcDesatualizado(id) ? Math.min(st[0], 2) : st[0];
+    const b = ok ? Math.min(base + 1, INT.length - 1) : 0;
     S.fc[id] = [b, hj + (ok ? INT[b] : 1)];
+    if (c && c.ver > 1) S.cfg.fcv = Object.assign({}, S.cfg.fcv, { [id]: [c.ver, S.fc[id][1]] });
   }
   function marcarAtividade() { const d = hoje(); S.act[d] = (S.act[d] || 0) + 1; }
 
   /* ---------- apostila: status e páginas ---------- */
-  const TIPO_AP = { sala: 'Em sala', casa: 'Para casa', adicionais: 'Adicionais', unit: 'Unit', test: 'Test', exercises: 'Exercises' };
   const MIN_Q = 2.5; /* minutos por questão da apostila no plano */
   function aulaTxt(a) {
     const p = String(a).split('-');
@@ -710,6 +829,12 @@
         <div class="row"><button class="btn pri" data-a="simini" data-tipo="diag">Fazer o diagnóstico</button><button class="btn" data-a="tab" data-v="plano">Ajustar o plano</button></div></section>`;
     }
     if (S.ativo) h += `<div class="banner acc"><p>Você tem um simulado em andamento.</p><button class="btn sm pri" data-a="go" data-v="sim">Continuar</button></div>`;
+    h += avisoContas();
+    if (!gravouLocal) h += `<div class="banner warn" role="alert"><p><b>Seu progresso não está sendo salvo neste aparelho</b> (armazenamento cheio ou bloqueado, como na navegação anônima). Para não perder o que estudou, copie o progresso em Plano › Dados.</p><button class="btn sm" data-a="tab" data-v="plano">Abrir o Plano</button></div>`;
+    if (recuperar) {
+      h += `<div class="banner warn"><p>Um progresso salvo antes neste aparelho não pôde ser aberto por esta versão do app. Guardamos uma cópia: copie e guarde antes de descartar.${msgRec ? ' ' + msgRec : ''}</p><button class="btn sm" data-a="reccopiar">Copiar</button><button class="btn sm" data-a="recdescartar">Descartar</button></div>`;
+      if (pedindo === 'rec') h += `<div class="field"><label for="rec-txt">Selecione e copie a cópia do progresso</label><textarea id="rec-txt" class="codigo" readonly rows="4">${esc(recuperar)}</textarea></div>`;
+    }
     const prox = CAL.map(x => ({ x, n: dnum(x.d) })).filter(o => o.n >= hj && o.n < prova).sort((a, b) => a.n - b.n)[0];
     if (prox) h += `<div class="banner acc"><p><b>${prox.x.nome}</b> em ${plural(prox.n - hj, 'dia', 'dias')} (${fdata(prox.n)}), antes da sua prova alvo. Se estiver inscrito, use como experiência real de prova.</p></div>`;
     const atr =p.dias.filter(x => x.n < hj).reduce((a, x) => a.concat(x.tar), []).filter(t => (t.tipo === 'teoria' || t.tipo === 'quiz' || t.tipo === 'diag') && !feita(t));
@@ -788,8 +913,8 @@
       <form class="form" id="cfg" onsubmit="return false">
         <div class="field"><label for="cfg-alvo">Prova alvo</label><select id="cfg-alvo">${CAL.map(x => `<option value="${x.id}" ${c.alvo === x.id ? 'selected' : ''}>${x.nome} (${fdata(dnum(x.d))}/${x.d.slice(0, 4)})</option>`).join('')}<option value="outra" ${c.alvo === 'outra' ? 'selected' : ''}>Outra data</option></select></div>
         <div class="field"><label for="cfg-modalidade">Modalidade</label><select id="cfg-modalidade"><option value="normal" ${c.modalidade !== 'bct' ? 'selected' : ''}>CFS normal · Inglês básico</option><option value="bct" ${c.modalidade === 'bct' ? 'selected' : ''}>CFS BCT · Inglês intermediário</option></select></div>
-        <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${c.prova}" ${c.alvo === 'outra' ? '' : 'disabled'}></div>
-        <div class="field"><label for="cfg-inicio">Início do plano</label><input type="date" id="cfg-inicio" value="${c.inicio}"></div>
+        <div class="field"><label for="cfg-prova">Data da prova</label><input type="date" id="cfg-prova" value="${esc(c.prova)}" ${c.alvo === 'outra' ? '' : 'disabled'}></div>
+        <div class="field"><label for="cfg-inicio">Início do plano</label><input type="date" id="cfg-inicio" value="${esc(c.inicio)}"></div>
         <div class="field"><label for="cfg-horas">Horas por dia</label><select id="cfg-horas">${[1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10].map(x => `<option value="${x}" ${Number(c.horas) === x ? 'selected' : ''}>${fh(x)}</option>`).join('')}</select></div>
         <div class="field"><label for="cfg-sim">Simulado semanal</label><select id="cfg-sim">${[0, 1, 2, 3, 4, 5, 6].map(x => `<option value="${x}" ${Number(c.simDia) === x ? 'selected' : ''}>${DIAS_L[x]}</option>`).join('')}</select></div>
         <div class="field"><label for="cfg-tempo">Tempo do simulado completo</label><select id="cfg-tempo">${[180, 210, 240, 260].map(x => `<option value="${x}" ${Number(c.tempoSim) === x ? 'selected' : ''}>${fh(x / 60)}</option>`).join('')}</select></div>
@@ -816,7 +941,7 @@
         <li><b>96 questões objetivas</b>, 24 de cada matéria (Português, Inglês, Matemática e Física), com 4 alternativas.</li>
         <li><b>Eliminação</b>: nota abaixo de 5,0 em qualquer matéria ou média final abaixo de 5,0 (nota de 0 a 10). A classificação é pela média, então a meta do curso é 8,0: cerca de 19 acertos em 24 por matéria.</li>
         <li><b>Questões oficiais</b>: as provas anteriores da EEAR, com gabarito oficial, ficam na aba Simulados e na aba Provas de cada módulo.</li>
-        <li><b>Datas</b>: confirme sempre no edital oficial, em ingresso.eear.fab.mil.br.</li>
+        <li style="overflow-wrap:break-word"><b>Datas</b>: confirme sempre no edital oficial, em ingresso.eear.fab.mil.br.</li>
         <li><b>Controle de Tráfego Aéreo (BCT)</b>: o inglês costuma ser cobrado em nível intermediário. Se for sua opção, dê peso extra a Inglês.</li>
       </ul></section>`;
     if (p.dias.length) {
@@ -838,6 +963,7 @@
       <div class="row"><button class="btn" data-a="expcopiar">Copiar meu progresso</button><button class="btn" data-a="impabrir">Colar progresso</button></div>
       ${pedindo === 'exp' ? `<div class="field"><label for="exp-txt">Selecione e copie o código</label><textarea id="exp-txt" class="codigo" readonly rows="4">${esc(JSON.stringify(S))}</textarea></div>` : ''}
       ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>Isso substitui o progresso deste aparelho.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
+      ${blocoDados()}
       ${msgDados ? `<p class="small" role="status" style="margin:0">${msgDados}</p>` : ''}
       <div class="sync" id="sync"></div></section>`;
     h += cartaoInstalar();
@@ -845,7 +971,7 @@
     return h;
   }
   /* Instalação como app: só no site (no app de Android e no link do curso ela não se aplica). */
-  let instalar = null, msgDados = '';
+  let instalar = null, msgDados = '', msgRec = '';
   window.addEventListener('beforeinstallprompt', ev => { ev.preventDefault(); instalar = ev; if (V.v === 'plano') render(); });
   function cartaoInstalar() {
     if (window.EEAR_SITE !== 'site') return '';
@@ -941,7 +1067,7 @@
       <p class="cert-cert">Certificamos que</p>
       <h1 class="cert-nome">${esc(S.cfg.nome)}</h1>
       <p class="cert-txt">concluiu ${geral ? 'o <b>curso preparatório completo para o CFS da EEAR</b>, nas quatro matérias da prova (Língua Portuguesa, Língua Inglesa, Matemática e Física)' : `a matéria <b>${MATS[s].nome}</b> do curso preparatório para o CFS da EEAR`}, com ${ms.length} aulas e nota de pelo menos 80% no quiz de cada uma.</p>
-      <div class="cert-dados"><div><span class="lab">Carga horária</span><b>${horas} horas</b></div><div><span class="lab">Concluído em</span><b>${dataLonga(data)}</b></div><div><span class="lab">Código</span><b class="num">${cod}</b></div></div>
+      <div class="cert-dados"><div><span class="lab">Carga horária</span><b>${horas} horas</b></div><div><span class="lab">Concluído em</span><b>${dataLonga(data)}</b></div><div><span class="lab">Código</span><b class="num">${esc(cod)}</b></div></div>
       <div class="cert-ass"><span class="marca" role="img" aria-label="INPHAX"></span><span>emitido pela INPHAX</span></div>
       <p class="cert-nota">Curso livre de estudo, sem vínculo com a EEAR ou com a Força Aérea Brasileira. Não tem validade acadêmica.</p>
     </div></article>
@@ -1018,7 +1144,7 @@
     const aba = V.aba || 'aula';
     const r = S.mod[m.id] || {}, st = estMod(m.id);
     let h = `<button class="btn ghost back" data-a="mat" data-s="${m.m}">← Trilha de ${MATS[m.m].curto}</button>`;
-    h += `<div class="stack"><div class="eyebrow">${sig(m.m)} Aula ${nAula(m)} de ${aulasDe(m.m).length} · ${m.id} · incidência ${bolinhas(m.peso)} · ${fh(m.h)}</div><h1 class="h1">${m.t}</h1><div class="row"><span class="chip ${st.k}">${st.txt}</span>${r.tent ? `<span class="small muted">${plural(r.tent, 'tentativa', 'tentativas')} no quiz</span>` : ''}</div></div>`;
+    h += `<div class="stack"><div class="eyebrow">${sig(m.m)} Aula ${nAula(m)} de ${aulasDe(m.m).length} · ${m.id} · incidência ${bolinhas(m.peso)} · ${fh(m.h)}</div><h1 class="h1">${m.t}</h1><div class="row"><span class="chip ${st.k}">${st.txt}</span>${r.tent ? `<span class="small muted">${esc(plural(r.tent, 'tentativa', 'tentativas'))} no quiz</span>` : ''}</div></div>`;
     const ofi = OFI[m.id] || [];
     const aps = APMOD[m.id] || [];
     const abas = [['aula', 'Aula'], ['teoria', 'Teoria'], ['ex', 'Exemplos'], ['quiz', 'Quiz']].concat(apVisivel() ? [['ap', 'Apostila']] : [], [['prov', 'Provas'], ['cards', 'Cartões']]);
@@ -1255,9 +1381,17 @@
     h += `<div class="stack"><div class="eyebrow">Flashcards · ${f.titulo}</div><div class="meter b-${c.m}"><i style="width:${(f.i / f.fila.length) * 100}%"></i></div></div>`;
     h += `<div class="fc"><span class="chip tag">${sig(c.m)} ${m.id}</span><div>${c.f}</div>${f.virado ? `<div class="verso">${c.v}</div>` : ''}</div>`;
     h += f.virado
-      ? `<div class="row" style="justify-content:center"><button class="btn" data-a="fcaval" data-ok="0">Errei</button><button class="btn pri" data-a="fcaval" data-ok="1">Acertei</button></div>`
-      : `<div class="row" style="justify-content:center"><button class="btn pri" data-a="fcvirar">Mostrar resposta</button></div>`;
+      ? `<div class="row fc-acoes"><button class="btn" data-a="fcaval" data-ok="0">Errei</button><button class="btn pri" data-a="fcaval" data-ok="1">Acertei</button></div>`
+      : `<div class="row fc-acoes"><button class="btn pri" data-a="fcvirar">Mostrar resposta</button></div>`;
     return h;
+  }
+
+  // Depois de revelar: se o começo da resposta ficou atrás dos botões fixos (cartão longo em tela pequena), rola só o necessário para mostrá-lo.
+  function mostrarVerso() {
+    const v = document.querySelector('.fc .verso'), bar = document.querySelector('.fc-acoes');
+    if (!v || !bar) return;
+    const falta = v.getBoundingClientRect().top + 72 - bar.getBoundingClientRect().top;
+    if (falta > 0) window.scrollBy(0, falta);
   }
 
   function vTreino() {
@@ -1274,7 +1408,7 @@
       h += ORD.map(s => {
         const ids = Object.keys(S.erros).filter(id => Q[id] && Q[id].m === s);
         if (!ids.length) return '';
-        return `<details class="rev"><summary>${MATS[s].curto} · ${ids.length}</summary>${ids.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)} <span class="chip bad">${S.erros[id]}x</span></summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</details>`;
+        return `<details class="rev"><summary>${MATS[s].curto} · ${ids.length}</summary>${ids.map(id => { const q = Q[id]; return `<details class="rev"><summary>${rotulo(q)} · ${resumo(q.e)} <span class="chip bad">${esc(S.erros[id])}x</span></summary><div class="q-enun">${enun(q)}</div><p><b>Resposta:</b> ${q.of ? LETRAS[q.c] + ') ' : ''}${q.o[q.c]}</p><div class="expl">${q.r}</div></details>`; }).join('')}</details>`;
       }).join('');
     }
     h += `</section>`;
@@ -1352,7 +1486,7 @@
     const nome = nomeSim(reg);
     let h = `<div class="stack"><div class="eyebrow">Debriefing · ${nome} · ${fdata(dnum(reg.d))}</div><h1 class="h1">${reg.tipo === 'diag' ? 'Seu ponto de partida' : (med >= META && !ks.some(s => reg.r[s][0] / reg.r[s][1] < META) ? 'Meta de 80% batida' : 'Resultado do simulado')}</h1></div>`;
     h += `<section class="card"><div class="row between"><div><div class="eyebrow">Média</div><span class="score num">${nota(med)}</span></div>${reg.tipo === 'completo' || reg.tipo === 'prova' || reg.tipo === 'oficial' ? `<span class="chip ${elimina ? 'bad' : (med >= META ? 'ok' : 'warn')}">${elimina ? 'Abaixo do mínimo do edital' : (med >= META ? 'Na meta do curso' : 'Acima do mínimo, abaixo da meta')}</span>` : ''}</div>
-      <div class="tbl tbl-res"><table><thead><tr><th>Matéria</th><th class="num">Acertos</th><th class="num">Nota</th><th>Situação</th></tr></thead><tbody>${ks.map(s => { const x = reg.r[s][0] / reg.r[s][1]; return `<tr><td>${sig(s)} ${MATS[s].curto}</td><td class="num">${reg.r[s][0]}/${reg.r[s][1]}</td><td class="num">${nota(x)}</td><td>${x >= META ? '<span class="chip ok">meta</span>' : x >= 0.5 ? '<span class="chip warn">abaixo da meta</span>' : '<span class="chip bad">abaixo de 5</span>'}</td></tr>`; }).join('')}</tbody></table></div>
+      <div class="tbl tbl-res" tabindex="0" role="region" aria-label="Notas por matéria"><table><thead><tr><th>Matéria</th><th class="num">Acertos</th><th class="num">Nota</th><th>Situação</th></tr></thead><tbody>${ks.map(s => { const x = reg.r[s][0] / reg.r[s][1]; return `<tr><td>${sig(s)} ${MATS[s].curto}</td><td class="num">${reg.r[s][0]}/${reg.r[s][1]}</td><td class="num">${nota(x)}</td><td>${x >= META ? '<span class="chip ok">meta</span>' : x >= 0.5 ? '<span class="chip warn">abaixo da meta</span>' : '<span class="chip bad">abaixo de 5</span>'}</td></tr>`; }).join('')}</tbody></table></div>
       <p class="small muted" style="margin:0">${reg.tipo === 'diag' ? 'O plano agora dá mais tempo às matérias com nota menor. ' : ''}Meta do curso: nota 8,0 em cada matéria. Mínimo do edital: 5,0 em cada matéria e média 5,0.${reg.min ? ' Tempo usado: ' + fh(reg.min / 60) + '.' : ''}</p></section>`;
     const porMod = {};
     u.ids.forEach(id => { if (Q[id].mod && MOD[Q[id].mod] && moduloAtivo(MOD[Q[id].mod]) && !acertou(id, u.perms[id], u.resp[id])) porMod[Q[id].mod] = (porMod[Q[id].mod] || 0) + 1; });
@@ -1396,7 +1530,7 @@
     h += `<section class="card"><div class="eyebrow">Treino focado</div><h2 class="h2">Simulado por matéria</h2><p class="small" style="margin:0">24 questões em 1 hora.</p><div class="row">${ORD.map(s => `<button class="btn" data-a="simini" data-tipo="materia" data-s="${s}" ${S.ativo ? 'disabled' : ''}>${MATS[s].curto}</button>`).join('')}</div></section>`;
     const hist = S.sims.slice().reverse();
     h += `<section class="card"><div class="row between"><h2 class="h2">Histórico</h2>${S.ult ? '<button class="btn sm" data-a="go" data-v="res">Correção do último</button>' : ''}</div>${grafico()}`;
-    h += hist.length ? `<div class="tbl tbl-res"><table><thead><tr><th>Data</th><th>Tipo</th>${ORD.map(s => `<th class="num">${MATS[s].sigla}</th>`).join('')}<th class="num">Média</th></tr></thead><tbody>${hist.map(r => `<tr><td class="num">${fdata(dnum(r.d))}</td><td>${nomeSim(r, true)}</td>${ORD.map(s => `<td class="num">${r.r[s] ? nota(r.r[s][0] / r.r[s][1]) : '–'}</td>`).join('')}<td class="num"><b>${nota(media(r))}</b></td></tr>`).join('')}</tbody></table></div>` : '<p class="empty">Nenhum simulado feito ainda.</p>';
+    h += hist.length ? `<div class="tbl tbl-res" tabindex="0" role="region" aria-label="Histórico de simulados"><table><thead><tr><th>Data</th><th>Tipo</th>${ORD.map(s => `<th class="num">${MATS[s].sigla}</th>`).join('')}<th class="num">Média</th></tr></thead><tbody>${hist.map(r => `<tr><td class="num">${fdata(dnum(r.d))}</td><td>${nomeSim(r, true)}</td>${ORD.map(s => `<td class="num">${r.r[s] ? nota(r.r[s][0] / r.r[s][1]) : '–'}</td>`).join('')}<td class="num"><b>${nota(media(r))}</b></td></tr>`).join('')}</tbody></table></div>` : '<p class="empty">Nenhum simulado feito ainda.</p>';
     h += `</section>`;
     return h;
   }
@@ -1510,12 +1644,12 @@
       case 'marcar': if (S.feito[d.k]) delete S.feito[d.k]; else { S.feito[d.k] = true; marcarAtividade(); } salvar(); render(); break;
       case 'fcini': { const ids = devidos(d.s || null).map(c => c.id); if (ids.length) iniciarFC(ids, d.s ? MATS[d.s].curto : 'revisão do dia'); break; }
       case 'fcmod': { const m = MOD[d.id]; marcarLido(m.id); iniciarFC(m.fc.map((_, i) => m.id + '~' + i), m.id); break; }
-      case 'fcvirar': FC.virado = true; render(); break;
+      case 'fcvirar': FC.virado = true; render(); mostrarVerso(); break;
       case 'fcaval': {
         const id = FC.fila[FC.i], ok = d.ok === '1';
         avaliar(id, ok);
         if (ok) FC.ok++; else { FC.err++; if (!FC.rep[id]) { FC.rep[id] = 1; FC.fila.push(id); } }
-        FC.i++; FC.virado = false; salvar(); render(); break;
+        FC.i++; FC.virado = false; salvar(); render(); window.scrollTo(0, 0); break;
       }
       case 'errosini': {
         let ids = Object.keys(S.erros).filter(id => Q[id] && (!d.s || Q[id].m === d.s));
@@ -1613,6 +1747,13 @@
         try { navigator.clipboard.writeText(txt).then(ok, falha); } catch (e) { falha(); }
         break;
       }
+      case 'reccopiar': {
+        const ok = () => { msgRec = 'Cópia copiada.'; pedindo = null; render(); };
+        const falha = () => { pedindo = 'rec'; render(); const t = document.getElementById('rec-txt'); if (t) { t.focus(); t.select(); } };
+        try { navigator.clipboard.writeText(recuperar).then(ok, falha); } catch (e) { falha(); }
+        break;
+      }
+      case 'recdescartar': try { localStorage.removeItem(chave(LS_REC)); } catch (e) { /* ignora */ } recuperar = null; msgRec = ''; pedindo = null; render(); break;
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
       case 'impok': {
         const t = document.getElementById('imp-txt');
@@ -1629,7 +1770,7 @@
         break;
       }
       case 'instalar': if (instalar) { const p = instalar; instalar = null; p.prompt(); p.userChoice.then(() => render(), () => render()); } break;
-      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Date.now(); pedindo = null; salvar(); go('hoje'); break; }
+      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Date.now(); delete S.cfg.fcv; delete S.cfg.fcAncora; pedindo = null; salvar(); go('hoje'); break; }
       default: break;
     }
   });
@@ -1671,4 +1812,455 @@
     contaIniciar();
   }
   if (hot && typeof hot.ready === 'function') hot.ready(iniciar); else iniciar((hot && hot.data) || {});
+  /* ---------- união do progresso entre aparelhos ----------
+     A nuvem guardava o progresso inteiro do último aparelho que gravou: quem estudava offline em dois aparelhos perdia o
+     que fez num deles. Agora cada sincronização une os dois lados em três vias. A base é a última versão que este
+     aparelho e a nuvem tinham em comum; fica numa chave própria (missao-eear-v1-base), então o formato do progresso não
+     muda e as versões antigas do app a ignoram. Para cada item: igual nos dois lados, fica; mudou só de um lado, vale a
+     mudança; mudou dos dois lados, vale a regra do tipo de dado. Regra geral: a sincronização nunca apaga estudo.
+       - aulas (mod), passos da aula (aula), simulados (sims) e atividade (act) só crescem: notas pela maior, tentativas e
+         atividade somando o que cada lado fez desde a base, datas de conclusão pela mais antiga, simulados unidos;
+       - flashcards (fc): se os dois lados revisaram o mesmo cartão, vale a revisão do lado gravado por último, e a versão
+         vista (cfg.fcv) acompanha o cartão escolhido; um cartão nunca some por ausência do outro lado;
+       - caderno de erros, tarefas marcadas e folhas da apostila aceitam apagamento (erro corrigido, tarefa desmarcada,
+         folha limpa) só quando o outro lado não mexeu no item; erro corrigido de um lado e errado de novo do outro fica;
+       - simulado em andamento: o deste aparelho; demais campos e configuração: o lado gravado por último;
+       - certificados: juntarCerts, como antes; "Zerar progresso" (cfg.certsZ) vale para o que existia antes dele.
+     Sem base (primeira sincronização deste aparelho), nada é tratado como apagado. Se for impossível separar o que veio
+     antes e depois de um "Zerar" feito em outro aparelho, o progresso deste aparelho vira uma cópia de recuperação. */
+  /* A base pertence a uma conta (nuvem.conta): se outra conta entrar neste aparelho, a base é ignorada (união sem base). */
+  function lerBase() { try { const t = localStorage.getItem(chave(BASE_K)); const o = t && JSON.parse(t); return o && o.conta === nuvem.conta && o.st && o.st.v === 1 ? mesclar(o.st) : null; } catch (e) { return null; } }
+  function gravarBase(st) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
+  function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+  /* Assinatura do documento da nuvem (sinc): resumo FNV-1a do conteúdo sem ela, em ordem fixa de chaves. Só esta versão
+     do app grava assinado. Documento sem assinatura, ou com assinatura que não bate (uma versão antiga gravou por cima,
+     ou mudou algo e manteve o campo), não serve de referência para apagar: a união é feita sem base. Não é proteção
+     contra quem quer forjar; é detecção de gravação de outra versão. */
+  function resumoDoc(o) {
+    const t = JSON.stringify(canonico(o)); let h = 0x811c9dc5;
+    for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+    return h.toString(36) + '.' + t.length.toString(36);
+  }
+  function semAssinatura(o) { const x = Object.assign({}, o); delete x.sinc; return x; }
+  function assinar(o) { o.sinc = resumoDoc(semAssinatura(o)); return o; }
+  function assinaturaOk(o) { return !!o && typeof o === 'object' && typeof o.sinc === 'string' && o.sinc === resumoDoc(semAssinatura(o)); }
+  /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
+  function uTres(tb, b, l, c, conflito) {
+    if (uIgual(l, c)) return l;
+    if (tb && uIgual(l, b)) return c;
+    if (tb && uIgual(c, b)) return l;
+    return conflito(l, c, b);
+  }
+  function uMapa(bm, lm, cm, conflito, apaga) {
+    const tb = !!bm, out = {};
+    [...new Set(Object.keys(lm || {}).concat(Object.keys(cm || {})))].sort().forEach(k => { // ordem fixa: os dois aparelhos chegam ao mesmo texto
+      const b = tb ? bm[k] : undefined, l = (lm || {})[k], c = (cm || {})[k];
+      /* Sem apagamento: um item que sumiu de um lado sem estar na base continua (a ausência não apaga estudo). */
+      let v = uTres(tb, b, l, c, conflito);
+      if (v === undefined && !apaga) v = l !== undefined ? l : c;
+      if (v !== undefined) out[k] = v;
+    });
+    return out;
+  }
+  function uMin(a, b) { return dataValida(a) && dataValida(b) ? (a < b ? a : b) : dataValida(a) ? a : b; }
+  function uNum(x) { return typeof x === 'number' && isFinite(x) ? x : 0; }
+  /* Contagem que cada lado aumentou desde a base: base + (local − base) + (nuvem − base); sem base, a maior. */
+  function uSoma(b, l, c, tb) { return tb ? Math.max(uNum(l), uNum(c), uNum(l) + uNum(c) - uNum(b)) : Math.max(uNum(l), uNum(c)); }
+  function uAula(b, l, c, tb, novoL) { // registro de aula (mod) ou passos da aula (aula): só cresce
+    if (!l || !c) return l || c;
+    const r = Object.assign({}, novoL ? c : l, novoL ? l : c), bb = (tb && b) || {};
+    if ('best' in l || 'best' in c) r.best = Math.max(uNum(l.best), uNum(c.best));
+    if ('tent' in l || 'tent' in c) r.tent = uSoma(bb.tent, l.tent, c.tent, tb && !!b);
+    ['lido', 'ok', 'v', 'e'].forEach(k => { const m = uMin(l[k], c[k]); if (dataValida(m)) r[k] = m; });
+    return r;
+  }
+  function uSims(bs, ls, cs) { // simulados: une sem duplicar; o mesmo resultado nos dois lados conta uma vez (sem base, a maior contagem)
+    const conta = a => a.reduce((m, x) => { const k = JSON.stringify(x); m[k] = (m[k] || 0) + 1; return m; }, {});
+    const B = conta(bs || []), L = conta(ls), C = conta(cs), out = ls.slice();
+    Object.keys(C).forEach(k => { const extra = (bs ? Math.max(L[k] || 0, (L[k] || 0) + C[k] - (B[k] || 0)) : Math.max(L[k] || 0, C[k])) - (L[k] || 0); for (let i = 0; i < extra; i++) out.push(JSON.parse(k)); });
+    return out.map(x => [x, JSON.stringify(x)]).sort((a, b) => String(a[0].d).localeCompare(String(b[0].d)) || (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0)).map(x => x[0]);
+  }
+  function uApostila(b, l, c, tb, novoL) {
+    if (!l || !c) return l || c;
+    const r = Object.assign({}, novoL ? c : l, novoL ? l : c), bb = (tb && b) || {}, nv = (x, y) => (novoL ? x : y);
+    ['r', 'ok'].forEach(k => { r[k] = uMapa(tb ? bb[k] || {} : null, l[k], c[k], (x, y) => (x === undefined ? y : y === undefined ? x : nv(x, y)), true); });
+    r.tent = uSoma(bb.tent, l.tent, c.tent, tb && !!b);
+    if ('best' in l || 'best' in c) r.best = Math.max(uNum(l.best), uNum(c.best));
+    return r;
+  }
+  /* Une dois progressos já lidos por mesclar(). base: a última versão comum, ou null. Devolve { st, perdido }: perdido
+     é o progresso que não pôde ser unido (só no caso do "Zerar" sem base), para virar cópia de recuperação. */
+  function unirProgresso(base, l, c) {
+    const zl = uNum(l.cfg.certsZ), zc = uNum(c.cfg.certsZ), zb = base ? uNum(base.cfg.certsZ) : 0;
+    /* "Zerar progresso" que este aparelho ainda não conhecia (ou o inverso): sem base, só dá para separar pelo horário. */
+    if (!base && zc > zl && (l.t || 0) > zc) return { st: c, perdido: l };
+    if (!base && zc > zl) return { st: c, perdido: null };
+    if (!base && zl > zc && (c.t || 0) > zl) return { st: l, perdido: c };
+    if (!base && zl > zc) return { st: l, perdido: null };
+    /* Com base, o lado que zerou depois dela apaga só o que já existia na base; o que o outro lado estudou depois fica. */
+    if (base && (zl > zb || zc > zb)) {
+      const zerou = zc > zb ? c : l, outro = zerou === c ? l : c;
+      const novo = (bm, om) => { const o = {}; Object.keys(om || {}).forEach(k => { if (!uIgual((bm || {})[k], om[k])) o[k] = om[k]; }); return o; };
+      const so = JSON.parse(JSON.stringify(outro));
+      ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { so[k] = novo(base[k], outro[k]); });
+      so.sims = uSims(base.sims, outro.sims, []).filter(x => !base.sims.some(y => uIgual(x, y)));
+      so.cfg = Object.assign({}, zerou.cfg);
+      return unirProgresso(zerou, zerou, so);
+    }
+    const tb = !!base, B = base || {}, novoL = (l.t || 0) >= (c.t || 0), nv = (x, y) => (novoL ? x : y);
+    const u = JSON.parse(JSON.stringify(novoL ? l : c));
+    u.t = Math.max(l.t || 0, c.t || 0);
+    u.mod = uMapa(tb ? B.mod : null, l.mod, c.mod, (x, y, b) => uAula(b, x, y, tb, novoL));
+    u.aula = uMapa(tb ? B.aula : null, l.aula, c.aula, (x, y, b) => uAula(b, x, y, tb, novoL));
+    u.act = uMapa(tb ? B.act : null, l.act, c.act, (x, y, b) => uSoma(b, x, y, tb));
+    u.sims = uSims(tb ? B.sims : null, l.sims, c.sims);
+    /* Flashcards: a revisão gravada por último vence; a versão vista acompanha o cartão escolhido. */
+    const lado = {};
+    u.fc = uMapa(tb ? B.fc : null, l.fc, c.fc, (x, y) => (x === undefined ? y : y === undefined ? x : nv(x, y)));
+    Object.keys(u.fc).forEach(id => { lado[id] = uIgual(u.fc[id], l.fc[id]) ? l : c; });
+    u.erros = uMapa(tb ? B.erros : null, l.erros, c.erros, (x, y, b) => (x === undefined ? y : y === undefined ? x : uSoma(b, x, y, tb)), true);
+    u.feito = uMapa(tb ? B.feito : null, l.feito, c.feito, (x, y) => (x !== undefined ? x : y), true);
+    u.ap = uMapa(tb ? B.ap : null, l.ap, c.ap, (x, y, b) => uApostila(b, x, y, tb, novoL));
+    ['diag', 'ult', 'ultAula'].forEach(k => { u[k] = uTres(tb, B[k], l[k], c[k], (x, y) => (nv(x, y) != null ? nv(x, y) : nv(y, x))); });
+    u.ativo = uTres(tb, B.ativo, l.ativo, c.ativo, (x, y) => (x != null ? x : y));
+    /* Configuração: campo a campo; certificados, versões vistas e âncoras têm regra própria. */
+    const ESP = ['certs', 'certsZ', 'fcv', 'fcAncora'], bc = (tb && B.cfg) || {};
+    u.cfg = {};
+    new Set(Object.keys(l.cfg).concat(Object.keys(c.cfg))).forEach(k => {
+      if (ESP.includes(k)) return;
+      const v = uTres(tb, bc[k], l.cfg[k], c.cfg[k], (x, y) => (nv(x, y) !== undefined ? nv(x, y) : nv(y, x)));
+      if (v !== undefined) u.cfg[k] = v;
+    });
+    const fcv = {};
+    Object.keys(u.fc).forEach(id => { const g = (lado[id].cfg.fcv || {})[id] || (l.cfg.fcv || {})[id] || (c.cfg.fcv || {})[id]; if (g) fcv[id] = g; });
+    if (Object.keys(fcv).length) u.cfg.fcv = fcv;
+    const anc = uMapa(tb ? bc.fcAncora || {} : null, l.cfg.fcAncora, c.cfg.fcAncora, (x, y) => uMin(x, y));
+    if (Object.keys(anc).length) u.cfg.fcAncora = anc;
+    u.cfg.certs = (l.cfg.certs || []).slice();
+    if (l.cfg.certsZ) u.cfg.certsZ = l.cfg.certsZ;
+    juntarCerts(u.cfg, c.cfg, u);
+    return { st: mesclar(u), perdido: null };
+  }
+  /* ---------- contas neste aparelho ----------
+     Cada conta tem o próprio progresso local (missao-eear-v1@firebase:uid ou @claude:id); sem conta, vale o de sempre.
+     Ao entrar, o aparelho passa a mostrar só o progresso daquela conta. O progresso feito sem conta fica guardado à parte
+     e só vai para a conta se o aluno pedir ("Levar para a conta"). Ao sair, o aluno escolhe manter ou apagar deste
+     aparelho o progresso da conta; apagar só é possível depois que a nuvem confirmou tudo (nada some antes de estar
+     salvo em outro lugar). Toda exclusão pede confirmação e diz exatamente o que foi apagado. */
+  function copiar(x) { return JSON.parse(JSON.stringify(x)); }
+  function usarIdentidade(id) {
+    id = id || '';
+    if (id === identidade) return false;
+    clearTimeout(tSave);
+    nuvem.ref = null; nuvem.on = false; nuvem.again = false; nuvem.futura = false; nuvem.bloqueada = false; nuvem.pendente = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.refPausada = null; nuvem.conta = id;
+    identidade = id;
+    try { if (id) localStorage.setItem(LS_CONTA, id); else localStorage.removeItem(LS_CONTA); } catch (e) { /* sem armazenamento */ }
+    S = carregar(); QZ = null; FC = null; pedindo = null; msgRec = ''; contaUI.adiado = false;
+    V = mostrarInicio() ? { v: 'inicio' } : V.v === 'plano' ? V : { v: 'hoje' }; // a tela inicial depende do progresso da conta que entrou
+    render();
+    return true;
+  }
+  /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
+  function apagarLocal(id) {
+    [LS, LS_REC, BASE_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
+    if (id === identidade) { S = novoEstado(); recuperar = null; }
+  }
+  function contasGuardadas() {
+    const ids = new Set();
+    try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i) || ''; const m = k.match(/^missao-eear-v1(?:-base|-recuperar)?@(.+)$/); if (m && m[1] !== identidade) ids.add(m[1]); } } catch (e) { /* ignora */ }
+    return [...ids];
+  }
+  /* A cópia desta conta neste aparelho já está na nuvem dela? Só quando é igual à última versão que a nuvem confirmou
+     (a base), ou quando não tem estudo. Cópia de recuperação ou ilegível: não está (é o que pode ser perdido). */
+  function sincronizadoDe(id) {
+    try {
+      if (localStorage.getItem(chave(LS_REC, id))) return false;
+      const t = localStorage.getItem(chave(LS, id)); if (!t) return true;
+      const st = mesclar(JSON.parse(t)); if (semEstudo(st)) return true;
+      const b = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null');
+      return !!(b && b.conta === id && b.st && b.st.v === 1 && uIgual(mesclar(b.st), st));
+    } catch (e) { return false; }
+  }
+  function progressoSemConta() { try { const t = localStorage.getItem(LS); const o = t && JSON.parse(t); return o && o.v === 1 ? mesclar(o) : null; } catch (e) { return null; } }
+  /* O progresso desta conta unido ao feito sem conta. Os "Zerar" de cada lado não se cruzam e a configuração da conta fica. */
+  function unirImportacao(a) {
+    const l = copiar(S), c = copiar(a); delete l.cfg.certsZ; delete c.cfg.certsZ;
+    const u = unirProgresso(null, mesclar(l), mesclar(c)).st;
+    Object.keys(S.cfg).forEach(k => { if (!['certs', 'fcv', 'fcAncora'].includes(k)) u.cfg[k] = copiar(S.cfg[k]); });
+    return mesclar(u);
+  }
+  /* Há estudo sem conta neste aparelho que a conta em uso ainda não tem? */
+  function novidadeSemConta() {
+    if (!identidade) return null;
+    const a = progressoSemConta();
+    if (!a || semEstudo(a)) return null;
+    const u = unirImportacao(a);
+    return ['mod', 'fc', 'sims', 'erros', 'ap', 'aula'].some(k => !uIgual(u[k], S[k])) ? a : null;
+  }
+  /* A nuvem já tem tudo o que está neste aparelho (a última sincronização gravou exatamente o progresso atual)? */
+  function sincronizado() { const b = lerBase(); return !!b && uIgual(b, mesclar(copiar(S))); }
+  function resumoProg(st) { return `${plural(Object.keys(st.mod).length, 'aula estudada', 'aulas estudadas')}, ${plural(Object.keys(st.fc).length, 'flashcard visto', 'flashcards vistos')} e ${plural(st.sims.length, 'simulado', 'simulados')}`; }
+
+  /* Aviso na tela Hoje: progresso sem conta que a conta ainda não tem. */
+  function avisoContas() {
+    if (contaUI.adiado || !identidade) return '';
+    const a = novidadeSemConta();
+    return a ? `<div class="banner acc"><p>Este aparelho tem progresso feito sem conta (${resumoProg(a)}) que ainda não está nesta conta. Ele só vai para a conta se você pedir.</p><button class="btn sm pri" data-a="contalevar">Levar para a conta</button><button class="btn sm" data-a="contaadiar">Agora não</button></div>` : '';
+  }
+  /* Cartão da conta conectada (Firebase): sair com escolha, excluir a conta. */
+  function cartaoContaLogada(u) {
+    let h = `<section class="card"><h2 class="h2">Sua conta</h2><p style="margin:0">Conectado como <b>${esc(u.displayName || u.email || 'aluno')}</b>${u.displayName && u.email ? ` (${esc(u.email)})` : ''}. Este aparelho mostra só o progresso desta conta.${nuvem.bloqueada ? ' A sincronização com a nuvem ainda não está liberada: por enquanto, o progresso desta conta fica só neste aparelho.' : ''}</p>`;
+    const a = novidadeSemConta();
+    if (a) h += `<p class="small" style="margin:0">Progresso feito sem conta neste aparelho: ${resumoProg(a)}. <button class="btn sm" data-a="contalevar">Levar para a conta</button></p>`;
+    if (pedindo === 'sair') {
+      const ok = sincronizado();
+      h += `<div class="confirm"><p>Sair da conta. O que fazer com o progresso desta conta neste aparelho?${ok ? ' Ele está salvo na nuvem.' : ' Atenção: parte dele ainda não está salva na nuvem, então só dá para sair mantendo os dados aqui.'}</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="contasairmanter">Sair e manter aqui</button>${ok ? '<button class="btn sm" data-a="contasairapagar">Sair e apagar deste aparelho</button>' : ''}</div>`;
+    } else if (pedindo === 'excluirconta') {
+      const senha = (u.providerData || []).some(p => p && p.providerId === 'password');
+      h += `<div class="confirm"><p><b>Excluir a conta</b> apaga para sempre a conta, o progresso dela na nuvem e a cópia dela neste aparelho. Baixe seus dados antes, se quiser guardar. Isso não pode ser desfeito.</p>
+        ${senha ? '<div class="field"><label for="conta-senha">Sua senha</label><input type="password" id="conta-senha" autocomplete="current-password"></div>' : '<p class="small" style="margin:0">Você vai confirmar com o Google.</p>'}
+        <div class="field"><label for="conta-confirma">Digite EXCLUIR para confirmar</label><input id="conta-confirma" autocomplete="off"></div>
+        <button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="contaexcluirok">Excluir a conta</button></div>`;
+    } else h += `<div class="row"><button class="btn" data-a="contasair">Sair desta conta</button><button class="btn ghost" data-a="contaexcluir">Excluir minha conta</button></div>`;
+    if (contaUI.msg) h += `<p class="small" role="status" style="margin:0">${esc(contaUI.msg)}</p>`;
+    return h + '</section>';
+  }
+  /* Bloco "Seus dados" em Plano › Dados: baixar, consultar e apagar o que este aparelho guarda. */
+  function blocoDados() {
+    const outras = contasGuardadas().length, pendentes = contasGuardadas().filter(id => !sincronizadoDe(id)).length;
+    let h = `<div class="aphead">Seus dados</div><div class="row"><button class="btn" data-a="dadosbaixar">Baixar meus dados</button><button class="btn" data-a="dadosver">O que está guardado</button><button class="btn ghost" data-a="dadosapagar">Apagar os dados deste aparelho</button></div>`;
+    if (pedindo === 'dadosver') {
+      h += `<ul class="small" style="margin:0"><li>Neste aparelho, ${identidade ? 'nesta conta' : 'sem conta'}: ${resumoProg(S)}${S.cfg.nome ? ', o nome do certificado' : ''} e a configuração do plano.</li>${recuperar ? '<li>Uma cópia de recuperação de um progresso que não pôde ser aberto.</li>' : ''}${lerBase() ? '<li>Uma cópia da última sincronização com a nuvem (para unir o estudo feito em outros aparelhos).</li>' : ''}${outras ? `<li>Progresso de ${plural(outras, 'outra conta', 'outras contas')} que já entraram neste aparelho (não aparece aqui).</li>` : ''}${identidade && !identidade.indexOf('firebase:') ? '<li>Na nuvem (Firebase): o seu login (e-mail) e um documento só com o progresso e a data da última gravação.</li>' : ''}</ul>`;
+    } else if (pedindo === 'dadosapagar') {
+      const bloq = identidade && !sincronizado() && !nuvem.apagado; // nuvem apagada a pedido: a cópia daqui é a última
+      h += `<div class="confirm"><p>${nuvem.apagado && !bloq ? 'Esta é a última cópia do progresso desta conta (a da nuvem foi apagada). ' : ''}${bloq ? (nuvem.semTrava ? 'Não dá para apagar agora: neste ambiente a nuvem não tem a trava que garante que ela guardou tudo, então a cópia deste aparelho é necessária. Baixe seus dados, se precisar.' : 'Não dá para apagar agora: parte do progresso desta conta ainda não está salva na nuvem e seria perdida. Conecte-se à internet e tente de novo, ou baixe seus dados antes.') : `Apagar deste aparelho ${identidade ? 'o progresso desta conta (a nuvem continua com ele)' : 'todo o progresso feito sem conta, incluindo o nome e a configuração do plano'}? Isso não pode ser desfeito.`}</p><button class="btn sm" data-a="cancelar">Cancelar</button>${bloq ? '' : '<button class="btn sm pri" data-a="dadosapagarok">Apagar deste aparelho</button>'}${!identidade && outras ? `<button class="btn sm" data-a="dadosapagartudo">Apagar também ${plural(outras, 'a outra conta guardada', 'as outras contas guardadas')} aqui</button>${pendentes ? `<p class="small" style="margin:0;flex-basis:100%">${plural(pendentes, 'conta tem', 'contas têm')} progresso que a nuvem ainda não confirmou e não ${pendentes === 1 ? 'será apagada' : 'serão apagadas'}: entre nela para enviá-lo.</p>` : ''}` : ''}</div>`;
+    }
+    return h + blocoNuvemClaude();
+  }
+  function baixarDados() {
+    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: S, copiaDeRecuperacao: recuperar };
+    if (window.EEAR_APK) { pedindo = 'exp'; render(); return; } // no app Android não há download de arquivo: mostra o código para copiar
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' }));
+    a.download = 'missao-eear-meus-dados-' + hoje() + '.json';
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  }
+  async function sairConta(apagar) {
+    if (!conta.api || contaUI.ocupado) return;
+    const id = identidade;
+    if (apagar && !sincronizado()) { contaUI.msg = 'Parte do progresso ainda não está na nuvem: nada foi apagado.'; pedindo = null; render(); return; }
+    contaUI.ocupado = true;
+    try {
+      await conta.api.au.signOut(conta.api.auth);
+      usarIdentidade('');
+      if (apagar) apagarLocal(id);
+      contaUI.msg = apagar ? 'Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem.' : 'Você saiu. O progresso da conta continua neste aparelho, guardado à parte, e na nuvem.';
+    } catch (e) { contaUI.msg = 'Não foi possível sair agora. Nada foi apagado.'; }
+    contaUI.ocupado = false; pedindo = null; render();
+  }
+  async function excluirConta() {
+    const api = conta.api, u = api && api.auth.currentUser, val = id => ((document.getElementById(id) || {}).value || '').trim();
+    if (!u || contaUI.ocupado) return;
+    if (val('conta-confirma') !== 'EXCLUIR') { contaUI.msg = 'Digite EXCLUIR para confirmar. Nada foi excluído.'; render(); return; }
+    contaUI.ocupado = true;
+    const id = identidade, { au, fs } = api;
+    let passo = 'confirmar';
+    try {
+      if ((u.providerData || []).some(p => p && p.providerId === 'password')) await au.reauthenticateWithCredential(u, au.EmailAuthProvider.credential(u.email, (document.getElementById('conta-senha') || {}).value || ''));
+      else await au.reauthenticateWithPopup(u, new au.GoogleAuthProvider());
+      passo = 'nuvem'; nuvem.ref = null; clearTimeout(tSave);
+      await fs.deleteDoc(fs.doc(api.db, 'alunos', u.uid));
+      passo = 'conta';
+      await au.deleteUser(u);
+      usarIdentidade(''); apagarLocal(id);
+      contaUI.msg = 'Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos.';
+      pedindo = null;
+    } catch (e) {
+      contaUI.msg = passo === 'confirmar' ? 'Não foi possível confirmar sua identidade (senha incorreta ou janela fechada). Nada foi excluído.'
+        : passo === 'nuvem' ? 'Não foi possível apagar o progresso na nuvem agora. Nada foi excluído.'
+          : 'O progresso na nuvem foi apagado, mas a conta não pôde ser excluída agora. A cópia deste aparelho continua aqui. Tente de novo.';
+    }
+    contaUI.ocupado = false; render();
+  }
+  document.addEventListener('click', ev => {
+    const b = ev.target.closest('[data-a]');
+    if (!b) return;
+    switch (b.dataset.a) {
+      case 'contalevar': { const a = novidadeSemConta(); if (a) { S = unirImportacao(a); salvar(); contaUI.msg = 'O progresso feito sem conta foi levado para esta conta. Ele continua guardado também sem conta neste aparelho.'; } render(); break; }
+      case 'contaadiar': contaUI.adiado = true; render(); break;
+      case 'contasair': contaUI.msg = ''; pedindo = 'sair'; render(); break;
+      case 'contasairmanter': sairConta(false); break;
+      case 'contasairapagar': sairConta(true); break;
+      case 'contaexcluir': contaUI.msg = ''; pedindo = 'excluirconta'; render(); break;
+      case 'contaexcluirok': excluirConta(); break;
+      case 'dadosbaixar': baixarDados(); break;
+      case 'dadosver': pedindo = pedindo === 'dadosver' ? null : 'dadosver'; render(); break;
+      case 'dadosapagar': pedindo = 'dadosapagar'; render(); break;
+      case 'dadosapagarok': if (identidade && !sincronizado()) break; apagarLocal(identidade); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados.'; render(); break;
+      case 'dadosapagartudo': { // só as contas cuja nuvem já tem tudo: o estudo não enviado de outra conta não é apagado
+        if (identidade) break;
+        const ficam = contasGuardadas().filter(id => !sincronizadoDe(id));
+        contasGuardadas().filter(id => !ficam.includes(id)).forEach(apagarLocal); apagarLocal(''); pedindo = null;
+        msgDados = ficam.length ? `Os dados deste aparelho foram apagados, menos ${ficam.length === 1 ? 'a cópia de uma conta' : 'as cópias de ' + ficam.length + ' contas'} com progresso que a nuvem ainda não confirmou. Entre nessa conta para enviá-lo.` : 'Os dados deste aparelho foram apagados, de todas as contas.';
+        render(); break;
+      }
+      default: break;
+    }
+  });
+  /* ---------- gravação no link do curso no Claude (nuvem sem transação) ----------
+     A nuvem do Claude grava o documento inteiro, por último quem grava, sem transação. Dois aparelhos que liam juntos
+     e gravavam em seguida perdiam o que o outro gravou (4 de 8 marcações simultâneas no teste), e pior: a base deste
+     aparelho passava a ter o que a nuvem perdeu, e a próxima união tratava isso como apagado no outro aparelho.
+     - Com a trava da nuvem (doc.acquire, cooperativa e de curta duração): ler, unir e gravar só com a trava; depois,
+       ler de novo para conferir. A base só é registrada se a nuvem tem exatamente o que foi gravado e a trava ainda
+       valia; senão, a união é refeita em seguida, com a base anterior (que não tem nada que a nuvem possa ter perdido).
+     - Sem a trava (versão antiga da API, ou recusada): grava, mas apaga a base. A união sem base nunca trata ausência
+       como apagamento, então nada se perde; o preço é que desmarcar algo pode voltar, e o aluno é avisado. Depois de
+       gravar, confere a nuvem de novo pouco depois.
+     Funções declaradas: conectar() só chega aqui depois de esperar a nuvem, com o arquivo inteiro já carregado. */
+  /* A trava não pode ser liberada, só vence. Um nome novo a cada uso (em vez de renovar a mesma) e uma trava curta fazem
+     os aparelhos se alternarem: quem grava sempre não deixa o outro esperando para sempre. */
+  const TRAVA_MS = 5000;
+  function holderNovo() { return 'aba-' + Math.random().toString(36).slice(2) + '-' + Date.now().toString(36); }
+  /* A trava pode criar o documento vazio, ou com campos dela: sem v e sem nenhum campo do progresso, é como se não existisse. */
+  function lerDocClaude(snap) {
+    const o = snap && snap.exists ? snap.data() : null;
+    if (!o || typeof o !== 'object') return o || null;
+    return !('v' in o) && !['t', 'cfg', 'mod', 'fc', 'sims'].some(k => k in o) ? null : o;
+  }
+  /* Comparação sem depender da ordem das chaves (a nuvem pode devolver o documento em outra ordem). */
+  function canonico(x) { return Array.isArray(x) ? x.map(canonico) : x && typeof x === 'object' ? Object.keys(x).sort().reduce((o, k) => { o[k] = canonico(x[k]); return o; }, {}) : x; }
+  function mesmoDoc(a, b) { return JSON.stringify(canonico(a)) === JSON.stringify(canonico(b)); }
+  function ocupada(espera) { const e = new Error('nuvem ocupada por outro aparelho'); e.code = 'unavailable'; e.espera = espera; return e; }
+  /* Devolve 'ok' (pode registrar a base), 'conferir' (gravou, mas outro gravou junto: refazer a união) ou 'semtrava'.
+     Só quem tem a trava grava; se ela vencer no meio, é renovada com o mesmo nome antes de gravar (concedida só se
+     ninguém a pegou nesse intervalo, e então ninguém gravou). A base só vale se a conferência terminou com a trava. */
+  async function lerUnirGravar(ref, planejar) {
+    const nome = holderNovo();
+    const travar = async () => {
+      const t = await ref.acquire({ holder: nome, ttlMs: TRAVA_MS });
+      if (!t || !t.acquired) throw ocupada((Date.parse(t && t.expiresAt) || Date.now()) - Date.now());
+      return Math.min(Date.parse(t.expiresAt) || Infinity, Date.now() + TRAVA_MS) - 1000; // margem para a resposta chegar
+    };
+    let fim = 0;
+    if (typeof ref.acquire === 'function' && !nuvem.semTrava) {
+      try { fim = await travar(); }
+      catch (e) { if (e && e.code === 'unavailable') throw e; nuvem.semTrava = true; } // trava recusada: segue sem ela
+    } else nuvem.semTrava = true;
+    if (!fim) { const novo = planejar(lerDocClaude(await ref.get())); if (novo) await ref.set(novo); return novo ? 'semtrava' : 'semtrava-igual'; }
+    const novo = planejar(lerDocClaude(await ref.get()));
+    if (!novo) return 'ok';
+    if (Date.now() > fim) fim = await travar();
+    await ref.set(novo);
+    const visto = lerDocClaude(await ref.get());
+    return mesmoDoc(visto, novo) && Date.now() <= fim ? 'ok' : 'conferir';
+  }
+  /* Depois de uma união aplicada: registra a base só quando é seguro, e agenda a conferência quando não é. */
+  function depoisDeGravar(modo, p) {
+    if (modo === 'ok') { gravarBase(p.u); return; }
+    if (modo === 'conferir') { setTimeout(gravar, 2000 + Math.random() * 2000); return; }
+    try { localStorage.removeItem(chave(BASE_K)); } catch (e) { /* sem armazenamento */ } // sem trava: união sem base
+    if (modo === 'semtrava') setTimeout(gravar, 5000 + Math.random() * 2000);
+  }
+  /* ---------- apagar o progresso da nuvem do curso no Claude, a pedido do próprio aluno ----------
+     A API do curso no Claude grava o documento inteiro e não tem gravação condicional; as regras do curso só deixam
+     cada aluno gravar progresso/<o próprio id>. Por isso:
+     - a exclusão grava uma marca (v: 2, apagado: data, sem nenhum progresso) com a trava e confere a gravação. A marca
+       tem v: 2 para que nenhuma versão a adote como progresso: a versão do PR #22 a trata como "versão mais nova" e não
+       grava por cima; a versão antiga (sem união) não a lê como progresso e não apaga a cópia local dela;
+     - outro aparelho com esta versão, ao encontrar a marca, para de sincronizar e mantém a cópia local; só volta a
+       enviar se o aluno pedir ("Enviar de novo para a nuvem");
+     - este aparelho guarda que apagou (missao-eear-v1-apagado@conta). Se depois encontrar progresso na nuvem, foi uma
+       versão antiga, aberta em outro aparelho, que regravou às cegas: avisa e oferece apagar de novo, sem unir;
+     - limite documentado: uma aba antiga já aberta no momento da exclusão regrava a cada estudo, e a API não tem como
+       impedir. Este aparelho detecta e avisa; não há garantia contra isso enquanto houver abas antigas abertas. */
+  function chaveApagado() { return chave('missao-eear-v1-apagado'); }
+  function apagadoAqui() { try { return !!localStorage.getItem(chaveApagado()); } catch (e) { return false; } }
+  function podeApagarNuvem() { return identidade.indexOf('claude:') === 0 && !!(nuvem.ref || nuvem.refPausada); }
+  /* BLOQUEADA (verificação final, 2026-11-09): com o build real da versão publicada, uma aba antiga aberta antes da
+     exclusão recolocou o progresso na nuvem. Fica desligada até o caminho novo com o antigo trancado nas regras
+     (auditoria/verificacao-final.md, seção 5) ser implementado e validado no serviço real. Só os testes a ligam.
+     O reconhecimento da marca de exclusão continua ativo. */
+  function exclusaoLiberada() { return window.EEAR_EXCLUSAO_NUVEM === true; }
+  /* A nuvem tem a marca de exclusão, ou regravaram depois de este aparelho apagar: nada é unido nem gravado. */
+  function exclusaoNaNuvem(o) {
+    if (o && typeof o === 'object' && o.apagado) return nuvem.reenviar ? { ignorar: true } : { apagado: String(o.apagado) };
+    if (o && apagadoAqui() && !nuvem.reenviar) return { reapareceu: true };
+    return null;
+  }
+  function pausarPorExclusao(ref, p) {
+    nuvem.ref = null; nuvem.on = false; nuvem.refPausada = ref;
+    nuvem.apagado = p.apagado || ''; nuvem.reapareceu = !!p.reapareceu;
+  }
+  async function apagarNuvem() {
+    const ref = nuvem.ref || nuvem.refPausada, id = identidade;
+    if (!exclusaoLiberada()) return;
+    if (!ref || contaUI.ocupado || id.indexOf('claude:') !== 0) return;
+    contaUI.ocupado = true; clearTimeout(tSave); nuvem.ref = null; // nada mais desta conta é enviado daqui
+    for (let i = 0; nuvem.busy && i < 40; i++) await new Promise(r => setTimeout(r, 250)); // espera a gravação em curso
+    const marca = { v: 2, apagado: new Date().toISOString(), t: Number.MAX_SAFE_INTEGER };
+    let passo = 'gravar';
+    try {
+      if (typeof ref.acquire === 'function') { // trava ocupada (outro aparelho, ou este mesmo ao abrir): espera ela vencer
+        for (let i = 0; ; i++) {
+          let tr = null;
+          try { tr = await ref.acquire({ holder: holderNovo(), ttlMs: TRAVA_MS }); } catch (e) { if (e && e.code === 'unavailable') throw e; }
+          if (!tr || tr.acquired) break;
+          if (i === 2) throw ocupada(0);
+          await new Promise(r => setTimeout(r, Math.max(0, (Date.parse(tr.expiresAt) || Date.now()) - Date.now()) + 300));
+        }
+      }
+      await ref.set(marca);
+      passo = 'conferir';
+      const snap = await ref.get(), o = snap && snap.exists ? snap.data() : null;
+      if (!o || o.apagado !== marca.apagado) throw new Error('outra gravação depois da exclusão');
+      if (identidade === id) {
+        try { localStorage.setItem(chaveApagado(), JSON.stringify({ quando: marca.apagado })); localStorage.removeItem(chave(BASE_K)); } catch (e) { /* sem armazenamento */ }
+        pausarPorExclusao(ref, { apagado: marca.apagado });
+        msgDados = 'O progresso desta conta foi apagado da nuvem do curso. Este aparelho ainda tem uma cópia; para apagá-la também, use "Apagar os dados deste aparelho".';
+        pedindo = null;
+      }
+    } catch (e) {
+      if (passo === 'gravar') { nuvem.ref = ref; msgDados = 'Não foi possível apagar agora (sem conexão, ou outro aparelho gravando). Nada foi apagado da nuvem.'; }
+      else { nuvem.refPausada = ref; msgDados = 'O pedido foi enviado, mas não deu para confirmar que a nuvem foi apagada (outro aparelho pode ter gravado ao mesmo tempo). Tente de novo.'; }
+    }
+    contaUI.ocupado = false; render();
+  }
+  /* Volta a enviar este aparelho para a nuvem, a pedido do aluno (desfaz a exclusão com o que este aparelho tem). */
+  async function reenviarNuvem() {
+    const ref = nuvem.refPausada;
+    if (!ref || contaUI.ocupado) return;
+    try { localStorage.removeItem(chaveApagado()); } catch (e) { /* sem armazenamento */ }
+    nuvem.reenviar = true; nuvem.apagado = ''; nuvem.reapareceu = false; msgDados = '';
+    await sincronizar(ref, nuvem.conta); // o pedido vale até uma gravação dar certo (conciliar o desliga), mesmo com a trava ocupada
+    render();
+  }
+  function blocoNuvemClaude() {
+    if (!podeApagarNuvem()) return '';
+    const data = q => { const d = new Date(q); return isNaN(d) ? '' : ' em ' + d.toLocaleDateString('pt-BR'); };
+    if (pedindo === 'nuvemapagar' && exclusaoLiberada()) {
+      return `<div class="confirm"><p><b>Apagar meu progresso da nuvem do curso</b> apaga a cópia guardada na sua conta. Este aparelho mantém a cópia dele. Feche o curso nos outros aparelhos antes: uma versão antiga aberta pode gravar de novo.</p>
+        <div class="field"><label for="nuvem-confirma">Digite APAGAR para confirmar</label><input id="nuvem-confirma" autocomplete="off"></div>
+        <button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="nuvemapagarok">Apagar da nuvem</button></div>`;
+    }
+    if (nuvem.apagado || nuvem.reapareceu) {
+      return `<div class="confirm"><p>${nuvem.apagado ? `O progresso desta conta foi apagado da nuvem do curso${data(nuvem.apagado)}. O que você estudar aqui fica só neste aparelho.` : 'Depois que você apagou o progresso da nuvem, uma versão antiga do curso, aberta em outro aparelho, gravou de novo. Feche ou recarregue o curso nos outros aparelhos e apague de novo.'}</p>${nuvem.reapareceu && exclusaoLiberada() ? '<button class="btn sm" data-a="nuvemapagar">Apagar de novo da nuvem</button>' : ''}<button class="btn sm" data-a="nuvemreenviar">Enviar de novo para a nuvem</button></div>`;
+    }
+    return exclusaoLiberada() ? '<div class="row"><button class="btn ghost" data-a="nuvemapagar">Apagar meu progresso da nuvem do curso</button></div>' : '';
+  }
+  document.addEventListener('click', ev => {
+    const b = ev.target.closest('[data-a]');
+    if (!b) return;
+    switch (b.dataset.a) {
+      case 'nuvemapagar': if (!exclusaoLiberada()) break; msgDados = ''; pedindo = 'nuvemapagar'; render(); break;
+      case 'nuvemapagarok': {
+        const t = ((document.getElementById('nuvem-confirma') || {}).value || '').trim();
+        if (t !== 'APAGAR') { msgDados = 'Digite APAGAR para confirmar. Nada foi apagado.'; render(); break; }
+        apagarNuvem(); break;
+      }
+      case 'nuvemreenviar': reenviarNuvem(); break;
+      default: break;
+    }
+  });
 })();

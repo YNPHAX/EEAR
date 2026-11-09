@@ -66,13 +66,13 @@ EEAR.add({
   ],
   fc: [
     ['"Para mim fazer" ou "para eu fazer"?', 'Para eu fazer: o pronome é sujeito do infinitivo.'],
-    ['Palavras que atraem o pronome (próclise)', 'Negação, advérbios sem vírgula, relativos, indefinidos, interrogativos, conjunções subordinativas, frases exclamativas/optativas.'],
-    ['Quando usar mesóclise?', 'Futuro do presente ou do pretérito sem palavra atrativa: far-se-á, dir-te-ia.'],
-    ['Pode iniciar frase com pronome oblíquo?', 'Não, na norma-padrão. Use ênclise: Disseram-me.'],
-    ['Vossa x Sua Excelência', 'Vossa: falando com a pessoa. Sua: falando dela.'],
-    ['Este e aquele na retomada', 'Este = último termo citado; aquele = primeiro.'],
-    ['Cujo: regra principal', 'Indica posse, concorda com o possuído e não aceita artigo depois.'],
-    ['o/a x lhe', 'o/a = objeto direto; lhe = objeto indireto.']
+    ['Corrija a colocação do pronome, se necessário:<br>a) "Quando viu-me, o sargento sorriu."<br>b) "Ninguém avisou-nos do atraso."<br>c) "Deus te proteja!"', 'a) Quando me viu (conjunção subordinativa atrai o pronome).<br>b) Ninguém nos avisou (palavra negativa atrai).<br>c) Correta: frase optativa pede próclise.', 2],
+    ['Reescreva com o pronome na posição correta: "Entregarei-lhe o relatório amanhã" e "Não entregarei-lhe o relatório."', 'Entregar-lhe-ei o relatório amanhã (futuro sem palavra atrativa: mesóclise). Não lhe entregarei o relatório (a negação atrai: próclise).', 2],
+    ['Reescreva de acordo com a norma-padrão: "Me avise quando o voo pousar."', 'Avise-me quando o voo pousar. Na norma-padrão não se inicia frase com pronome oblíquo átono; na fala brasileira, essa próclise é comum.', 2],
+    ['Complete com Vossa ou Sua: "___ Excelência, o ministro, chegou à base." E, falando com ele: "___ Excelência deseja café?"', 'Sua Excelência (fala-se sobre a pessoa) e Vossa Excelência (fala-se com a pessoa). Nos dois casos o verbo fica na 3ª pessoa: chegou, deseja.', 2],
+    ['Complete com este ou aquele: "Física e Inglês exigem treino diário: ___ pede leitura de textos em outra língua; ___, muitos cálculos."', 'Este (Inglês, o último citado) pede leitura em outra língua; aquele (Física, o primeiro), muitos cálculos.', 2],
+    ['Una as frases com "cujo", na forma correta: "O piloto chegou. O avião do piloto foi revisado."', 'O piloto cujo avião foi revisado chegou. "Cujo" indica posse, concorda com o possuído (avião) e não aceita artigo depois ("cujo o" é erro).', 2],
+    ['Substitua os termos destacados por pronomes: "Convidei <b>o instrutor</b>" e "Obedeci <b>ao instrutor</b>."', 'Convidei-o (convidar é VTD: objeto direto → o). Obedeci-lhe (obedecer é VTI com a: objeto indireto → lhe).', 2]
   ]
 });
 
@@ -128,14 +128,14 @@ EEAR.add({
     ['Em "Quando você ___ (propor) as mudanças à diretoria, ___ (manter) a calma", a alternativa que completa corretamente é', ['propor / mantém', 'propuser / mantenha', 'propor / mantenha', 'propuser / mantém'], 1, 'Futuro do subjuntivo de propor: propuser. Para a ordem dirigida a "você", o imperativo vem do presente do subjuntivo: mantenha.']
   ],
   fc: [
-    ['Futuro do subjuntivo: ver x vir', 'Ver: quando eu vir. Vir: quando eu vier.'],
-    ['Futuro do subjuntivo de pôr e derivados', 'Puser, propuser, compuser, supuser.'],
-    ['Pretérito perfeito de intervir', 'Ele interveio (como "veio").'],
-    ['Particípio com ter/haver x ser/estar', 'Ter/haver: regular (aceitado). Ser/estar: irregular (aceito).'],
-    ['Passiva sintética', 'VTD + se, com o verbo concordando com o sujeito: Vendem-se casas.'],
-    ['Ativa → passiva: o que acontece com o tempo?', 'O tempo vai para o verbo ser: conduziu → foi conduzido.'],
-    ['Imperativo afirmativo de tu e vós', 'Do presente do indicativo sem s: canta, cantai. Os outros vêm do subjuntivo.'],
-    ['Correlação: se + imperfeito do subjuntivo', 'Combina com futuro do pretérito: se estudasse, passaria.']
+    ['Complete no futuro do subjuntivo: "Quando você ___ (ver) o sargento, avise-o" e "Se ele ___ (vir) à base amanhã, conversaremos."', 'Vir (de ver: quando eu vir, quando você vir) e vier (de vir: se ele vier). Não confunda os dois verbos.', 2],
+    ['Complete: "Se a equipe ___ (repor) as peças e ___ (manter) o prazo, o avião decola."', 'Repuser e mantiver: futuro do subjuntivo dos derivados de pôr e de ter (pôr → puser; ter → tiver).', 2],
+    ['Complete: "Ontem o tenente ___ (intervir) na discussão; hoje os sargentos ___ (intervir) sempre que preciso."', 'Interveio (pretérito perfeito, como veio) e intervêm (presente, plural, como vêm). Intervir se conjuga como vir.', 2],
+    ['Complete com o particípio adequado: "A tropa tinha ___ (imprimir) os mapas" e "O capitão foi ___ (eleger) representante."', 'Tinha imprimido (com ter/haver, particípio regular) e foi eleito (com ser/estar, particípio irregular).', 2],
+    ['Corrija, se necessário: "Revisa-se os motores às segundas" e "Necessitam-se de voluntários."', 'Revisam-se os motores (passiva sintética: "os motores" é o sujeito, e o verbo concorda). Necessita-se de voluntários (VTI + se: sujeito indeterminado, verbo no singular).', 2],
+    ['Passe para a voz passiva: "A equipe <b>revisará</b> o motor." Que verbo recebe o tempo de "revisará"?', 'O motor será revisado pela equipe. O futuro passa para o verbo ser (será); o verbo principal fica no particípio.', 2],
+    ['Complete no imperativo afirmativo: "___ (dizer, tu) a verdade" e "___ (dizer, você) a verdade."', 'Dize (ou diz) tu: vem do presente do indicativo (dizes) sem o s. Diga você: vem do presente do subjuntivo.', 2],
+    ['Corrija a correlação de tempos: "Se o tempo melhorasse, decolaremos às 9h."', 'Se o tempo melhorasse, decolaríamos (imperfeito do subjuntivo + futuro do pretérito). Ou: se o tempo melhorar, decolaremos (futuro do subjuntivo + futuro do presente).', 2]
   ]
 });
 
@@ -194,14 +194,14 @@ EEAR.add({
     ['Na frase "Ufa! Terminei a prova", a palavra "Ufa" é', ['advérbio de modo.', 'interjeição de alívio.', 'conjunção explicativa.', 'preposição acidental.'], 1, '"Ufa" exprime alívio: interjeição.']
   ],
   fc: [
-    ['Pois explicativo x conclusivo', 'Antes do verbo: explicativo. Depois do verbo, entre vírgulas: conclusivo.'],
-    ['Conjunções adversativas', 'Mas, porém, contudo, todavia, entretanto, no entanto.'],
-    ['Conjunções concessivas', 'Embora, ainda que, mesmo que, conquanto, posto que, se bem que.'],
-    ['À medida que x na medida em que', 'À medida que: proporção. Na medida em que: causa.'],
+    ['Classifique o "pois":<br>a) "Leve o casaco, <b>pois</b> vai esfriar."<br>b) "O motor falhou; o voo será, <b>pois</b>, adiado."', 'a) Explicativo (= porque), antes do verbo.<br>b) Conclusivo (= portanto), depois do verbo e entre vírgulas.', 2],
+    ['Em "Treinou bastante, <b>mas</b> perdeu a prova", quais podem substituir "mas" sem mudar o sentido: porém, portanto, contudo, porque?', 'Porém e contudo (adversativas: oposição). "Portanto" indicaria conclusão, e "porque", causa.', 2],
+    ['Que relação expressa "<b>Ainda que</b> o vento aumente, o salto será mantido"? O que muda se trocarmos por "<b>Caso</b> o vento aumente"?', 'Concessão: o vento aumentar não impede o salto. Com "caso", a relação passa a ser de condição.', 2],
+    ['Complete com <i>à medida que</i> ou <i>na medida em que</i>:<br>1) ___ os dias passavam, a ansiedade aumentava.<br>2) O plano foi aprovado, ___ reduzia custos.', '1) À medida que: proporção (uma coisa avança junto com a outra).<br>2) Na medida em que: causa (= porque).', 2],
     ['Tão/tanto… que', 'Oração consecutiva (consequência).'],
-    ['Combinação x contração', 'Combinação sem perda (ao). Contração com perda (do, no, pelo, à).'],
-    ['Três valores de "como"', 'Causa (no início), comparação, conformidade (= conforme).'],
-    ['Conjunções integrantes', 'Que e se: introduzem orações substantivas.']
+    ['Classifique como combinação ou contração: "aos", "pela", "num" e "àquele".', 'Aos: combinação (a + os, sem perda). Pela, num e àquele: contrações (há perda ou fusão de fonemas).', 2],
+    ['Classifique o "como":<br>a) "<b>Como</b> chovia, o voo atrasou."<br>b) "Voou <b>como</b> um pássaro."<br>c) "Agiu <b>como</b> o manual manda."', 'a) Causa (no início, = porque).<br>b) Comparação.<br>c) Conformidade (= conforme).', 2],
+    ['Em qual frase o "que" é conjunção integrante?<br>a) "Sei <b>que</b> a prova será difícil."<br>b) "A prova <b>que</b> fiz foi difícil." Como testar?', 'a) Integrante: a oração pode ser trocada por "isso" (Sei isso). Em b, "que" é pronome relativo (= a qual) e retoma "prova".', 2]
   ]
 });
 
@@ -263,13 +263,13 @@ EEAR.add({
     ['O objeto indireto está destacado em', ['Entreguei <u>o documento</u> ao sargento.', 'Obedeça <u>às normas</u>.', 'Ele estava <u>com pressa</u>.', 'Saímos <u>de manhã</u>.'], 1, '"Obedecer" é transitivo indireto (obedecer a algo): "às normas" é objeto indireto.']
   ],
   fc: [
-    ['Sujeito indeterminado: duas formas', '3ª pessoa do plural sem referente; ou VI/VTI + se (verbo no singular).'],
-    ['Orações sem sujeito', 'Haver = existir; haver/fazer tempo; fenômenos naturais; ser em horas e datas.'],
-    ['Verbos de ligação', 'Ser, estar, parecer, permanecer, ficar, continuar, andar, tornar-se.'],
-    ['Predicado verbo-nominal', 'Verbo de ação + predicativo: Chegaram cansados.'],
-    ['Complemento nominal x adjunto adnominal', 'CN: sentido passivo (defesa da pátria). AA: agente ou posse (decisão do juiz).'],
-    ['Agente da passiva', 'Quem pratica a ação na voz passiva, introduzido por "por" ou "de".'],
-    ['Aposto x vocativo', 'Aposto explica um termo. Vocativo é chamamento, sem função na oração.'],
+    ['Classifique o sujeito:<br>a) "Roubaram as ferramentas do hangar."<br>b) "Vive-se bem no interior."<br>c) "Consertaram-se os rádios."', 'a) Indeterminado (3ª pessoa do plural sem referente).<br>b) Indeterminado (verbo intransitivo + se, no singular).<br>c) Simples, "os rádios": passiva sintética (os rádios foram consertados).', 2],
+    ['Qual destas orações tem sujeito? "Ventou muito à noite." · "São duas horas." · "Existem vagas." · "Houve atrasos."', 'Só "Existem vagas" (sujeito: vagas, por isso o plural). Ventar (fenômeno natural), ser (horas) e haver (= existir) formam orações sem sujeito.', 2],
+    ['Em qual frase "andar" é verbo de ligação: "O sargento <b>anda</b> preocupado" ou "O sargento <b>anda</b> pela pista"?', 'Na primeira: liga o sujeito a um estado ("preocupado" é predicativo). Na segunda, indica ação (deslocar-se): verbo intransitivo.', 2],
+    ['Classifique o predicado:<br>a) "Os cadetes estavam cansados."<br>b) "Os cadetes voltaram cansados."<br>c) "Os cadetes voltaram cedo."', 'a) Nominal (verbo de ligação + predicativo).<br>b) Verbo-nominal (ação + predicativo "cansados").<br>c) Verbal ("cedo" é adjunto adverbial).', 2],
+    ['Classifique os termos destacados: a construção <b>da ponte</b>; a ordem <b>do comandante</b>; favorável <b>à mudança</b>.', 'Da ponte: complemento nominal (a ponte é construída). Do comandante: adjunto adnominal (ele dá a ordem). À mudança: complemento nominal (ligado a adjetivo).', 2],
+    ['Em "A pista foi interditada <b>pela torre</b>", qual é a função do termo destacado? Passe a frase para a voz ativa.', 'Agente da passiva (quem pratica a ação). Na ativa, ele vira sujeito: A torre interditou a pista.', 2],
+    ['Classifique os termos destacados: "<b>Tenente</b>, o relatório está pronto." e "O tenente, <b>nosso instrutor</b>, chegou."', 'Tenente: vocativo (chamamento, sem função na oração). Nosso instrutor: aposto explicativo (explica "o tenente").', 2],
     ['"Fazem dois anos" está certo?', 'Não. Faz dois anos: fazer indicando tempo é impessoal.']
   ]
 });
@@ -324,13 +324,13 @@ EEAR.add({
     ['"Embora chovesse, decolamos." Reescrita com oração reduzida de mesmo sentido:', ['Por chover, decolamos.', 'Apesar de chover, decolamos.', 'Para chover, decolamos.', 'Ao chover, decolamos.'], 1, '"Apesar de chover" mantém a concessão. "Por chover" seria causa; "para", finalidade; "ao", tempo.']
   ],
   fc: [
-    ['Como reconhecer oração substantiva?', 'Pode ser trocada por "isso" e costuma começar por que/se integrantes.'],
+    ['Em "Ninguém percebeu <b>que o pneu estava furado</b>", como provar que a oração destacada é substantiva? Qual é a função dela?', 'Troque por "isso": Ninguém percebeu isso. É o objeto direto de "percebeu": subordinada substantiva objetiva direta, introduzida pela integrante "que".', 2],
     ['"É preciso que…": tipo de oração', 'Subordinada substantiva subjetiva.'],
-    ['Adjetiva restritiva x explicativa', 'Restritiva: sem vírgula, limita. Explicativa: com vírgulas, vale para o todo.'],
-    ['Oração completiva nominal', 'Completa um nome: Tenho certeza de que…'],
-    ['Oração predicativa', 'Depois de verbo de ligação: O ideal é que…'],
-    ['Formas das orações reduzidas', 'Infinitivo, gerúndio ou particípio, sem conjunção.'],
-    ['Como classificar uma reduzida?', 'Desenvolva com a conjunção adequada e classifique a forma desenvolvida.'],
-    ['Coordenadas sindéticas: tipos', 'Aditivas, adversativas, alternativas, conclusivas, explicativas.']
+    ['Qual é a diferença de sentido?<br>a) "Os mecânicos que fizeram o curso foram promovidos."<br>b) "Os mecânicos, que fizeram o curso, foram promovidos."', 'a) Restritiva: só os que fizeram o curso foram promovidos.<br>b) Explicativa: todos os mecânicos fizeram o curso e foram promovidos.', 2],
+    ['Classifique as orações destacadas: "Tenho medo <b>de que o voo atrase</b>" e "Duvido <b>de que o voo atrase</b>."', '1ª: completiva nominal (completa o substantivo "medo"). 2ª: objetiva indireta (completa o verbo "duvidar de").', 2],
+    ['Classifique as orações destacadas: "A verdade é <b>que a pista estava molhada</b>" e "É verdade <b>que a pista estava molhada</b>."', '1ª: predicativa (vem depois do verbo de ligação, e "a verdade" é o sujeito). 2ª: subjetiva (a oração é o sujeito: "Isso é verdade").', 2],
+    ['Identifique a forma nominal de cada oração reduzida: "<b>Ao sair</b>, tranque a porta", "<b>Chegando</b> à base, ligue" e "<b>Concluído</b> o voo, desembarcamos."', 'Infinitivo (sair), gerúndio (chegando) e particípio (concluído). As reduzidas não têm conjunção e usam formas nominais.', 2],
+    ['Desenvolva e classifique a oração reduzida: "<b>Sentindo-se</b> mal, o cabo deixou a formatura."', 'Como se sentia mal (ou: porque se sentia mal): subordinada adverbial causal, reduzida de gerúndio. A reduzida se classifica pela forma desenvolvida.', 2],
+    ['Classifique as coordenadas:<br>a) "Estude, <b>que a prova é amanhã</b>."<br>b) "<b>Ora</b> chove, <b>ora</b> faz sol."<br>c) "Treinou muito; <b>logo</b>, está pronto."', 'a) Explicativa (que = pois).<br>b) Alternativa.<br>c) Conclusiva.', 2]
   ]
 });

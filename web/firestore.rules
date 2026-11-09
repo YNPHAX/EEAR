@@ -1,12 +1,20 @@
 rules_version = '2';
-// Cada aluno lê e grava só o próprio progresso (documento alunos/{uid}).
+// Cada aluno lê, grava e apaga só o próprio progresso (documento alunos/{uid}).
+// O documento guarda só v (versão do formato), dados (o progresso, em texto), t (quando o aparelho gravou) e
+// atualizado (hora do servidor): nada de nome ou e-mail, que já ficam no login.
+// Um app antigo (v menor) não grava por cima de um documento de versão mais nova.
+// Testado com o emulador oficial em testes/firebase-emulador.test.js.
 service cloud.firestore {
   match /databases/{database}/documents {
     match /alunos/{uid} {
-      allow read: if request.auth != null && request.auth.uid == uid;
-      allow write: if request.auth != null && request.auth.uid == uid
-        && request.resource.data.dados is string
-        && request.resource.data.dados.size() < 900000;
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['v', 'dados', 't', 'atualizado'])
+        && request.resource.data.v is int && request.resource.data.v >= 1
+        && request.resource.data.dados is string && request.resource.data.dados.size() < 900000
+        && request.resource.data.t is number
+        && request.resource.data.atualizado == request.time
+        && (resource == null || !('v' in resource.data) || request.resource.data.v >= resource.data.v);
     }
   }
 }

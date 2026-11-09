@@ -40,10 +40,10 @@ EEAR.add({
     ['km/h para m/s', 'Divida por 3,6.'],
     ['Unidade de força no SI', 'Newton: kg·m/s².'],
     ['Resultante de vetores perpendiculares', 'R² = a² + b²'],
-    ['Limites da resultante de dois vetores', '|a − b| ≤ R ≤ a + b'],
+    ['Duas forças de 9 N e 4 N atuam no mesmo ponto. A resultante pode valer 3 N? E 14 N? Qual é o intervalo possível?', '|9 − 4| ≤ R ≤ 9 + 4, ou seja, 5 N ≤ R ≤ 13 N. Nem 3 N nem 14 N são possíveis. O mínimo ocorre com as forças em sentidos opostos e o máximo, no mesmo sentido.', 2],
     ['Componentes de um vetor', 'Vx = V·cos θ; Vy = V·sen θ'],
-    ['Ordem de grandeza', 'N < 3,16 → 10ⁿ; N ≥ 3,16 → 10ⁿ⁺¹.'],
-    ['Grandezas vetoriais', 'Deslocamento, velocidade, aceleração, força, impulso.'],
+    ['Qual é a ordem de grandeza de 4,2 × 10³ e de 2,5 × 10⁻²?', '4,2 ≥ 3,16 → 10⁴. 2,5 < 3,16 → 10⁻². Compara-se o número que multiplica a potência de 10 com √10 ≈ 3,16.', 2],
+    ['Quais destas grandezas são vetoriais: massa, velocidade, temperatura, força, tempo, impulso?', 'Velocidade, força e impulso: precisam de módulo, direção e sentido. Massa, temperatura e tempo são escalares (bastam o valor e a unidade).', 2],
     ['Prefixos μ e n', '10⁻⁶ e 10⁻⁹']
   ]
 });
@@ -60,7 +60,8 @@ EEAR.add({
 </ul>
 <h3>Velocidade média</h3>
 <div class="f">v<sub>m</sub> = Δs / Δt</div>
-<p>Atenção: velocidade média <b>não</b> é a média das velocidades. Ida de 60 km a 60 km/h (1 h) e volta de 60 km a 30 km/h (2 h): v<sub>m</sub> = 120 km / 3 h = 40 km/h.</p>
+<p><b>Velocidade média</b> usa o <b>deslocamento</b> (Δs). <b>Rapidez média</b> usa a <b>distância percorrida</b>: distância ÷ tempo. As duas coincidem quando o móvel não muda de sentido.</p>
+<p>Atenção: nenhuma delas é a média das velocidades. Ida de 60 km a 60 km/h (1 h) e volta de 60 km a 30 km/h (2 h): rapidez média = 120 km / 3 h = 40 km/h; a velocidade média é nula, porque o carro volta ao ponto de partida (deslocamento zero).</p>
 <h3>Movimento uniforme (MU)</h3>
 <div class="f">v constante, a = 0     s = s₀ + v·t</div>
 <ul>
@@ -74,7 +75,7 @@ EEAR.add({
 <li>Mesmo sentido: v<sub>rel</sub> = v<sub>A</sub> − v<sub>B</sub>. Sentidos opostos: v<sub>rel</sub> = v<sub>A</sub> + v<sub>B</sub>.</li>
 <li>Trem atravessando ponte ou túnel: distância = comprimento do trem + comprimento da ponte.</li>
 </ul>
-<p class="dica">Numa questão de velocidade média com trechos diferentes, calcule o tempo de cada trecho e divida a distância total pelo tempo total.</p>`,
+<p class="dica">Numa questão de velocidade média com trechos diferentes no mesmo sentido, calcule o tempo de cada trecho e divida a distância total pelo tempo total. Se houver volta, essa conta dá a rapidez média.</p>`,
   ex: [
     ['Um carro percorre 150 km em 2 h e depois 90 km em 1 h. Qual a velocidade média total?', '<p>240 km / 3 h = <b>80 km/h</b>.</p>'],
     ['Dois carros partem um em direção ao outro, separados por 300 m, com velocidades de 20 m/s e 10 m/s. Quando se encontram?', '<p>v<sub>rel</sub> = 30 m/s: t = 300/30 = <b>10 s</b>.</p>'],
@@ -93,14 +94,14 @@ EEAR.add({
     ['Vê-se um relâmpago e ouve-se o trovão 3 s depois. Sendo a velocidade do som 340 m/s, o raio caiu a cerca de', ['113 m', '340 m', '1020 m', '3400 m'], 2, 'A luz chega quase instantaneamente: d = 340·3 = 1020 m.']
   ],
   fc: [
-    ['Velocidade média', 'Δs/Δt (distância total ÷ tempo total).'],
-    ['Função horária do MU', 's = s₀ + v·t'],
-    ['Velocidade relativa: mesmo sentido', 'Subtrai as velocidades.'],
-    ['Velocidade relativa: sentidos opostos', 'Soma as velocidades.'],
+    ['Um carro anda 60 km para o norte em 1 h e volta 30 km para o sul em 0,5 h. Calcule a velocidade média (deslocamento ÷ tempo) e a rapidez média (distância percorrida ÷ tempo).', 'Deslocamento: 30 km para o norte em 1,5 h → velocidade média de 20 km/h, para o norte. Distância percorrida: 90 km → rapidez média de 60 km/h. As duas coincidem quando o móvel não muda de sentido.', 2],
+    ['Um móvel segue s = 40 − 8t (SI). Em que instante passa pela origem? O movimento é progressivo ou retrógrado?', 's = 0 → 40 − 8t = 0 → t = 5 s. A velocidade é −8 m/s (negativa): movimento retrógrado.', 2],
+    ['Um carro a 90 km/h está 2 km atrás de um caminhão a 70 km/h, no mesmo sentido. Em quanto tempo o carro alcança o caminhão?', 'Mesmo sentido: velocidade relativa de 90 − 70 = 20 km/h. Tempo = 2/20 = 0,1 h = 6 min.', 2],
+    ['Dois trens se aproximam em sentidos opostos, a 60 km/h e 40 km/h, separados por 25 km. Em quanto tempo se cruzam?', 'Sentidos opostos: velocidade relativa de 60 + 40 = 100 km/h. Tempo = 25/100 = 0,25 h = 15 min.', 2],
     ['Trem atravessando ponte', 'Distância = trem + ponte.'],
-    ['Inclinação do gráfico s × t', 'Velocidade.'],
-    ['Repouso e movimento', 'Dependem do referencial.'],
-    ['Deslocamento x distância', 'Deslocamento: posição final − inicial. Distância: tudo o que foi percorrido.']
+    ['No gráfico s × t de um movimento uniforme, a reta passa por (0 s; 10 m) e (5 s; 35 m). Qual é a velocidade? E se a reta fosse descendente?', 'v = (35 − 10)/(5 − 0) = 5 m/s: a inclinação da reta é a velocidade. Reta descendente: velocidade negativa (movimento retrógrado).', 2],
+    ['Para quem está parado na calçada, uma gota de chuva cai na vertical. Como o motorista de um carro em movimento vê a trajetória dessa gota?', 'Inclinada, vindo da frente: no referencial do carro, a gota tem também uma velocidade horizontal oposta à do carro. A trajetória depende do referencial.', 2],
+    ['Um atleta dá uma volta completa numa pista circular de 400 m. Qual é a distância percorrida e qual é o deslocamento?', 'Distância percorrida: 400 m. Deslocamento: zero, porque ele termina no ponto de partida.', 2]
   ]
 });
 
@@ -142,10 +143,10 @@ EEAR.add({
   fc: [
     ['Função horária da velocidade', 'v = v₀ + a·t'],
     ['Função horária da posição (MUV)', 's = s₀ + v₀t + at²/2'],
-    ['Equação de Torricelli', 'v² = v₀² + 2aΔs (sem tempo)'],
-    ['Área do gráfico v × t', 'Deslocamento.'],
-    ['Inclinação do gráfico v × t', 'Aceleração.'],
-    ['Altura máxima no lançamento vertical', 'H = v₀²/2g'],
+    ['Um carro a 20 m/s freia com desaceleração de 5 m/s² até parar. Que distância percorre? Resolva sem calcular o tempo.', 'Torricelli: 0 = 20² − 2 · 5 · Δs → Δs = 400/10 = 40 m.', 2],
+    ['No gráfico v × t, um corpo fica a 10 m/s durante 2 s e depois freia em linha reta até parar em mais 4 s. Qual é o deslocamento total?', 'É a área sob o gráfico: retângulo 10 · 2 = 20 m mais triângulo 4 · 10/2 = 20 m, total 40 m.', 2],
+    ['No gráfico v × t, a velocidade cai em linha reta de 24 m/s para 8 m/s em 4 s. Qual é a aceleração?', 'a = (8 − 24)/4 = −4 m/s². A inclinação negativa, com velocidade positiva, indica movimento retardado.', 2],
+    ['Uma bola lançada verticalmente para cima atinge 5 m de altura máxima (g = 10 m/s², sem resistência do ar). Com que velocidade foi lançada?', 'H = v₀²/2g → v₀ = √(2 · 10 · 5) = 10 m/s.', 2],
     ['Tempo de subida', 't = v₀/g'],
     ['Queda livre: altura', 'h = gt²/2']
   ]
@@ -187,14 +188,14 @@ EEAR.add({
     ['A hélice de um helicóptero gira com frequência de 5 Hz. Seu período é', ['5 s', '0,5 s', '0,2 s', '2 s'], 2, 'T = 1/f = 1/5 = 0,2 s.']
   ],
   fc: [
-    ['Tempo de queda no lançamento horizontal', 't = √(2h/g), igual ao da queda livre.'],
+    ['Duas bolas saem juntas da mesma altura: uma é solta e a outra é lançada horizontalmente a 15 m/s. Sem resistência do ar, qual chega primeiro ao chão?', 'Chegam juntas: o tempo de queda depende só da altura, t = √(2h/g). A velocidade horizontal não interfere no movimento vertical.', 2],
     ['Componentes do lançamento oblíquo', 'v₀x = v₀cos θ; v₀y = v₀sen θ'],
-    ['Alcance do lançamento oblíquo', 'A = v₀²·sen 2θ/g (máximo em 45°)'],
+    ['Dois projéteis saem a 20 m/s, um a 30° e outro a 60°, e caem no mesmo nível (g = 10 m/s², sem resistência do ar). Qual vai mais longe?', 'Nenhum: sen 60° = sen 120°, então os dois alcançam 400 · (√3/2)/10 = 20√3 ≈ 34,6 m. Com lançamento e chegada no mesmo nível, ângulos complementares dão o mesmo alcance, e o máximo é em 45°.', 2],
     ['Velocidade no ponto mais alto (oblíquo)', 'Horizontal: v₀·cos θ.'],
-    ['rpm para Hz', 'Divida por 60.'],
+    ['Um motor gira a 1800 rpm. Qual é a frequência em hertz e qual é o período?', 'f = 1800/60 = 30 Hz. T = 1/f = 1/30 s (cerca de 0,033 s).', 2],
     ['Velocidade angular', 'ω = 2π/T = 2πf'],
     ['Aceleração centrípeta', 'v²/R = ω²R'],
-    ['Polias com correia', 'Mesma velocidade linear: f₁R₁ = f₂R₂.']
+    ['Uma polia de raio 20 cm, a 90 rpm, move por correia uma polia de raio 6 cm. Qual é a frequência da polia menor?', 'Pela correia, as duas têm a mesma velocidade linear: f₁R₁ = f₂R₂ → 90 · 20 = f₂ · 6 → f₂ = 300 rpm.', 2]
   ]
 });
 
@@ -238,13 +239,13 @@ EEAR.add({
     ['Quando um ônibus freia bruscamente, os passageiros são projetados para a frente. Isso é explicado', ['pela 1ª lei de Newton (inércia).', 'pela 2ª lei de Newton.', 'pela 3ª lei de Newton.', 'pela lei da gravitação.'], 0, 'Os corpos tendem a manter a velocidade que tinham: inércia.']
   ],
   fc: [
-    ['1ª lei de Newton', 'Inércia: sem resultante, mantém repouso ou MRU.'],
+    ['Uma nave no espaço profundo, longe de qualquer influência, desliga os motores. O que acontece com a sua velocidade?', 'Continua constante, em linha reta (1ª lei, inércia): sem força resultante, não há aceleração. Os motores só seriam necessários para mudar a velocidade.', 2],
     ['2ª lei de Newton', 'F_R = m·a'],
-    ['3ª lei de Newton', 'Ação e reação: corpos diferentes, mesma intensidade, sentidos opostos.'],
-    ['Força de atrito', 'f = μ·N'],
+    ['Um caminhão bate de frente num carro. Qual dos dois recebe a força maior? Qual sofre a maior aceleração?', 'As forças têm a mesma intensidade (ação e reação, em corpos diferentes). O carro sofre a maior aceleração, porque tem menor massa (a = F/m).', 2],
+    ['Um bloco de 20 kg desliza num piso horizontal com coeficiente de atrito 0,25 (g = 10 m/s²). Qual é a força de atrito? Ela depende da área de contato?', 'N = 200 N; f = μ · N = 0,25 · 200 = 50 N. Não depende da área de contato, só do coeficiente de atrito e da força normal.', 2],
     ['Plano inclinado sem atrito', 'a = g·sen θ; N = P·cos θ.'],
-    ['Elevador subindo acelerado', 'N = m(g + a)'],
+    ['Uma pessoa de 50 kg está num elevador que desce acelerando a 2 m/s² (g = 10 m/s²). Quanto marca uma balança sob ela, em newtons?', 'N = m(g − a) = 50 · 8 = 400 N: ela parece mais leve. Subindo acelerado, seria N = m(g + a).', 2],
     ['Resultante centrípeta', 'F = m·v²/R'],
-    ['Lei de Hooke', 'F = k·x']
+    ['Uma mola estica 4 cm com uma força de 2 N. Quanto estica com 5 N, dentro do limite elástico?', 'k = 2/0,04 = 50 N/m; x = 5/50 = 0,1 m = 10 cm. A deformação é proporcional à força (lei de Hooke).', 2]
   ]
 });

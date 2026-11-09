@@ -39,12 +39,12 @@ EEAR.add({
     ['Se o conjunto das partes de A tem 32 elementos, então A tem', ['5 elementos', '6 elementos', '16 elementos', '32 elementos'], 0, '2ⁿ = 32 → n = 5.']
   ],
   fc: [
-    ['Número de subconjuntos de um conjunto com n elementos', '2ⁿ'],
-    ['n(A ∪ B)', 'n(A) + n(B) − n(A ∩ B)'],
-    ['Geratriz de 0,ababab…', 'ab/99'],
+    ['Um conjunto A tem 32 subconjuntos. Quantos elementos tem A? Quantos subconjuntos de A são diferentes do próprio A?', '2ⁿ = 32 → n = 5 elementos. Subconjuntos diferentes de A: 32 − 1 = 31.', 2],
+    ['Numa turma de 40 alunos, 25 jogam futebol, 18 jogam vôlei e 7 jogam os dois. Quantos não jogam nenhum dos dois?', 'n(F ∪ V) = 25 + 18 − 7 = 36. Não jogam nenhum: 40 − 36 = 4.', 2],
+    ['Escreva 0,272727… como fração irredutível.', 'Período de dois algarismos: 27/99 = 3/11.', 2],
     ['Geratriz de 0,1333…', '(13 − 1)/90 = 2/15'],
-    ['Inclusão dos conjuntos numéricos', 'ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ'],
-    ['A − B', 'Elementos que estão em A e não estão em B.'],
+    ['Qual é o menor conjunto numérico (ℕ, ℤ, ℚ ou ℝ) a que pertence cada número: −3, 0,25, √9 e √2?', '−3 ∈ ℤ; 0,25 = 1/4 ∈ ℚ; √9 = 3 ∈ ℕ; √2 ∈ ℝ (irracional). Como ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ, cada um também pertence aos conjuntos maiores.', 2],
+    ['Sendo A = {2, 4, 6, 8} e B = {6, 8, 10}, determine A − B e B − A.', 'A − B = {2, 4} (está em A e não está em B). B − A = {10}. Em geral, A − B ≠ B − A.', 2],
     ['Exemplos de irracionais', '√2, √3, √5, π, e.']
   ]
 });
@@ -96,11 +96,11 @@ EEAR.add({
   fc: [
     ['Condição de domínio: fração', 'Denominador ≠ 0.'],
     ['Condição de domínio: raiz par', 'Radicando ≥ 0 (> 0 se estiver no denominador).'],
-    ['(f ∘ g)(x)', 'f(g(x)): aplica g primeiro.'],
-    ['Como achar a inversa', 'Troque x por y e isole y.'],
+    ['Com f(x) = x − 3 e g(x) = 2x, calcule f(g(5)) e g(f(5)). A ordem importa?', 'f(g(5)) = f(10) = 7; g(f(5)) = g(2) = 4. Sim: em f ∘ g aplica-se g primeiro, e em geral f ∘ g ≠ g ∘ f.', 2],
+    ['Encontre a inversa de f(x) = 3x − 6 e confira: quanto vale f⁻¹(f(4))?', 'x = 3y − 6 → f⁻¹(x) = (x + 6)/3. f(4) = 6 e f⁻¹(6) = 12/3 = 4: a inversa desfaz a função.', 2],
     ['Função par x ímpar', 'Par: f(−x) = f(x). Ímpar: f(−x) = −f(x).'],
-    ['Bijetora', 'Injetora e sobrejetora; só ela tem inversa.'],
-    ['Teste da reta vertical', 'Gráfico é função se toda vertical corta no máximo uma vez.']
+    ['f: ℝ → ℝ, f(x) = x², tem inversa? E g: [0, +∞) → [0, +∞), g(x) = x²?', 'f não: f(−2) = f(2), então não é injetora (e não atinge valores negativos). g sim: com esse domínio e contradomínio é bijetora, e g⁻¹(x) = √x.', 2],
+    ['A circunferência x² + y² = 4 é gráfico de uma função y = f(x)? Use o teste da reta vertical.', 'Não: a reta x = 0 corta a curva em (0, 2) e (0, −2). Para ser função, cada reta vertical deve cortar o gráfico no máximo uma vez.', 2]
   ]
 });
 
@@ -145,13 +145,13 @@ EEAR.add({
   ],
   fc: [
     ['Coeficiente angular por dois pontos', 'a = (y₂ − y₁)/(x₂ − x₁)'],
-    ['Zero da função afim', 'x = −b/a'],
+    ['Em que ponto a reta y = −2x + 8 corta o eixo x? Para que valores de x ela é positiva?', '−2x + 8 = 0 → x = 4: ponto (4, 0). Como a = −2 < 0, a função é decrescente: positiva para x < 4.', 2],
     ['Fórmula de Bhaskara', 'x = (−b ± √Δ)/2a, com Δ = b² − 4ac.'],
-    ['Soma e produto das raízes', 'S = −b/a; P = c/a.'],
-    ['Vértice da parábola', 'xᵥ = −b/2a; yᵥ = −Δ/4a.'],
-    ['Sinal de Δ', '> 0: duas raízes; = 0: uma (dupla); < 0: nenhuma real.'],
-    ['a > 0 na parábola', 'Concavidade para cima, vértice é mínimo.'],
-    ['Inequação: multiplicou por negativo', 'Inverta o sinal da desigualdade.']
+    ['Sem calcular as raízes de 2x² − 6x + 3 = 0, encontre 1/x₁ + 1/x₂.', '1/x₁ + 1/x₂ = (x₁ + x₂)/(x₁ · x₂) = S/P. S = −b/a = 3 e P = c/a = 3/2, logo S/P = 2. (Δ = 12 > 0: as raízes são reais.)', 2],
+    ['Qual é o valor mínimo de f(x) = 2x² − 8x + 3 e para qual x ele ocorre?', 'a = 2 > 0: o vértice é ponto de mínimo. xᵥ = −b/2a = 8/4 = 2; f(2) = 8 − 16 + 3 = −5. Mínimo −5, em x = 2.', 2],
+    ['Para que valores de k a equação x² − 6x + k = 0 não tem raízes reais?', 'Sem raízes reais: Δ < 0. Δ = 36 − 4k < 0 → k > 9.', 2],
+    ['O gráfico de f(x) = −2x² + 4x + 1 tem concavidade para cima ou para baixo? O vértice é ponto de máximo ou de mínimo?', 'a = −2 < 0: concavidade para baixo, e o vértice é ponto de máximo. xᵥ = 1 e f(1) = 3: valor máximo 3.', 2],
+    ['Resolva −3x + 6 > 0. Onde erra quem responde x > 2?', '−3x > −6; ao dividir por −3, inverte-se a desigualdade: x < 2. Quem respondeu x > 2 esqueceu de inverter o sinal.', 2]
   ]
 });
 
@@ -191,12 +191,12 @@ EEAR.add({
   ],
   fc: [
     ['Definição de |x|', 'x se x ≥ 0; −x se x < 0.'],
-    ['√(x²)', '|x|'],
-    ['|x| = a (a > 0)', 'x = a ou x = −a.'],
-    ['|x| < a', '−a < x < a.'],
-    ['|x| > a', 'x < −a ou x > a.'],
-    ['|x| = número negativo', 'Conjunto vazio.'],
-    ['Vértice de f(x) = |x − h| + k', '(h, k).']
+    ['Calcule √((x − 5)²) para x = 2. Por que o resultado não é x − 5?', '√((2 − 5)²) = √9 = 3 = |2 − 5|. Em geral, √(a²) = |a|; x − 5 daria −3, e a raiz quadrada não é negativa.', 2],
+    ['Resolva |2x − 4| = 6.', '2x − 4 = 6 → x = 5, ou 2x − 4 = −6 → x = −1. S = {−1, 5}.', 2],
+    ['Lendo |x − 3| < 2 como distância, que números inteiros satisfazem a inequação?', 'A distância de x a 3 é menor que 2 → 1 < x < 5. Inteiros: 2, 3 e 4.', 2],
+    ['Resolva |x + 1| > 3 e escreva a resposta em intervalos.', 'x + 1 > 3 → x > 2, ou x + 1 < −3 → x < −4. S = (−∞, −4) ∪ (2, +∞).', 2],
+    ['Quantas soluções reais tem |x − 2| + 5 = 1? E |x − 2| = 0?', '|x − 2| = −4: nenhuma, porque o módulo nunca é negativo. |x − 2| = 0: uma, x = 2.', 2],
+    ['Qual é o vértice e qual é a imagem de f(x) = |x + 3| − 1?', 'Vértice (−3, −1). Como |x + 3| ≥ 0, temos f(x) ≥ −1: imagem [−1, +∞).', 2]
   ]
 });
 
@@ -242,11 +242,11 @@ EEAR.add({
   fc: [
     ['aᵐ · aⁿ e aᵐ / aⁿ', 'aᵐ⁺ⁿ e aᵐ⁻ⁿ'],
     ['a⁻ⁿ e a^(m/n)', '1/aⁿ e ⁿ√(aᵐ)'],
-    ['Exponencial crescente ou decrescente?', 'Base > 1: crescente. 0 < base < 1: decrescente.'],
-    ['Ponto fixo de f(x) = aˣ', '(0, 1). Imagem (0, +∞).'],
-    ['Inequação com base entre 0 e 1', 'Inverte o sinal.'],
-    ['Juros compostos', 'M = C(1 + i)ᵗ'],
-    ['Meia-vida', 'm = m₀ · (1/2)^(t/T)'],
-    ['4ˣ − k·2ˣ + c = 0', 'Substitua y = 2ˣ e resolva o 2º grau.']
+    ['Sem calcular, compare (0,7)³ com (0,7)⁵ e 3<sup>1,2</sup> com 3<sup>1,5</sup>.', '(0,7)³ > (0,7)⁵: base entre 0 e 1, função decrescente. 3<sup>1,2</sup> < 3<sup>1,5</sup>: base maior que 1, função crescente.', 2],
+    ['Interseção do gráfico de f(x) = aˣ com o eixo y', '(0, 1), pois a⁰ = 1. Imagem: (0, +∞).', 2],
+    ['Resolva (1/2)ˣ > (1/2)³.', 'Base entre 0 e 1: a função é decrescente, então a desigualdade se inverte entre os expoentes: x < 3.', 2],
+    ['R$ 2.000,00 a juros compostos de 5% ao mês. Qual é o montante após 2 meses? Por que não é R$ 2.200,00?', 'M = 2000 · (1,05)² = R$ 2.205,00. No 2º mês, os juros incidem sobre R$ 2.100,00. R$ 2.200,00 seria o resultado com juros simples.', 2],
+    ['Uma substância tem meia-vida de 5 anos. De uma amostra de 80 g, quanto resta após 15 anos?', '15 anos = 3 meias-vidas: 80 → 40 → 20 → 10 g. Pela fórmula: m = 80 · (1/2)³ = 10 g.', 2],
+    ['Resolva 4ˣ − 6 · 2ˣ + 8 = 0.', 'Com y = 2ˣ: y² − 6y + 8 = 0 → y = 2 ou y = 4. Então 2ˣ = 2 → x = 1, ou 2ˣ = 4 → x = 2. S = {1, 2}.', 2]
   ]
 });

@@ -31,3 +31,30 @@ jobs:
           "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
       - name: Testes da plataforma
         run: NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/plataforma.test.js
+
+  # Contas, transações, regras do Firestore e exclusão de conta nos emuladores oficiais do Firebase (projeto de teste
+  # "demo-eear": nenhum serviço real e nenhuma credencial). Roda em paralelo com o job acima.
+  firebase-emulador:
+    runs-on: ubuntu-latest
+    # O emulators:exec encerra os emuladores no fim, também quando os testes falham; o limite cobre um travamento.
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      # Versões fixas, fora da pasta do repositório. O firebase-tools baixa o emulador do Firestore (um .jar) a cada execução.
+      - name: Instalar o firebase-tools, o SDK web do Firebase e o Playwright
+        run: |
+          npm install --prefix "$RUNNER_TEMP/fb" --no-save --no-audit --no-fund firebase-tools@15.35.0 firebase@12.19.0 playwright@1.63.0
+          "$RUNNER_TEMP/fb/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Testes nos emuladores
+        run: |
+          NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
+            EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/firebase-emulador.test.js

@@ -51,7 +51,7 @@
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 1rem; line-height: 1.5; } /* 1rem: respeita o tamanho de fonte escolhido pelo aluno (16 px no padrão) */
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--top-bg); }
 button, input, select, textarea { font: inherit; color: inherit; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
@@ -160,6 +160,29 @@ h1, h2, h3 { text-wrap: balance; }
 .teoria .dica { background: var(--accent-soft); border-radius: 8px; padding: 10px 12px; }
 .teoria .dica::before { content: "Na prova: "; font-weight: 700; color: var(--accent); }
 .tbl { overflow-x: auto; }
+.tbl:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Fonte do sistema ampliada: as consultas abaixo são em rem, que cresce com a fonte; só valem quando o texto não cabe
+   na largura (com a fonte normal, nem em 320 px). O topo passa a contagem para a linha de baixo, a barra de abas rola na
+   horizontal com os rótulos inteiros e a linha de cada matéria põe a contagem embaixo do nome. Nada é escondido. */
+.top, nav.tabs, .card, .subj, .tasks, .mods, .days { container-type: inline-size; }
+.h1 { overflow-wrap: break-word; } /* palavra maior que a linha (título com fonte ampliada) quebra em vez de empurrar a página */
+@container (max-width: 18rem) {
+  .top-in { flex-wrap: wrap; row-gap: 6px; }
+  .tabs-in { grid-template-columns: repeat(6, max-content); justify-content: start; gap: 4px; padding-inline: 8px; overflow-x: auto; overscroll-behavior-x: contain; }
+  .tab { padding-inline: 6px; }
+}
+@container (max-width: 11rem) {
+  .subj > .small { grid-column: 2 / 4; }
+  .task, .modrow { grid-template-columns: auto minmax(0, 1fr); }
+  .task > :nth-child(3), .modrow > :nth-child(3) { grid-column: 2; justify-self: start; }
+  .task > .chip, .modrow > .chip { white-space: normal; }
+  .days .day { grid-template-columns: minmax(0, 1fr); }
+  .days .day li { overflow-wrap: break-word; }
+}
+@container (max-width: 14rem) {
+  .card * { overflow-wrap: anywhere; } /* palavras e endereços longos quebram dentro do cartão estreito */
+  .card .chip { white-space: normal; }
+}
 .tbl table { border-collapse: collapse; width: 100%; font-size: .92rem; }
 .tbl th, .tbl td { border: 1px solid var(--line); padding: 6px 9px; text-align: left; vertical-align: top; }
 .tbl th { background: var(--surface-2); font-weight: 700; }
@@ -203,6 +226,9 @@ sup, sub { line-height: 0; }
 .fc { min-height: 220px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); padding: 22px 18px; display: flex; flex-direction: column; gap: 14px; justify-content: center; text-align: center; font-size: 1.12rem; line-height: 1.5; }
 .fc .verso { border-top: 1px dashed var(--line); padding-top: 14px; color: var(--ink); }
 .fc .tag { align-self: center; }
+/* Botões do flashcard fixos acima da barra de abas: no celular o aluno revela e avalia sem precisar rolar um cartão longo. */
+.fc-acoes { justify-content: center; position: sticky; bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px)); z-index: 5; background: var(--bg); padding-block: 8px; margin-block: -8px; }
+@media (min-width: 820px) { .fc-acoes { bottom: 0; } }
 
 .simbar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 61px); z-index: 5; background: var(--bg); padding-block: 8px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
 @media (min-width: 820px) { .simbar { top: calc(env(safe-area-inset-top, 0px) + 110px); } }
@@ -394,9 +420,11 @@ details.rev[open] summary { margin-bottom: 8px; }
 <script src="dados/por1.js"></script>
 <script src="dados/por2.js"></script>
 <script src="dados/por3.js"></script>
+<script src="dados/por4.js"></script>
 <script src="dados/ing1.js"></script>
 <script src="dados/ing2.js"></script>
 <script src="dados/ing3.js"></script>
+<script src="dados/ing4.js"></script>
 <script src="dados/mat1.js"></script>
 <script src="dados/mat2.js"></script>
 <script src="dados/mat3.js"></script>
@@ -405,5 +433,6 @@ details.rev[open] summary { margin-bottom: 8px; }
 <script src="dados/fis2.js"></script>
 <script src="dados/fis3.js"></script>
 <script src="dados/fis4.js"></script>
+<script src="dados/fis5.js"></script>
 <script src="dados/provas.js"></script>
 <script src="app.js"></script>
