@@ -1,11 +1,12 @@
 /* Testes da sincronização entre aparelhos com uma nuvem fictícia, em memória (nenhum serviço real). Dois aparelhos
    (contextos separados do navegador) estudam offline e depois sincronizam; confere a união por tipo de dado, o "Zerar
    progresso", a nuvem de uma versão futura, falhas de rede e a repetição. Usado por testes/plataforma.test.js. */
-const LS = 'missao-eear-v1', LS_BASE = 'missao-eear-v1-base', LS_REC = 'missao-eear-v1-recuperar';
 
 module.exports = async function testarSincronia({ b, srv, base, ok }) {
   console.log('\n== sincronização entre aparelhos (nuvem fictícia)');
   const nuvem = { doc: null, gravacoes: 0, offline: {}, falhas: 0, usuario: 'aluno-ficticio' };
+  /* Chaves locais da conta em uso (cada conta tem as suas; veja testes/contas.js). */
+  const LS = () => 'missao-eear-v1@claude:' + nuvem.usuario, LS_BASE = () => 'missao-eear-v1-base@claude:' + nuvem.usuario, LS_REC = () => 'missao-eear-v1-recuperar@claude:' + nuvem.usuario;
   const copia = x => JSON.parse(JSON.stringify(x));
   const esperar = async (f, ms = 9000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await f()) return true; await new Promise(r => setTimeout(r, 150)); } return false; };
   async function aparelho(nome) {
@@ -21,10 +22,10 @@ module.exports = async function testarSincronia({ b, srv, base, ok }) {
       }) }) };
     });
     const p = await ctx.newPage(); p.on('pageerror', e => erros.push(e.message));
-    const ler = k => p.evaluate(k => JSON.parse(localStorage.getItem(k)), k || LS);
+    const ler = k => p.evaluate(k => JSON.parse(localStorage.getItem(k)), k || LS());
     /* "Estudar": altera o progresso como o app faria e reabre o app (a abertura sincroniza). */
-    const estudar = async f => { const s = await ler(); f(s); s.t = Date.now(); await p.evaluate(([k, x]) => localStorage.setItem(k, JSON.stringify(x)), [LS, s]); await p.reload(); await p.waitForTimeout(300); };
-    return { p, ctx, erros, ler, estudar, abrir: async estado => { await p.goto(srv.url); if (estado) { await p.evaluate(([k, x]) => localStorage.setItem(k, JSON.stringify(x)), [LS, estado]); await p.reload(); } await p.waitForTimeout(400); } };
+    const estudar = async f => { const s = await ler(); f(s); s.t = Date.now(); await p.evaluate(([k, x]) => localStorage.setItem(k, JSON.stringify(x)), [LS(), s]); await p.reload(); await p.waitForTimeout(300); };
+    return { p, ctx, erros, ler, estudar, abrir: async estado => { await p.goto(srv.url); if (estado) { await p.evaluate(([k, x]) => localStorage.setItem(k, JSON.stringify(x)), [LS(), estado]); await p.reload(); } await p.waitForTimeout(400); } };
   }
   const D = new Date(), hj = D.getFullYear() + '-' + String(D.getMonth() + 1).padStart(2, '0') + '-' + String(D.getDate()).padStart(2, '0');
   const P0 = () => Object.assign(base({}), { t: Date.now() - 60000, act: { [hj]: 1 }, erros: { 'MAT03-2': 1, 'POR01-3': 2 } });
@@ -33,7 +34,7 @@ module.exports = async function testarSincronia({ b, srv, base, ok }) {
     nuvem.doc = P0(); nuvem.gravacoes = 0; nuvem.offline = {};
     const A = await aparelho('A'), B = await aparelho('B');
     await A.abrir(copia(nuvem.doc)); await B.abrir(copia(nuvem.doc));
-    const comBase = !!(await A.ler(LS_BASE)) && !!(await B.ler(LS_BASE));
+    const comBase = !!(await A.ler(LS_BASE())) && !!(await B.ler(LS_BASE()));
     nuvem.offline = { A: true, B: true };
     await A.estudar(s => { s.mod.POR02 = { lido: hj, best: 0.9, tent: 1, ok: hj }; s.fc['POR02~0'] = [1, 99999]; s.act[hj] += 3; s.sims.push({ d: hj, tipo: 'materia', mat: 'por', r: { por: [20, 24] }, min: 40 }); delete s.erros['MAT03-2']; });
     await B.estudar(s => { s.mod.MAT01 = { lido: hj, best: 0.8, tent: 1, ok: hj }; s.fc['MAT01~0'] = [2, 99998]; s.act[hj] += 2; s.sims.push({ d: hj, tipo: 'materia', mat: 'mat', r: { mat: [15, 24] }, min: 50 }); s.erros['FIS01-1'] = 1; s.feito['T:1'] = true; });
@@ -83,8 +84,8 @@ module.exports = async function testarSincronia({ b, srv, base, ok }) {
     nuvem.doc = Object.assign(base({ certs: [], certsZ: zerou }), { t: zerou, mod: {}, fc: {}, erros: {}, sims: [] }); nuvem.offline = {};
     const A = await aparelho('A'); const local = Object.assign(P0(), { t: Date.now() });
     nuvem.offline = { A: true }; await A.abrir(local); // aparelho que nunca sincronizou: sem base
-    await A.p.evaluate(k => localStorage.removeItem(k), LS_BASE); nuvem.offline = {}; await A.p.reload(); await A.p.waitForTimeout(500);
-    const st = await A.ler(), rec = await A.ler(LS_REC);
+    await A.p.evaluate(k => localStorage.removeItem(k), LS_BASE()); nuvem.offline = {}; await A.p.reload(); await A.p.waitForTimeout(500);
+    const st = await A.ler(), rec = await A.ler(LS_REC());
     ok(!st.mod.POR01 && rec && rec.mod.POR01 && JSON.stringify(rec.erros) === JSON.stringify(local.erros) && await A.p.locator('[data-a="reccopiar"]').count() === 1, 'sem como separar o que veio antes do "Zerar": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje' + (rec ? '' : ' [sem cópia]'));
     await A.ctx.close();
   }
@@ -98,14 +99,14 @@ module.exports = async function testarSincronia({ b, srv, base, ok }) {
     await A.ctx.close();
   }
 
-  { // 7. outra conta entra no mesmo aparelho: a base da conta anterior não é usada (nada é apagado por engano)
+  { // 7. outra conta entra no mesmo aparelho: ela vê só o próprio progresso; o da conta anterior fica guardado à parte
     nuvem.doc = P0(); nuvem.offline = {}; nuvem.usuario = 'conta-a';
     const A = await aparelho('A'); await A.abrir(copia(nuvem.doc));
-    const baseA = await A.ler(LS_BASE);
+    const cacheA = await A.ler(), baseA = await A.ler(LS_BASE());
     nuvem.usuario = 'conta-b'; nuvem.doc = Object.assign(base({}), { t: Date.now(), mod: { MAT05: { lido: hj, best: 0.5, tent: 1 } }, fc: {}, erros: {}, sims: [] });
     await A.p.reload(); await A.p.waitForTimeout(600);
-    const st = await A.ler(), baseB = await A.ler(LS_BASE);
-    ok(baseA && baseA.conta === 'claude:conta-a' && st.erros['MAT03-2'] === 1 && st.erros['POR01-3'] === 2 && !!st.mod.MAT05 && baseB.conta === 'claude:conta-b', 'outra conta no mesmo aparelho: a base da conta anterior é ignorada e nenhum erro do caderno é apagado por engano');
+    const st = await A.ler(), aindaA = await A.p.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1@claude:conta-a')));
+    ok(baseA && baseA.conta === 'claude:conta-a' && !!st.mod.MAT05 && !st.mod.POR01 && !st.erros['MAT03-2'] && JSON.stringify(aindaA) === JSON.stringify(cacheA) && !nuvem.doc.mod.POR01, 'outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte');
     nuvem.usuario = 'aluno-ficticio';
     await A.ctx.close();
   }
