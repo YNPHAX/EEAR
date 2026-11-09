@@ -305,8 +305,9 @@
     syncInfo();
     if (nuvem.again) { nuvem.again = false; gravar(); }
   }
-  /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. */
-  const semEstudo = o => !Object.keys(o.mod).length && !o.sims.length && !Object.keys(o.fc).length && !Object.keys(o.ap).length && !o.diag && !Object.keys(o.aula || {}).length;
+  /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. Tarefas marcadas, caderno
+     de erros e atividade também contam como estudo (antes não contavam, e um aparelho que só tinha marcado tarefas perdia as marcações). */
+  const semEstudo = o => !Object.keys(o.mod).length && !o.sims.length && !Object.keys(o.fc).length && !Object.keys(o.ap).length && !o.diag && !Object.keys(o.aula || {}).length && !Object.keys(o.feito || {}).length && !Object.keys(o.erros || {}).length && !Object.keys(o.act || {}).length;
   /* Calcula a união deste aparelho com o progresso da nuvem (o), sem efeito nenhum: dentro de uma transação, pode rodar
      de novo com uma leitura mais nova. Devolve o que gravar na nuvem (ou null) e o que aplicar aqui depois. */
   function planejarUniao(o) {
@@ -434,7 +435,7 @@
       <form class="form" onsubmit="return false"><div class="field"><label for="fb-email">E-mail</label><input type="email" id="fb-email" autocomplete="email" value="${esc(conta.email)}"></div><div class="field"><label for="fb-senha">Senha</label><input type="password" id="fb-senha" autocomplete="current-password"></div></form>
       <div class="row"><button class="btn" data-a="fbentrar">Entrar</button><button class="btn" data-a="fbcriar">Criar conta</button><button class="btn ghost" data-a="fbsenha">Esqueci a senha</button></div>
       <p class="small muted" style="margin:0">Ao criar uma conta, você concorda com os <a href="termos.html" target="_blank" rel="noopener">Termos de uso</a> e a <a href="privacidade.html" target="_blank" rel="noopener">Política de privacidade</a>.</p>
-      ${conta.msg ? `<p class="small" role="status" style="margin:0">${esc(conta.msg)}</p>` : ''}</section>`;
+      ${conta.msg || contaUI.msg ? `<p class="small" role="status" style="margin:0">${esc(conta.msg || contaUI.msg)}</p>` : ''}</section>`; // contaUI.msg: o resultado de sair ou de excluir a conta
   }
   async function acaoConta(a) {
     if (!conta.api) return;
