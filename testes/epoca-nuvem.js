@@ -27,7 +27,7 @@ module.exports = async function testarEpocaNuvem({ b, srv, ok }) {
     await ctx.exposeFunction('__eSet', async o => { const d = N.atraso[nome] || 0; N.atraso[nome] = 0; await espera(150 + Math.random() * 250 + d); if (fora()) return 'unavailable'; N.doc = copia(o); return ''; });
     await ctx.exposeFunction('__eAcq', async (h, ttl) => { await espera(40); if (fora()) return { off: true }; const ag = Date.now(), t = N.trava; if (t && t.ate > ag && t.h !== h) return { acquired: false, expiresAt: new Date(t.ate).toISOString() }; N.trava = { h, ate: ag + ttl }; return { acquired: true, holder: h, expiresAt: new Date(ag + ttl).toISOString() }; });
     await ctx.addInitScript(semente => {
-      if (semente && !sessionStorage.getItem('semeado')) { localStorage.setItem(semente.k, semente.v); sessionStorage.setItem('semeado', '1'); }
+      if (semente && !localStorage.getItem('teste-semeado')) { localStorage.setItem(semente.k, semente.v); localStorage.setItem('teste-semeado', '1'); } // só na primeira abertura do aparelho: reabrir não volta à semente
       const off = () => { const e = new Error('sem rede'); e.code = 'unavailable'; return e; };
       window.claude = { use: async k => {
         const u = await window.__eU();

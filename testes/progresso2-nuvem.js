@@ -37,7 +37,7 @@ module.exports = async function testarProgresso2({ b, srv, ok }) {
     });
     await ctx.exposeFunction('__pAcq', async (p, h, ttl) => { await espera(30); const ag = Date.now(), t = N.travas[p]; if (t && t.ate > ag && t.h !== h) return { acquired: false, expiresAt: new Date(t.ate).toISOString() }; N.travas[p] = { h, ate: ag + ttl }; return { acquired: true, holder: h, expiresAt: new Date(ag + ttl).toISOString() }; });
     await ctx.addInitScript(sem => {
-      if (sem && !sessionStorage.getItem('semeado')) { localStorage.setItem(sem.k, sem.v); sessionStorage.setItem('semeado', '1'); }
+      if (sem && !localStorage.getItem('teste-semeado')) { localStorage.setItem(sem.k, sem.v); localStorage.setItem('teste-semeado', '1'); } // só na primeira abertura do aparelho: reabrir não volta à semente
       const erro = c => { const e = new Error(c); e.code = c; return e; };
       window.claude = { use: async k => {
         const u = await window.__pU();
@@ -126,9 +126,9 @@ module.exports = async function testarProgresso2({ b, srv, ok }) {
     const todas = ['T:velho1', 'T:a', 'T:b', 'T:base'];
     await ate(async () => todas.every(k => tem(novo('ana'), k)), 40000); await A.reabrir(); await B.reabrir();
     await ate(async () => { const a = await A.ler(), c = await B.ler(); return todas.every(k => tem(a, k) && tem(c, k)); }, 30000);
-    const la = await A.ler(), lb = await B.ler();
+    const la = await A.ler(), lb = await B.ler(), falta = x => todas.filter(k => !tem(x, k));
     ok(todas.every(k => tem(novo('ana'), k) && tem(la, k) && tem(lb, k)) && N.gravacoesAntigo === 0 && !A.erros.length && !B.erros.length,
-      'dois aparelhos migrando ao mesmo tempo: nada se perde e o caminho antigo não é gravado');
+      'dois aparelhos migrando ao mesmo tempo: nada se perde e o caminho antigo não é gravado' + ` [faltam na nuvem: ${falta(novo('ana'))} | A: ${falta(la)} | B: ${falta(lb)} | erros: ${A.erros.concat(B.erros).join(' | ')}]`);
     await fechar(A, B);
   }
 
