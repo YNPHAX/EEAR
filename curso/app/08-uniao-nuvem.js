@@ -15,8 +15,11 @@
      Sem base (primeira sincronização deste aparelho), nada é tratado como apagado. Se for impossível separar o que veio
      antes e depois de um "Zerar" feito em outro aparelho, o progresso deste aparelho vira uma cópia de recuperação. */
   /* A base pertence a uma conta (nuvem.conta): se outra conta entrar neste aparelho, a base é ignorada (união sem base). */
-  function lerBase() { try { const t = localStorage.getItem(chave(BASE_K)); const o = t && JSON.parse(t); return o && o.conta === nuvem.conta && o.st && o.st.v === 1 ? mesclar(o.st) : null; } catch (e) { return null; } }
-  function gravarBase(st) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
+  function lerBaseBruta() { try { const t = localStorage.getItem(chave(BASE_K)); const o = t && JSON.parse(t); return o && o.conta === nuvem.conta && o.st && o.st.v === 1 ? o : null; } catch (e) { return null; } }
+  function lerBase() { const o = lerBaseBruta(); return o ? mesclar(o.st) : null; }
+  /* Época da base: a da nuvem quando esta base foi confirmada (veja "época da sincronização" abaixo). */
+  function epocaBase() { const o = lerBaseBruta(); return o && typeof o.ep === 'string' ? o.ep : ''; }
+  function gravarBase(st, ep) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st, ep: ep || '' })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
   function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
   /* Assinatura do documento da nuvem (sinc): resumo FNV-1a do conteúdo sem ela, em ordem fixa de chaves. Só esta versão
      do app grava assinado. Documento sem assinatura, ou com assinatura que não bate (uma versão antiga gravou por cima,
@@ -30,6 +33,17 @@
   function semAssinatura(o) { const x = Object.assign({}, o); delete x.sinc; return x; }
   function assinar(o) { o.sinc = resumoDoc(semAssinatura(o)); return o; }
   function assinaturaOk(o) { return !!o && typeof o === 'object' && typeof o.sinc === 'string' && o.sinc === resumoDoc(semAssinatura(o)); }
+  /* Época da sincronização (ep, dentro da assinatura). A assinatura diz só quem gravou o documento ATUAL; não diz se o
+     histórico dele passou por uma gravação de versão antiga. Exemplo do defeito que isto corrige: a versão antiga grava
+     por cima sem as marcações do aparelho B; o aparelho A une esse documento (sem base, sem apagar nada) e grava o
+     resultado assinado; B via o documento assinado como sucessor da base dele, e as marcações que só ele tinha pareciam
+     apagadas do outro lado: B as apagava também. Agora toda união com um documento que não foi gravado por esta versão
+     (sem assinatura, assinatura que não bate, sem época) começa uma época nova, e a base de um aparelho só vale com a
+     mesma época do documento da nuvem. Dentro de uma época, cada documento assinado descende de todas as bases dela:
+     ou é uma união em três vias com uma base da mesma época, ou uma união sem base (que não apaga nada) com um documento
+     da mesma época. Então o que falta na nuvem em relação à base foi apagado por um aparelho desta versão. Com época
+     diferente, a união é sem base: nada deste aparelho é apagado (o preço: uma desmarcação feita antes pode voltar). */
+  function novaEpoca() { return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
   /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
   function uTres(tb, b, l, c, conflito) {
     if (uIgual(l, c)) return l;
