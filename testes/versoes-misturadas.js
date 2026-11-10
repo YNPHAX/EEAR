@@ -3,16 +3,18 @@
    fictícia em memória (latência aleatória, trava doc.acquire, documentos por caminho, nenhum serviço real), marcam
    tarefas ao mesmo tempo, a versão anterior fecha, e os aparelhos novos marcam mais uma vez. A nuvem começa com um
    progresso só dela no caminho antigo (progresso/<id>), como o de um aparelho que não abre mais o curso.
-   Regras da nuvem fictícia (quarto argumento): "novas" (padrão) segue as regras propostas para a versão nova: o caminho
-   antigo fica só para leitura; "antigas" deixa o aluno gravar nos dois caminhos (as regras de hoje, ou um esquecimento).
+   Regras da nuvem fictícia (quarto argumento, de web/regras-claude.json): "novas" (padrão) = as propostas, com o caminho
+   antigo só para leitura; "reversao" = o caminho antigo gravável de novo, com progresso2 ainda protegido; "antigas" = as
+   de hoje, sem regra para progresso2 (a regra padrão do serviço deixa gravar nele).
    Confere: nenhuma marcação feita nos aparelhos novos e nada do que só existia na nuvem se perde, na nuvem nem neles.
    O que a versão anterior grava é informado: com as regras novas, a gravação dela é recusada e fica no aparelho dela.
-   Uso: node testes/versoes-misturadas.js <site da versão anterior> <site da versão nova> [rodadas] [novas|antigas]
+   Uso: node testes/versoes-misturadas.js <site da versão anterior> <site da versão nova> [rodadas] [novas|antigas|reversao]
    Os sites vêm de web/build.py. Requer o pacote playwright com o Chromium. Sai com código 1 se houver perda. */
 const fs = require('fs'), path = require('path'), http = require('http');
 const { chromium } = require('playwright');
-const [ANTERIOR, NOVA] = process.argv.slice(2, 4).map(p => path.resolve(p || '')), RODADAS = Number(process.argv[4]) || 5, REGRAS = process.argv[5] === 'antigas' ? 'antigas' : 'novas';
-if (!process.argv[3]) { console.error('Uso: node testes/versoes-misturadas.js <site anterior> <site novo> [rodadas] [novas|antigas]'); process.exit(2); }
+const [ANTERIOR, NOVA] = process.argv.slice(2, 4).map(p => path.resolve(p || '')), RODADAS = Number(process.argv[4]) || 5, REGRAS = process.argv[5] === 'antigas' ? 'antigas' : process.argv[5] === 'reversao' ? 'reversao' : 'novas';
+const modelo = require('./regras-nuvem.js'), CONJ = { novas: 'propostas', antigas: 'hoje', reversao: 'reversao' }[REGRAS];
+if (!process.argv[3]) { console.error('Uso: node testes/versoes-misturadas.js <site anterior> <site novo> [rodadas] [novas|antigas|reversao]'); process.exit(2); }
 function servir(raiz) {
   const srv = http.createServer((q, r) => {
     const u = decodeURIComponent(q.url.split('?')[0]); let f = path.join(raiz, u.replace(/^\/EEAR\/?/, '/'));
@@ -28,7 +30,8 @@ async function rodada(b, nova, anterior, n) {
   const N = { docs: { 'progresso/aluno1': { v: 1, t: Date.now() - 3600000, cfg: {}, mod: {}, fc: {}, erros: { 'MAT03-2': 1 }, sims: [], feito: { 'T:so-na-nuvem': true }, act: {}, aula: {}, ap: {} } }, travas: {}, sets: 0, recusadas: 0 };
   /* EEAR_CAMINHO=progresso: compara com uma versão nova anterior à barreira, que sincroniza no caminho antigo. */
   const NOVO = process.env.EEAR_CAMINHO === 'progresso' ? 'progresso/aluno1' : 'progresso2/aluno1';
-  const pode = p => p === NOVO || (REGRAS === 'antigas' && p === 'progresso/aluno1');
+  /* Permissões pelo modelo das regras do serviço (testes/regras-nuvem.js), para o aluno (nível interact). */
+  const pode = p => modelo.pode(modelo.REGRAS[CONJ], 'interact', 'aluno1', 'write', p);
   const noDoc = () => (N.docs[NOVO] && N.docs[NOVO].feito) || {};
   async function aparelho(url, nome) {
     const ctx = await b.newContext({ serviceWorkers: 'block' }), erros = [];

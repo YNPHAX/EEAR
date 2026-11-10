@@ -298,6 +298,7 @@ async function testarNavegador(E) {
 (async () => {
   const E = carregarDados();
   testarDados(E);
+  require('./regras-nuvem.js').testarRegras(ok);
   testarContasMat(E);
   testarContasFis(E);
   await testarNavegador(E);

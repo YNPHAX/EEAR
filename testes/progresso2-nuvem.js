@@ -5,9 +5,11 @@
    apagar nada e sem tocar nele; isolamento entre contas; falhas e nova tentativa; desmarcações depois da migração não
    voltam; reversão (o caminho antigo muda depois da migração) é unida de novo, uma vez; dois aparelhos migrando juntos.
    Usado por testes/plataforma.test.js. */
+const { REGRAS, pode } = require('./regras-nuvem.js');
 module.exports = async function testarProgresso2({ b, srv, ok }) {
   console.log('\n== caminho novo (progresso2) e migração do caminho antigo (nuvem fictícia com as regras propostas)');
-  const N = { docs: {}, travas: {}, regrasAntigas: false, falhaGetAntigo: 0, falhaSet: 0, gravacoesAntigo: 0, recusadas: 0 };
+  /* regras: o conjunto de web/regras-claude.json em vigor ("propostas", "reversao" ou "hoje"); os alunos têm nível interact. */
+  const N = { docs: {}, travas: {}, regras: 'propostas', falhaGetAntigo: 0, falhaSet: 0, gravacoesAntigo: 0, recusadas: 0 };
   const copia = x => (x == null ? x : JSON.parse(JSON.stringify(x)));
   const espera = ms => new Promise(r => setTimeout(r, ms));
   const ate = async (f, ms = 30000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await f()) return true; await espera(150); } return false; };
@@ -15,9 +17,9 @@ module.exports = async function testarProgresso2({ b, srv, ok }) {
   const P = feito => ({ v: 1, t: Date.now() - 60000, cfg: { nome: 'Aluna', alvo: 'cfs2-2027', prova: '2026-11-22', inicio: hj, horas: 3, dias: [0, 1, 2, 3, 4, 5, 6], excl: [] },
     mod: {}, fc: {}, erros: { 'MAT03-2': 1 }, sims: [], feito: Object.assign({ 'T:base': true }, feito), act: {}, aula: {}, ap: {}, diag: null, ativo: null, ult: null, ultAula: null });
   const tem = (s, k) => !!(s && s.feito && s.feito[k]);
-  /* Regras propostas: dono do caminho = último segmento; só o próprio dono lê e grava; progresso/ só leitura. */
-  const podeLer = (u, p) => p.split('/')[1] === u;
-  const podeGravar = (u, p) => p === 'progresso2/' + u || (N.regrasAntigas && p === 'progresso/' + u);
+  /* Permissões pelo modelo das regras do serviço (testes/regras-nuvem.js), com a regra padrão da raiz incluída. */
+  const podeLer = (u, p) => pode(REGRAS[N.regras], 'interact', u, 'read', p);
+  const podeGravar = (u, p) => pode(REGRAS[N.regras], 'interact', u, 'write', p);
   async function aparelho(usuario, semente) {
     const ctx = await b.newContext({ serviceWorkers: 'block' }), erros = [];
     await ctx.exposeFunction('__pU', () => usuario);
@@ -35,7 +37,7 @@ module.exports = async function testarProgresso2({ b, srv, ok }) {
     });
     await ctx.exposeFunction('__pAcq', async (p, h, ttl) => { await espera(30); const ag = Date.now(), t = N.travas[p]; if (t && t.ate > ag && t.h !== h) return { acquired: false, expiresAt: new Date(t.ate).toISOString() }; N.travas[p] = { h, ate: ag + ttl }; return { acquired: true, holder: h, expiresAt: new Date(ag + ttl).toISOString() }; });
     await ctx.addInitScript(sem => {
-      if (sem && !sessionStorage.getItem('semeado')) { localStorage.setItem(sem.k, sem.v); sessionStorage.setItem('semeado', '1'); }
+      if (sem && !localStorage.getItem('teste-semeado')) { localStorage.setItem(sem.k, sem.v); localStorage.setItem('teste-semeado', '1'); } // só na primeira abertura do aparelho: reabrir não volta à semente
       const erro = c => { const e = new Error(c); e.code = c; return e; };
       window.claude = { use: async k => {
         const u = await window.__pU();
@@ -55,7 +57,7 @@ module.exports = async function testarProgresso2({ b, srv, ok }) {
     await d.abrir();
     return d;
   }
-  const reiniciar = () => { N.docs = {}; N.travas = {}; N.regrasAntigas = false; N.falhaGetAntigo = 0; N.falhaSet = 0; N.gravacoesAntigo = 0; N.recusadas = 0; };
+  const reiniciar = () => { N.docs = {}; N.travas = {}; N.regras = 'propostas'; N.falhaGetAntigo = 0; N.falhaSet = 0; N.gravacoesAntigo = 0; N.recusadas = 0; };
   const fechar = async (...ds) => { for (const d of ds) await d.ctx.close(); };
   const novo = u => N.docs['progresso2/' + u], antigo = u => N.docs['progresso/' + u];
 
@@ -107,7 +109,9 @@ module.exports = async function testarProgresso2({ b, srv, ok }) {
        quando a versão nova volta, o que foi gravado na reversão é unido, uma vez. */
     reiniciar(); N.docs['progresso/ana'] = P({ 'T:velho1': true });
     const A = await aparelho('ana'); await ate(async () => tem(novo('ana'), 'T:velho1')); await espera(6000);
-    N.regrasAntigas = true; N.docs['progresso/ana'] = Object.assign(copia(antigo('ana')), { t: Date.now(), feito: Object.assign({}, antigo('ana').feito, { 'T:reversao': true }) }); N.regrasAntigas = false;
+    N.regras = 'reversao'; // a versão anterior volta ao ar com as regras de reversão e grava no caminho antigo
+    if (podeGravar('ana', 'progresso/ana')) N.docs['progresso/ana'] = Object.assign(copia(antigo('ana')), { t: Date.now(), feito: Object.assign({}, antigo('ana').feito, { 'T:reversao': true }) });
+    N.regras = 'propostas';
     await A.reabrir(); await ate(async () => tem(novo('ana'), 'T:reversao')); await espera(6000);
     await A.marcar('T:reversao'); await ate(async () => !tem(novo('ana'), 'T:reversao')); await espera(6000); // desmarca depois de voltar
     await A.reabrir(); await espera(9000);
@@ -122,9 +126,22 @@ module.exports = async function testarProgresso2({ b, srv, ok }) {
     const todas = ['T:velho1', 'T:a', 'T:b', 'T:base'];
     await ate(async () => todas.every(k => tem(novo('ana'), k)), 40000); await A.reabrir(); await B.reabrir();
     await ate(async () => { const a = await A.ler(), c = await B.ler(); return todas.every(k => tem(a, k) && tem(c, k)); }, 30000);
-    const la = await A.ler(), lb = await B.ler();
+    const la = await A.ler(), lb = await B.ler(), falta = x => todas.filter(k => !tem(x, k));
     ok(todas.every(k => tem(novo('ana'), k) && tem(la, k) && tem(lb, k)) && N.gravacoesAntigo === 0 && !A.erros.length && !B.erros.length,
-      'dois aparelhos migrando ao mesmo tempo: nada se perde e o caminho antigo não é gravado');
+      'dois aparelhos migrando ao mesmo tempo: nada se perde e o caminho antigo não é gravado' + ` [faltam na nuvem: ${falta(novo('ana'))} | A: ${falta(la)} | B: ${falta(lb)} | erros: ${A.erros.concat(B.erros).join(' | ')}]`);
     await fechar(A, B);
+  }
+
+  { /* 7. Segurança na reversão: com as regras de hoje (sem regra para progresso2), qualquer aluno lê e grava o progresso2
+       de outra conta (vazamento confirmado no serviço real); com as regras de reversão, não, e o app continua sincronizando
+       só o próprio caminho novo enquanto o antigo volta a ser gravável. */
+    reiniciar(); N.docs['progresso/ana'] = P({ 'T:velho1': true }); N.docs['progresso2/bia'] = P({ 'T:bia-privado': true }); const biaAntes = JSON.stringify(novo('bia'));
+    N.regras = 'hoje'; const vaza = podeLer('ana', 'progresso2/bia') && podeGravar('ana', 'progresso2/bia');
+    N.regras = 'reversao'; const isola = !podeLer('ana', 'progresso2/bia') && !podeGravar('ana', 'progresso2/bia') && podeGravar('ana', 'progresso/ana');
+    const A = await aparelho('ana'); await ate(async () => tem(novo('ana'), 'T:velho1')); await A.marcar('T:a1'); await ate(async () => tem(novo('ana'), 'T:a1')); await espera(3000);
+    const la = await A.ler();
+    ok(vaza && isola && tem(novo('ana'), 'T:a1') && !tem(la, 'T:bia-privado') && JSON.stringify(novo('bia')) === biaAntes && N.gravacoesAntigo === 0 && !A.erros.length,
+      'reversão: com as regras de hoje o progresso2 de outra conta vaza (reproduzido); com as regras de reversão fica isolado, e o app segue só no próprio caminho novo');
+    await fechar(A);
   }
 };
