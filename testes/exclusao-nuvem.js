@@ -29,7 +29,7 @@ module.exports = async function testarExclusaoNuvem({ b, srv, base, ok }) {
       window.claude = { use: async k => {
         const u = await window.__u();
         if (k === 'user') return { id: async () => u };
-        return { doc: caminho => { const dono = caminho.split('/')[1]; return {
+        return { doc: caminho => { if (/^progresso\//.test(caminho)) return { get: async () => ({ exists: false, data: () => null }), set: async () => { const e = new Error('regras'); e.code = 'invalid_argument'; throw e; }, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + 5000).toISOString() }) }; const dono = caminho.split('/')[1]; return {
           get: async () => { const x = await window.__g(dono); return { exists: x != null, data: () => x }; },
           set: async o => { const r = await window.__s(dono, o); if (r) { const e = new Error(r); e.code = r; throw e; } },
           acquire: o => window.__a(dono, o.holder, o.ttlMs)

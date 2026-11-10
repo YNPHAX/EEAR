@@ -179,10 +179,51 @@ A reversão foi testada com os builds: o progresso gravado pelo app novo abre na
 2. Republicar o curso no Claude só depois de: a época da sincronização integrada; `testes/versoes-misturadas.js` sem perda
    com os builds da versão publicada e da nova; e a verificação com conta de teste no serviço real (seção 2).
 3. Para reduzir o tempo de convivência com a versão antiga: avisar os alunos para recarregar o curso em todos os
-   aparelhos depois da republicação. Barreira mais forte, ainda não implementada: o caminho novo `progresso2/{id}` com o
-   antigo trancado nas regras (`auditoria/verificacao-final.md`, seção 5), que impede a versão antiga de gravar.
+   aparelhos depois da republicação. A barreira do caminho novo (abaixo) impede a versão antiga de cobrir o que só
+   existe na nuvem; ela depende de publicar o curso no Claude junto com as regras abaixo.
 4. Não oferecer "Apagar meu progresso da nuvem" antes da verificação com conta de teste no Claude (seção 2).
 5. As cópias locais (`missao-eear-v1`, cópias por conta, cópia de recuperação) não são apagadas por nenhuma atualização.
+
+**Barreira do caminho novo (`progresso2`), implementada no PR da barreira; não verificada no serviço real:**
+- **O que faz:** a versão nova sincroniza só em `progresso2/<id>` (`curso/app/12-caminho-novo.js`); as versões antigas
+  só conhecem `progresso/<id>`. As regras publicadas junto deixam o caminho antigo só para leitura dos alunos.
+- **Regras a declarar ao republicar o curso no Claude** (hoje estão publicadas só as duas primeiras, com
+  `progresso/{self}` gravável por `interact`):
+  ```json
+  {"db": {"rules": [
+    {"path": "progresso", "read": "owner", "write": "owner"},
+    {"path": "progresso/{self}", "read": "view", "write": "owner"},
+    {"path": "progresso2", "read": "owner", "write": "owner"},
+    {"path": "progresso2/{self}", "read": "view", "write": "interact"}
+  ]}, "user": {}}
+  ```
+  Pelo contrato do `db` (0.2.96), as regras em vigor são as da versão servida, "a partir da próxima chamada depois de
+  ela entrar no ar": uma aba antiga já aberta tem a gravação seguinte recusada (`invalid_argument`). A versão publicada
+  hoje trata esse erro desligando a sincronização e mantendo o estudo no aparelho (`missao-eear-v1`); conferido no
+  `app.js` publicado. Na versão nova, esse estudo aparece em Plano › Dados como "progresso feito sem conta", com a opção
+  de levá-lo para a conta (a pedido, como antes).
+- **Migração:** depois da primeira leitura do caminho novo, o documento antigo é lido e unido ao progresso do aparelho
+  sem base (nada se apaga); o caminho antigo nunca é gravado. O resumo do documento antigo fica em `cfg.migV1`: se ele
+  não muda, não é unido de novo (desmarcações feitas depois não voltam); se muda (gravação de uma aba antiga antes de as
+  regras valerem, ou uma reversão), é unido mais uma vez. Falha ao ler o caminho antigo: tenta de novo ao abrir.
+- **Reversão:** republicar a versão anterior com as regras de hoje (`progresso/{self}` gravável por `interact`). A versão
+  anterior volta a usar `progresso/<id>`, que tem o progresso de quando a barreira entrou; o estudo feito depois disso
+  fica em `progresso2/<id>` e nos aparelhos, sem ser apagado. Ao voltar para a versão nova, o que a versão anterior gravou
+  no caminho antigo durante a reversão é unido (o resumo mudou). Sem as regras de hoje, a versão anterior não sincroniza
+  (o estudo fica no aparelho).
+- **Limites:**
+  - não verificado no serviço real: o efeito de `write: "owner"` numa regra `{self}`, o código do erro de gravação
+    recusada, a entrada em vigor das regras para abas já abertas e a leitura do caminho antigo pelo aluno;
+  - estudo que uma aba antiga gravou no próprio aparelho depois da troca de regras não vai sozinho para a nuvem: fica no
+    aparelho, e a versão nova oferece levá-lo (a pedido);
+  - "Apagar meu progresso da nuvem" (bloqueado) teria de apagar também `progresso/<id>`; hoje só o dono pode, pelo painel
+    de dados;
+  - uma desmarcação feita antes de uma reversão pode voltar ao unir o caminho antigo de novo.
+- **Verificação com conta de teste, antes de oferecer aos alunos** (o dono, num artifact de teste privado, com uma conta
+  de aluno convidada como Contributor): (1) com as regras novas, a conta de aluno lê `progresso/<id>` e não grava nele;
+  (2) grava `progresso2/<id>` e não lê nem grava o de outra conta; (3) uma aba com a versão anterior aberta antes da troca
+  tem a próxima gravação recusada e não perde o estudo local; (4) a migração leva o progresso antigo para `progresso2`;
+  (5) a reversão com as regras de hoje volta a sincronizar no caminho antigo.
 
 ## 5. Testes e CI
 
