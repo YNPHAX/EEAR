@@ -178,6 +178,9 @@
         S = mesclar(o);
         juntarCerts(S.cfg, { certs: local.certs.map(r => Object.assign({}, r, { t: Math.max(r.t, agora) })), certsZ: local.certsZ }, null);
         registrarCerts(S);
+        /* O progresso colado não descende da base desta conta: sem ela, a próxima sincronização une o colado com a nuvem
+           sem apagar nada (com a base, o que o colado não tem parecia apagado aqui e sumia da nuvem e dos outros aparelhos). */
+        try { localStorage.removeItem(chave(BASE_K)); } catch (e) { /* sem armazenamento */ }
         pedindo = null; msgDados = 'Progresso carregado.'; salvar(); render();
         break;
       }
