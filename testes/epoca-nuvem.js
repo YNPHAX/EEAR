@@ -8,7 +8,7 @@
    reconexão não perdem nada; nuvem incompatível não apaga o progresso deste aparelho. Usado por testes/plataforma.test.js. */
 module.exports = async function testarEpocaNuvem({ b, srv, ok }) {
   console.log('\n== versões antiga e nova na mesma nuvem do Claude (nuvem fictícia, contas fictícias)');
-  const N = { doc: null, trava: null, usuario: '', foraDoAr: false };
+  const N = { doc: null, trava: null, usuario: '', foraDoAr: false, atraso: {}, semRede: {} }; // atraso e semRede: por aparelho (nome)
   const copia = x => (x == null ? x : JSON.parse(JSON.stringify(x)));
   const espera = ms => new Promise(r => setTimeout(r, ms));
   const ate = async (f, ms = 25000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await f()) return true; await espera(150); } return false; };
@@ -19,12 +19,13 @@ module.exports = async function testarEpocaNuvem({ b, srv, ok }) {
   /* O que a versão antiga grava: o progresso inteiro dela (o que leu ao abrir, mais o que estudou), sem os campos que
      ela não conhece fora de cfg (sinc, ep), por cima, sem ler de novo. */
   const antiga = (lido, extra) => { const o = copia(lido); delete o.sinc; delete o.ep; o.t = Date.now(); o.feito = Object.assign({}, o.feito, extra); return o; };
-  async function aparelho(semente) {
+  async function aparelho(semente, nome) {
     const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 844 } }), erros = [];
     await ctx.exposeFunction('__eU', () => N.usuario);
-    await ctx.exposeFunction('__eGet', async () => { await espera(60 + Math.random() * 120); if (N.foraDoAr) return { off: true }; return { x: copia(N.doc) }; });
-    await ctx.exposeFunction('__eSet', async o => { await espera(150 + Math.random() * 250); if (N.foraDoAr) return 'unavailable'; N.doc = copia(o); return ''; });
-    await ctx.exposeFunction('__eAcq', async (h, ttl) => { await espera(40); if (N.foraDoAr) return { off: true }; const ag = Date.now(), t = N.trava; if (t && t.ate > ag && t.h !== h) return { acquired: false, expiresAt: new Date(t.ate).toISOString() }; N.trava = { h, ate: ag + ttl }; return { acquired: true, holder: h, expiresAt: new Date(ag + ttl).toISOString() }; });
+    const fora = () => N.foraDoAr || !!N.semRede[nome];
+    await ctx.exposeFunction('__eGet', async () => { await espera(60 + Math.random() * 120); if (fora()) return { off: true }; return { x: copia(N.doc) }; });
+    await ctx.exposeFunction('__eSet', async o => { const d = N.atraso[nome] || 0; N.atraso[nome] = 0; await espera(150 + Math.random() * 250 + d); if (fora()) return 'unavailable'; N.doc = copia(o); return ''; });
+    await ctx.exposeFunction('__eAcq', async (h, ttl) => { await espera(40); if (fora()) return { off: true }; const ag = Date.now(), t = N.trava; if (t && t.ate > ag && t.h !== h) return { acquired: false, expiresAt: new Date(t.ate).toISOString() }; N.trava = { h, ate: ag + ttl }; return { acquired: true, holder: h, expiresAt: new Date(ag + ttl).toISOString() }; });
     await ctx.addInitScript(semente => {
       if (semente && !sessionStorage.getItem('semeado')) { localStorage.setItem(semente.k, semente.v); sessionStorage.setItem('semeado', '1'); }
       const off = () => { const e = new Error('sem rede'); e.code = 'unavailable'; return e; };
@@ -48,7 +49,7 @@ module.exports = async function testarEpocaNuvem({ b, srv, ok }) {
     const clicar = (a, d) => p.evaluate(([a, d]) => { const x = document.createElement('button'); x.dataset.a = a; Object.assign(x.dataset, d); document.body.appendChild(x); x.click(); x.remove(); }, [a, d || {}]);
     const marcar = k => clicar('marcar', { k });
     await p.goto(srv.url);
-    return { p, ctx, erros, ler, marcar, sincronizou: async () => !!(await ler(LS_BASE())) };
+    return { p, ctx, erros, ler, marcar, clicar, sincronizou: async () => !!(await ler(LS_BASE())) };
   }
   /* Assina como o app (resumo FNV-1a do documento sem sinc, em ordem fixa de chaves): simula um documento assinado por
      um aparelho novo que não tinha o que este aparelho tem. */
@@ -167,6 +168,40 @@ module.exports = async function testarEpocaNuvem({ b, srv, ok }) {
     const n = N.doc, la = await A.ler(), lb = await B.ler(), falta = s => novas.filter(k => !tem(s, k));
     ok(!falta(n).length && !falta(la).length && !falta(lb).length && !A.erros.length && !B.erros.length,
       'concorrência com uma versão antiga gravando por cima: nenhuma marcação dos aparelhos novos se perde, na nuvem nem neles' + ` [faltam na nuvem: ${falta(n)} | A: ${falta(la)} | B: ${falta(lb)}]`);
+    await fechar(A, B);
+  }
+
+  if (roda(7)) { /* 7. Gravação atrasada de outro aparelho novo: A estuda sem rede; B estuda depois e grava com a trava, mas a
+       resposta demora mais que a trava; A volta, grava e confirma; a gravação de B chega depois e cobre a de A (assinada,
+       da mesma época, mais recente). A não pode tratar o que gravou como apagado do outro lado. */
+    N.usuario = 'ep-atrasada'; N.doc = P0(); N.trava = null; N.atraso = {}; N.semRede = {};
+    const A = await aparelho(null, 'A'); await ate(A.sincronizou); await espera(5500);
+    const B = await aparelho(null, 'B'); await ate(B.sincronizou); await espera(5500);
+    N.semRede.A = true; await A.marcar('T:a1'); await espera(1000);
+    N.atraso.B = 12000; await B.marcar('T:b1'); await espera(2500); // B pega a trava e grava (atrasado)
+    N.semRede.A = false; // A grava quando a trava de B vencer
+    await ate(async () => tem(N.doc, 'T:a1')); const aGravou = tem(N.doc, 'T:a1');
+    await ate(async () => tem(N.doc, 'T:b1')); await espera(5500); const coberta = !tem(N.doc, 'T:a1');
+    await A.marcar('T:a2'); await ate(async () => tem(N.doc, 'T:a2')); await espera(5500);
+    const n = N.doc, la = await A.ler();
+    ok(aGravou && coberta && tem(n, 'T:a1') && tem(la, 'T:a1') && tem(n, 'T:b1') && !A.erros.length && !B.erros.length,
+      'gravação atrasada de outro aparelho chega depois da que este aparelho confirmou: o que ele gravou não é apagado' + ` [a gravação de A chegou: ${aGravou}; foi coberta: ${coberta} | nuvem: ${Object.keys(n.feito)} | A: ${Object.keys(la.feito)}]`);
+    await fechar(A, B);
+  }
+
+  if (roda(8)) { /* 8. "Colar progresso" com um código antigo e sincronizar: o estudo dos outros aparelhos não some. */
+    N.usuario = 'ep-colar'; N.doc = P0(); N.trava = null; N.atraso = {}; N.semRede = {};
+    const A = await aparelho(); await ate(A.sincronizou); await espera(5500);
+    const codigo = JSON.stringify(Object.assign(copia(await A.ler()), { t: Date.now() })); // código copiado agora
+    const B = await aparelho(); await ate(B.sincronizou); await espera(5500);
+    await B.marcar('T:b1'); await ate(async () => tem(N.doc, 'T:b1')); await espera(5500);
+    await A.marcar('T:a1'); await ate(async () => tem(N.doc, 'T:a1') && tem(N.doc, 'T:b1')); await espera(5500);
+    await A.clicar('tab', { v: 'plano' }); await A.clicar('impabrir'); await A.p.fill('#imp-txt', codigo); await A.clicar('impok');
+    await espera(3000); await espera(5500);
+    await B.marcar('T:b2'); await ate(async () => tem(N.doc, 'T:b2')); await espera(5500);
+    const n = N.doc, lb = await B.ler();
+    ok(tem(n, 'T:b1') && tem(lb, 'T:b1') && tem(n, 'T:a1') && !A.erros.length && !B.erros.length,
+      'colar um progresso antigo num aparelho e sincronizar: nada do que estava na nuvem e nos outros aparelhos é apagado' + ` [nuvem: ${Object.keys(n.feito)} | B: ${Object.keys(lb.feito)}]`);
     await fechar(A, B);
   }
 };

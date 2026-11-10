@@ -320,22 +320,25 @@
     if (ex) o = null; // o aluno pediu para enviar de novo: a marca é substituída pelo progresso deste aparelho
     if (o && (typeof o !== 'object' || o.v !== 1)) return { futura: true };
     const local = mesclar(JSON.parse(JSON.stringify(S)));
-    let u = local, perdido = null, c = null, assinado = true, ep = '';
+    let u = local, perdido = null, c = null, assinado = true, ep = '', lin = [];
     if (o) {
       assinado = assinaturaOk(o); // sem assinatura válida: gravado (ou alterado) por uma versão antiga do app
       ep = assinado && typeof o.ep === 'string' ? o.ep : ''; // época da nuvem (08-uniao-nuvem.js)
+      lin = assinado ? linhagem(o) : []; // gravações de que a nuvem descende (08-uniao-nuvem.js)
       c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
       /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
          dela), se a nuvem foi gravada por esta versão (uma versão antiga grava o progresso inteiro dela por cima, sem
          trava, e o que ela não tinha pareceria apagado do outro lado) e se é da mesma época da nuvem (um aparelho novo
-         pode ter unido e assinado por cima de uma gravação antiga, e o documento não descende mais desta base). */
-      const b = lerBase(), base = assinado && ep && epocaBase() === ep && b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
+         pode ter unido e assinado por cima de uma gravação antiga, e o documento não descende mais desta base) e se a
+         gravação que a base representa está na linhagem da nuvem (uma gravação atrasada de outro aparelho pode ter coberto
+         a que esta base confirmou). */
+      const b = lerBase(), base = assinado && ep && epocaBase() === ep && lin.includes(idBase()) && b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
       /* Aparelho que nunca sincronizou e não tem estudo: fica com a nuvem. Um aparelho zerado depois dela passa pela união. */
       if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
       if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
     } else if (!S.t) return { nada: true }; // aparelho e nuvem sem progresso: nada a gravar
     /* Documento sem assinatura ou sem época (ou nuvem vazia): a união começa uma época nova e é gravada assinada. */
-    return { local, u, perdido, ep: ep || novaEpoca(), gravar: !c || !ep || !uIgual(u, c) };
+    return { local, u, perdido, ep: ep || novaEpoca(), lin, id: lin[lin.length - 1] || '', gravar: !c || !ep || !lin.length || !uIgual(u, c) };
   }
   /* Lê a nuvem, une e grava. Com transação (Firebase), a leitura e a gravação são atômicas: se outro aparelho gravar no
      meio, a união é refeita sobre o que ele gravou. Sem transação (link do curso no Claude), veja lerUnirGravar
@@ -344,7 +347,12 @@
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
     let p = null, modo = 'ok';
-    const planejar = o => { p = planejarUniao(o); return p.gravar ? assinar(Object.assign(JSON.parse(JSON.stringify(p.u)), { ep: p.ep })) : null; };
+    const planejar = o => {
+      p = planejarUniao(o);
+      if (!p.gravar) return null;
+      p.id = novoIdGravacao(); // esta gravação entra na linhagem; a base, se confirmada, a representa
+      return assinar(Object.assign(JSON.parse(JSON.stringify(p.u)), { ep: p.ep, lin: p.lin.concat(p.id).slice(-LIN_MAX) }));
+    };
     if (ref.transacao) await ref.transacao(planejar);
     else modo = await lerUnirGravar(ref, planejar);
     if (nuvem.conta !== conta0 || !p || p.nada) return;
@@ -1769,6 +1777,9 @@
         S = mesclar(o);
         juntarCerts(S.cfg, { certs: local.certs.map(r => Object.assign({}, r, { t: Math.max(r.t, agora) })), certsZ: local.certsZ }, null);
         registrarCerts(S);
+        /* O progresso colado não descende da base desta conta: sem ela, a próxima sincronização une o colado com a nuvem
+           sem apagar nada (com a base, o que o colado não tem parecia apagado aqui e sumia da nuvem e dos outros aparelhos). */
+        try { localStorage.removeItem(chave(BASE_K)); } catch (e) { /* sem armazenamento */ }
         pedindo = null; msgDados = 'Progresso carregado.'; salvar(); render();
         break;
       }
@@ -1836,7 +1847,9 @@
   function lerBase() { const o = lerBaseBruta(); return o ? mesclar(o.st) : null; }
   /* Época da base: a da nuvem quando esta base foi confirmada (veja "época da sincronização" abaixo). */
   function epocaBase() { const o = lerBaseBruta(); return o && typeof o.ep === 'string' ? o.ep : ''; }
-  function gravarBase(st, ep) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st, ep: ep || '' })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
+  /* Gravação que a base representa (veja "linhagem das gravações" abaixo). */
+  function idBase() { const o = lerBaseBruta(); return o && typeof o.id === 'string' ? o.id : ''; }
+  function gravarBase(st, ep, id) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st, ep: ep || '', id: id || '' })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
   function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
   /* Assinatura do documento da nuvem (sinc): resumo FNV-1a do conteúdo sem ela, em ordem fixa de chaves. Só esta versão
      do app grava assinado. Documento sem assinatura, ou com assinatura que não bate (uma versão antiga gravou por cima,
@@ -1861,6 +1874,16 @@
      da mesma época. Então o que falta na nuvem em relação à base foi apagado por um aparelho desta versão. Com época
      diferente, a união é sem base: nada deste aparelho é apagado (o preço: uma desmarcação feita antes pode voltar). */
   function novaEpoca() { return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  /* Linhagem das gravações (lin, dentro da assinatura): os identificadores das últimas gravações de que o documento
+     descende, o mais novo no fim. A época não basta quando uma gravação deste app chega atrasada: o aparelho B grava
+     com a trava, a resposta demora, a trava vence, o aparelho A lê o documento anterior, grava e confirma (a base de A
+     passa a ser a gravação dele); depois a gravação de B chega e cobre a de A. O documento de B é assinado e da mesma
+     época, mas não descende da base de A: o que A gravou parecia apagado do outro lado, e A apagava. Agora a base só vale
+     se a gravação que ela representa está na linhagem do documento da nuvem; senão, a união é sem base e nada deste
+     aparelho é apagado. Com mais de LIN_MAX gravações desde a base, ela também deixa de valer (sem apagar nada). */
+  const LIN_MAX = 40;
+  function novoIdGravacao() { return 'g' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  function linhagem(o) { return o && Array.isArray(o.lin) ? o.lin.filter(x => typeof x === 'string') : []; }
   /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
   function uTres(tb, b, l, c, conflito) {
     if (uIgual(l, c)) return l;
@@ -2175,7 +2198,7 @@
   }
   /* Depois de uma união aplicada: registra a base só quando é seguro, e agenda a conferência quando não é. */
   function depoisDeGravar(modo, p) {
-    if (modo === 'ok') { gravarBase(p.u, p.ep); return; }
+    if (modo === 'ok') { gravarBase(p.u, p.ep, p.id); return; }
     if (modo === 'conferir') { setTimeout(gravar, 2000 + Math.random() * 2000); return; }
     try { localStorage.removeItem(chave(BASE_K)); } catch (e) { /* sem armazenamento */ } // sem trava: união sem base
     if (modo === 'semtrava') setTimeout(gravar, 5000 + Math.random() * 2000);

@@ -146,7 +146,15 @@ A reversão foi testada com os builds: o progresso gravado pelo app novo abre na
   com um documento que esta versão não gravou começa uma época nova, e a base de um aparelho só vale com a mesma época do
   documento da nuvem; senão, a união é sem base e nada deste aparelho é apagado. Testes: `testes/epoca-nuvem.js` (no CI)
   e `testes/versoes-misturadas.js` (builds reais, fora do CI).
-- **Abrangência:** vale para o link do Claude e para o Firebase (a assinatura e a época vão dentro de `dados`).
+- **Mais dois defeitos (auditoria independente do PR #28, corrigidos no PR da linhagem das gravações):**
+  - *Gravação atrasada:* o aparelho B grava com a trava e a resposta demora mais que ela; o aparelho A grava e confirma;
+    a gravação de B chega depois, assinada e da mesma época, sem o que A gravou; na sincronização seguinte, A apagava o
+    que tinha gravado. Correção: linhagem das gravações (`lin`, dentro da assinatura): a base só vale se a gravação que
+    ela representa está na linhagem do documento da nuvem.
+  - *Colar progresso:* colar um código antigo e sincronizar apagava da nuvem e dos outros aparelhos o que o código não
+    tinha (tarefas, caderno de erros, apostila). Correção: colar descarta a base; a sincronização seguinte une sem apagar.
+    Por isso, colar passa a somar com a nuvem, em vez de substituí-la.
+- **Abrangência:** vale para o link do Claude e para o Firebase (a assinatura, a época e a linhagem vão dentro de `dados`).
 - **Limites (sem garantia absoluta):**
   - enquanto uma versão antiga continuar gravando, desmarcações feitas no app novo podem voltar (união sem base não
     apaga);
@@ -154,6 +162,8 @@ A reversão foi testada com os builds: o progresso gravado pelo app novo abre na
     por ela, e o app novo não tem como recuperar. O app novo preserva o que cada aparelho novo tem guardado;
   - "Apagar os dados deste aparelho" confia na última sincronização confirmada; se uma versão antiga cobriu a nuvem
     depois dela, a nuvem pode não ter tudo o que o aviso diz;
+  - com mais de 40 gravações de outros aparelhos desde a última sincronização deste, a base deixa de valer: nada se
+    apaga, mas uma desmarcação feita aqui pode voltar;
   - nada disso foi testado no serviço real do Claude.
 
 **Outras combinações verificadas:**

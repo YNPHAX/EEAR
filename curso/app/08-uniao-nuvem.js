@@ -19,7 +19,9 @@
   function lerBase() { const o = lerBaseBruta(); return o ? mesclar(o.st) : null; }
   /* Época da base: a da nuvem quando esta base foi confirmada (veja "época da sincronização" abaixo). */
   function epocaBase() { const o = lerBaseBruta(); return o && typeof o.ep === 'string' ? o.ep : ''; }
-  function gravarBase(st, ep) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st, ep: ep || '' })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
+  /* Gravação que a base representa (veja "linhagem das gravações" abaixo). */
+  function idBase() { const o = lerBaseBruta(); return o && typeof o.id === 'string' ? o.id : ''; }
+  function gravarBase(st, ep, id) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st, ep: ep || '', id: id || '' })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
   function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
   /* Assinatura do documento da nuvem (sinc): resumo FNV-1a do conteúdo sem ela, em ordem fixa de chaves. Só esta versão
      do app grava assinado. Documento sem assinatura, ou com assinatura que não bate (uma versão antiga gravou por cima,
@@ -44,6 +46,16 @@
      da mesma época. Então o que falta na nuvem em relação à base foi apagado por um aparelho desta versão. Com época
      diferente, a união é sem base: nada deste aparelho é apagado (o preço: uma desmarcação feita antes pode voltar). */
   function novaEpoca() { return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  /* Linhagem das gravações (lin, dentro da assinatura): os identificadores das últimas gravações de que o documento
+     descende, o mais novo no fim. A época não basta quando uma gravação deste app chega atrasada: o aparelho B grava
+     com a trava, a resposta demora, a trava vence, o aparelho A lê o documento anterior, grava e confirma (a base de A
+     passa a ser a gravação dele); depois a gravação de B chega e cobre a de A. O documento de B é assinado e da mesma
+     época, mas não descende da base de A: o que A gravou parecia apagado do outro lado, e A apagava. Agora a base só vale
+     se a gravação que ela representa está na linhagem do documento da nuvem; senão, a união é sem base e nada deste
+     aparelho é apagado. Com mais de LIN_MAX gravações desde a base, ela também deixa de valer (sem apagar nada). */
+  const LIN_MAX = 40;
+  function novoIdGravacao() { return 'g' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  function linhagem(o) { return o && Array.isArray(o.lin) ? o.lin.filter(x => typeof x === 'string') : []; }
   /* Valor de um item em três vias: SEM BASE (tb = false), qualquer diferença é conflito. */
   function uTres(tb, b, l, c, conflito) {
     if (uIgual(l, c)) return l;
