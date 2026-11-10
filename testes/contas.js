@@ -12,7 +12,7 @@ module.exports = async function testarContas({ b, srv, base, ok }) {
     await ctx.exposeFunction('__get', () => (nuvens[usuario] ? JSON.parse(JSON.stringify(nuvens[usuario])) : null));
     await ctx.exposeFunction('__set', o => { nuvens[usuario] = JSON.parse(JSON.stringify(o)); });
     await ctx.addInitScript(() => {
-      window.claude = { use: async k => (k === 'user' ? { id: () => window.__usuario() } : { doc: () => ({ get: async () => { const d = await window.__get(); return { exists: !!d, data: () => d }; }, set: o => window.__set(o), acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + o.ttlMs).toISOString() }) }) }) };
+      window.claude = { use: async k => (k === 'user' ? { id: () => window.__usuario() } : { doc: c => /^progresso\//.test(c) ? { get: async () => ({ exists: false, data: () => null }), set: async () => { const e = new Error('regras'); e.code = 'invalid_argument'; throw e; }, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + 5000).toISOString() }) } : ({ get: async () => { const d = await window.__get(); return { exists: !!d, data: () => d }; }, set: o => window.__set(o), acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + o.ttlMs).toISOString() }) }) }) };
     });
     const p = await ctx.newPage(); p.on('pageerror', e => erros.push(e.message));
     const ler = k => p.evaluate(k => JSON.parse(localStorage.getItem(k)), k);

@@ -1,6 +1,6 @@
   /* ---------- apagar o progresso da nuvem do curso no Claude, a pedido do próprio aluno ----------
      A API do curso no Claude grava o documento inteiro e não tem gravação condicional; as regras do curso só deixam
-     cada aluno gravar progresso/<o próprio id>. Por isso:
+     cada aluno gravar progresso2/<o próprio id> (o caminho antigo, progresso/<id>, fica só para leitura; 12-caminho-novo.js). Por isso:
      - a exclusão grava uma marca (v: 2, apagado: data, sem nenhum progresso) com a trava e confere a gravação. A marca
        tem v: 2 para que nenhuma versão a adote como progresso: a versão do PR #22 a trata como "versão mais nova" e não
        grava por cima; a versão antiga (sem união) não a lê como progresso e não apaga a cópia local dela;

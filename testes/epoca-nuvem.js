@@ -32,7 +32,7 @@ module.exports = async function testarEpocaNuvem({ b, srv, ok }) {
       window.claude = { use: async k => {
         const u = await window.__eU();
         if (k === 'user') return { id: async () => u };
-        return { doc: () => ({
+        return { doc: c => /^progresso\//.test(c) ? { get: async () => ({ exists: false, data: () => null }), set: async () => { const e = new Error('regras'); e.code = 'invalid_argument'; throw e; }, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + 5000).toISOString() }) } : ({
           get: async () => { const r = await window.__eGet(); if (r.off) throw off(); return { exists: r.x != null, data: () => r.x }; },
           set: async o => { const r = await window.__eSet(o); if (r) throw off(); },
           acquire: async o => { const r = await window.__eAcq(o.holder, o.ttlMs); if (r.off) throw off(); return r; }

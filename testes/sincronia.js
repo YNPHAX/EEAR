@@ -16,7 +16,7 @@ module.exports = async function testarSincronia({ b, srv, base, ok }) {
     await ctx.exposeFunction('__nuvemSet', o => { if (nuvem.offline[nome]) return { off: true }; if (nuvem.falhas > 0) { nuvem.falhas--; return { off: true }; } nuvem.doc = copia(o); nuvem.gravacoes++; return {}; });
     await ctx.addInitScript(() => {
       const fora = () => { const e = new Error('sem rede'); e.code = 'unavailable'; throw e; };
-      window.claude = { use: async k => (k === 'user' ? { id: () => window.__nuvemUsuario() } : { doc: () => ({
+      window.claude = { use: async k => (k === 'user' ? { id: () => window.__nuvemUsuario() } : { doc: c => /^progresso\//.test(c) ? { get: async () => ({ exists: false, data: () => null }), set: async () => { const e = new Error('regras'); e.code = 'invalid_argument'; throw e; }, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + 5000).toISOString() }) } : ({
         get: async () => { const r = await window.__nuvemGet(); if (r.off) fora(); return { exists: !!r.doc, data: () => r.doc }; },
         set: async o => { const r = await window.__nuvemSet(o); if (r.off) fora(); },
         // trava da API real (doc.acquire); aqui sempre concedida: a disputa pela trava fica em testes/nuvem-claude.js

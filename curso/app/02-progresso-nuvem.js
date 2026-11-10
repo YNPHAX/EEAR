@@ -106,7 +106,7 @@
 
   /* pendente: há estudo deste aparelho que a nuvem ainda não confirmou; semRede: a última tentativa falhou por falta de rede.
      O aviso nunca diz "salvo na sua conta" enquanto houver algo pendente. */
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false };
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false }; // lida: a nuvem desta conta já foi lida nesta abertura
   let tSave = null;
   function salvar() {
     S.t = Date.now();
@@ -176,6 +176,7 @@
     };
     if (ref.transacao) await ref.transacao(planejar);
     else modo = await lerUnirGravar(ref, planejar);
+    nuvem.lida = true; // mesmo sem nada a gravar (nuvem e aparelho vazios): a migração do caminho antigo pode seguir
     if (nuvem.conta !== conta0 || !p || p.nada) return;
     if (p.apagado || p.reapareceu) { pausarPorExclusao(ref, p); render(); return; }
     nuvem.reenviar = false; // "Enviar de novo" atendido: a nuvem tem o progresso deste aparelho
@@ -194,7 +195,7 @@
     if (!uIgual(u, p.u)) gravar(); // a união com o que veio depois ainda não está na nuvem
   }
   async function sincronizar(ref, conta) {
-    nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.conta = String(conta || '');
+    nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.lida = false; nuvem.conta = String(conta || '');
     await gravar();
   }
   async function conectar() {
@@ -207,7 +208,8 @@
       const id = await user.id();
       if (!id) return;
       usarIdentidade('claude:' + id); // o progresso local passa a ser o desta conta
-      await sincronizar(db.doc('progresso/' + id), 'claude:' + id);
+      await sincronizar(db.doc(caminhoNuvem(id)), 'claude:' + id); // progresso2/<id> (12-caminho-novo.js)
+      migrarCaminhoAntigo(db.doc(caminhoAntigo(id)), 'claude:' + id); // une o progresso/<id> das versões antigas, sem apagar
     } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
   }
 

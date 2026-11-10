@@ -8,7 +8,7 @@ const RAIZ = path.resolve(__dirname, '..');
 let falhas = 0;
 const ok = (cond, msg) => { console.log(`${cond ? '  ✓' : '  ✗'} ${msg}`); if (!cond) falhas++; };
 
-const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js'), testarRobustez = require('./robustez.js'), testarSincronia = require('./sincronia.js'), testarContas = require('./contas.js'), testarNuvemClaude = require('./nuvem-claude.js'), testarExclusaoNuvem = require('./exclusao-nuvem.js'), testarEpocaNuvem = require('./epoca-nuvem.js');
+const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js'), testarRobustez = require('./robustez.js'), testarSincronia = require('./sincronia.js'), testarContas = require('./contas.js'), testarNuvemClaude = require('./nuvem-claude.js'), testarExclusaoNuvem = require('./exclusao-nuvem.js'), testarEpocaNuvem = require('./epoca-nuvem.js'), testarProgresso2 = require('./progresso2-nuvem.js');
 const { carregarDados, testarDados, testarContasMat, testarContasFis } = dados;
 dados.usar(ok);
 
@@ -243,7 +243,7 @@ async function testarNavegador(E) {
         p.on('pageerror', e => erros.push(e.message));
         await ctx.addInitScript(d => {
           window.__nuvem = { doc: d, gravados: [] };
-          window.claude = { use: async k => k === 'user' ? { id: async () => 'aluno-1' } : { doc: () => ({ get: async () => ({ exists: !!window.__nuvem.doc, data: () => JSON.parse(JSON.stringify(window.__nuvem.doc)) }), set: async o => { window.__nuvem.gravados.push(JSON.parse(JSON.stringify(o))); }, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + o.ttlMs).toISOString() }) }) } };
+          window.claude = { use: async k => k === 'user' ? { id: async () => 'aluno-1' } : { doc: c => /^progresso\//.test(c) ? { get: async () => ({ exists: false, data: () => null }), set: async () => { const e = new Error('regras'); e.code = 'invalid_argument'; throw e; }, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + 5000).toISOString() }) } : ({ get: async () => ({ exists: !!window.__nuvem.doc, data: () => JSON.parse(JSON.stringify(window.__nuvem.doc)) }), set: async o => { window.__nuvem.gravados.push(JSON.parse(JSON.stringify(o))); }, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + o.ttlMs).toISOString() }) }) } };
         }, doc);
         // aparelho já conectado à conta: o progresso local dela fica na chave da conta (veja testes/contas.js)
         await p.goto(srv.url); await p.evaluate(s => localStorage.setItem('missao-eear-v1@claude:aluno-1', JSON.stringify(s)), estado); await p.goto(srv.url); await p.waitForTimeout(500);
@@ -289,6 +289,7 @@ async function testarNavegador(E) {
   await testarNuvemClaude({ b, srv, base, ok });
   await testarExclusaoNuvem({ b, srv, base, ok });
   await testarEpocaNuvem({ b, srv, ok });
+  await testarProgresso2({ b, srv, ok });
 
   await b.close(); srv.fechar();
   fs.rmSync(saida, { recursive: true, force: true });
