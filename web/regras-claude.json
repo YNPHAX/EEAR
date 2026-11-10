@@ -1,0 +1,19 @@
+{
+  "_leia": "Regras do banco de dados (capability db) do curso publicado no Claude. Fonte única: auditoria/integracao-segura.md e os testes (testes/regras-nuvem.js) leem daqui. Toda publicação declara as regras de progresso E de progresso2: um caminho sem regra cai na regra padrão do serviço (leitura view, gravação interact), e qualquer aluno leria e gravaria o progresso dos outros (confirmado no serviço real em 2026-11-10).",
+  "hoje": [
+    { "path": "progresso", "read": "owner", "write": "owner" },
+    { "path": "progresso/{self}", "read": "view", "write": "interact" }
+  ],
+  "propostas": [
+    { "path": "progresso", "read": "owner", "write": "owner" },
+    { "path": "progresso/{self}", "read": "view", "write": "owner" },
+    { "path": "progresso2", "read": "owner", "write": "owner" },
+    { "path": "progresso2/{self}", "read": "view", "write": "interact" }
+  ],
+  "reversao": [
+    { "path": "progresso", "read": "owner", "write": "owner" },
+    { "path": "progresso/{self}", "read": "view", "write": "interact" },
+    { "path": "progresso2", "read": "owner", "write": "owner" },
+    { "path": "progresso2/{self}", "read": "view", "write": "interact" }
+  ]
+}
