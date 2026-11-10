@@ -247,7 +247,7 @@ mas muda mais a aparência.
 | `testes/firebase-emulador.test.js` | 23 de 23 aqui; os 2 do Google rodam no CI (25 de 25 no CI do PR #25) | emuladores oficiais |
 | `testes/atualizacao.js` (main → nova → main → nova) | 7 de 7 | builds reais, Chromium |
 | `testes/comparar-conteudo.js` (main × topo) | só cartões e teoria (ING07, ING09, MAT18 e FIS02) mudam | dados do curso |
-| App antigo real (build da main) e app novo, mesma nuvem, gravações sobrepostas | nada se perdeu | builds reais, nuvem fictícia |
+| App antigo real (build da main) e app novo, mesma nuvem, gravações sobrepostas | com 1 aparelho novo, nada se perdeu. **Correção posterior:** com 2 aparelhos novos houve perda (auditoria do PR #27), corrigida pela época da sincronização (`auditoria/integracao-segura.md`, seção 4) | builds reais, nuvem fictícia |
 | Exclusão com aba antiga real aberta | **o progresso voltou para a nuvem** (motivo do bloqueio) | builds reais, nuvem fictícia |
 | Sincronização concorrente e isolamento de contas | dentro da plataforma (`nuvem-claude.js`, `sincronia.js`, `contas.js`) e do emulador (12 marcações simultâneas sem perda; regras entre contas) | simulado e emulador |
 | ESLint, `montar_app --conferir`, autoteste (172), `validar`, `conferir-workflows` | sem erros | — |

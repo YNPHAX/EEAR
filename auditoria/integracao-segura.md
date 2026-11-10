@@ -134,26 +134,45 @@ A reversão foi testada com os builds: o progresso gravado pelo app novo abre na
 - **Reprodução:**
   - simulada: `testes/nuvem-claude.js`, cenário 10;
   - com o build real da main e o do PR #22 na mesma nuvem fictícia, também houve perda.
-- **Correção:** assinatura do documento (`sinc`, um resumo do conteúdo). Documento sem assinatura, ou com assinatura
-  que não bate, foi gravado por outra versão: a união é feita sem base (nada é apagado) e a versão assinada é gravada
-  em seguida. Com o build real da main e o desta branch, nada se perdeu.
-- **Abrangência:** vale para o link do Claude e para o Firebase (a assinatura vai dentro de `dados`).
-- **Custo:** enquanto uma versão antiga continuar gravando, desmarcações feitas no app novo podem voltar (união sem base
-  não apaga). Nunca se perde estudo.
+- **Correção (1ª parte):** assinatura do documento (`sinc`, um resumo do conteúdo). Documento sem assinatura, ou com
+  assinatura que não bate, foi gravado por outra versão: a união é feita sem base (nada é apagado) e a versão assinada é
+  gravada em seguida.
+- **Defeito que restava (auditoria final do PR #27, corrigido no PR da época da sincronização):** com dois ou mais
+  aparelhos novos e uma versão antiga, a assinatura não bastava. A versão antiga gravava por cima sem as marcações do
+  aparelho B; o aparelho A unia esse documento e o gravava assinado; B via o documento assinado como sucessor da base
+  dele e apagava as próprias marcações (tarefas, caderno de erros, folhas da apostila), na nuvem e no aparelho.
+  Reproduzido com os builds reais (2 aparelhos novos + 1 antigo): perda em 5 de 5 rodadas instrumentadas.
+- **Correção (2ª parte): época da sincronização** (`ep`, dentro da assinatura; `curso/app/08-uniao-nuvem.js`). Toda união
+  com um documento que esta versão não gravou começa uma época nova, e a base de um aparelho só vale com a mesma época do
+  documento da nuvem; senão, a união é sem base e nada deste aparelho é apagado. Testes: `testes/epoca-nuvem.js` (no CI)
+  e `testes/versoes-misturadas.js` (builds reais, fora do CI).
+- **Abrangência:** vale para o link do Claude e para o Firebase (a assinatura e a época vão dentro de `dados`).
+- **Limites (sem garantia absoluta):**
+  - enquanto uma versão antiga continuar gravando, desmarcações feitas no app novo podem voltar (união sem base não
+    apaga);
+  - a versão antiga grava às cegas: o que só existia na nuvem (de um aparelho que não abre mais o curso) pode ser coberto
+    por ela, e o app novo não tem como recuperar. O app novo preserva o que cada aparelho novo tem guardado;
+  - "Apagar os dados deste aparelho" confia na última sincronização confirmada; se uma versão antiga cobriu a nuvem
+    depois dela, a nuvem pode não ter tudo o que o aviso diz;
+  - nada disso foi testado no serviço real do Claude.
 
 **Outras combinações verificadas:**
 - **Main ↔ app novo, sem nuvem** (`testes/atualizacao.js`, 7 de 7): o progresso vai e volta sem perda.
 - **Versão dos PRs #21 a #23 diante de documentos assinados:** a assinatura é um campo a mais dentro do progresso. Essas
   versões juntam o progresso normalmente e gravam sem ela; a próxima leitura do app novo trata o documento como de outra
-  versão e faz a união sem base, sem perda.
+  versão e faz a união sem base (época nova).
 - **Travas:** a versão publicada hoje não usa `acquire`. O app novo não depende disso: a trava protege entre aparelhos
-  com o app novo, e a assinatura protege contra os que não a usam.
+  com o app novo, e a assinatura e a época protegem contra os que não a usam.
 
-**Estratégia de atualização:**
-1. Publicar o site e republicar o curso no Claude com esta versão.
-2. Por alguns dias, manter a assinatura e a união sem base.
-3. Não oferecer "Apagar meu progresso da nuvem" antes da verificação com conta de teste no Claude (seção 2).
-4. As cópias locais (`missao-eear-v1`, cópias por conta, cópia de recuperação) não são apagadas por nenhuma atualização.
+**Estratégia de atualização (a republicação do curso no Claude depende de autorização do dono):**
+1. Publicar o site só pelo procedimento da seção 3. O site e o APK não usam a nuvem do Claude.
+2. Republicar o curso no Claude só depois de: a época da sincronização integrada; `testes/versoes-misturadas.js` sem perda
+   com os builds da versão publicada e da nova; e a verificação com conta de teste no serviço real (seção 2).
+3. Para reduzir o tempo de convivência com a versão antiga: avisar os alunos para recarregar o curso em todos os
+   aparelhos depois da republicação. Barreira mais forte, ainda não implementada: o caminho novo `progresso2/{id}` com o
+   antigo trancado nas regras (`auditoria/verificacao-final.md`, seção 5), que impede a versão antiga de gravar.
+4. Não oferecer "Apagar meu progresso da nuvem" antes da verificação com conta de teste no Claude (seção 2).
+5. As cópias locais (`missao-eear-v1`, cópias por conta, cópia de recuperação) não são apagadas por nenhuma atualização.
 
 ## 5. Testes e CI
 
@@ -161,7 +180,7 @@ A reversão foi testada com os builds: o progresso gravado pelo app novo abre na
 |---|---|---|
 | `node testes/plataforma.test.js` | ver relatório final (inclui `exclusao-nuvem.js` e o cenário 10 de `nuvem-claude.js`) | Chromium simulado, nuvens fictícias |
 | `testes/firebase-emulador.test.js` | ver relatório final | emuladores oficiais |
-| Main real × app novo na mesma nuvem fictícia | sem perda (PR #22: com perda) | builds reais, nuvem simulada |
+| Main real × app novo na mesma nuvem fictícia | 1 aparelho novo: sem perda (PR #22: com perda). 2 aparelhos novos: com perda até a época da sincronização; veja o PR dela | builds reais, nuvem simulada |
 | `testes/atualizacao.js` e `testes/comparar-conteudo.js` | ver relatório final | builds reais |
 | Lotes 0 a 3: 274 cartões e 3 teorias | nenhum erro factual | leitura humana e automática |
 
@@ -170,7 +189,8 @@ A reversão foi testada com os builds: o progresso gravado pelo app novo abre na
 - **Exclusão da nuvem do Claude:** abas antigas abertas podem regravar (detectado, não impedido). `acquire` e as regras
   não foram verificados no serviço real.
 - **Ordem da publicação:** sem a proteção do ambiente `github-pages`, um merge abaixo do PR #25 publica o site.
-- **Versões antigas:** enquanto existirem, desmarcações podem voltar (sem perda de estudo).
+- **Versões antigas:** enquanto existirem, desmarcações podem voltar, e o que só existia na nuvem pode ser coberto pela
+  versão antiga (seção 4). Republicar no Claude só nas condições da seção 4.
 - **Testes reais:** nada foi testado em aparelho real, iOS, Firebase de produção, Google real ou no serviço real do
   Claude.
 - **CSP:** continua ausente. As garantias de servidor do Firebase continuam pendentes (`auditoria/auditoria-consolidada.md`).

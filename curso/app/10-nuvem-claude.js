@@ -48,7 +48,7 @@
   }
   /* Depois de uma união aplicada: registra a base só quando é seguro, e agenda a conferência quando não é. */
   function depoisDeGravar(modo, p) {
-    if (modo === 'ok') { gravarBase(p.u); return; }
+    if (modo === 'ok') { gravarBase(p.u, p.ep); return; }
     if (modo === 'conferir') { setTimeout(gravar, 2000 + Math.random() * 2000); return; }
     try { localStorage.removeItem(chave(BASE_K)); } catch (e) { /* sem armazenamento */ } // sem trava: união sem base
     if (modo === 'semtrava') setTimeout(gravar, 5000 + Math.random() * 2000);
