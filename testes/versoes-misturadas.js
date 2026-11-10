@@ -49,9 +49,10 @@ async function rodada(b, nova, anterior, n) {
   const X = await aparelho(nova, 'X'); await espera(2500); await X.marcar('T:X-unico');
   for (let t = 0; t < 30 && !noDoc()['T:X-unico']; t++) await espera(500);
   await espera(1000); await X.ctx.close();
+  await V.marcar('T:V-antes'); await espera(4000); // a versão anterior grava (às cegas) antes de A e B abrirem
   const A = await aparelho(nova, 'A'), B = await aparelho(nova, 'B');
   await espera(3000);
-  const marcas = { A: [], B: [], V: [] };
+  const marcas = { A: [], B: [], V: ['T:V-antes'] };
   for (let r = 0; r < 8; r++) {
     await Promise.all([A, B, V].map(async d => { const k = `T:${d.nome}${r}`; marcas[d.nome].push(k); await d.marcar(k); }));
     await espera(700 + Math.random() * 1500);
