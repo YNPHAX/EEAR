@@ -1,5 +1,7 @@
 # Auditoria independente da integração Firebase — EEAR
 
+Parecer mais recente: [auditoria final independente de b2a369b](firebase-codex-b2a369b.md) — **REPROVADO**, com novas reproduções de perda de progresso.
+
 Atualização posterior: [Hosting em ce548dd, CI confirmado e preparação do gate de F01](firebase-codex-ce548dd.md). O parecer continua REPROVADO.
 
 Data: 11/11/2026. Repositório: `YNPHAX/EEAR`.

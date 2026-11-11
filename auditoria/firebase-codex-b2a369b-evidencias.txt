@@ -1,0 +1,268 @@
+EEAR — evidências independentes finais
+2026-11-11T16:27:58.565850+00:00
+Snapshot: b2a369b29dd6fcb532260e9948a6e0941b990500
+Controle: 553ff011686497e29272fa542a27b11308407bb2
+Parecer: REPROVADO. Apenas emuladores; nenhum deploy ou Firebase real.
+Node 24.22.1; Java 21; SDK 12.19.0; Firebase CLI 15.35.0; Playwright 1.63.0; Chromium 153.
+Saídas adicionais observadas: autoteste 183/183; validar, conferir-workflows e montagem/build OK.
+A suíte longa de plataforma não foi repetida; a suíte Firebase existente passou 50/50.
+
+f01-oito-b2a369b.log SHA256=db4b8f0bcb75b2399a90f76890d2bb1037b83ec432806cd4082999a65673f809
+riscos-b2a369b.log SHA256=9606bcb22b4a849a6c94434091e8996311f488a994e63453c9df75b7e4ed9a74
+controle-zerar-contagens-b2a369b.log SHA256=6e50856ba4008ba60d3886baabaabea903254cbb9f9283c4fbd90f6c0f5e30aa
+zerar-unica-553ff01.log SHA256=b76e915a90d58873e52267f0f8d84114f307fe1b8abf636a3aaab7cd1f8303a2
+firebase-b2a369b.log SHA256=ae9797a716f3abd65432f4cad52252f8ca310c3ea69713074883d3804c214531
+f02-f04-b2a369b.log SHA256=998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2
+hosting-b2a369b.log SHA256=b26bc7190efda6d4bee2a55ccf31aab74cbda2b62690ee34f7591442ea676ce6
+hosting-headers-b2a369b.log SHA256=be0dbf18fedd2b2d503760ade44ea4ea77ec1cd4f81d801779cf346db5ab80b4
+ci-final.json SHA256=801034a69161206648cde4304c4d1fe3210e1e9a0f92c00492e57110dc3a0e78
+ci-dns-b2a369b.txt SHA256=246768d9e51e6d80347f07795fc91cb27b468777f523ea448d6fd3319eb66967
+
+----- f01-oito-b2a369b.log -----
+F01: alvo /tmp/eear-b2a369b, commit b2a369b29dd6fcb532260e9948a6e0941b990500
+F01: alvo /tmp/eear-b2a369b, commit b2a369b29dd6fcb532260e9948a6e0941b990500
+✓ dispositivos: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ fechar-A: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ fechar-B: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ desmarcar: {"aceitoA":["T:B","T:base"],"aceitoB":["T:B","T:base"],"offline":true,"servidor":true,"paginas":[true]}
+✗ zerar: {"aceitoA":["T:depois-zerar"],"aceitoB":["T:depois-zerar"],"offline":true,"servidor":false,"paginas":[false]}
+✓ certificado: {"aceitoA":["T:B","T:base","T:remover"],"aceitoB":["T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ reconectar: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":null,"servidor":true,"paginas":[true,true]}
+✗ zerar-duplo: {"aceitoA":["T:A","T:B"],"aceitoB":["T:A","T:B"],"offline":true,"servidor":false,"paginas":[false]}
+F01: 6/8 cenários passaram; 2 falha(s). Parecer não alterado automaticamente.
+
+----- riscos-b2a369b.log -----
+Riscos F01: b2a369b29dd6fcb532260e9948a6e0941b990500
+Riscos F01: b2a369b29dd6fcb532260e9948a6e0941b990500
+✗ zerar-nuvem: {"aceito":{"t":1794413833751,"certsZ":1794413833725,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"offline":{"t":1794413833751,"certsZ":1794413833725,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"servidor":{"t":1794413833751,"certsZ":1794413833725,"certs":[],"feito":{},"act":{"2026-11-11":1}},"antesReabrir":{"t":1794413833751,"certsZ":1794413833725,"certs":[],"feito":{},"act":{"2026-11-11":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794413833751,"certsZ":1794413833725,"certs":[],"feito":{},"act":{"2026-11-11":1}}}
+✓ suspensa: {"t":1794413855779,"certsZ":1794413855760,"certs":[],"feito":{"T:apos-suspensao":true},"act":{"2026-11-11":1}}
+✗ exclusao-surda: {"removido":true,"restaurado":{"t":1794413857389,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-11":3}}}
+✗ contagens: {"esperado":62,"A":49,"B":49,"cache":49,"marcacoes":61}
+✗ escrita-interrompida: {"BconfirmadaAntesDeFechar":true,"aposFecharAmbas":{"t":1794413861088,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:base":true,"T:A-race":true},"act":{"2026-11-11":3}},"breakpointAposSetItem":true}
+Riscos: 4 falha(s) em 5 investigações.
+
+----- controle-zerar-contagens-b2a369b.log -----
+Riscos F01: b2a369b29dd6fcb532260e9948a6e0941b990500
+Riscos F01: b2a369b29dd6fcb532260e9948a6e0941b990500
+✗ zerar-unica: {"aceito":{"t":1794413995160,"certsZ":1794413995152,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"offline":{"t":1794413995160,"certsZ":1794413995152,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"servidor":{"t":1794413995160,"certsZ":1794413995152,"certs":[],"feito":{},"act":{"2026-11-11":1}},"antesReabrir":{"t":1794413995160,"certsZ":1794413995152,"certs":[],"feito":{},"act":{"2026-11-11":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794413995160,"certsZ":1794413995152,"certs":[],"feito":{},"act":{"2026-11-11":1}}}
+✗ contagens: {"esperado":62,"A":38,"B":38,"cache":38,"marcacoes":61}
+Riscos: 2 falha(s) em 2 investigações.
+
+----- zerar-unica-553ff01.log -----
+Riscos F01: 553ff011686497e29272fa542a27b11308407bb2
+Riscos F01: 553ff011686497e29272fa542a27b11308407bb2
+✗ zerar-unica: {"aceito":{"t":1794414095922,"certsZ":1794414095914,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"offline":{"t":1794414095922,"certsZ":1794414095914,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"servidor":{"t":1794414095922,"certsZ":1794414095914,"certs":[],"feito":{},"act":{"2026-11-11":1}},"antesReabrir":{"t":1794414095922,"certsZ":1794414095914,"certs":[],"feito":{},"act":{"2026-11-11":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794414095922,"certsZ":1794414095914,"certs":[],"feito":{},"act":{"2026-11-11":1}}}
+Riscos: 1 falha(s) em 1 investigações.
+
+----- firebase-b2a369b.log -----
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-b2a369b/testes/firebase-emulador.test.js"
+
+== contas, isolamento e documento mínimo
+  ✓ conta nova: o documento só tem v, dados, t e atualizado (sem e-mail), e o progresso sem conta não foi levado sozinho
+  ✓ o progresso sem conta continua intacto e o aluno pode levá-lo para a conta
+  ✓ levar para a conta (pedido pelo aluno): o progresso sem conta vai para a nuvem da conta e continua guardado sem conta
+  ✓ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte
+  ✓ conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A
+  ✓ troca de conta com gravação pendente: o estudo de B não vai para A e continua na cópia de B neste aparelho
+  ✓ sair apagando: bloqueado enquanto há estudo fora da nuvem; depois, apaga só a cópia deste aparelho e a nuvem continua com tudo
+  ✓ sem erro de JavaScript nos fluxos de conta
+
+== gravações simultâneas na mesma conta (dois aparelhos)
+  ✓ com transação: 12 marcações feitas ao mesmo tempo em dois aparelhos, nenhuma perdida na nuvem
+  (comparação, sem transação, com a gravação de reserva: 0 de 12 marcações perdidas)
+
+== versão futura, regras e exclusão de conta
+  ✓ documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho
+  ✓ documento corrompido na nuvem: o app não grava por cima, não trava e guarda o estudo no aparelho
+  ✓ regras: uma conta não lê, não grava e não apaga o documento de outra
+  ✓ regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito
+  ✓ regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 3)
+  ✓ regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista 403, consulta 403]
+  ✓ regras: sem login, nada é lido nem gravado [leitura 403, gravação 403]
+  ✓ regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno
+  ✓ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito
+  ✓ regras: o próprio aluno pode apagar o documento dele
+  ✓ gravação recusada pelas regras: a sincronização para, o aviso diz por quê, e o estudo continua neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem recusou a gravação). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ app aberto sem internet: o login não carrega e o aviso diz que tenta de novo; com a conexão de volta, o login aparece sem recarregar
+  ✓ build de homologação: o cartão da conta avisa que é o projeto de teste e pede só contas e dados fictícios
+  ✓ excluir a conta: senha errada ou confirmação diferente de EXCLUIR não excluem nada
+  ✓ excluir a conta: apaga o documento, o login e a cópia local da conta; o progresso sem conta fica; a mensagem diz o que foi apagado
+
+== sessão, interrupções e recuperação
+  ✓ conta encerrada em outra aba: esta aba passa ao progresso sem conta; o que se estuda depois não vai para a conta, e a cópia da conta fica intacta
+  ✓ página fechada antes de gravar na nuvem: o estudo ficou no aparelho e vai para a nuvem quando o app abre de novo
+  ✓ sessão invalidada no servidor: o app volta ao progresso sem conta, e a cópia da conta neste aparelho e a nuvem continuam com tudo
+  ✓ conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha, e nenhuma das duas contas é excluída
+  ✓ exclusão parcial: a mensagem diz que o progresso na nuvem foi apagado e a conta não; o login e a cópia deste aparelho continuam
+  ✓ exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos
+
+== auditoria independente: tipos, sessão offline e certificados
+  ✓ auditoria regras: recusa v texto na criação [403]
+  ✓ auditoria regras: recusa v zero na criação [403]
+  ✓ auditoria regras: recusa v fracionária na criação [403]
+  ✓ auditoria regras: recusa dados mapa na criação [403]
+  ✓ auditoria regras: recusa t texto na criação [403]
+  ✓ auditoria regras: recusa campo extra na criação [403]
+  ✓ auditoria regras: recusa criação sem v [403]
+  ✓ auditoria regras: recusa criação sem dados [403]
+  ✓ auditoria regras: recusa criação sem t [403]
+  ✓ auditoria regras: atualizado é obrigatório e deve corresponder à hora do servidor
+  ✓ auditoria regras: criação válida aceita; campo extra na atualização e subcoleção do próprio UID recusados
+  ✓ auditoria sessão: progresso inicial confirmado no servidor
+  ✓ auditoria sessão: fechar e reabrir com emuladores indisponíveis preserva o estudo pendente
+  ✓ auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login
+  ✓ auditoria certificados: registro e código preservados ao enviar para o Firestore
+  ✓ auditoria certificados: segundo dispositivo recebe o mesmo código, data e registro
+  ✓ auditoria certificados: gravação do segundo dispositivo mantém certificado e progresso anterior
+  ✓ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=true, nuvem=true]
+  ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail
+  ✓ excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem
+
+tudo certo
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+----- f02-f04-b2a369b.log -----
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}
+
+----- hosting-b2a369b.log -----
+✓ alias padrão aponta ao projeto de teste
+✓ artefatos de homologação em diretório separado
+✗ Hosting declara predeploy (necessário; conteúdo exige auditoria) — sem hook, o CLI não executa o verificador Python
+✓ nenhuma reescrita do app intercepta o handler reservado de OAuth
+✓ build oficial permitido no modo oficial
+✓ build eear-teste aceito só como homologação
+✓ authDomain de outro projeto recusado no build
+✓ projectId de produção recusado no build
+✓ sem-marcador é recusado por --site — exit=1
+✗ projeto-divergente é recusado por --homologacao — exit=0
+✗ marcador em página auxiliar não habilita app oficial como homologação — exit=0
+Hosting: 3 falha(s); nenhuma operação no Firebase real.
+
+----- hosting-headers-b2a369b.log -----
+i  emulators: Starting emulators: hosting
+i  emulators: Detected demo project ID "demo-eear-hosting", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  hub: emulator hub unable to start on port 4400, starting on 4401 instead.
+⚠  logging: Logging Emulator unable to start on port 4500, starting on 4501 instead.
+i  hosting[demo-eear-hosting]: Serving hosting files from: site
+✔  hosting[demo-eear-hosting]: Local server: http://127.0.0.1:5200
+i  Running script: node "/tmp/eear-hosting-emu-UZfbwj/provar.js"
+i  hosting: 127.0.0.1 - - [11/Nov/2026:16:17:06 +0000] "GET / HTTP/1.1" 200 - "-" "node"
+{"url":"/","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":null,"referer":"strict-origin-when-cross-origin"}
+{"url":"/index.html","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [11/Nov/2026:16:17:07 +0000] "GET /index.html HTTP/1.1" 200 - "-" "node"
+{"url":"/app.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [11/Nov/2026:16:17:07 +0000] "GET /sw.js HTTP/1.1" 200 - "-" "node"
+{"url":"/sw.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [11/Nov/2026:16:17:07 +0000] "GET /app.js HTTP/1.1" 200 - "-" "node"
+{"url":"/manifest.webmanifest","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [11/Nov/2026:16:17:07 +0000] "GET /manifest.webmanifest HTTP/1.1" 200 805 "-" "node"
+i  hosting: 127.0.0.1 - - [11/Nov/2026:16:17:07 +0000] "GET /__/auth/handler HTTP/1.1" 404 154 "-" "node"
+{"url":"/__/auth/handler","status":404,"nosniff":"nosniff","robots":"noindex, nofollow","cache":null,"referer":"strict-origin-when-cross-origin"}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  hosting: Stopping Hosting Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+----- ci-final.json -----
+[
+  {
+    "sha": "553ff011686497e29272fa542a27b11308407bb2",
+    "runs": [],
+    "checks": []
+  },
+  {
+    "sha": "b2a369b29dd6fcb532260e9948a6e0941b990500",
+    "runs": [
+      {
+        "id": 43055195277,
+        "name": "App Android",
+        "status": "completed",
+        "conclusion": "success",
+        "run_attempt": 1,
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43055195277"
+      },
+      {
+        "id": 43055195232,
+        "name": "Site",
+        "status": "completed",
+        "conclusion": "success",
+        "run_attempt": 1,
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43055195232"
+      },
+      {
+        "id": 43055195496,
+        "name": "Testes",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_attempt": 1,
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43055195496"
+      }
+    ],
+    "checks": [
+      {
+        "name": "publicar",
+        "status": "completed",
+        "conclusion": "skipped",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43055195277/job/130643612883"
+      },
+      {
+        "name": "publicar",
+        "status": "completed",
+        "conclusion": "skipped",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43055195232/job/130642879607"
+      },
+      {
+        "name": "firebase-emulador",
+        "status": "completed",
+        "conclusion": "failure",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43055195496/job/130642660864"
+      },
+      {
+        "name": "plataforma",
+        "status": "completed",
+        "conclusion": "failure",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43055195496/job/130642660464"
+      },
+      {
+        "name": "apk",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43055195277/job/130642660016"
+      },
+      {
+        "name": "montar",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43055195232/job/130642659470"
+      }
+    ]
+  }
+]
+
+----- ci-dns-b2a369b.txt -----
+Job 130642660464
+2026-11-11T16:17:56.8350419Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/main/x/xfonts-utils/xfonts-utils_7.7%2b7build1_amd64v3.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T16:17:56.8352359Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-cyrillic/xfonts-cyrillic_1.0.5%2bnmu1build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T16:17:56.8355204Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-scalable/xfonts-scalable_1.0.3-1.3build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T16:17:56.8368044Z Failed to install browsers
+2026-11-11T16:17:56.8368993Z Error: Installation process exited with code: 100
+
+Job 130642660864
+2026-11-11T16:18:17.3543062Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/main/x/xfonts-utils/xfonts-utils_7.7%2b7build1_amd64v3.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T16:18:17.3544330Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-cyrillic/xfonts-cyrillic_1.0.5%2bnmu1build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T16:18:17.3545393Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-scalable/xfonts-scalable_1.0.3-1.3build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T16:18:17.3563801Z Failed to install browsers
+2026-11-11T16:18:17.3564283Z Error: Installation process exited with code: 100

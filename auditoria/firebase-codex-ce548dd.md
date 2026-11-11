@@ -1,5 +1,7 @@
 # Auditoria complementar — Hosting e preparação de F01
 
+Atualização posterior: [parecer final independente de b2a369b](firebase-codex-b2a369b.md). A correção foi recebida e testada; o parecer continua **REPROVADO**.
+
 Data: 11/11/2026. Snapshot independente: [`ce548dda6b6bde287eec708c7d7896047befc82e`](https://github.com/YNPHAX/EEAR/commit/ce548dda6b6bde287eec708c7d7896047befc82e), branch `claude/eear-study-hydwqt`.
 
 **Parecer mantido: REPROVADO.** Esta etapa não é a auditoria final da correção de F01. Aguarda-se o commit do Claude que a implementará; a aprovação dependerá dos testes independentes e da preservação de F02–F07.
