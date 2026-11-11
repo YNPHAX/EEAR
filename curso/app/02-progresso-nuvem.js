@@ -80,26 +80,27 @@
   /* Contas (veja "contas neste aparelho"): cada identidade tem as próprias chaves (chave@identidade). Sem conta, valem as
      chaves de sempre, onde já está o progresso de quem nunca entrou numa conta. LS_CONTA lembra a conta em uso. */
   const LS_CONTA = 'missao-eear-conta', BASE_K = 'missao-eear-v1-base';
-  /* Abas (14-abas.js): linhagem da versão local (ABAS_K) e o que esta aba sabe dela (abas). */
-  const ABAS_K = 'missao-eear-v1-abas', abas = { raw: null, id: '', lin: [], hist: [] };
+  /* Abas (14-abas.js): diário durável desta aba (DIARIO_K), o que ela sabe da cópia principal (loc) e a liderança da
+     sincronização com a nuvem (lider). ABAS_K: linhagem de uma versão anterior desta correção, só para limpar. */
+  const DIARIO_K = 'missao-eear-v1-diario', ABAS_K = 'missao-eear-v1-abas', QUER_K = 'missao-eear-v1-quer';
+  const loc = { tab: 't' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36), seq: 0, pendente: 0, base: null, bid: '', lin: [], agendado: false, denovo: false, soltarVida: null, vigiadas: new Set(), segura: false, soltarSeg: null, escritora: false, vivos: null, mortas: null }, lider = { ativa: false, soltar: null, conta: null, espera: null };
   const contaUI = { msg: '', adiado: false, ocupado: false }; // estado da tela da conta (veja "contas neste aparelho")
   let identidade = '', recuperar = null, gravouLocal = true;
   const chave = (k, id) => { const i = id === undefined ? identidade : id; return i ? k + '@' + i : k; };
   /* Lê o progresso da identidade em uso; se for ilegível, guarda uma cópia antes que alguma gravação o cubra. */
   function carregar() {
-    let st = novoEstado();
-    abas.raw = null; abas.id = ''; abas.lin = []; abas.hist = [];
+    let st = novoEstado(), t = null;
     try {
-      const t = localStorage.getItem(chave(LS));
-      abas.raw = t;
+      t = localStorage.getItem(chave(LS));
       if (t) {
         let lido = false;
         try { const o = JSON.parse(t); if (o && o.v === 1) { st = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
-        if (!lido) try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* sem espaço para a cópia */ }
-        else lembrarLocal(t, st);
+        if (!lido) { try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* sem espaço para a cópia */ } t = null; }
       }
       recuperar = localStorage.getItem(chave(LS_REC));
+      localStorage.removeItem(chave(ABAS_K));
     } catch (e) { /* sem armazenamento local */ }
+    loc.pendente = 0; partirDe(t, st); abrirAbas(); // 14-abas.js: diários de abas que fecharam são absorvidos logo depois
     return st;
   }
   try {
@@ -116,13 +117,14 @@
   function salvar() {
     S.t = Date.now();
     fixarAncoras();
-    try { S = gravarLocal(S); gravouLocal = true; } catch (e) { gravouLocal = false; } // unido ao que outra aba gravou (14-abas.js); o aviso aparece no próximo render()
+    try { persistir(); gravouLocal = true; } catch (e) { gravouLocal = false; } // diário desta aba, durável na hora (14-abas.js); o aviso aparece no próximo render()
+    consolidar(); // a cópia principal é atualizada com a trava, unida ao que outras abas gravaram
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
   async function gravar() {
-    if (saindo || !nuvem.ref) return;
+    if (saindo || !nuvem.ref || !lider.ativa) return; // só a aba líder sincroniza (14-abas.js)
     if (nuvem.busy) { nuvem.again = true; return; }
     const ref = nuvem.ref, conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
@@ -197,7 +199,8 @@
     const u = uIgual(S, p.local) ? p.u : unirProgresso(p.local, mesclar(JSON.parse(JSON.stringify(S))), p.u).st;
     if (!uIgual(u, S)) {
       S = u;
-      try { S = gravarLocal(S); } catch (e) { /* ignora */ }
+      try { persistir(); } catch (e) { gravouLocal = false; }
+      consolidar();
       if (V.v === 'inicio') V = { v: 'hoje' };
       render();
     }
@@ -207,7 +210,8 @@
   }
   async function sincronizar(ref, conta) {
     nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.lida = false; nuvem.erro = ''; nuvem.falhas = 0; nuvem.conta = String(conta || '');
-    await gravar();
+    await liderar(); // trava de líder (14-abas.js): livre, esta aba sincroniza já; senão, quando a líder fechar
+    if (lider.ativa) await gravar();
   }
   async function conectar() {
     const cl = window.claude;
@@ -333,6 +337,6 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
+    if (el) el.textContent = nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.ref && !lider.ativa ? (sincronizado() ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.') : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 

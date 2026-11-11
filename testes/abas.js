@@ -74,6 +74,15 @@ module.exports = async function testarAbas({ b, srv, base, ok }) {
     ok(tem(s, 'T:a5') && tem(s, 'T:b5') && tem(s, 'T:base') && !X.erros.length, `duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: ${Object.keys(s.feito)}]`);
     await X.ctx.close();
   }
+  { // 7. contagens com as duas abas marcando ao mesmo tempo (F09): 2 iniciais + 20 + 20 = 42, sem perder nem dobrar
+    const X = await aparelho(), B = await X.aba(false);
+    for (let i = 0; i < 20; i++) await Promise.all([X.A.marcar('T:pa' + i), B.marcar('T:pb' + i)]);
+    await espera(1200);
+    const s = await X.ler(), sb = await B.p.evaluate(k => JSON.parse(localStorage.getItem(k)), K);
+    const todas = Array.from({ length: 20 }, (_, i) => i).every(i => tem(s, 'T:pa' + i) && tem(s, 'T:pb' + i));
+    ok(s.act[hj] === 42 && sb.act[hj] === 42 && todas && !X.erros.length, `contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [${s.act[hj]}]`);
+    await X.ctx.close();
+  }
   { // 6. a cópia deste aparelho foi apagada em outra aba (Plano › Dados › Apagar os dados deste aparelho): não volta
     //    pela aba aberta. (Uma aba suspensa durante a exclusão, que acorda com os dados antigos, une sem base e pode
     //    regravar a cópia local; apagar só é permitido quando a nuvem já tem tudo: auditoria/firebase-homologacao.md.)

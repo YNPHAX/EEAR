@@ -100,9 +100,32 @@
     if ('best' in l || 'best' in c) r.best = Math.max(uNum(l.best), uNum(c.best));
     return r;
   }
+  /* O que "outro" tem de novo desde a base (usado no "Zerar" e na cópia local apagada): itens novos ou mudados; contagens
+     (atividade, caderno de erros, tentativas) só com o que foi somado depois da base; simulados novos. */
+  function novidades(base, outro) {
+    const novo = (bm, om) => { const o = {}; Object.keys(om || {}).forEach(k => { if (!uIgual((bm || {})[k], om[k])) o[k] = om[k]; }); return o; };
+    const so = JSON.parse(JSON.stringify(outro));
+    ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { so[k] = novo(base[k], outro[k]); });
+    so.sims = uSims(base.sims, outro.sims, []).filter(x => !base.sims.some(y => uIgual(x, y)));
+    const delta = (m, bm) => Object.keys(m).forEach(k => { const d = uNum(m[k]) - uNum((bm || {})[k]); if (d > 0) m[k] = d; else delete m[k]; });
+    delta(so.act, base.act); delta(so.erros, base.erros);
+    ['mod', 'aula'].forEach(t => Object.keys(so[t]).forEach(k => { const r = so[t][k], b0 = (base[t] || {})[k]; if (r && b0 && typeof r === 'object' && 'tent' in r) r.tent = Math.max(0, uNum(r.tent) - uNum(b0.tent)); }));
+    return so;
+  }
+  /* Contagens somadas pelo que cada lado fez desde a base, também quando os dois lados chegaram ao mesmo valor. */
+  function somarContagens(u, B, l, c) {
+    const soma = (b, x, y) => Math.max(0, uNum(x) + uNum(y) - uNum(b));
+    Object.keys(u.act).forEach(k => { u.act[k] = Math.max(u.act[k], soma(B.act[k], l.act[k], c.act[k])); });
+    Object.keys(u.erros).forEach(k => { if (l.erros[k] !== undefined && c.erros[k] !== undefined) u.erros[k] = Math.max(u.erros[k], soma(B.erros[k], l.erros[k], c.erros[k])); });
+    ['mod', 'aula'].forEach(t => Object.keys(u[t]).forEach(k => { const r = u[t][k], x = l[t][k], y = c[t][k], b = (B[t] || {})[k]; if (r && x && y && b && typeof r === 'object' && typeof x === 'object' && typeof y === 'object' && typeof b === 'object' && 'tent' in r) r.tent = Math.max(uNum(r.tent), soma(b.tent, x.tent, y.tent)); }));
+  }
   /* Une dois progressos já lidos por mesclar(). base: a última versão comum, ou null. Devolve { st, perdido }: perdido
      é o progresso que não pôde ser unido (só no caso do "Zerar" sem base), para virar cópia de recuperação. */
-  function unirProgresso(base, l, c) {
+  /* opc.somar (só entre abas deste aparelho, 14-abas.js, onde a base é exata: a versão principal de que cada lado parte):
+     contagens iguais nos dois lados são incrementos independentes e somam (duas abas indo de 18 para 19 dão 20). Na
+     nuvem, a base pode estar atrasada (gravação ainda não confirmada) e o mesmo incremento aparece dos dois lados: lá,
+     valor igual continua sendo a mesma mudança (F09). */
+  function unirProgresso(base, l, c, opc) {
     const zl = uNum(l.cfg.certsZ), zc = uNum(c.cfg.certsZ), zb = base ? uNum(base.cfg.certsZ) : 0;
     /* "Zerar progresso" que este aparelho ainda não conhecia (ou o inverso): sem base, só dá para separar pelo horário. */
     if (!base && zc > zl && (l.t || 0) > zc) return { st: c, perdido: l };
@@ -112,12 +135,11 @@
     /* Com base, o lado que zerou depois dela apaga só o que já existia na base; o que o outro lado estudou depois fica. */
     if (base && (zl > zb || zc > zb)) {
       const zerou = zc > zb ? c : l, outro = zerou === c ? l : c;
-      const novo = (bm, om) => { const o = {}; Object.keys(om || {}).forEach(k => { if (!uIgual((bm || {})[k], om[k])) o[k] = om[k]; }); return o; };
-      const so = JSON.parse(JSON.stringify(outro));
-      ['mod', 'fc', 'erros', 'feito', 'act', 'ap', 'aula'].forEach(k => { so[k] = novo(base[k], outro[k]); });
-      so.sims = uSims(base.sims, outro.sims, []).filter(x => !base.sims.some(y => uIgual(x, y)));
+      const so = novidades(base, outro);
       so.cfg = Object.assign({}, zerou.cfg);
-      return unirProgresso(zerou, zerou, so);
+      /* Base vazia com a configuração de quem zerou (F08): a base não pode ser o próprio estado zerado, senão o que foi
+         estudado depois do "Zerar" (presente nele e ausente do delta do outro lado) parecia apagado e sumia. */
+      return unirProgresso(mesclar({ v: 1, t: 0, cfg: zerou.cfg }), zerou, so, opc);
     }
     const tb = !!base, B = base || {}, novoL = (l.t || 0) >= (c.t || 0), nv = (x, y) => (novoL ? x : y);
     const u = JSON.parse(JSON.stringify(novoL ? l : c));
@@ -148,6 +170,7 @@
     if (Object.keys(fcv).length) u.cfg.fcv = fcv;
     const anc = uMapa(tb ? bc.fcAncora || {} : null, l.cfg.fcAncora, c.cfg.fcAncora, (x, y) => uMin(x, y));
     if (Object.keys(anc).length) u.cfg.fcAncora = anc;
+    if (opc && opc.somar && tb) somarContagens(u, B, l, c);
     u.cfg.certs = (l.cfg.certs || []).slice();
     if (l.cfg.certsZ) u.cfg.certsZ = l.cfg.certsZ;
     juntarCerts(u.cfg, c.cfg, u);

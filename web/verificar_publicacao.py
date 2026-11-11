@@ -24,7 +24,10 @@ Uso:
   python3 -I web/verificar_publicacao.py verificar app/www --app     (conteúdo do app de Android)
   python3 -I web/verificar_publicacao.py verificar missao-eear.apk --apk
   python3 -I web/verificar_publicacao.py verificar <pasta> --homologacao  (build de homologação do Firebase, para o
-      Hosting do projeto de teste: mesma conferência do material do site, e a pasta TEM de ser de homologação)
+      Hosting do projeto de teste: mesma conferência do material do site, e a entrada do app TEM de ter a configuração
+      de homologação: projeto eear-teste, marca, authDomain do projeto)
+  python3 -I web/verificar_publicacao.py verificar-hosting <pasta enviada> <projeto>  (predeploy do Hosting, com
+      "$RESOURCE_DIR" e "$GCLOUD_PROJECT" do Firebase CLI: projeto efetivo e pasta efetiva do deploy)
   python3 -I web/verificar_publicacao.py validar                     (confere o arquivo de impressões)
   python3 -I web/verificar_publicacao.py autoteste [-v]              (confere a própria verificação, com material de mentira)
   python3 -I web/verificar_publicacao.py conferir-workflows          (confere as camadas 1 e 2)
@@ -445,7 +448,51 @@ def carregar(imp_arq):
             'aprovadas': {publicado(a): s for a, s in origem.items()}, 'sha': canonico(imp)}
 
 
-def verificar(alvo, modo, imp_arq=IMPRESSOES, publicar=True, homologacao_exigida=False):
+PROJETOS_HOMOLOGACAO = ('eear-teste',)
+CONFIG_FIREBASE = re.compile(r'window\.EEAR_FIREBASE\s*=\s*(\{[^{}]*\})\s*;')
+
+
+def config_homologacao(alvo, projeto=None):
+    """H02: o build de homologação é validado pela configuração EFETIVA da entrada do app (index.html), e não por uma marca
+    em qualquer arquivo: uma única atribuição window.EEAR_FIREBASE, projeto de homologação, "homologacao": true,
+    authDomain do próprio projeto e, quando informado (deploy), o mesmo projeto do deploy."""
+    try:
+        txt = open(os.path.join(alvo, 'index.html'), encoding='utf-8').read()
+    except (OSError, UnicodeDecodeError):
+        return [(alvo, 'sem index.html legível: não dá para conferir a configuração do Firebase da entrada do app')]
+    achados = CONFIG_FIREBASE.findall(txt)
+    if len(achados) != 1:
+        return [(alvo, f'a entrada do app (index.html) tem {len(achados)} configurações do Firebase; um build de homologação tem exatamente uma')]
+    try:
+        cfg = json.loads(achados[0])
+    except ValueError:
+        return [(alvo, 'a configuração do Firebase da entrada do app não é JSON válido')]
+    pid, erros = cfg.get('projectId'), []
+    if pid not in PROJETOS_HOMOLOGACAO:
+        erros.append(f'projeto da entrada do app ({pid}) não é de homologação ({", ".join(PROJETOS_HOMOLOGACAO)})')
+    if cfg.get('homologacao') is not True:
+        erros.append('a configuração da entrada do app não está marcada como homologação')
+    if isinstance(pid, str) and cfg.get('authDomain') not in (pid + '.firebaseapp.com', pid + '.web.app'):
+        erros.append(f'authDomain ({cfg.get("authDomain")}) não é do projeto {pid}')
+    if projeto is not None and projeto != pid:
+        erros.append(f'o deploy vai para o projeto {projeto or "(não informado)"}, e o build é do projeto {pid}')
+    return [(alvo, e) for e in erros]
+
+
+def verificar_hosting(alvo, projeto):
+    """H01: chamado pelo predeploy do Hosting (firebase.json), que recebe do Firebase CLI o projeto efetivo do deploy
+    ($GCLOUD_PROJECT, inclusive com --project) e a pasta efetivamente enviada ($RESOURCE_DIR, o hosting.public usado).
+    Saída diferente de 0 interrompe o deploy antes de qualquer envio (lib/deploy/lifecycleHooks.js do firebase-tools)."""
+    if projeto not in PROJETOS_HOMOLOGACAO:
+        print(f'BLOQUEADO: deploy do Hosting só no projeto de homologação ({", ".join(PROJETOS_HOMOLOGACAO)}), não em "{projeto}"')
+        return 1
+    if not alvo or not os.path.isdir(alvo):
+        print(f'ERRO: a pasta do Hosting ({alvo or "não informada"}) não existe; monte o build de homologação antes')
+        return 2
+    return verificar(alvo, 'site', homologacao_exigida=True, projeto=projeto)
+
+
+def verificar(alvo, modo, imp_arq=IMPRESSOES, publicar=True, homologacao_exigida=False, projeto=None):
     """publicar=False só na conferência do próprio build (conferir_build): um build de homologação do Firebase pode ser
     montado e testado, mas a verificação de publicação (a dos workflows) o recusa. homologacao_exigida=True (opção
     --homologacao, para o Hosting do projeto de teste): confere o material como no site e exige a marca de homologação,
@@ -473,8 +520,10 @@ def verificar(alvo, modo, imp_arq=IMPRESSOES, publicar=True, homologacao_exigida
         homolog = homologacao(alvo, modo)
         if publicar:
             achados += homolog
-        elif homologacao_exigida and not homolog:
-            achados.append((alvo, 'a opção --homologacao só vale para um build de homologação do Firebase (web/build.py com EEAR_FIREBASE_CONFIG)'))
+        elif homologacao_exigida:
+            if not homolog:
+                achados.append((alvo, 'a opção --homologacao só vale para um build de homologação do Firebase (web/build.py com EEAR_FIREBASE_CONFIG)'))
+            achados += config_homologacao(alvo, projeto)
         elif homolog:
             print('AVISO: build de homologação do Firebase (projeto de teste): serve para testes e não pode ser publicado')
     except NaoVerificavel as e:
@@ -1322,9 +1371,12 @@ def autoteste(verboso=False):
             ('outros', 'saída vazia (sem index.html)', lambda: verificar(os.makedirs(cam('vazio')) or cam('vazio'), 'site', imp), 1),
             ('outros', 'build de homologação do Firebase (site)', lambda: verificar(site('homolog', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId": "eear-teste", "homologacao": true};</script><p>Curso</p>'}), 'site', imp), 1),
             ('outros', 'build de homologação do Firebase (APK)', lambda: verificar(apk('homolog.apk', [('assets/public/teste.html', '<script>window.EEAR_FIREBASE = {"homologacao":true};</script>')]), 'apk', imp), 1),
-            ('outros', '--homologacao: build de homologação sem material restrito é aceito', lambda: verificar(site('homolog-ok', {'index.html': '<script>window.EEAR_FIREBASE = {"homologacao": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 0),
+            ('outros', '--homologacao: build de homologação sem material restrito é aceito', lambda: verificar(site('homolog-ok', {'index.html': '<script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 0),
+            ('outros', '--homologacao: projeto divergente com a marca é recusado (H02)', lambda: verificar(site('homolog-divergente', {'index.html': '<script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-producao.web.app\", \"projectId\": \"eear-producao\", \"appId\": \"x\", \"homologacao\": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: app oficial com a marca só numa página auxiliar é recusado (H02)', lambda: verificar(site('homolog-aux', {'privacidade.html': '<script>const nota = {"homologacao": true};</script>'}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: projeto do deploy diferente do build é recusado (H01)', lambda: verificar(site('homolog-deploy', {'index.html': '<script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True, projeto='eear-producao'), 1),
             ('outros', '--homologacao: build oficial (sem a marca) é recusado', lambda: verificar(site('homolog-oficial'), 'site', imp, homologacao_exigida=True), 1),
-            ('outros', '--homologacao: material restrito continua recusado', lambda: verificar(site('homolog-restrito', {'index.html': '<script>window.EEAR_FIREBASE = {"homologacao": true};</script><p>Curso</p>', 'dados/material.js': restrito}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: material restrito continua recusado', lambda: verificar(site('homolog-restrito', {'index.html': '<script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><p>Curso</p>', 'dados/material.js': restrito}), 'site', imp, homologacao_exigida=True), 1),
             ('outros', 'projeto de teste sem marcador (site)', lambda: verificar(site('teste-sem-marca', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId":"eear-teste"};</script>'}), 'site', imp), 1),
             ('outros', 'projeto de teste com marcador falso (app)', lambda: verificar(site('teste-falso', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId":"eear-teste","homologacao":false};</script>'}), 'app', imp), 1),
             ('outros', 'configuração de teste em JavaScript separado (site)', lambda: verificar(site('teste-js', {'dados/config.js': "window.EEAR_FIREBASE = {projectId:'eear-teste'};"}), 'site', imp), 1),
@@ -1426,6 +1478,8 @@ if __name__ == '__main__':
         sys.exit(verificar(a[1], a[2][2:]))
     if a[:1] == ['verificar'] and len(a) == 3 and a[2] == '--homologacao':
         sys.exit(verificar(a[1], 'site', homologacao_exigida=True))
+    if a[:1] == ['verificar-hosting'] and len(a) == 3:
+        sys.exit(verificar_hosting(a[1], a[2]))
     if a == ['validar']:
         sys.exit(validar())
     if a[:1] == ['autoteste'] and a[1:] in ([], ['-v']):

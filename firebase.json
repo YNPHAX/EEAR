@@ -30,7 +30,19 @@
             "value": "no-cache"
           }
         ]
+      },
+      {
+        "source": "/",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
       }
+    ],
+    "predeploy": [
+      "python3 -I web/verificar_publicacao.py verificar-hosting \"$RESOURCE_DIR\" \"$GCLOUD_PROJECT\""
     ]
   },
   "firestore": {

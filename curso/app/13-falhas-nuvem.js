@@ -31,6 +31,7 @@
     return 'A sincronização com a nuvem parou (' + motivoErroNuvem(nuvem.erro) + '). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).';
   }
   function retomarNuvem() {
+    consolidar(); // diários de abas que fecharam enquanto esta estava no fundo (14-abas.js)
     if (FB && !conta.api && conta.pronto && !conta.iniciando) contaIniciar(); // o login não carregou (sem internet ao abrir)
     if (nuvem.ref && !nuvem.busy && (nuvem.semRede || nuvem.pendente)) { clearTimeout(nuvem.tRetry); nuvem.falhas = 0; gravar(); }
   }
@@ -39,7 +40,7 @@
      trocando de página, o navegador dispara pagehide antes; aí nada começa: uma união terminada depois gravaria a cópia
      desta página por cima do que outra aba ou outra abertura já guardou neste aparelho. */
   let saindo = false;
-  window.addEventListener('pagehide', () => { saindo = true; clearTimeout(tSave); clearTimeout(nuvem.tRetry); });
+  window.addEventListener('pagehide', () => { saindo = true; clearTimeout(tSave); clearTimeout(nuvem.tRetry); soltarLocal(false); }); // a cópia principal já foi gravada (14-abas.js)
   window.addEventListener('pageshow', ev => {
     saindo = false;
     if (ev.persisted) { S = carregar(); render(); } // outra abertura pode ter atualizado o cache enquanto esta ficou suspensa
@@ -47,5 +48,6 @@
   });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') { retomarNuvem(); return; }
+    soltarLocal(false); // no fundo, a aba pode ser suspensa: não fica com a trava local (14-abas.js)
     if (!saindo && nuvem.ref && nuvem.pendente && !nuvem.busy) { clearTimeout(tSave); gravar(); } // indo para o fundo: envia já
   });

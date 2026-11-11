@@ -10,6 +10,8 @@
     if (id === identidade) return false;
     clearTimeout(tSave);
     clearTimeout(nuvem.tRetry); nuvem.erro = ''; nuvem.falhas = 0;
+    if (lider.soltar) lider.soltar(); lider.soltar = null; lider.ativa = false; lider.conta = null; lider.espera = null; // a liderança da nuvem era da conta anterior
+    soltarLocal(false); loc.escritora = false; loc.vivos = null; // a trava local também (14-abas.js)
     nuvem.ref = null; nuvem.on = false; nuvem.again = false; nuvem.futura = false; nuvem.bloqueada = false; nuvem.pendente = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.refPausada = null; nuvem.conta = id;
     identidade = id;
     try { if (id) localStorage.setItem(LS_CONTA, id); else localStorage.removeItem(LS_CONTA); } catch (e) { /* sem armazenamento */ }
@@ -20,8 +22,9 @@
   }
   /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
   function apagarLocal(id) {
-    [LS, LS_REC, BASE_K, ABAS_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
-    if (id === identidade) { S = novoEstado(); recuperar = null; abas.raw = null; abas.id = ''; abas.lin = []; abas.hist = []; }
+    [LS, LS_REC, BASE_K, ABAS_K, QUER_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
+    try { const pre = chave(DIARIO_K, id) + '#'; Object.keys(localStorage).filter(k => k.indexOf(pre) === 0).forEach(k => localStorage.removeItem(k)); } catch (e) { /* ignora */ } // diários das abas desta conta
+    if (id === identidade) { S = novoEstado(); recuperar = null; loc.pendente = 0; partirDe(null, null); }
   }
   function contasGuardadas() {
     const ids = new Set();
