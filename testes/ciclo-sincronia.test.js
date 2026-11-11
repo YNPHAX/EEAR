@@ -20,6 +20,7 @@ const { execFileSync } = require('child_process'), { chromium } = require('playw
   try {
     for (const modo of ['recusa', 'callback', 'saida']) {
       const ctx = await b.newContext({ serviceWorkers: 'block' }), p = await ctx.newPage();
+      await ctx.route('**/*', r => new URL(r.request().url()).origin === `http://127.0.0.1:${srv.address().port}` ? r.continue() : r.abort());
       await p.goto(`http://127.0.0.1:${srv.address().port}/`);
       const resultado = await p.evaluate(async modo => {
         const a = window.__audit, idA = 'firebase:auditoria-A', idB = 'firebase:auditoria-B';
