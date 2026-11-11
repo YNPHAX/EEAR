@@ -35,9 +35,14 @@ function servir(raiz) {
    sem base, que não apaga nada por ausência); até o PR #21, lia e gravava em seguida e perdia de 5 a 6 de 12. */
 function montar(semTransacao) {
   const saida = fs.mkdtempSync(path.join(os.tmpdir(), 'eear-fb-'));
-  execFileSync('python3', ['web/build.py', saida], { cwd: RAIZ, stdio: 'ignore' });
+  // Nunca herdar web/firebase.json ou EEAR_FIREBASE_CONFIG do desenvolvedor: a configuração real, emitida depois
+  // do marcador EEAR_SITE, sobrescreveria a do emulador injetada abaixo. null desliga o Firebase durante o build.
+  const config = saida + '.json'; fs.writeFileSync(config, 'null');
+  try { execFileSync('python3', ['web/build.py', saida], { cwd: RAIZ, stdio: 'ignore', env: Object.assign({}, process.env, { EEAR_FIREBASE_CONFIG: config }) }); }
+  finally { fs.rmSync(config, { force: true }); }
   const cfg = { apiKey: 'demo', authDomain: `${PROJ}.firebaseapp.com`, projectId: PROJ, appId: 'demo', sincronizar: true, homologacao: true, emuladores: { auth: AU, firestore: ['127.0.0.1', 8080] } };
   const ix = path.join(saida, 'index.html'); let h = fs.readFileSync(ix, 'utf8');
+  if (h.includes('window.EEAR_FIREBASE')) throw new Error('Fixture recusada: o build herdou configuração Firebase externa.');
   if (!h.includes('window.EEAR_SITE = "site";')) throw new Error('marcador do site não encontrado');
   fs.writeFileSync(ix, h.replace('window.EEAR_SITE = "site";', `window.EEAR_SITE = "site"; window.EEAR_FIREBASE = ${JSON.stringify(cfg)};`));
   if (semTransacao) { const a = path.join(saida, 'app.js'), s = fs.readFileSync(a, 'utf8'), m = '      transacao: f =>'; if (!s.includes(m)) throw new Error('transacao não encontrada'); fs.writeFileSync(a, s.replace(m, '      _semTransacao: f =>')); }
@@ -265,6 +270,8 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     await G.p.fill('#conta-senha', 'senha-gui-1'); await G.p.fill('#conta-confirma', 'EXCLUIR'); await G.clicar('contaexcluirok'); await G.p.waitForSelector('#fb-email', { timeout: 15000 }); await G.p.waitForTimeout(500);
     ok(!!(await entrar('gui@exemplo.test', 'senha-gui-1')).error && !(await docAdmin(uidG)) && (await G.ler('missao-eear-v1@firebase:' + uidG)) === null && !G.erros.length, 'exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos');
     await G.ctx.close(); }
+
+  await require('./firebase-auditoria.js')({ ok, req, AU, DOCS, PROJ, campos, gravarComo, aparelho, marcar, progresso, ate, url: srv.url });
 
   /* Login com o Google (janela do emulador no lugar do Google) e exclusão com reautenticação pelo Google. O SDK carrega
      apis.google.com/js/api.js para o fluxo de janela, também com o emulador: sem acesso a esse endereço, a janela não

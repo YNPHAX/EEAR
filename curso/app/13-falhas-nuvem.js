@@ -39,8 +39,12 @@
      trocando de página, o navegador dispara pagehide antes; aí nada começa: uma união terminada depois gravaria a cópia
      desta página por cima do que outra aba ou outra abertura já guardou neste aparelho. */
   let saindo = false;
-  window.addEventListener('pagehide', () => { saindo = true; });
-  window.addEventListener('pageshow', () => { saindo = false; });
+  window.addEventListener('pagehide', () => { saindo = true; clearTimeout(tSave); clearTimeout(nuvem.tRetry); });
+  window.addEventListener('pageshow', ev => {
+    saindo = false;
+    if (ev.persisted) { S = carregar(); render(); } // outra abertura pode ter atualizado o cache enquanto esta ficou suspensa
+    retomarNuvem();
+  });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') { retomarNuvem(); return; }
     if (!saindo && nuvem.ref && nuvem.pendente && !nuvem.busy) { clearTimeout(tSave); gravar(); } // indo para o fundo: envia já

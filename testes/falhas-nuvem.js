@@ -84,15 +84,16 @@ module.exports = async function testarFalhasNuvem({ b, srv, ok }) {
     Object.assign(N, { doc: null, usuario: 'falha-saida', erros: [], fora: false, tentativas: 0 });
     const A = await aparelho(); await A.marcar('T:base'); await ate(async () => naNuvem('T:base'));
     /* Espera a sincronização de T:base terminar (depois de gravar, ela ainda confere a nuvem): uma marcação feita no meio
-       dela vai para a nuvem logo no fim dela (comportamento normal, de antes desta mudança), e o teste a confundia com o
-       envio antecipado. Era a falha intermitente do CI no commit 5aca0a4 (1 em 6 execuções aqui). */
+       dela vai para a nuvem logo no fim dela (comportamento normal), e o teste a confundia com o envio antecipado. Era a
+       falha intermitente do CI no commit 5aca0a4. */
     await espera(1000);
-    /* Mede QUANDO a gravação acontece, em vez de esperar um tempo fixo (no CI, mais lento, a espera fixa podia cruzar o
-       intervalo normal de 1,5 s): o envio antecipado gravaria em milissegundos; o caminho normal, depois do intervalo. */
-    const t0 = Date.now(); await A.marcar('T:saindo');
+    // Relógio parado: uma máquina lenta não pode consumir os 1,5 s entre os dois comandos do Playwright (auditoria Codex).
+    await A.p.clock.install(); await A.p.clock.pauseAt(new Date(Date.now() + 1000));
+    const antes = N.tentativas; await A.marcar('T:saindo');
     await A.p.evaluate(() => { window.dispatchEvent(new Event('pagehide')); Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
-    const chegou = await ate(async () => naNuvem('T:saindo'), 8000), ms = N.gravouEm - t0;
-    ok(chegou && ms >= 1400 && await A.local('T:saindo') && !A.erros.length, `página fechando: o envio antecipado não começa; o estudo fica no aparelho e segue o intervalo normal (gravou ${ms} ms depois de marcar)`);
+    await A.p.clock.runFor(1700);
+    /* Na saída, nada começa nem o intervalo pendente envia (F02): o estudo fica no aparelho e vai na próxima abertura. */
+    ok(N.tentativas === antes && !naNuvem('T:saindo') && await A.local('T:saindo') && !A.erros.length, 'página fechando: nada é enviado depois de pagehide, nem pelo intervalo pendente (o estudo fica no aparelho)');
     await A.ctx.close();
   }
 };

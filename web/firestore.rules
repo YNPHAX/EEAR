@@ -4,7 +4,8 @@ rules_version = '2';
 // - ninguém lista a coleção alunos (nem o próprio aluno: o app só lê o documento dele pelo id);
 // - qualquer outro caminho é recusado (regra final).
 // O documento guarda só v (versão do formato), dados (o progresso, em texto), t (quando o aparelho gravou) e
-// atualizado (hora do servidor): nada de nome ou e-mail, que já ficam no login. Um app antigo (v menor) não grava por cima
+// atualizado (hora do servidor). dados pode conter cfg.nome, usado no certificado; não é um campo anônimo.
+// As regras validam o envelope, não o JSON dentro de dados. Um app antigo (v menor) não grava por cima
 // de um documento de versão mais nova. Estas regras não são as do banco de dados do Claude (web/regras-claude.json):
 // lá a autorização é por nível de compartilhamento do artifact; aqui, pelo uid do Firebase Authentication.
 // Testado com o emulador oficial em testes/firebase-emulador.test.js.

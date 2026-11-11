@@ -50,3 +50,4 @@ Publicação: o workflow Site publica no GitHub Pages só quando é disparado à
 
 ## Entrega
 - Informe o que mudou, quais verificações foram executadas, seus resultados e as pendências.
+- Auditoria independente Firebase: `node testes/ciclo-sincronia.test.js` (requer Playwright; transporte controlado no app real, sem serviço externo). A suíte `firebase-emulador.test.js` inclui `testes/firebase-auditoria.js` (matriz de campos, sessão persistida offline e certificados). Com `EEAR_SONDA_ABAS=1`, também executa a sonda de perda entre abas offline; é diagnóstica e falha enquanto esse defeito permanecer aberto.

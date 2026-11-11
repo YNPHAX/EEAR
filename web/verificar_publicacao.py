@@ -379,21 +379,22 @@ def problemas(alvo, imp, modo):
     return achados
 
 
-HOMOLOGACAO = re.compile(rb'"homologacao"\s*:\s*true')
+HOMOLOGACAO = re.compile(rb"""(?:["']?homologacao["']?\s*:\s*true\b|["']?projectId["']?\s*:\s*["']eear-teste["'])""")
 
 
 def homologacao(alvo, modo):
-    """Um build feito com a configuração do Firebase de homologação (web/build.py marca "homologacao": true) nunca é
-    publicado: ele aponta para o projeto de teste e avisa que é ambiente de teste."""
+    """Recusa tanto o marcador quanto o próprio projeto de teste, mesmo sem marcador ou em script separado.
+    É uma barreira contra publicação acidental; não é um analisador de JavaScript arbitrário/ofuscado."""
+    extensoes = ('.html', '.js', '.json')
     if modo == 'apk':
         try:
             with zipfile.ZipFile(alvo) as z:
-                paginas = [z.read(n) for n in z.namelist() if n.startswith('assets/public/') and n.endswith('.html')]
+                paginas = [z.read(n) for n in z.namelist() if n.startswith('assets/public/') and n.endswith(extensoes)]
         except (OSError, zipfile.BadZipFile):
             return []  # o APK ilegível já é recusado pela análise acima
     else:
         paginas = [open(os.path.join(r, n), 'rb').read() for r, _, ns in os.walk(alvo) for n in ns
-                   if n.endswith('.html') and os.path.isfile(os.path.join(r, n)) and not os.path.islink(os.path.join(r, n))]
+                   if n.endswith(extensoes) and os.path.isfile(os.path.join(r, n)) and not os.path.islink(os.path.join(r, n))]
     return [(alvo, 'build de homologação do Firebase (projeto de teste): não pode ser publicado')] if any(HOMOLOGACAO.search(p) for p in paginas) else []
 
 
@@ -1324,6 +1325,11 @@ def autoteste(verboso=False):
             ('outros', '--homologacao: build de homologação sem material restrito é aceito', lambda: verificar(site('homolog-ok', {'index.html': '<script>window.EEAR_FIREBASE = {"homologacao": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 0),
             ('outros', '--homologacao: build oficial (sem a marca) é recusado', lambda: verificar(site('homolog-oficial'), 'site', imp, homologacao_exigida=True), 1),
             ('outros', '--homologacao: material restrito continua recusado', lambda: verificar(site('homolog-restrito', {'index.html': '<script>window.EEAR_FIREBASE = {"homologacao": true};</script><p>Curso</p>', 'dados/material.js': restrito}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', 'projeto de teste sem marcador (site)', lambda: verificar(site('teste-sem-marca', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId":"eear-teste"};</script>'}), 'site', imp), 1),
+            ('outros', 'projeto de teste com marcador falso (app)', lambda: verificar(site('teste-falso', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId":"eear-teste","homologacao":false};</script>'}), 'app', imp), 1),
+            ('outros', 'configuração de teste em JavaScript separado (site)', lambda: verificar(site('teste-js', {'dados/config.js': "window.EEAR_FIREBASE = {projectId:'eear-teste'};"}), 'site', imp), 1),
+            ('outros', 'configuração de teste em JavaScript separado (APK)', lambda: verificar(apk('teste-js.apk', [('assets/public/dados/config.js', "window.EEAR_FIREBASE = {projectId:'eear-teste'};")]), 'apk', imp), 1),
+            ('outros', 'marcador em JavaScript separado (APK)', lambda: verificar(apk('marca-js.apk', [('assets/public/dados/config.js', 'window.EEAR_FIREBASE = {"homologacao":true};')]), 'apk', imp), 1),
             ('outros', 'login sem a marca de homologação continua aceito', lambda: verificar(site('com-login', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId": "outro"};</script><p>Curso</p>'}), 'site', imp), 0),
             ('outros', 'nome com "apostila", mesmo com conteúdo legítimo', lambda: verificar(site('nome', {'dados/apostila-propria.js': 'x=1'}), 'site', imp), 1),
             ('falha segura', 'impressões ausentes', lambda: verificar(site('f1'), 'site', cam('nao-existe.json')), 2),
