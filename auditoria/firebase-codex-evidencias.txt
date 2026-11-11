@@ -1,0 +1,413 @@
+EEAR — evidências da auditoria independente Codex
+Gerado em UTC: 2026-11-11T13:47:24.141342+00:00
+Base: 5aca0a4e2cd051910de026ef68c96c245f8381a9
+Runtime de produto testado: árvore ac4331b2a93cbb595bd030d3aca339ab749dd94b (commit 15173cc).
+Fixture de isolamento posterior: árvore 6d2b86e96cff1b7545ec186a679ea600f07ecae2 (commit 96eaf65).
+Somente emuladores demo-eear. Nenhum Firebase real acessado.
+Node 24.22.1; Java 21; Firebase CLI 15.35.0; SDK 12.19.0; Playwright 1.63.0; Chromium 153.0.8010.12.
+Comandos dos testes: NODE_PATH=/tmp/eear-audit-deps/node_modules PLAYWRIGHT_BROWSERS_PATH=/tmp/eear-audit-browsers
+  node testes/plataforma.test.js
+  node testes/ciclo-sincronia.test.js [build original ou corrigido]
+  EEAR_FIREBASE_SDK=/tmp/eear-audit-deps/node_modules/firebase EEAR_FIREBASE_CLI=/tmp/eear-audit-deps/node_modules/.bin/firebase node testes/firebase-emulador.test.js
+  EEAR_SONDA_ABAS=1 junto ao comando anterior reproduz F01 (exit 1 esperado enquanto o defeito persistir).
+  EEAR_FIREBASE_CONFIG=/tmp/nao-ler-config-real-do-desenvolvedor.json junto ao comando normal verifica isolamento da fixture.
+  python3 -I web/verificar_publicacao.py autoteste; validar; conferir-workflows (comandos separados).
+  node testes/atualizacao.js /tmp/eear-original-site /tmp/eear-corrigido-site
+  node testes/comparar-conteudo.js /tmp/eear-base-audit /workspace/eear-audit
+
+Resumos e SHA-256 dos logs completos (os arquivos completos estão em /tmp/eear-audit-evidence):
+plataforma-original.log: SHA256=50b1cb2df807911249ee670a4909a28e09400b8a0a7fa15496017063b65b6c9e passam=227 falhas=0; última linha=['tudo certo']
+plataforma-corrigido.log: SHA256=51ea23ff72b45b010d76c49e1202485b57a1b913c2b90cb86dcd64c9a4aaa12d passam=227 falhas=0; última linha=['tudo certo']
+firebase-original.log: SHA256=e4817a4413092fe957a220ed1e9aa6be9038211714ac452086e9806f4488a3da passam=32 falhas=0; última linha=['i  logging: Stopping Logging Emulator']
+firebase-corrigido.log: SHA256=d7d6cb31b3943a4e0077a6fcfeb241790d7f854e790660805c6ae233b7be3fde passam=49 falhas=0; última linha=['i  logging: Stopping Logging Emulator']
+firebase-isolamento.log: SHA256=d7d6cb31b3943a4e0077a6fcfeb241790d7f854e790660805c6ae233b7be3fde passam=49 falhas=0; última linha=['i  logging: Stopping Logging Emulator']
+firebase-sonda-abas.log: SHA256=857ac356bd397362c1e159315320b40fab8d4b0a2402dd46743de1b604c09aa6 passam=49 falhas=1; última linha=['Error: Script "node "/workspace/eear-audit/testes/firebase-emulador.test.js"" exited with code 1']
+ciclo-original.log: SHA256=14e3ff238c127c351db46f58f5e1affaea8d526d4aaec343743327b3aa8f7113 passam=0 falhas=3; última linha=['✗ saida: {"preservou":false}']
+ciclo-corrigido.log: SHA256=998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2 passam=3 falhas=0; última linha=['✓ saida: {"preservou":true}']
+publicacao-regressao-original.log: SHA256=44c11f5436bd3bc2801cd9a84fec708009744281458ce7f121c843c554ce4914 passam=0 falhas=0; última linha=['FALHOU: 5 de 180 casos do autoteste']
+autoteste-original.log: SHA256=ef76f3fa6c398fdee18387e416c939d2247fc4c86d7ff1567d9baa5f1e01bf65 passam=0 falhas=0; última linha=['OK: autoteste da verificação (175 casos)']
+atualizacao.log: SHA256=a1f2c01ceb06985e165b95d57fb1d9e7440f82363f3da341864660102a9cca19 passam=7 falhas=0; última linha=['tudo certo']
+builds.log: SHA256=02da7c9e0480643b1cb7ee378354a6dde0ea7b8c0f1e64642533ad1763d5d209 passam=0 falhas=0; última linha=['APK sintetico com assets de homologacao: publicacao recusada (nao e compilacao Android)']
+lint.log: SHA256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 passam=0 falhas=0; última linha=[]
+
+----- ciclo-original.log -----
+✗ recusa: {"erro":"permission-denied","ativa":false,"enviadoA":null,"enviadoB":null}
+✗ callback: {"erro":"","ativa":true,"enviadoA":{"T:B":true},"enviadoB":{"T:B":true}}
+✗ saida: {"preservou":false}
+
+----- ciclo-corrigido.log -----
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}
+
+----- publicacao-regressao-original.log -----
+AUTOTESTE FALHOU: [FALHA] [outros] projeto de teste sem marcador (site): esperado 1, obtido 0
+AUTOTESTE FALHOU: [FALHA] [outros] projeto de teste com marcador falso (app): esperado 1, obtido 0
+AUTOTESTE FALHOU: [FALHA] [outros] configuração de teste em JavaScript separado (site): esperado 1, obtido 0
+AUTOTESTE FALHOU: [FALHA] [outros] configuração de teste em JavaScript separado (APK): esperado 1, obtido 0
+AUTOTESTE FALHOU: [FALHA] [outros] marcador em JavaScript separado (APK): esperado 1, obtido 0
+FALHOU: 5 de 180 casos do autoteste
+
+----- fixture-original.txt -----
+Ordem de configuração reproduzida sem executar Firebase: ['demo-eear', 'eear-teste']; última configuração sobrescreve a primeira.
+
+----- ci-original-falha.txt -----
+2026-11-11T05:22:47.8671354Z   ✗ página fechando: o envio antecipado não começa (o estudo fica no aparelho e segue o caminho normal)
+2026-11-11T05:22:47.9244145Z 1 falha(s)
+2026-11-11T05:22:47.9402165Z ##[error]Process completed with exit code 1.
+
+----- firebase-corrigido.log -----
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-audit/testes/firebase-emulador.test.js"
+
+== contas, isolamento e documento mínimo
+  ✓ conta nova: o documento só tem v, dados, t e atualizado (sem e-mail), e o progresso sem conta não foi levado sozinho
+  ✓ o progresso sem conta continua intacto e o aluno pode levá-lo para a conta
+  ✓ levar para a conta (pedido pelo aluno): o progresso sem conta vai para a nuvem da conta e continua guardado sem conta
+  ✓ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte
+  ✓ conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A
+  ✓ troca de conta com gravação pendente: o estudo de B não vai para A e continua na cópia de B neste aparelho
+  ✓ sair apagando: bloqueado enquanto há estudo fora da nuvem; depois, apaga só a cópia deste aparelho e a nuvem continua com tudo
+  ✓ sem erro de JavaScript nos fluxos de conta
+
+== gravações simultâneas na mesma conta (dois aparelhos)
+  ✓ com transação: 12 marcações feitas ao mesmo tempo em dois aparelhos, nenhuma perdida na nuvem
+  (comparação, sem transação, com a gravação de reserva: 0 de 12 marcações perdidas)
+
+== versão futura, regras e exclusão de conta
+  ✓ documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho
+  ✓ documento corrompido na nuvem: o app não grava por cima, não trava e guarda o estudo no aparelho
+  ✓ regras: uma conta não lê, não grava e não apaga o documento de outra
+  ✓ regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito
+  ✓ regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 3)
+  ✓ regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista 403, consulta 403]
+  ✓ regras: sem login, nada é lido nem gravado [leitura 403, gravação 403]
+  ✓ regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno
+  ✓ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito
+  ✓ regras: o próprio aluno pode apagar o documento dele
+  ✓ gravação recusada pelas regras: a sincronização para, o aviso diz por quê, e o estudo continua neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem recusou a gravação). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ app aberto sem internet: o login não carrega e o aviso diz que tenta de novo; com a conexão de volta, o login aparece sem recarregar
+  ✓ build de homologação: o cartão da conta avisa que é o projeto de teste e pede só contas e dados fictícios
+  ✓ excluir a conta: senha errada ou confirmação diferente de EXCLUIR não excluem nada
+  ✓ excluir a conta: apaga o documento, o login e a cópia local da conta; o progresso sem conta fica; a mensagem diz o que foi apagado
+
+== sessão, interrupções e recuperação
+  ✓ conta encerrada em outra aba: esta aba passa ao progresso sem conta; o que se estuda depois não vai para a conta, e a cópia da conta fica intacta
+  ✓ página fechada antes de gravar na nuvem: o estudo ficou no aparelho e vai para a nuvem quando o app abre de novo
+  ✓ sessão invalidada no servidor: o app volta ao progresso sem conta, e a cópia da conta neste aparelho e a nuvem continuam com tudo
+  ✓ conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha, e nenhuma das duas contas é excluída
+  ✓ exclusão parcial: a mensagem diz que o progresso na nuvem foi apagado e a conta não; o login e a cópia deste aparelho continuam
+  ✓ exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos
+
+== auditoria independente: tipos, sessão offline e certificados
+  ✓ auditoria regras: recusa v texto na criação [403]
+  ✓ auditoria regras: recusa v zero na criação [403]
+  ✓ auditoria regras: recusa v fracionária na criação [403]
+  ✓ auditoria regras: recusa dados mapa na criação [403]
+  ✓ auditoria regras: recusa t texto na criação [403]
+  ✓ auditoria regras: recusa campo extra na criação [403]
+  ✓ auditoria regras: recusa criação sem v [403]
+  ✓ auditoria regras: recusa criação sem dados [403]
+  ✓ auditoria regras: recusa criação sem t [403]
+  ✓ auditoria regras: atualizado é obrigatório e deve corresponder à hora do servidor
+  ✓ auditoria regras: criação válida aceita; campo extra na atualização e subcoleção do próprio UID recusados
+  ✓ auditoria sessão: progresso inicial confirmado no servidor
+  ✓ auditoria sessão: fechar e reabrir com emuladores indisponíveis preserva o estudo pendente
+  ✓ auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login
+  ✓ auditoria certificados: registro e código preservados ao enviar para o Firestore
+  ✓ auditoria certificados: segundo dispositivo recebe o mesmo código, data e registro
+  ✓ auditoria certificados: gravação do segundo dispositivo mantém certificado e progresso anterior
+  ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail
+  ✓ excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem
+
+tudo certo
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+----- firebase-isolamento.log -----
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-audit/testes/firebase-emulador.test.js"
+
+== contas, isolamento e documento mínimo
+  ✓ conta nova: o documento só tem v, dados, t e atualizado (sem e-mail), e o progresso sem conta não foi levado sozinho
+  ✓ o progresso sem conta continua intacto e o aluno pode levá-lo para a conta
+  ✓ levar para a conta (pedido pelo aluno): o progresso sem conta vai para a nuvem da conta e continua guardado sem conta
+  ✓ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte
+  ✓ conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A
+  ✓ troca de conta com gravação pendente: o estudo de B não vai para A e continua na cópia de B neste aparelho
+  ✓ sair apagando: bloqueado enquanto há estudo fora da nuvem; depois, apaga só a cópia deste aparelho e a nuvem continua com tudo
+  ✓ sem erro de JavaScript nos fluxos de conta
+
+== gravações simultâneas na mesma conta (dois aparelhos)
+  ✓ com transação: 12 marcações feitas ao mesmo tempo em dois aparelhos, nenhuma perdida na nuvem
+  (comparação, sem transação, com a gravação de reserva: 0 de 12 marcações perdidas)
+
+== versão futura, regras e exclusão de conta
+  ✓ documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho
+  ✓ documento corrompido na nuvem: o app não grava por cima, não trava e guarda o estudo no aparelho
+  ✓ regras: uma conta não lê, não grava e não apaga o documento de outra
+  ✓ regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito
+  ✓ regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 3)
+  ✓ regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista 403, consulta 403]
+  ✓ regras: sem login, nada é lido nem gravado [leitura 403, gravação 403]
+  ✓ regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno
+  ✓ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito
+  ✓ regras: o próprio aluno pode apagar o documento dele
+  ✓ gravação recusada pelas regras: a sincronização para, o aviso diz por quê, e o estudo continua neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem recusou a gravação). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ app aberto sem internet: o login não carrega e o aviso diz que tenta de novo; com a conexão de volta, o login aparece sem recarregar
+  ✓ build de homologação: o cartão da conta avisa que é o projeto de teste e pede só contas e dados fictícios
+  ✓ excluir a conta: senha errada ou confirmação diferente de EXCLUIR não excluem nada
+  ✓ excluir a conta: apaga o documento, o login e a cópia local da conta; o progresso sem conta fica; a mensagem diz o que foi apagado
+
+== sessão, interrupções e recuperação
+  ✓ conta encerrada em outra aba: esta aba passa ao progresso sem conta; o que se estuda depois não vai para a conta, e a cópia da conta fica intacta
+  ✓ página fechada antes de gravar na nuvem: o estudo ficou no aparelho e vai para a nuvem quando o app abre de novo
+  ✓ sessão invalidada no servidor: o app volta ao progresso sem conta, e a cópia da conta neste aparelho e a nuvem continuam com tudo
+  ✓ conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha, e nenhuma das duas contas é excluída
+  ✓ exclusão parcial: a mensagem diz que o progresso na nuvem foi apagado e a conta não; o login e a cópia deste aparelho continuam
+  ✓ exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos
+
+== auditoria independente: tipos, sessão offline e certificados
+  ✓ auditoria regras: recusa v texto na criação [403]
+  ✓ auditoria regras: recusa v zero na criação [403]
+  ✓ auditoria regras: recusa v fracionária na criação [403]
+  ✓ auditoria regras: recusa dados mapa na criação [403]
+  ✓ auditoria regras: recusa t texto na criação [403]
+  ✓ auditoria regras: recusa campo extra na criação [403]
+  ✓ auditoria regras: recusa criação sem v [403]
+  ✓ auditoria regras: recusa criação sem dados [403]
+  ✓ auditoria regras: recusa criação sem t [403]
+  ✓ auditoria regras: atualizado é obrigatório e deve corresponder à hora do servidor
+  ✓ auditoria regras: criação válida aceita; campo extra na atualização e subcoleção do próprio UID recusados
+  ✓ auditoria sessão: progresso inicial confirmado no servidor
+  ✓ auditoria sessão: fechar e reabrir com emuladores indisponíveis preserva o estudo pendente
+  ✓ auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login
+  ✓ auditoria certificados: registro e código preservados ao enviar para o Firestore
+  ✓ auditoria certificados: segundo dispositivo recebe o mesmo código, data e registro
+  ✓ auditoria certificados: gravação do segundo dispositivo mantém certificado e progresso anterior
+  ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail
+  ✓ excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem
+
+tudo certo
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+----- builds.log -----
+outro-projeto recusado
+campo-extra recusado
+bool-invalido recusado
+modelo-nao-preenchido recusado
+site homologacao montada e publicacao recusada
+app homologacao montada e publicacao recusada
+APK sintetico com assets de homologacao: publicacao recusada (nao e compilacao Android)
+
+----- sonda de abas offline -----
+  ✗ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=false, nuvem=false]
+1 falha(s)
+
+----- workflows dos PRs 27–31 -----
+[
+  {
+    "pr": 27,
+    "sha": "2a128a9cff39e6440c44a5aa2fb9e685ee9ed9b7",
+    "runs": [
+      {
+        "id": 42648239168,
+        "name": "Site",
+        "head_sha": "2a128a9cff39e6440c44a5aa2fb9e685ee9ed9b7",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42648239168"
+      },
+      {
+        "id": 42648239088,
+        "name": "App Android",
+        "head_sha": "2a128a9cff39e6440c44a5aa2fb9e685ee9ed9b7",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42648239088"
+      },
+      {
+        "id": 42648239218,
+        "name": "Testes",
+        "head_sha": "2a128a9cff39e6440c44a5aa2fb9e685ee9ed9b7",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42648239218"
+      }
+    ]
+  },
+  {
+    "pr": 28,
+    "sha": "5d3575df985d3125b4c23c795e301de440fad62e",
+    "runs": [
+      {
+        "id": 42744883379,
+        "name": "Site",
+        "head_sha": "5d3575df985d3125b4c23c795e301de440fad62e",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42744883379"
+      },
+      {
+        "id": 42744883298,
+        "name": "App Android",
+        "head_sha": "5d3575df985d3125b4c23c795e301de440fad62e",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42744883298"
+      },
+      {
+        "id": 42744883295,
+        "name": "Testes",
+        "head_sha": "5d3575df985d3125b4c23c795e301de440fad62e",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42744883295"
+      }
+    ]
+  },
+  {
+    "pr": 29,
+    "sha": "1993599d088d822f60190d20651cc19911f37414",
+    "runs": [
+      {
+        "id": 42842221229,
+        "name": "Site",
+        "head_sha": "1993599d088d822f60190d20651cc19911f37414",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42842221229"
+      },
+      {
+        "id": 42842221285,
+        "name": "App Android",
+        "head_sha": "1993599d088d822f60190d20651cc19911f37414",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42842221285"
+      },
+      {
+        "id": 42842221572,
+        "name": "Testes",
+        "head_sha": "1993599d088d822f60190d20651cc19911f37414",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42842221572"
+      }
+    ]
+  },
+  {
+    "pr": 30,
+    "sha": "7f425b66d19ba1ef015593797aca4efbd8e29221",
+    "runs": [
+      {
+        "id": 42857264845,
+        "name": "App Android",
+        "head_sha": "7f425b66d19ba1ef015593797aca4efbd8e29221",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42857264845"
+      },
+      {
+        "id": 42857264914,
+        "name": "Site",
+        "head_sha": "7f425b66d19ba1ef015593797aca4efbd8e29221",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42857264914"
+      },
+      {
+        "id": 42857265150,
+        "name": "Testes",
+        "head_sha": "7f425b66d19ba1ef015593797aca4efbd8e29221",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42857265150"
+      }
+    ]
+  },
+  {
+    "pr": 31,
+    "sha": "a78a6b9bb67676da3d9915453e41a147c9b26b30",
+    "runs": [
+      {
+        "id": 42876328339,
+        "name": "Testes",
+        "head_sha": "a78a6b9bb67676da3d9915453e41a147c9b26b30",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42876328339"
+      },
+      {
+        "id": 42876328709,
+        "name": "Site",
+        "head_sha": "a78a6b9bb67676da3d9915453e41a147c9b26b30",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42876328709"
+      },
+      {
+        "id": 42876328422,
+        "name": "App Android",
+        "head_sha": "a78a6b9bb67676da3d9915453e41a147c9b26b30",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/42876328422"
+      }
+    ]
+  }
+]
+
+----- encerramento das suítes completas -----
+plataforma-original.log
+== falhas da nuvem: tentar de novo, avisar quando parar, nunca apagar (nuvem fictícia)
+  ✓ gravação recusada: a sincronização para (sem repetir a gravação recusada), o aviso diz que parou e por quê, e a marcação fica neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem do curso não permite gravar com o seu acesso). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ gravação recusada: depois que a nuvem volta a aceitar, abrir o app de novo envia o que ficou no aparelho
+  ✓ cota estourada e servidor ocupado: o app tenta de novo, com espera crescente, e o estudo chega à nuvem (3 tentativas)
+  ✓ sem rede: tentativas espaçadas (3 em 9 s, com a primeira abertura), o estudo fica salvo neste aparelho, e a conexão voltando grava na hora (104 ms) [aviso: Progresso salvo neste aparelho.]
+  ✓ app indo para o fundo: o estudo vai para a nuvem sem esperar o intervalo de 1,5 s (18 ms)
+  ✓ página fechando: o envio antecipado não começa (o estudo fica no aparelho e segue o caminho normal)
+
+tudo certo
+plataforma-corrigido.log
+== falhas da nuvem: tentar de novo, avisar quando parar, nunca apagar (nuvem fictícia)
+  ✓ gravação recusada: a sincronização para (sem repetir a gravação recusada), o aviso diz que parou e por quê, e a marcação fica neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem do curso não permite gravar com o seu acesso). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ gravação recusada: depois que a nuvem volta a aceitar, abrir o app de novo envia o que ficou no aparelho
+  ✓ cota estourada e servidor ocupado: o app tenta de novo, com espera crescente, e o estudo chega à nuvem (3 tentativas)
+  ✓ sem rede: tentativas espaçadas (3 em 9 s, com a primeira abertura), o estudo fica salvo neste aparelho, e a conexão voltando grava na hora (103 ms) [aviso: Progresso salvo neste aparelho.]
+  ✓ app indo para o fundo: o estudo vai para a nuvem sem esperar o intervalo de 1,5 s (12 ms)
+  ✓ página fechando: o envio antecipado não começa (o estudo fica no aparelho e segue o caminho normal)
+
+tudo certo
