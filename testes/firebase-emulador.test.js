@@ -266,6 +266,8 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     ok(!!(await entrar('gui@exemplo.test', 'senha-gui-1')).error && !(await docAdmin(uidG)) && (await G.ler('missao-eear-v1@firebase:' + uidG)) === null && !G.erros.length, 'exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos');
     await G.ctx.close(); }
 
+  await require('./firebase-auditoria.js')({ ok, req, AU, DOCS, PROJ, campos, gravarComo, aparelho, marcar, progresso, ate, url: srv.url });
+
   /* Login com o Google (janela do emulador no lugar do Google) e exclusão com reautenticação pelo Google. O SDK carrega
      apis.google.com/js/api.js para o fluxo de janela, também com o emulador: sem acesso a esse endereço, a janela não
      abre. Fora do CI, isso vira "NÃO TESTADO" com o motivo; no CI (CI=true), é falha. */
