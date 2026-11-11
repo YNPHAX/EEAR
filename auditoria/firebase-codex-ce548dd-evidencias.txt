@@ -1,0 +1,147 @@
+EEAR — etapa ce548dd — evidências independentes
+2026-11-11T15:54:48.055715+00:00
+Nenhum deploy ou Firebase real acessado.
+Snapshot: ce548dda6b6bde287eec708c7d7896047befc82e
+Branch Codex de partida: 1d692f34c1baa7a5d968e4dcbd826fc2449825d9
+Ferramentas: Firebase CLI 15.35.0; SDK 12.19.0; Playwright 1.63.0; Chromium 153; Node 24.22.1; Java 21.
+Autoteste ce548dd: 178 casos; montagem JS e conferir-workflows passaram.
+
+hosting-ce548dd.log SHA256=d6c1f04f044af3318ad9d87f5cea66110e5b8c3e9992ddad738437262e4403c2
+hosting-emulador.log SHA256=49f90169ec33d192125372080f6763fe26ae885f5d815aba50f56051a33ef6de
+isolamento-ce548dd.log SHA256=7c807d3582f0a5eec0f772f44b49110f606fb85b8309cb23a4914ab64568cf26
+workflow-negativo.log SHA256=8065935c0e31297a2c6599abed187cee7df3c58379fa1a1214d64e02301a81f3
+f01-ce548dd-primeira.log SHA256=75dad88050f6e35f57ffbd3dffeafd0cbdc3dd9a79e1efe078fb24760b89c2a6
+f01-ce548dd-refinamento.log SHA256=f82a0c0b888438849434b084a0aa72c41fd90e94ffdf458174fb68439baa6965
+f01-calibracao-final.log SHA256=26f405ba6f2a7bedabdcc9d772dca22063fdf8c741880620fc26fb6554e18a73
+f02-f04-preservadas.log SHA256=998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2
+f05-preservada.log SHA256=5a155544dcb8dc78dfdfdb01b4e2df57fcdc5dad60f93321e44e7443d03e4849
+ci-codex-dns.txt SHA256=b1869e2f35efd87b4eab59c061248ef95c7e83013a874c367fa9dd666a52e252
+
+----- hosting-ce548dd.log -----
+✓ alias padrão aponta ao projeto de teste
+✓ artefatos de homologação em diretório separado
+✗ Hosting tem gate automático predeploy (projeto efetivo e conteúdo) — sem hook, o CLI não executa o verificador Python
+✓ nenhuma reescrita do app intercepta o handler reservado de OAuth
+✓ build oficial permitido no modo oficial
+✓ build eear-teste aceito só como homologação
+✓ authDomain de outro projeto recusado no build
+✓ projectId de produção recusado no build
+✗ sem-marcador é recusado por --site — exit=0
+✗ projeto-divergente é recusado por --homologacao — exit=0
+✗ marcador em página auxiliar não habilita app oficial como homologação — exit=0
+Hosting: 4 falha(s); nenhuma operação no Firebase real.
+
+----- hosting-emulador.log -----
+i  emulators: Starting emulators: hosting
+i  emulators: Detected demo project ID "demo-eear-hosting", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  hosting[demo-eear-hosting]: Serving hosting files from: site
+✔  hosting[demo-eear-hosting]: Local server: http://127.0.0.1:5200
+i  Running script: node "/tmp/eear-hosting-emu-flwmDF/provar.js"
+i  hosting: 127.0.0.1 - - [11/Nov/2026:15:43:45 +0000] "GET / HTTP/1.1" 200 - "-" "node"
+{"url":"/","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":null,"referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [11/Nov/2026:15:43:45 +0000] "GET /index.html HTTP/1.1" 200 - "-" "node"
+{"url":"/index.html","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/app.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [11/Nov/2026:15:43:45 +0000] "GET /sw.js HTTP/1.1" 200 - "-" "node"
+{"url":"/sw.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [11/Nov/2026:15:43:45 +0000] "GET /app.js HTTP/1.1" 200 - "-" "node"
+i  hosting: 127.0.0.1 - - [11/Nov/2026:15:43:45 +0000] "GET /manifest.webmanifest HTTP/1.1" 200 805 "-" "node"
+{"url":"/manifest.webmanifest","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [11/Nov/2026:15:43:45 +0000] "GET /__/auth/handler HTTP/1.1" 404 154 "-" "node"
+{"url":"/__/auth/handler","status":404,"nosniff":"nosniff","robots":"noindex, nofollow","cache":null,"referer":"strict-origin-when-cross-origin"}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  hosting: Stopping Hosting Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+----- isolamento-ce548dd.log -----
+== isolamento entre contas no Firestore (emuladores)
+  ✓ as duas contas têm uid diferentes
+  ✓ a conta A lê o próprio documento (ainda não existe: abra o app com a conta A e estude algo para criá-lo)
+  ✓ a conta B NÃO lê o documento da conta A [403]
+  ✓ a conta B NÃO grava o documento da conta A [403]
+  ✓ a conta B NÃO apaga o documento da conta A [403]
+  ✓ ninguém lista a coleção alunos, nem a própria conta [403]
+  ✓ sem login, o documento não é lido [403]
+  ✓ a conta A NÃO grava assinaturas/{uid} (só o servidor poderá) [403]
+  ✓ documento com campo a mais (e-mail) é recusado [403]
+
+tudo certo: o isolamento entre as duas contas vale com as regras publicadas
+
+----- workflow-negativo.log -----
+ERRO: site.yml: job montar: envio de _site sem a verificação desse caminho no passo imediatamente anterior
+ERRO: site.yml: job publicar: usa um artefato (github-pages) que não vem verificado de um job em "needs"
+
+exit=2
+
+----- f01-ce548dd-primeira.log -----
+F01: alvo /tmp/eear-ce548dd, commit ce548dda6b6bde287eec708c7d7896047befc82e
+F01: alvo /tmp/eear-ce548dd, commit ce548dda6b6bde287eec708c7d7896047befc82e
+✓ dispositivos: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✗ fechar-A: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"paginas":[null]}
+✗ fechar-B: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"paginas":[null]}
+✗ desmarcar: {"aceitoA":["T:base"],"aceitoB":["T:base","T:remover","T:B"],"offline":false,"servidor":false,"paginas":[false]}
+✗ zerar: {"aceitoA":[],"aceitoB":["T:base","T:remover","T:depois-zerar"],"offline":false,"servidor":false,"paginas":[false]}
+✗ certificado: {"aceitoA":["T:base","T:remover"],"aceitoB":["T:base","T:remover","T:B"],"offline":false,"servidor":false,"paginas":[false]}
+✓ reconectar: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✗ zerar-duplo: {"aceitoA":["T:A"],"aceitoB":["T:B"],"paginas":[null]}
+F01: 2/8 cenários passaram; 6 falha(s). Parecer não alterado automaticamente.
+
+----- f01-ce548dd-refinamento.log -----
+F01: alvo /tmp/eear-ce548dd, commit ce548dda6b6bde287eec708c7d7896047befc82e
+F01: alvo /tmp/eear-ce548dd, commit ce548dda6b6bde287eec708c7d7896047befc82e
+✓ dispositivos: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✗ fechar-A: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":false,"servidor":false,"paginas":[false]}
+✗ fechar-B: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":false,"servidor":false,"paginas":[false]}
+✗ desmarcar: page.waitForSelector: Timeout 30000ms exceeded.
+✗ zerar: {"aceitoA":[],"aceitoB":["T:base","T:remover","T:depois-zerar"],"offline":false,"servidor":false,"paginas":[false]}
+✗ certificado: {"aceitoA":["T:base","T:remover"],"aceitoB":["T:base","T:remover","T:B"],"offline":false,"servidor":false,"paginas":[false]}
+✓ reconectar: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✗ zerar-duplo: {"aceitoA":["T:A"],"aceitoB":["T:B"],"offline":false,"servidor":false,"paginas":[false]}
+F01: 2/8 cenários passaram; 6 falha(s). Parecer não alterado automaticamente.
+
+----- f01-calibracao-final.log -----
+F01: alvo /tmp/eear-ce548dd, commit ce548dda6b6bde287eec708c7d7896047befc82e
+F01: alvo /tmp/eear-ce548dd, commit ce548dda6b6bde287eec708c7d7896047befc82e
+✓ dispositivos: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✗ desmarcar: {"aceitoA":["T:base"],"aceitoB":["T:base","T:remover","T:B"],"offline":false,"servidor":false,"paginas":[false]}
+✓ reconectar: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+F01: 2/3 cenários passaram; 1 falha(s). Parecer não alterado automaticamente.
+
+----- f02-f04-preservadas.log -----
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}
+
+----- f05-preservada.log -----
+OK: autoteste da verificação (180 casos)
+
+----- ci-codex-dns.txt -----
+CI Codex tentativa 1 / plataforma
+2026-11-11T13:55:53.1862148Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/main/x/xfonts-utils/xfonts-utils_7.7%2b7build1_amd64v3.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T13:55:53.1863171Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-cyrillic/xfonts-cyrillic_1.0.5%2bnmu1build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T13:55:53.1864246Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-scalable/xfonts-scalable_1.0.3-1.3build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T13:55:53.1883314Z Failed to install browsers
+2026-11-11T13:55:53.1883784Z Error: Installation process exited with code: 100
+
+CI Codex tentativa 1 / firebase
+2026-11-11T13:56:44.3336329Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/main/x/xfonts-utils/xfonts-utils_7.7%2b7build1_amd64v3.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T13:56:44.3337927Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-cyrillic/xfonts-cyrillic_1.0.5%2bnmu1build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T13:56:44.3339510Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-scalable/xfonts-scalable_1.0.3-1.3build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T13:56:44.3356369Z Failed to install browsers
+2026-11-11T13:56:44.3357012Z Error: Installation process exited with code: 100
+
+CI Codex tentativa 2 / firebase
+2026-11-11T15:46:50.6333267Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/main/x/xfonts-utils/xfonts-utils_7.7%2b7build1_amd64v3.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T15:46:50.6335279Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-cyrillic/xfonts-cyrillic_1.0.5%2bnmu1build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T15:46:50.6337017Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-scalable/xfonts-scalable_1.0.3-1.3build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T15:46:50.6351334Z Failed to install browsers
+2026-11-11T15:46:50.6351926Z Error: Installation process exited with code: 100
+
+CI Codex tentativa 2 / plataforma
+2026-11-11T15:46:39.1432360Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/main/x/xfonts-utils/xfonts-utils_7.7%2b7build1_amd64v3.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T15:46:39.1434081Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-cyrillic/xfonts-cyrillic_1.0.5%2bnmu1build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T15:46:39.1435791Z E: Failed to fetch https://security.ubuntu.com/ubuntu/pool/universe/x/xfonts-scalable/xfonts-scalable_1.0.3-1.3build1_all.deb  Temporary failure resolving 'security.ubuntu.com'
+2026-11-11T15:46:39.1453777Z Failed to install browsers
+2026-11-11T15:46:39.1454241Z Error: Installation process exited with code: 100

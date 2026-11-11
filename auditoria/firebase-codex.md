@@ -1,5 +1,7 @@
 # Auditoria independente da integração Firebase — EEAR
 
+Atualização posterior: [Hosting em ce548dd, CI confirmado e preparação do gate de F01](firebase-codex-ce548dd.md). O parecer continua REPROVADO.
+
 Data: 11/11/2026. Repositório: `YNPHAX/EEAR`.
 
 **Parecer: REPROVADO para aprovação da integração em homologação.** Há perda de progresso reproduzida entre abas offline ainda não corrigida (F01). As correções desta auditoria reduzem outros riscos, mas não eliminam esse bloqueador. Testes exploratórios com contas fictícias podem continuar; isto não é autorização para publicar site, APK ou regras.
