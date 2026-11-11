@@ -3,3 +3,6 @@ _site/
 app/www/
 app/android/
 app/node_modules/
+
+# configuração do Firebase (homologação): fica fora do repositório
+web/firebase.json

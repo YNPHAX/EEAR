@@ -29,13 +29,14 @@ function servir(raiz) {
   const srv = http.createServer((q, r) => { let f = path.join(raiz, decodeURIComponent(q.url.split('?')[0])); if (f.endsWith(path.sep)) f = path.join(f, 'index.html'); if (!f.startsWith(raiz) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'Content-Type': tipos[path.extname(f)] || 'application/octet-stream' }); fs.createReadStream(f).pipe(r); });
   return new Promise(res => srv.listen(0, '127.0.0.1', () => res({ url: `http://127.0.0.1:${srv.address().port}/`, fechar: () => srv.close() })));
 }
-/* Site montado com uma configuração de teste do Firebase (emuladores, sincronização liberada). semTransacao: variante
+/* Site montado com uma configuração de teste do Firebase (emuladores, sincronização liberada, marcado como homologação,
+   como o build de web/build.py com o projeto eear-teste). semTransacao: variante
    só para comparação, sem runTransaction. Desde o PR #22, sem transação o app usa a gravação de reserva (sem trava e
    sem base, que não apaga nada por ausência); até o PR #21, lia e gravava em seguida e perdia de 5 a 6 de 12. */
 function montar(semTransacao) {
   const saida = fs.mkdtempSync(path.join(os.tmpdir(), 'eear-fb-'));
   execFileSync('python3', ['web/build.py', saida], { cwd: RAIZ, stdio: 'ignore' });
-  const cfg = { apiKey: 'demo', authDomain: `${PROJ}.firebaseapp.com`, projectId: PROJ, appId: 'demo', sincronizar: true, emuladores: { auth: AU, firestore: ['127.0.0.1', 8080] } };
+  const cfg = { apiKey: 'demo', authDomain: `${PROJ}.firebaseapp.com`, projectId: PROJ, appId: 'demo', sincronizar: true, homologacao: true, emuladores: { auth: AU, firestore: ['127.0.0.1', 8080] } };
   const ix = path.join(saida, 'index.html'); let h = fs.readFileSync(ix, 'utf8');
   if (!h.includes('window.EEAR_SITE = "site";')) throw new Error('marcador do site não encontrado');
   fs.writeFileSync(ix, h.replace('window.EEAR_SITE = "site";', `window.EEAR_SITE = "site"; window.EEAR_FIREBASE = ${JSON.stringify(cfg)};`));
@@ -155,8 +156,48 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     ok(lerB.st === 403 && gravaB.st === 403 && apagaB.st === 403, 'regras: uma conta não lê, não grava e não apaga o documento de outra');
     ok(extra.st === 403 && valido.st === 200, 'regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito');
     ok(rebaixa.st === 403, 'regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 3)');
+    /* privilégio mínimo: ninguém lista a coleção (nem o próprio aluno), sem login nada passa, outros caminhos são
+       recusados, o documento precisa dos 4 campos e tem tamanho máximo */
+    const lista = await req(`${DOCS}/alunos`, { headers: { Authorization: 'Bearer ' + ana.idToken } });
+    const consulta = await req(`${DOCS}:runQuery`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer ' + ana.idToken }, body: JSON.stringify({ structuredQuery: { from: [{ collectionId: 'alunos' }] } }) });
+    const semLogin = await req(`${DOCS}/alunos/${ana.localId}`); // sem o cabeçalho Authorization: visitante sem sessão
+    const semLoginGrava = await req(`${DOCS}:commit`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ writes: [{ update: { name: `projects/${PROJ}/databases/(default)/documents/alunos/${ana.localId}`, fields: campos(3, { v: 3 }) }, updateTransforms: [{ fieldPath: 'atualizado', setToServerValue: 'REQUEST_TIME' }] }] }) });
+    const outro = await req(`${DOCS}:commit`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer ' + ana.idToken }, body: JSON.stringify({ writes: [{ update: { name: `projects/${PROJ}/databases/(default)/documents/assinaturas/${ana.localId}`, fields: { ativa: { booleanValue: true } } } }] }) });
+    const semT = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '1' }, dados: { stringValue: '{}' } });
+    const grande = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '1' }, dados: { stringValue: 'x'.repeat(900001) }, t: { integerValue: '1' } });
+    const proprioBia = await gravarComo(bia.idToken, bia.localId, campos(1, { v: 1 }));
+    ok(lista.st === 403 && (consulta.st === 403 || (Array.isArray(consulta.j) && consulta.j.some(x => x.error))), `regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista ${lista.st}, consulta ${consulta.st}]`);
+    ok(semLogin.st === 403 && semLoginGrava.st === 403, `regras: sem login, nada é lido nem gravado [leitura ${semLogin.st}, gravação ${semLoginGrava.st}]`);
+    ok(outro.st === 403, 'regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno');
+    ok(semT.st === 403 && grande.st === 403 && proprioBia.st === 200, 'regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito');
     const apagaA = await req(`${DOCS}/alunos/${ana.localId}`, { method: 'DELETE', headers: { Authorization: 'Bearer ' + ana.idToken } });
     ok(apagaA.st === 200 && !(await docAdmin(ana.localId)), 'regras: o próprio aluno pode apagar o documento dele'); }
+
+  { /* gravação recusada pelas regras reais (progresso acima do limite): a sincronização para, o aviso diz por quê e
+       nada some do aparelho */
+    const R = await aparelho(); await R.conectar('rui@exemplo.test', 'senha-rui-1', true); const uidR = await R.uid();
+    await marcar(R, 'T:rui1'); await ate(async () => { const x = await progresso(uidR); return x && x.feito && x.feito['T:rui1']; });
+    await R.p.evaluate(k => { const s = JSON.parse(localStorage.getItem(k)); s.cfg.anotacoes = 'x'.repeat(950000); localStorage.setItem(k, JSON.stringify(s)); }, 'missao-eear-v1@firebase:' + uidR);
+    await R.p.reload(); await R.p.waitForTimeout(2500); await marcar(R, 'T:rui-grande'); await espera(4000); await R.plano();
+    const aviso = await R.p.locator('#sync').innerText(), local = await R.ler('missao-eear-v1@firebase:' + uidR), nuvemR = await progresso(uidR);
+    ok(/parou/.test(aviso) && /recusou/.test(aviso) && /nada foi apagado/.test(aviso) && local.feito['T:rui-grande'] && local.feito['T:rui1'] && !nuvemR.feito['T:rui-grande'] && !R.erros.length,
+      `gravação recusada pelas regras: a sincronização para, o aviso diz por quê, e o estudo continua neste aparelho [aviso: ${aviso}]`);
+    await R.ctx.close(); }
+
+  { /* app aberto sem internet: o login não carrega; quando a conexão volta, ele carrega sozinho */
+    const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 900 } }); let semRede = true;
+    await ctx.route('https://www.gstatic.com/firebasejs/12.19.0/**', r => (semRede ? r.abort('internetdisconnected') : r.fulfill({ status: 200, contentType: 'text/javascript', body: fs.readFileSync(path.join(SDK, path.basename(new URL(r.request().url()).pathname))) })));
+    const p = await ctx.newPage(), erros = []; p.on('pageerror', e => erros.push(e.message));
+    await p.goto(srv.url); await p.waitForTimeout(1500);
+    await p.evaluate(() => { const x = document.createElement('button'); x.dataset.a = 'tab'; x.dataset.v = 'plano'; document.body.appendChild(x); x.click(); x.remove(); });
+    await p.waitForTimeout(300);
+    const antes = await p.locator('main').innerText();
+    semRede = false; await p.evaluate(() => window.dispatchEvent(new Event('online')));
+    const carregou = await p.waitForSelector('#fb-email', { timeout: 10000 }).then(() => true, () => false);
+    const depois = await p.locator('main').innerText();
+    ok(/Não foi possível carregar o login/.test(antes) && /tenta de novo/.test(antes) && carregou && !erros.length, 'app aberto sem internet: o login não carrega e o aviso diz que tenta de novo; com a conexão de volta, o login aparece sem recarregar');
+    ok(/Ambiente de homologação/.test(depois) && /contas e dados fictícios/.test(depois), 'build de homologação: o cartão da conta avisa que é o projeto de teste e pede só contas e dados fictícios');
+    await ctx.close(); }
 
   let E = null;
   try { E = await aparelho(); const anon2 = { v: 1, t: Date.now(), cfg: { nome: 'Sem Conta' }, mod: { MAT01: { lido: hj } }, fc: {}, sims: [] };

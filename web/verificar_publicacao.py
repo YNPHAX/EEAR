@@ -377,6 +377,24 @@ def problemas(alvo, imp, modo):
     return achados
 
 
+HOMOLOGACAO = re.compile(rb'"homologacao"\s*:\s*true')
+
+
+def homologacao(alvo, modo):
+    """Um build feito com a configuração do Firebase de homologação (web/build.py marca "homologacao": true) nunca é
+    publicado: ele aponta para o projeto de teste e avisa que é ambiente de teste."""
+    if modo == 'apk':
+        try:
+            with zipfile.ZipFile(alvo) as z:
+                paginas = [z.read(n) for n in z.namelist() if n.startswith('assets/public/') and n.endswith('.html')]
+        except (OSError, zipfile.BadZipFile):
+            return []  # o APK ilegível já é recusado pela análise acima
+    else:
+        paginas = [open(os.path.join(r, n), 'rb').read() for r, _, ns in os.walk(alvo) for n in ns
+                   if n.endswith('.html') and os.path.isfile(os.path.join(r, n)) and not os.path.islink(os.path.join(r, n))]
+    return [(alvo, 'build de homologação do Firebase (projeto de teste): não pode ser publicado')] if any(HOMOLOGACAO.search(p) for p in paginas) else []
+
+
 # --- arquivo de impressões ---
 
 def publicado(arq):
@@ -424,7 +442,9 @@ def carregar(imp_arq):
             'aprovadas': {publicado(a): s for a, s in origem.items()}, 'sha': canonico(imp)}
 
 
-def verificar(alvo, modo, imp_arq=IMPRESSOES):
+def verificar(alvo, modo, imp_arq=IMPRESSOES, publicar=True):
+    """publicar=False só na conferência do próprio build (conferir_build): um build de homologação do Firebase pode ser
+    montado e testado, mas a verificação de publicação (a dos workflows) o recusa."""
     try:
         imp = carregar(imp_arq)
     except Exception as e:
@@ -443,6 +463,11 @@ def verificar(alvo, modo, imp_arq=IMPRESSOES):
         return 2
     try:
         achados = problemas(alvo, imp, modo)
+        homolog = homologacao(alvo, modo)
+        if publicar:
+            achados += homolog
+        elif homolog:
+            print('AVISO: build de homologação do Firebase (projeto de teste): serve para testes e não pode ser publicado')
     except NaoVerificavel as e:
         print(f'ERRO: a conferência não pôde terminar ({e}); nada pode ser publicado')
         return 2
@@ -865,7 +890,7 @@ def conferir_build(saida, modo):
         if probs:
             print('ERRO: o build e os workflows precisam conferir o conteúdo antes de enviar; nada pode ser publicado')
             return 2
-        return verificar(saida, modo)
+        return verificar(saida, modo, publicar=False)
     except Exception as e:
         print(f'ERRO: a conferência não pôde terminar ({type(e).__name__}); nada pode ser publicado')
         return 2
@@ -1286,6 +1311,9 @@ def autoteste(verboso=False):
             ('outros', 'marca do código das apostilas', lambda: verificar(site('marca', {'dados/b.js': 'EEAR.apostila = {}'}), 'site', imp), 1),
             ('outros', 'arquivo fora da lista (material.pdf)', lambda: verificar(site('pdf', {'material.pdf': 'x'}), 'site', imp), 1),
             ('outros', 'saída vazia (sem index.html)', lambda: verificar(os.makedirs(cam('vazio')) or cam('vazio'), 'site', imp), 1),
+            ('outros', 'build de homologação do Firebase (site)', lambda: verificar(site('homolog', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId": "eear-teste", "homologacao": true};</script><p>Curso</p>'}), 'site', imp), 1),
+            ('outros', 'build de homologação do Firebase (APK)', lambda: verificar(apk('homolog.apk', [('assets/public/teste.html', '<script>window.EEAR_FIREBASE = {"homologacao":true};</script>')]), 'apk', imp), 1),
+            ('outros', 'login sem a marca de homologação continua aceito', lambda: verificar(site('com-login', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId": "outro"};</script><p>Curso</p>'}), 'site', imp), 0),
             ('outros', 'nome com "apostila", mesmo com conteúdo legítimo', lambda: verificar(site('nome', {'dados/apostila-propria.js': 'x=1'}), 'site', imp), 1),
             ('falha segura', 'impressões ausentes', lambda: verificar(site('f1'), 'site', cam('nao-existe.json')), 2),
             ('falha segura', 'impressões que não são JSON', lambda: verificar(site('f2'), 'site', escrever(cam('ruim.json'), '{"versao": 3,')), 2),

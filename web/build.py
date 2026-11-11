@@ -15,6 +15,30 @@ OUT = os.path.abspath(args[0] if args else os.path.join(RAIZ, '_site'))
 # link do botão "Baixar o APK": vazio esconde o botão. Fica vazio até existir um APK limpo, assinado com a chave definitiva.
 APK = os.environ.get('EEAR_APK_URL', '')
 
+# login dos alunos (Firebase). A configuração do app da web fica FORA do repositório: o caminho vem de
+# EEAR_FIREBASE_CONFIG, ou web/firebase.json (excluído pelo .gitignore). Sem ela, o login fica desligado.
+# Só o projeto de homologação é aceito; um projeto de produção exige mudar PROJETOS_FIREBASE, numa decisão explícita.
+# O build de homologação sai marcado ("homologacao": true): o app avisa que é ambiente de teste e
+# verificar_publicacao.py recusa publicá-lo.
+PROJETOS_FIREBASE = {'eear-teste': 'homologacao'}
+CAMPOS_FIREBASE = {'apiKey', 'authDomain', 'projectId', 'appId', 'storageBucket', 'messagingSenderId', 'sincronizar'}
+fb_cfg = os.environ.get('EEAR_FIREBASE_CONFIG') or os.path.join(RAIZ, 'web', 'firebase.json')
+if os.environ.get('EEAR_FIREBASE_CONFIG') and not os.path.isfile(fb_cfg):
+    raise FileNotFoundError(f'EEAR_FIREBASE_CONFIG aponta para um arquivo que não existe: {fb_cfg}')
+fb = json.load(open(fb_cfg, encoding='utf-8')) if os.path.isfile(fb_cfg) else None
+if fb is not None:
+    if not isinstance(fb, dict) or set(fb) - CAMPOS_FIREBASE:
+        raise ValueError(f'configuração do Firebase com campos inesperados: {sorted(set(fb) - CAMPOS_FIREBASE) if isinstance(fb, dict) else fb}')
+    vazios = [k for k in ('apiKey', 'authDomain', 'projectId', 'appId') if not isinstance(fb.get(k), str) or not re.fullmatch(r'[A-Za-z0-9:._-]+', fb[k])]
+    if vazios:
+        raise ValueError(f'configuração do Firebase incompleta (copie do console): {vazios}')
+    if PROJETOS_FIREBASE.get(fb['projectId']) != 'homologacao':
+        raise ValueError(f'projeto Firebase não permitido neste build: {fb["projectId"]} (só {sorted(PROJETOS_FIREBASE)})')
+    if 'sincronizar' in fb and fb['sincronizar'] is not True and fb['sincronizar'] is not False:
+        raise ValueError('"sincronizar" tem de ser true ou false')
+    fb['homologacao'] = True
+    print(f'Firebase: projeto de homologação {fb["projectId"]}, sincronização {"ligada" if fb.get("sincronizar") is True else "desligada"}')
+
 NOME, CURTO = 'Missão EEAR · INPHAX', 'Missão EEAR'
 DESC = 'Curso preparatório da INPHAX para o CFS da EEAR: aulas com vídeo, plano de estudos até a prova, quizzes, flashcards, simulados e provas oficiais com gabarito.'
 TEMA_CLARO, TEMA_ESCURO, FUNDO = '#0C0C0C', '#0C0C0C', '#0C0C0C'
@@ -49,9 +73,6 @@ meta = f'''<meta charset="utf-8">
 <link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
 '''
 modo = 'app' if APP else 'site'
-# login dos alunos (Firebase): web/firebase.json com a configuração do app da web do projeto
-fb_cfg = os.path.join(WEB, 'firebase.json')
-fb = json.load(open(fb_cfg, encoding='utf-8')) if os.path.exists(fb_cfg) else None
 antes = f'<script>window.EEAR_SITE = {json.dumps(modo)}; window.EEAR_APK = {json.dumps(APK)};' + (f' window.EEAR_FIREBASE = {json.dumps(fb)};' if fb else '') + '</script>\n'
 registro = '' if APP else '''
 <script>

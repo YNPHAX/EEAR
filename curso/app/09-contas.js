@@ -9,6 +9,7 @@
     id = id || '';
     if (id === identidade) return false;
     clearTimeout(tSave);
+    clearTimeout(nuvem.tRetry); nuvem.erro = ''; nuvem.falhas = 0;
     nuvem.ref = null; nuvem.on = false; nuvem.again = false; nuvem.futura = false; nuvem.bloqueada = false; nuvem.pendente = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.refPausada = null; nuvem.conta = id;
     identidade = id;
     try { if (id) localStorage.setItem(LS_CONTA, id); else localStorage.removeItem(LS_CONTA); } catch (e) { /* sem armazenamento */ }

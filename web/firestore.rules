@@ -1,20 +1,37 @@
 rules_version = '2';
-// Cada aluno lê, grava e apaga só o próprio progresso (documento alunos/{uid}).
+// Regras do Cloud Firestore do Missão EEAR (Firebase Authentication + Firestore). Privilégio mínimo:
+// - cada aluno só lê (get), cria, atualiza e apaga o próprio documento alunos/{uid}, onde uid é o do login (request.auth.uid);
+// - ninguém lista a coleção alunos (nem o próprio aluno: o app só lê o documento dele pelo id);
+// - qualquer outro caminho é recusado (regra final).
 // O documento guarda só v (versão do formato), dados (o progresso, em texto), t (quando o aparelho gravou) e
-// atualizado (hora do servidor): nada de nome ou e-mail, que já ficam no login.
-// Um app antigo (v menor) não grava por cima de um documento de versão mais nova.
+// atualizado (hora do servidor): nada de nome ou e-mail, que já ficam no login. Um app antigo (v menor) não grava por cima
+// de um documento de versão mais nova. Estas regras não são as do banco de dados do Claude (web/regras-claude.json):
+// lá a autorização é por nível de compartilhamento do artifact; aqui, pelo uid do Firebase Authentication.
 // Testado com o emulador oficial em testes/firebase-emulador.test.js.
 service cloud.firestore {
   match /databases/{database}/documents {
+    function dono(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+    function documentoValido() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['v', 'dados', 't', 'atualizado'])
+        && d.keys().hasAll(['v', 'dados', 't', 'atualizado'])
+        && d.v is int && d.v >= 1
+        && d.dados is string && d.dados.size() < 900000
+        && d.t is number
+        && d.atualizado == request.time;
+    }
     match /alunos/{uid} {
-      allow read, delete: if request.auth != null && request.auth.uid == uid;
-      allow create, update: if request.auth != null && request.auth.uid == uid
-        && request.resource.data.keys().hasOnly(['v', 'dados', 't', 'atualizado'])
-        && request.resource.data.v is int && request.resource.data.v >= 1
-        && request.resource.data.dados is string && request.resource.data.dados.size() < 900000
-        && request.resource.data.t is number
-        && request.resource.data.atualizado == request.time
-        && (resource == null || !('v' in resource.data) || request.resource.data.v >= resource.data.v);
+      allow get: if dono(uid);
+      allow list: if false;
+      allow create: if dono(uid) && documentoValido();
+      allow update: if dono(uid) && documentoValido()
+        && (!('v' in resource.data) || request.resource.data.v >= resource.data.v);
+      allow delete: if dono(uid);
+    }
+    match /{caminho=**} {
+      allow read, write: if false;
     }
   }
 }

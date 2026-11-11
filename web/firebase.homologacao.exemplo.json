@@ -1,0 +1,7 @@
+{
+  "apiKey": "<cole a apiKey do app EEAR-Web-Teste>",
+  "authDomain": "eear-teste.firebaseapp.com",
+  "projectId": "eear-teste",
+  "appId": "<cole o appId do app EEAR-Web-Teste>",
+  "sincronizar": false
+}

@@ -285,7 +285,7 @@
 
   /* pendente: há estudo deste aparelho que a nuvem ainda não confirmou; semRede: a última tentativa falhou por falta de rede.
      O aviso nunca diz "salvo na sua conta" enquanto houver algo pendente. */
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false }; // lida: a nuvem desta conta já foi lida nesta abertura
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false, erro: '', falhas: 0, tRetry: null }; // lida: a nuvem desta conta já foi lida nesta abertura; erro, falhas, tRetry: veja 13-falhas-nuvem.js
   let tSave = null;
   function salvar() {
     S.t = Date.now();
@@ -298,12 +298,12 @@
   async function gravar() {
     if (!nuvem.ref) return;
     if (nuvem.busy) { nuvem.again = true; return; }
-    nuvem.busy = true;
-    try { await conciliar(nuvem.ref); }
-    catch (e) {
-      if (e && e.code === 'unavailable' && e.espera === undefined) nuvem.semRede = true;
-      if (e && e.code === 'unavailable') setTimeout(gravar, e.espera !== undefined ? Math.max(0, e.espera) + 200 + Math.random() * 1000 : 2500 + Math.random() * 2500); // nuvem travada por outro aparelho, ou sem rede
-      else { nuvem.ref = null; nuvem.on = false; }
+    nuvem.busy = true; clearTimeout(nuvem.tRetry);
+    try { await conciliar(nuvem.ref); nuvem.falhas = 0; nuvem.erro = ''; }
+    catch (e) { // veja 13-falhas-nuvem.js
+      if (e && e.code === 'unavailable' && e.espera !== undefined) nuvem.tRetry = setTimeout(gravar, Math.max(0, e.espera) + 200 + Math.random() * 1000); // nuvem travada por outro aparelho
+      else if (erroPassageiro(e)) { nuvem.semRede = true; nuvem.tRetry = setTimeout(gravar, esperaNuvem()); } // sem rede, servidor ocupado ou cota: tenta de novo
+      else { nuvem.ref = null; nuvem.on = false; nuvem.erro = String((e && e.code) || 'desconhecido'); } // recusada: para, e o aviso diz; o estudo fica aqui
     }
     nuvem.busy = false;
     syncInfo();
@@ -374,7 +374,7 @@
     if (!uIgual(u, p.u)) gravar(); // a união com o que veio depois ainda não está na nuvem
   }
   async function sincronizar(ref, conta) {
-    nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.lida = false; nuvem.conta = String(conta || '');
+    nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.lida = false; nuvem.erro = ''; nuvem.falhas = 0; nuvem.conta = String(conta || '');
     await gravar();
   }
   async function conectar() {
@@ -394,7 +394,7 @@
 
   /* ---------- conta do aluno no site: login e progresso na nuvem (Firebase, quando configurado) ---------- */
   const FB = window.EEAR_FIREBASE || null, FB_VERSAO = '12.19.0';
-  const conta = { pronto: !FB, user: null, api: null, msg: '', email: '' };
+  const conta = { pronto: !FB, user: null, api: null, msg: '', email: '', iniciando: false };
   function erroConta(e) {
     const c = (e && e.code) || '';
     return ({
@@ -412,12 +412,14 @@
     })[c] || 'Não foi possível entrar agora. Tente de novo.';
   }
   async function contaIniciar() {
-    if (!FB) return;
+    if (!FB || conta.iniciando) return;
+    conta.iniciando = true; conta.msg = '';
     try {
       const base = 'https://www.gstatic.com/firebasejs/' + FB_VERSAO + '/';
       const mods = await Promise.all(['firebase-app', 'firebase-auth', 'firebase-firestore'].map(n => import(base + n + '.js')));
-      const opcoes = Object.assign({}, FB); delete opcoes.sincronizar; delete opcoes.emuladores;
-      const app0 = mods[0].initializeApp(opcoes), au = mods[1], fs = mods[2];
+      const opcoes = Object.assign({}, FB); delete opcoes.sincronizar; delete opcoes.emuladores; delete opcoes.homologacao;
+      /* Nova tentativa (o login não carregou da primeira vez): reaproveita o app, se ele chegou a ser criado. */
+      const app0 = mods[0].getApps().length ? mods[0].getApp() : mods[0].initializeApp(opcoes), au = mods[1], fs = mods[2];
       const auth = au.getAuth(app0), db = fs.getFirestore(app0);
       auth.languageCode = 'pt';
       /* Emuladores do Firebase (só para testes, e só quando o app roda em localhost). */
@@ -430,7 +432,8 @@
         else { nuvem.fb = false; if (identidade.indexOf('firebase:') === 0) usarIdentidade(''); } // sessão encerrada: volta ao progresso sem conta, sem apagar nada
         if (V.v === 'plano' || V.v === 'inicio') render(); else syncInfo();
       });
-    } catch (e) { conta.pronto = true; conta.msg = 'Não foi possível carregar o login agora. Verifique a internet.'; if (V.v === 'plano' || V.v === 'inicio') render(); }
+    } catch (e) { conta.pronto = true; conta.msg = 'Não foi possível carregar o login agora. Verifique a internet: o app tenta de novo quando a conexão voltar. O seu progresso continua salvo neste aparelho.'; if (V.v === 'plano' || V.v === 'inicio') render(); }
+    conta.iniciando = false;
   }
   /* Conta conectada: o aparelho passa a usar o progresso local desta conta. A nuvem só é usada com a configuração
      "sincronizar": true, a ser ligada depois de validar as regras e as transações no projeto real (veja
@@ -452,7 +455,12 @@
     };
     sincronizar(ref, id);
   }
+  /* Build de homologação (web/build.py): o cartão da conta avisa que é o projeto de teste. */
   function cartaoConta() {
+    const h = cartaoContaBase();
+    return FB && FB.homologacao ? h.replace('</h2>', '</h2><p class="small" role="note" style="margin:0"><b>Ambiente de homologação</b> (projeto de teste ' + esc(String(FB.projectId || '')) + '): use só contas e dados fictícios.</p>') : h;
+  }
+  function cartaoContaBase() {
     if (!FB) return '';
     if (!conta.pronto) return '<section class="card"><h2 class="h2">Sua conta</h2><p class="small muted" style="margin:0">Carregando o login…</p></section>';
     if (conta.user) return cartaoContaLogada(conta.user);
@@ -488,7 +496,7 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
+    if (el) el.textContent = nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 
   /* ---------- status ---------- */
@@ -1994,6 +2002,7 @@
     id = id || '';
     if (id === identidade) return false;
     clearTimeout(tSave);
+    clearTimeout(nuvem.tRetry); nuvem.erro = ''; nuvem.falhas = 0;
     nuvem.ref = null; nuvem.on = false; nuvem.again = false; nuvem.futura = false; nuvem.bloqueada = false; nuvem.pendente = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.refPausada = null; nuvem.conta = id;
     identidade = id;
     try { if (id) localStorage.setItem(LS_CONTA, id); else localStorage.removeItem(LS_CONTA); } catch (e) { /* sem armazenamento */ }
@@ -2335,4 +2344,51 @@
     salvar(); // a próxima gravação leva a união para progresso2
     render();
   }
+  /* ---------- falhas da nuvem: tentar de novo sem perder nada, e dizer ao aluno quando a sincronização parou ----------
+     O estudo é sempre gravado primeiro neste aparelho (salvar); a nuvem é uma cópia conciliada depois. Quando a nuvem
+     falha:
+     - erro passageiro (sem rede, servidor ocupado, cota estourada, transação disputada): tenta de novo sozinho, com
+       espera crescente (2,5 a 5 s, depois 5 a 10 s, 10 a 20 s… até 60 s); a conexão voltando ou o app voltando para a tela tentam
+       na hora, e o app indo para o fundo (trocar de app no celular) envia o que estava esperando;
+     - erro que não passa sozinho (gravação recusada pelas regras, sessão inválida, documento grande demais): a
+       sincronização para até o app abrir de novo, e o aviso diz isso, com o motivo. Nada é apagado: o estudo continua
+       neste aparelho e vai para a conta quando a sincronização voltar a funcionar.
+     O login do Firebase que não carregou (app aberto sem internet) também é tentado de novo quando a conexão volta.
+     Funções declaradas: gravar() e syncInfo() (02-progresso-nuvem.js) as usam depois que o arquivo inteiro carregou. */
+  function erroPassageiro(e) {
+    const c = String((e && e.code) || '').replace(/^firestore\//, '');
+    // Firestore usa hífen (resource-exhausted); a nuvem do Claude, sublinhado (resource_exhausted)
+    return ['unavailable', 'deadline-exceeded', 'aborted', 'resource-exhausted', 'resource_exhausted', 'internal', 'cancelled'].indexOf(c) >= 0;
+  }
+  /* A primeira espera é a de antes desta mudança (2,5 a 5 s); depois dobra (5 a 10 s, 10 a 20 s…), até 60 s. */
+  function esperaNuvem() {
+    nuvem.falhas = (nuvem.falhas || 0) + 1;
+    return Math.min(60000, 2500 * Math.pow(2, nuvem.falhas - 1) * (1 + Math.random()));
+  }
+  function motivoErroNuvem(c) {
+    return ({
+      'permission-denied': 'a nuvem recusou a gravação',
+      invalid_argument: 'a nuvem do curso não permite gravar com o seu acesso',
+      unauthenticated: 'a sessão expirou; saia e entre de novo na conta',
+      'invalid-argument': 'a nuvem recusou o formato do progresso'
+    })[c] || 'erro ' + c;
+  }
+  function avisoErroNuvem() {
+    return 'A sincronização com a nuvem parou (' + motivoErroNuvem(nuvem.erro) + '). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).';
+  }
+  function retomarNuvem() {
+    if (FB && !conta.api && conta.pronto && !conta.iniciando) contaIniciar(); // o login não carregou (sem internet ao abrir)
+    if (nuvem.ref && !nuvem.busy && (nuvem.semRede || nuvem.pendente)) { clearTimeout(nuvem.tRetry); nuvem.falhas = 0; gravar(); }
+  }
+  window.addEventListener('online', retomarNuvem);
+  /* Só envia antes do intervalo quando a página vai para o fundo e continua viva (trocar de app no celular). Fechando ou
+     trocando de página, o navegador dispara pagehide antes; aí nada começa: uma união terminada depois gravaria a cópia
+     desta página por cima do que outra aba ou outra abertura já guardou neste aparelho. */
+  let saindo = false;
+  window.addEventListener('pagehide', () => { saindo = true; });
+  window.addEventListener('pageshow', () => { saindo = false; });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') { retomarNuvem(); return; }
+    if (!saindo && nuvem.ref && nuvem.pendente && !nuvem.busy) { clearTimeout(tSave); gravar(); } // indo para o fundo: envia já
+  });
 })();

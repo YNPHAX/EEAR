@@ -8,7 +8,7 @@ const RAIZ = path.resolve(__dirname, '..');
 let falhas = 0;
 const ok = (cond, msg) => { console.log(`${cond ? '  ✓' : '  ✗'} ${msg}`); if (!cond) falhas++; };
 
-const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js'), testarRobustez = require('./robustez.js'), testarSincronia = require('./sincronia.js'), testarContas = require('./contas.js'), testarNuvemClaude = require('./nuvem-claude.js'), testarExclusaoNuvem = require('./exclusao-nuvem.js'), testarEpocaNuvem = require('./epoca-nuvem.js'), testarProgresso2 = require('./progresso2-nuvem.js');
+const dados = require('./dados.js'), testarVersoes = require('./versoes.js'), testarCelular = require('./celular.js'), testarRobustez = require('./robustez.js'), testarSincronia = require('./sincronia.js'), testarContas = require('./contas.js'), testarNuvemClaude = require('./nuvem-claude.js'), testarExclusaoNuvem = require('./exclusao-nuvem.js'), testarEpocaNuvem = require('./epoca-nuvem.js'), testarProgresso2 = require('./progresso2-nuvem.js'), testarFalhasNuvem = require('./falhas-nuvem.js');
 const { carregarDados, testarDados, testarContasMat, testarContasFis } = dados;
 dados.usar(ok);
 
@@ -290,6 +290,7 @@ async function testarNavegador(E) {
   await testarExclusaoNuvem({ b, srv, base, ok });
   await testarEpocaNuvem({ b, srv, ok });
   await testarProgresso2({ b, srv, ok });
+  await testarFalhasNuvem({ b, srv, ok });
 
   await b.close(); srv.fechar();
   fs.rmSync(saida, { recursive: true, force: true });
