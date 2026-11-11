@@ -4,7 +4,7 @@ name: Testes
 
 on:
   push:
-    branches: [main, 'claude/**']
+    branches: [main, 'claude/**', 'codex/**']
   workflow_dispatch:
 
 permissions:
@@ -30,7 +30,9 @@ jobs:
           npm install --prefix "$RUNNER_TEMP/pw" --no-save --no-audit --no-fund playwright@1.63.0
           "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
       - name: Testes da plataforma
-        run: NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/plataforma.test.js
+        run: |
+          NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/ciclo-sincronia.test.js
+          NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/plataforma.test.js
 
   # Contas, transações, regras do Firestore e exclusão de conta nos emuladores oficiais do Firebase (projeto de teste
   # "demo-eear": nenhum serviço real e nenhuma credencial). Roda em paralelo com o job acima.

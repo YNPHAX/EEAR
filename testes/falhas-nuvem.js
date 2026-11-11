@@ -83,9 +83,11 @@ module.exports = async function testarFalhasNuvem({ b, srv, ok }) {
     //    gravaria a cópia desta página por cima do que outra abertura guardou neste aparelho (defeito achado nesta revisão)
     Object.assign(N, { doc: null, usuario: 'falha-saida', erros: [], fora: false, tentativas: 0 });
     const A = await aparelho(); await A.marcar('T:base'); await ate(async () => naNuvem('T:base'));
+    // Relógio parado: uma máquina lenta não pode consumir os 1,5 s entre os dois comandos do Playwright.
+    await A.p.clock.install(); await A.p.clock.pauseAt(new Date(Date.now() + 1000));
     const antes = N.tentativas; await A.marcar('T:saindo');
     await A.p.evaluate(() => { window.dispatchEvent(new Event('pagehide')); Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
-    await espera(700);
+    await A.p.clock.runFor(1700);
     ok(N.tentativas === antes && !naNuvem('T:saindo') && await A.local('T:saindo') && !A.erros.length, 'página fechando: o envio antecipado não começa (o estudo fica no aparelho e segue o caminho normal)');
     await A.ctx.close();
   }

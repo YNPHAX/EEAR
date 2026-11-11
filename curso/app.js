@@ -296,12 +296,15 @@
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
   async function gravar() {
-    if (!nuvem.ref) return;
+    if (saindo || !nuvem.ref) return;
     if (nuvem.busy) { nuvem.again = true; return; }
+    const ref = nuvem.ref, conta0 = nuvem.conta;
+    const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
     nuvem.busy = true; clearTimeout(nuvem.tRetry);
-    try { await conciliar(nuvem.ref); nuvem.falhas = 0; nuvem.erro = ''; }
+    try { await conciliar(ref); if (atual()) { nuvem.falhas = 0; nuvem.erro = ''; } }
     catch (e) { // veja 13-falhas-nuvem.js
-      if (e && e.code === 'unavailable' && e.espera !== undefined) nuvem.tRetry = setTimeout(gravar, Math.max(0, e.espera) + 200 + Math.random() * 1000); // nuvem travada por outro aparelho
+      if (!atual()) { /* resposta de uma sessão anterior: não altera a nova */ }
+      else if (e && e.code === 'unavailable' && e.espera !== undefined) nuvem.tRetry = setTimeout(gravar, Math.max(0, e.espera) + 200 + Math.random() * 1000); // nuvem travada por outro aparelho
       else if (erroPassageiro(e)) { nuvem.semRede = true; nuvem.tRetry = setTimeout(gravar, esperaNuvem()); } // sem rede, servidor ocupado ou cota: tenta de novo
       else { nuvem.ref = null; nuvem.on = false; nuvem.erro = String((e && e.code) || 'desconhecido'); } // recusada: para, e o aviso diz; o estudo fica aqui
     }
@@ -346,8 +349,10 @@
      O resultado só é aplicado aqui depois que a nuvem confirmou, e só se a conta continuar a mesma. */
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
+    const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
     let p = null, modo = 'ok';
     const planejar = o => {
+      if (!atual()) return null; // inclusive callbacks repetidos pelo Firestore após troca de conta
       p = planejarUniao(o);
       if (!p.gravar) return null;
       p.id = novoIdGravacao(); // esta gravação entra na linhagem; a base, se confirmada, a representa
@@ -355,6 +360,7 @@
     };
     if (ref.transacao) await ref.transacao(planejar);
     else modo = await lerUnirGravar(ref, planejar);
+    if (!atual()) return; // não sobrescreve o cache de outra sessão/abertura nem confirma a leitura dela
     nuvem.lida = true; // mesmo sem nada a gravar (nuvem e aparelho vazios): a migração do caminho antigo pode seguir
     if (nuvem.conta !== conta0 || !p || p.nada) return;
     if (p.apagado || p.reapareceu) { pausarPorExclusao(ref, p); render(); return; }
@@ -437,7 +443,8 @@
   }
   /* Conta conectada: o aparelho passa a usar o progresso local desta conta. A nuvem só é usada com a configuração
      "sincronizar": true, a ser ligada depois de validar as regras e as transações no projeto real (veja
-     auditoria/contas-e-sincronizacao.md). O documento guarda só o progresso, a versão e as datas: nada de nome ou e-mail. */
+     auditoria/contas-e-sincronizacao.md). O documento guarda o progresso, a versão e as datas; o progresso inclui
+     cfg.nome quando informado para o certificado. Senha e tokens do login não são copiados para o documento. */
   function ligarNuvem(u) {
     const id = 'firebase:' + u.uid;
     usarIdentidade(id);
@@ -2385,8 +2392,12 @@
      trocando de página, o navegador dispara pagehide antes; aí nada começa: uma união terminada depois gravaria a cópia
      desta página por cima do que outra aba ou outra abertura já guardou neste aparelho. */
   let saindo = false;
-  window.addEventListener('pagehide', () => { saindo = true; });
-  window.addEventListener('pageshow', () => { saindo = false; });
+  window.addEventListener('pagehide', () => { saindo = true; clearTimeout(tSave); clearTimeout(nuvem.tRetry); });
+  window.addEventListener('pageshow', ev => {
+    saindo = false;
+    if (ev.persisted) { S = carregar(); render(); } // outra abertura pode ter atualizado o cache enquanto esta ficou suspensa
+    retomarNuvem();
+  });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') { retomarNuvem(); return; }
     if (!saindo && nuvem.ref && nuvem.pendente && !nuvem.busy) { clearTimeout(tSave); gravar(); } // indo para o fundo: envia já
