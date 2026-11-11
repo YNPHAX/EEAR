@@ -83,10 +83,16 @@ module.exports = async function testarFalhasNuvem({ b, srv, ok }) {
     //    gravaria a cópia desta página por cima do que outra abertura guardou neste aparelho (defeito achado nesta revisão)
     Object.assign(N, { doc: null, usuario: 'falha-saida', erros: [], fora: false, tentativas: 0 });
     const A = await aparelho(); await A.marcar('T:base'); await ate(async () => naNuvem('T:base'));
-    const antes = N.tentativas; await A.marcar('T:saindo');
+    /* Espera a sincronização de T:base terminar (depois de gravar, ela ainda confere a nuvem): uma marcação feita no meio
+       dela vai para a nuvem logo no fim dela (comportamento normal, de antes desta mudança), e o teste a confundia com o
+       envio antecipado. Era a falha intermitente do CI no commit 5aca0a4 (1 em 6 execuções aqui). */
+    await espera(1000);
+    /* Mede QUANDO a gravação acontece, em vez de esperar um tempo fixo (no CI, mais lento, a espera fixa podia cruzar o
+       intervalo normal de 1,5 s): o envio antecipado gravaria em milissegundos; o caminho normal, depois do intervalo. */
+    const t0 = Date.now(); await A.marcar('T:saindo');
     await A.p.evaluate(() => { window.dispatchEvent(new Event('pagehide')); Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
-    await espera(700);
-    ok(N.tentativas === antes && !naNuvem('T:saindo') && await A.local('T:saindo') && !A.erros.length, 'página fechando: o envio antecipado não começa (o estudo fica no aparelho e segue o caminho normal)');
+    const chegou = await ate(async () => naNuvem('T:saindo'), 8000), ms = N.gravouEm - t0;
+    ok(chegou && ms >= 1400 && await A.local('T:saindo') && !A.erros.length, `página fechando: o envio antecipado não começa; o estudo fica no aparelho e segue o intervalo normal (gravou ${ms} ms depois de marcar)`);
     await A.ctx.close();
   }
 };
