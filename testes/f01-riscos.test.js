@@ -76,8 +76,9 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
         } else if (nome === 'escrita-interrompida') {
           f.rede(ctx, true);
           const linhas = fs.readFileSync(path.join(alvo, 'curso/app.js'), 'utf8').split('\n');
-          const aposLeitura = linhas.findIndex(l => l === '    let u = st;');
-          const aposEscrita = linhas.findIndex(l => l === '    lembrarLocal(txt, u);');
+          const diario = linhas.some(l => l === '  function consolidarAgora(vivos, mortas) { // mortas (aba com a trava, sem nova consulta): só esses órfãos; os demais, depois');
+          const aposLeitura = linhas.findIndex(l => l === (diario ? '    let atual = txt0 != null ? estadoDe(txt0) : null;' : '    let u = st;'));
+          const aposEscrita = linhas.findIndex(l => l === (diario ? '      gravouLocal = true; txt = novo;' : '    lembrarLocal(txt, u);'));
           if (aposLeitura < 0 || aposEscrita < 0) throw new Error('Revisar breakpoints para este alvo; não adaptar silenciosamente.');
           const cdp = await ctx.newCDPSession(A); await cdp.send('Debugger.enable');
           const url = new URL('app.js', A.url()).href;
@@ -90,14 +91,22 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
           let pausou = pausa(); const gravando = marcar(A, 'T:A-race').catch(() => null); await pausou;
           // A já leu a chave real e está suspensa antes de escrever; B grava e fecha com sua alteração persistida.
           await Promise.race([marcar(B, 'T:B-race'), new Promise((_, reject) => setTimeout(() => reject(new Error('Outro renderer bloqueado pelo debugger')), 10000))]);
-          const antes = await B.evaluate(k => JSON.parse(localStorage.getItem(k)), chave);
+          const antes = await B.evaluate(([k, diario]) => diario
+            ? Object.keys(localStorage).filter(k => k.startsWith('missao-eear-v1-diario@')).some(k => { const d = JSON.parse(localStorage.getItem(k)); return d.st.feito['T:B-race']; })
+            : !!JSON.parse(localStorage.getItem(k)).feito['T:B-race'], [chave, diario]);
           await B.close(); await cdp.send('Debugger.removeBreakpoint', { breakpointId: bp1.breakpointId });
-          pausou = pausa(); await cdp.send('Debugger.resume'); await pausou;
+          pausou = pausa(); await cdp.send('Debugger.resume'); const gravou = await pausou;
+          const raw = await cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: gravou.callFrames[0].callFrameId, expression: diario ? 'localStorage.getItem(k)' : 'localStorage.getItem(chave(LS))', returnByValue: true });
+          const principalAntesDeFechar = JSON.parse(raw.result.value);
           // A escreveu o snapshot antigo de verdade; fechar antes de processar storage impede a reparação posterior.
           await A.close(); await gravando;
-          const C = await f.pagina(ctx), s = await f.estado(C);
-          passou = !!(s.feito['T:A-race'] && s.feito['T:B-race']);
-          resultado = { BconfirmadaAntesDeFechar: !!antes.feito['T:B-race'], aposFecharAmbas: resumo(s), breakpointAposSetItem: bp2.locations.length > 0 };
+          const C = await f.pagina(ctx); let s, cache;
+          const recuperou = await f.ate(async () => {
+            s = await f.estado(C); cache = await C.evaluate(k => JSON.parse(localStorage.getItem(k)), chave);
+            return s.feito['T:A-race'] && s.feito['T:B-race'] && cache && cache.feito['T:A-race'] && cache.feito['T:B-race'];
+          });
+          passou = !!(antes && recuperou && s.feito['T:base'] && s.act[hj] === 4 && cache.act[hj] === 4);
+          resultado = { diario, BconfirmadaAntesDeFechar: antes, principalAntesDeFechar: resumo(principalAntesDeFechar), aposFecharAmbas: resumo(s), cache: resumo(cache), breakpointAposSetItem: bp2.locations.length > 0 };
         } else throw new Error('Cenário desconhecido: ' + nome);
         console.log(`${passou ? '✓' : '✗'} ${nome}: ${JSON.stringify(resultado)}`);
         if (!passou) falhas++;
