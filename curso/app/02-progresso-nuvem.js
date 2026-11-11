@@ -80,18 +80,23 @@
   /* Contas (veja "contas neste aparelho"): cada identidade tem as próprias chaves (chave@identidade). Sem conta, valem as
      chaves de sempre, onde já está o progresso de quem nunca entrou numa conta. LS_CONTA lembra a conta em uso. */
   const LS_CONTA = 'missao-eear-conta', BASE_K = 'missao-eear-v1-base';
+  /* Abas (14-abas.js): linhagem da versão local (ABAS_K) e o que esta aba sabe dela (abas). */
+  const ABAS_K = 'missao-eear-v1-abas', abas = { raw: null, id: '', lin: [], hist: [] };
   const contaUI = { msg: '', adiado: false, ocupado: false }; // estado da tela da conta (veja "contas neste aparelho")
   let identidade = '', recuperar = null, gravouLocal = true;
   const chave = (k, id) => { const i = id === undefined ? identidade : id; return i ? k + '@' + i : k; };
   /* Lê o progresso da identidade em uso; se for ilegível, guarda uma cópia antes que alguma gravação o cubra. */
   function carregar() {
     let st = novoEstado();
+    abas.raw = null; abas.id = ''; abas.lin = []; abas.hist = [];
     try {
       const t = localStorage.getItem(chave(LS));
+      abas.raw = t;
       if (t) {
         let lido = false;
         try { const o = JSON.parse(t); if (o && o.v === 1) { st = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
         if (!lido) try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* sem espaço para a cópia */ }
+        else lembrarLocal(t, st);
       }
       recuperar = localStorage.getItem(chave(LS_REC));
     } catch (e) { /* sem armazenamento local */ }
@@ -111,7 +116,7 @@
   function salvar() {
     S.t = Date.now();
     fixarAncoras();
-    try { localStorage.setItem(chave(LS), JSON.stringify(S)); gravouLocal = true; } catch (e) { gravouLocal = false; } // o aviso aparece no próximo render()
+    try { S = gravarLocal(S); gravouLocal = true; } catch (e) { gravouLocal = false; } // unido ao que outra aba gravou (14-abas.js); o aviso aparece no próximo render()
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
@@ -192,7 +197,7 @@
     const u = uIgual(S, p.local) ? p.u : unirProgresso(p.local, mesclar(JSON.parse(JSON.stringify(S))), p.u).st;
     if (!uIgual(u, S)) {
       S = u;
-      try { localStorage.setItem(chave(LS), JSON.stringify(S)); } catch (e) { /* ignora */ }
+      try { S = gravarLocal(S); } catch (e) { /* ignora */ }
       if (V.v === 'inicio') V = { v: 'hoje' };
       render();
     }

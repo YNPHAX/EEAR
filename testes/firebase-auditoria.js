@@ -62,8 +62,9 @@ module.exports = async function ({ ok, req, AU, DOCS, PROJ, campos, gravarComo, 
     ok(remoto.cfg.certs.some(c => JSON.stringify(c) === JSON.stringify(cert)) && remoto.feito['T:offline-reaberto'], 'auditoria certificados: gravação do segundo dispositivo mantém certificado e progresso anterior');
   } finally { await A.ctx.close(); await B.ctx.close(); }
 
-  // Sonda opcional de defeito ainda aberto: não faz parte do CI verde. Sai com falha se houver perda.
-  if (process.env.EEAR_SONDA_ABAS === '1') {
+  // Sonda de F01 (perda entre abas offline): corrigida em curso/app/14-abas.js, agora roda sempre (EEAR_SONDA_ABAS=0 a
+  // desliga só para depurar outra coisa). Sai com falha se houver perda.
+  if (process.env.EEAR_SONDA_ABAS !== '0') {
     const O = await aparelho();
     try {
       await O.conectar('abas-auditoria@exemplo.test', 'auditoria-senha-3', true);

@@ -20,8 +20,8 @@
   }
   /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
   function apagarLocal(id) {
-    [LS, LS_REC, BASE_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
-    if (id === identidade) { S = novoEstado(); recuperar = null; }
+    [LS, LS_REC, BASE_K, ABAS_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
+    if (id === identidade) { S = novoEstado(); recuperar = null; abas.raw = null; abas.id = ''; abas.lin = []; abas.hist = []; }
   }
   function contasGuardadas() {
     const ids = new Set();

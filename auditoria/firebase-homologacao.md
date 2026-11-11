@@ -47,8 +47,8 @@ integração da cadeia de PRs**; nesta branch, a configuração nunca entra no r
 
 | Verificação | Resultado |
 |---|---|
-| `node testes/plataforma.test.js` (inclui `testes/falhas-nuvem.js`, 6 casos; contas; sincronização; certificados) | 227 de 227 (a base do PR #31 tem 221) |
-| `node testes/firebase-emulador.test.js` (Auth e Firestore oficiais: contas, transações, regras, exclusão, falhas) | 30 de 30; login com o Google só no CI |
+| `node testes/plataforma.test.js` (inclui `testes/falhas-nuvem.js` e `testes/abas.js`; contas; sincronização; certificados) | 234 de 234 |
+| `node testes/firebase-emulador.test.js` (Auth e Firestore oficiais: contas, transações, regras, exclusão, falhas) | 48 de 48 aqui (inclui a matriz do Codex e a sonda de F01); login com o Google só no CI |
 | `testes/isolamento-firebase.js` nos emuladores com `web/firestore.rules` | 9 de 9; com regras abertas, 7 falhas (o teste pega o vazamento) |
 | Emuladores de Hosting e Firestore com `firebase.json` da raiz | página 200, cabeçalhos, regras carregadas (403) |
 | `verificar_publicacao.py autoteste`, `validar`, `conferir-workflows`, `verificar --site/--app/--homologacao` | OK |
@@ -85,7 +85,7 @@ npx --yes firebase-tools@15.35.0 deploy --only hosting --project eear-teste
 ## 5. Regras do Firestore a publicar
 
 Publique **exatamente** o arquivo `web/firestore.rules` desta branch. Conferência: SHA-256
-`0b0135112729e080a4f0b3fbe4ed2c8dcce7cbb46fb7fe6df5ac9c6c679af2c2` (`sha256sum web/firestore.rules`).
+`18a264318c2a3cc906489198f14b34644d7acf66c7ea69dbef2a3a415dd60a9e` (`sha256sum web/firestore.rules`).
 
 O que elas permitem e recusam:
 
@@ -165,7 +165,46 @@ sincronização com a nuvem parou (a nuvem recusou a gravação)…" e guarda o 
 Bloqueiam a aprovação: perda de marcação, acesso entre contas, campo além dos quatro, login impossível no iPhone sem
 alternativa documentada.
 
-## 9. Riscos pendentes (investigados; nada disso está resolvido)
+## 9. Resposta à auditoria do Codex (`auditoria/firebase-codex.md`)
+
+| Achado | Situação nesta branch |
+|---|---|
+| F01 — perda entre abas offline | **Corrigido** em `curso/app/14-abas.js` (seção 9.1). A sonda do Codex passa a rodar sempre no emulador. |
+| F02–F04 — respostas atrasadas, callback de outra sessão, erro atrasado | Incorporados do Codex (merge revisado, `553ff01`); `testes/ciclo-sincronia.test.js` 3 de 3. |
+| F05 — barreira de publicação | Incorporado; convive com `verificar --homologacao` (183 casos no autoteste). |
+| F06 — dados pessoais em `dados` | Comentários incorporados; `cfg.nome` continua dentro do progresso (seção 10). |
+| F07 — fixture do emulador | Incorporado. |
+
+### 9.1 F01: reprodução, causa e correção
+
+- **Reprodução** (sonda do Codex no emulador, merge `553ff01`, antes da correção): `✗ SONDA abas offline … [cache=false,
+  nuvem=false]`, saída 1.
+- **Causa:** cada aba tem a sua cópia do progresso na memória e grava o progresso inteiro na mesma chave local; a última
+  gravação apaga o que a outra aba guardou. A transação do Firestore só concilia o que chega ao servidor.
+- **Correção:**
+  - antes de gravar, a aba lê a chave; se outra aba gravou desde a última vez que esta leu ou gravou, as duas versões são
+    unidas com `unirProgresso`, a mesma união de três vias da nuvem (marcações, desmarcações, contagens, certificados e
+    "Zerar" seguem as regras de lá);
+  - a base da união é a versão mais recente que as duas abas têm em comum, tirada de uma linhagem gravada à parte
+    (`missao-eear-v1-abas@<conta>`: id da gravação, ids das anteriores e um resumo do texto a que pertence). Uma versão
+    sem linhagem (versão antiga do app) recebe um id do próprio texto, para que duas abas que a leram a reconheçam;
+  - sem versão comum conhecida, a união é sem base: nada se apaga;
+  - quando outra aba grava (evento `storage`), esta une na hora e, se tinha algo que a outra cobriu (leitura atrasada da
+    chave), grava a união de volta;
+  - o texto do progresso na chave local não mudou (versões antigas, exportação e cópias de recuperação iguais).
+- **Testes:** `testes/abas.js` (7 casos, na suíte da plataforma): duas abas e uma fecha; contagens sem perder nem dobrar;
+  desmarcação com e sem o aviso entre abas; "Zerar"; certificados; leitura atrasada; cópia apagada em outra aba. Os 7
+  falham no build de `553ff01` e passam com a correção (3 de 3 rodadas). Sonda do Codex: `✓ … [cache=true, nuvem=true]`.
+- **Limites que continuam:**
+  - uma aba **suspensa durante** "Apagar os dados deste aparelho" que acorda com os dados antigos na memória une sem
+    base e pode regravar a cópia local apagada (apagar só é permitido quando a nuvem já tem tudo, então não volta estudo
+    zerado nem desmarcado; zerar e desmarcar têm linhagem);
+  - num cruzamento raro (duas abas unindo, cada uma, a gravação concorrente da outra), contagens de tentativas e
+    atividade podem somar duas vezes o mesmo trecho; marcações não se perdem;
+  - a gravação local não usa trava entre abas (o `localStorage` é síncrono e a trava do navegador é assíncrona); a
+    correção é a união com linhagem e a regravação ao receber o aviso, não exclusão mútua.
+
+## 10. Riscos pendentes (investigados; nada disso está resolvido)
 
 - **Google no APK.** O botão do Google fica escondido no APK (a janela do Google não abre numa WebView). Consequências:
   uma conta criada com o Google no site não entra no APK; "Excluir minha conta" de uma conta Google falha no APK (a
