@@ -23,6 +23,8 @@ Uso:
   python3 -I web/verificar_publicacao.py verificar _site --site      (saída do build do site)
   python3 -I web/verificar_publicacao.py verificar app/www --app     (conteúdo do app de Android)
   python3 -I web/verificar_publicacao.py verificar missao-eear.apk --apk
+  python3 -I web/verificar_publicacao.py verificar <pasta> --homologacao  (build de homologação do Firebase, para o
+      Hosting do projeto de teste: mesma conferência do material do site, e a pasta TEM de ser de homologação)
   python3 -I web/verificar_publicacao.py validar                     (confere o arquivo de impressões)
   python3 -I web/verificar_publicacao.py autoteste [-v]              (confere a própria verificação, com material de mentira)
   python3 -I web/verificar_publicacao.py conferir-workflows          (confere as camadas 1 e 2)
@@ -442,9 +444,13 @@ def carregar(imp_arq):
             'aprovadas': {publicado(a): s for a, s in origem.items()}, 'sha': canonico(imp)}
 
 
-def verificar(alvo, modo, imp_arq=IMPRESSOES, publicar=True):
+def verificar(alvo, modo, imp_arq=IMPRESSOES, publicar=True, homologacao_exigida=False):
     """publicar=False só na conferência do próprio build (conferir_build): um build de homologação do Firebase pode ser
-    montado e testado, mas a verificação de publicação (a dos workflows) o recusa."""
+    montado e testado, mas a verificação de publicação (a dos workflows) o recusa. homologacao_exigida=True (opção
+    --homologacao, para o Hosting do projeto de teste): confere o material como no site e exige a marca de homologação,
+    para que essa opção nunca sirva para liberar um build oficial."""
+    if homologacao_exigida:
+        publicar = False
     try:
         imp = carregar(imp_arq)
     except Exception as e:
@@ -466,6 +472,8 @@ def verificar(alvo, modo, imp_arq=IMPRESSOES, publicar=True):
         homolog = homologacao(alvo, modo)
         if publicar:
             achados += homolog
+        elif homologacao_exigida and not homolog:
+            achados.append((alvo, 'a opção --homologacao só vale para um build de homologação do Firebase (web/build.py com EEAR_FIREBASE_CONFIG)'))
         elif homolog:
             print('AVISO: build de homologação do Firebase (projeto de teste): serve para testes e não pode ser publicado')
     except NaoVerificavel as e:
@@ -1313,6 +1321,9 @@ def autoteste(verboso=False):
             ('outros', 'saída vazia (sem index.html)', lambda: verificar(os.makedirs(cam('vazio')) or cam('vazio'), 'site', imp), 1),
             ('outros', 'build de homologação do Firebase (site)', lambda: verificar(site('homolog', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId": "eear-teste", "homologacao": true};</script><p>Curso</p>'}), 'site', imp), 1),
             ('outros', 'build de homologação do Firebase (APK)', lambda: verificar(apk('homolog.apk', [('assets/public/teste.html', '<script>window.EEAR_FIREBASE = {"homologacao":true};</script>')]), 'apk', imp), 1),
+            ('outros', '--homologacao: build de homologação sem material restrito é aceito', lambda: verificar(site('homolog-ok', {'index.html': '<script>window.EEAR_FIREBASE = {"homologacao": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 0),
+            ('outros', '--homologacao: build oficial (sem a marca) é recusado', lambda: verificar(site('homolog-oficial'), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: material restrito continua recusado', lambda: verificar(site('homolog-restrito', {'index.html': '<script>window.EEAR_FIREBASE = {"homologacao": true};</script><p>Curso</p>', 'dados/material.js': restrito}), 'site', imp, homologacao_exigida=True), 1),
             ('outros', 'login sem a marca de homologação continua aceito', lambda: verificar(site('com-login', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId": "outro"};</script><p>Curso</p>'}), 'site', imp), 0),
             ('outros', 'nome com "apostila", mesmo com conteúdo legítimo', lambda: verificar(site('nome', {'dados/apostila-propria.js': 'x=1'}), 'site', imp), 1),
             ('falha segura', 'impressões ausentes', lambda: verificar(site('f1'), 'site', cam('nao-existe.json')), 2),
@@ -1407,6 +1418,8 @@ if __name__ == '__main__':
     a = sys.argv[1:]
     if a[:1] == ['verificar'] and len(a) == 3 and a[2] in ('--site', '--app', '--apk'):
         sys.exit(verificar(a[1], a[2][2:]))
+    if a[:1] == ['verificar'] and len(a) == 3 and a[2] == '--homologacao':
+        sys.exit(verificar(a[1], 'site', homologacao_exigida=True))
     if a == ['validar']:
         sys.exit(validar())
     if a[:1] == ['autoteste'] and a[1:] in ([], ['-v']):

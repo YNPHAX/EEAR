@@ -34,6 +34,10 @@ if fb is not None:
         raise ValueError(f'configuração do Firebase incompleta (copie do console): {vazios}')
     if PROJETOS_FIREBASE.get(fb['projectId']) != 'homologacao':
         raise ValueError(f'projeto Firebase não permitido neste build: {fb["projectId"]} (só {sorted(PROJETOS_FIREBASE)})')
+    # o domínio do login tem de ser do próprio projeto: o padrão (firebaseapp.com) ou o do Hosting (web.app), que no
+    # iPhone evita o bloqueio de armazenamento entre sites no login com o Google
+    if fb['authDomain'] not in (fb['projectId'] + '.firebaseapp.com', fb['projectId'] + '.web.app'):
+        raise ValueError(f'authDomain tem de ser {fb["projectId"]}.firebaseapp.com ou {fb["projectId"]}.web.app, não {fb["authDomain"]}')
     if 'sincronizar' in fb and fb['sincronizar'] is not True and fb['sincronizar'] is not False:
         raise ValueError('"sincronizar" tem de ser true ou false')
     fb['homologacao'] = True

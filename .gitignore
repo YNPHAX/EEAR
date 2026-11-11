@@ -6,3 +6,8 @@ app/node_modules/
 
 # configuração do Firebase (homologação): fica fora do repositório
 web/firebase.json
+
+# build e cache do Firebase Hosting de homologação (homologacao/)
+homologacao/site/
+homologacao/.firebase/
+homologacao/*.log

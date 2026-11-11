@@ -408,7 +408,11 @@
       'auth/too-many-requests': 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.',
       'auth/network-request-failed': 'Sem internet. Tente de novo quando estiver conectado.',
       'auth/popup-closed-by-user': 'A janela do Google foi fechada antes de terminar.',
-      'auth/unauthorized-domain': 'Este endereço ainda não está autorizado no Firebase.'
+      'auth/unauthorized-domain': 'Este endereço ainda não está autorizado no Firebase.',
+      'auth/password-does-not-meet-requirements': 'A senha não atende aos requisitos: use pelo menos 8 caracteres, com letras e números.',
+      'auth/operation-not-allowed': 'Esta forma de entrar não está ativada no Firebase.',
+      'auth/user-disabled': 'Esta conta foi desativada.',
+      'auth/popup-blocked': 'O navegador bloqueou a janela do Google. Permita janelas para este site e tente de novo.'
     })[c] || 'Não foi possível entrar agora. Tente de novo.';
   }
   async function contaIniciar() {
