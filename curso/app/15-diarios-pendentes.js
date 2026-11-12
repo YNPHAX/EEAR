@@ -144,10 +144,11 @@
   });
   // Não aceitar mutações sobre uma cópia inicial ainda não reconciliada com o checkpoint desta identidade.
   function aguardandoDados(ev) {
-    if (loc.carregado) return;
+    if (loc.carregado && !loc.incompativel) return;
     const el = ev.target.closest('[data-a]');
     if (ev.type === 'click' && (!el || ['tab', 'go', 'expcopiar', 'dadosver', 'dadosbaixar', 'cancelar'].includes(el.dataset.a))) return;
-    ev.preventDefault(); ev.stopImmediatePropagation(); contaUI.msg = 'Preparando seus dados. Aguarde para estudar.'; render();
+    if (loc.incompativel && ev.type === 'click' && el && ['dadosapagar', 'dadosapagarok', 'reccopiar', 'recdescartar'].includes(el.dataset.a)) return;
+    ev.preventDefault(); ev.stopImmediatePropagation(); contaUI.msg = loc.incompativel ? 'O armazenamento está ilegível. Exporte seus dados antes de apagar a cópia para recomeçar.' : 'Preparando seus dados. Aguarde para estudar.'; render();
   }
   document.addEventListener('click', aguardandoDados, true);
   document.addEventListener('change', aguardandoDados, true);

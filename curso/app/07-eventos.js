@@ -174,6 +174,7 @@
         if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); break; }
         // Importar acrescenta estudo; ausência no código antigo não é uma ordem de apagar progresso novo.
         const local = opCopiar(S), colado = mesclar(o);
+        if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); break; }
         const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
         const importado = conhecida ? opMeta(colado) : opVazio();
         const combinado = conhecida ? opCombinarEstados(S, colado) : S;

@@ -1823,6 +1823,7 @@
         if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); break; }
         // Importar acrescenta estudo; ausência no código antigo não é uma ordem de apagar progresso novo.
         const local = opCopiar(S), colado = mesclar(o);
+        if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); break; }
         const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
         const importado = conhecida ? opMeta(colado) : opVazio();
         const combinado = conhecida ? opCombinarEstados(S, colado) : S;
@@ -2085,7 +2086,7 @@
     const r = await apagarDuravel(id, definitivo);
     const bases = [LS, LS_REC, BASE_K, ABAS_K, QUER_K, VIDA_K, APAGOU_K, DIARIO_K].map(k => chave(k, id));
     Object.keys(localStorage).filter(k => bases.some(b => k === b || k.indexOf(b + '#') === 0)).forEach(k => localStorage.removeItem(k));
-    if (id === identidade) { nuvem.ref = null; nuvem.on = false; loc.ops = []; loc.gen = r.gen; loc.pendente = 0; loc.confirmando = false; S = novoEstado(); recuperar = null; partirDe(null, S); }
+    if (id === identidade) { nuvem.ref = null; nuvem.on = false; loc.ops = []; loc.gen = r.gen; loc.pendente = 0; loc.confirmando = false; loc.incompativel = false; gravouLocal = true; S = novoEstado(); recuperar = null; partirDe(null, S); }
   }
   function contasGuardadas() {
     const ids = new Set();
@@ -2740,10 +2741,11 @@
   });
   // Não aceitar mutações sobre uma cópia inicial ainda não reconciliada com o checkpoint desta identidade.
   function aguardandoDados(ev) {
-    if (loc.carregado) return;
+    if (loc.carregado && !loc.incompativel) return;
     const el = ev.target.closest('[data-a]');
     if (ev.type === 'click' && (!el || ['tab', 'go', 'expcopiar', 'dadosver', 'dadosbaixar', 'cancelar'].includes(el.dataset.a))) return;
-    ev.preventDefault(); ev.stopImmediatePropagation(); contaUI.msg = 'Preparando seus dados. Aguarde para estudar.'; render();
+    if (loc.incompativel && ev.type === 'click' && el && ['dadosapagar', 'dadosapagarok', 'reccopiar', 'recdescartar'].includes(el.dataset.a)) return;
+    ev.preventDefault(); ev.stopImmediatePropagation(); contaUI.msg = loc.incompativel ? 'O armazenamento está ilegível. Exporte seus dados antes de apagar a cópia para recomeçar.' : 'Preparando seus dados. Aguarde para estudar.'; render();
   }
   document.addEventListener('click', aguardandoDados, true);
   document.addEventListener('change', aguardandoDados, true);
