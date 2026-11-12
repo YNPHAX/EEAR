@@ -306,6 +306,46 @@ sobrescrito é aplicado de novo (inc), mas a recuperação de um órfão leva at
 que cai só tem o diário absorvido depois de 30 min (ou quando ela volta). A aba líder pode mostrar "Progresso salvo na
 sua conta." enquanto outra aba tem um diário pendente por milissegundos; a exclusão, ainda assim, fica bloqueada.
 
+### 9.4 Quarta rodada (`auditoria/firebase-codex-8bd32d2.md`, que reprovou `8bd32d2`)
+
+Reprodução no `8bd32d2` com os testes do Codex, sem alteração: `concorrencia-fallback.test.js` ✗ (F13: B some depois
+da limpeza do recibo e da gravação com leitura antiga); `orfaos-auditoria.test.js` 1 de 4 (`segunda-escrita-8s` e
+`segunda-escrita-30min` com atividade 5, esperado 4; `crash-processo` sem recuperação); `hosting-gates-auditoria.py`
+2 falhas (comentário JavaScript e script `application/json`).
+
+| Achado | Causa | Correção |
+|---|---|---|
+| F13 (alta) | sem Web Locks não há exclusão mútua: a aba com leitura antiga gravava por cima, e o recibo de B já tinha sido apagado | antes de gravar a cópia principal, a aba lê a chave de novo; se mudou desde a leitura, refaz a consolidação sobre a versão nova (até 5 vezes); o recibo de uma aba fechada só é apagado depois de 2 s de carência (cobre leituras atrasadas entre processos, que duram milissegundos) |
+| F09 residual (média) | o diário mais novo partia da base antiga, e a união somava de novo o diário anterior que outra aba já tinha absorvido | o diário leva `bseq` (a marca inc da versão de que a aba partiu) e `ant` (os estados dos diários dela depois dessa versão); se a cópia já tem o diário k, a união parte do estado de k |
+| H02 residual (média) | o verificador aceitava qualquer `<script>` sem `src` | só vale o formato exato do `web/build.py`: `<script>` sem atributos com as três atribuições, uma vez, antes dos scripts do app, fora de comentários e de elementos que não executam script; casos novos no autoteste (193) |
+| Queda do navegador inteiro (limite registrado pelo Codex) | o localStorage do Chromium não chega ao disco a tempo | **medição própria** (`Browser.crash` 50 ms, 300 ms e 1,2 s depois da gravação, 3 rodadas cada, com e sem `durability: 'strict'`): localStorage perdido em 18 de 18; IndexedDB mantido em 18 de 18. Cada diário vai também para o IndexedDB (`curso/app/16-diario-duravel.js`, commit síncrono quando a conexão já está aberta) e volta na abertura. Uma marca de exclusão local, gravada só quando um diário pendente fica, distingue "cópia apagada pelo aluno" de "cópia perdida na queda" |
+
+Decisão de arquitetura: a cópia principal continua no localStorage. A abertura do app é síncrona, as versões antigas
+leem essa chave, e a exportação, a recuperação e as contas dependem dela. Migrar tudo para o IndexedDB exigiria abrir
+o app de forma assíncrona e quebraria a convivência com versões antigas. O IndexedDB entra só como cópia durável dos
+diários, que é o que a queda perde. Sem Web Locks, a exclusão mútua continua inexistente; a conferência antes de
+gravar e a carência fecham a janela observada, mas não são uma transação.
+
+Resultados (testes do Codex sem alteração): `concorrencia-fallback.test.js` ✓; `orfaos-auditoria.test.js` 4 de 4
+(`crash-processo` 2 de 2 com 1,2 s: localStorage sem nenhum diário antes de o app abrir; o diário voltou do IndexedDB,
+atividade 3 de 3 na interface e no servidor); `diarios-auditoria.test.js` 8 de 8; F01 8 de 8; riscos 5 de 5;
+`hosting-gates-auditoria.py` 0 falha; `hosting-auditoria.py` 0 falha. Próprio: `testes/abas-duravel.js` (falha no
+`8bd32d2`, passa agora).
+
+Ajustes de linha para os pontos de parada do Codex: a gravação do diário continua em uma linha
+`localStorage.setItem(chaveDiario(loc.tab), JSON.stringify(...))`, e as linhas de leitura e gravação da consolidação
+não mudaram (os testes procuram essas linhas e recusam o alvo se elas sumirem).
+
+Riscos que continuam:
+- sem Web Locks, duas abas ainda podem consolidar ao mesmo tempo; a conferência antes de gravar reduz a janela a
+  microssegundos, e a carência de 2 s supõe que leituras atrasadas entre processos durem menos que isso;
+- uma queda do navegador nos primeiros milissegundos depois do clique ainda pode perder aquele clique; não foi medido
+  abaixo de 50 ms;
+- depois de uma queda que perca a cópia principal, um recibo anterior a um "Zerar" que ainda esteja no IndexedDB (nos
+  ~2 s de carência) pode trazer de volta progresso zerado;
+- um diário fora da cadeia com mais de 6 sequências não rebaseadas volta a usar a base antiga (contagem pode dobrar);
+- a medição de durabilidade é do Chromium deste ambiente; Safari, WebView do Android e iOS não foram medidos.
+
 ## 10. Riscos pendentes (investigados; nada disso está resolvido)
 
 - **Google no APK.** O botão do Google fica escondido no APK (a janela do Google não abre numa WebView). Consequências:
