@@ -282,6 +282,30 @@ abre tem de ter as duas marcações). `hosting-auditoria.py`: 0 falha.
   principal (marcações e contagens passam);
 - o teste `escrita-interrompida` do Codex precisa ser reapontado para as linhas novas (eu não alterei a branch dele).
 
+### 9.3 Terceira rodada (`auditoria/firebase-codex-61e1d32.md`, que reprovou `61e1d32`)
+
+O parecer confirmou F01 (8 de 8), F08, F09 (62 de 62; 202 de 202 com quatro abas), H01, H03 e F02–F07, e trouxe
+F10, F11, F12 e um resíduo de H02. Reprodução no `61e1d32`, com os testes do Codex sem alteração:
+`diarios-auditoria.test.js` 5 de 8 (`sem-web-locks-crash`, `exclusao-com-diario-pendente` e `sem-notificacoes` falham);
+`hosting-gates-auditoria.py` 2 falhas (configuração só num comentário; script que a redefine antes do app).
+
+| Achado | Causa | Correção (`curso/app/15-diarios-pendentes.js`, `web/verificar_publicacao.py`) |
+|---|---|---|
+| F10 (alta): exclusão local apagava o diário ainda fora da cópia de outra aba | `sincronizado()` só olhava a memória da aba; `apagarLocal()` apagava todos os diários | diário **pendente** = o que ainda mudaria a cópia principal (inc não o cobre e aplicá-lo muda a cópia). Com um pendente, `sincronizado()`/`sincronizadoDe()` são falsos (não se oferece apagar); `apagarLocal()` nunca apaga um pendente; a exclusão pedida na tela roda com a trava local (depois de qualquer consolidação em andamento) e confere de novo |
+| F11 (alta): sem Web Locks, diários órfãos eram ignorados | sem a trava não havia como saber se a dona do diário estava viva | registro de vida por aba (`missao-eear-v1-vida@<conta>#<aba>`, a cada 2 s; removido ao fechar); diário de aba sem registro recente (8 s; 30 min em segundo plano) é órfão e entra na consolidação. A dona que só parecia fechada reconhece o próprio diário na cópia (`loc.jhist`, `baseSeq`) e não conta duas vezes |
+| F12 (baixa): órfão esperava a próxima abertura sem aviso `storage` | a vigia só começava pelo aviso ou na abertura | procura de diários a cada 3 s (com Web Locks: vigia a trava de vida; sem: consolida os órfãos) |
+| H02 residual (média) | regex sobre o texto inteiro do `index.html` | só vale a atribuição dentro de um `<script>` da própria página, fora de comentários, e uma única menção no `index.html`; em qualquer outro arquivo do site, `EEAR_FIREBASE` só pode aparecer nas duas leituras do app |
+
+Resultados com a correção: `diarios-auditoria.test.js` 8 de 8; `hosting-gates-auditoria.py` 0 falha; autoteste 188
+casos (dois casos novos de H02). Regressão própria: `testes/abas-recuperacao.js` (queda real da página sem Web Locks,
+logo depois de gravar o diário; exclusão com diário pendente de outra aba), que falha no `61e1d32` e passa com a
+correção. `testes/ciclo-sincronia.test.js` passou a ser o do Codex (espera a operação antiga entrar no transporte).
+
+Limites que continuam: sem Web Locks, duas abas podem consolidar ao mesmo tempo (sem exclusão mútua); o diário
+sobrescrito é aplicado de novo (inc), mas a recuperação de um órfão leva até cerca de 10 s; uma aba em segundo plano
+que cai só tem o diário absorvido depois de 30 min (ou quando ela volta). A aba líder pode mostrar "Progresso salvo na
+sua conta." enquanto outra aba tem um diário pendente por milissegundos; a exclusão, ainda assim, fica bloqueada.
+
 ## 10. Riscos pendentes (investigados; nada disso está resolvido)
 
 - **Google no APK.** O botão do Google fica escondido no APK (a janela do Google não abre numa WebView). Consequências:

@@ -24,15 +24,18 @@ const { execFileSync } = require('child_process'), { chromium } = require('playw
       await p.goto(`http://127.0.0.1:${srv.address().port}/`);
       const resultado = await p.evaluate(async modo => {
         const a = window.__audit, idA = 'firebase:auditoria-A', idB = 'firebase:auditoria-B';
-        let liberar, enviadoA = null, enviadoB = null;
+        let liberar, iniciou, enviadoA = null, enviadoB = null;
         const espera = new Promise(r => { liberar = r; });
+        const iniciada = new Promise(r => { iniciou = r; });
         a.usarIdentidade(idA); a.estado().feito['T:A'] = true; a.salvar();
         const antiga = a.sincronizar({ transacao: async f => {
+          iniciou(); // a operação antiga precisa ter entrado no transporte, inclusive com liderança assíncrona
           if (modo === 'saida') { const remoto = JSON.parse(JSON.stringify(a.estado())); remoto.feito['T:remota'] = true; enviadoA = f(remoto); }
           await espera;
           if (modo === 'recusa') { const e = new Error('recusa atrasada'); e.code = 'permission-denied'; throw e; }
           if (modo === 'callback') enviadoA = f(null);
         } }, idA);
+        await iniciada;
         if (modo === 'saida') {
           window.dispatchEvent(new Event('pagehide'));
           const chave = 'missao-eear-v1@' + idA, atual = JSON.parse(localStorage.getItem(chave));

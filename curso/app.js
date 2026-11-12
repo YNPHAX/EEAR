@@ -261,8 +261,8 @@
   const LS_CONTA = 'missao-eear-conta', BASE_K = 'missao-eear-v1-base';
   /* Abas (14-abas.js): diário durável desta aba (DIARIO_K), o que ela sabe da cópia principal (loc) e a liderança da
      sincronização com a nuvem (lider). ABAS_K: linhagem de uma versão anterior desta correção, só para limpar. */
-  const DIARIO_K = 'missao-eear-v1-diario', ABAS_K = 'missao-eear-v1-abas', QUER_K = 'missao-eear-v1-quer';
-  const loc = { tab: 't' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36), seq: 0, pendente: 0, base: null, bid: '', lin: [], agendado: false, denovo: false, soltarVida: null, vigiadas: new Set(), segura: false, soltarSeg: null, escritora: false, vivos: null, mortas: null }, lider = { ativa: false, soltar: null, conta: null, espera: null };
+  const DIARIO_K = 'missao-eear-v1-diario', ABAS_K = 'missao-eear-v1-abas', QUER_K = 'missao-eear-v1-quer', VIDA_K = 'missao-eear-v1-vida';
+  const loc = { tab: 't' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36), seq: 0, pendente: 0, base: null, bid: '', lin: [], agendado: false, denovo: false, soltarVida: null, vigiadas: new Set(), segura: false, soltarSeg: null, escritora: false, vivos: null, mortas: null, semEfeito: false, jhist: [], baseSeq: 0 }, lider = { ativa: false, soltar: null, conta: null, espera: null };
   const contaUI = { msg: '', adiado: false, ocupado: false }; // estado da tela da conta (veja "contas neste aparelho")
   let identidade = '', recuperar = null, gravouLocal = true;
   const chave = (k, id) => { const i = id === undefined ? identidade : id; return i ? k + '@' + i : k; };
@@ -2059,7 +2059,7 @@
   /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
   function apagarLocal(id) {
     [LS, LS_REC, BASE_K, ABAS_K, QUER_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
-    try { const pre = chave(DIARIO_K, id) + '#'; Object.keys(localStorage).filter(k => k.indexOf(pre) === 0).forEach(k => localStorage.removeItem(k)); } catch (e) { /* ignora */ } // diários das abas desta conta
+    apagarDiarios(id); // diários das abas desta conta, menos os pendentes (única cópia de um estudo; 15-diarios-pendentes.js)
     if (id === identidade) { S = novoEstado(); recuperar = null; loc.pendente = 0; partirDe(null, null); }
   }
   function contasGuardadas() {
@@ -2071,7 +2071,7 @@
      (a base), ou quando não tem estudo. Cópia de recuperação ou ilegível: não está (é o que pode ser perdido). */
   function sincronizadoDe(id) {
     try {
-      if (localStorage.getItem(chave(LS_REC, id))) return false;
+      if (localStorage.getItem(chave(LS_REC, id)) || temPendentes(id)) return false; // diário de outra aba ainda fora da cópia
       const t = localStorage.getItem(chave(LS, id)); if (!t) return true;
       const st = mesclar(JSON.parse(t)); if (semEstudo(st)) return true;
       const b = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null');
@@ -2095,7 +2095,7 @@
     return ['mod', 'fc', 'sims', 'erros', 'ap', 'aula'].some(k => !uIgual(u[k], S[k])) ? a : null;
   }
   /* A nuvem já tem tudo o que está neste aparelho (a última sincronização gravou exatamente o progresso atual)? */
-  function sincronizado() { const b = lerBase(); return !!b && uIgual(b, mesclar(copiar(S))); }
+  function sincronizado() { const b = lerBase(); return !!b && uIgual(b, mesclar(copiar(S))) && !temPendentes(identidade); } // e nenhuma aba com estudo fora da cópia (F10)
   function resumoProg(st) { return `${plural(Object.keys(st.mod).length, 'aula estudada', 'aulas estudadas')}, ${plural(Object.keys(st.fc).length, 'flashcard visto', 'flashcards vistos')} e ${plural(st.sims.length, 'simulado', 'simulados')}`; }
 
   /* Aviso na tela Hoje: progresso sem conta que a conta ainda não tem. */
@@ -2194,7 +2194,7 @@
       case 'dadosbaixar': baixarDados(); break;
       case 'dadosver': pedindo = pedindo === 'dadosver' ? null : 'dadosver'; render(); break;
       case 'dadosapagar': pedindo = 'dadosapagar'; render(); break;
-      case 'dadosapagarok': if (identidade && !sincronizado()) break; apagarLocal(identidade); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados.'; render(); break;
+      case 'dadosapagarok': comTravaLocal(() => { if (identidade && !sincronizado()) { pedindo = null; msgDados = 'Nada foi apagado: outra aba ou este aparelho tem estudo que ainda não está na nuvem.'; render(); return; } apagarLocal(identidade); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados.'; render(); }); break; // com a trava: depois de qualquer gravação em andamento (F10)
       case 'dadosapagartudo': { // só as contas cuja nuvem já tem tudo: o estudo não enviado de outra conta não é apagado
         if (identidade) break;
         const ficam = contasGuardadas().filter(id => !sincronizadoDe(id));
@@ -2495,7 +2495,7 @@
   /* Cópia própria: a base não pode ser o mesmo objeto que S (carregar devolve o estado que vira S), senão mudar S mudava
      a base, e a união via a marcação nova na base e ausente na cópia principal, ou seja, apagada. */
   function partirDe(txt, st) {
-    const m = txt != null && metaDe(txt); loc.base = txt == null || !st ? null : JSON.parse(JSON.stringify(st)); loc.bid = idVersao(txt); loc.lin = m ? m.lin.slice() : [];
+    const m = txt != null && metaDe(txt); loc.base = txt == null || !st ? null : JSON.parse(JSON.stringify(st)); loc.bid = idVersao(txt); loc.lin = m ? m.lin.slice() : []; loc.baseSeq = (m && m.inc[loc.tab]) || 0;
   }
   /* Base da união com a versão txt: o estado da versão de que a aba partiu, se ela está na cadeia de txt; senão, nenhuma. */
   function baseNaCadeia(txt, m, bid, base) {
@@ -2510,8 +2510,9 @@
     localStorage.setItem(chaveDiario(loc.tab), JSON.stringify({ seq: loc.seq, bid: loc.bid, base: loc.base, st: S }));
     loc.escritora = true;
     loc.pendente = loc.seq;
+    loc.jhist = (loc.jhist || []).concat([{ seq: loc.seq, st: JSON.parse(JSON.stringify(S)) }]).slice(-6); // 15-diarios-pendentes.js
   }
-  function guardarPerdido(p) { if (!p) return; recuperar = JSON.stringify(p); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
+  function guardarPerdido(p) { if (!p || loc.semEfeito) return; recuperar = JSON.stringify(p); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
   /* Cópia principal apagada: do estado st, só o que veio depois da base (sem os certificados que a base já tinha). */
   function soDepois(base, st) {
     const so = novidades(base, st), tinha = (base.cfg.certs || []).map(certChave);
@@ -2583,7 +2584,10 @@
   function receberPrincipal(txt) {
     const novo = estadoDe(txt), m = metaDe(txt);
     if (!novo) return;
-    const b0 = baseNaCadeia(txt, m, loc.bid, loc.base), cadeia = !!b0, eu = mesclar(JSON.parse(JSON.stringify(S)));
+    /* Outra aba já pôs na cópia um diário desta aba posterior à base dela (sem Web Locks, esta aba parecia fechada): a base
+       é o estado daquele diário, para não contar duas vezes o que ele trouxe. */
+    const k = m && m.inc[loc.tab], dj = k > (loc.baseSeq || 0) ? (loc.jhist || []).find(h => h.seq === k) : null;
+    const b0 = dj ? mesclar(JSON.parse(JSON.stringify(dj.st))) : baseNaCadeia(txt, m, loc.bid, loc.base), cadeia = !!b0, eu = mesclar(JSON.parse(JSON.stringify(S)));
     let u;
     if (!cadeia && loc.base) u = unirSemCadeia(mesclar(JSON.parse(JSON.stringify(loc.base))), eu, novo);
     else { const r = unirProgresso(b0, eu, novo, SOMAR); guardarPerdido(r.perdido); u = r.st; }
@@ -2624,7 +2628,7 @@
     if (loc.agendado) { loc.denovo = true; return; } // já há um pedido na fila: roda de novo quando a vez chegar
     loc.agendado = true; loc.denovo = false;
     const conta = identidade;
-    if (!temTravas()) { setTimeout(() => { loc.agendado = false; if (identidade === conta) consolidarAgora(null); if (loc.denovo) { loc.denovo = false; consolidar(); } }, 0); return; }
+    if (!temTravas()) { setTimeout(() => { loc.agendado = false; if (identidade === conta) consolidarAgora(null, mortasSemTrava()); if (loc.denovo) { loc.denovo = false; consolidar(); } }, 0); return; }
     navigator.locks.request('eear-local@' + nomeConta(), async () => {
       let q = null; try { q = await navigator.locks.query(); } catch (e) { /* sem consulta: só o próprio diário */ }
       loc.agendado = false;
@@ -2676,6 +2680,7 @@
     if (loc.soltarVida) loc.soltarVida();
     loc.soltarVida = null; loc.vigiadas = new Set();
     if (temTravas()) navigator.locks.request('eear-vida#' + loc.tab + '@' + nomeConta(), () => new Promise(r => { loc.soltarVida = r; })).catch(() => { /* sem trava de vida */ });
+    iniciarVigia(); // 15-diarios-pendentes.js
     setTimeout(() => { consolidar(); lerDiarios().forEach(x => vigiar(x.tab)); }, 0);
   }
   /* Liderança da nuvem: só a aba que tem a trava da conta sincroniza. Trava livre: esta aba a pega já (com uma aba só,
@@ -2717,4 +2722,91 @@
     } else if (atual != null && !versaoConhecida(atual)) receberPrincipal(atual);
     if (JSON.stringify(S) !== antes) depoisDeMudarS();
   });
+  /* ---------- diários pendentes: exclusão local segura (F10) e navegador sem Web Locks (F11, F12) ----------
+     1. Pendente é o diário de uma aba (de qualquer aba desta conta, viva ou não) que ainda acrescentaria algo à cópia
+        principal: a marca inc não o cobre e aplicá-lo mudaria a cópia. Com um diário pendente, o progresso não está todo
+        na nuvem: "Apagar deste aparelho" fica bloqueado (sincronizado() e sincronizadoDe() consultam temPendentes), e
+        apagarLocal() nunca apaga um diário pendente (ele é a única cópia daquele estudo). A exclusão pedida na tela roda
+        com a trava local, depois de qualquer consolidação em andamento, e confere tudo de novo antes de apagar.
+     2. Sem Web Locks: cada aba registra que está viva (VIDA_K, a cada 2 s; ao fechar, apaga o registro). Diário de uma aba
+        sem registro recente (8 s; 30 min se ela está em segundo plano, onde o navegador espaça os temporizadores) é órfão e
+        entra na consolidação de qualquer aba, uma vez só (inc). Se a aba "órfã" estava viva (suspensa), ela reconhece que
+        o próprio diário entrou e não conta duas vezes (receberPrincipal, com o histórico do diário em loc.jhist).
+     3. A cada 3 s (com ou sem Web Locks) a aba procura diários de abas que ela não vigia ainda: um aviso storage perdido
+        não deixa um órfão esperando a próxima abertura do app.
+     Funções declaradas: 09-contas.js, 13-falhas-nuvem.js e 14-abas.js as usam depois que o arquivo inteiro carregou. */
+  function chaveVida(tab, id) { return chave(VIDA_K, id) + '#' + tab; }
+  function lerDiariosDe(id) {
+    const pre = chave(DIARIO_K, id) + '#', out = [];
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i) || '';
+        if (k.indexOf(pre) !== 0) continue;
+        let d = null; try { d = JSON.parse(localStorage.getItem(k)); } catch (e) { /* ilegível */ }
+        out.push({ tab: k.slice(pre.length), k, txt: localStorage.getItem(k), d: d && d.st && typeof d.seq === 'number' ? d : null });
+      }
+    } catch (e) { /* sem armazenamento */ }
+    return out;
+  }
+  /* O diário d ainda acrescentaria algo à cópia principal txt (de meta m e estado st0)? Ilegível conta como pendente. */
+  function diarioPendente(d, txt, m, st0, tab) {
+    if (!d) return true;
+    if (m && m.inc[tab] !== undefined && m.inc[tab] >= d.seq) return false;
+    loc.semEfeito = true; // a conferência não grava cópia de recuperação
+    try {
+      if (txt == null || !st0) { const base = d.base ? mesclar(d.base) : null, meu = base ? soDepois(base, mesclar(d.st)) : mesclar(d.st); return !semEstudo(meu); }
+      return !mesmoConteudo(aplicarDiario(d, txt, m, st0), st0);
+    } catch (e) { return true; } finally { loc.semEfeito = false; }
+  }
+  function pendentesDe(id) {
+    let txt = null; try { txt = localStorage.getItem(chave(LS, id)); } catch (e) { return [{ k: '', txt: null }]; }
+    const m = txt != null ? metaDe(txt) : null, st0 = txt != null ? estadoDe(txt) : null;
+    return lerDiariosDe(id).filter(x => diarioPendente(x.d, txt, m, st0, x.tab));
+  }
+  function temPendentes(id) { return pendentesDe(id).length > 0; }
+  /* Apaga os diários da conta que não estão pendentes; o pendente fica (e entra na cópia, só com o que veio depois da base). */
+  function apagarDiarios(id) {
+    const ficam = new Set(pendentesDe(id).map(x => x.k));
+    lerDiariosDe(id).forEach(x => {
+      if (ficam.has(x.k)) return;
+      try { if (localStorage.getItem(x.k) === x.txt) localStorage.removeItem(x.k); } catch (e) { /* ignora */ } // mudou desde a leitura: fica
+    });
+    try { const pre = chave(VIDA_K, id) + '#'; Object.keys(localStorage).filter(k => k.indexOf(pre) === 0 && k !== chaveVida(loc.tab, id)).forEach(k => localStorage.removeItem(k)); } catch (e) { /* ignora */ }
+  }
+  /* Roda fn com a trava local (depois de qualquer consolidação de outra aba em andamento); sem Web Locks, na hora. */
+  function comTravaLocal(fn) {
+    if (!temTravas() || loc.segura) { fn(); return; }
+    const conta = identidade;
+    try { localStorage.setItem(chave(QUER_K), loc.tab + '.' + Date.now()); } catch (e) { /* a dona confere a fila */ }
+    navigator.locks.request('eear-local@' + nomeConta(), () => { if (identidade === conta) fn(); }).catch(() => { /* aba fechando */ });
+  }
+  /* Sem Web Locks: abas sem registro de vida recente, com diário. */
+  function mortasSemTrava() {
+    const m = new Set(), agora = Date.now();
+    lerDiarios().forEach(x => {
+      if (x.tab === loc.tab) return;
+      let v = null; try { v = JSON.parse(localStorage.getItem(chaveVida(x.tab)) || 'null'); } catch (e) { /* ilegível: sem registro */ }
+      if (!v || typeof v.t !== 'number' || agora - v.t > (v.oculta ? 1800000 : 8000)) m.add(x.tab);
+    });
+    return m;
+  }
+  function registrarVida() {
+    if (temTravas() || saindo) return;
+    try { localStorage.setItem(chaveVida(loc.tab), JSON.stringify({ t: Date.now(), oculta: document.visibilityState === 'hidden' })); } catch (e) { /* sem espaço */ }
+  }
+  /* A cada 3 s: vigia diários novos (com Web Locks) ou consolida órfãos (sem). */
+  function procurarOrfaos() {
+    if (saindo) return;
+    if (temTravas()) { lerDiarios().forEach(x => vigiar(x.tab)); return; }
+    registrarVida();
+    if (mortasSemTrava().size) consolidar();
+  }
+  function iniciarVigia() { // carregar() a chama na abertura, antes de este trecho rodar: os temporizadores ficam em loc
+    clearInterval(loc.tVida); clearInterval(loc.tOrfaos);
+    if (!temTravas()) { setTimeout(registrarVida, 0); loc.tVida = setInterval(registrarVida, 2000); } // depois da carga (saindo é de 13-falhas-nuvem.js)
+    loc.tOrfaos = setInterval(procurarOrfaos, 3000);
+  }
+  window.addEventListener('pagehide', () => { if (!temTravas()) { try { localStorage.removeItem(chaveVida(loc.tab)); } catch (e) { /* ignora */ } } });
+  window.addEventListener('pageshow', () => registrarVida());
+  document.addEventListener('visibilitychange', () => registrarVida());
 })();

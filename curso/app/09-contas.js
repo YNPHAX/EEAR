@@ -23,7 +23,7 @@
   /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
   function apagarLocal(id) {
     [LS, LS_REC, BASE_K, ABAS_K, QUER_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
-    try { const pre = chave(DIARIO_K, id) + '#'; Object.keys(localStorage).filter(k => k.indexOf(pre) === 0).forEach(k => localStorage.removeItem(k)); } catch (e) { /* ignora */ } // diários das abas desta conta
+    apagarDiarios(id); // diários das abas desta conta, menos os pendentes (única cópia de um estudo; 15-diarios-pendentes.js)
     if (id === identidade) { S = novoEstado(); recuperar = null; loc.pendente = 0; partirDe(null, null); }
   }
   function contasGuardadas() {
@@ -35,7 +35,7 @@
      (a base), ou quando não tem estudo. Cópia de recuperação ou ilegível: não está (é o que pode ser perdido). */
   function sincronizadoDe(id) {
     try {
-      if (localStorage.getItem(chave(LS_REC, id))) return false;
+      if (localStorage.getItem(chave(LS_REC, id)) || temPendentes(id)) return false; // diário de outra aba ainda fora da cópia
       const t = localStorage.getItem(chave(LS, id)); if (!t) return true;
       const st = mesclar(JSON.parse(t)); if (semEstudo(st)) return true;
       const b = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null');
@@ -59,7 +59,7 @@
     return ['mod', 'fc', 'sims', 'erros', 'ap', 'aula'].some(k => !uIgual(u[k], S[k])) ? a : null;
   }
   /* A nuvem já tem tudo o que está neste aparelho (a última sincronização gravou exatamente o progresso atual)? */
-  function sincronizado() { const b = lerBase(); return !!b && uIgual(b, mesclar(copiar(S))); }
+  function sincronizado() { const b = lerBase(); return !!b && uIgual(b, mesclar(copiar(S))) && !temPendentes(identidade); } // e nenhuma aba com estudo fora da cópia (F10)
   function resumoProg(st) { return `${plural(Object.keys(st.mod).length, 'aula estudada', 'aulas estudadas')}, ${plural(Object.keys(st.fc).length, 'flashcard visto', 'flashcards vistos')} e ${plural(st.sims.length, 'simulado', 'simulados')}`; }
 
   /* Aviso na tela Hoje: progresso sem conta que a conta ainda não tem. */
@@ -158,7 +158,7 @@
       case 'dadosbaixar': baixarDados(); break;
       case 'dadosver': pedindo = pedindo === 'dadosver' ? null : 'dadosver'; render(); break;
       case 'dadosapagar': pedindo = 'dadosapagar'; render(); break;
-      case 'dadosapagarok': if (identidade && !sincronizado()) break; apagarLocal(identidade); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados.'; render(); break;
+      case 'dadosapagarok': comTravaLocal(() => { if (identidade && !sincronizado()) { pedindo = null; msgDados = 'Nada foi apagado: outra aba ou este aparelho tem estudo que ainda não está na nuvem.'; render(); return; } apagarLocal(identidade); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados.'; render(); }); break; // com a trava: depois de qualquer gravação em andamento (F10)
       case 'dadosapagartudo': { // só as contas cuja nuvem já tem tudo: o estudo não enviado de outra conta não é apagado
         if (identidade) break;
         const ficam = contasGuardadas().filter(id => !sincronizadoDe(id));

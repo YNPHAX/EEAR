@@ -50,7 +50,7 @@
   /* Cópia própria: a base não pode ser o mesmo objeto que S (carregar devolve o estado que vira S), senão mudar S mudava
      a base, e a união via a marcação nova na base e ausente na cópia principal, ou seja, apagada. */
   function partirDe(txt, st) {
-    const m = txt != null && metaDe(txt); loc.base = txt == null || !st ? null : JSON.parse(JSON.stringify(st)); loc.bid = idVersao(txt); loc.lin = m ? m.lin.slice() : [];
+    const m = txt != null && metaDe(txt); loc.base = txt == null || !st ? null : JSON.parse(JSON.stringify(st)); loc.bid = idVersao(txt); loc.lin = m ? m.lin.slice() : []; loc.baseSeq = (m && m.inc[loc.tab]) || 0;
   }
   /* Base da união com a versão txt: o estado da versão de que a aba partiu, se ela está na cadeia de txt; senão, nenhuma. */
   function baseNaCadeia(txt, m, bid, base) {
@@ -65,8 +65,9 @@
     localStorage.setItem(chaveDiario(loc.tab), JSON.stringify({ seq: loc.seq, bid: loc.bid, base: loc.base, st: S }));
     loc.escritora = true;
     loc.pendente = loc.seq;
+    loc.jhist = (loc.jhist || []).concat([{ seq: loc.seq, st: JSON.parse(JSON.stringify(S)) }]).slice(-6); // 15-diarios-pendentes.js
   }
-  function guardarPerdido(p) { if (!p) return; recuperar = JSON.stringify(p); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
+  function guardarPerdido(p) { if (!p || loc.semEfeito) return; recuperar = JSON.stringify(p); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
   /* Cópia principal apagada: do estado st, só o que veio depois da base (sem os certificados que a base já tinha). */
   function soDepois(base, st) {
     const so = novidades(base, st), tinha = (base.cfg.certs || []).map(certChave);
@@ -138,7 +139,10 @@
   function receberPrincipal(txt) {
     const novo = estadoDe(txt), m = metaDe(txt);
     if (!novo) return;
-    const b0 = baseNaCadeia(txt, m, loc.bid, loc.base), cadeia = !!b0, eu = mesclar(JSON.parse(JSON.stringify(S)));
+    /* Outra aba já pôs na cópia um diário desta aba posterior à base dela (sem Web Locks, esta aba parecia fechada): a base
+       é o estado daquele diário, para não contar duas vezes o que ele trouxe. */
+    const k = m && m.inc[loc.tab], dj = k > (loc.baseSeq || 0) ? (loc.jhist || []).find(h => h.seq === k) : null;
+    const b0 = dj ? mesclar(JSON.parse(JSON.stringify(dj.st))) : baseNaCadeia(txt, m, loc.bid, loc.base), cadeia = !!b0, eu = mesclar(JSON.parse(JSON.stringify(S)));
     let u;
     if (!cadeia && loc.base) u = unirSemCadeia(mesclar(JSON.parse(JSON.stringify(loc.base))), eu, novo);
     else { const r = unirProgresso(b0, eu, novo, SOMAR); guardarPerdido(r.perdido); u = r.st; }
@@ -179,7 +183,7 @@
     if (loc.agendado) { loc.denovo = true; return; } // já há um pedido na fila: roda de novo quando a vez chegar
     loc.agendado = true; loc.denovo = false;
     const conta = identidade;
-    if (!temTravas()) { setTimeout(() => { loc.agendado = false; if (identidade === conta) consolidarAgora(null); if (loc.denovo) { loc.denovo = false; consolidar(); } }, 0); return; }
+    if (!temTravas()) { setTimeout(() => { loc.agendado = false; if (identidade === conta) consolidarAgora(null, mortasSemTrava()); if (loc.denovo) { loc.denovo = false; consolidar(); } }, 0); return; }
     navigator.locks.request('eear-local@' + nomeConta(), async () => {
       let q = null; try { q = await navigator.locks.query(); } catch (e) { /* sem consulta: só o próprio diário */ }
       loc.agendado = false;
@@ -231,6 +235,7 @@
     if (loc.soltarVida) loc.soltarVida();
     loc.soltarVida = null; loc.vigiadas = new Set();
     if (temTravas()) navigator.locks.request('eear-vida#' + loc.tab + '@' + nomeConta(), () => new Promise(r => { loc.soltarVida = r; })).catch(() => { /* sem trava de vida */ });
+    iniciarVigia(); // 15-diarios-pendentes.js
     setTimeout(() => { consolidar(); lerDiarios().forEach(x => vigiar(x.tab)); }, 0);
   }
   /* Liderança da nuvem: só a aba que tem a trava da conta sincroniza. Trava livre: esta aba a pega já (com uma aba só,

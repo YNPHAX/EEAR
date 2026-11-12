@@ -82,8 +82,8 @@
   const LS_CONTA = 'missao-eear-conta', BASE_K = 'missao-eear-v1-base';
   /* Abas (14-abas.js): diário durável desta aba (DIARIO_K), o que ela sabe da cópia principal (loc) e a liderança da
      sincronização com a nuvem (lider). ABAS_K: linhagem de uma versão anterior desta correção, só para limpar. */
-  const DIARIO_K = 'missao-eear-v1-diario', ABAS_K = 'missao-eear-v1-abas', QUER_K = 'missao-eear-v1-quer';
-  const loc = { tab: 't' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36), seq: 0, pendente: 0, base: null, bid: '', lin: [], agendado: false, denovo: false, soltarVida: null, vigiadas: new Set(), segura: false, soltarSeg: null, escritora: false, vivos: null, mortas: null }, lider = { ativa: false, soltar: null, conta: null, espera: null };
+  const DIARIO_K = 'missao-eear-v1-diario', ABAS_K = 'missao-eear-v1-abas', QUER_K = 'missao-eear-v1-quer', VIDA_K = 'missao-eear-v1-vida';
+  const loc = { tab: 't' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36), seq: 0, pendente: 0, base: null, bid: '', lin: [], agendado: false, denovo: false, soltarVida: null, vigiadas: new Set(), segura: false, soltarSeg: null, escritora: false, vivos: null, mortas: null, semEfeito: false, jhist: [], baseSeq: 0 }, lider = { ativa: false, soltar: null, conta: null, espera: null };
   const contaUI = { msg: '', adiado: false, ocupado: false }; // estado da tela da conta (veja "contas neste aparelho")
   let identidade = '', recuperar = null, gravouLocal = true;
   const chave = (k, id) => { const i = id === undefined ? identidade : id; return i ? k + '@' + i : k; };
