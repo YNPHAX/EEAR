@@ -1,0 +1,551 @@
+EVIDÊNCIAS INDEPENDENTES — 61e1d32d574fa4a8b1cfeb47a149898013c013db
+Somente dados fictícios e emuladores locais. Nenhum deploy ou Firebase real.
+Data UTC da consolidação: 2026-11-11T23:29:32Z
+
+HASHES DOS TESTES EXECUTADOS (SHA-256)
+b367dd5e599c71bb570a90f2f87ea7e24676c1ddebf7e023cdde23df7e6ee777  testes/f01-abas.test.js
+1d4f30fc985645a4cde9d90865fa14dd4b451507e02eddbc533f31c0dcbd03d8  testes/f01-fixture.js
+e920cfcebdba5fbde47a4e2670328165141738ad2a582bae589ac919f92e6aae  testes/f01-riscos.test.js
+aad18b74b5c85a6ce84a58717c105bc9edbfc6c35ff08444a1ec32482c45f833  testes/diarios-auditoria.test.js
+a6899f1b92cf80167d92bfce50b2d8e1425ec784550758669dc1d3f7129ad409  testes/ciclo-sincronia.test.js
+eaa620afb1278fef6588d598a2d4b70ea3167e3023f1352ea17debbbd77cef93  testes/hosting-auditoria.py
+23b37ebb995495bd429ffb4386643d1e72a64605ea117d7eb5cfe5d7e1cfcabb  testes/hosting-gates-auditoria.py
+
+HASHES DOS LOGS COMPLETOS DA SESSÃO (SHA-256; arquivos em /tmp/eear-61-evidence)
+5194106ce5b985a5670c319255e0698a3a0c36720bf23ff650387dbcd9e029b9  autoteste.log
+ec0815e37151369128a603f9a1a5eb7452a084dff280b425be77bfd8dbc8e8bc  ci-inicial.json
+73464785a6509e046859d54ede5f853f74259039ca31ad97edd424d0c751ca41  controles-crash-lider.log
+a96de5ebf8d4a7e44f38ba31c9d8d7f3fe7d74cba0bb6e93a40c0034d8e2f834  diarios-adicionais.log
+3d76947f9f63c3c810b5d84c2578cf55dc8397a5cb8f6aa6d49f048826f32b7b  diarios-final.log
+f1ba3633944824effc64a16ff51a781bc991954813a726ace66b32116ff455a7  exclusao-diario-pendente.log
+14cf97e380a6ee913064070b1ccd2f7eb8715a4b632fbaab360c4b135db845d8  f01-oito.log
+998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2  f02-f04-barreira.log
+998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2  f02-f04-original.log
+f0d49b850f8af32b7b06033a343fbe223e3b93b1d9e58717e95b112a96a06790  firebase-padrao.log
+b8c1ee8abbc31c936fe399cdead475e3ccee60b6192c0067dc6714baa2fe9813  hosting-gates.log
+d2b7af209a7511a05f2f24c791e894b128c2c5f64c8516cc00762173f4cc589d  hosting-headers.log
+7f46dc3ddb02fdd68eed4f2c1491bce8ff8f5b855e6ef8c9840ad46a073a4f82  hosting-sonda.log
+a98599233f7876aa5bcbf619a055ac4c8fdc932b67d2bc7ba297ca7a5d2533e7  interrupcao-adaptada.log
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  lint-alvo.log
+9b3ae19dfdb6b5c58cef33fb4764ff0845710e86e461c43bace420305d0d749b  montagem.log
+329ba4b687284d85a169534194ca18ae7a9ae9cdffe932664f6edc285fb34220  riscos-controles.log
+bbfd5e3bd94ca5d10a3b801ed1c9893a86b4b6ec92b7bb5ab30cc62717b5cd71  sem-locks-apos-salvar.log
+2ed17e0792a043f3f8cd4eba63638f0d8ec718fe7e33c4cc232be7c6d037c4f2  sem-locks-precondicao.log
+843b89e780648fa13f09876b085b208d430b4adbeff70f17690ea48ade60733a  sem-locks-renderer-crash.log
+dd48626daec175d2e7c17c94c77e334f5d8d4a88a4cf513381beaae428d93d89  validar.log
+81a41b921ef2727b31b12154c2cb2408a84f268c9a715d1bfdbbf8ae65045c06  workflows.log
+
+RESULTADOS SELECIONADOS DOS LOGS (linhas literais; logs completos identificados acima)
+Exit esperado para falha de produto nas sondas: 1. Saídas de gates são as do processo verificador.
+
+f01-oito.log
+F01: alvo /tmp/eear-61e1d32, commit 61e1d32d574fa4a8b1cfeb47a149898013c013db
+F01: alvo /tmp/eear-61e1d32, commit 61e1d32d574fa4a8b1cfeb47a149898013c013db
+✓ dispositivos: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ fechar-A: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:base","T:remover","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+✓ fechar-B: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ desmarcar: {"aceitoA":["T:B","T:base"],"aceitoB":["T:base","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+✓ zerar: {"aceitoA":["T:depois-zerar"],"aceitoB":["T:depois-zerar"],"offline":true,"servidor":true,"paginas":[true]}
+✓ certificado: {"aceitoA":["T:B","T:base","T:remover"],"aceitoB":["T:base","T:remover","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+✓ reconectar: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ zerar-duplo: {"aceitoA":["T:A","T:B"],"aceitoB":["T:A","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+F01: 8/8 cenários passaram; 0 falha(s). Parecer não alterado automaticamente.
+✔  Script exited successfully (code 0)
+
+riscos-controles.log
+Riscos F01: 61e1d32d574fa4a8b1cfeb47a149898013c013db
+Riscos F01: 61e1d32d574fa4a8b1cfeb47a149898013c013db
+✓ zerar-unica: {"aceito":{"t":1794438046385,"certsZ":1794438046374,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"offline":{"t":1794438046385,"certsZ":1794438046374,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"servidor":{"t":1794438046385,"certsZ":1794438046374,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"antesReabrir":{"t":1794438046385,"certsZ":1794438046374,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794438046385,"certsZ":1794438046374,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-11":1}}}
+✓ suspensa: {"t":1794438050269,"certsZ":1794438050250,"certs":[],"feito":{"T:apos-suspensao":true},"act":{"2026-11-11":1}}
+✓ exclusao-surda: {"removido":true,"restaurado":{"t":1794438052278,"certsZ":0,"certs":[],"feito":{"T:novo":true},"act":{"2026-11-11":1}}}
+✓ contagens: {"esperado":62,"A":62,"B":62,"cache":62,"marcacoes":61}
+Riscos: 0 falha(s) em 4 investigações.
+✔  Script exited successfully (code 0)
+
+interrupcao-adaptada.log
+Riscos F01: 61e1d32d574fa4a8b1cfeb47a149898013c013db
+Riscos F01: 61e1d32d574fa4a8b1cfeb47a149898013c013db
+✓ escrita-interrompida: {"diario":true,"BconfirmadaAntesDeFechar":true,"principalAntesDeFechar":{"t":1794438332101,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:base":true,"T:A-race":true},"act":{"2026-11-11":3}},"aposFecharAmbas":{"t":1794438332105,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:A-race":true,"T:B-race":true,"T:base":true},"act":{"2026-11-11":4}},"cache":{"t":1794438332105,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:A-race":true,"T:B-race":true,"T:base":true},"act":{"2026-11-11":4}},"breakpointAposSetItem":true}
+Riscos: 0 falha(s) em 1 investigações.
+✔  Script exited successfully (code 0)
+
+diarios-final.log
+Diários: alvo 61e1d32d574fa4a8b1cfeb47a149898013c013db
+Diários: alvo 61e1d32d574fa4a8b1cfeb47a149898013c013db
+✓ apos-diario: {"webLocks":true,"interrupcao":"fechamento","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":false,"principalJaContinha":false,"ponto":{"scriptId":"28","lineNumber":2510,"columnNumber":4},"aposHandlerDeSalvar":false,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"diariosAntesExcluir":0,"ofereceuExcluir":false,"diarioDepois":0,"aviso":"Progresso salvo na sua conta."}
+✓ apos-diario-crash: {"webLocks":true,"interrupcao":"Page.crash","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":false,"principalJaContinha":false,"ponto":{"scriptId":"28","lineNumber":2510,"columnNumber":4},"aposHandlerDeSalvar":false,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"diariosAntesExcluir":0,"ofereceuExcluir":false,"diarioDepois":0,"aviso":"Progresso salvo na sua conta."}
+✓ sem-web-locks: {"webLocks":false,"interrupcao":"fechamento","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"29","lineNumber":2543,"columnNumber":14},"aposHandlerDeSalvar":true,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"diariosAntesExcluir":1,"ofereceuExcluir":false,"diarioDepois":1,"aviso":"Progresso salvo na sua conta."}
+✗ sem-web-locks-crash: {"webLocks":false,"interrupcao":"Page.crash","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"29","lineNumber":2543,"columnNumber":14},"aposHandlerDeSalvar":true,"recuperado":false,"chegou":false,"exportado":{"T:base":true},"diariosAntesExcluir":1,"ofereceuExcluir":true,"diarioDepois":0,"aviso":"Progresso salvo na sua conta."}
+✗ exclusao-com-diario-pendente: {"webLocks":true,"aceitaNaExportacao":true,"principalJaContinha":false,"duraveisAntes":1,"avisoAntes":"Progresso salvo na sua conta.","ofereceuExcluir":true,"duraveisDepois":0,"recuperado":false,"chegou":false,"exportado":{},"servidor":{"T:base":true}}
+✓ concorrencia-intensa: {"paginas":4,"alteracoes":200,"totalEsperado":202,"atividade":202,"marcacoes":201,"convergiu":true,"recuperado":true,"chegou":true}
+✗ sem-notificacoes: {"recuperouViva":false,"diarios":1,"recuperouFria":true,"estado":{"T:ativa":true,"T:base":true,"T:orfao":true}}
+✓ lider-suspensa: {"lider":"A","papelB":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","local":true,"enviouCongelada":true,"enviouDepois":true,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem."}
+Diários: 3 falha(s) em 8 cenários.
+⚠  Script exited unsuccessfully (code 1)
+
+f02-f04-barreira.log
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}
+
+firebase-padrao.log
+  ✓ conta nova: o documento só tem v, dados, t e atualizado (sem e-mail), e o progresso sem conta não foi levado sozinho
+  ✓ o progresso sem conta continua intacto e o aluno pode levá-lo para a conta
+  ✓ levar para a conta (pedido pelo aluno): o progresso sem conta vai para a nuvem da conta e continua guardado sem conta
+  ✓ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte
+  ✓ conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A
+  ✓ troca de conta com gravação pendente: o estudo de B não vai para A e continua na cópia de B neste aparelho
+  ✓ sair apagando: bloqueado enquanto há estudo fora da nuvem; depois, apaga só a cópia deste aparelho e a nuvem continua com tudo
+  ✓ sem erro de JavaScript nos fluxos de conta
+  ✓ com transação: 12 marcações feitas ao mesmo tempo em dois aparelhos, nenhuma perdida na nuvem
+  ✓ documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho
+  ✓ documento corrompido na nuvem: o app não grava por cima, não trava e guarda o estudo no aparelho
+  ✓ regras: uma conta não lê, não grava e não apaga o documento de outra
+  ✓ regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito
+  ✓ regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 3)
+  ✓ regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista 403, consulta 403]
+  ✓ regras: sem login, nada é lido nem gravado [leitura 403, gravação 403]
+  ✓ regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno
+  ✓ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito
+  ✓ regras: o próprio aluno pode apagar o documento dele
+  ✓ gravação recusada pelas regras: a sincronização para, o aviso diz por quê, e o estudo continua neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem recusou a gravação). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ app aberto sem internet: o login não carrega e o aviso diz que tenta de novo; com a conexão de volta, o login aparece sem recarregar
+  ✓ build de homologação: o cartão da conta avisa que é o projeto de teste e pede só contas e dados fictícios
+  ✓ excluir a conta: senha errada ou confirmação diferente de EXCLUIR não excluem nada
+  ✓ excluir a conta: apaga o documento, o login e a cópia local da conta; o progresso sem conta fica; a mensagem diz o que foi apagado
+  ✓ conta encerrada em outra aba: esta aba passa ao progresso sem conta; o que se estuda depois não vai para a conta, e a cópia da conta fica intacta
+  ✓ página fechada antes de gravar na nuvem: o estudo ficou no aparelho e vai para a nuvem quando o app abre de novo
+  ✓ sessão invalidada no servidor: o app volta ao progresso sem conta, e a cópia da conta neste aparelho e a nuvem continuam com tudo
+  ✓ conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha, e nenhuma das duas contas é excluída
+  ✓ exclusão parcial: a mensagem diz que o progresso na nuvem foi apagado e a conta não; o login e a cópia deste aparelho continuam
+  ✓ exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos
+  ✓ auditoria regras: recusa v texto na criação [403]
+  ✓ auditoria regras: recusa v zero na criação [403]
+  ✓ auditoria regras: recusa v fracionária na criação [403]
+  ✓ auditoria regras: recusa dados mapa na criação [403]
+  ✓ auditoria regras: recusa t texto na criação [403]
+  ✓ auditoria regras: recusa campo extra na criação [403]
+  ✓ auditoria regras: recusa criação sem v [403]
+  ✓ auditoria regras: recusa criação sem dados [403]
+  ✓ auditoria regras: recusa criação sem t [403]
+  ✓ auditoria regras: atualizado é obrigatório e deve corresponder à hora do servidor
+  ✓ auditoria regras: criação válida aceita; campo extra na atualização e subcoleção do próprio UID recusados
+  ✓ auditoria sessão: progresso inicial confirmado no servidor
+  ✓ auditoria sessão: fechar e reabrir com emuladores indisponíveis preserva o estudo pendente
+  ✓ auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login
+  ✓ auditoria certificados: registro e código preservados ao enviar para o Firestore
+  ✓ auditoria certificados: segundo dispositivo recebe o mesmo código, data e registro
+  ✓ auditoria certificados: gravação do segundo dispositivo mantém certificado e progresso anterior
+  ✓ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=true, nuvem=true]
+  ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail
+  ✓ excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem
+tudo certo
+✔  Script exited successfully (code 0)
+
+hosting-sonda.log
+✓ alias padrão aponta ao projeto de teste
+✓ artefatos de homologação em diretório separado
+✓ Hosting declara predeploy (necessário; conteúdo exige auditoria) — sem hook, o CLI não executa o verificador Python
+✓ nenhuma reescrita do app intercepta o handler reservado de OAuth
+✓ build oficial permitido no modo oficial
+✓ build eear-teste aceito só como homologação
+✓ authDomain de outro projeto recusado no build
+✓ projectId de produção recusado no build
+✓ sem-marcador é recusado por --site — exit=1
+✓ projeto-divergente é recusado por --homologacao — exit=1
+✓ marcador em página auxiliar não habilita app oficial como homologação — exit=1
+
+hosting-gates.log
+✓ artefato e destino de teste: exit=0; esperado=permitir
+✓ destino de produção: exit=1; esperado=recusar
+✓ destino vazio: exit=1; esperado=recusar
+✓ pasta ausente: exit=2; esperado=recusar
+✓ artefato oficial: exit=1; esperado=recusar
+✓ configuração divergente: exit=1; esperado=recusar
+✓ duas configurações literais: exit=1; esperado=recusar
+✓ arquivo proibido pelo verificador de conteúdo: exit=1; esperado=recusar
+✗ configuração apenas em comentário não habilita homologação: exit=0; esperado=recusar
+✗ configuração sobrescrita por script antes do app: exit=0; esperado=recusar
+Gates: 2 falha(s). Sem deploy; configurações fictícias não executaram SDK.
+
+hosting-headers.log
+{"url":"/","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/index.html","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/app.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/sw.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/manifest.webmanifest","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/__/auth/handler","status":404,"nosniff":"nosniff","robots":"noindex, nofollow","cache":null,"referer":"strict-origin-when-cross-origin"}
+✔  Script exited successfully (code 0)
+
+autoteste.log
+OK: autoteste da verificação (186 casos)
+
+validar.log
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+
+workflows.log
+OK: o build e os workflows conferem o conteúdo antes de enviar
+
+montagem.log
+OK: curso/app.js igual à montagem de curso/app/
+
+CALIBRAÇÕES E CONTROLES
+sem-locks-precondicao.log / sem-locks-apos-salvar.log: fechamento limpo pode terminar callback; não equivale a crash.
+sem-locks-renderer-crash.log: reprodução selecionada de F11, repetida na matriz diarios-final.log.
+exclusao-diario-pendente.log: primeira reprodução de F10; matriz final acrescenta reconexão e precondição explícita da cópia principal.
+controles-crash-lider.log: crash com Locks recuperou o diário; líder identificada/congelada não impediu o envio.
+diarios-adicionais.log: rodada exploratória anterior ao refinamento do breakpoint sem Locks; não é a evidência principal de aceitação após handler.
+CI original: metadados em ci-inicial.json; jobs e excertos de logs anexados abaixo.
+
+CI — API de jobs e excertos dos logs obtidos pelo conector GitHub
+{
+  "sha": "61e1d32d574fa4a8b1cfeb47a149898013c013db",
+  "jobs": [
+    {
+      "run": 43103211308,
+      "jobs": [
+        {
+          "id": 130799723901,
+          "name": "firebase-emulador",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 43103211308,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Instalar o firebase-tools, o SDK web do Firebase e o Playwright",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Testes nos emuladores",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 130799724445,
+          "name": "plataforma",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 43103211308,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Instalar o Playwright e o Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Testes da plataforma",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 43103211245,
+      "jobs": [
+        {
+          "id": 130799724090,
+          "name": "montar",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 43103211245,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Montar o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Conferir o JavaScript",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Conferir que nada restrito vai para o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/upload-pages-artifact@v3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 130799840480,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 43103211245,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    },
+    {
+      "run": 43103211257,
+      "jobs": [
+        {
+          "id": 130799724031,
+          "name": "apk",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 43103211257,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Conteúdo do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Conferir que nada restrito vai para o app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Projeto Android",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Versão do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Compilar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Separar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Conferir o APK compilado",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25
+            }
+          ]
+        },
+        {
+          "id": 130800783958,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 43103211257,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  ],
+  "logs": [
+    {
+      "id": 130799724445,
+      "passed_markers": 239,
+      "lines": [
+        "2026-11-11T21:45:44.7905081Z   ✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]",
+        "2026-11-11T21:45:46.3833553Z == escrita interrompida entre abas (pontos de parada reais do Chromium)",
+        "2026-11-11T21:45:47.8363739Z   ✓ escrita interrompida: A leu, B gravou o diário e fechou, A gravou por cima e fechou; a aba que abre tem as duas marcações [diário de B: true; principal depois de A: ?; aberta: T:A-race,T:B-race,T:base; absorvido em 9 ms]"
+      ]
+    },
+    {
+      "id": 130799723901,
+      "passed_markers": 50,
+      "lines": [
+        "2026-11-11T21:30:31.3948321Z   ✓ auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login",
+        "2026-11-11T21:30:36.4961803Z   ✓ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=true, nuvem=true]",
+        "2026-11-11T21:30:40.0369170Z   ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail",
+        "2026-11-11T21:30:41.2750175Z \u001b[32m\u001b[1m✔ \u001b[22m\u001b[39m Script exited successfully (code 0)"
+      ]
+    }
+  ]
+}

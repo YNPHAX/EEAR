@@ -62,6 +62,7 @@ caracteres ou números, criptografia, codificações não listadas acima, como e
 texto comprimido nos metadados de PNG)."""
 import ast, base64, binascii, collections, contextlib, gzip, hashlib, html, io, json, os, random, re, stat, sys, tempfile
 import unicodedata, urllib.parse, warnings, zipfile, zlib
+from html.parser import HTMLParser
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMPRESSOES = os.path.join(RAIZ, 'web', 'impressoes-restritas.json')
@@ -457,6 +458,56 @@ LEITURA_FIREBASE = re.compile(r'window\.EEAR_FIREBASE(?=\s*(?:\)|\|\|))')  # as 
 TEXTO_CONFIG = ('.html', '.htm', '.js', '.mjs', '.json', '.webmanifest', '.svg', '.xml', '.txt')
 
 
+class EntradaHosting(HTMLParser):
+    """Aceita o script canônico somente como filho direto de html/head/body (ou raiz em fixtures).
+    Comentários e texto cru de script são tratados pelo parser, nunca como tags executáveis.
+    HTML ambíguo/malformado é recusado em vez de tentar reproduzir a reparação do navegador.
+    """
+    VAZIOS = set('area base br col embed hr img input link meta param source track wbr'.split())
+
+    def __init__(self):
+        super().__init__(convert_charrefs=False)
+        self.pilha, self.configs, self.script = [], [], None
+        self.erro, self.externo = False, False
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'script':
+            self.script = (self.get_starttag_text() == '<script>', list(self.pilha), self.externo, '')
+            if any(k == 'src' for k, _ in attrs):
+                self.externo = True
+        if tag not in self.VAZIOS:
+            self.pilha.append(tag)
+
+    def handle_startendtag(self, tag, attrs):
+        if tag not in self.VAZIOS and not any(t in ('svg', 'math') for t in self.pilha):
+            self.erro = True
+
+    def handle_data(self, data):
+        if self.script is not None and self.pilha and self.pilha[-1] == 'script':
+            a, pais, antes, texto = self.script
+            self.script = (a, pais, antes, texto + data)
+
+    def handle_endtag(self, tag):
+        if tag in self.VAZIOS or not self.pilha or self.pilha[-1] != tag:
+            self.erro = True
+            return
+        if tag == 'script' and self.script:
+            simples, pais, tarde, texto = self.script
+            m = SCRIPT_CONFIG.fullmatch('<script>' + texto + '</script>')
+            if m and simples and not tarde and all(t in ('html', 'head', 'body') for t in pais):
+                self.configs.append(m.group(2))
+            self.script = None
+        self.pilha.pop()
+
+    def configuracoes(self, texto):
+        try:
+            self.feed(texto)
+            self.close()
+        except Exception:
+            self.erro = True
+        return [] if self.erro or self.pilha else self.configs
+
+
 def config_homologacao(alvo, projeto=None):
     """H02: o build de homologação é validado pela configuração EFETIVA da entrada do app (index.html), e não por uma marca
     em qualquer arquivo: uma única atribuição window.EEAR_FIREBASE, projeto de homologação, "homologacao": true,
@@ -470,17 +521,10 @@ def config_homologacao(alvo, projeto=None):
     # Só o formato exato que web/build.py gera: <script> sem atributos, só as três atribuições, uma vez, antes do primeiro
     # script do app, fora de elementos que não executam script. Interpretar JavaScript arbitrário (comentários, tipos não
     # executáveis, condicionais) não é confiável; qualquer outra forma é recusada (H02).
-    canon = SCRIPT_CONFIG.findall(txt)
-    if len(canon) != 1 or txt.count('EEAR_FIREBASE') != 1:
-        return [(alvo, f'a entrada do app (index.html) não tem exatamente um script de configuração no formato do build '
-                       f'({len(canon)} no formato; {txt.count("EEAR_FIREBASE")} menções a EEAR_FIREBASE); recusado')]
-    pos, app = txt.find(canon[0][0]), txt.find('<script src=')
-    if app >= 0 and pos > app:
-        return [(alvo, 'a configuração do Firebase vem depois dos scripts do app: não é a que o app lê')]
-    antes = txt[:pos].lower()
-    if any(len(re.findall(r'<' + t + r'\b', antes)) > len(re.findall(r'</' + t + r'\s*>', antes)) for t in INERTES):
-        return [(alvo, 'a configuração do Firebase está dentro de um elemento que não executa script (template, noscript, textarea...); recusado')]
-    achados = [canon[0][1]]
+    achados = EntradaHosting().configuracoes(txt)
+    if len(achados) != 1 or txt.count('EEAR_FIREBASE') != 1:
+        return [(alvo, 'a entrada do app não tem exatamente uma configuração canônica executável, '
+                       'em posição estrutural válida antes do app; HTML ambíguo é recusado')]
     # H02: nenhum outro arquivo pode redefinir a configuração antes ou depois do app; fora do index.html, só as leituras do app
     for pasta, _, arquivos in os.walk(alvo):
         for nome in arquivos:
