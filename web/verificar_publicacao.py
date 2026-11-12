@@ -451,7 +451,8 @@ def carregar(imp_arq):
 PROJETOS_HOMOLOGACAO = ('eear-teste',)
 CONFIG_FIREBASE = re.compile(r'window\.EEAR_FIREBASE\s*=\s*(\{[^{}]*\})\s*;')
 COMENTARIO_HTML = re.compile(r'<!--.*?-->', re.S)
-SCRIPT_INLINE = re.compile(r'<script(?![^>]*\bsrc\s*=)[^>]*>(.*?)</script\s*>', re.S | re.I)
+SCRIPT_CONFIG = re.compile(r'(<script>window\.EEAR_SITE = "(?:site|app)"; window\.EEAR_APK = [^;<>]{0,40}; window\.EEAR_FIREBASE = (\{[^{}<>]*\});</script>)')
+INERTES = ('template', 'noscript', 'textarea', 'xmp', 'plaintext', 'iframe', 'object', 'title', 'style', 'svg', 'math', 'select')
 LEITURA_FIREBASE = re.compile(r'window\.EEAR_FIREBASE(?=\s*(?:\)|\|\|))')  # as duas leituras do app (curso/app/02-progresso-nuvem.js)
 TEXTO_CONFIG = ('.html', '.htm', '.js', '.mjs', '.json', '.webmanifest', '.svg', '.xml', '.txt')
 
@@ -466,12 +467,20 @@ def config_homologacao(alvo, projeto=None):
         return [(alvo, 'sem index.html legível: não dá para conferir a configuração do Firebase da entrada do app')]
     if 'EEAR_FIREBASE' in ''.join(COMENTARIO_HTML.findall(txt)):
         return [(alvo, 'a entrada do app (index.html) tem EEAR_FIREBASE dentro de um comentário: só vale a configuração executada')]
-    sem_coment = COMENTARIO_HTML.sub('', txt)
-    inline = ''.join(SCRIPT_INLINE.findall(sem_coment))
-    achados = CONFIG_FIREBASE.findall(inline)
-    if len(achados) != 1 or sem_coment.count('EEAR_FIREBASE') != 1:
-        return [(alvo, f'a entrada do app (index.html) tem {len(achados)} configurações do Firebase num script da própria página '
-                       f'({sem_coment.count("EEAR_FIREBASE")} menções); um build de homologação tem exatamente uma, e nada mais a menciona')]
+    # Só o formato exato que web/build.py gera: <script> sem atributos, só as três atribuições, uma vez, antes do primeiro
+    # script do app, fora de elementos que não executam script. Interpretar JavaScript arbitrário (comentários, tipos não
+    # executáveis, condicionais) não é confiável; qualquer outra forma é recusada (H02).
+    canon = SCRIPT_CONFIG.findall(txt)
+    if len(canon) != 1 or txt.count('EEAR_FIREBASE') != 1:
+        return [(alvo, f'a entrada do app (index.html) não tem exatamente um script de configuração no formato do build '
+                       f'({len(canon)} no formato; {txt.count("EEAR_FIREBASE")} menções a EEAR_FIREBASE); recusado')]
+    pos, app = txt.find(canon[0][0]), txt.find('<script src=')
+    if app >= 0 and pos > app:
+        return [(alvo, 'a configuração do Firebase vem depois dos scripts do app: não é a que o app lê')]
+    antes = txt[:pos].lower()
+    if any(len(re.findall(r'<' + t + r'\b', antes)) > len(re.findall(r'</' + t + r'\s*>', antes)) for t in INERTES):
+        return [(alvo, 'a configuração do Firebase está dentro de um elemento que não executa script (template, noscript, textarea...); recusado')]
+    achados = [canon[0][1]]
     # H02: nenhum outro arquivo pode redefinir a configuração antes ou depois do app; fora do index.html, só as leituras do app
     for pasta, _, arquivos in os.walk(alvo):
         for nome in arquivos:
@@ -1392,14 +1401,19 @@ def autoteste(verboso=False):
             ('outros', 'saída vazia (sem index.html)', lambda: verificar(os.makedirs(cam('vazio')) or cam('vazio'), 'site', imp), 1),
             ('outros', 'build de homologação do Firebase (site)', lambda: verificar(site('homolog', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId": "eear-teste", "homologacao": true};</script><p>Curso</p>'}), 'site', imp), 1),
             ('outros', 'build de homologação do Firebase (APK)', lambda: verificar(apk('homolog.apk', [('assets/public/teste.html', '<script>window.EEAR_FIREBASE = {"homologacao":true};</script>')]), 'apk', imp), 1),
-            ('outros', '--homologacao: build de homologação sem material restrito é aceito', lambda: verificar(site('homolog-ok', {'index.html': '<script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 0),
-            ('outros', '--homologacao: projeto divergente com a marca é recusado (H02)', lambda: verificar(site('homolog-divergente', {'index.html': '<script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-producao.web.app\", \"projectId\": \"eear-producao\", \"appId\": \"x\", \"homologacao\": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: build de homologação sem material restrito é aceito', lambda: verificar(site('homolog-ok', {'index.html': '<script>window.EEAR_SITE = "site"; window.EEAR_APK = ""; window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><script src="app.js"></script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 0),
+            ('outros', '--homologacao: projeto divergente com a marca é recusado (H02)', lambda: verificar(site('homolog-divergente', {'index.html': '<script>window.EEAR_SITE = "site"; window.EEAR_APK = ""; window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-producao.web.app\", \"projectId\": \"eear-producao\", \"appId\": \"x\", \"homologacao\": true};</script><script src="app.js"></script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 1),
             ('outros', '--homologacao: app oficial com a marca só numa página auxiliar é recusado (H02)', lambda: verificar(site('homolog-aux', {'privacidade.html': '<script>const nota = {"homologacao": true};</script>'}), 'site', imp, homologacao_exigida=True), 1),
-            ('outros', '--homologacao: projeto do deploy diferente do build é recusado (H01)', lambda: verificar(site('homolog-deploy', {'index.html': '<script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True, projeto='eear-producao'), 1),
+            ('outros', '--homologacao: projeto do deploy diferente do build é recusado (H01)', lambda: verificar(site('homolog-deploy', {'index.html': '<script>window.EEAR_SITE = "site"; window.EEAR_APK = ""; window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><script src="app.js"></script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True, projeto='eear-producao'), 1),
             ('outros', '--homologacao: configuração só num comentário HTML é recusada (H02)', lambda: verificar(site('homolog-coment', {'index.html': '<!-- <script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script> --><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 1),
-            ('outros', '--homologacao: script que redefine a configuração é recusado (H02)', lambda: verificar(site('homolog-redef', {'index.html': '<script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><script src="dados/amb.js"></script><p>Curso</p>', 'dados/amb.js': 'window.EEAR_FIREBASE = {projectId: "outro"};'}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: script que redefine a configuração é recusado (H02)', lambda: verificar(site('homolog-redef', {'index.html': '<script>window.EEAR_SITE = "site"; window.EEAR_APK = ""; window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><script src="app.js"></script><script src="dados/amb.js"></script><p>Curso</p>', 'dados/amb.js': 'window.EEAR_FIREBASE = {projectId: "outro"};'}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: configuração só num comentário JavaScript é recusada (H02)', lambda: verificar(site('homolog-x0', {'index.html': '<script>// window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};\n</script><script src="app.js"></script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: configuração num script não executável (application/json) é recusada (H02)', lambda: verificar(site('homolog-x1', {'index.html': '<script type="application/json">window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><script src="app.js"></script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: configuração dentro de uma condição é recusada (H02)', lambda: verificar(site('homolog-x2', {'index.html': '<script>if (false) { window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true}; }</script><script src="app.js"></script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: configuração depois do app é recusada (H02)', lambda: verificar(site('homolog-x3', {'index.html': '<script src="app.js"></script><script>window.EEAR_SITE = "site"; window.EEAR_APK = ""; window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: configuração dentro de <template> é recusada (H02)', lambda: verificar(site('homolog-x4', {'index.html': '<template><script>window.EEAR_SITE = "site"; window.EEAR_APK = ""; window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script></template><script src="app.js"></script><p>Curso</p>'}), 'site', imp, homologacao_exigida=True), 1),
             ('outros', '--homologacao: build oficial (sem a marca) é recusado', lambda: verificar(site('homolog-oficial'), 'site', imp, homologacao_exigida=True), 1),
-            ('outros', '--homologacao: material restrito continua recusado', lambda: verificar(site('homolog-restrito', {'index.html': '<script>window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><p>Curso</p>', 'dados/material.js': restrito}), 'site', imp, homologacao_exigida=True), 1),
+            ('outros', '--homologacao: material restrito continua recusado', lambda: verificar(site('homolog-restrito', {'index.html': '<script>window.EEAR_SITE = "site"; window.EEAR_APK = ""; window.EEAR_FIREBASE = {\"apiKey\": \"x\", \"authDomain\": \"eear-teste.web.app\", \"projectId\": \"eear-teste\", \"appId\": \"x\", \"homologacao\": true};</script><script src="app.js"></script><p>Curso</p>', 'dados/material.js': restrito}), 'site', imp, homologacao_exigida=True), 1),
             ('outros', 'projeto de teste sem marcador (site)', lambda: verificar(site('teste-sem-marca', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId":"eear-teste"};</script>'}), 'site', imp), 1),
             ('outros', 'projeto de teste com marcador falso (app)', lambda: verificar(site('teste-falso', {'index.html': '<script>window.EEAR_FIREBASE = {"projectId":"eear-teste","homologacao":false};</script>'}), 'app', imp), 1),
             ('outros', 'configuração de teste em JavaScript separado (site)', lambda: verificar(site('teste-js', {'dados/config.js': "window.EEAR_FIREBASE = {projectId:'eear-teste'};"}), 'site', imp), 1),
