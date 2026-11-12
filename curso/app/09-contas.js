@@ -22,9 +22,11 @@
   }
   /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
   async function apagarLocal(id, definitivo) {
+    const bases = [DIARIO_K].map(k => chave(k, id));
+    // O corte é anterior à transação. Uma reserva imutável criada depois dele pertence a uma nova ação.
+    const existentes = Object.keys(localStorage).filter(k => bases.some(b => k === b || k.indexOf(b + '#') === 0)).map(k => [k, localStorage.getItem(k)]);
     const r = await apagarDuravel(id, definitivo);
-    const bases = [LS, LS_REC, BASE_K, ABAS_K, QUER_K, VIDA_K, APAGOU_K, DIARIO_K].map(k => chave(k, id));
-    Object.keys(localStorage).filter(k => bases.some(b => k === b || k.indexOf(b + '#') === 0)).forEach(k => localStorage.removeItem(k));
+    existentes.forEach(([k, txt]) => { if (localStorage.getItem(k) === txt) localStorage.removeItem(k); });
     if (id === identidade) { nuvem.ref = null; nuvem.on = false; loc.ops = []; loc.gen = r.gen; loc.pendente = 0; loc.confirmando = false; loc.incompativel = false; gravouLocal = true; S = novoEstado(); recuperar = null; partirDe(null, S); }
   }
   function contasGuardadas() {

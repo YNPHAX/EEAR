@@ -168,7 +168,7 @@
       case 'recdescartar': descartarRecuperacao(); break;
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
       case 'impok': {
-        const t = document.getElementById('imp-txt');
+        const t = document.getElementById('imp-txt'), substituir = !!(document.getElementById('imp-substituir') || {}).checked;
         let o = null;
         try { o = JSON.parse((t && t.value || '').trim()); } catch (e) { o = null; }
         if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); break; }
@@ -180,12 +180,12 @@
         const combinado = conhecida ? opCombinarEstados(S, colado) : S;
         loc.meta = opMeta(combinado); loc.vista = opCopiar(combinado);
         const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
-        S = unirProgresso(null, l, c).st;
+        S = substituir ? mesclar(c) : unirProgresso(null, l, c).st;
         const certs = S.cfg.certs;
         S.cfg = Object.assign({}, colado.cfg, { certs });
         S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(colado.cfg.certsZ) || 0);
         juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
-        pedindo = null; msgDados = 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado }); render();
+        pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado }); render();
 
         break;
       }

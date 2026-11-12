@@ -1,4 +1,13 @@
   /* Fila da aba; checkpoint IDB serializa todas as abas. Cache e notificações não são confirmação durável. */
+  function operacaoPermitida(r, o) {
+    return !r.encerrado && typeof o.id === 'string' && !['__proto__', 'constructor', 'prototype'].includes(o.id) && !(r.ignoradas || {})[o.id]
+      && (!o.gen || o.gen === r.gen || o.local === true);
+  }
+  function aplicarReservas(r, ops) {
+    const u = Object.assign({}, r, { recibos: Object.assign({}, r.recibos || {}) });
+    ops.forEach(o => { if (operacaoPermitida(r, o) && !u.recibos[o.id]) { u.meta = opUnir(u.meta, o.delta); u.recibos[o.id] = true; u.apagado = false; } });
+    return u;
+  }
   function depoisDeMudarS() {
     if (V.v === 'inicio' && !semEstudo(S)) V = { v: 'hoje' };
     render();
@@ -8,7 +17,7 @@
     if (id !== identidade || !r || !opValida(r.meta)) return;
     if (r.apagado && loc.gen && loc.gen !== r.gen) { nuvem.ref = null; nuvem.on = false; }
     let m = r.meta;
-    const ops = (loc.ops || []).filter(o => o.conta === id && (!o.gen || o.gen === r.gen));
+    const ops = (loc.ops || []).filter(o => o.conta === id && operacaoPermitida(r, o));
     ops.forEach(o => { m = opUnir(m, o.delta); });
     const antes = JSON.stringify(opSemMeta(S)); loc.gen = r.gen; loc.meta = m;
     S = opEstado(m); loc.vista = opCopiar(S);
@@ -16,13 +25,17 @@
   }
   function cachear(r, id) {
     if (r.apagado) return;
-    try {
-      const texto = localStorage.getItem(chave(LS, id)), hash = resumoDoc(r.meta);
-      if (loc.cacheId === id && loc.cacheHash === hash && loc.cacheTexto === texto) return;
-      const atual = estadoDe(texto), novo = opEstado(r.meta);
-      if (atual && mesmoConteudo(opPlano(atual), opPlano(novo))) { loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = texto; return; }
-      const bruto = JSON.stringify(novo); localStorage.setItem(chave(LS, id), bruto); loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = bruto;
-    } catch (e) { /* IDB já confirmou; o cache é opcional */ }
+    // Cache opcional sob a mesma transação que serializa exclusões. Uma conferência fora dela não basta.
+    transacaoConta(id, atual => {
+      if (!atual || atual.apagado || atual.gen !== r.gen) return;
+      try {
+        const texto = localStorage.getItem(chave(LS, id)), hash = resumoDoc(atual.meta);
+        if (loc.cacheId === id && loc.cacheHash === hash && loc.cacheTexto === texto) return;
+        const anterior = estadoDe(texto), novo = opEstado(atual.meta);
+        if (anterior && mesmoConteudo(opPlano(anterior), opPlano(novo))) { loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = texto; return; }
+        const bruto = JSON.stringify(novo); localStorage.setItem(chave(LS, id), bruto); loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = bruto;
+      } catch (e) { /* IDB já confirmou; o cache é opcional */ }
+    }).catch(() => null);
   }
   function abrirAbas() {
     document.documentElement.dataset.armazenamento = 'carregando'; loc.incompativel = false;
@@ -32,8 +45,7 @@
     try { const raw = JSON.parse(localStorage.getItem(chave(LS)) || 'null'); if (raw && raw._abas) st._abas = raw._abas; } catch (e) { /* cache ilegível preservado por carregar */ }
     loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, r => {
       if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)), legados: Object.fromEntries(diarios.concat(antigos).filter(x => !x.d.delta).map(x => [x.k, x.d.seq])) };
-      let m = r.meta; diarios.forEach(({ d }) => { if (d.delta && opValida(d.delta) && (d.gen === r.gen || (!d.gen && !r.apagado))) m = opUnir(m, d.delta); });
-      return Object.assign({}, r, { meta: m });
+      return aplicarReservas(r, diarios.filter(x => x.d.delta && opValida(x.d.delta)).map(x => x.d));
     })).then(r => {
       if (id !== identidade) return;
       if (mesmoConteudo(opPlano(st), opPlano(r.st))) { loc.cacheId = id; loc.cacheHash = resumoDoc(r.meta); try { loc.cacheTexto = localStorage.getItem(chave(LS, id)); } catch (e) { /* cache opcional */ } }
@@ -46,7 +58,7 @@
     let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
     if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
-    const o = { v: 2, id: oid, conta: id, gen: loc.gen, delta, st: opCopiar(S) };
+    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: !remoto, delta, st: opCopiar(S) };
     loc.ops = (loc.ops || []).concat([o]); loc.pendente = loc.ops.length; loc.confirmando = true;
     // Reserva imutável. Falhar aqui não impede a transação IDB; nenhuma mensagem de confirmação antecipada.
     try { localStorage.setItem(chaveDiario(oid), JSON.stringify(o)); } catch (e) { loc.reservaFalhou = true; }
@@ -56,9 +68,7 @@
     const carga = loc.carga || Promise.resolve();
     loc.fila = (loc.fila || Promise.resolve()).catch(() => null).then(() => carga).then(async () => {
       const r = await transacaoConta(o.conta, ant => {
-        if (ant && ((o.gen && o.gen !== ant.gen) || (ant.apagado && o.gen !== ant.gen))) throw new Error('A cópia desta conta foi apagada em outra aba; operação antiga preservada para exportação.');
-        const m = ant ? ant.meta : opSemente(novoEstado());
-        return Object.assign({}, ant || {}, { gen: ant ? ant.gen : o.gen || opId(), apagado: false, meta: opUnir(m, o.delta) });
+        return aplicarReservas(ant || { gen: o.gen || opId(), meta: opSemente(novoEstado()) }, [o]);
       });
       // A transação já terminou. Só agora se pode remover esta operação da reserva.
       try { localStorage.removeItem(chave(DIARIO_K, o.conta) + '#' + o.id); } catch (e) { /* reaplicação é idempotente */ }
@@ -97,12 +107,10 @@
     transacaoConta(id, r => {
       if (!r) return { gen: opId(), meta: opMeta(S) };
       todos.filter(x => !x.d.delta && !((r.legados || {})[x.k] >= x.d.seq)).forEach(x => quarentenar(x.txt, id, x.k, JSON.stringify(x.d.st)));
-      let m = r.meta;
-      ds.forEach(({ d }) => { if (!d.gen || d.gen === r.gen) m = opUnir(m, d.delta); });
-      return Object.assign({}, r, { meta: m });
+      return aplicarReservas(r, ds.map(x => x.d));
     }).then(r => {
       if (id !== identidade) return;
-      const confirmadas = ds.filter(x => (!x.d.gen || x.d.gen === r.gen) && mesmoConteudo(opUnir(r.meta, x.d.delta), r.meta));
+      const confirmadas = ds.filter(x => (r.recibos || {})[x.d.id] || !operacaoPermitida(r, x.d));
       confirmadas.forEach(x => { try { if (localStorage.getItem(x.k) === x.txt) localStorage.removeItem(x.k); } catch (e) { /* idempotente */ } });
       loc.ops = (loc.ops || []).filter(o => !confirmadas.some(x => x.d.id === o.id)); loc.pendente = loc.ops.length; loc.confirmando = !!loc.pendente;
       gravouLocal = true; receberDuravel(r, id); cachear(r, id);

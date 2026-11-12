@@ -92,14 +92,19 @@
   }
   async function apagarDuravel(id, definitivo) {
     const r = await transacaoConta(id, (ant, t) => {
-      if (!definitivo && ant && opValida(ant.meta) && lerDiariosDe(id).some(x => x.d.delta && (!x.d.gen || x.d.gen === ant.gen) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
+      if (!definitivo && ant && opValida(ant.meta) && lerDiariosDe(id).some(x => x.d.delta && operacaoPermitida(ant, x.d) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
       if (!definitivo && id && ant && !ant.apagado) {
         let base = null; try { base = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null'); } catch (e) { /* sem confirmação */ }
         if (!base || !base.st || !uIgual(opEstado(ant.meta), mesclar(base.st))) throw new Error('Nada foi apagado: há progresso ainda não confirmado na nuvem.');
         if (lerDiariosDe(id).some(x => x.d.delta && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
       }
       const q = t.objectStore('quarentena').openCursor(); q.onsuccess = () => { const c = q.result; if (c) { if (c.value.conta === id) c.delete(); c.continue(); } };
-      return { gen: opId(), apagado: true, meta: opSemente(novoEstado()) };
+      // Nenhum escritor de cache pode atravessar este corte: usa o mesmo object store readwrite.
+      const bases = [LS, LS_REC, BASE_K, ABAS_K, QUER_K, VIDA_K, APAGOU_K].map(k => chave(k, id));
+      Object.keys(localStorage).filter(k => bases.some(b => k === b || k.indexOf(b + '#') === 0)).forEach(k => localStorage.removeItem(k));
+      const ignoradas = Object.assign({}, ant && ant.ignoradas || {}, ant && ant.recibos || {});
+      lerDiariosDe(id).forEach(x => { if (x.d.delta && typeof x.d.id === 'string' && !['__proto__', 'constructor', 'prototype'].includes(x.d.id)) ignoradas[x.d.id] = true; });
+      return { gen: opId(), apagado: true, encerrado: !!definitivo || !!(ant && ant.encerrado), ignoradas, meta: opSemente(novoEstado()) };
     }, true);
     // Banco legado: só depois da transação nova; nenhum progresso pessoal deve ficar no espelho antigo.
     if (window.indexedDB) await new Promise((resolve, reject) => {

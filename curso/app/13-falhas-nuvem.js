@@ -50,5 +50,5 @@
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') { retomarNuvem(); return; }
     soltarLocal(false); // no fundo, a aba pode ser suspensa: não fica com a trava local (14-abas.js)
-    if (!saindo && nuvem.ref && nuvem.pendente && !nuvem.busy) { clearTimeout(tSave); gravar(); } // indo para o fundo: envia já
+    if (!saindo && nuvem.ref && nuvem.pendente) { clearTimeout(tSave); gravar(true); } // flush pontual após ceder liderança; transação remota continua serializando
   });

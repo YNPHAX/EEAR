@@ -124,8 +124,8 @@
     tSave = setTimeout(gravar, 1500);
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
-  async function gravar() {
-    if (loc.incompativel || saindo || !nuvem.ref || !lider.ativa) return; // só a aba líder sincroniza (14-abas.js)
+  async function gravar(aoFundo) {
+    if (loc.incompativel || saindo || !nuvem.ref || (!lider.ativa && !(aoFundo && document.visibilityState === 'hidden'))) return;
     if (nuvem.busy) { nuvem.again = true; return; }
     const ref = nuvem.ref, conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
@@ -139,7 +139,7 @@
     }
     nuvem.busy = false;
     syncInfo();
-    if (nuvem.again) { nuvem.again = false; return gravar(); }
+    if (nuvem.again) { nuvem.again = false; return gravar(document.visibilityState === 'hidden'); }
   }
   /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. Tarefas marcadas, caderno
      de erros e atividade também contam como estudo (antes não contavam, e um aparelho que só tinha marcado tarefas perdia as marcações). */

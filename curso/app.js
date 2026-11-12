@@ -313,8 +313,8 @@
     tSave = setTimeout(gravar, 1500);
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
-  async function gravar() {
-    if (loc.incompativel || saindo || !nuvem.ref || !lider.ativa) return; // só a aba líder sincroniza (14-abas.js)
+  async function gravar(aoFundo) {
+    if (loc.incompativel || saindo || !nuvem.ref || (!lider.ativa && !(aoFundo && document.visibilityState === 'hidden'))) return;
     if (nuvem.busy) { nuvem.again = true; return; }
     const ref = nuvem.ref, conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
@@ -328,7 +328,7 @@
     }
     nuvem.busy = false;
     syncInfo();
-    if (nuvem.again) { nuvem.again = false; return gravar(); }
+    if (nuvem.again) { nuvem.again = false; return gravar(document.visibilityState === 'hidden'); }
   }
   /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. Tarefas marcadas, caderno
      de erros e atividade também contam como estudo (antes não contavam, e um aparelho que só tinha marcado tarefas perdia as marcações). */
@@ -1018,7 +1018,7 @@
       <p class="small muted" style="margin:0">Copie o código do progresso aqui e cole no outro aparelho, em Plano › Dados › Colar progresso. Vale entre o site, o app e o link do curso.</p>
       <div class="row"><button class="btn" data-a="expcopiar">Copiar meu progresso</button><button class="btn" data-a="impabrir">Colar progresso</button></div>
       ${pedindo === 'exp' ? `<div class="field"><label for="exp-txt">Selecione e copie o código</label><textarea id="exp-txt" class="codigo" readonly rows="4">${esc(JSON.stringify(S))}</textarea></div>` : ''}
-      ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>O estudo do código será unido ao deste aparelho. As preferências do código serão carregadas.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
+      ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>O estudo do código será unido ao deste aparelho. As preferências do código serão carregadas.</p><label><input type="checkbox" id="imp-substituir"> Substituir o estudo deste aparelho pelo código, mantendo os certificados conquistados</label><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
       ${blocoDados()}
       ${msgDados ? `<p class="small" role="status" style="margin:0">${msgDados}</p>` : ''}
       <div class="sync" id="sync"></div></section>`;
@@ -1817,7 +1817,7 @@
       case 'recdescartar': descartarRecuperacao(); break;
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
       case 'impok': {
-        const t = document.getElementById('imp-txt');
+        const t = document.getElementById('imp-txt'), substituir = !!(document.getElementById('imp-substituir') || {}).checked;
         let o = null;
         try { o = JSON.parse((t && t.value || '').trim()); } catch (e) { o = null; }
         if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); break; }
@@ -1829,12 +1829,12 @@
         const combinado = conhecida ? opCombinarEstados(S, colado) : S;
         loc.meta = opMeta(combinado); loc.vista = opCopiar(combinado);
         const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
-        S = unirProgresso(null, l, c).st;
+        S = substituir ? mesclar(c) : unirProgresso(null, l, c).st;
         const certs = S.cfg.certs;
         S.cfg = Object.assign({}, colado.cfg, { certs });
         S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(colado.cfg.certsZ) || 0);
         juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
-        pedindo = null; msgDados = 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado }); render();
+        pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado }); render();
 
         break;
       }
@@ -2083,9 +2083,11 @@
   }
   /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
   async function apagarLocal(id, definitivo) {
+    const bases = [DIARIO_K].map(k => chave(k, id));
+    // O corte é anterior à transação. Uma reserva imutável criada depois dele pertence a uma nova ação.
+    const existentes = Object.keys(localStorage).filter(k => bases.some(b => k === b || k.indexOf(b + '#') === 0)).map(k => [k, localStorage.getItem(k)]);
     const r = await apagarDuravel(id, definitivo);
-    const bases = [LS, LS_REC, BASE_K, ABAS_K, QUER_K, VIDA_K, APAGOU_K, DIARIO_K].map(k => chave(k, id));
-    Object.keys(localStorage).filter(k => bases.some(b => k === b || k.indexOf(b + '#') === 0)).forEach(k => localStorage.removeItem(k));
+    existentes.forEach(([k, txt]) => { if (localStorage.getItem(k) === txt) localStorage.removeItem(k); });
     if (id === identidade) { nuvem.ref = null; nuvem.on = false; loc.ops = []; loc.gen = r.gen; loc.pendente = 0; loc.confirmando = false; loc.incompativel = false; gravouLocal = true; S = novoEstado(); recuperar = null; partirDe(null, S); }
   }
   function contasGuardadas() {
@@ -2475,7 +2477,7 @@
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') { retomarNuvem(); return; }
     soltarLocal(false); // no fundo, a aba pode ser suspensa: não fica com a trava local (14-abas.js)
-    if (!saindo && nuvem.ref && nuvem.pendente && !nuvem.busy) { clearTimeout(tSave); gravar(); } // indo para o fundo: envia já
+    if (!saindo && nuvem.ref && nuvem.pendente) { clearTimeout(tSave); gravar(true); } // flush pontual após ceder liderança; transação remota continua serializando
   });
   /* Operações identificadas: registradores LWW por campo e contribuições de contadores por operação.
      União associativa, comutativa e idempotente. Um reset remove apenas contribuições que observou;
@@ -2596,6 +2598,15 @@
   function partirDe(txt, st) { loc.vista = opCopiar(st || novoEstado()); loc.meta = opMeta(loc.vista); }
   function estadoDe(txt) { try { const o = JSON.parse(txt); return o && o.v === 1 ? mesclar(o) : null; } catch (e) { return null; } }
   /* Fila da aba; checkpoint IDB serializa todas as abas. Cache e notificações não são confirmação durável. */
+  function operacaoPermitida(r, o) {
+    return !r.encerrado && typeof o.id === 'string' && !['__proto__', 'constructor', 'prototype'].includes(o.id) && !(r.ignoradas || {})[o.id]
+      && (!o.gen || o.gen === r.gen || o.local === true);
+  }
+  function aplicarReservas(r, ops) {
+    const u = Object.assign({}, r, { recibos: Object.assign({}, r.recibos || {}) });
+    ops.forEach(o => { if (operacaoPermitida(r, o) && !u.recibos[o.id]) { u.meta = opUnir(u.meta, o.delta); u.recibos[o.id] = true; u.apagado = false; } });
+    return u;
+  }
   function depoisDeMudarS() {
     if (V.v === 'inicio' && !semEstudo(S)) V = { v: 'hoje' };
     render();
@@ -2605,7 +2616,7 @@
     if (id !== identidade || !r || !opValida(r.meta)) return;
     if (r.apagado && loc.gen && loc.gen !== r.gen) { nuvem.ref = null; nuvem.on = false; }
     let m = r.meta;
-    const ops = (loc.ops || []).filter(o => o.conta === id && (!o.gen || o.gen === r.gen));
+    const ops = (loc.ops || []).filter(o => o.conta === id && operacaoPermitida(r, o));
     ops.forEach(o => { m = opUnir(m, o.delta); });
     const antes = JSON.stringify(opSemMeta(S)); loc.gen = r.gen; loc.meta = m;
     S = opEstado(m); loc.vista = opCopiar(S);
@@ -2613,13 +2624,17 @@
   }
   function cachear(r, id) {
     if (r.apagado) return;
-    try {
-      const texto = localStorage.getItem(chave(LS, id)), hash = resumoDoc(r.meta);
-      if (loc.cacheId === id && loc.cacheHash === hash && loc.cacheTexto === texto) return;
-      const atual = estadoDe(texto), novo = opEstado(r.meta);
-      if (atual && mesmoConteudo(opPlano(atual), opPlano(novo))) { loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = texto; return; }
-      const bruto = JSON.stringify(novo); localStorage.setItem(chave(LS, id), bruto); loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = bruto;
-    } catch (e) { /* IDB já confirmou; o cache é opcional */ }
+    // Cache opcional sob a mesma transação que serializa exclusões. Uma conferência fora dela não basta.
+    transacaoConta(id, atual => {
+      if (!atual || atual.apagado || atual.gen !== r.gen) return;
+      try {
+        const texto = localStorage.getItem(chave(LS, id)), hash = resumoDoc(atual.meta);
+        if (loc.cacheId === id && loc.cacheHash === hash && loc.cacheTexto === texto) return;
+        const anterior = estadoDe(texto), novo = opEstado(atual.meta);
+        if (anterior && mesmoConteudo(opPlano(anterior), opPlano(novo))) { loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = texto; return; }
+        const bruto = JSON.stringify(novo); localStorage.setItem(chave(LS, id), bruto); loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = bruto;
+      } catch (e) { /* IDB já confirmou; o cache é opcional */ }
+    }).catch(() => null);
   }
   function abrirAbas() {
     document.documentElement.dataset.armazenamento = 'carregando'; loc.incompativel = false;
@@ -2629,8 +2644,7 @@
     try { const raw = JSON.parse(localStorage.getItem(chave(LS)) || 'null'); if (raw && raw._abas) st._abas = raw._abas; } catch (e) { /* cache ilegível preservado por carregar */ }
     loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, r => {
       if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)), legados: Object.fromEntries(diarios.concat(antigos).filter(x => !x.d.delta).map(x => [x.k, x.d.seq])) };
-      let m = r.meta; diarios.forEach(({ d }) => { if (d.delta && opValida(d.delta) && (d.gen === r.gen || (!d.gen && !r.apagado))) m = opUnir(m, d.delta); });
-      return Object.assign({}, r, { meta: m });
+      return aplicarReservas(r, diarios.filter(x => x.d.delta && opValida(x.d.delta)).map(x => x.d));
     })).then(r => {
       if (id !== identidade) return;
       if (mesmoConteudo(opPlano(st), opPlano(r.st))) { loc.cacheId = id; loc.cacheHash = resumoDoc(r.meta); try { loc.cacheTexto = localStorage.getItem(chave(LS, id)); } catch (e) { /* cache opcional */ } }
@@ -2643,7 +2657,7 @@
     let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
     if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
-    const o = { v: 2, id: oid, conta: id, gen: loc.gen, delta, st: opCopiar(S) };
+    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: !remoto, delta, st: opCopiar(S) };
     loc.ops = (loc.ops || []).concat([o]); loc.pendente = loc.ops.length; loc.confirmando = true;
     // Reserva imutável. Falhar aqui não impede a transação IDB; nenhuma mensagem de confirmação antecipada.
     try { localStorage.setItem(chaveDiario(oid), JSON.stringify(o)); } catch (e) { loc.reservaFalhou = true; }
@@ -2653,9 +2667,7 @@
     const carga = loc.carga || Promise.resolve();
     loc.fila = (loc.fila || Promise.resolve()).catch(() => null).then(() => carga).then(async () => {
       const r = await transacaoConta(o.conta, ant => {
-        if (ant && ((o.gen && o.gen !== ant.gen) || (ant.apagado && o.gen !== ant.gen))) throw new Error('A cópia desta conta foi apagada em outra aba; operação antiga preservada para exportação.');
-        const m = ant ? ant.meta : opSemente(novoEstado());
-        return Object.assign({}, ant || {}, { gen: ant ? ant.gen : o.gen || opId(), apagado: false, meta: opUnir(m, o.delta) });
+        return aplicarReservas(ant || { gen: o.gen || opId(), meta: opSemente(novoEstado()) }, [o]);
       });
       // A transação já terminou. Só agora se pode remover esta operação da reserva.
       try { localStorage.removeItem(chave(DIARIO_K, o.conta) + '#' + o.id); } catch (e) { /* reaplicação é idempotente */ }
@@ -2694,12 +2706,10 @@
     transacaoConta(id, r => {
       if (!r) return { gen: opId(), meta: opMeta(S) };
       todos.filter(x => !x.d.delta && !((r.legados || {})[x.k] >= x.d.seq)).forEach(x => quarentenar(x.txt, id, x.k, JSON.stringify(x.d.st)));
-      let m = r.meta;
-      ds.forEach(({ d }) => { if (!d.gen || d.gen === r.gen) m = opUnir(m, d.delta); });
-      return Object.assign({}, r, { meta: m });
+      return aplicarReservas(r, ds.map(x => x.d));
     }).then(r => {
       if (id !== identidade) return;
-      const confirmadas = ds.filter(x => (!x.d.gen || x.d.gen === r.gen) && mesmoConteudo(opUnir(r.meta, x.d.delta), r.meta));
+      const confirmadas = ds.filter(x => (r.recibos || {})[x.d.id] || !operacaoPermitida(r, x.d));
       confirmadas.forEach(x => { try { if (localStorage.getItem(x.k) === x.txt) localStorage.removeItem(x.k); } catch (e) { /* idempotente */ } });
       loc.ops = (loc.ops || []).filter(o => !confirmadas.some(x => x.d.id === o.id)); loc.pendente = loc.ops.length; loc.confirmando = !!loc.pendente;
       gravouLocal = true; receberDuravel(r, id); cachear(r, id);
@@ -2843,14 +2853,19 @@
   }
   async function apagarDuravel(id, definitivo) {
     const r = await transacaoConta(id, (ant, t) => {
-      if (!definitivo && ant && opValida(ant.meta) && lerDiariosDe(id).some(x => x.d.delta && (!x.d.gen || x.d.gen === ant.gen) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
+      if (!definitivo && ant && opValida(ant.meta) && lerDiariosDe(id).some(x => x.d.delta && operacaoPermitida(ant, x.d) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
       if (!definitivo && id && ant && !ant.apagado) {
         let base = null; try { base = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null'); } catch (e) { /* sem confirmação */ }
         if (!base || !base.st || !uIgual(opEstado(ant.meta), mesclar(base.st))) throw new Error('Nada foi apagado: há progresso ainda não confirmado na nuvem.');
         if (lerDiariosDe(id).some(x => x.d.delta && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
       }
       const q = t.objectStore('quarentena').openCursor(); q.onsuccess = () => { const c = q.result; if (c) { if (c.value.conta === id) c.delete(); c.continue(); } };
-      return { gen: opId(), apagado: true, meta: opSemente(novoEstado()) };
+      // Nenhum escritor de cache pode atravessar este corte: usa o mesmo object store readwrite.
+      const bases = [LS, LS_REC, BASE_K, ABAS_K, QUER_K, VIDA_K, APAGOU_K].map(k => chave(k, id));
+      Object.keys(localStorage).filter(k => bases.some(b => k === b || k.indexOf(b + '#') === 0)).forEach(k => localStorage.removeItem(k));
+      const ignoradas = Object.assign({}, ant && ant.ignoradas || {}, ant && ant.recibos || {});
+      lerDiariosDe(id).forEach(x => { if (x.d.delta && typeof x.d.id === 'string' && !['__proto__', 'constructor', 'prototype'].includes(x.d.id)) ignoradas[x.d.id] = true; });
+      return { gen: opId(), apagado: true, encerrado: !!definitivo || !!(ant && ant.encerrado), ignoradas, meta: opSemente(novoEstado()) };
     }, true);
     // Banco legado: só depois da transação nova; nenhum progresso pessoal deve ficar no espelho antigo.
     if (window.indexedDB) await new Promise((resolve, reject) => {
