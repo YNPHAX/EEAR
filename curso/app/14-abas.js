@@ -62,7 +62,11 @@
   /* Grava o diário desta aba (síncrono: é o que torna a alteração durável). Sem espaço, lança. */
   function persistir() {
     loc.seq++;
-    localStorage.setItem(chaveDiario(loc.tab), JSON.stringify({ seq: loc.seq, bid: loc.bid, base: loc.base, st: S }));
+    /* bseq: a marca inc desta aba na versão de que ela partiu; ant: estados dos diários dela depois dessa versão. Se outra
+       aba já absorveu um deles (esta parecia fechada), a união parte dele, e nada do que ele trouxe conta duas vezes (F09). */
+    const ant = (loc.jhist || []).filter(h => h.seq > (loc.baseSeq || 0)).slice(-6);
+    localStorage.setItem(chaveDiario(loc.tab), JSON.stringify({ seq: loc.seq, bid: loc.bid, base: loc.base, bseq: loc.baseSeq || 0, ant, ts: Date.now(), st: S }));
+    espelhar(chaveDiario(loc.tab), localStorage.getItem(chaveDiario(loc.tab))); // cópia durável em IndexedDB (16-diario-duravel.js)
     loc.escritora = true;
     loc.pendente = loc.seq;
     loc.jhist = (loc.jhist || []).concat([{ seq: loc.seq, st: JSON.parse(JSON.stringify(S)) }]).slice(-6); // 15-diarios-pendentes.js
@@ -83,14 +87,15 @@
     const r = unirProgresso(mesclar({ v: 1, t: 0, cfg: atual.cfg }), so, atual, SOMAR); guardarPerdido(r.perdido); return r.st;
   }
   /* Aplica um diário sobre a cópia principal lida no início da consolidação (txt0, m0) já com os diários anteriores (atual). */
-  function aplicarDiario(d, txt0, m0, atual) {
+  function aplicarDiario(d, txt0, m0, atual, tab) {
     const base = d.base ? mesclar(d.base) : null, st = mesclar(d.st);
-    if (txt0 == null) { // sem cópia principal: apagada (o diário partia de uma) ou ainda não criada
-      const meu = base ? soDepois(base, st) : st;
+    if (txt0 == null) { // sem cópia principal: apagada pelo aluno (a marca de exclusão existe) ou ainda não criada/perdida numa queda
+      const meu = base && apagadaAqui() ? soDepois(base, st) : st;
       if (!atual) return meu;
       const r = unirProgresso(mesclar({ v: 1, t: 0, cfg: meu.cfg }), meu, atual, SOMAR); guardarPerdido(r.perdido); return r.st;
     }
-    const b0 = baseNaCadeia(txt0, m0, d.bid, base);
+    const k = m0 && tab !== undefined ? m0.inc[tab] : undefined, dk = k !== undefined && k > (d.bseq || 0) && k < d.seq ? (d.ant || []).find(h => h && h.seq === k && h.st) : null;
+    const b0 = dk ? mesclar(JSON.parse(JSON.stringify(dk.st))) : baseNaCadeia(txt0, m0, d.bid, base); // F09: a cópia já tem o diário k desta aba
     if (b0 && atual && mesmoConteudo(b0, atual)) return st; // nada mudou desde a base: o diário é o estado novo, como está
     if (!b0 && base && atual) return unirSemCadeia(base, st, atual);
     const r = unirProgresso(b0, st, atual, SOMAR); guardarPerdido(r.perdido); return r.st;
@@ -107,9 +112,9 @@
       const meu = tab === loc.tab, antigo = m0 ? m0.inc[tab] : undefined;
       if (antigo !== undefined) inc[tab] = antigo;
       if (!meu && (mortas ? !mortas.has(tab) : !vivos || vivos.has(tab))) return; // aba aberta cuida do próprio diário
-      if (!d || (antigo !== undefined && antigo >= d.seq)) { if (!meu) usados.push(kd); return; } // ilegível ou já absorvido
-      const depois = aplicarDiario(d, txt0, m0, atual);
-      if (atual && mesmoConteudo(depois, atual)) { if (meu) proprio = d; else usados.push(kd); return; } // nada novo: não regrava a cópia principal
+      if (!d || (antigo !== undefined && antigo >= d.seq)) { if (!meu && (!d || !(Date.now() - (d.ts || 0) < GRACA_RECIBO))) usados.push(kd); return; } // ilegível ou já absorvido (recibo recente fica: F13)
+      const depois = aplicarDiario(d, txt0, m0, atual, tab);
+      if (atual && mesmoConteudo(depois, atual)) { if (meu) proprio = d; else if (!(Date.now() - (d.ts || 0) < GRACA_RECIBO)) usados.push(kd); return; } // nada novo: não regrava a cópia principal
       atual = depois; inc[tab] = d.seq; mudou = true;
       if (meu) proprio = d; // órfão aplicado: apagado numa consolidação seguinte, quando a cópia principal confirmar (inc)
     });
@@ -118,10 +123,15 @@
       const id = 'v' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36), ant = txt0 != null ? idVersao(txt0) : '';
       const lin = ((m0 && m0.lin) || []).concat(ant ? [ant] : []).slice(-30);
       const novo = JSON.stringify(Object.assign({}, atual, { _abas: { id, lin, inc } }));
+      let agora0 = null; try { agora0 = localStorage.getItem(k); } catch (e) { return; }
+      if (agora0 !== txt0 && (loc.refazer || 0) < 5) { // outra aba gravou depois da leitura (F13): refaz sobre a versão nova
+        loc.refazer = (loc.refazer || 0) + 1; try { consolidarAgora(vivos, mortas); } finally { loc.refazer--; } return;
+      }
       try { localStorage.setItem(k, novo); } catch (e) { gravouLocal = false; return; } // sem espaço: o diário continua
       gravouLocal = true; txt = novo;
     }
-    usados.forEach(kd => { try { localStorage.removeItem(kd); } catch (e) { /* ignora */ } });
+    if (mudou) limparApagada(); // há cópia principal de novo: a marca de exclusão não vale mais
+    usados.forEach(kd => { try { localStorage.removeItem(kd); } catch (e) { /* ignora */ } espelhar(kd, null); });
     const antes = JSON.stringify(S);
     if (proprio) { // o que esta aba fez depois do diário absorvido continua (união com o diário como base)
       const cur = estadoDe(txt), agora = mesclar(JSON.parse(JSON.stringify(S)));
@@ -236,6 +246,7 @@
     loc.soltarVida = null; loc.vigiadas = new Set();
     if (temTravas()) navigator.locks.request('eear-vida#' + loc.tab + '@' + nomeConta(), () => new Promise(r => { loc.soltarVida = r; })).catch(() => { /* sem trava de vida */ });
     iniciarVigia(); // 15-diarios-pendentes.js
+    restaurarDuraveis(); // 16-diario-duravel.js: diário que só sobreviveu no IndexedDB (queda do navegador)
     setTimeout(() => { consolidar(); lerDiarios().forEach(x => vigiar(x.tab)); }, 0);
   }
   /* Liderança da nuvem: só a aba que tem a trava da conta sincroniza. Trava livre: esta aba a pega já (com uma aba só,

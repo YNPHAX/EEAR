@@ -16,14 +16,16 @@
     identidade = id;
     try { if (id) localStorage.setItem(LS_CONTA, id); else localStorage.removeItem(LS_CONTA); } catch (e) { /* sem armazenamento */ }
     S = carregar(); QZ = null; FC = null; pedindo = null; msgRec = ''; contaUI.adiado = false;
-    V = mostrarInicio() ? { v: 'inicio' } : V.v === 'plano' ? V : { v: 'hoje' }; // a tela inicial depende do progresso da conta que entrou
+    V = V.v === 'plano' ? V : mostrarInicio() ? { v: 'inicio' } : { v: 'hoje' }; // a tela inicial depende do progresso da conta que entrou; quem entrou pela aba Plano continua nela
     render();
     return true;
   }
   /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
   function apagarLocal(id) {
     [LS, LS_REC, BASE_K, ABAS_K, QUER_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
-    apagarDiarios(id); // diários das abas desta conta, menos os pendentes (única cópia de um estudo; 15-diarios-pendentes.js)
+    /* Diários das abas desta conta, menos os pendentes (única cópia de um estudo; 15-diarios-pendentes.js). Se algum ficou, a
+       marca diz que a cópia principal sumiu por exclusão, e não por queda: ele entra só com o que veio depois (16-diario-duravel.js). */
+    if (apagarDiarios(id)) marcarApagada(id); else limparApagada(id);
     if (id === identidade) { S = novoEstado(); recuperar = null; loc.pendente = 0; partirDe(null, null); }
   }
   function contasGuardadas() {

@@ -25,29 +25,30 @@
     return out;
   }
   /* O diário d ainda acrescentaria algo à cópia principal txt (de meta m e estado st0)? Ilegível conta como pendente. */
-  function diarioPendente(d, txt, m, st0, tab) {
+  function diarioPendente(d, txt, m, st0, tab, id) {
     if (!d) return true;
     if (m && m.inc[tab] !== undefined && m.inc[tab] >= d.seq) return false;
     loc.semEfeito = true; // a conferência não grava cópia de recuperação
     try {
-      if (txt == null || !st0) { const base = d.base ? mesclar(d.base) : null, meu = base ? soDepois(base, mesclar(d.st)) : mesclar(d.st); return !semEstudo(meu); }
-      return !mesmoConteudo(aplicarDiario(d, txt, m, st0), st0);
+      if (txt == null || !st0) { const base = d.base ? mesclar(d.base) : null, meu = base && apagadaAqui(id) ? soDepois(base, mesclar(d.st)) : mesclar(d.st); return !semEstudo(meu); }
+      return !mesmoConteudo(aplicarDiario(d, txt, m, st0, tab), st0);
     } catch (e) { return true; } finally { loc.semEfeito = false; }
   }
   function pendentesDe(id) {
     let txt = null; try { txt = localStorage.getItem(chave(LS, id)); } catch (e) { return [{ k: '', txt: null }]; }
     const m = txt != null ? metaDe(txt) : null, st0 = txt != null ? estadoDe(txt) : null;
-    return lerDiariosDe(id).filter(x => diarioPendente(x.d, txt, m, st0, x.tab));
+    return lerDiariosDe(id).filter(x => diarioPendente(x.d, txt, m, st0, x.tab, id));
   }
   function temPendentes(id) { return pendentesDe(id).length > 0; }
   /* Apaga os diários da conta que não estão pendentes; o pendente fica (e entra na cópia, só com o que veio depois da base). */
   function apagarDiarios(id) {
-    const ficam = new Set(pendentesDe(id).map(x => x.k));
+    const ficam = new Set(pendentesDe(id).map(x => x.k).filter(Boolean));
     lerDiariosDe(id).forEach(x => {
       if (ficam.has(x.k)) return;
-      try { if (localStorage.getItem(x.k) === x.txt) localStorage.removeItem(x.k); } catch (e) { /* ignora */ } // mudou desde a leitura: fica
+      try { if (localStorage.getItem(x.k) === x.txt) { localStorage.removeItem(x.k); espelhar(x.k, null); } } catch (e) { /* ignora */ } // mudou desde a leitura: fica
     });
     try { const pre = chave(VIDA_K, id) + '#'; Object.keys(localStorage).filter(k => k.indexOf(pre) === 0 && k !== chaveVida(loc.tab, id)).forEach(k => localStorage.removeItem(k)); } catch (e) { /* ignora */ }
+    return ficam.size; // diários pendentes que ficaram
   }
   /* Roda fn com a trava local (depois de qualquer consolidação de outra aba em andamento); sem Web Locks, na hora. */
   function comTravaLocal(fn) {
