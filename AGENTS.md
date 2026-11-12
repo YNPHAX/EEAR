@@ -51,3 +51,5 @@ Publicação: o workflow Site publica no GitHub Pages só quando é disparado à
 
 ## Entrega
 - Informe o que mudou, quais verificações foram executadas, seus resultados e as pendências.
+
+- Continuidade Codex: arquitetura e limites em `auditoria/transicao-codex.md`. `node testes/operacoes.test.js` verifica propriedades das operações sem serviços externos. Sondas com as variáveis de F01: `node testes/operacoes-interrupcao.test.js`, `node testes/operacoes-suspensas.test.js`, `node testes/operacoes-falhas.test.js`. `EEAR_GRUPOS=robustez,contas,abas node testes/plataforma.test.js` seleciona grupos para desenvolvimento; sem variável o CI mantém a matriz completa. Reservas/checkpoint são distintos; somente transaction.oncomplete confirma persistência. Nenhuma operação no Firebase real é permitida nesta continuidade.

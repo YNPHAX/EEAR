@@ -24,12 +24,20 @@ service cloud.firestore {
         && d.atualizado == request.time;
     }
     match /alunos/{uid} {
-      allow get: if dono(uid);
+      allow get: if dono(uid) && !exists(/databases/$(database)/documents/contasExcluidas/$(uid));
       allow list: if false;
-      allow create: if dono(uid) && documentoValido();
-      allow update: if dono(uid) && documentoValido()
+      allow create: if dono(uid) && !exists(/databases/$(database)/documents/contasExcluidas/$(uid)) && documentoValido();
+      allow update: if dono(uid) && !exists(/databases/$(database)/documents/contasExcluidas/$(uid)) && documentoValido()
         && (!('v' in resource.data) || request.resource.data.v >= resource.data.v);
       allow delete: if dono(uid);
+    }
+    // Tombstone mínimo: bloqueia escritores com tokens antigos. Imutável; não contém nome ou progresso.
+    match /contasExcluidas/{uid} {
+      allow get: if dono(uid);
+      allow list, update, delete: if false;
+      allow create: if dono(uid) && request.resource.data.keys().hasOnly(['v', 'excluida'])
+        && request.resource.data.keys().hasAll(['v', 'excluida']) && request.resource.data.v == 1
+        && request.resource.data.excluida == request.time;
     }
     match /{caminho=**} {
       allow read, write: if false;

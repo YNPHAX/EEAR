@@ -22,7 +22,7 @@
   /* Gravação que a base representa (veja "linhagem das gravações" abaixo). */
   function idBase() { const o = lerBaseBruta(); return o && typeof o.id === 'string' ? o.id : ''; }
   function gravarBase(st, ep, id) { try { localStorage.setItem(chave(BASE_K), JSON.stringify({ conta: nuvem.conta, st, ep: ep || '', id: id || '' })); } catch (e) { /* sem espaço: a próxima união é sem base, sem apagar nada */ } }
-  function uIgual(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+  function uIgual(a, b) { return JSON.stringify(canonico(a)) === JSON.stringify(canonico(b)); }
   /* Assinatura do documento da nuvem (sinc): resumo FNV-1a do conteúdo sem ela, em ordem fixa de chaves. Só esta versão
      do app grava assinado. Documento sem assinatura, ou com assinatura que não bate (uma versão antiga gravou por cima,
      ou mudou algo e manteve o campo), não serve de referência para apagar: a união é feita sem base. Não é proteção

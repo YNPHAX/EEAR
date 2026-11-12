@@ -11,7 +11,7 @@
     clearTimeout(tSave);
     clearTimeout(nuvem.tRetry); nuvem.erro = ''; nuvem.falhas = 0;
     if (lider.soltar) lider.soltar(); lider.soltar = null; lider.ativa = false; lider.conta = null; lider.espera = null; // a liderança da nuvem era da conta anterior
-    soltarLocal(false); loc.escritora = false; loc.vivos = null; // a trava local também (14-abas.js)
+    soltarLocal(false); // a fila anterior continua ligada à identidade que a originou
     nuvem.ref = null; nuvem.on = false; nuvem.again = false; nuvem.futura = false; nuvem.bloqueada = false; nuvem.pendente = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.refPausada = null; nuvem.conta = id;
     identidade = id;
     try { if (id) localStorage.setItem(LS_CONTA, id); else localStorage.removeItem(LS_CONTA); } catch (e) { /* sem armazenamento */ }
@@ -21,12 +21,11 @@
     return true;
   }
   /* Apaga deste aparelho o progresso de uma identidade (e as cópias dela). Só é chamado depois de confirmação explícita. */
-  function apagarLocal(id) {
-    [LS, LS_REC, BASE_K, ABAS_K, QUER_K].forEach(k => { try { localStorage.removeItem(chave(k, id)); } catch (e) { /* ignora */ } });
-    /* Diários das abas desta conta, menos os pendentes (única cópia de um estudo; 15-diarios-pendentes.js). Se algum ficou, a
-       marca diz que a cópia principal sumiu por exclusão, e não por queda: ele entra só com o que veio depois (16-diario-duravel.js). */
-    if (apagarDiarios(id)) marcarApagada(id); else limparApagada(id);
-    if (id === identidade) { S = novoEstado(); recuperar = null; loc.pendente = 0; partirDe(null, null); }
+  async function apagarLocal(id, definitivo) {
+    const r = await apagarDuravel(id, definitivo);
+    const bases = [LS, LS_REC, BASE_K, ABAS_K, QUER_K, VIDA_K, APAGOU_K, DIARIO_K].map(k => chave(k, id));
+    Object.keys(localStorage).filter(k => bases.some(b => k === b || k.indexOf(b + '#') === 0)).forEach(k => localStorage.removeItem(k));
+    if (id === identidade) { nuvem.ref = null; nuvem.on = false; loc.ops = []; loc.gen = r.gen; loc.pendente = 0; loc.confirmando = false; S = novoEstado(); recuperar = null; partirDe(null, S); }
   }
   function contasGuardadas() {
     const ids = new Set();
@@ -117,7 +116,7 @@
     try {
       await conta.api.au.signOut(conta.api.auth);
       usarIdentidade('');
-      if (apagar) apagarLocal(id);
+      if (apagar) await apagarLocal(id);
       contaUI.msg = apagar ? 'Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem.' : 'Você saiu. O progresso da conta continua neste aparelho, guardado à parte, e na nuvem.';
     } catch (e) { contaUI.msg = 'Não foi possível sair agora. Nada foi apagado.'; }
     contaUI.ocupado = false; pedindo = null; render();
@@ -133,10 +132,14 @@
       if ((u.providerData || []).some(p => p && p.providerId === 'password')) await au.reauthenticateWithCredential(u, au.EmailAuthProvider.credential(u.email, (document.getElementById('conta-senha') || {}).value || ''));
       else await au.reauthenticateWithPopup(u, new au.GoogleAuthProvider());
       passo = 'nuvem'; nuvem.ref = null; clearTimeout(tSave);
-      await fs.deleteDoc(fs.doc(api.db, 'alunos', u.uid));
+      await fs.runTransaction(api.db, async tx => {
+        const marca = fs.doc(api.db, 'contasExcluidas', u.uid), antiga = await tx.get(marca);
+        if (!antiga.exists()) tx.set(marca, { v: 1, excluida: fs.serverTimestamp() });
+        tx.delete(fs.doc(api.db, 'alunos', u.uid));
+      });
       passo = 'conta';
       await au.deleteUser(u);
-      usarIdentidade(''); apagarLocal(id);
+      usarIdentidade(''); await apagarLocal(id, true);
       contaUI.msg = 'Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos.';
       pedindo = null;
     } catch (e) {
@@ -146,7 +149,7 @@
     }
     contaUI.ocupado = false; render();
   }
-  document.addEventListener('click', ev => {
+  document.addEventListener('click', async ev => {
     const b = ev.target.closest('[data-a]');
     if (!b) return;
     switch (b.dataset.a) {
@@ -160,11 +163,11 @@
       case 'dadosbaixar': baixarDados(); break;
       case 'dadosver': pedindo = pedindo === 'dadosver' ? null : 'dadosver'; render(); break;
       case 'dadosapagar': pedindo = 'dadosapagar'; render(); break;
-      case 'dadosapagarok': comTravaLocal(() => { if (identidade && !sincronizado()) { pedindo = null; msgDados = 'Nada foi apagado: outra aba ou este aparelho tem estudo que ainda não está na nuvem.'; render(); return; } apagarLocal(identidade); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados.'; render(); }); break; // com a trava: depois de qualquer gravação em andamento (F10)
+      case 'dadosapagarok': comTravaLocal(async () => { if (temPendentes(identidade) || (identidade && !sincronizado())) { pedindo = null; msgDados = 'Nada foi apagado: outra aba ou este aparelho tem estudo que ainda não está na nuvem.'; render(); return; } await apagarLocal(identidade); pedindo = null; msgDados = 'Os dados deste aparelho foram apagados.'; render(); }); break; // com a trava: depois de qualquer gravação em andamento (F10)
       case 'dadosapagartudo': { // só as contas cuja nuvem já tem tudo: o estudo não enviado de outra conta não é apagado
         if (identidade) break;
         const ficam = contasGuardadas().filter(id => !sincronizadoDe(id));
-        contasGuardadas().filter(id => !ficam.includes(id)).forEach(apagarLocal); apagarLocal(''); pedindo = null;
+        await Promise.all(contasGuardadas().filter(id => !ficam.includes(id)).map(id => apagarLocal(id))); await apagarLocal(''); pedindo = null;
         msgDados = ficam.length ? `Os dados deste aparelho foram apagados, menos ${ficam.length === 1 ? 'a cópia de uma conta' : 'as cópias de ' + ficam.length + ' contas'} com progresso que a nuvem ainda não confirmou. Entre nessa conta para enviá-lo.` : 'Os dados deste aparelho foram apagados, de todas as contas.';
         render(); break;
       }

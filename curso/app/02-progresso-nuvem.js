@@ -80,10 +80,10 @@
   /* Contas (veja "contas neste aparelho"): cada identidade tem as próprias chaves (chave@identidade). Sem conta, valem as
      chaves de sempre, onde já está o progresso de quem nunca entrou numa conta. LS_CONTA lembra a conta em uso. */
   const LS_CONTA = 'missao-eear-conta', BASE_K = 'missao-eear-v1-base';
-  /* Abas (14-abas.js): diário durável desta aba (DIARIO_K), o que ela sabe da cópia principal (loc) e a liderança da
-     sincronização com a nuvem (lider). ABAS_K: linhagem de uma versão anterior desta correção, só para limpar. */
-  const DIARIO_K = 'missao-eear-v1-diario', ABAS_K = 'missao-eear-v1-abas', QUER_K = 'missao-eear-v1-quer', VIDA_K = 'missao-eear-v1-vida', APAGOU_K = 'missao-eear-v1-local-apagado', GRACA_RECIBO = 2000;
-  const loc = { tab: 't' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36), seq: 0, pendente: 0, base: null, bid: '', lin: [], agendado: false, denovo: false, soltarVida: null, vigiadas: new Set(), segura: false, soltarSeg: null, escritora: false, vivos: null, mortas: null, semEfeito: false, jhist: [], baseSeq: 0 }, lider = { ativa: false, soltar: null, conta: null, espera: null };
+  /* Operações e checkpoint (14–16): reserva imutável por operação; IDB confirma por oncomplete.
+     Chaves legadas continuam reconhecidas na migração e na exclusão. */
+  const DIARIO_K = 'missao-eear-v1-diario', ABAS_K = 'missao-eear-v1-abas', QUER_K = 'missao-eear-v1-quer', VIDA_K = 'missao-eear-v1-vida', APAGOU_K = 'missao-eear-v1-local-apagado';
+  const loc = { meta: null, vista: null, gen: null, ops: [], pendente: 0, carregado: false, confirmando: false }, lider = { ativa: false, soltar: null, conta: null, espera: null };
   const contaUI = { msg: '', adiado: false, ocupado: false }; // estado da tela da conta (veja "contas neste aparelho")
   let identidade = '', recuperar = null, gravouLocal = true;
   const chave = (k, id) => { const i = id === undefined ? identidade : id; return i ? k + '@' + i : k; };
@@ -100,7 +100,8 @@
       recuperar = localStorage.getItem(chave(LS_REC));
       localStorage.removeItem(chave(ABAS_K));
     } catch (e) { /* sem armazenamento local */ }
-    loc.pendente = 0; partirDe(t, st); abrirAbas(); // 14-abas.js: diários de abas que fecharam são absorvidos logo depois
+    try { st = opEstado(metaMigrada(st, lerDiariosDe(identidade))); } catch (e) { /* cópia original permanece exportável */ }
+    loc.carregado = false; loc.semIDB = false; loc.pendente = 0; partirDe(t, st); abrirAbas(); // 14-abas.js: diários de abas que fecharam são absorvidos logo depois
     return st;
   }
   try {
@@ -117,8 +118,8 @@
   function salvar() {
     S.t = Date.now();
     fixarAncoras();
-    try { persistir(); gravouLocal = true; } catch (e) { gravouLocal = false; } // diário desta aba, durável na hora (14-abas.js); o aviso aparece no próximo render()
-    consolidar(); // a cópia principal é atualizada com a trava, unida ao que outras abas gravaram
+    try { persistir(); } catch (e) { gravouLocal = false; } // operação reservada; a confirmação durável é assíncrona e aparece no aviso
+    consolidar(); // checkpoint transacional, independente de Web Locks
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
@@ -129,7 +130,7 @@
     const ref = nuvem.ref, conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
     nuvem.busy = true; clearTimeout(nuvem.tRetry);
-    try { await conciliar(ref); if (atual()) { nuvem.falhas = 0; nuvem.erro = ''; } }
+    try { await (loc.carga || Promise.resolve()); await (loc.fila || Promise.resolve()); if (!atual()) { nuvem.busy = false; return; } await conciliar(ref); if (atual()) { nuvem.falhas = 0; nuvem.erro = ''; } }
     catch (e) { // veja 13-falhas-nuvem.js
       if (!atual()) { /* resposta de uma sessão anterior: não altera a nova */ }
       else if (e && e.code === 'unavailable' && e.espera !== undefined) nuvem.tRetry = setTimeout(gravar, Math.max(0, e.espera) + 200 + Math.random() * 1000); // nuvem travada por outro aparelho
@@ -138,7 +139,7 @@
     }
     nuvem.busy = false;
     syncInfo();
-    if (nuvem.again) { nuvem.again = false; gravar(); }
+    if (nuvem.again) { nuvem.again = false; return gravar(); }
   }
   /* Aparelho sem estudo nenhum ainda (só a configuração): o progresso da nuvem tem preferência. Tarefas marcadas, caderno
      de erros e atividade também contam como estudo (antes não contavam, e um aparelho que só tinha marcado tarefas perdia as marcações). */
@@ -168,6 +169,13 @@
       if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
       if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
     } else if (!S.t) return { nada: true }; // aparelho e nuvem sem progresso: nada a gravar
+    // Estados desta arquitetura unem contribuições identificadas, não diferenças de contadores agregados.
+    if (c && opValida(c.cfg._ops) && mesmoConteudo(opPlano(c), opPlano(opEstado(c.cfg._ops)))) u = opCombinarEstados(local, c);
+    else if (c && !lerBase() && semEstudo(local)) u = opEstado(opUnir(opMeta(local), opMeta(c)));
+    else if (c) {
+      const m = opMeta(local), delta = opDelta(m, local, u, 'legado-nuvem:' + resumoDoc(opSemMeta(c)));
+      u = opEstado(opUnir(m, delta));
+    } else u = opEstado(opMeta(local));
     /* Documento sem assinatura ou sem época (ou nuvem vazia): a união começa uma época nova e é gravada assinada. */
     return { local, u, perdido, ep: ep || novaEpoca(), lin, id: lin[lin.length - 1] || '', gravar: !c || !ep || !lin.length || !uIgual(u, c) };
   }
@@ -196,10 +204,10 @@
     if (p.futura) { nuvem.ref = null; nuvem.on = false; nuvem.futura = true; return; }
     if (p.perdido) { recuperar = JSON.stringify(p.perdido); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
     /* O que o aluno fez enquanto a gravação viajava também fica: união da cópia usada no cálculo com o estado atual. */
-    const u = uIgual(S, p.local) ? p.u : unirProgresso(p.local, mesclar(JSON.parse(JSON.stringify(S))), p.u).st;
+    const u = uIgual(S, p.local) ? p.u : opValida(p.u.cfg._ops) ? opCombinarEstados(S, p.u) : unirProgresso(p.local, mesclar(JSON.parse(JSON.stringify(S))), p.u).st;
     if (!uIgual(u, S)) {
       S = u;
-      try { persistir(); } catch (e) { gravouLocal = false; }
+      try { persistir(true); } catch (e) { gravouLocal = false; }
       consolidar();
       if (V.v === 'inicio') V = { v: 'hoje' };
       render();
@@ -337,6 +345,6 @@
   }
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.ref && !lider.ativa ? (sincronizado() ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.') : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
+    if (el) el.textContent = loc.confirmando ? 'Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.' : !gravouLocal ? 'O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.' : nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.ref && !lider.ativa ? (sincronizado() ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.') : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 

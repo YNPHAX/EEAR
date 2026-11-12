@@ -132,7 +132,17 @@
   function mesclar(o) {
     const b = novoEstado();
     Object.keys(b).forEach(k => { if (o && Object.prototype.hasOwnProperty.call(o, k)) b[k] = o[k]; });
-    b.cfg = Object.assign(novoEstado().cfg, (o && o.cfg) || {});
+    b.cfg = Object.assign(novoEstado().cfg, Object.fromEntries(Object.entries((o && o.cfg && typeof o.cfg === 'object') ? o.cfg : {}).filter(([k]) => !['__proto__', 'prototype', 'constructor'].includes(k))));
+    const padrao = novoEstado().cfg;
+    Object.keys(padrao).forEach(k => {
+      if (Array.isArray(padrao[k])) {
+        if (!Array.isArray(b.cfg[k])) b.cfg[k] = padrao[k];
+      } else if (typeof b.cfg[k] !== typeof padrao[k] || (typeof b.cfg[k] === 'number' && !isFinite(b.cfg[k]))) b.cfg[k] = padrao[k];
+    });
+    if (b.cfg.nome != null && typeof b.cfg.nome !== 'string') b.cfg.nome = '';
+    b.cfg.dias = b.cfg.dias.filter(n => Number.isInteger(n) && n >= 0 && n <= 6);
+    b.cfg.excl = b.cfg.excl.filter(n => typeof n === 'string');
+
     if (o && o.cfg && !o.cfg.alvo) {
       /* Estado da 1ª versão: a data padrão antiga vira a nova meta de 2027. */
       if (o.cfg.prova === '2026-11-22') { b.cfg.alvo = 'cfs2-2027'; b.cfg.prova = '2026-11-22'; }

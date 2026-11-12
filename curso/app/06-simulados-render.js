@@ -48,6 +48,7 @@
       if (ok) r[q.m][0]++; else S.erros[id] = (S.erros[id] || 0) + 1;
     });
     const reg = { d: hoje(), tipo: a.tipo, mat: a.materia, prova: a.prova || null, r, min: Math.round((Date.now() - a.ini) / 60000) };
+    reg.id = opId();
     S.sims.push(reg);
     if (a.tipo === 'diag') { S.diag = {}; ORD.forEach(s => { S.diag[s] = r[s] ? r[s][0] / r[s][1] : 0.5; }); }
     S.ult = { reg, ids: a.ids, perms: a.perms, resp: a.resp };
@@ -153,7 +154,10 @@
     }
     document.body.classList.toggle('sem-nav', V.v === 'inicio');
     document.body.classList.toggle('sem-apostila', !apVisivel());
+    if (!gravouLocal && V.v !== 'hoje') h = '<div class="banner warn" role="alert">O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e copie o progresso em Plano › Dados.</div>' + h;
+    if (!loc.carregado) h = '<div role="status" class="banner">Preparando seus dados. Aguarde para estudar.</div>' + h;
     app.innerHTML = h;
+    if (!loc.carregado) app.querySelectorAll('button[data-a], input:not([readonly]), select').forEach(el => { if (!['tab', 'go', 'expcopiar', 'dadosver', 'dadosbaixar', 'cancelar'].includes(el.dataset.a)) el.disabled = true; });
     app.classList.toggle('largo', V.v === 'apset');
     app.classList.toggle('combarra', V.v === 'apset' && !!app.querySelector('.apbar'));
     lazyPaginas();
