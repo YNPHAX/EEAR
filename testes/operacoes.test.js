@@ -30,5 +30,19 @@ for (let rodada = 0; rodada < 5; rodada++) {
   ordem.concat(ordem, ordem.slice().reverse()).forEach(d => { r = opUnir(r, d); });
   const s = opEstado(r); assert.strictEqual(s.act.dia, 122); assert.strictEqual(Object.keys(s.feito).length, 120);
 }
-assert.strictEqual(opValida({ v: 1, n: 1, r: { '["cfg","__proto__","x"]': [1, 'x', true] }, c: {} }), false);
+const notas = base(); notas.mod = { POR01: { best: 0.7, tent: 1 } }; const nm = opSemente(notas), alta = copia(notas), baixa = copia(notas); alta.mod.POR01.best = 1; baixa.mod.POR01.best = 0.8;
+const unidas = opUnir(opUnir(nm, opDelta(nm, notas, alta, 'A')), opDelta(nm, notas, baixa, 'B'));
+assert.strictEqual(opEstado(unidas).mod.POR01.best, 1, 'melhor nota concorrente não pode diminuir');
+const ca = base(), cb = base(); ca.cfg.certs = [{ c: 'CERT', d: '2026-10-01', t: 1 }]; cb.cfg.certs = [{ c: 'CERT', d: '2026-10-03', t: 3 }];
+const dcA = opDelta(seed, base(), ca, 'CA'), dcB = opDelta(seed, base(), cb, 'CB');
+const cs = opUnir(opUnir(seed, dcA), dcB); assert.strictEqual(opEstado(cs).cfg.certs[0].d, '2026-10-01');
+const semCert = copia(opEstado(cs)); semCert.cfg.certs = []; const rc = opDelta(cs, opEstado(cs), semCert, 'RC');
+assert.strictEqual(opEstado(opUnir(opUnir(cs, rc), dcA)).cfg.certs.length, 0, 'repetir certificado anterior ao reset não o restaura');
+
+const v1 = { v: 1, n: 0, r: { '["mod","POR01","best"]': [0, 'legado', 0.9], '["cfg","certs","CERT"]': [0, 'legado', { c: 'CERT', d: '2026-10-01', t: 1 }] }, c: {} };
+const migrado = opEstado(v1); assert.strictEqual(migrado.mod.POR01.best, 0.9); assert.strictEqual(migrado.cfg.certs.length, 1);
+const apagado = copia(migrado); apagado.mod = {}; apagado.cfg.certs = [];
+const dz = opDelta(v1, migrado, apagado, 'Z-v1');
+const reunido = opEstado(opUnir(opUnir(v1, dz), v1)); assert.strictEqual(reunido.mod.POR01, undefined); assert.strictEqual(reunido.cfg.certs.length, 0);
+assert.strictEqual(opValida({ v: 2, n: 1, r: { '["cfg","__proto__","x"]': [1, 'x', true] }, c: {}, s: {} }), false);
 console.log('Operações: propriedades de união, repetição, dois resets, 4 produtores/120 alterações e caminhos maliciosos passaram.');

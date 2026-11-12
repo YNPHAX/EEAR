@@ -28,7 +28,11 @@
             resultado = new Error('O progresso durável está ilegível. Nada foi substituído; exporte a cópia de recuperação.'); resultado.code = 'checkpoint-corrompido';
             if (id === identidade) { recuperar = texto; try { localStorage.setItem(chave(LS_REC), texto); } catch (e) { /* a transação preserva a quarentena */ } } return;
           }
-          try { resultado = editar(q.result || null, t); if (resultado !== undefined) { if (resultado.meta) resultado.st = opEstado(resultado.meta); s.put(resultado, id); } }
+          if (q.result) q.result.meta = opMigrar(q.result.meta);
+          try {
+            resultado = editar(q.result || null, t);
+            if (resultado !== undefined) { if (resultado.meta) { if (!opValida(resultado.meta)) throw new Error('Operação incompatível; checkpoint anterior preservado.'); resultado.st = opEstado(resultado.meta); } s.put(resultado, id); }
+          }
           catch (e) { resultado = e; t.abort(); }
         };
         t.oncomplete = () => resultado instanceof Error ? reject(resultado) : resolve(resultado);

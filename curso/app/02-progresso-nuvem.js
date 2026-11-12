@@ -294,9 +294,9 @@
     nuvem.fb = true;
     if (FB.sincronizar !== true) { nuvem.bloqueada = true; syncInfo(); return; }
     const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid);
-    const paraDoc = o => ({ v: 1, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
-    /* Documento de uma versão futura (v > 1): devolve só a versão, para a união recusar e nada ser gravado por cima. */
-    const deDoc = x => (!x ? null : Number(x.v) > 1 ? { v: Number(x.v) } : JSON.parse(x.dados));
+    const paraDoc = o => ({ v: 2, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
+    /* Envelope Firebase v2 impede escritores antigos de remover identidades; uma versão futura (v > 2): devolve só a versão, para a união recusar e nada ser gravado por cima. */
+    const deDoc = x => (!x ? null : Number(x.v) > 2 ? { v: Number(x.v) } : JSON.parse(x.dados));
     const ref = {
       get: async () => { const s = await fs.getDoc(doc), x = s.exists() ? s.data() : null; return { exists: !!x, data: () => deDoc(x) }; },
       set: o => fs.setDoc(doc, paraDoc(o)),

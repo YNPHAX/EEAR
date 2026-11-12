@@ -16,7 +16,13 @@
   }
   function cachear(r, id) {
     if (r.apagado) return;
-    try { const atual = estadoDe(localStorage.getItem(chave(LS, id))); const novo = opEstado(r.meta); if (atual && mesmoConteudo(opPlano(atual), opPlano(novo))) return; localStorage.setItem(chave(LS, id), JSON.stringify(novo)); } catch (e) { /* IDB já confirmou; o cache é opcional */ }
+    try {
+      const texto = localStorage.getItem(chave(LS, id)), hash = resumoDoc(r.meta);
+      if (loc.cacheId === id && loc.cacheHash === hash && loc.cacheTexto === texto) return;
+      const atual = estadoDe(texto), novo = opEstado(r.meta);
+      if (atual && mesmoConteudo(opPlano(atual), opPlano(novo))) { loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = texto; return; }
+      const bruto = JSON.stringify(novo); localStorage.setItem(chave(LS, id), bruto); loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = bruto;
+    } catch (e) { /* IDB já confirmou; o cache é opcional */ }
   }
   function abrirAbas() {
     document.documentElement.dataset.armazenamento = 'carregando';
@@ -29,6 +35,7 @@
       return Object.assign({}, r, { meta: m });
     })).then(r => {
       if (id !== identidade) return;
+      if (mesmoConteudo(opPlano(st), opPlano(r.st))) { loc.cacheId = id; loc.cacheHash = resumoDoc(r.meta); try { loc.cacheTexto = localStorage.getItem(chave(LS, id)); } catch (e) { /* cache opcional */ } }
       receberDuravel(r, id); cachear(r, id); gravouLocal = true; loc.carregado = true; document.documentElement.dataset.armazenamento = 'pronto'; render(); consolidar();
     }).catch(e => { if (id !== identidade) return; loc.carregado = true; document.documentElement.dataset.armazenamento = 'reserva'; loc.semIDB = e.code !== 'checkpoint-corrompido'; gravouLocal = false; loc.erro = e.message; consolidar(); render(); syncInfo(); });
     loc.timer = setInterval(() => consolidar(), 1500);

@@ -483,9 +483,9 @@
     nuvem.fb = true;
     if (FB.sincronizar !== true) { nuvem.bloqueada = true; syncInfo(); return; }
     const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid);
-    const paraDoc = o => ({ v: 1, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
-    /* Documento de uma versão futura (v > 1): devolve só a versão, para a união recusar e nada ser gravado por cima. */
-    const deDoc = x => (!x ? null : Number(x.v) > 1 ? { v: Number(x.v) } : JSON.parse(x.dados));
+    const paraDoc = o => ({ v: 2, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
+    /* Envelope Firebase v2 impede escritores antigos de remover identidades; uma versão futura (v > 2): devolve só a versão, para a união recusar e nada ser gravado por cima. */
+    const deDoc = x => (!x ? null : Number(x.v) > 2 ? { v: Number(x.v) } : JSON.parse(x.dados));
     const ref = {
       get: async () => { const s = await fs.getDoc(doc), x = s.exists() ? s.data() : null; return { exists: !!x, data: () => deDoc(x) }; },
       set: o => fs.setDoc(doc, paraDoc(o)),
@@ -2477,17 +2477,37 @@
      cfg._ops preserva identidades na nuvem e em versões antigas que copiam cfg. Não é uma assinatura de segurança. */
   function opCopiar(x) { return JSON.parse(JSON.stringify(x)); }
   function opId() { return 'o' + (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)); }
-  function opVazio() { return { v: 1, n: 0, r: {}, c: {} }; }
+  function opVazio() { return { v: 2, n: 0, r: {}, c: {}, s: {} }; }
   function opCaminho(k) {
     try { const p = JSON.parse(k); return Array.isArray(p) && p.length > 0 && p.length < 15 && ['v', 't', 'cfg', 'mod', 'fc', 'erros', 'sims', 'diag', 'feito', 'act', 'ativo', 'ult', 'ap', 'aula', 'ultAula'].includes(p[0]) && p.every(x => typeof x === 'string' && !['__proto__', 'prototype', 'constructor', '_ops'].includes(x)) ? p : null; } catch (e) { return null; }
   }
-  function opValida(m) {
-    const obj = o => !!o && typeof o === 'object' && !Array.isArray(o);
-    if (!obj(m) || m.v !== 1 || !Number.isSafeInteger(m.n) || m.n < 0 || !obj(m.r) || !obj(m.c)) return false;
-    return Object.keys(m.r).every(k => { const a = m.r[k]; return opCaminho(k) && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string'; })
-      && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
+  function opMigrar(m) {
+    if (!m || m.v !== 1) return m;
+    try {
+      const u = opCopiar(m); u.v = 2; u.s = {};
+      if (!opValida(u)) return null;
+      Object.keys(u.r).forEach(k => {
+        const p = opCaminho(k), r = u.r[k];
+        if (r.length !== 3 || (!opMaximo(p) && !opCertificado(p))) return;
+        const id = '@v1:' + JSON.stringify(r.slice(0, 2));
+        if (opMaximo(p) && typeof r[2] === 'number' && r[2] >= 0) u.c[k] = { a: { [id]: r[2] }, x: {} };
+        else if (opCertificado(p) && certValido(r[2])) u.s[k] = { a: { [id]: r[2] }, x: {} };
+        else return;
+        delete u.r[k];
+      }); return u;
+    } catch (e) { return null; }
   }
-  function opContador(p) { return p[0] === 'act' || p[0] === 'erros' || (['mod', 'aula'].includes(p[0]) && p[p.length - 1] === 'tent'); }
+  function opValida(m) {
+    if (m && m.v === 1) m = opMigrar(m);
+    const obj = o => !!o && typeof o === 'object' && !Array.isArray(o);
+    if (!obj(m) || m.v !== 2 || !Number.isSafeInteger(m.n) || m.n < 0 || !obj(m.r) || !obj(m.c) || !obj(m.s)) return false;
+    return Object.keys(m.r).every(k => { const a = m.r[k]; return opCaminho(k) && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string'; })
+      && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
+      && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(opCaminho(k)) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
+  }
+  function opMaximo(p) { return ['mod', 'aula'].includes(p[0]) && p[p.length - 1] === 'best'; }
+  function opCertificado(p) { return p[0] === 'cfg' && p[1] === 'certs' && p.length === 3; }
+  function opContador(p) { return opMaximo(p) || p[0] === 'act' || p[0] === 'erros' || (['mod', 'aula'].includes(p[0]) && p[p.length - 1] === 'tent'); }
   function opPlano(st) {
     const s = opCopiar(st), out = {};
     if (s.cfg) delete s.cfg._ops;
@@ -2502,18 +2522,32 @@
   function opSemMeta(s) { const x = opCopiar(s); if (x.cfg) delete x.cfg._ops; return x; }
   function opSemente(st) {
     const m = opVazio(), f = opPlano(st);
-    Object.keys(f).forEach(k => { const p = opCaminho(k); if (!p) return; const v = f[k]; if (opContador(p) && typeof v === 'number' && v >= 0) m.c[k] = { a: { legado: v }, x: {} }; else m.r[k] = [0, 'legado', v]; }); return m;
+    Object.keys(f).forEach(k => { const p = opCaminho(k); if (!p) return; const v = f[k]; if (opCertificado(p) && certValido(v)) m.s[k] = { a: { legado: v }, x: {} }; else if (opContador(p) && typeof v === 'number' && v >= 0) m.c[k] = { a: { legado: v }, x: {} }; else m.r[k] = [0, 'legado', v]; }); return m;
   }
-  function opMeta(st) { const m = st && st.cfg && st.cfg._ops; return opValida(m) ? opCopiar(m) : opSemente(st); }
+  function opMeta(st) { const m = st && st.cfg && st.cfg._ops; return opValida(m) ? opCopiar(opMigrar(m)) : opSemente(st); }
   function opUnir(a, b) {
+    a = opMigrar(a); b = opMigrar(b);
     const r = opCopiar(a); r.n = Math.max(a.n, b.n);
     Object.keys(b.r).forEach(k => { const x = r.r[k], y = b.r[k]; if (!x || y[0] > x[0] || (y[0] === x[0] && (y[1] > x[1] || (y[1] === x[1] && JSON.stringify(y) > JSON.stringify(x))))) r.r[k] = opCopiar(y); });
-    Object.keys(b.c).forEach(k => { const y = b.c[k], x = r.c[k] || { a: {}, x: {} }; Object.keys(y.a).forEach(id => { x.a[id] = Math.max(x.a[id] || 0, y.a[id]); }); Object.keys(y.x).forEach(id => { x.x[id] = true; }); r.c[k] = x; }); return r;
+    Object.keys(b.s).forEach(k => {
+      const y = b.s[k], x = r.s[k] || { a: {}, x: {} };
+      Object.keys(y.a).forEach(id => { const a = x.a[id], v = y.a[id]; if (!a || v.d < a.d || (v.d === a.d && JSON.stringify(v) > JSON.stringify(a))) x.a[id] = opCopiar(v); });
+      Object.keys(y.x).forEach(id => { x.x[id] = true; }); r.s[k] = x;
+    });
+    Object.keys(b.c).forEach(k => { const y = b.c[k], x = r.c[k] || { a: {}, x: {} }; Object.keys(y.a).forEach(id => { x.a[id] = Math.max(x.a[id] || 0, y.a[id]); }); Object.keys(y.x).forEach(id => { x.x[id] = true; }); r.c[k] = x; });
+    // Tombstones LWW do protótipo v1 continuam cobrindo os valores antigos convertidos.
+    [r.c, r.s].forEach(mapa => Object.keys(mapa).forEach(k => {
+      const barreira = r.r[k]; if (!barreira || barreira.length !== 2) return;
+      Object.keys(mapa[k].a).filter(id => id.indexOf('@v1:') === 0).forEach(id => { const a = JSON.parse(id.slice(4)); if (a[0] < barreira[0] || (a[0] === barreira[0] && a[1] <= barreira[1])) mapa[k].x[id] = true; });
+    })); return r;
   }
   function opEstado(m) {
+    m = opMigrar(m);
     const out = {}, campos = {};
     Object.keys(m.r).forEach(k => { if (m.r[k].length === 3) campos[k] = m.r[k][2]; });
-    Object.keys(m.c).forEach(k => { const c = m.c[k], ids = Object.keys(c.a).filter(id => !c.x[id]); if (ids.length) campos[k] = ids.reduce((n, id) => n + c.a[id], 0); });
+    Object.keys(m.s).forEach(k => { const c = m.s[k], vals = Object.keys(c.a).filter(id => !c.x[id]).map(id => c.a[id]).sort((a, b) => a.d.localeCompare(b.d) || (Number(!a.c) - Number(!b.c)) || JSON.stringify(a).localeCompare(JSON.stringify(b))); if (vals.length) campos[k] = vals[0]; });
+    Object.keys(m.c).forEach(k => { const c = m.c[k], ids = Object.keys(c.a).filter(id => !c.x[id]); if (ids.length) campos[k] = opMaximo(opCaminho(k)) ? ids.reduce((n, id) => Math.max(n, c.a[id]), 0) : ids.reduce((n, id) => n + c.a[id], 0); });
+    Object.keys(m.c).forEach(k => { if (campos[k] !== undefined && (!Number.isFinite(campos[k]) || (!opMaximo(opCaminho(k)) && !Number.isSafeInteger(campos[k])))) throw new Error('Contagem fora do limite seguro; nada foi substituído.'); });
     Object.keys(campos).sort((a, b) => JSON.parse(a).length - JSON.parse(b).length || a.localeCompare(b)).forEach(k => {
       const p = opCaminho(k); if (!p) return; let o = out;
       p.forEach((v, i) => { if (i === p.length - 1) o[v] = opCopiar(campos[k]); else { if (!o[v] || typeof o[v] !== 'object' || Array.isArray(o[v])) o[v] = {}; o = o[v]; } });
@@ -2523,13 +2557,18 @@
     out.cfg._ops = m; return mesclar(out);
   }
   function opDelta(m, antes, depois, id) {
+    m = opMigrar(m);
     const d = opVazio(); d.n = m.n + 1; const a = opPlano(antes), b = opPlano(depois);
     [...new Set(Object.keys(a).concat(Object.keys(b)))].forEach(k => {
       if (JSON.stringify(a[k]) === JSON.stringify(b[k])) return;
       const p = opCaminho(k); if (!p) return;
-      if (opContador(p) && (typeof b[k] === 'number' || b[k] === undefined) && (typeof a[k] === 'number' || a[k] === undefined)) {
+      if (opCertificado(p)) {
+        const c = { a: {}, x: {} }, atual = m.s[k];
+        if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) c.x[i] = true; });
+        if (b[k] !== undefined && certValido(b[k])) c.a[id] = b[k]; d.s[k] = c;
+      } else if (opContador(p) && (typeof b[k] === 'number' || b[k] === undefined) && (typeof a[k] === 'number' || a[k] === undefined)) {
         const c = { a: {}, x: {} }, v = Math.max(0, Number(b[k]) || 0), ant = Math.max(0, Number(a[k]) || 0);
-        if (v > ant) c.a[id] = v - ant;
+        if (v > ant) c.a[id] = opMaximo(p) ? v : v - ant;
         else { const atual = m.c[k]; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) c.x[i] = true; }); if (v) c.a[id] = v; }
         d.c[k] = c;
       } else d.r[k] = b[k] === undefined ? [d.n, id] : [d.n, id, b[k]];
@@ -2560,7 +2599,13 @@
   }
   function cachear(r, id) {
     if (r.apagado) return;
-    try { const atual = estadoDe(localStorage.getItem(chave(LS, id))); const novo = opEstado(r.meta); if (atual && mesmoConteudo(opPlano(atual), opPlano(novo))) return; localStorage.setItem(chave(LS, id), JSON.stringify(novo)); } catch (e) { /* IDB já confirmou; o cache é opcional */ }
+    try {
+      const texto = localStorage.getItem(chave(LS, id)), hash = resumoDoc(r.meta);
+      if (loc.cacheId === id && loc.cacheHash === hash && loc.cacheTexto === texto) return;
+      const atual = estadoDe(texto), novo = opEstado(r.meta);
+      if (atual && mesmoConteudo(opPlano(atual), opPlano(novo))) { loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = texto; return; }
+      const bruto = JSON.stringify(novo); localStorage.setItem(chave(LS, id), bruto); loc.cacheId = id; loc.cacheHash = hash; loc.cacheTexto = bruto;
+    } catch (e) { /* IDB já confirmou; o cache é opcional */ }
   }
   function abrirAbas() {
     document.documentElement.dataset.armazenamento = 'carregando';
@@ -2573,6 +2618,7 @@
       return Object.assign({}, r, { meta: m });
     })).then(r => {
       if (id !== identidade) return;
+      if (mesmoConteudo(opPlano(st), opPlano(r.st))) { loc.cacheId = id; loc.cacheHash = resumoDoc(r.meta); try { loc.cacheTexto = localStorage.getItem(chave(LS, id)); } catch (e) { /* cache opcional */ } }
       receberDuravel(r, id); cachear(r, id); gravouLocal = true; loc.carregado = true; document.documentElement.dataset.armazenamento = 'pronto'; render(); consolidar();
     }).catch(e => { if (id !== identidade) return; loc.carregado = true; document.documentElement.dataset.armazenamento = 'reserva'; loc.semIDB = e.code !== 'checkpoint-corrompido'; gravouLocal = false; loc.erro = e.message; consolidar(); render(); syncInfo(); });
     loc.timer = setInterval(() => consolidar(), 1500);
@@ -2705,7 +2751,11 @@
             resultado = new Error('O progresso durável está ilegível. Nada foi substituído; exporte a cópia de recuperação.'); resultado.code = 'checkpoint-corrompido';
             if (id === identidade) { recuperar = texto; try { localStorage.setItem(chave(LS_REC), texto); } catch (e) { /* a transação preserva a quarentena */ } } return;
           }
-          try { resultado = editar(q.result || null, t); if (resultado !== undefined) { if (resultado.meta) resultado.st = opEstado(resultado.meta); s.put(resultado, id); } }
+          if (q.result) q.result.meta = opMigrar(q.result.meta);
+          try {
+            resultado = editar(q.result || null, t);
+            if (resultado !== undefined) { if (resultado.meta) { if (!opValida(resultado.meta)) throw new Error('Operação incompatível; checkpoint anterior preservado.'); resultado.st = opEstado(resultado.meta); } s.put(resultado, id); }
+          }
           catch (e) { resultado = e; t.abort(); }
         };
         t.oncomplete = () => resultado instanceof Error ? reject(resultado) : resolve(resultado);
