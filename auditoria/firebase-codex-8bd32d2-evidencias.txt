@@ -1,0 +1,394 @@
+EVIDÊNCIAS INDEPENDENTES — 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Dados fictícios; somente emuladores locais. Sem deploy, publicação de regras ou Firebase real.
+Consolidação UTC: 2026-11-12T02:16:38Z
+
+HASHES DOS TESTES INDEPENDENTES ATUAIS (SHA-256)
+b367dd5e599c71bb570a90f2f87ea7e24676c1ddebf7e023cdde23df7e6ee777  testes/f01-abas.test.js
+1d4f30fc985645a4cde9d90865fa14dd4b451507e02eddbc533f31c0dcbd03d8  testes/f01-fixture.js
+e920cfcebdba5fbde47a4e2670328165141738ad2a582bae589ac919f92e6aae  testes/f01-riscos.test.js
+aad18b74b5c85a6ce84a58717c105bc9edbfc6c35ff08444a1ec32482c45f833  testes/diarios-auditoria.test.js
+a6899f1b92cf80167d92bfce50b2d8e1425ec784550758669dc1d3f7129ad409  testes/ciclo-sincronia.test.js
+eaa620afb1278fef6588d598a2d4b70ea3167e3023f1352ea17debbbd77cef93  testes/hosting-auditoria.py
+eb62f7886e8154a56b2d56636a2e3775a881949afc740daf380581690249c7ac  testes/hosting-gates-auditoria.py
+323f12d0ab741d4d23d2f0fbfceb468a537c94d4fc1556d7d11c46c23ad46258  testes/orfaos-auditoria.test.js
+37e377d82a492d16f85da10eb2e2c59bf9bb48a419eac73ec9e617d97d8bdcf9  testes/concorrencia-fallback.test.js
+773a903f12f9328953dbd19a7a1caf90e50f0f618ea3d65dce7b7512208297ab  testes/storage-crash-controle.js
+
+Oito cenários/fixture/riscos/diários/ciclo são idênticos a 9ba5f52.
+A sonda Hosting de 10 casos foi reexecutada antes de acrescentar os dois scripts inertes.
+A rotina de retorno de órfãos não mudou entre orfaos-segunda e orfaos-final, salvo o controle de Date.now isolado para 30min.
+A rotina de crash foi depois estabilizada e recebeu inspeção do armazenamento antes de carregar o app; seus resultados decisivos são crash-processo-probe-*.log.
+Falhas exploratórias de preparação não são achados do candidato.
+
+HASHES DOS LOGS COMPLETOS (SHA-256; /tmp/eear-8bd-evidence)
+23a1d1f0c16ee39145af0612451d4ebf87435c70843934679d1428783f996c54  autoteste.log
+932e9aa86f42701b792e646e4e4a3e60fe8a56a21d8b688232fa985a28440447  build.log
+93c5e2dbd2a2b3d473a935afe874f8084c4b43c32862272a3a38e4b31982f57d  ci-verificado.json
+3732fe7042169243d458644aeb7d0fee66dbf67b273c4f414e55473cc4a3ecea  concorrencia-fallback-confirmacao.log
+3732fe7042169243d458644aeb7d0fee66dbf67b273c4f414e55473cc4a3ecea  concorrencia-fallback.log
+81952b5329bc3126eaf62aa651f44767176b104f13381e3338b914d3e683267e  crash-processo-probe-1200.log
+2de476e7e18c0a1aaa9a96203b3b3d31bf1a5d86bd5f65fb00e8974cd4e4a782  crash-processo-probe-6500.log
+603282b5ea943a794aa90afac612f1c1ac642a4dbeb12ed9175ce891caa299a5  crash-processo-revisado.log
+2f3abb37640c0b38a54a99830e4153b4d300cfd7b3bf230dc52e0be6b9709d4a  diagnostico-storage.log
+07ffb2e401c668671d63447aa0e125b11a30729cceb416900094a0083114d38d  diarios-original.log
+641ad99f1fb70e4b5d72f82fe265dc9056689cae0363816fbea5577283505d2e  f01-oito.log
+998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2  f02-f04.log
+b515816700c1e92983e87f901d9779224c4fa497ba4fcee45a826d6f9cff4aff  f08-unica.log
+ccb66d561bda1b814c25d54200048f67ec830fb914462c8f5cfcd58f67b1db69  firebase-padrao.log
+a17c4ffedfafcac05a53470d9974906da78f440776822b1c148807ae96907d9c  hosting-gates-adicionais.log
+012d4f8547cb72b9a687874bd27e8454aa07b66086aad7c55174d47197906646  hosting-gates.log
+cf48566ce5db05892da9dba7e99d43cb4b1cdedc80fbf2d1e6b8ccfcbc2ade1b  hosting-headers.log
+7f46dc3ddb02fdd68eed4f2c1491bce8ff8f5b855e6ef8c9840ad46a073a4f82  hosting-sonda.log
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  lint-alvo.log
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  lint-testes.log
+9b3ae19dfdb6b5c58cef33fb4764ff0845710e86e461c43bace420305d0d749b  montagem.log
+5a0cd3900fc7a6fd93c7b961144a26565fa4c768a11b1cbaa6e5a0082e4a02a6  orfaos-final.log
+ed29bd35bb2ff326f2d938a2b4b106441c0a5c6d2e1d324a08a3e881918f3b66  orfaos-primeira.log
+6b7f16c4b66b8c8a750dddd8abd05848874180614c8239a2da38a338b31d2a3a  orfaos-segunda.log
+3bad20eadfa152e351bfdf886c026582cdda052bd25fa8b44c1f8b53ddaa7c13  riscos-regressoes.log
+74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b  sem-firebase.json
+379eef1810741e265948665833660248a3e5697eb1103a8a178c8d1cd7036816  sequencia-resultados.json
+2f3abb37640c0b38a54a99830e4153b4d300cfd7b3bf230dc52e0be6b9709d4a  storage-crash-controle.log
+dd48626daec175d2e7c17c94c77e334f5d8d4a88a4cf513381beaae428d93d89  validar.log
+81a41b921ef2727b31b12154c2cb2408a84f268c9a715d1bfdbbf8ae65045c06  workflows.log
+
+RESULTADOS LITERAIS SELECIONADOS
+Sondas saem com código 1 quando o critério falha; isso não é erro de infraestrutura por si só.
+
+f01-oito.log
+F01: alvo /tmp/eear-8bd32d2, commit 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+F01: alvo /tmp/eear-8bd32d2, commit 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✓ dispositivos: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ fechar-A: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:base","T:remover","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+✓ fechar-B: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ desmarcar: {"aceitoA":["T:B","T:base"],"aceitoB":["T:base","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+✓ zerar: {"aceitoA":["T:depois-zerar"],"aceitoB":["T:depois-zerar"],"offline":true,"servidor":true,"paginas":[true]}
+✓ certificado: {"aceitoA":["T:base","T:remover"],"aceitoB":["T:base","T:remover","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+✓ reconectar: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ zerar-duplo: {"aceitoA":["T:A","T:B"],"aceitoB":["T:A","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+F01: 8/8 cenários passaram; 0 falha(s). Parecer não alterado automaticamente.
+✔  Script exited successfully (code 0)
+
+diarios-original.log
+Diários: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Diários: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✓ apos-diario: {"webLocks":true,"interrupcao":"fechamento","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":false,"principalJaContinha":false,"ponto":{"scriptId":"28","lineNumber":2510,"columnNumber":4},"aposHandlerDeSalvar":false,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"diariosAntesExcluir":0,"ofereceuExcluir":false,"diarioDepois":0,"aviso":"Progresso salvo na sua conta."}
+✓ apos-diario-crash: {"webLocks":true,"interrupcao":"Page.crash","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":false,"principalJaContinha":false,"ponto":{"scriptId":"28","lineNumber":2510,"columnNumber":4},"aposHandlerDeSalvar":false,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"diariosAntesExcluir":0,"ofereceuExcluir":false,"diarioDepois":0,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem."}
+✓ sem-web-locks: {"webLocks":false,"interrupcao":"fechamento","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"29","lineNumber":2544,"columnNumber":14},"aposHandlerDeSalvar":true,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"diariosAntesExcluir":1,"ofereceuExcluir":false,"diarioDepois":1,"aviso":"Progresso salvo na sua conta."}
+✓ sem-web-locks-crash: {"webLocks":false,"interrupcao":"Page.crash","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"29","lineNumber":2544,"columnNumber":14},"aposHandlerDeSalvar":true,"recuperado":true,"chegou":true,"exportado":{"T:aceita":true,"T:base":true},"diariosAntesExcluir":1,"ofereceuExcluir":false,"diarioDepois":1,"aviso":"Progresso salvo na sua conta."}
+✓ exclusao-com-diario-pendente: {"webLocks":true,"aceitaNaExportacao":true,"principalJaContinha":false,"duraveisAntes":1,"avisoAntes":"Progresso salvo na sua conta.","ofereceuExcluir":false,"duraveisDepois":1,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"servidor":{"T:aceita":true,"T:base":true}}
+✓ concorrencia-intensa: {"paginas":4,"alteracoes":200,"totalEsperado":202,"atividade":202,"marcacoes":201,"convergiu":true,"recuperado":true,"chegou":true}
+✓ sem-notificacoes: {"recuperouViva":true,"diarios":1,"recuperouFria":true,"estado":{"T:ativa":true,"T:base":true,"T:orfao":true}}
+✓ lider-suspensa: {"lider":"A","papelB":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","local":true,"enviouCongelada":true,"enviouDepois":true,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem."}
+Diários: 0 falha(s) em 8 cenários.
+✔  Script exited successfully (code 0)
+
+riscos-regressoes.log
+Riscos F01: 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Riscos F01: 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✓ zerar-nuvem: {"aceito":{"t":1794448356857,"certsZ":1794448356667,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"offline":{"t":1794448356857,"certsZ":1794448356667,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"servidor":{"t":1794448356857,"certsZ":1794448356667,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"antesReabrir":{"t":1794448356857,"certsZ":1794448356667,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794448356857,"certsZ":1794448356667,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}}}
+✓ suspensa: {"t":1794448365385,"certsZ":1794448365374,"certs":[],"feito":{"T:apos-suspensao":true},"act":{"2026-11-12":1}}
+✓ exclusao-surda: {"removido":true,"restaurado":{"t":1794448367638,"certsZ":0,"certs":[],"feito":{"T:novo":true},"act":{"2026-11-12":1}}}
+✓ contagens: {"esperado":62,"A":62,"B":62,"cache":62,"marcacoes":61}
+✓ escrita-interrompida: {"diario":true,"BconfirmadaAntesDeFechar":true,"principalAntesDeFechar":{"t":1794448373201,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:base":true,"T:A-race":true},"act":{"2026-11-12":3}},"aposFecharAmbas":{"t":1794448373204,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:A-race":true,"T:B-race":true,"T:base":true},"act":{"2026-11-12":4}},"cache":{"t":1794448373204,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:A-race":true,"T:B-race":true,"T:base":true},"act":{"2026-11-12":4}},"breakpointAposSetItem":true}
+Riscos: 0 falha(s) em 5 investigações.
+✔  Script exited successfully (code 0)
+
+f08-unica.log
+Riscos F01: 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Riscos F01: 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✓ zerar-unica: {"aceito":{"t":1794449219002,"certsZ":1794449218993,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"offline":{"t":1794449219002,"certsZ":1794449218993,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"servidor":{"t":1794449219002,"certsZ":1794449218993,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"antesReabrir":{"t":1794449219002,"certsZ":1794449218993,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794449219002,"certsZ":1794449218993,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}}}
+Riscos: 0 falha(s) em 1 investigações.
+✔  Script exited successfully (code 0)
+
+f02-f04.log
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}
+
+firebase-padrao.log
+  ✓ conta nova: o documento só tem v, dados, t e atualizado (sem e-mail), e o progresso sem conta não foi levado sozinho
+  ✓ o progresso sem conta continua intacto e o aluno pode levá-lo para a conta
+  ✓ levar para a conta (pedido pelo aluno): o progresso sem conta vai para a nuvem da conta e continua guardado sem conta
+  ✓ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte
+  ✓ conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A
+  ✓ troca de conta com gravação pendente: o estudo de B não vai para A e continua na cópia de B neste aparelho
+  ✓ sair apagando: bloqueado enquanto há estudo fora da nuvem; depois, apaga só a cópia deste aparelho e a nuvem continua com tudo
+  ✓ sem erro de JavaScript nos fluxos de conta
+  ✓ com transação: 12 marcações feitas ao mesmo tempo em dois aparelhos, nenhuma perdida na nuvem
+  ✓ documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho
+  ✓ documento corrompido na nuvem: o app não grava por cima, não trava e guarda o estudo no aparelho
+  ✓ regras: uma conta não lê, não grava e não apaga o documento de outra
+  ✓ regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito
+  ✓ regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 3)
+  ✓ regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista 403, consulta 403]
+  ✓ regras: sem login, nada é lido nem gravado [leitura 403, gravação 403]
+  ✓ regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno
+  ✓ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito
+  ✓ regras: o próprio aluno pode apagar o documento dele
+  ✓ gravação recusada pelas regras: a sincronização para, o aviso diz por quê, e o estudo continua neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem recusou a gravação). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ app aberto sem internet: o login não carrega e o aviso diz que tenta de novo; com a conexão de volta, o login aparece sem recarregar
+  ✓ build de homologação: o cartão da conta avisa que é o projeto de teste e pede só contas e dados fictícios
+  ✓ excluir a conta: senha errada ou confirmação diferente de EXCLUIR não excluem nada
+  ✓ excluir a conta: apaga o documento, o login e a cópia local da conta; o progresso sem conta fica; a mensagem diz o que foi apagado
+  ✓ conta encerrada em outra aba: esta aba passa ao progresso sem conta; o que se estuda depois não vai para a conta, e a cópia da conta fica intacta
+  ✓ página fechada antes de gravar na nuvem: o estudo ficou no aparelho e vai para a nuvem quando o app abre de novo
+  ✓ sessão invalidada no servidor: o app volta ao progresso sem conta, e a cópia da conta neste aparelho e a nuvem continuam com tudo
+  ✓ conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha, e nenhuma das duas contas é excluída
+  ✓ exclusão parcial: a mensagem diz que o progresso na nuvem foi apagado e a conta não; o login e a cópia deste aparelho continuam
+  ✓ exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos
+  ✓ auditoria regras: recusa v texto na criação [403]
+  ✓ auditoria regras: recusa v zero na criação [403]
+  ✓ auditoria regras: recusa v fracionária na criação [403]
+  ✓ auditoria regras: recusa dados mapa na criação [403]
+  ✓ auditoria regras: recusa t texto na criação [403]
+  ✓ auditoria regras: recusa campo extra na criação [403]
+  ✓ auditoria regras: recusa criação sem v [403]
+  ✓ auditoria regras: recusa criação sem dados [403]
+  ✓ auditoria regras: recusa criação sem t [403]
+  ✓ auditoria regras: atualizado é obrigatório e deve corresponder à hora do servidor
+  ✓ auditoria regras: criação válida aceita; campo extra na atualização e subcoleção do próprio UID recusados
+  ✓ auditoria sessão: progresso inicial confirmado no servidor
+  ✓ auditoria sessão: fechar e reabrir com emuladores indisponíveis preserva o estudo pendente
+  ✓ auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login
+  ✓ auditoria certificados: registro e código preservados ao enviar para o Firestore
+  ✓ auditoria certificados: segundo dispositivo recebe o mesmo código, data e registro
+  ✓ auditoria certificados: gravação do segundo dispositivo mantém certificado e progresso anterior
+  ✓ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=true, nuvem=true]
+  ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail
+  ✓ excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem
+tudo certo
+✔  Script exited successfully (code 0)
+
+concorrencia-fallback.log
+✗ limpeza-concorrente: {"webLocks":false,"aceitoB":true,"persistidoB":true,"recibosAntes":1,"limpou":true,"aposLimpeza":{"T:base":true,"T:B":true},"principalA":{"T:base":true,"T:A":true},"recuperou":false,"recibosDepois":0,"exportado":{"T:base":true,"T:A":true},"principalD":{"T:base":true,"T:A":true},"servidor":{"T:A":true,"T:base":true},"atividade":3,"aviso":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+
+concorrencia-fallback-confirmacao.log
+✗ limpeza-concorrente: {"webLocks":false,"aceitoB":true,"persistidoB":true,"recibosAntes":1,"limpou":true,"aposLimpeza":{"T:base":true,"T:B":true},"principalA":{"T:base":true,"T:A":true},"recuperou":false,"recibosDepois":0,"exportado":{"T:base":true,"T:A":true},"principalD":{"T:base":true,"T:A":true},"servidor":{"T:A":true,"T:base":true},"atividade":3,"aviso":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+
+orfaos-segunda.log
+Órfãos: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Órfãos: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✓ retorno-8s: {"webLocks":false,"eventosStorage":false,"oculta":false,"relogioControlado":false,"primeiroAceito":true,"diarioSeq":2,"novaSeq":2,"antesDoPrazo":true,"adotou":true,"esperaRealMs":12612,"antesRetornar":3,"esperado":3,"UI":3,"cache":3,"feito":{"T:base":true,"T:primeiro":true},"servidor":3,"reaberto":3,"correto":true,"nuvemCorreta":true}
+✗ segunda-escrita-8s: {"webLocks":false,"eventosStorage":false,"oculta":false,"relogioControlado":false,"primeiroAceito":true,"diarioSeq":1,"novaSeq":2,"antesDoPrazo":true,"adotou":true,"esperaRealMs":27897,"antesRetornar":3,"esperado":4,"UI":5,"cache":5,"feito":{"T:base":true,"T:primeiro":true,"T:segundo":true},"servidor":7,"reaberto":7,"correto":false,"nuvemCorreta":false}
+✗ segunda-escrita-30min: FALHA DE PREPARAÇÃO/EXECUÇÃO: browserContext.close: Target page, context or browser has been closed
+✗ crash-processo: FALHA DE PREPARAÇÃO/EXECUÇÃO: browser.newContext: Target page, context or browser has been closed
+Órfãos: 3 falha(s) em 4 cenários.
+⚠  Script exited unsuccessfully (code 1)
+
+orfaos-final.log
+Órfãos: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Órfãos: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✓ retorno-8s: {"webLocks":false,"eventosStorage":false,"oculta":false,"relogioControlado":false,"primeiroAceito":true,"diarioSeq":1,"novaSeq":1,"antesDoPrazo":true,"adotou":true,"esperaRealMs":12474,"antesRetornar":3,"esperado":3,"UI":3,"cache":3,"feito":{"T:base":true,"T:primeiro":true},"servidor":3,"reaberto":3,"correto":true,"nuvemCorreta":true}
+✗ segunda-escrita-8s: {"webLocks":false,"eventosStorage":false,"oculta":false,"relogioControlado":false,"primeiroAceito":true,"diarioSeq":1,"novaSeq":2,"antesDoPrazo":true,"adotou":true,"esperaRealMs":28122,"antesRetornar":3,"esperado":4,"UI":5,"cache":5,"feito":{"T:base":true,"T:primeiro":true,"T:segundo":true},"servidor":7,"reaberto":7,"correto":false,"nuvemCorreta":false}
+✗ segunda-escrita-30min: {"webLocks":false,"eventosStorage":false,"oculta":true,"relogioControlado":true,"primeiroAceito":true,"diarioSeq":1,"novaSeq":2,"antesDoPrazo":true,"adotou":true,"esperaRealMs":25360,"antesRetornar":3,"esperado":4,"UI":5,"cache":5,"feito":{"T:base":true,"T:primeiro":true,"T:segundo":true},"servidor":7,"reaberto":7,"correto":false,"nuvemCorreta":false}
+✗ crash-processo: FALHA DE PREPARAÇÃO/EXECUÇÃO: locator.inputValue: Timeout 30000ms exceeded.
+Órfãos: 3 falha(s) em 4 cenários.
+⚠  Script exited unsuccessfully (code 1)
+
+crash-processo-probe-1200.log
+Órfãos: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Órfãos: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+  crash-processo: sessão/base confirmadas antes da interrupção.
+  crash-processo: Browser.crash fechou o contexto; reabrindo o mesmo perfil.
+✗ crash-processo: {"interrupcao":"Browser.crash","perfilPersistente":true,"esperaAntesCrash":1200,"aceitaNaUI":true,"diarioLegivel":true,"ofereceuExcluir":false,"principalAntes":{"T:base":true},"preApp":{"principalPresente":false,"diarios":0,"diarioContinhaMarcacao":false},"recuperou":false,"chegou":false,"estado":{}}
+Órfãos: 1 falha(s) em 1 cenários.
+⚠  Script exited unsuccessfully (code 1)
+
+crash-processo-probe-6500.log
+Órfãos: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Órfãos: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+  crash-processo: sessão/base confirmadas antes da interrupção.
+  crash-processo: Browser.crash fechou o contexto; reabrindo o mesmo perfil.
+✓ crash-processo: {"interrupcao":"Browser.crash","perfilPersistente":true,"esperaAntesCrash":6500,"aceitaNaUI":true,"diarioLegivel":true,"ofereceuExcluir":false,"principalAntes":{"T:base":true},"preApp":{"principalPresente":true,"diarios":1,"diarioContinhaMarcacao":true},"recuperou":true,"chegou":true,"estado":{"T:base":true,"T:primeiro":true},"atividade":3}
+Órfãos: 0 falha(s) em 1 cenários.
+✔  Script exited successfully (code 0)
+
+storage-crash-controle.log
+{"modo":"limpo","ms":1200,"marcador":"ficticio-duravel"}
+{"modo":"crash","ms":1200,"marcador":null}
+{"modo":"crash","ms":6500,"marcador":"ficticio-duravel"}
+
+hosting-sonda.log
+✓ alias padrão aponta ao projeto de teste
+✓ artefatos de homologação em diretório separado
+✓ Hosting declara predeploy (necessário; conteúdo exige auditoria) — sem hook, o CLI não executa o verificador Python
+✓ nenhuma reescrita do app intercepta o handler reservado de OAuth
+✓ build oficial permitido no modo oficial
+✓ build eear-teste aceito só como homologação
+✓ authDomain de outro projeto recusado no build
+✓ projectId de produção recusado no build
+✓ sem-marcador é recusado por --site — exit=1
+✓ projeto-divergente é recusado por --homologacao — exit=1
+✓ marcador em página auxiliar não habilita app oficial como homologação — exit=1
+
+hosting-gates.log
+✓ artefato e destino de teste: exit=0; esperado=permitir
+✓ destino de produção: exit=1; esperado=recusar
+✓ destino vazio: exit=1; esperado=recusar
+✓ pasta ausente: exit=2; esperado=recusar
+✓ artefato oficial: exit=1; esperado=recusar
+✓ configuração divergente: exit=1; esperado=recusar
+✓ duas configurações literais: exit=1; esperado=recusar
+✓ arquivo proibido pelo verificador de conteúdo: exit=1; esperado=recusar
+✓ configuração apenas em comentário não habilita homologação: exit=1; esperado=recusar
+✓ configuração sobrescrita por script antes do app: exit=1; esperado=recusar
+Gates: 0 falha(s). Sem deploy; configurações fictícias não executaram SDK.
+
+hosting-gates-adicionais.log
+✓ artefato e destino de teste: exit=0; esperado=permitir
+✓ destino de produção: exit=1; esperado=recusar
+✓ destino vazio: exit=1; esperado=recusar
+✓ pasta ausente: exit=2; esperado=recusar
+✓ artefato oficial: exit=1; esperado=recusar
+✓ configuração divergente: exit=1; esperado=recusar
+✓ duas configurações literais: exit=1; esperado=recusar
+✓ arquivo proibido pelo verificador de conteúdo: exit=1; esperado=recusar
+✓ configuração apenas em comentário não habilita homologação: exit=1; esperado=recusar
+✓ configuração sobrescrita por script antes do app: exit=1; esperado=recusar
+✗ configuração em comentário JavaScript não habilita homologação: exit=0; esperado=recusar
+✗ configuração em script não executável não habilita homologação: exit=0; esperado=recusar
+Gates: 2 falha(s). Sem deploy; configurações fictícias não executaram SDK.
+
+hosting-headers.log
+{"url":"/","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/index.html","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/app.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/sw.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/manifest.webmanifest","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/__/auth/handler","status":404,"nosniff":"nosniff","robots":"noindex, nofollow","cache":null,"referer":"strict-origin-when-cross-origin"}
+✔  Script exited successfully (code 0)
+
+autoteste.log
+OK: autoteste da verificação (188 casos)
+
+validar.log
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+
+workflows.log
+OK: o build e os workflows conferem o conteúdo antes de enviar
+
+montagem.log
+OK: curso/app.js igual à montagem de curso/app/
+
+build.log
+OK: autoteste da verificação (188 casos)
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+OK: nada restrito em /tmp/eear-8bd-site
+
+CLASSIFICAÇÃO DAS REPRODUÇÕES
+concorrencia-fallback*.log: duas perdas de B comprovadas antes/depois de gravações reais e limpeza por C, sem relógio/eventos falsificados.
+orfaos-final.log: controle de um diário passou; retorno com segundo diário falhou em 8s reais e 30min controlados; o erro de preparação do crash nesse run não foi classificado como defeito.
+crash-processo-probe-1200.log: Browser.crash com diário legível antes; perfil já sem principal/diários antes de executar app; falha de recuperação permanece registrada.
+crash-processo-probe-6500.log: controle diagnóstico do mesmo cenário; perfil preservou diário, recuperação exata 3/3 e envio passaram.
+storage-crash-controle.log: backend Chromium sem EEAR/Firebase mostra perda no crash curto, preservação no longo e no fechamento limpo. Não substitui o critério do app.
+hosting-gates.log: os dois falsos aceites anteriores corrigidos. hosting-gates-adicionais.log: dois scripts inertes ainda aceitos.
+orfaos-primeira.log / orfaos-segunda.log / crash-processo-revisado.log: desenvolvimento da preparação; ver limites no parecer.
+
+CI — METADADOS DE JOBS E EXCERTOS DOS LOGS (conector GitHub)
+{
+  "sha": "8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b",
+  "runs": [
+    {
+      "id": 43127064260,
+      "name": "Site",
+      "sha": "8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43127064260"
+    },
+    {
+      "id": 43127064307,
+      "name": "App Android",
+      "sha": "8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43127064307"
+    },
+    {
+      "id": 43127064192,
+      "name": "Testes",
+      "sha": "8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43127064192"
+    }
+  ],
+  "jobs": [
+    {
+      "run_id": 43127064260,
+      "jobs": [
+        {
+          "id": 130881727309,
+          "name": "montar",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 130881866379,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ]
+    },
+    {
+      "run_id": 43127064307,
+      "jobs": [
+        {
+          "id": 130881727569,
+          "name": "apk",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 130882658851,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ]
+    },
+    {
+      "run_id": 43127064192,
+      "jobs": [
+        {
+          "id": 130881727174,
+          "name": "plataforma",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 130881727601,
+          "name": "firebase-emulador",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "logs": [
+    {
+      "id": 130881727174,
+      "passed_markers": 241,
+      "lines": [
+        "2026-11-12T00:43:10.3435906Z   ✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]",
+        "2026-11-12T00:43:11.8668500Z == escrita interrompida entre abas (pontos de parada reais do Chromium)",
+        "2026-11-12T00:43:13.2384750Z   ✓ escrita interrompida: A leu, B gravou o diário e fechou, A gravou por cima e fechou; a aba que abre tem as duas marcações [diário de B: true; principal depois de A: ?; aberta: T:A-race,T:B-race,T:base; absorvido em 8 ms]",
+        "2026-11-12T00:43:23.0041953Z   ✓ sem Web Locks: a aba que caiu depois de gravar o diário não perde a marcação; outra aba a recupera [cópia antes: sem a marcação; recuperada em 7946 ms]",
+        "2026-11-12T00:43:25.7620705Z   ✓ apagar os dados com um diário pendente de outra aba: o diário fica, e o estudo dele volta depois que a aba cai (o resto continua apagado) [diários com a marcação depois de apagar: 1; feito: T:pendente]"
+      ]
+    },
+    {
+      "id": 130881727601,
+      "passed_markers": 50,
+      "lines": [
+        "2026-11-12T00:27:45.4501979Z   ✓ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=true, nuvem=true]",
+        "2026-11-12T00:27:49.1789661Z   ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail",
+        "2026-11-12T00:27:50.4707705Z \u001b[32m\u001b[1m✔ \u001b[22m\u001b[39m Script exited successfully (code 0)"
+      ]
+    }
+  ]
+}

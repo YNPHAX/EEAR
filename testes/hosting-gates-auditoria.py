@@ -67,5 +67,14 @@ with tempfile.TemporaryDirectory(prefix='eear-gates-audit-') as d:
     (externo / 'dados/ambiente-auditoria.js').write_text('window.EEAR_FIREBASE = ' + json.dumps(dict(teste, projectId='eear-producao', authDomain='eear-producao.web.app')) + ';')
     conferir('configuração sobrescrita por script antes do app', externo, 'eear-teste')
 
+    for nome, inicio, fim in [
+        ('configuração em comentário JavaScript', '<script>// ', '\n</script>'),
+        ('configuração em script não executável', '<script type="application/json">', '</script>'),
+    ]:
+        inerte = copiar(nome.replace(' ', '-'), raiz / 'oficial')
+        with (inerte / 'index.html').open('a') as f:
+            f.write(inicio + 'window.EEAR_FIREBASE = ' + json.dumps(dict(teste, homologacao=True)) + ';' + fim)
+        conferir(nome + ' não habilita homologação', inerte, 'eear-teste')
+
 print(f'Gates: {falhas} falha(s). Sem deploy; configurações fictícias não executaram SDK.')
 sys.exit(1 if falhas else 0)
