@@ -1,0 +1,195 @@
+EVIDÊNCIAS DA MISSÃO NOTURNA — 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Dados fictícios, emuladores e transporte controlado; sem operações no Firebase real.
+Consolidação UTC: 2026-11-12T03:22:50Z
+
+TESTES INDEPENDENTES — SHA-256
+a011d5d33f680a63c7619647ef4608e77b81774869a2d22888ead484aa819f3d  testes/noturna-integridade.test.js
+a6b49e6c6cf97e48ed6d422697613a454cab8c387995ea425946a05b8b9ece00  testes/noturna-falhas.test.js
+b325ba7e74fcff58234e69317d7ee2532a6ed2c1a41e94a02e6bc6da5f3af5fb  testes/noturna-seguranca.test.js
+c6bec79b49c583ffca61953aba0df1832e617d39dfc6aa2cee2f9efef9fddb20  testes/noturna-confirmacao.test.js
+1d4f30fc985645a4cde9d90865fa14dd4b451507e02eddbc533f31c0dcbd03d8  testes/f01-fixture.js
+b367dd5e599c71bb570a90f2f87ea7e24676c1ddebf7e023cdde23df7e6ee777  testes/f01-abas.test.js
+e920cfcebdba5fbde47a4e2670328165141738ad2a582bae589ac919f92e6aae  testes/f01-riscos.test.js
+aad18b74b5c85a6ce84a58717c105bc9edbfc6c35ff08444a1ec32482c45f833  testes/diarios-auditoria.test.js
+a6899f1b92cf80167d92bfce50b2d8e1425ec784550758669dc1d3f7129ad409  testes/ciclo-sincronia.test.js
+
+FONTES DO CANDIDATO — SHA-256
+7d1208e0090c703e033a9df35aff5c1372132eeaded9e93c3bb2f1e6e45c3a03  curso/app.js
+16c7ec190a5266e45534f7294d433bc76f6b2c06037e7da474e47f198155347d  curso/app/01-base.js
+5c266b44c0e7e2ae7001f2fefe1409ab13d9265da6bd1b0204524daa78487308  curso/app/02-progresso-nuvem.js
+c49754752a045963fb08ff5310ad2089dfc1df3ec89b464d442dcb3dee2f77b5  curso/app/08-uniao-nuvem.js
+d4778c471fbd6700aedc3925146b69815b5baef8eb7ac9fc59ffcf743543ce61  curso/app/09-contas.js
+d1024c9324780a9d6364d5efac097b47db298cbb171b7ae5f9f499af41fb4fd4  curso/app/14-abas.js
+5aa0c0aac055f9a49630de24300729d323af3afa82960873e9375f30c14ed964  curso/app/15-diarios-pendentes.js
+18a264318c2a3cc906489198f14b34644d7acf66c7ea69dbef2a3a415dd60a9e  web/firestore.rules
+
+LOGS COMPLETOS DA SESSÃO — SHA-256 (/tmp/eear-noturna-evidence)
+e8a3eab64495fb0094bc49c80388fa4a2a8269cc6d9f16fce42553f7617051d3  abas-isoladas.js
+a1b3553e1ea5ecb698dfd82aa28e387a29ff7754170d4c76559be4e4e9325fcf  abas-isoladas.log
+b4eb874e3d1cc7c709de5a27c60c6ce0e25915907bfd0ae4a15497df96a4ef45  build-antigo.log
+998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2  ciclo-sessao.log
+92219036474a96d8dfa9c7fd6d358fc82a46172e95f3a6f4f1c6d09f227f3184  confirmacao-controle.log
+d8231ca677563f7be068197dee6de69700d4e15bcc15ed7a80e873b120b71ed5  confirmacao-interrompida.log
+8af5440cd9ff1bb0f54febf2d6c2a0858df78bca938072ecca23b0d658d0ea49  confirmacao-repetida.log
+ccbfc410d5ac3307d778a830a56526f96c29e855f1aff1e3d4f54338e3cf52d1  credenciais-historico.json
+929a6fbdc35c005c938a28faf6bf27255290814b27844e3b7b73de3dfc872249  credenciais.json
+fd1763f726c601aca901a97975d60c76b95b1153affc95abca7042dfb1e9127a  diagnostico-saida.log
+e24b8070bb43d6e27b73482402fdeac1943f36d1bb91a3d13f4347c687bfad37  falhas-confirmacao.log
+a480fa3d795a90d8aa8ef54666e07c4790803f9810ca5e24b11a24228ebe5eb7  falhas-primeira.log
+793412b44debc4ef95ad2c0476a323c1ed0eabca5231a7bc6db3740743625ac0  integridade-confirmacao.log
+267ff88b87123c6dad751400856d5858078d3bf2761cb1fd137b9595d9d228da  integridade-final.log
+0ce2bbe0235652a037618a94e069351e1f3d4ebb7bf3a6f8b6a920998bbca9e1  integridade-primeira.log
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  lint.log
+a1f2c01ceb06985e165b95d57fb1d9e7440f82363f3da341864660102a9cca19  migracao.log
+422bf3a29e73bd10a9181b98aef225b12e4e60f1a9c0650d7c71d1a19ebe3b01  plataforma-completa.log
+5f38672b274436011d081978144e709827fe87f091fe2a2677bf219aaad8593c  reexecucoes.json
+f1516818e3eb30a17012faf6590d8857575b6d5b7d041f6252d38f371c5418b5  saida-corrigida.log
+68df108e8b7ed3b1547ba778793d978c11d9a8a2fb5d79f6a769ab8f9c67b98f  saida-diagnostico-final.log
+91df9faa2460cbec34167866902186307eb37bd699fecf3eede02a3c40fc69a7  seguranca-confirmacao.log
+91df9faa2460cbec34167866902186307eb37bd699fecf3eede02a3c40fc69a7  seguranca.log
+
+RESULTADOS LITERAIS SELECIONADOS
+Falhas de preparação nas rodadas exploratórias não são classificadas como falhas do app.
+As suítes finais de integridade, falhas e segurança incluem sondas que reprovam o candidato.
+A sonda de líder reprova o critério de disponibilidade observado, sem perda do diário.
+
+integridade-final.log
+Noturna: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Noturna: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✗ sair-apagar: {"dadosAntes":4,"dadosDepois":[{"chave":"missao-eear-v1-diario@firebase:<UID_FICTICIO>#talon3yzzmwcyrrh0","nomeRetido":true,"estudoRetido":true}],"aposReabrir":1,"servidorExiste":true,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem."}
+✗ excluir-conta: {"dadosAntes":4,"dadosDepois":[{"chave":"missao-eear-v1-diario@firebase:<UID_FICTICIO>#t1mdyd9jtmwcyru6o","nomeRetido":true,"estudoRetido":true}],"aposReabrir":1,"servidorExiste":false,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos."}
+✗ outra-sessao: {"aceitoOffline":true,"documentoApagado":true,"novoLoginHTTP":400,"outraSessaoAindaConectada":true,"documentoRecriado":true,"nomeRecriado":true,"feito":{"T:base":true,"T:offline":true}}
+✗ diario-corrompido: {"preservadoExato":false,"original":false,"backup":false,"restantes":0,"avisoRecuperacao":0}
+✓ diario-futuro: {"preservadoExato":true,"original":true,"backup":false,"restantes":1,"avisoRecuperacao":0}
+✗ atividade-dispositivos: {"aceitos":{"A":3,"B":3,"simuladosA":0,"simuladosB":0,"registrosIguais":true,"idsDistintos":null},"convergiu":false,"esperadoAtividade":4,"atividadeServidor":3,"simuladosServidor":0,"atividadeReaberto":3,"feito":{"T:A-independente":true,"T:B-independente":true,"T:base":true}}
+✗ simulados-iguais: {"aceitos":{"A":3,"B":3,"simuladosA":1,"simuladosB":1,"registrosIguais":true,"idsDistintos":true},"convergiu":false,"esperadoAtividade":4,"atividadeServidor":3,"simuladosServidor":2,"atividadeReaberto":3,"feito":{"T:base":true}}
+Noturna: 6 falha(s) em 7 cenários.
+⚠  Script exited unsuccessfully (code 1)
+
+falhas-confirmacao.log
+Falhas noturnas: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Falhas noturnas: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✗ quota-real: {"quota":{"caracteres":5240778,"negou":true},"aceitaNaUI":true,"principal":false,"diario":false,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","alertas":[],"avisou":false,"recuperou":false}
+✓ seis-abas: {"abas":6,"alteracoes":150,"esperado":152,"atividade":152,"marcacoes":150,"convergiu":true,"reabriu":true,"chegou":true,"duracaoMs":4126}
+✗ lider-pausada: {"local":true,"principal":false,"diario":true,"enviouPausada":false,"enviouRetorno":true,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","lider":"A"}
+✓ indexeddb-indisponivel: {"sessaoPersistiuSemIndexedDB":true,"progresso":{"T:base":true,"T:sem-idb":true},"chegou":true}
+Falhas noturnas: 2 falha(s) em 4 cenários.
+⚠  Script exited unsuccessfully (code 1)
+
+seguranca-confirmacao.log
+Segurança noturna: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Segurança noturna: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✓ regras: {"resultados":[{"caso":"próprio get","esperado":200,"observado":200},{"caso":"outro UID get","esperado":403,"observado":403},{"caso":"sem autenticação","esperado":403,"observado":403},{"caso":"listagem","esperado":403,"observado":403},{"caso":"subcoleção","esperado":403,"observado":403},{"caso":"query só do UID próprio continua list","esperado":403,"observado":403},{"caso":"agregação count","esperado":403,"observado":403},{"caso":"batch misto próprio/outro UID","esperado":403,"observado":403}],"batchAtomicoPreservouProprio":true}
+✗ dias: {"campo":"dias","tipoInvalido":"null","erros":["Cannot read properties of null (reading 'indexOf')"],"acessoDados":0,"tipoPersistido":"null","corpoCaracteres":321}
+✗ excl: {"campo":"excl","tipoInvalido":"objeto","erros":["object is not iterable (cannot read property Symbol(Symbol.iterator))"],"acessoDados":0,"tipoPersistido":"object","corpoCaracteres":321}
+✗ nome: {"campo":"nome","tipoInvalido":"objeto","erros":["(S.cfg.nome || \"\").trim is not a function"],"acessoDados":1,"tipoPersistido":"object","corpoCaracteres":7976}
+Segurança noturna: 3 falha(s) em 4 cenários.
+⚠  Script exited unsuccessfully (code 1)
+
+confirmacao-repetida.log
+Confirmação noturna: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Confirmação noturna: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✗ commit-sem-confirmacao: {"confirmarAntesNovoEstudo":false,"commitHTTP":200,"baseAntes":2,"servidorAntes":3,"aceito":true,"voltou":true,"offlineAtividade":3,"chegou":false,"visivel":false,"atividadeFinal":5,"servidorFinal":5,"marcacoesFinais":{"T:ack-interrompido":true,"T:apos-reabrir":true,"T:base":true},"certificado":true}
+⚠  Script exited unsuccessfully (code 1)
+
+confirmacao-controle.log
+Confirmação noturna: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+Confirmação noturna: alvo 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b
+✓ commit-sem-confirmacao: {"confirmarAntesNovoEstudo":true,"commitHTTP":200,"baseAntes":2,"servidorAntes":3,"aceito":true,"voltou":true,"offlineAtividade":3,"chegou":true,"visivel":true,"atividadeFinal":4,"servidorFinal":4,"marcacoesFinais":{"T:ack-interrompido":true,"T:base":true,"T:apos-reabrir":true},"certificado":true}
+✔  Script exited successfully (code 0)
+
+ciclo-sessao.log
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}
+
+migracao.log
+  ✓ na versão anterior: o progresso antigo abre e o aluno marca uma tarefa e revisa um cartão
+  ✓ na versão nova: aulas, notas, cartões, erros, tarefas, simulados e o nome continuam iguais
+  ✓ na versão nova: abre sem erro de JavaScript
+  ✓ na versão nova: o aluno estuda (tarefa e cartão)
+  ✓ versão anterior com o progresso gravado pela nova: abre Hoje, Plano e Treino sem erro de JavaScript
+  ✓ versão anterior com o progresso da nova: nenhum estudo some
+  ✓ de volta à versão nova: o estudo feito nas duas continua
+tudo certo
+
+abas-isoladas.log
+RODADA 1 — módulo inalterado do candidato
+✓ duas abas da mesma conta: a marcação da aba que fechou continua no aparelho e as contagens somam sem perder nem dobrar [feito: T:a1,T:apagar,T:base,T:b1,T:b2 | atividade: 5 (esperado 5)]
+✓ desmarcar numa aba e estudar na outra: a desmarcação não volta e o estudo fica
+✓ desmarcar numa aba e estudar na outra (aba suspensa, sem o aviso): a desmarcação não volta e o estudo fica
+✓ "Zerar" numa aba: o que existia antes não volta pela outra aba (nem os certificados), e o que ela estudou depois fica [feito: T:b-depois]
+✓ certificados: gravações de duas abas mantêm o mesmo registro, data e código
+✓ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:a5,T:apagar,T:b5,T:base]
+✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]
+✓ cópia apagada em outra aba: a aba aberta não regrava o que foi apagado; só o estudo novo fica [feito: T:depois-de-apagar]
+RODADA 2 — módulo inalterado do candidato
+✓ duas abas da mesma conta: a marcação da aba que fechou continua no aparelho e as contagens somam sem perder nem dobrar [feito: T:a1,T:apagar,T:base,T:b1,T:b2 | atividade: 5 (esperado 5)]
+✓ desmarcar numa aba e estudar na outra: a desmarcação não volta e o estudo fica
+✓ desmarcar numa aba e estudar na outra (aba suspensa, sem o aviso): a desmarcação não volta e o estudo fica
+✓ "Zerar" numa aba: o que existia antes não volta pela outra aba (nem os certificados), e o que ela estudou depois fica [feito: T:b-depois]
+✓ certificados: gravações de duas abas mantêm o mesmo registro, data e código
+✓ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:a5,T:apagar,T:b5,T:base]
+✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]
+✓ cópia apagada em outra aba: a aba aberta não regrava o que foi apagado; só o estudo novo fica [feito: T:depois-de-apagar]
+RODADA 3 — módulo inalterado do candidato
+✓ duas abas da mesma conta: a marcação da aba que fechou continua no aparelho e as contagens somam sem perder nem dobrar [feito: T:a1,T:apagar,T:base,T:b1,T:b2 | atividade: 5 (esperado 5)]
+✓ desmarcar numa aba e estudar na outra: a desmarcação não volta e o estudo fica
+✓ desmarcar numa aba e estudar na outra (aba suspensa, sem o aviso): a desmarcação não volta e o estudo fica
+✓ "Zerar" numa aba: o que existia antes não volta pela outra aba (nem os certificados), e o que ela estudou depois fica [feito: T:b-depois]
+✓ certificados: gravações de duas abas mantêm o mesmo registro, data e código
+✗ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:base,T:apagar,T:b5]
+✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]
+✓ cópia apagada em outra aba: a aba aberta não regrava o que foi apagado; só o estudo novo fica [feito: T:depois-de-apagar]
+Falhas de asserção: 1
+
+plataforma-completa.log
+Asserções aprovadas: 237
+Asserções reprovadas: 1
+  ✗ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:base,T:apagar,T:b5]
+1 falha(s)
+Apenas a asserção de leitura artificial antiga falhou; demais resultados estão no log completo identificado por hash.
+
+credenciais.json
+{
+  "escopo": "arquivos rastreados de 8bd32d2; nenhuma chave exibida",
+  "ocorrencias": []
+}
+
+credenciais-historico.json
+{
+  "escopo": "ancestrais de 8bd32d2; marcadores de chave privada e token GitHub em diffs de arquivos de c\u00f3digo/config",
+  "commits_com_marcadores": []
+}
+
+reexecucoes.json
+[
+  {
+    "suite": "integridade-confirmacao",
+    "exit": 1
+  },
+  {
+    "suite": "falhas-confirmacao",
+    "exit": 1
+  }
+]
+
+REPRODUÇÃO DO MÓDULO DO CANDIDATO ISOLADO (diagnóstico, não teste independente de perda real)
+const {chromium}=require('playwright'),fs=require('fs'),path=require('path'),http=require('http');
+const alvo='/tmp/eear-8bd32d2',site='/tmp/eear-8bd-site';
+(async()=>{const srv=http.createServer((q,r)=>{const n=new URL(q.url,'http://localhost').pathname;const p=path.join(site,n==='/'?'index.html':n);if(!p.startsWith(site+path.sep)||!fs.existsSync(p)||!fs.statSync(p).isFile()){r.writeHead(404);return r.end();}r.setHeader('Content-Type',p.endsWith('.js')?'text/javascript':p.endsWith('.html')?'text/html':'application/octet-stream');r.end(fs.readFileSync(p));});await new Promise(r=>srv.listen(0,'127.0.0.1',r));const url='http://127.0.0.1:'+srv.address().port+'/',b=await chromium.launch();let falhas=0;
+const hoje=new Date().toISOString().slice(0,10);
+const base=cfg=>({v:1,t:Date.now(),cfg:Object.assign({nome:'Aluno Teste',alvo:'cfs2-2027',prova:'2026-11-22',inicio:hoje,horas:3,dias:[0,1,2,3,4,5,6],excl:[]},cfg),mod:{POR01:{best:0.9,tent:2,lido:'2026-10-01'},ING14:{best:0.8,tent:1,lido:'2026-10-02'}},fc:{'POR01~0':[2,20400]},erros:{'MAT03-2':1},sims:[{d:'2026-10-03',tipo:'materia',mat:'por',prova:null,r:{por:[18,24]},min:50}],feito:{},act:{'2026-10-01':1},aula:{},ap:{},diag:null,ativo:null,ult:null,ultAula:'POR01'});
+try{for(let i=1;i<=3;i++){console.log('RODADA '+i+' — módulo inalterado do candidato');await require(path.join(alvo,'testes/abas.js'))({b,srv:{url},base,ok:(p,m)=>{console.log((p?'✓ ':'✗ ')+m);if(!p)falhas++;}});}}finally{await b.close();await new Promise(r=>srv.close(r));}console.log('Falhas de asserção: '+falhas);process.exitCode=falhas?1:0;})().catch(e=>{console.error(e);process.exitCode=1;});
+
+
+CONTEXTO DE ATRIBUIÇÃO
+N01: quota real; Storage.setItem não foi substituído. Após aceitar a marcação, não havia principal nem diário; UI dizia salvo localmente.
+N02: o diário retido contém nome/estudo fictícios. A nuvem permaneceu na saída e foi apagada na exclusão da conta.
+N03: novo login correto recusado pelo Auth emulado, mas outra sessão anterior recriou o documento. Sem troca/forja de UID. Sem teste de revogação no Firebase real.
+N04: entradas sintaticamente JSON v1, mas com tipos inválidos, importadas pelos handlers reais. Erros persistiram após reload.
+N05: corrupção foi injetada explicitamente na chave de diário; não se afirma que um setItem normal seja parcial.
+F09: duas atividades independentes viraram 3 em vez de 4; os dois registros de simulado foram preservados.
+F09/ACK: resposta real de commit HTTP 200 retida depois da gravação. Servidor 3/base local 2 antes de Page.crash; reabertura offline 3; novo estudo levou a 5 em vez de 4.
+Controle ACK: confirmar a base após reabrir e antes do novo estudo resultou em 4/4. Não substitui a falha do cenário padrão.
+Nenhum teste anterior F01/F02–F09 foi enfraquecido ou alterado nesta missão.
