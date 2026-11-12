@@ -115,17 +115,17 @@
      O aviso nunca diz "salvo na sua conta" enquanto houver algo pendente. */
   const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false, erro: '', falhas: 0, tRetry: null }; // lida: a nuvem desta conta já foi lida nesta abertura; erro, falhas, tRetry: veja 13-falhas-nuvem.js
   let tSave = null;
-  function salvar() {
+  function salvar(importado) {
     S.t = Date.now();
     fixarAncoras();
-    try { persistir(); } catch (e) { gravouLocal = false; } // operação reservada; a confirmação durável é assíncrona e aparece no aviso
+    try { persistir(importado); } catch (e) { gravouLocal = false; } // operação reservada; a confirmação durável é assíncrona e aparece no aviso
     consolidar(); // checkpoint transacional, independente de Web Locks
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
   async function gravar() {
-    if (saindo || !nuvem.ref || !lider.ativa) return; // só a aba líder sincroniza (14-abas.js)
+    if (loc.incompativel || saindo || !nuvem.ref || !lider.ativa) return; // só a aba líder sincroniza (14-abas.js)
     if (nuvem.busy) { nuvem.again = true; return; }
     const ref = nuvem.ref, conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
@@ -152,12 +152,13 @@
     if (ex) o = null; // o aluno pediu para enviar de novo: a marca é substituída pelo progresso deste aparelho
     if (o && (typeof o !== 'object' || o.v !== 1)) return { futura: true };
     const local = mesclar(JSON.parse(JSON.stringify(S)));
-    let u = local, perdido = null, c = null, assinado = true, ep = '', lin = [];
+    let u = local, perdido = null, c = null, operacional = false, assinado = true, ep = '', lin = [];
     if (o) {
       assinado = assinaturaOk(o); // sem assinatura válida: gravado (ou alterado) por uma versão antiga do app
       ep = assinado && typeof o.ep === 'string' ? o.ep : ''; // época da nuvem (08-uniao-nuvem.js)
       lin = assinado ? linhagem(o) : []; // gravações de que a nuvem descende (08-uniao-nuvem.js)
       c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
+      operacional = opValida(c.cfg._ops) && mesmoConteudo(opPlano(c), opPlano(opEstado(c.cfg._ops)));
       /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
          dela), se a nuvem foi gravada por esta versão (uma versão antiga grava o progresso inteiro dela por cima, sem
          trava, e o que ela não tinha pareceria apagado do outro lado) e se é da mesma época da nuvem (um aparelho novo
@@ -166,11 +167,12 @@
          a que esta base confirmou). */
       const b = lerBase(), base = assinado && ep && epocaBase() === ep && lin.includes(idBase()) && b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
       /* Aparelho que nunca sincronizou e não tem estudo: fica com a nuvem. Um aparelho zerado depois dela passa pela união. */
-      if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
+      if (operacional) u = opCombinarEstados(local, c);
+      else if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
       if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
     } else if (!S.t) return { nada: true }; // aparelho e nuvem sem progresso: nada a gravar
     // Estados desta arquitetura unem contribuições identificadas, não diferenças de contadores agregados.
-    if (c && opValida(c.cfg._ops) && mesmoConteudo(opPlano(c), opPlano(opEstado(c.cfg._ops)))) u = opCombinarEstados(local, c);
+    if (c && operacional) u = opCombinarEstados(local, c);
     else if (c && !lerBase() && semEstudo(local)) u = opEstado(opUnir(opMeta(local), opMeta(c)));
     else if (c) {
       const m = opMeta(local), delta = opDelta(m, local, u, 'legado-nuvem:' + resumoDoc(opSemMeta(c)));
@@ -343,8 +345,3 @@
     } catch (e) { conta.msg = erroConta(e); }
     render();
   }
-  function syncInfo() {
-    const el = document.getElementById('sync');
-    if (el) el.textContent = loc.confirmando ? 'Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.' : !gravouLocal ? 'O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.' : nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.ref && !lider.ativa ? (sincronizado() ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.') : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
-  }
-

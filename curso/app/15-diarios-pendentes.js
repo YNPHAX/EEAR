@@ -25,24 +25,26 @@
     } catch (e) { /* IDB já confirmou; o cache é opcional */ }
   }
   function abrirAbas() {
-    document.documentElement.dataset.armazenamento = 'carregando';
+    document.documentElement.dataset.armazenamento = 'carregando'; loc.incompativel = false;
+    loc.quarentinas = new Map();
     clearInterval(loc.timer); loc.ops = []; loc.gen = null; loc.fila = Promise.resolve(); loc.pendente = 0;
     const id = identidade, st = opCopiar(loc.vista || novoEstado()), diarios = lerDiariosDe(id);
     try { const raw = JSON.parse(localStorage.getItem(chave(LS)) || 'null'); if (raw && raw._abas) st._abas = raw._abas; } catch (e) { /* cache ilegível preservado por carregar */ }
     loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, r => {
-      if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)) };
+      if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)), legados: Object.fromEntries(diarios.concat(antigos).filter(x => !x.d.delta).map(x => [x.k, x.d.seq])) };
       let m = r.meta; diarios.forEach(({ d }) => { if (d.delta && opValida(d.delta) && (d.gen === r.gen || (!d.gen && !r.apagado))) m = opUnir(m, d.delta); });
       return Object.assign({}, r, { meta: m });
     })).then(r => {
       if (id !== identidade) return;
       if (mesmoConteudo(opPlano(st), opPlano(r.st))) { loc.cacheId = id; loc.cacheHash = resumoDoc(r.meta); try { loc.cacheTexto = localStorage.getItem(chave(LS, id)); } catch (e) { /* cache opcional */ } }
       receberDuravel(r, id); cachear(r, id); gravouLocal = true; loc.carregado = true; document.documentElement.dataset.armazenamento = 'pronto'; render(); consolidar();
-    }).catch(e => { if (id !== identidade) return; loc.carregado = true; document.documentElement.dataset.armazenamento = 'reserva'; loc.semIDB = e.code !== 'checkpoint-corrompido'; gravouLocal = false; loc.erro = e.message; consolidar(); render(); syncInfo(); });
+    }).catch(e => { if (id !== identidade) return; loc.carregado = true; document.documentElement.dataset.armazenamento = 'reserva'; loc.incompativel = e.code === 'checkpoint-corrompido'; loc.semIDB = e.code !== 'checkpoint-corrompido'; gravouLocal = false; loc.erro = e.message; consolidar(); render(); syncInfo(); });
     loc.timer = setInterval(() => consolidar(), 1500);
   }
   function persistir(remoto) {
     const id = identidade, antes = loc.vista || novoEstado(), meta = loc.meta || opMeta(antes), oid = opId();
-    const delta = remoto && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
+    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
+    if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
     const o = { v: 2, id: oid, conta: id, gen: loc.gen, delta, st: opCopiar(S) };
     loc.ops = (loc.ops || []).concat([o]); loc.pendente = loc.ops.length; loc.confirmando = true;
@@ -56,7 +58,7 @@
       const r = await transacaoConta(o.conta, ant => {
         if (ant && ((o.gen && o.gen !== ant.gen) || (ant.apagado && o.gen !== ant.gen))) throw new Error('A cópia desta conta foi apagada em outra aba; operação antiga preservada para exportação.');
         const m = ant ? ant.meta : opSemente(novoEstado());
-        return { gen: ant ? ant.gen : o.gen || opId(), meta: opUnir(m, o.delta) };
+        return Object.assign({}, ant || {}, { gen: ant ? ant.gen : o.gen || opId(), apagado: false, meta: opUnir(m, o.delta) });
       });
       // A transação já terminou. Só agora se pode remover esta operação da reserva.
       try { localStorage.removeItem(chave(DIARIO_K, o.conta) + '#' + o.id); } catch (e) { /* reaplicação é idempotente */ }
@@ -79,14 +81,25 @@
   }
   function consolidar() {
     if (!loc.carregado || loc.lendo) return;
-    if (loc.semIDB) { consolidarReserva(); return; }
+    if (loc.semIDB) {
+      consolidarReserva();
+      if (!loc.tentando) {
+        loc.tentando = true; const id = identidade, atual = opCopiar(S);
+        transacaoConta(id, r => {
+          if (r && r.apagado && loc.gen !== r.gen) throw new Error('Cópia apagada em outra aba; exporte o estudo antes de continuar.');
+          return Object.assign({}, r || {}, { gen: r ? r.gen : opId(), meta: opUnir(r ? r.meta : opVazio(), opMeta(atual)) });
+        }).then(r => { if (id !== identidade) return; loc.semIDB = false; loc.incompativel = false; loc.ops = []; loc.pendente = 0; loc.confirmando = false; gravouLocal = true; receberDuravel(r, id); cachear(r, id); render(); }).catch(() => null).finally(() => { loc.tentando = false; });
+      }
+      return;
+    }
     const id = identidade; loc.lendo = true;
-    const ds = lerDiariosDe(id).filter(x => x.d.v === 2 && opValida(x.d.delta));
+    const todos = lerDiariosDe(id), ds = todos.filter(x => x.d.v === 2 && opValida(x.d.delta));
     transacaoConta(id, r => {
       if (!r) return { gen: opId(), meta: opMeta(S) };
+      todos.filter(x => !x.d.delta && !((r.legados || {})[x.k] >= x.d.seq)).forEach(x => quarentenar(x.txt, id, x.k, JSON.stringify(x.d.st)));
       let m = r.meta;
       ds.forEach(({ d }) => { if (!d.gen || d.gen === r.gen) m = opUnir(m, d.delta); });
-      return { gen: r.gen, apagado: r.apagado, meta: m };
+      return Object.assign({}, r, { meta: m });
     }).then(r => {
       if (id !== identidade) return;
       const confirmadas = ds.filter(x => (!x.d.gen || x.d.gen === r.gen) && mesmoConteudo(opUnir(r.meta, x.d.delta), r.meta));

@@ -156,6 +156,7 @@
     document.body.classList.toggle('sem-apostila', !apVisivel());
     if (!gravouLocal && V.v !== 'hoje') h = '<div class="banner warn" role="alert">O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e copie o progresso em Plano › Dados.</div>' + h;
     if (!loc.carregado) h = '<div role="status" class="banner">Preparando seus dados. Aguarde para estudar.</div>' + h;
+    if (loc.semIDB && gravouLocal) h = '<div class="banner warn" role="alert">Este navegador usa uma cópia de reserva sem proteção contra queda. Exporte o progresso em Plano › Dados antes de fechar.</div>' + h;
     app.innerHTML = h;
     if (!loc.carregado) app.querySelectorAll('button[data-a], input:not([readonly]), select').forEach(el => { if (!['tab', 'go', 'expcopiar', 'dadosver', 'dadosbaixar', 'cancelar'].includes(el.dataset.a)) el.disabled = true; });
     app.classList.toggle('largo', V.v === 'apset');

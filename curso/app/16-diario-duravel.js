@@ -13,9 +13,10 @@
         o.onblocked = () => { loc.idb = null; reject(new Error('Armazenamento bloqueado por outra versão')); };
       } catch (e) { loc.idb = null; reject(e); }
     });
-    return loc.idb;
+    const atual = loc.idb; atual.catch(() => { if (loc.idb === atual) loc.idb = null; });
+    return atual;
   }
-  async function transacaoConta(id, editar) {
+  async function transacaoConta(id, editar, permitirCorrompido) {
     const db = await abrirDuravel();
     return new Promise((resolve, reject) => {
       let t, resultado;
@@ -23,12 +24,12 @@
         t = db.transaction(['contas', 'quarentena'], 'readwrite', { durability: 'strict' });
         const s = t.objectStore('contas'), q = s.get(id);
         q.onsuccess = () => {
-          if (q.result && !opValida(q.result.meta)) {
+          if (!permitirCorrompido && q.result && !opValida(q.result.meta)) {
             const texto = JSON.stringify(q.result); t.objectStore('quarentena').add({ conta: id, origem: 'checkpoint', texto });
             resultado = new Error('O progresso durável está ilegível. Nada foi substituído; exporte a cópia de recuperação.'); resultado.code = 'checkpoint-corrompido';
             if (id === identidade) { recuperar = texto; try { localStorage.setItem(chave(LS_REC), texto); } catch (e) { /* a transação preserva a quarentena */ } } return;
           }
-          if (q.result) q.result.meta = opMigrar(q.result.meta);
+          if (q.result && opValida(q.result.meta)) q.result.meta = opMigrar(q.result.meta);
           try {
             resultado = editar(q.result || null, t);
             if (resultado !== undefined) { if (resultado.meta) { if (!opValida(resultado.meta)) throw new Error('Operação incompatível; checkpoint anterior preservado.'); resultado.st = opEstado(resultado.meta); } s.put(resultado, id); }
@@ -40,14 +41,16 @@
       } catch (e) { reject(e); }
     });
   }
-  function quarentenar(texto, id, origem) {
+  function quarentenar(texto, id, origem, progresso) {
     if (typeof texto !== 'string' || !texto) return;
-    try { const k = chave(LS_REC, id); if (!localStorage.getItem(k)) localStorage.setItem(k, texto); } catch (e) { /* a cópia IDB é tentada também */ }
+    loc.quarentinas = loc.quarentinas || new Map(); const ref = id + ':' + origem; if (loc.quarentinas.get(ref) === texto) return; loc.quarentinas.set(ref, texto);
+    const copia = progresso || texto;
+    try { const k = chave(LS_REC, id); if (!localStorage.getItem(k)) localStorage.setItem(k, copia); } catch (e) { /* a cópia IDB é tentada também */ }
     abrirDuravel().then(db => {
       const t = db.transaction('quarentena', 'readwrite', { durability: 'strict' }); t.objectStore('quarentena').add({ conta: id, origem, texto });
       t.onerror = t.onabort = () => { gravouLocal = false; };
     }).catch(() => { gravouLocal = false; });
-    if (id === identidade) recuperar = texto;
+    if (id === identidade) { recuperar = copia; setTimeout(() => { if (id === identidade) render(); }, 0); }
   }
   function lerDiariosDe(id) {
     const pre = chave(DIARIO_K, id) + '#', out = [];
@@ -63,7 +66,7 @@
     if (!window.indexedDB) return [];
     return new Promise(resolve => {
       const o = window.indexedDB.open('eear-diarios', 1); let novo = false;
-      o.onupgradeneeded = () => { novo = true; };
+      o.onupgradeneeded = () => { novo = true; if (!o.result.objectStoreNames.contains('d')) o.result.createObjectStore('d'); };
       o.onerror = o.onblocked = () => resolve([]);
       o.onsuccess = () => {
         const db = o.result;
@@ -84,12 +87,12 @@
       const tab = k.slice(k.lastIndexOf('#') + 1), inc = st._abas && st._abas.inc && st._abas.inc[tab];
       if (inc !== undefined && inc >= d.seq) return;
       const base = d.base ? mesclar(d.base) : novoEstado();
-      m = opUnir(m, d.base ? opDelta(opMeta(base), base, mesclar(d.st), 'migracao:' + resumoDoc([k, d.seq])) : opMeta(mesclar(d.st)));
+      m = opUnir(m, d.base ? opDelta(opMeta(base), base, mesclar(d.st), 'migracao:' + JSON.stringify([k, d.seq])) : opMeta(mesclar(d.st)));
     }); return m;
   }
   async function apagarDuravel(id, definitivo) {
     const r = await transacaoConta(id, (ant, t) => {
-      if (!definitivo && ant && lerDiariosDe(id).some(x => x.d.delta && (!x.d.gen || x.d.gen === ant.gen) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
+      if (!definitivo && ant && opValida(ant.meta) && lerDiariosDe(id).some(x => x.d.delta && (!x.d.gen || x.d.gen === ant.gen) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
       if (!definitivo && id && ant && !ant.apagado) {
         let base = null; try { base = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null'); } catch (e) { /* sem confirmação */ }
         if (!base || !base.st || !uIgual(opEstado(ant.meta), mesclar(base.st))) throw new Error('Nada foi apagado: há progresso ainda não confirmado na nuvem.');
@@ -97,10 +100,10 @@
       }
       const q = t.objectStore('quarentena').openCursor(); q.onsuccess = () => { const c = q.result; if (c) { if (c.value.conta === id) c.delete(); c.continue(); } };
       return { gen: opId(), apagado: true, meta: opSemente(novoEstado()) };
-    });
+    }, true);
     // Banco legado: só depois da transação nova; nenhum progresso pessoal deve ficar no espelho antigo.
     if (window.indexedDB) await new Promise((resolve, reject) => {
-      const o = window.indexedDB.open('eear-diarios', 1); o.onerror = () => reject(o.error); o.onblocked = () => reject(new Error('Espelho antigo bloqueado'));
+      const o = window.indexedDB.open('eear-diarios', 1); o.onupgradeneeded = () => { if (!o.result.objectStoreNames.contains('d')) o.result.createObjectStore('d'); }; o.onerror = () => reject(o.error); o.onblocked = () => reject(new Error('Espelho antigo bloqueado'));
       o.onsuccess = () => { const db = o.result; if (!db.objectStoreNames.contains('d')) { db.close(); resolve(); return; }
         const t = db.transaction('d', 'readwrite', { durability: 'strict' }), q = t.objectStore('d').openCursor(), pre = chave(DIARIO_K, id) + '#';
         q.onsuccess = () => { const c = q.result; if (c) { if (String(c.key).indexOf(pre) === 0) c.delete(); c.continue(); } };
@@ -108,4 +111,18 @@
       };
     });
     return r;
+  }
+  async function copiasQuarentena(id, apagar) {
+    const db = await abrirDuravel();
+    return new Promise((resolve, reject) => {
+      const t = db.transaction('quarentena', apagar ? 'readwrite' : 'readonly', { durability: 'strict' }), q = t.objectStore('quarentena').openCursor(), out = [];
+      q.onsuccess = () => { const c = q.result; if (c) { if (c.value.conta === id) { out.push(c.value); if (apagar) c.delete(); } c.continue(); } };
+      t.oncomplete = () => resolve(out); t.onabort = t.onerror = () => reject(t.error);
+    });
+  }
+  async function descartarRecuperacao() {
+    const id = identidade;
+    try { await copiasQuarentena(id, true); } catch (e) { if (window.indexedDB) { msgDados = 'Não foi possível confirmar a exclusão da cópia. Tente novamente.'; render(); return; } }
+    try { localStorage.removeItem(chave(LS_REC, id)); } catch (e) { return; }
+    if (id === identidade) { recuperar = null; msgRec = ''; pedindo = null; render(); }
   }

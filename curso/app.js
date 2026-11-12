@@ -304,17 +304,17 @@
      O aviso nunca diz "salvo na sua conta" enquanto houver algo pendente. */
   const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false, erro: '', falhas: 0, tRetry: null }; // lida: a nuvem desta conta já foi lida nesta abertura; erro, falhas, tRetry: veja 13-falhas-nuvem.js
   let tSave = null;
-  function salvar() {
+  function salvar(importado) {
     S.t = Date.now();
     fixarAncoras();
-    try { persistir(); } catch (e) { gravouLocal = false; } // operação reservada; a confirmação durável é assíncrona e aparece no aviso
+    try { persistir(importado); } catch (e) { gravouLocal = false; } // operação reservada; a confirmação durável é assíncrona e aparece no aviso
     consolidar(); // checkpoint transacional, independente de Web Locks
     clearTimeout(tSave);
     tSave = setTimeout(gravar, 1500);
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
   async function gravar() {
-    if (saindo || !nuvem.ref || !lider.ativa) return; // só a aba líder sincroniza (14-abas.js)
+    if (loc.incompativel || saindo || !nuvem.ref || !lider.ativa) return; // só a aba líder sincroniza (14-abas.js)
     if (nuvem.busy) { nuvem.again = true; return; }
     const ref = nuvem.ref, conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
@@ -341,12 +341,13 @@
     if (ex) o = null; // o aluno pediu para enviar de novo: a marca é substituída pelo progresso deste aparelho
     if (o && (typeof o !== 'object' || o.v !== 1)) return { futura: true };
     const local = mesclar(JSON.parse(JSON.stringify(S)));
-    let u = local, perdido = null, c = null, assinado = true, ep = '', lin = [];
+    let u = local, perdido = null, c = null, operacional = false, assinado = true, ep = '', lin = [];
     if (o) {
       assinado = assinaturaOk(o); // sem assinatura válida: gravado (ou alterado) por uma versão antiga do app
       ep = assinado && typeof o.ep === 'string' ? o.ep : ''; // época da nuvem (08-uniao-nuvem.js)
       lin = assinado ? linhagem(o) : []; // gravações de que a nuvem descende (08-uniao-nuvem.js)
       c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
+      operacional = opValida(c.cfg._ops) && mesmoConteudo(opPlano(c), opPlano(opEstado(c.cfg._ops)));
       /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
          dela), se a nuvem foi gravada por esta versão (uma versão antiga grava o progresso inteiro dela por cima, sem
          trava, e o que ela não tinha pareceria apagado do outro lado) e se é da mesma época da nuvem (um aparelho novo
@@ -355,11 +356,12 @@
          a que esta base confirmou). */
       const b = lerBase(), base = assinado && ep && epocaBase() === ep && lin.includes(idBase()) && b && (b.t || 0) <= (local.t || 0) && (b.t || 0) <= (c.t || 0) ? b : null;
       /* Aparelho que nunca sincronizou e não tem estudo: fica com a nuvem. Um aparelho zerado depois dela passa pela união. */
-      if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
+      if (operacional) u = opCombinarEstados(local, c);
+      else if (!b && semEstudo(S) && !((Number(S.cfg.certsZ) || 0) > (Number(c.cfg.certsZ) || 0))) { u = c; juntarCerts(u.cfg, S.cfg, u); registrarCerts(u); } else ({ st: u, perdido } = unirProgresso(base, local, c));
       if (!u.cfg.nome && S.cfg.nome) u.cfg.nome = S.cfg.nome;
     } else if (!S.t) return { nada: true }; // aparelho e nuvem sem progresso: nada a gravar
     // Estados desta arquitetura unem contribuições identificadas, não diferenças de contadores agregados.
-    if (c && opValida(c.cfg._ops) && mesmoConteudo(opPlano(c), opPlano(opEstado(c.cfg._ops)))) u = opCombinarEstados(local, c);
+    if (c && operacional) u = opCombinarEstados(local, c);
     else if (c && !lerBase() && semEstudo(local)) u = opEstado(opUnir(opMeta(local), opMeta(c)));
     else if (c) {
       const m = opMeta(local), delta = opDelta(m, local, u, 'legado-nuvem:' + resumoDoc(opSemMeta(c)));
@@ -532,11 +534,6 @@
     } catch (e) { conta.msg = erroConta(e); }
     render();
   }
-  function syncInfo() {
-    const el = document.getElementById('sync');
-    if (el) el.textContent = loc.confirmando ? 'Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.' : !gravouLocal ? 'O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.' : nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.ref && !lider.ativa ? (sincronizado() ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.') : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
-  }
-
   /* ---------- status ---------- */
   function estMod(id) {
     const r = S.mod[id];
@@ -1021,7 +1018,7 @@
       <p class="small muted" style="margin:0">Copie o código do progresso aqui e cole no outro aparelho, em Plano › Dados › Colar progresso. Vale entre o site, o app e o link do curso.</p>
       <div class="row"><button class="btn" data-a="expcopiar">Copiar meu progresso</button><button class="btn" data-a="impabrir">Colar progresso</button></div>
       ${pedindo === 'exp' ? `<div class="field"><label for="exp-txt">Selecione e copie o código</label><textarea id="exp-txt" class="codigo" readonly rows="4">${esc(JSON.stringify(S))}</textarea></div>` : ''}
-      ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>Isso substitui o progresso deste aparelho.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
+      ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>O estudo do código será unido ao deste aparelho. As preferências do código serão carregadas.</p><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
       ${blocoDados()}
       ${msgDados ? `<p class="small" role="status" style="margin:0">${msgDados}</p>` : ''}
       <div class="sync" id="sync"></div></section>`;
@@ -1636,6 +1633,7 @@
     document.body.classList.toggle('sem-apostila', !apVisivel());
     if (!gravouLocal && V.v !== 'hoje') h = '<div class="banner warn" role="alert">O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e copie o progresso em Plano › Dados.</div>' + h;
     if (!loc.carregado) h = '<div role="status" class="banner">Preparando seus dados. Aguarde para estudar.</div>' + h;
+    if (loc.semIDB && gravouLocal) h = '<div class="banner warn" role="alert">Este navegador usa uma cópia de reserva sem proteção contra queda. Exporte o progresso em Plano › Dados antes de fechar.</div>' + h;
     app.innerHTML = h;
     if (!loc.carregado) app.querySelectorAll('button[data-a], input:not([readonly]), select').forEach(el => { if (!['tab', 'go', 'expcopiar', 'dadosver', 'dadosbaixar', 'cancelar'].includes(el.dataset.a)) el.disabled = true; });
     app.classList.toggle('largo', V.v === 'apset');
@@ -1816,27 +1814,31 @@
         try { navigator.clipboard.writeText(recuperar).then(ok, falha); } catch (e) { falha(); }
         break;
       }
-      case 'recdescartar': try { localStorage.removeItem(chave(LS_REC)); } catch (e) { /* ignora */ } recuperar = null; msgRec = ''; pedindo = null; render(); break;
+      case 'recdescartar': descartarRecuperacao(); break;
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
       case 'impok': {
         const t = document.getElementById('imp-txt');
         let o = null;
         try { o = JSON.parse((t && t.value || '').trim()); } catch (e) { o = null; }
         if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); break; }
-        /* O progresso colado substitui o deste aparelho, mas os certificados que este aparelho já tinha continuam:
-           eles entram como registrados agora, para um "zerar" antigo do outro aparelho não apagá-los na nuvem. */
-        const local = S.cfg, agora = Date.now();
-        S = mesclar(o);
-        juntarCerts(S.cfg, { certs: local.certs.map(r => Object.assign({}, r, { t: Math.max(r.t, agora) })), certsZ: local.certsZ }, null);
-        registrarCerts(S);
-        /* O progresso colado não descende da base desta conta: sem ela, a próxima sincronização une o colado com a nuvem
-           sem apagar nada (com a base, o que o colado não tem parecia apagado aqui e sumia da nuvem e dos outros aparelhos). */
-        try { localStorage.removeItem(chave(BASE_K)); } catch (e) { /* sem armazenamento */ }
-        pedindo = null; msgDados = 'Progresso carregado.'; salvar(); render();
+        // Importar acrescenta estudo; ausência no código antigo não é uma ordem de apagar progresso novo.
+        const local = opCopiar(S), colado = mesclar(o);
+        const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
+        const importado = conhecida ? opMeta(colado) : opVazio();
+        const combinado = conhecida ? opCombinarEstados(S, colado) : S;
+        loc.meta = opMeta(combinado); loc.vista = opCopiar(combinado);
+        const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
+        S = unirProgresso(null, l, c).st;
+        const certs = S.cfg.certs;
+        S.cfg = Object.assign({}, colado.cfg, { certs });
+        S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(colado.cfg.certsZ) || 0);
+        juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
+        pedindo = null; msgDados = 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado }); render();
+
         break;
       }
       case 'instalar': if (instalar) { const p = instalar; instalar = null; p.prompt(); p.userChoice.then(() => render(), () => render()); } break;
-      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Date.now(); delete S.cfg.fcv; delete S.cfg.fcAncora; pedindo = null; salvar(); go('hoje'); break; }
+      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Math.max(Date.now(), (Number(cfg.certsZ) || 0) + 1); delete S.cfg.fcv; delete S.cfg.fcAncora; pedindo = null; salvar(); go('hoje'); break; }
       default: break;
     }
   });
@@ -2157,8 +2159,11 @@
     }
     return h + blocoNuvemClaude();
   }
-  function baixarDados() {
-    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: S, copiaDeRecuperacao: recuperar };
+  async function baixarDados() {
+    const id = identidade;
+    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: opCopiar(S), copiaDeRecuperacao: recuperar };
+    try { dados.quarentena = await copiasQuarentena(id, false); } catch (e) { dados.quarentena = []; }
+    if (id !== identidade) return;
     if (window.EEAR_APK) { pedindo = 'exp'; render(); return; } // no app Android não há download de arquivo: mostra o código para copiar
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' }));
@@ -2500,10 +2505,12 @@
   function opValida(m) {
     if (m && m.v === 1) m = opMigrar(m);
     const obj = o => !!o && typeof o === 'object' && !Array.isArray(o);
+    const conjunto = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && o[id] === true);
+    const conjuntos = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && conjunto(o[id]));
     if (!obj(m) || m.v !== 2 || !Number.isSafeInteger(m.n) || m.n < 0 || !obj(m.r) || !obj(m.c) || !obj(m.s)) return false;
     return Object.keys(m.r).every(k => { const a = m.r[k]; return opCaminho(k) && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string'; })
       && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
-      && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(opCaminho(k)) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
+      && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && (!a.l || conjuntos(a.l)) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(opCaminho(k)) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
   }
   function opMaximo(p) { return ['mod', 'aula'].includes(p[0]) && p[p.length - 1] === 'best'; }
   function opCertificado(p) { return p[0] === 'cfg' && p[1] === 'certs' && p.length === 3; }
@@ -2534,11 +2541,11 @@
       Object.keys(y.a).forEach(id => { const a = x.a[id], v = y.a[id]; if (!a || v.d < a.d || (v.d === a.d && JSON.stringify(v) > JSON.stringify(a))) x.a[id] = opCopiar(v); });
       Object.keys(y.x).forEach(id => { x.x[id] = true; }); r.s[k] = x;
     });
-    Object.keys(b.c).forEach(k => { const y = b.c[k], x = r.c[k] || { a: {}, x: {} }; Object.keys(y.a).forEach(id => { x.a[id] = Math.max(x.a[id] || 0, y.a[id]); }); Object.keys(y.x).forEach(id => { x.x[id] = true; }); r.c[k] = x; });
+    Object.keys(b.c).forEach(k => { const y = b.c[k], x = r.c[k] || { a: {}, x: {} }; Object.keys(y.a).forEach(id => { x.a[id] = Math.max(x.a[id] || 0, y.a[id]); }); Object.keys(y.x).forEach(id => { x.x[id] = true; }); ['l', 'o'].forEach(tipo => { if (!y[tipo]) return; x[tipo] = x[tipo] || {}; Object.keys(y[tipo]).forEach(id => { x[tipo][id] = Object.assign({}, x[tipo][id] || {}, y[tipo][id]); }); }); r.c[k] = x; });
     // Tombstones LWW do protótipo v1 continuam cobrindo os valores antigos convertidos.
     [r.c, r.s].forEach(mapa => Object.keys(mapa).forEach(k => {
       const barreira = r.r[k]; if (!barreira || barreira.length !== 2) return;
-      Object.keys(mapa[k].a).filter(id => id.indexOf('@v1:') === 0).forEach(id => { const a = JSON.parse(id.slice(4)); if (a[0] < barreira[0] || (a[0] === barreira[0] && a[1] <= barreira[1])) mapa[k].x[id] = true; });
+      Object.keys(mapa[k].a).filter(id => id.indexOf('@v1:') === 0).forEach(id => { let a; try { a = JSON.parse(id.slice(4)); } catch (e) { return; } if (a[0] < barreira[0] || (a[0] === barreira[0] && a[1] <= barreira[1])) mapa[k].x[id] = true; });
     })); return r;
   }
   function opEstado(m) {
@@ -2546,7 +2553,9 @@
     const out = {}, campos = {};
     Object.keys(m.r).forEach(k => { if (m.r[k].length === 3) campos[k] = m.r[k][2]; });
     Object.keys(m.s).forEach(k => { const c = m.s[k], vals = Object.keys(c.a).filter(id => !c.x[id]).map(id => c.a[id]).sort((a, b) => a.d.localeCompare(b.d) || (Number(!a.c) - Number(!b.c)) || JSON.stringify(a).localeCompare(JSON.stringify(b))); if (vals.length) campos[k] = vals[0]; });
-    Object.keys(m.c).forEach(k => { const c = m.c[k], ids = Object.keys(c.a).filter(id => !c.x[id]); if (ids.length) campos[k] = opMaximo(opCaminho(k)) ? ids.reduce((n, id) => Math.max(n, c.a[id]), 0) : ids.reduce((n, id) => n + c.a[id], 0); });
+    Object.keys(m.c).forEach(k => { const c = m.c[k], vivos = Object.keys(c.a).filter(id => !c.x[id]), retirados = new Set();
+      Object.keys(c.l || {}).forEach(l => { const viu = c.l[l], concorrente = vivos.some(id => !viu[id] && !((c.o || {})[id] || {})[l]); if (!concorrente) Object.keys(viu).forEach(id => retirados.add(id)); });
+      const ids = vivos.filter(id => !retirados.has(id)); if (ids.length) campos[k] = opMaximo(opCaminho(k)) ? ids.reduce((n, id) => Math.max(n, c.a[id]), 0) : ids.reduce((n, id) => n + c.a[id], 0); });
     Object.keys(m.c).forEach(k => { if (campos[k] !== undefined && (!Number.isFinite(campos[k]) || (!opMaximo(opCaminho(k)) && !Number.isSafeInteger(campos[k])))) throw new Error('Contagem fora do limite seguro; nada foi substituído.'); });
     Object.keys(campos).sort((a, b) => JSON.parse(a).length - JSON.parse(b).length || a.localeCompare(b)).forEach(k => {
       const p = opCaminho(k); if (!p) return; let o = out;
@@ -2558,7 +2567,7 @@
   }
   function opDelta(m, antes, depois, id) {
     m = opMigrar(m);
-    const d = opVazio(); d.n = m.n + 1; const a = opPlano(antes), b = opPlano(depois);
+    const d = opVazio(); d.n = Math.max(m.n, Date.now()) + 1; const a = opPlano(antes), b = opPlano(depois);
     [...new Set(Object.keys(a).concat(Object.keys(b)))].forEach(k => {
       if (JSON.stringify(a[k]) === JSON.stringify(b[k])) return;
       const p = opCaminho(k); if (!p) return;
@@ -2568,8 +2577,12 @@
         if (b[k] !== undefined && certValido(b[k])) c.a[id] = b[k]; d.s[k] = c;
       } else if (opContador(p) && (typeof b[k] === 'number' || b[k] === undefined) && (typeof a[k] === 'number' || a[k] === undefined)) {
         const c = { a: {}, x: {} }, v = Math.max(0, Number(b[k]) || 0), ant = Math.max(0, Number(a[k]) || 0);
-        if (v > ant) c.a[id] = opMaximo(p) ? v : v - ant;
-        else { const atual = m.c[k]; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) c.x[i] = true; }); if (v) c.a[id] = v; }
+        const atual = m.c[k], lidas = Object.fromEntries(Object.keys((atual && atual.l) || {}).map(i => [i, true]));
+        if (v > ant) { c.a[id] = opMaximo(p) ? v : v - ant; if (p[0] === 'erros') c.o = { [id]: lidas }; }
+        else if (p[0] === 'erros' && !((depois.cfg.certsZ || 0) > (antes.cfg.certsZ || 0))) {
+          const vistos = {}; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) vistos[i] = true; });
+          c.l = { [id]: vistos }; if (v) { c.a[id] = v; c.o = { [id]: Object.assign({}, lidas, { [id]: true }) }; }
+        } else { const atual = m.c[k]; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) c.x[i] = true; }); if (v) c.a[id] = v; }
         d.c[k] = c;
       } else d.r[k] = b[k] === undefined ? [d.n, id] : [d.n, id, b[k]];
     }); return d;
@@ -2608,24 +2621,26 @@
     } catch (e) { /* IDB já confirmou; o cache é opcional */ }
   }
   function abrirAbas() {
-    document.documentElement.dataset.armazenamento = 'carregando';
+    document.documentElement.dataset.armazenamento = 'carregando'; loc.incompativel = false;
+    loc.quarentinas = new Map();
     clearInterval(loc.timer); loc.ops = []; loc.gen = null; loc.fila = Promise.resolve(); loc.pendente = 0;
     const id = identidade, st = opCopiar(loc.vista || novoEstado()), diarios = lerDiariosDe(id);
     try { const raw = JSON.parse(localStorage.getItem(chave(LS)) || 'null'); if (raw && raw._abas) st._abas = raw._abas; } catch (e) { /* cache ilegível preservado por carregar */ }
     loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, r => {
-      if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)) };
+      if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)), legados: Object.fromEntries(diarios.concat(antigos).filter(x => !x.d.delta).map(x => [x.k, x.d.seq])) };
       let m = r.meta; diarios.forEach(({ d }) => { if (d.delta && opValida(d.delta) && (d.gen === r.gen || (!d.gen && !r.apagado))) m = opUnir(m, d.delta); });
       return Object.assign({}, r, { meta: m });
     })).then(r => {
       if (id !== identidade) return;
       if (mesmoConteudo(opPlano(st), opPlano(r.st))) { loc.cacheId = id; loc.cacheHash = resumoDoc(r.meta); try { loc.cacheTexto = localStorage.getItem(chave(LS, id)); } catch (e) { /* cache opcional */ } }
       receberDuravel(r, id); cachear(r, id); gravouLocal = true; loc.carregado = true; document.documentElement.dataset.armazenamento = 'pronto'; render(); consolidar();
-    }).catch(e => { if (id !== identidade) return; loc.carregado = true; document.documentElement.dataset.armazenamento = 'reserva'; loc.semIDB = e.code !== 'checkpoint-corrompido'; gravouLocal = false; loc.erro = e.message; consolidar(); render(); syncInfo(); });
+    }).catch(e => { if (id !== identidade) return; loc.carregado = true; document.documentElement.dataset.armazenamento = 'reserva'; loc.incompativel = e.code === 'checkpoint-corrompido'; loc.semIDB = e.code !== 'checkpoint-corrompido'; gravouLocal = false; loc.erro = e.message; consolidar(); render(); syncInfo(); });
     loc.timer = setInterval(() => consolidar(), 1500);
   }
   function persistir(remoto) {
     const id = identidade, antes = loc.vista || novoEstado(), meta = loc.meta || opMeta(antes), oid = opId();
-    const delta = remoto && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
+    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
+    if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
     const o = { v: 2, id: oid, conta: id, gen: loc.gen, delta, st: opCopiar(S) };
     loc.ops = (loc.ops || []).concat([o]); loc.pendente = loc.ops.length; loc.confirmando = true;
@@ -2639,7 +2654,7 @@
       const r = await transacaoConta(o.conta, ant => {
         if (ant && ((o.gen && o.gen !== ant.gen) || (ant.apagado && o.gen !== ant.gen))) throw new Error('A cópia desta conta foi apagada em outra aba; operação antiga preservada para exportação.');
         const m = ant ? ant.meta : opSemente(novoEstado());
-        return { gen: ant ? ant.gen : o.gen || opId(), meta: opUnir(m, o.delta) };
+        return Object.assign({}, ant || {}, { gen: ant ? ant.gen : o.gen || opId(), apagado: false, meta: opUnir(m, o.delta) });
       });
       // A transação já terminou. Só agora se pode remover esta operação da reserva.
       try { localStorage.removeItem(chave(DIARIO_K, o.conta) + '#' + o.id); } catch (e) { /* reaplicação é idempotente */ }
@@ -2662,14 +2677,25 @@
   }
   function consolidar() {
     if (!loc.carregado || loc.lendo) return;
-    if (loc.semIDB) { consolidarReserva(); return; }
+    if (loc.semIDB) {
+      consolidarReserva();
+      if (!loc.tentando) {
+        loc.tentando = true; const id = identidade, atual = opCopiar(S);
+        transacaoConta(id, r => {
+          if (r && r.apagado && loc.gen !== r.gen) throw new Error('Cópia apagada em outra aba; exporte o estudo antes de continuar.');
+          return Object.assign({}, r || {}, { gen: r ? r.gen : opId(), meta: opUnir(r ? r.meta : opVazio(), opMeta(atual)) });
+        }).then(r => { if (id !== identidade) return; loc.semIDB = false; loc.incompativel = false; loc.ops = []; loc.pendente = 0; loc.confirmando = false; gravouLocal = true; receberDuravel(r, id); cachear(r, id); render(); }).catch(() => null).finally(() => { loc.tentando = false; });
+      }
+      return;
+    }
     const id = identidade; loc.lendo = true;
-    const ds = lerDiariosDe(id).filter(x => x.d.v === 2 && opValida(x.d.delta));
+    const todos = lerDiariosDe(id), ds = todos.filter(x => x.d.v === 2 && opValida(x.d.delta));
     transacaoConta(id, r => {
       if (!r) return { gen: opId(), meta: opMeta(S) };
+      todos.filter(x => !x.d.delta && !((r.legados || {})[x.k] >= x.d.seq)).forEach(x => quarentenar(x.txt, id, x.k, JSON.stringify(x.d.st)));
       let m = r.meta;
       ds.forEach(({ d }) => { if (!d.gen || d.gen === r.gen) m = opUnir(m, d.delta); });
-      return { gen: r.gen, apagado: r.apagado, meta: m };
+      return Object.assign({}, r, { meta: m });
     }).then(r => {
       if (id !== identidade) return;
       const confirmadas = ds.filter(x => (!x.d.gen || x.d.gen === r.gen) && mesmoConteudo(opUnir(r.meta, x.d.delta), r.meta));
@@ -2736,9 +2762,10 @@
         o.onblocked = () => { loc.idb = null; reject(new Error('Armazenamento bloqueado por outra versão')); };
       } catch (e) { loc.idb = null; reject(e); }
     });
-    return loc.idb;
+    const atual = loc.idb; atual.catch(() => { if (loc.idb === atual) loc.idb = null; });
+    return atual;
   }
-  async function transacaoConta(id, editar) {
+  async function transacaoConta(id, editar, permitirCorrompido) {
     const db = await abrirDuravel();
     return new Promise((resolve, reject) => {
       let t, resultado;
@@ -2746,12 +2773,12 @@
         t = db.transaction(['contas', 'quarentena'], 'readwrite', { durability: 'strict' });
         const s = t.objectStore('contas'), q = s.get(id);
         q.onsuccess = () => {
-          if (q.result && !opValida(q.result.meta)) {
+          if (!permitirCorrompido && q.result && !opValida(q.result.meta)) {
             const texto = JSON.stringify(q.result); t.objectStore('quarentena').add({ conta: id, origem: 'checkpoint', texto });
             resultado = new Error('O progresso durável está ilegível. Nada foi substituído; exporte a cópia de recuperação.'); resultado.code = 'checkpoint-corrompido';
             if (id === identidade) { recuperar = texto; try { localStorage.setItem(chave(LS_REC), texto); } catch (e) { /* a transação preserva a quarentena */ } } return;
           }
-          if (q.result) q.result.meta = opMigrar(q.result.meta);
+          if (q.result && opValida(q.result.meta)) q.result.meta = opMigrar(q.result.meta);
           try {
             resultado = editar(q.result || null, t);
             if (resultado !== undefined) { if (resultado.meta) { if (!opValida(resultado.meta)) throw new Error('Operação incompatível; checkpoint anterior preservado.'); resultado.st = opEstado(resultado.meta); } s.put(resultado, id); }
@@ -2763,14 +2790,16 @@
       } catch (e) { reject(e); }
     });
   }
-  function quarentenar(texto, id, origem) {
+  function quarentenar(texto, id, origem, progresso) {
     if (typeof texto !== 'string' || !texto) return;
-    try { const k = chave(LS_REC, id); if (!localStorage.getItem(k)) localStorage.setItem(k, texto); } catch (e) { /* a cópia IDB é tentada também */ }
+    loc.quarentinas = loc.quarentinas || new Map(); const ref = id + ':' + origem; if (loc.quarentinas.get(ref) === texto) return; loc.quarentinas.set(ref, texto);
+    const copia = progresso || texto;
+    try { const k = chave(LS_REC, id); if (!localStorage.getItem(k)) localStorage.setItem(k, copia); } catch (e) { /* a cópia IDB é tentada também */ }
     abrirDuravel().then(db => {
       const t = db.transaction('quarentena', 'readwrite', { durability: 'strict' }); t.objectStore('quarentena').add({ conta: id, origem, texto });
       t.onerror = t.onabort = () => { gravouLocal = false; };
     }).catch(() => { gravouLocal = false; });
-    if (id === identidade) recuperar = texto;
+    if (id === identidade) { recuperar = copia; setTimeout(() => { if (id === identidade) render(); }, 0); }
   }
   function lerDiariosDe(id) {
     const pre = chave(DIARIO_K, id) + '#', out = [];
@@ -2786,7 +2815,7 @@
     if (!window.indexedDB) return [];
     return new Promise(resolve => {
       const o = window.indexedDB.open('eear-diarios', 1); let novo = false;
-      o.onupgradeneeded = () => { novo = true; };
+      o.onupgradeneeded = () => { novo = true; if (!o.result.objectStoreNames.contains('d')) o.result.createObjectStore('d'); };
       o.onerror = o.onblocked = () => resolve([]);
       o.onsuccess = () => {
         const db = o.result;
@@ -2807,12 +2836,12 @@
       const tab = k.slice(k.lastIndexOf('#') + 1), inc = st._abas && st._abas.inc && st._abas.inc[tab];
       if (inc !== undefined && inc >= d.seq) return;
       const base = d.base ? mesclar(d.base) : novoEstado();
-      m = opUnir(m, d.base ? opDelta(opMeta(base), base, mesclar(d.st), 'migracao:' + resumoDoc([k, d.seq])) : opMeta(mesclar(d.st)));
+      m = opUnir(m, d.base ? opDelta(opMeta(base), base, mesclar(d.st), 'migracao:' + JSON.stringify([k, d.seq])) : opMeta(mesclar(d.st)));
     }); return m;
   }
   async function apagarDuravel(id, definitivo) {
     const r = await transacaoConta(id, (ant, t) => {
-      if (!definitivo && ant && lerDiariosDe(id).some(x => x.d.delta && (!x.d.gen || x.d.gen === ant.gen) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
+      if (!definitivo && ant && opValida(ant.meta) && lerDiariosDe(id).some(x => x.d.delta && (!x.d.gen || x.d.gen === ant.gen) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
       if (!definitivo && id && ant && !ant.apagado) {
         let base = null; try { base = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null'); } catch (e) { /* sem confirmação */ }
         if (!base || !base.st || !uIgual(opEstado(ant.meta), mesclar(base.st))) throw new Error('Nada foi apagado: há progresso ainda não confirmado na nuvem.');
@@ -2820,10 +2849,10 @@
       }
       const q = t.objectStore('quarentena').openCursor(); q.onsuccess = () => { const c = q.result; if (c) { if (c.value.conta === id) c.delete(); c.continue(); } };
       return { gen: opId(), apagado: true, meta: opSemente(novoEstado()) };
-    });
+    }, true);
     // Banco legado: só depois da transação nova; nenhum progresso pessoal deve ficar no espelho antigo.
     if (window.indexedDB) await new Promise((resolve, reject) => {
-      const o = window.indexedDB.open('eear-diarios', 1); o.onerror = () => reject(o.error); o.onblocked = () => reject(new Error('Espelho antigo bloqueado'));
+      const o = window.indexedDB.open('eear-diarios', 1); o.onupgradeneeded = () => { if (!o.result.objectStoreNames.contains('d')) o.result.createObjectStore('d'); }; o.onerror = () => reject(o.error); o.onblocked = () => reject(new Error('Espelho antigo bloqueado'));
       o.onsuccess = () => { const db = o.result; if (!db.objectStoreNames.contains('d')) { db.close(); resolve(); return; }
         const t = db.transaction('d', 'readwrite', { durability: 'strict' }), q = t.objectStore('d').openCursor(), pre = chave(DIARIO_K, id) + '#';
         q.onsuccess = () => { const c = q.result; if (c) { if (String(c.key).indexOf(pre) === 0) c.delete(); c.continue(); } };
@@ -2831,5 +2860,24 @@
       };
     });
     return r;
+  }
+  async function copiasQuarentena(id, apagar) {
+    const db = await abrirDuravel();
+    return new Promise((resolve, reject) => {
+      const t = db.transaction('quarentena', apagar ? 'readwrite' : 'readonly', { durability: 'strict' }), q = t.objectStore('quarentena').openCursor(), out = [];
+      q.onsuccess = () => { const c = q.result; if (c) { if (c.value.conta === id) { out.push(c.value); if (apagar) c.delete(); } c.continue(); } };
+      t.oncomplete = () => resolve(out); t.onabort = t.onerror = () => reject(t.error);
+    });
+  }
+  async function descartarRecuperacao() {
+    const id = identidade;
+    try { await copiasQuarentena(id, true); } catch (e) { if (window.indexedDB) { msgDados = 'Não foi possível confirmar a exclusão da cópia. Tente novamente.'; render(); return; } }
+    try { localStorage.removeItem(chave(LS_REC, id)); } catch (e) { return; }
+    if (id === identidade) { recuperar = null; msgRec = ''; pedindo = null; render(); }
+  }
+  /* Confirmação de gravação é distinta de reserva e de disponibilidade da nuvem. */
+  function syncInfo() {
+    const el = document.getElementById('sync');
+    if (el) el.textContent = loc.confirmando ? 'Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.' : !gravouLocal ? 'O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.' : loc.semIDB ? 'Este navegador usa uma cópia de reserva sem proteção contra queda. Exporte em Plano › Dados antes de fechar.' : recuperar ? 'Há dados preservados para recuperação. Veja a tela Hoje ou baixe seus dados antes de continuar.' : nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.ref && !lider.ativa ? (sincronizado() ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.') : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 })();

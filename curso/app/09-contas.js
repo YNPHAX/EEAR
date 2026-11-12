@@ -99,8 +99,11 @@
     }
     return h + blocoNuvemClaude();
   }
-  function baixarDados() {
-    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: S, copiaDeRecuperacao: recuperar };
+  async function baixarDados() {
+    const id = identidade;
+    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: opCopiar(S), copiaDeRecuperacao: recuperar };
+    try { dados.quarentena = await copiasQuarentena(id, false); } catch (e) { dados.quarentena = []; }
+    if (id !== identidade) return;
     if (window.EEAR_APK) { pedindo = 'exp'; render(); return; } // no app Android não há download de arquivo: mostra o código para copiar
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' }));
