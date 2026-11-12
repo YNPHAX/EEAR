@@ -1,5 +1,6 @@
 /* Auditoria independente de retorno de abas vivas consideradas órfãs por tempo.
    EEAR_ORFAOS_CENARIOS: retorno-8s,segunda-escrita-8s,segunda-escrita-30min,crash-processo.
+   EEAR_ORFAOS_SEQUENCIAS amplia os casos segunda-escrita (padrão 2, até 30), exigindo todas as marcas e a contagem exata.
    Mesma fixture/emuladores de F01; nenhuma leitura/gravação de localStorage é falsificada.
    O caso 30min controla somente Date.now do observador e do retorno: não espera 30 minutos reais. */
 const fs = require('fs'), os = require('os'), path = require('path'), { execFileSync } = require('child_process');
@@ -39,11 +40,14 @@ async function retorno(f, nome) {
     const segunda = nome !== 'retorno-8s', oculta = nome.endsWith('30min');
     if (oculta) await B.evaluate(() => { Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
     const trava = await breakpoint(ctx, B, segunda);
-    const acao = B.evaluate(segunda => {
-      for (const k of segunda ? ['T:primeiro', 'T:segundo'] : ['T:primeiro']) {
+    const quantidade = segunda ? Number(process.env.EEAR_ORFAOS_SEQUENCIAS || 2) : 1;
+    if (!Number.isInteger(quantidade) || quantidade < 1 || quantidade > 30) throw new Error('Quantidade de sequências fora do limite de teste.');
+    const marcas = Array.from({ length: quantidade }, (_, i) => i === 0 ? 'T:primeiro' : i === 1 ? 'T:segundo' : 'T:seq-' + (i + 1));
+    const acao = B.evaluate(marcas => {
+      for (const k of marcas) {
         const b = document.createElement('button'); b.dataset.a = 'marcar'; b.dataset.k = k; document.body.appendChild(b); b.click(); b.remove();
       }
-    }, segunda).catch(() => null);
+    }, marcas).catch(() => null);
     const pausa = await trava.parada, frame = pausa.callFrames[0].callFrameId;
     const captura = await trava.cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: frame, returnByValue: true,
       expression: '({diario:JSON.parse(localStorage.getItem(chaveDiario(loc.tab))), vida:JSON.parse(localStorage.getItem(chaveVida(loc.tab))), tab:loc.tab, seq:loc.seq, exportado:JSON.parse(document.getElementById("exp-txt").value).feito})' });
@@ -57,16 +61,31 @@ async function retorno(f, nome) {
     if (!adotou || inc !== c.diario.seq || adotado.act[hj] !== 3) throw new Error('Adoção do primeiro diário não confirmada exatamente uma vez: ' + JSON.stringify(adotado));
     await delay(3300); const antesRetornar = await cache();
     if (oculta) await trava.cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: frame, expression: 'Date.now = () => ' + (c.vida.t + 1800001) });
-    await trava.cdp.send('Debugger.removeBreakpoint', { breakpointId: trava.bp.breakpointId }); await trava.cdp.send('Debugger.resume'); await acao;
-    const esperado = segunda ? 4 : 3; let st;
-    const correto = await f.ate(async () => { st = await f.estado(B); const a = await cache(); return st.act[hj] === esperado && a.act[hj] === esperado && st.feito['T:primeiro'] && (!segunda || st.feito['T:segundo']); }, 6000);
+    let historico = null, pausaFinal;
+    if (quantidade > 2) {
+      const linhas = fs.readFileSync(path.join(alvo, 'curso/app.js'), 'utf8').split('\n'), lineNumber = linhas.findIndex(l => l === '    const k = chave(LS);');
+      if (lineNumber < 0) throw new Error('Revisar o ponto nativo de consolidação.');
+      pausaFinal = new Promise((r, reject) => { const t = setTimeout(() => reject(new Error('Não atingiu a consolidação após todas as sequências')), 10000); trava.cdp.once('Debugger.paused', p => { clearTimeout(t); r(p); }); });
+      await trava.cdp.send('Debugger.setBreakpointByUrl', { url: new URL('app.js', B.url()).href, lineNumber, condition: '!!S.feito[' + JSON.stringify(marcas[marcas.length - 1]) + ']' });
+    }
+    await trava.cdp.send('Debugger.removeBreakpoint', { breakpointId: trava.bp.breakpointId }); await trava.cdp.send('Debugger.resume');
+    if (pausaFinal) {
+      const p = await pausaFinal;
+      const r = await trava.cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: p.callFrames[0].callFrameId, returnByValue: true,
+        expression: '({diario:JSON.parse(localStorage.getItem(chaveDiario(loc.tab))),inc:JSON.parse(localStorage.getItem(chave(LS)))._abas.inc[loc.tab]})' });
+      historico = { seq: r.result.value.diario.seq, inc: r.result.value.inc, ant: (r.result.value.diario.ant || []).map(x => x.seq) };
+      await trava.cdp.send('Debugger.disable');
+    }
+    await acao;
+    const esperado = 2 + quantidade, temMarcas = s => !!s && marcas.every(k => s.feito[k]); let st;
+    const correto = await f.ate(async () => { st = await f.estado(B); const a = await cache(); return st.act[hj] === esperado && a.act[hj] === esperado && temMarcas(st) && temMarcas(a); }, 6000);
     const final = await cache();
     f.rede(ctx, false); await B.evaluate(() => window.dispatchEvent(new Event('online')));
-    const nuvemCorreta = await f.ate(async () => { const s = await f.ler(conta.uid); return s && s.act[hj] === esperado && s.feito['T:primeiro'] && (!segunda || s.feito['T:segundo']); }, 10000);
+    const nuvemCorreta = await f.ate(async () => { const s = await f.ler(conta.uid); return temMarcas(s) && s.act[hj] === esperado; }, 10000);
     const servidor = await f.ler(conta.uid);
     await A.close(); await B.close(); const C = await f.pagina(ctx); const reaberto = await f.estado(C);
-    const passou = antesDoPrazo && correto && nuvemCorreta && antesRetornar.act[hj] === 3 && reaberto.act[hj] === esperado && reaberto.cfg.certs.some(c => c.c === 'ORFAO-CERT');
-    return { passou, resultado: { webLocks: false, eventosStorage: false, oculta, relogioControlado: oculta, primeiroAceito: true, diarioSeq: c.diario.seq, novaSeq: c.seq, antesDoPrazo, adotou, esperaRealMs: Date.now() - inicio, antesRetornar: antesRetornar.act[hj], esperado, UI: st.act[hj], cache: final.act[hj], feito: final.feito, servidor: servidor.act[hj], reaberto: reaberto.act[hj], correto, nuvemCorreta } };
+    const passou = antesDoPrazo && correto && nuvemCorreta && antesRetornar.act[hj] === 3 && temMarcas(reaberto) && reaberto.act[hj] === esperado && reaberto.cfg.certs.some(c => c.c === 'ORFAO-CERT');
+    return { passou, resultado: { webLocks: false, eventosStorage: false, oculta, relogioControlado: oculta, quantidade, historico, primeiroAceito: true, diarioSeq: c.diario.seq, novaSeq: c.seq, antesDoPrazo, adotou, esperaRealMs: Date.now() - inicio, antesRetornar: antesRetornar.act[hj], esperado, UI: st.act[hj], cache: final.act[hj], feito: final.feito, servidor: servidor.act[hj], reaberto: reaberto.act[hj], correto, nuvemCorreta } };
   } finally { await ctx.close(); }
 }
 

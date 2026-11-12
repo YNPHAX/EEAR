@@ -1,0 +1,554 @@
+EVIDÊNCIAS INDEPENDENTES — EEAR — 12/11/2026 UTC
+SHA alvo: 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Branch de entrega: codex/auditoria-firebase-eear; parent 76c013dbcf0ded12086c35f7a8331252f2f0a886.
+Worktree alvo limpo: ''
+Somente emuladores, dados fictícios e localhost. Nenhum merge/deploy/publicação de regras/Firebase real.
+Node 24.22.1; Java 21.0.13; Firebase CLI 15.35.0; SDK 12.19.0; Playwright 1.63.0/Chromium.
+EEAR_REPO_ALVO=/tmp/eear-2f6cad6
+NODE_PATH=/tmp/eear-audit-deps/node_modules
+PLAYWRIGHT_BROWSERS_PATH=/tmp/eear-audit-browsers
+EEAR_FIREBASE_SDK=/tmp/eear-audit-deps/node_modules/firebase
+EEAR_FIREBASE_CLI=/tmp/eear-audit-deps/node_modules/.bin/firebase
+Auth/Firestore independentes: demo-eear-f01 em 9199/8180; suíte do candidato: demo-eear em 9099/8080.
+Hosting: demo-eear-hosting em 5200. Emuladores sequenciais para evitar colisão na porta 9150.
+Os códigos 1 abaixo são falhas diagnósticas esperadas dos achados, não sucesso nem erro de infraestrutura.
+F13: EEAR_F13_PONTO=ultima-conferencia; padrão mantém a primeira leitura.
+Nove sequências: EEAR_ORFAOS_CENARIOS=segunda-escrita-8s EEAR_ORFAOS_SEQUENCIAS=9.
+Controle ACK: EEAR_ACK_CONFIRMAR_ANTES=1. F08: EEAR_F01_RISCOS=zerar-unica.
+IDB repetição: EEAR_DURAVEL_CENARIOS=zerar-estudar,duas-quedas.
+Legado: EEAR_REPO_LEGADO=/tmp/eear-8bd32d2; app.js antigo servido intacto, após crash três abas usam o candidato.
+Firebase candidato: EEAR_FIREBASE_CONFIG=/tmp/eear-2f6-evidence/config-externa-inexistente.json EEAR_SONDA_ABAS=1.
+Plataforma: EEAR_FIREBASE_CONFIG=/tmp/eear-2f6-evidence/sem-firebase.json, conteúdo null.
+
+SHA256 DOS TESTES PRESERVADOS/AMPLIADOS
+b367dd5e599c71bb570a90f2f87ea7e24676c1ddebf7e023cdde23df7e6ee777  testes/f01-abas.test.js  idêntico a 76c013d
+1d4f30fc985645a4cde9d90865fa14dd4b451507e02eddbc533f31c0dcbd03d8  testes/f01-fixture.js  idêntico a 76c013d
+e920cfcebdba5fbde47a4e2670328165141738ad2a582bae589ac919f92e6aae  testes/f01-riscos.test.js  idêntico a 76c013d
+aad18b74b5c85a6ce84a58717c105bc9edbfc6c35ff08444a1ec32482c45f833  testes/diarios-auditoria.test.js  idêntico a 76c013d
+a6899f1b92cf80167d92bfce50b2d8e1425ec784550758669dc1d3f7129ad409  testes/ciclo-sincronia.test.js  idêntico a 76c013d
+a011d5d33f680a63c7619647ef4608e77b81774869a2d22888ead484aa819f3d  testes/noturna-integridade.test.js  idêntico a 76c013d
+a6b49e6c6cf97e48ed6d422697613a454cab8c387995ea425946a05b8b9ece00  testes/noturna-falhas.test.js  idêntico a 76c013d
+b325ba7e74fcff58234e69317d7ee2532a6ed2c1a41e94a02e6bc6da5f3af5fb  testes/noturna-seguranca.test.js  idêntico a 76c013d
+c6bec79b49c583ffca61953aba0df1832e617d39dfc6aa2cee2f9efef9fddb20  testes/noturna-confirmacao.test.js  idêntico a 76c013d
+aa5325f089635150bc66cd153a1b39ff5a4b4140a99691121afeda53596355b4  testes/concorrencia-fallback.test.js  ampliado
+c56963e317c03ded08f42130868779f2bd1729819c734d44cf73861b8f19665a  testes/orfaos-auditoria.test.js  ampliado
+53af9200b21bf50af5e842e21112dde5f01157698d4bb31b8bae4c480504b625  testes/duravel-candidato.test.js  novo
+9839619f38ab7203c6911fb8ce69f49dca53110735a3332bd90021265a326897  testes/diario-legado-auditoria.test.js  novo
+42aba9fef032eb22a2bb64f7faf1e406bbea51b388b51a9593e9bb54a9d17ef2  testes/hosting-contexto-auditoria.py  novo
+
+SHA256 DO CÓDIGO ALVO, SEM EDIÇÕES
+8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef  curso/app.js
+53b61206beefa4f5c6075e93b9257f13da7d4d98dfda87bcc28166efe77e0c74  curso/app/14-abas.js
+12d965adfd32a567345b7709ec4538caf1320264cf6d9710a6983f06d7903d1c  curso/app/16-diario-duravel.js
+6eefdfc63cd26af42e210369378e9bd0156f74de778b693b55de12d71b461418  web/verificar_publicacao.py
+18a264318c2a3cc906489198f14b34644d7acf66c7ea69dbef2a3a415dd60a9e  web/firestore.rules
+
+n-resultados.json
+[
+  {
+    "suite": "n-integridade-original",
+    "exit": 1
+  },
+  {
+    "suite": "n-falhas-original",
+    "exit": 1
+  },
+  {
+    "suite": "n-seguranca-original",
+    "exit": 1
+  },
+  {
+    "suite": "f09-ack-original",
+    "exit": 1
+  }
+]
+
+regressoes-resultados.json
+[
+  {
+    "suite": "f01-oito",
+    "exit": 0
+  },
+  {
+    "suite": "f13-leitura-original",
+    "exit": 0
+  },
+  {
+    "suite": "f13-ultima-conferencia",
+    "exit": 1
+  },
+  {
+    "suite": "orfaos-dois",
+    "exit": 0
+  },
+  {
+    "suite": "orfaos-nove",
+    "exit": 1
+  },
+  {
+    "suite": "diarios-original",
+    "exit": 0
+  },
+  {
+    "suite": "riscos-original",
+    "exit": 0
+  }
+]
+
+repeticoes-resultados.json
+[
+  {
+    "suite": "f13-repeticao",
+    "exit": 1
+  },
+  {
+    "suite": "orfaos-nove-repeticao",
+    "exit": 1
+  },
+  {
+    "suite": "f09-ack-controle",
+    "exit": 0
+  },
+  {
+    "suite": "f08-unica",
+    "exit": 0
+  }
+]
+
+complementares-resultados.json
+[
+  {
+    "suite": "diario-legado",
+    "exit": 0
+  },
+  {
+    "suite": "crash-processo-original",
+    "exit": 0
+  },
+  {
+    "suite": "orfaos-nove-final",
+    "exit": 1
+  },
+  {
+    "suite": "firebase-candidato",
+    "exit": 0
+  }
+]
+
+LOG /tmp/eear-2f6-evidence/f01-oito.log
+SHA256 79d8b4b9b4b925017dc244aade236e34a5b25050b3b1b373e67ec1544c4502a2
+F01: alvo /tmp/eear-2f6cad6, commit 2f6cad6ebba53d0f86319dcada671fe9396f8111
+F01: alvo /tmp/eear-2f6cad6, commit 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ dispositivos: {"aceitoA":["T:base","T:remover","T:A"],"aceitoB":["T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ fechar-A: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:base","T:remover","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+✓ fechar-B: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ desmarcar: {"aceitoA":["T:B","T:base"],"aceitoB":["T:base","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+✓ zerar: {"aceitoA":["T:depois-zerar"],"aceitoB":["T:depois-zerar"],"offline":true,"servidor":true,"paginas":[true]}
+✓ certificado: {"aceitoA":["T:B","T:base","T:remover"],"aceitoB":["T:base","T:remover","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+✓ reconectar: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:base","T:remover","T:B"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ zerar-duplo: {"aceitoA":["T:A","T:B"],"aceitoB":["T:A","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+F01: 8/8 cenários passaram; 0 falha(s). Parecer não alterado automaticamente.
+
+LOG /tmp/eear-2f6-evidence/n-integridade-original.log
+SHA256 aeacbf2edd73e22bd71ae64f936620a01b7bc297568947158360edf88ed16dbc
+Noturna: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Noturna: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✗ sair-apagar: {"dadosAntes":4,"dadosDepois":[{"chave":"missao-eear-v1-diario@firebase:<UID_FICTICIO>#t216188t6mwde9aak","nomeRetido":true,"estudoRetido":true},{"chave":"missao-eear-v1-local-apagado@firebase:<UID_FICTICIO>","nomeRetido":false,"estudoRetido":false}],"aposReabrir":2,"servidorExiste":true,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem."}
+✗ excluir-conta: {"dadosAntes":4,"dadosDepois":[{"chave":"missao-eear-v1-diario@firebase:<UID_FICTICIO>#t6oh9p4vlmwde9e2s","nomeRetido":true,"estudoRetido":true},{"chave":"missao-eear-v1-local-apagado@firebase:<UID_FICTICIO>","nomeRetido":false,"estudoRetido":false}],"aposReabrir":2,"servidorExiste":false,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos."}
+✗ outra-sessao: {"aceitoOffline":true,"documentoApagado":true,"novoLoginHTTP":400,"outraSessaoAindaConectada":true,"documentoRecriado":true,"nomeRecriado":true,"feito":{"T:base":true,"T:offline":true}}
+✗ diario-corrompido: {"preservadoExato":false,"original":false,"backup":false,"restantes":0,"avisoRecuperacao":0}
+✓ diario-futuro: {"preservadoExato":true,"original":true,"backup":false,"restantes":1,"avisoRecuperacao":0}
+✗ atividade-dispositivos: {"aceitos":{"A":3,"B":3,"simuladosA":0,"simuladosB":0,"registrosIguais":true,"idsDistintos":null},"convergiu":false,"esperadoAtividade":4,"atividadeServidor":3,"simuladosServidor":0,"atividadeReaberto":3,"feito":{"T:A-independente":true,"T:B-independente":true,"T:base":true}}
+✗ simulados-iguais: {"aceitos":{"A":3,"B":3,"simuladosA":1,"simuladosB":1,"registrosIguais":true,"idsDistintos":true},"convergiu":false,"esperadoAtividade":4,"atividadeServidor":3,"simuladosServidor":2,"atividadeReaberto":3,"feito":{"T:base":true}}
+Noturna: 6 falha(s) em 7 cenários.
+
+LOG /tmp/eear-2f6-evidence/n-falhas-original.log
+SHA256 fbf0efe9ca688f8d4cbd7b68f3b7c98c7ef4fb1cf1407b3261e27878cae9cf88
+Falhas noturnas: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Falhas noturnas: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✗ quota-real: {"quota":{"caracteres":5240741,"negou":true},"aceitaNaUI":true,"principal":false,"diario":false,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","alertas":[],"avisou":false,"recuperou":false}
+✓ seis-abas: {"abas":6,"alteracoes":150,"esperado":152,"atividade":152,"marcacoes":150,"convergiu":true,"reabriu":true,"chegou":true,"duracaoMs":5774}
+✗ lider-pausada: {"local":true,"principal":true,"diario":true,"enviouPausada":false,"enviouRetorno":true,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","lider":"A"}
+✓ indexeddb-indisponivel: {"sessaoPersistiuSemIndexedDB":true,"progresso":{"T:base":true,"T:sem-idb":true},"chegou":true}
+Falhas noturnas: 2 falha(s) em 4 cenários.
+
+LOG /tmp/eear-2f6-evidence/n-seguranca-original.log
+SHA256 8b62f21a3ec29aaeffd1dd2c6703d22e5c0378ed687d853b97d2a1659b094aeb
+Segurança noturna: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Segurança noturna: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ regras: {"resultados":[{"caso":"próprio get","esperado":200,"observado":200},{"caso":"outro UID get","esperado":403,"observado":403},{"caso":"sem autenticação","esperado":403,"observado":403},{"caso":"listagem","esperado":403,"observado":403},{"caso":"subcoleção","esperado":403,"observado":403},{"caso":"query só do UID próprio continua list","esperado":403,"observado":403},{"caso":"agregação count","esperado":403,"observado":403},{"caso":"batch misto próprio/outro UID","esperado":403,"observado":403}],"batchAtomicoPreservouProprio":true}
+✗ dias: {"campo":"dias","tipoInvalido":"null","erros":["Cannot read properties of null (reading 'indexOf')"],"acessoDados":0,"tipoPersistido":"null","corpoCaracteres":321}
+✗ excl: {"campo":"excl","tipoInvalido":"objeto","erros":["object is not iterable (cannot read property Symbol(Symbol.iterator))"],"acessoDados":0,"tipoPersistido":"object","corpoCaracteres":321}
+✗ nome: {"campo":"nome","tipoInvalido":"objeto","erros":["(S.cfg.nome || \"\").trim is not a function"],"acessoDados":1,"tipoPersistido":"object","corpoCaracteres":7976}
+Segurança noturna: 3 falha(s) em 4 cenários.
+
+LOG /tmp/eear-2f6-evidence/f09-ack-original.log
+SHA256 3f20f0b58f6b38846b8434bfd1facd696b44aca2ef39db7e1c11e1f7f59aef27
+Confirmação noturna: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Confirmação noturna: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✗ commit-sem-confirmacao: {"confirmarAntesNovoEstudo":false,"commitHTTP":200,"baseAntes":2,"servidorAntes":3,"aceito":true,"voltou":true,"offlineAtividade":3,"chegou":false,"visivel":false,"atividadeFinal":5,"servidorFinal":5,"marcacoesFinais":{"T:ack-interrompido":true,"T:apos-reabrir":true,"T:base":true},"certificado":true}
+
+LOG /tmp/eear-2f6-evidence/f09-ack-controle.log
+SHA256 cba7e780316240bfcb044e43e4ebef48845ffd51733e330a64df59ee66707a23
+Confirmação noturna: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Confirmação noturna: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ commit-sem-confirmacao: {"confirmarAntesNovoEstudo":true,"commitHTTP":200,"baseAntes":2,"servidorAntes":3,"aceito":true,"voltou":true,"offlineAtividade":3,"chegou":true,"visivel":true,"atividadeFinal":4,"servidorFinal":4,"marcacoesFinais":{"T:ack-interrompido":true,"T:base":true,"T:apos-reabrir":true},"certificado":true}
+
+LOG /tmp/eear-2f6-evidence/f13-leitura-original.log
+SHA256 b04543f8f53047f9d6cd0b43f1051928b430473c278e330e3b22ee136917464b
+Concorrência fallback: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Concorrência fallback: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ limpeza-concorrente: {"ponto":"depois da primeira leitura","webLocks":false,"aceitoB":true,"persistidoB":true,"recibosAntes":1,"espelhosAntes":1,"limpou":true,"limpouIDB":true,"limpezaMs":2290,"aposLimpeza":{"T:base":true,"T:B":true},"principalA":{"T:A":true,"T:B":true,"T:base":true},"recuperou":true,"recibosDepois":0,"espelhosDepois":0,"exportado":{"T:A":true,"T:B":true,"T:base":true},"principalD":{"T:A":true,"T:B":true,"T:base":true},"servidor":{"T:A":true,"T:B":true,"T:base":true},"atividade":4,"aviso":"Progresso salvo na sua conta."}
+
+LOG /tmp/eear-2f6-evidence/f13-ultima-conferencia.log
+SHA256 ecc01b58cf89f358cf1607e456a9fdb216a85bb1466b443fa287b4738861bc22
+Concorrência fallback: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Concorrência fallback: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✗ limpeza-concorrente: {"ponto":"depois da última conferência, antes do setItem","webLocks":false,"aceitoB":true,"persistidoB":true,"recibosAntes":1,"espelhosAntes":1,"limpou":true,"limpouIDB":true,"limpezaMs":2457,"aposLimpeza":{"T:base":true,"T:B":true},"principalA":{"T:base":true,"T:A":true},"recuperou":false,"recibosDepois":0,"espelhosDepois":0,"exportado":{"T:base":true,"T:A":true},"principalD":{"T:base":true,"T:A":true},"servidor":{"T:A":true,"T:base":true},"atividade":3,"aviso":"Progresso salvo na sua conta."}
+
+LOG /tmp/eear-2f6-evidence/f13-repeticao.log
+SHA256 5e5b6931cf0e2d7329acc699870ecc1fbf9c9b415be83da67d68c5ae2c655d78
+Concorrência fallback: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Concorrência fallback: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✗ limpeza-concorrente: {"ponto":"depois da última conferência, antes do setItem","webLocks":false,"aceitoB":true,"persistidoB":true,"recibosAntes":1,"espelhosAntes":1,"limpou":true,"limpouIDB":true,"limpezaMs":2291,"aposLimpeza":{"T:base":true,"T:B":true},"principalA":{"T:base":true,"T:A":true},"recuperou":false,"recibosDepois":0,"espelhosDepois":0,"exportado":{"T:base":true,"T:A":true},"principalD":{"T:base":true,"T:A":true},"servidor":{"T:A":true,"T:base":true},"atividade":3,"aviso":"Progresso salvo na sua conta."}
+
+LOG /tmp/eear-2f6-evidence/orfaos-dois.log
+SHA256 d7abda01f5ecab847998759bf318f0c86357c9c4b2e1d72c497295e4ee73e16c
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ retorno-8s: {"webLocks":false,"eventosStorage":false,"oculta":false,"relogioControlado":false,"quantidade":1,"historico":null,"primeiroAceito":true,"diarioSeq":2,"novaSeq":2,"antesDoPrazo":true,"adotou":true,"esperaRealMs":13125,"antesRetornar":3,"esperado":3,"UI":3,"cache":3,"feito":{"T:base":true,"T:primeiro":true},"servidor":3,"reaberto":3,"correto":true,"nuvemCorreta":true}
+✓ segunda-escrita-8s: {"webLocks":false,"eventosStorage":false,"oculta":false,"relogioControlado":false,"quantidade":2,"historico":null,"primeiroAceito":true,"diarioSeq":1,"novaSeq":2,"antesDoPrazo":true,"adotou":true,"esperaRealMs":12005,"antesRetornar":3,"esperado":4,"UI":4,"cache":4,"feito":{"T:base":true,"T:primeiro":true,"T:segundo":true},"servidor":4,"reaberto":4,"correto":true,"nuvemCorreta":true}
+✓ segunda-escrita-30min: {"webLocks":false,"eventosStorage":false,"oculta":true,"relogioControlado":true,"quantidade":2,"historico":null,"primeiroAceito":true,"diarioSeq":1,"novaSeq":2,"antesDoPrazo":true,"adotou":true,"esperaRealMs":9203,"antesRetornar":3,"esperado":4,"UI":4,"cache":4,"feito":{"T:base":true,"T:primeiro":true,"T:segundo":true},"servidor":4,"reaberto":4,"correto":true,"nuvemCorreta":true}
+Órfãos: 0 falha(s) em 3 cenários.
+
+LOG /tmp/eear-2f6-evidence/orfaos-nove.log
+SHA256 38ac7994c4eba72e7ab4b383145b3909b240cf9aff095f23cbac5868936f0502
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✗ segunda-escrita-8s: {"webLocks":false,"eventosStorage":false,"oculta":false,"relogioControlado":false,"quantidade":9,"historico":{"seq":9,"inc":1,"ant":[3,4,5,6,7,8]},"primeiroAceito":true,"diarioSeq":1,"novaSeq":2,"antesDoPrazo":true,"adotou":true,"esperaRealMs":28055,"antesRetornar":3,"esperado":11,"UI":12,"cache":12,"feito":{"T:base":true,"T:primeiro":true,"T:segundo":true,"T:seq-3":true,"T:seq-4":true,"T:seq-5":true,"T:seq-6":true,"T:seq-7":true,"T:seq-8":true,"T:seq-9":true},"servidor":12,"reaberto":12,"correto":false,"nuvemCorreta":false}
+Órfãos: 1 falha(s) em 1 cenários.
+
+LOG /tmp/eear-2f6-evidence/orfaos-nove-repeticao.log
+SHA256 c9fd99361b0afdc9420223d4b60bdfd5273558deba64630e8c548159e664d6d0
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✗ segunda-escrita-8s: {"webLocks":false,"eventosStorage":false,"oculta":false,"relogioControlado":false,"quantidade":9,"historico":{"seq":9,"inc":1,"ant":[3,4,5,6,7,8]},"primeiroAceito":true,"diarioSeq":1,"novaSeq":2,"antesDoPrazo":true,"adotou":true,"esperaRealMs":27810,"antesRetornar":3,"esperado":11,"UI":12,"cache":12,"feito":{"T:base":true,"T:primeiro":true,"T:segundo":true,"T:seq-3":true,"T:seq-4":true,"T:seq-5":true,"T:seq-6":true,"T:seq-7":true,"T:seq-8":true,"T:seq-9":true},"servidor":12,"reaberto":12,"correto":false,"nuvemCorreta":false}
+Órfãos: 1 falha(s) em 1 cenários.
+
+LOG /tmp/eear-2f6-evidence/orfaos-nove-final.log
+SHA256 7ef9b0a56e5dddb64d53135923c419f1abecbb922d162f7bf26e6aac5ba3922f
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✗ segunda-escrita-8s: {"webLocks":false,"eventosStorage":false,"oculta":false,"relogioControlado":false,"quantidade":9,"historico":{"seq":10,"inc":2,"ant":[4,5,6,7,8,9]},"primeiroAceito":true,"diarioSeq":2,"novaSeq":3,"antesDoPrazo":true,"adotou":true,"esperaRealMs":28003,"antesRetornar":3,"esperado":11,"UI":12,"cache":12,"feito":{"T:base":true,"T:primeiro":true,"T:segundo":true,"T:seq-3":true,"T:seq-4":true,"T:seq-5":true,"T:seq-6":true,"T:seq-7":true,"T:seq-8":true,"T:seq-9":true},"servidor":12,"reaberto":12,"correto":false,"nuvemCorreta":false}
+Órfãos: 1 falha(s) em 1 cenários.
+
+LOG /tmp/eear-2f6-evidence/diarios-original.log
+SHA256 385b72896ee7c4eee9d169a8adaa1003cca06e29f26b282e502426c37b29e0b0
+Diários: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Diários: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ apos-diario: {"webLocks":true,"interrupcao":"fechamento","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":false,"principalJaContinha":false,"ponto":{"scriptId":"28","lineNumber":2516,"columnNumber":4},"aposHandlerDeSalvar":false,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"diariosAntesExcluir":1,"ofereceuExcluir":false,"diarioDepois":1,"aviso":"Progresso salvo na sua conta."}
+✓ apos-diario-crash: {"webLocks":true,"interrupcao":"Page.crash","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":false,"principalJaContinha":false,"ponto":{"scriptId":"28","lineNumber":2516,"columnNumber":4},"aposHandlerDeSalvar":false,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"diariosAntesExcluir":1,"ofereceuExcluir":false,"diarioDepois":1,"aviso":"Progresso salvo na sua conta."}
+✓ sem-web-locks: {"webLocks":false,"interrupcao":"fechamento","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"29","lineNumber":2551,"columnNumber":14},"aposHandlerDeSalvar":true,"recuperado":true,"chegou":true,"exportado":{"T:aceita":true,"T:base":true},"diariosAntesExcluir":1,"ofereceuExcluir":false,"diarioDepois":1,"aviso":"Progresso salvo na sua conta."}
+✓ sem-web-locks-crash: {"webLocks":false,"interrupcao":"Page.crash","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"29","lineNumber":2551,"columnNumber":14},"aposHandlerDeSalvar":true,"recuperado":true,"chegou":true,"exportado":{"T:aceita":true,"T:base":true},"diariosAntesExcluir":1,"ofereceuExcluir":false,"diarioDepois":1,"aviso":"Progresso salvo na sua conta."}
+✓ exclusao-com-diario-pendente: {"webLocks":true,"aceitaNaExportacao":true,"principalJaContinha":false,"duraveisAntes":1,"avisoAntes":"Progresso salvo na sua conta.","ofereceuExcluir":false,"duraveisDepois":1,"recuperado":true,"chegou":true,"exportado":{"T:base":true,"T:aceita":true},"servidor":{"T:aceita":true,"T:base":true}}
+✓ concorrencia-intensa: {"paginas":4,"alteracoes":200,"totalEsperado":202,"atividade":202,"marcacoes":201,"convergiu":true,"recuperado":true,"chegou":true}
+✓ sem-notificacoes: {"recuperouViva":true,"diarios":1,"recuperouFria":true,"estado":{"T:ativa":true,"T:base":true,"T:orfao":true}}
+✓ lider-suspensa: {"lider":"A","papelB":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","local":true,"enviouCongelada":true,"enviouDepois":true,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem."}
+Diários: 0 falha(s) em 8 cenários.
+
+LOG /tmp/eear-2f6-evidence/riscos-original.log
+SHA256 fd9e08aadbc4aa1c2a1a12f937478f90986625680bdf3bd30ec34c1a09d57023
+Riscos F01: 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Riscos F01: 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ zerar-nuvem: {"aceito":{"t":1794479346659,"certsZ":1794479346628,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"offline":{"t":1794479346659,"certsZ":1794479346628,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"servidor":{"t":1794479346659,"certsZ":1794479346628,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"antesReabrir":{"t":1794479346659,"certsZ":1794479346628,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794479346659,"certsZ":1794479346628,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}}}
+✓ suspensa: {"t":1794479350295,"certsZ":1794479350287,"certs":[],"feito":{"T:apos-suspensao":true},"act":{"2026-11-12":1}}
+✓ exclusao-surda: {"removido":true,"restaurado":{"t":1794479351959,"certsZ":0,"certs":[],"feito":{"T:novo":true},"act":{"2026-11-12":1}}}
+✓ contagens: {"esperado":62,"A":62,"B":62,"cache":62,"marcacoes":61}
+✓ escrita-interrompida: {"diario":true,"BconfirmadaAntesDeFechar":true,"principalAntesDeFechar":{"t":1794479355726,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:base":true,"T:A-race":true},"act":{"2026-11-12":3}},"aposFecharAmbas":{"t":1794479355732,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:A-race":true,"T:B-race":true,"T:base":true},"act":{"2026-11-12":4}},"cache":{"t":1794479355732,"certsZ":0,"certs":["RISCO-CERT"],"feito":{"T:A-race":true,"T:B-race":true,"T:base":true},"act":{"2026-11-12":4}},"breakpointAposSetItem":true}
+Riscos: 0 falha(s) em 5 investigações.
+
+LOG /tmp/eear-2f6-evidence/f08-unica.log
+SHA256 7a5d3269c1bc658637d73e5c8bfc98343e8b43c4408f570e3668af8544f97946
+Riscos F01: 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Riscos F01: 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ zerar-unica: {"aceito":{"t":1794480003102,"certsZ":1794480003084,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"offline":{"t":1794480003102,"certsZ":1794480003084,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"servidor":{"t":1794480003102,"certsZ":1794480003084,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"antesReabrir":{"t":1794480003102,"certsZ":1794480003084,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794480003102,"certsZ":1794480003084,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-12":1}}}
+Riscos: 0 falha(s) em 1 investigações.
+
+LOG /tmp/eear-2f6-evidence/duravel-primeira.log
+SHA256 11038c3ee2b1b340e5b191eff3a7031009eb7267954bf55bbc9f48dd23d91dcc
+Durável independente: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Durável independente: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ marca: {"aceito":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0},"confirmouIDB":true,"antes":{"principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":2,"ts":1794479515217,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}],"idb":[{"seq":2,"ts":1794479515217,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}]},"antesDoApp":{"principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":1,"ts":1794479508663,"feito":{"T:base":true},"baseZ":0,"z":0}],"idb":[{"seq":2,"ts":1794479515217,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}]},"recuperou":true,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0,"certs":["DURAVEL-CERT"]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ zerar: {"aceito":{"feito":{},"act":{},"z":1794479526454},"confirmouIDB":true,"antes":{"principal":{"feito":{},"act":{},"certsZ":1794479526454,"certs":[]},"ls":[{"seq":2,"ts":1794479526454,"feito":{},"baseZ":0,"z":1794479526454}],"idb":[{"seq":2,"ts":1794479526454,"feito":{},"baseZ":0,"z":1794479526454}]},"antesDoApp":{"principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":1,"ts":1794479519873,"feito":{"T:base":true},"baseZ":0,"z":0}],"idb":[{"seq":2,"ts":1794479526454,"feito":{},"baseZ":0,"z":1794479526454}]},"recuperou":true,"primeira":{"feito":{},"act":{},"z":1794479526454,"certs":[]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✗ zerar-estudar: {"aceito":{"feito":{"T:novo":true},"act":{"2026-11-12":1},"z":1794479537985},"confirmouIDB":true,"antes":{"principal":{"feito":{"T:novo":true},"act":{"2026-11-12":1},"certsZ":1794479537985,"certs":[]},"ls":[{"seq":3,"ts":1794479538002,"feito":{"T:novo":true},"baseZ":1794479537985,"z":1794479537985}],"idb":[{"seq":3,"ts":1794479538002,"feito":{"T:novo":true},"baseZ":1794479537985,"z":1794479537985}]},"antesDoApp":{"principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":1,"ts":1794479531384,"feito":{"T:base":true},"baseZ":0,"z":0}],"idb":[{"seq":3,"ts":1794479538002,"feito":{"T:novo":true},"baseZ":1794479537985,"z":1794479537985}]},"recuperou":false,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":1794479537985,"certs":[]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✗ duas-quedas: {"aceito":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0},"confirmouIDB":true,"antes":{"principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":2,"ts":1794479557390,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}],"idb":[{"seq":2,"ts":1794479557390,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}]},"antesDoApp":{"principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":1,"ts":1794479550832,"feito":{"T:base":true},"baseZ":0,"z":0}],"idb":[{"seq":2,"ts":1794479557390,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}]},"recuperou":true,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0,"certs":["DURAVEL-CERT"]},"depoisLimpeza":{"principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":2,"ts":1794479557390,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}],"idb":[]},"segundaPre":{"principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":1,"ts":1794479550832,"feito":{"T:base":true},"baseZ":0,"z":0}],"idb":[]},"recuperouSegunda":false,"segundoEstado":{"feito":{"T:base":true},"act":{"2026-11-12":2}}}
+Durável: 2 falha(s) em 4 cenários.
+
+LOG /tmp/eear-2f6-evidence/duravel-repeticao.log
+SHA256 7d6f2153efdd3c78dd918fd259bc45ad3ea5158dbfd5f5a6157715cf080e057e
+Durável independente: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Durável independente: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✗ zerar-estudar: {"aceito":{"feito":{"T:novo":true},"act":{"2026-11-12":1},"z":1794479795675},"confirmouIDB":true,"antes":{"principal":{"feito":{"T:novo":true},"act":{"2026-11-12":1},"certsZ":1794479795675,"certs":[]},"ls":[{"seq":3,"ts":1794479795703,"feito":{"T:novo":true},"baseZ":1794479795675,"z":1794479795675}],"idb":[{"seq":3,"ts":1794479795703,"feito":{"T:novo":true},"baseZ":1794479795675,"z":1794479795675}]},"antesDoApp":{"principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":1,"ts":1794479789068,"feito":{"T:base":true},"baseZ":0,"z":0}],"idb":[{"seq":3,"ts":1794479795703,"feito":{"T:novo":true},"baseZ":1794479795675,"z":1794479795675}]},"recuperou":false,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":1794479795675,"certs":[]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✗ duas-quedas: {"aceito":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0},"confirmouIDB":true,"antes":{"principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":2,"ts":1794479813853,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}],"idb":[{"seq":2,"ts":1794479813853,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}]},"antesDoApp":{"principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":1,"ts":1794479807329,"feito":{"T:base":true},"baseZ":0,"z":0}],"idb":[{"seq":2,"ts":1794479813853,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}]},"recuperou":true,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0,"certs":["DURAVEL-CERT"]},"depoisLimpeza":{"principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":2,"ts":1794479813853,"feito":{"T:base":true,"T:novo":true},"baseZ":0,"z":0}],"idb":[]},"segundaPre":{"principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[{"seq":1,"ts":1794479807329,"feito":{"T:base":true},"baseZ":0,"z":0}],"idb":[]},"recuperouSegunda":false,"segundoEstado":{"feito":{"T:base":true},"act":{"2026-11-12":2}}}
+Durável: 2 falha(s) em 2 cenários.
+
+LOG /tmp/eear-2f6-evidence/diario-legado.log
+SHA256 9d2ce6d0d190f1c477119c99460a5a75ed18d25ccadc739451047d38f6442666
+✓ diario-legado-tres-abas: {"aceiteAntigo":true,"camposLegados":["seq","bid","base","st"],"semTs":true,"semAnt":true,"recuperou":true,"contagens":[3,3,3],"reaberto":3,"feito":{"T:base":true,"T:legado":true}}
+
+LOG /tmp/eear-2f6-evidence/crash-processo-original.log
+SHA256 b34c7a718a45cba757200e80a73a44a548c0b725007ab000d38eef83567052e0
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+Órfãos: alvo 2f6cad6ebba53d0f86319dcada671fe9396f8111
+✓ crash-processo: {"interrupcao":"Browser.crash","perfilPersistente":true,"esperaAntesCrash":1200,"aceitaNaUI":true,"diarioLegivel":true,"ofereceuExcluir":false,"principalAntes":{"T:base":true},"preApp":{"principalPresente":false,"diarios":0,"diarioContinhaMarcacao":false},"recuperou":true,"chegou":true,"estado":{"T:base":true,"T:primeiro":true},"atividade":3}
+Órfãos: 0 falha(s) em 1 cenários.
+
+LOG /tmp/eear-2f6-evidence/ciclo-sessao.log
+SHA256 998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}
+
+LOG /tmp/eear-2f6-evidence/hosting-anterior.log
+SHA256 7f46dc3ddb02fdd68eed4f2c1491bce8ff8f5b855e6ef8c9840ad46a073a4f82
+✓ alias padrão aponta ao projeto de teste
+✓ artefatos de homologação em diretório separado
+✓ Hosting declara predeploy (necessário; conteúdo exige auditoria) — sem hook, o CLI não executa o verificador Python
+✓ nenhuma reescrita do app intercepta o handler reservado de OAuth
+✓ build oficial permitido no modo oficial
+✓ build eear-teste aceito só como homologação
+✓ authDomain de outro projeto recusado no build
+✓ projectId de produção recusado no build
+✓ sem-marcador é recusado por --site — exit=1
+✓ projeto-divergente é recusado por --homologacao — exit=1
+✓ marcador em página auxiliar não habilita app oficial como homologação — exit=1
+Hosting: 0 falha(s); nenhuma operação no Firebase real.
+
+LOG /tmp/eear-2f6-evidence/hosting-gates.log
+SHA256 e84514813e87c43910dfddd1c5439cd466f410027d587f94d845496e7751ffaa
+✓ artefato e destino de teste: exit=0; esperado=permitir
+✓ destino de produção: exit=1; esperado=recusar
+✓ destino vazio: exit=1; esperado=recusar
+✓ pasta ausente: exit=2; esperado=recusar
+✓ artefato oficial: exit=1; esperado=recusar
+✓ configuração divergente: exit=1; esperado=recusar
+✓ duas configurações literais: exit=1; esperado=recusar
+✓ arquivo proibido pelo verificador de conteúdo: exit=1; esperado=recusar
+✓ configuração apenas em comentário não habilita homologação: exit=1; esperado=recusar
+✓ configuração sobrescrita por script antes do app: exit=1; esperado=recusar
+✓ configuração em comentário JavaScript não habilita homologação: exit=1; esperado=recusar
+✓ configuração em script não executável não habilita homologação: exit=1; esperado=recusar
+Gates: 0 falha(s). Sem deploy; configurações fictícias não executaram SDK.
+
+LOG /tmp/eear-2f6-evidence/hosting-contexto.log
+SHA256 2297cc98fb17ea0680025644dc0a4ebe7df6856adb6e0963f8e464bfd9dc5914
+✓ canonica-ativa: {"gateExit": 0, "configExecutada": true, "projetoRuntime": "eear-teste", "deveriaAceitar": true}
+✗ canonica-em-script-texto: {"gateExit": 0, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+✗ canonica-em-template-com-comentario: {"gateExit": 0, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+Contexto H02: 2 falha(s). Sem deploy, SDK ou Firebase real.
+
+LOG /tmp/eear-2f6-evidence/hosting-contexto-repeticao.log
+SHA256 2297cc98fb17ea0680025644dc0a4ebe7df6856adb6e0963f8e464bfd9dc5914
+✓ canonica-ativa: {"gateExit": 0, "configExecutada": true, "projetoRuntime": "eear-teste", "deveriaAceitar": true}
+✗ canonica-em-script-texto: {"gateExit": 0, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+✗ canonica-em-template-com-comentario: {"gateExit": 0, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+Contexto H02: 2 falha(s). Sem deploy, SDK ou Firebase real.
+
+LOG /tmp/eear-2f6-evidence/hosting-http.log
+SHA256 809de2d07031765826c15ae4881420017f90f03ae15e8f5ac8a6105a2550461b
+{"url":"/","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/index.html","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/app.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/sw.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/manifest.webmanifest","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/__/auth/handler","status":404,"nosniff":"nosniff","robots":"noindex, nofollow","cache":null,"referer":"strict-origin-when-cross-origin"}
+
+LOG /tmp/eear-2f6-evidence/autoteste.log
+SHA256 34d6f3d15c4f421c6c0c690a16c483b4146785920f89cad0e0ba0bac9018a02b
+OK: autoteste da verificação (193 casos)
+
+LOG /tmp/eear-2f6-evidence/validar.log
+SHA256 dd48626daec175d2e7c17c94c77e334f5d8d4a88a4cf513381beaae428d93d89
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+
+LOG /tmp/eear-2f6-evidence/workflows.log
+SHA256 81a41b921ef2727b31b12154c2cb2408a84f268c9a715d1bfdbbf8ae65045c06
+OK: o build e os workflows conferem o conteúdo antes de enviar
+
+LOG /tmp/eear-2f6-evidence/montagem.log
+SHA256 9b3ae19dfdb6b5c58cef33fb4764ff0845710e86e461c43bace420305d0d749b
+OK: curso/app.js igual à montagem de curso/app/
+
+LOG /tmp/eear-2f6-evidence/firebase-candidato.log
+SHA256 7a9102e4fdbc1b5f699a08fb270e11a6a457d9bd39c57b60d18cd5fa8b74fb3f
+  ✓ conta nova: o documento só tem v, dados, t e atualizado (sem e-mail), e o progresso sem conta não foi levado sozinho
+  ✓ o progresso sem conta continua intacto e o aluno pode levá-lo para a conta
+  ✓ levar para a conta (pedido pelo aluno): o progresso sem conta vai para a nuvem da conta e continua guardado sem conta
+  ✓ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte
+  ✓ conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A
+  ✓ troca de conta com gravação pendente: o estudo de B não vai para A e continua na cópia de B neste aparelho
+  ✓ sair apagando: bloqueado enquanto há estudo fora da nuvem; depois, apaga só a cópia deste aparelho e a nuvem continua com tudo
+  ✓ sem erro de JavaScript nos fluxos de conta
+  ✓ com transação: 12 marcações feitas ao mesmo tempo em dois aparelhos, nenhuma perdida na nuvem
+  ✓ documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho
+  ✓ documento corrompido na nuvem: o app não grava por cima, não trava e guarda o estudo no aparelho
+  ✓ regras: uma conta não lê, não grava e não apaga o documento de outra
+  ✓ regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito
+  ✓ regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 3)
+  ✓ regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista 403, consulta 403]
+  ✓ regras: sem login, nada é lido nem gravado [leitura 403, gravação 403]
+  ✓ regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno
+  ✓ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito
+  ✓ regras: o próprio aluno pode apagar o documento dele
+  ✓ gravação recusada pelas regras: a sincronização para, o aviso diz por quê, e o estudo continua neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem recusou a gravação). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ app aberto sem internet: o login não carrega e o aviso diz que tenta de novo; com a conexão de volta, o login aparece sem recarregar
+  ✓ build de homologação: o cartão da conta avisa que é o projeto de teste e pede só contas e dados fictícios
+  ✓ excluir a conta: senha errada ou confirmação diferente de EXCLUIR não excluem nada
+  ✓ excluir a conta: apaga o documento, o login e a cópia local da conta; o progresso sem conta fica; a mensagem diz o que foi apagado
+  ✓ conta encerrada em outra aba: esta aba passa ao progresso sem conta; o que se estuda depois não vai para a conta, e a cópia da conta fica intacta
+  ✓ página fechada antes de gravar na nuvem: o estudo ficou no aparelho e vai para a nuvem quando o app abre de novo
+  ✓ sessão invalidada no servidor: o app volta ao progresso sem conta, e a cópia da conta neste aparelho e a nuvem continuam com tudo
+  ✓ conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha, e nenhuma das duas contas é excluída
+  ✓ exclusão parcial: a mensagem diz que o progresso na nuvem foi apagado e a conta não; o login e a cópia deste aparelho continuam
+  ✓ exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos
+  ✓ auditoria regras: recusa v texto na criação [403]
+  ✓ auditoria regras: recusa v zero na criação [403]
+  ✓ auditoria regras: recusa v fracionária na criação [403]
+  ✓ auditoria regras: recusa dados mapa na criação [403]
+  ✓ auditoria regras: recusa t texto na criação [403]
+  ✓ auditoria regras: recusa campo extra na criação [403]
+  ✓ auditoria regras: recusa criação sem v [403]
+  ✓ auditoria regras: recusa criação sem dados [403]
+  ✓ auditoria regras: recusa criação sem t [403]
+  ✓ auditoria regras: atualizado é obrigatório e deve corresponder à hora do servidor
+  ✓ auditoria regras: criação válida aceita; campo extra na atualização e subcoleção do próprio UID recusados
+  ✓ auditoria sessão: progresso inicial confirmado no servidor
+  ✓ auditoria sessão: fechar e reabrir com emuladores indisponíveis preserva o estudo pendente
+  ✓ auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login
+  ✓ auditoria certificados: registro e código preservados ao enviar para o Firestore
+  ✓ auditoria certificados: segundo dispositivo recebe o mesmo código, data e registro
+  ✓ auditoria certificados: gravação do segundo dispositivo mantém certificado e progresso anterior
+  ✓ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=true, nuvem=true]
+  ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail
+  ✓ excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem
+tudo certo
+
+LOG /tmp/eear-2f6-evidence/plataforma-completa.log
+SHA256 a90449c5a1a907e7529885b0964142fa6a02a35c9647a6a1294e58f14685a8eb
+  ✓ só aparelhos novos: desmarcar num aparelho desmarca no outro e não volta; marcar de novo também passa para o outro
+  ✓ depois da gravação antiga, os aparelhos novos se reconciliam sem perda e voltam a propagar desmarcações (não há ressurreição)
+  ✓ sem rede, gravação da versão antiga no meio e aparelho fechado com gravação pendente: ao reconectar e ao reabrir, nada se perde [nuvem: T:a1,T:b1,T:base,T:fecha,T:off,T:v1,T:v2]
+  ✓ nuvem incompatível (antiga, assinatura que não bate, assinada em outra época, versão futura, corrompida): o progresso deste aparelho não é apagado [antigo, sem assinatura: ok; assinatura que não bate: ok; assinado por outro aparelho em outra época: ok; versão futura: ok; corrompido: ok]
+  ✓ concorrência com uma versão antiga gravando por cima: nenhuma marcação dos aparelhos novos se perde, na nuvem nem neles [faltam na nuvem:  | A:  | B: ]
+  ✓ gravação atrasada de outro aparelho chega depois da que este aparelho confirmou: o que ele gravou não é apagado [a gravação de A chegou: true; foi coberta: true | nuvem: T:a1,T:a2,T:b1,T:base | A: T:a1,T:a2,T:b1,T:base]
+  ✓ colar um progresso antigo num aparelho e sincronizar: nada do que estava na nuvem e nos outros aparelhos é apagado [nuvem: T:a1,T:b1,T:b2,T:base | B: T:a1,T:b1,T:b2,T:base]
+  ✓ migração: o caminho novo recebe a união do antigo com o aparelho, sem apagar nada; o caminho antigo não é tocado [novo: T:base,T:local,T:velho1,T:velho2]
+  ✓ isolamento: a conta ana não lê nem grava nada da conta bia (e o app nunca tenta gravar fora do próprio caminho novo)
+  ✓ falha ao ler o caminho antigo e gravações recusadas por falta de rede: nada se perde e a migração acontece ao abrir de novo
+  ✓ desmarcar depois da migração: a marcação não volta do caminho antigo ao reabrir os aparelhos
+  ✓ reversão: o estudo gravado no caminho antigo durante a reversão é unido ao voltar, uma vez (depois de desmarcado, não volta)
+  ✓ dois aparelhos migrando ao mesmo tempo: nada se perde e o caminho antigo não é gravado [faltam na nuvem:  | A:  | B:  | erros: ]
+  ✓ reversão: com as regras de hoje o progresso2 de outra conta vaza (reproduzido); com as regras de reversão fica isolado, e o app segue só no próprio caminho novo
+  ✓ gravação recusada: a sincronização para (sem repetir a gravação recusada), o aviso diz que parou e por quê, e a marcação fica neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem do curso não permite gravar com o seu acesso). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ gravação recusada: depois que a nuvem volta a aceitar, abrir o app de novo envia o que ficou no aparelho
+  ✓ cota estourada e servidor ocupado: o app tenta de novo, com espera crescente, e o estudo chega à nuvem (3 tentativas)
+  ✓ sem rede: tentativas espaçadas (3 em 9 s, com a primeira abertura), o estudo fica salvo neste aparelho, e a conexão voltando grava na hora (102 ms) [aviso: Progresso salvo neste aparelho.]
+  ✓ app indo para o fundo: o estudo vai para a nuvem sem esperar o intervalo de 1,5 s (12 ms)
+  ✓ página fechando: nada é enviado depois de pagehide, nem pelo intervalo pendente (o estudo fica no aparelho)
+  ✓ duas abas da mesma conta: a marcação da aba que fechou continua no aparelho e as contagens somam sem perder nem dobrar [feito: T:a1,T:apagar,T:base,T:b1,T:b2 | atividade: 5 (esperado 5)]
+  ✓ desmarcar numa aba e estudar na outra: a desmarcação não volta e o estudo fica
+  ✓ desmarcar numa aba e estudar na outra (aba suspensa, sem o aviso): a desmarcação não volta e o estudo fica
+  ✓ "Zerar" numa aba: o que existia antes não volta pela outra aba (nem os certificados), e o que ela estudou depois fica [feito: T:b-depois]
+  ✓ certificados: gravações de duas abas mantêm o mesmo registro, data e código
+  ✓ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:a5,T:apagar,T:b5,T:base]
+  ✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]
+  ✓ cópia apagada em outra aba: a aba aberta não regrava o que foi apagado; só o estudo novo fica [feito: T:depois-de-apagar]
+  ✓ escrita interrompida: A leu, B gravou o diário e fechou, A gravou por cima e fechou; a aba que abre tem as duas marcações [diário de B: true; principal depois de A: ?; aberta: T:A-race,T:B-race,T:base; absorvido em 6 ms]
+  ✓ sem Web Locks: a aba que caiu depois de gravar o diário não perde a marcação; outra aba a recupera [cópia antes: sem a marcação; recuperada em 9082 ms]
+  ✓ apagar os dados com um diário pendente de outra aba: o diário fica, e o estudo dele volta depois que a aba cai (o resto continua apagado) [diários com a marcação depois de apagar: 1; feito: T:pendente]
+  ✓ queda do navegador 1200 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:base,T:antes-da-queda]
+  ✓ queda do navegador 300 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:base,T:antes-da-queda]
+  ✓ isolamento: o diário durável de outra conta não é restaurado na conta aberta [cópia: nenhuma; diário da outra conta no localStorage: não]
+tudo certo
+Aprovações impressas: 241; falhas impressas: 0
+Fim do log:
+  ✓ isolamento: o diário durável de outra conta não é restaurado na conta aberta [cópia: nenhuma; diário da outra conta no localStorage: não]
+
+tudo certo
+
+CI DO SHA EXATO — metadados e excertos dos jobs conferidos via API GitHub
+[
+  {
+    "id": 43149221175,
+    "name": "Site",
+    "sha": "2f6cad6ebba53d0f86319dcada671fe9396f8111",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/YNPHAX/EEAR/actions/runs/43149221175"
+  },
+  {
+    "id": 43149221209,
+    "name": "App Android",
+    "sha": "2f6cad6ebba53d0f86319dcada671fe9396f8111",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/YNPHAX/EEAR/actions/runs/43149221209"
+  },
+  {
+    "id": 43149221266,
+    "name": "Testes",
+    "sha": "2f6cad6ebba53d0f86319dcada671fe9396f8111",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/YNPHAX/EEAR/actions/runs/43149221266"
+  }
+]
+
+job 130954170432
+2026-11-12T03:35:26.5111520Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2f6cad6ebba53d0f86319dcada671fe9396f8111:refs/remotes/origin/claude/eear-study-hydwqt
+2026-11-12T03:35:27.4932960Z  * [new ref]         2f6cad6ebba53d0f86319dcada671fe9396f8111 -> origin/claude/eear-study-hydwqt
+2026-11-12T03:35:27.5414608Z 2f6cad6ebba53d0f86319dcada671fe9396f8111
+2026-11-12T03:35:30.4024468Z OK: autoteste da verificação (193 casos)
+2026-11-12T03:35:30.4025486Z OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+2026-11-12T03:35:30.4026075Z OK: nada restrito em /home/runner/work/EEAR/EEAR/_site
+2026-11-12T03:35:32.1796892Z OK: autoteste da verificação (193 casos)
+2026-11-12T03:35:32.3386885Z OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+2026-11-12T03:35:32.3849944Z OK: o build e os workflows conferem o conteúdo antes de enviar
+2026-11-12T03:35:33.8936066Z OK: nada restrito em _site
+
+job 130954170281
+2026-11-12T03:35:26.3147535Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2f6cad6ebba53d0f86319dcada671fe9396f8111:refs/remotes/origin/claude/eear-study-hydwqt
+2026-11-12T03:35:26.7442406Z  * [new ref]         2f6cad6ebba53d0f86319dcada671fe9396f8111 -> origin/claude/eear-study-hydwqt
+2026-11-12T03:35:26.8099117Z 2f6cad6ebba53d0f86319dcada671fe9396f8111
+2026-11-12T03:35:33.4106337Z OK: autoteste da verificação (193 casos)
+2026-11-12T03:35:33.4108939Z OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+2026-11-12T03:35:33.4110682Z OK: nada restrito em /home/runner/work/EEAR/EEAR/app/www
+2026-11-12T03:35:35.6091846Z OK: autoteste da verificação (193 casos)
+2026-11-12T03:35:35.8634373Z OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+2026-11-12T03:35:35.9369151Z OK: o build e os workflows conferem o conteúdo antes de enviar
+2026-11-12T03:35:38.5586285Z OK: nada restrito em app/www
+2026-11-12T03:37:09.3373964Z BUILD SUCCESSFUL in 1m 24s
+2026-11-12T03:37:20.9207801Z OK: nada restrito em missao-eear.apk
+
+job 130954170506
+2026-11-12T03:35:26.6486005Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2f6cad6ebba53d0f86319dcada671fe9396f8111:refs/remotes/origin/claude/eear-study-hydwqt
+2026-11-12T03:35:27.6102007Z  * [new ref]         2f6cad6ebba53d0f86319dcada671fe9396f8111 -> origin/claude/eear-study-hydwqt
+2026-11-12T03:35:27.6655412Z 2f6cad6ebba53d0f86319dcada671fe9396f8111
+2026-11-12T03:53:53.0118777Z == queda do navegador inteiro logo depois de estudar (diário durável)
+2026-11-12T03:53:58.8748146Z   ✓ queda do navegador 1200 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:base,T:antes-da-queda]
+2026-11-12T03:54:03.9445542Z   ✓ queda do navegador 300 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:base,T:antes-da-queda]
+2026-11-12T03:54:05.8028737Z   ✓ isolamento: o diário durável de outra conta não é restaurado na conta aberta [cópia: nenhuma; diário da outra conta no localStorage: não]
+
+job 130954170857
+2026-11-12T03:35:27.6223898Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2f6cad6ebba53d0f86319dcada671fe9396f8111:refs/remotes/origin/claude/eear-study-hydwqt
+2026-11-12T03:35:28.3745609Z  * [new ref]         2f6cad6ebba53d0f86319dcada671fe9396f8111 -> origin/claude/eear-study-hydwqt
+2026-11-12T03:35:28.4434582Z 2f6cad6ebba53d0f86319dcada671fe9396f8111
+
+
+
+LIMITES: 30 minutos usam Date.now controlado; 8 segundos são reais. Navegador móvel/Safari/APK físico não executados.
+Browser.crash e Page.crash são processos/abas reais do Chromium com perfis descartáveis; não simulam perda de energia no hardware.
+localStorage pode voltar ao snapshot anterior após crash; N06/N07 confirmam por transação readonly que o diário novo estava no IndexedDB antes de cair.
+N03 confirmado no emulador, sem medir revogação de tokens no Firebase real. N05 usa corrupção deliberada, não escrita parcial demonstrada.
+H02 só comprova falso aceite de configuração inerte; não conexão com produção nem vazamento de credenciais.
+Parecer do SHA 2f6cad6: REPROVADO. Nenhuma correção do runtime nesta entrega.
