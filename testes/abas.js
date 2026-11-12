@@ -24,14 +24,17 @@ module.exports = async function testarAbas({ b, srv, base, ok }) {
     const A = await aba(false);
     await A.p.evaluate(([k, s]) => localStorage.setItem(k, JSON.stringify(s)), [K, semente()]); await A.p.reload(); await A.p.waitForTimeout(300);
     const ler = () => A.p.evaluate(k => JSON.parse(localStorage.getItem(k)), K).catch(() => null);
-    return { ctx, erros, aba, A, ler };
+    /* A consolidação entre abas é assíncrona (vez da trava local): espera até 3 s a cópia ter a marcação k da outra aba e
+       só então confere tudo (as asserções não mudam; com a máquina ocupada, 150 ms podiam não bastar). */
+    const lerCom = async (k, p) => { const fim = Date.now() + 3000; let s; do { s = p ? await p.evaluate(c => JSON.parse(localStorage.getItem(c)), K).catch(() => null) : await ler(); if (tem(s, k)) break; await espera(100); } while (Date.now() < fim); return s; };
+    return { ctx, erros, aba, A, ler, lerCom };
   }
 
   { // 1. a reprodução de F01, sem nuvem: duas abas estudam, a primeira fecha, a segunda continua
     const X = await aparelho(), B = await X.aba(false);
     await X.A.marcar('T:a1'); await espera(150); await B.marcar('T:b1'); await espera(150);
     await X.A.p.close(); await B.marcar('T:b2'); await espera(150);
-    const s = await B.p.evaluate(k => JSON.parse(localStorage.getItem(k)), K);
+    const s = await X.lerCom('T:b2', B.p);
     ok(['T:base', 'T:apagar', 'T:a1', 'T:b1', 'T:b2'].every(k => tem(s, k)) && s.act[hj] === 5 && !X.erros.length,
       `duas abas da mesma conta: a marcação da aba que fechou continua no aparelho e as contagens somam sem perder nem dobrar [feito: ${Object.keys(s.feito)} | atividade: ${s.act[hj]} (esperado 5)]`);
     await X.ctx.close();
@@ -41,7 +44,7 @@ module.exports = async function testarAbas({ b, srv, base, ok }) {
       const X = await aparelho(), B = await X.aba(surda);
       await X.A.marcar('T:apagar'); await espera(150); // desmarca
       await B.marcar('T:b3'); await espera(150);
-      const s = await X.ler();
+      const s = await X.lerCom('T:b3');
       ok(!tem(s, 'T:apagar') && tem(s, 'T:b3') && tem(s, 'T:base') && !X.erros.length, `desmarcar numa aba e estudar na outra${surda ? ' (aba suspensa, sem o aviso)' : ''}: a desmarcação não volta e o estudo fica`);
       await X.ctx.close();
     }
@@ -52,7 +55,7 @@ module.exports = async function testarAbas({ b, srv, base, ok }) {
     await X.A.p.reload(); await X.A.p.waitForTimeout(300); // A conhece o estudo de B antes de zerar
     await X.A.clicar('zerar'); await X.A.clicar('zerarok'); await espera(150);
     await B.marcar('T:b-depois'); await espera(150);
-    const s = await X.ler();
+    const s = await X.lerCom('T:b-depois');
     ok(!tem(s, 'T:base') && !tem(s, 'T:b-antes') && tem(s, 'T:b-depois') && !(s.cfg.certs || []).length && s.cfg.certsZ > 0 && !X.erros.length,
       `"Zerar" numa aba: o que existia antes não volta pela outra aba (nem os certificados), e o que ela estudou depois fica [feito: ${Object.keys(s.feito)}]`);
     await X.ctx.close();
@@ -60,7 +63,7 @@ module.exports = async function testarAbas({ b, srv, base, ok }) {
   { // 4. certificados: as gravações das duas abas mantêm o certificado e o código
     const X = await aparelho(), B = await X.aba(true);
     await X.A.marcar('T:c1'); await espera(150); await B.marcar('T:c2'); await espera(150);
-    const s = await X.ler();
+    const s = await X.lerCom('T:c2');
     ok((s.cfg.certs || []).length === 1 && JSON.stringify(s.cfg.certs[0]) === JSON.stringify(cert) && tem(s, 'T:c1') && tem(s, 'T:c2'), 'certificados: gravações de duas abas mantêm o mesmo registro, data e código');
     await X.ctx.close();
   }

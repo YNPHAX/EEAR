@@ -27,4 +27,15 @@ module.exports = async function testarDuravel({ srv, base, ok }) {
         `queda do navegador ${espera} ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: ${s ? Object.keys(s.feito) : '-'}]`);
     } catch (e) { ok(false, `queda do navegador (${espera} ms): o cenário não terminou — ${e.message}`); } finally { if (ctx) await ctx.close().catch(() => null); fs.rmSync(dir, { recursive: true, force: true }); }
   }
+  { // isolamento: um diário de outra conta, guardado no IndexedDB, não entra na cópia de quem abre o app (aqui, sem conta)
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'eear-duravel-')); let ctx;
+    try {
+      ctx = await abrir(dir); const p = ctx.pages()[0] || await ctx.newPage(); await p.goto(srv.url);
+      const outra = JSON.stringify({ seq: 9, bid: '', base: null, bseq: 0, ant: [], ts: Date.now(), st: Object.assign(base({}), { feito: { 'T:de-outra-conta': true } }) });
+      await p.evaluate(v => new Promise(res => { const o = window.indexedDB.open('eear-diarios', 1); o.onupgradeneeded = () => o.result.createObjectStore('d'); o.onsuccess = () => { const t = o.result.transaction('d', 'readwrite'); t.objectStore('d').put(v, 'missao-eear-v1-diario@claude:outra#tx'); t.oncomplete = () => { o.result.close(); res(); }; }; }), outra);
+      await p.reload(); await p.waitForTimeout(1500);
+      const r = await p.evaluate(() => ({ s: JSON.parse(localStorage.getItem('missao-eear-v1') || 'null'), outra: localStorage.getItem('missao-eear-v1-diario@claude:outra#tx') }));
+      ok(!tem(r.s, 'T:de-outra-conta') && r.outra === null, `isolamento: o diário durável de outra conta não é restaurado na conta aberta [cópia: ${r.s ? Object.keys(r.s.feito) : 'nenhuma'}; diário da outra conta no localStorage: ${r.outra === null ? 'não' : 'sim'}]`);
+    } catch (e) { ok(false, 'isolamento do diário durável: o cenário não terminou — ' + e.message); } finally { if (ctx) await ctx.close().catch(() => null); fs.rmSync(dir, { recursive: true, force: true }); }
+  }
 };
