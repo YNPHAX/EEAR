@@ -138,8 +138,11 @@ async function crashProcesso(f) {
 
 (async () => {
   if (fs.readFileSync(path.join(alvo, 'curso/app/16-diario-duravel.js'), 'utf8').includes("'eear-operacoes'")) {
-    if (process.env.EEAR_ORFAOS_CENARIOS === 'crash-processo') { process.env.EEAR_DURAVEL_CENARIOS = 'marca'; process.env.EEAR_DURAVEL_SEM_TRAVAS = '1'; require('./duravel-candidato.test.js'); }
-    else require('./operacoes-suspensas.test.js'); return;
+    const nomes = (process.env.EEAR_ORFAOS_CENARIOS || 'retorno-8s,segunda-escrita-8s,segunda-escrita-30min,crash-processo').split(','), retornos = nomes.filter(n => n !== 'crash-processo'); let falhas = 0;
+    const executar = (arquivo, env) => { try { execFileSync(process.execPath, [path.join(__dirname, arquivo)], { env: { ...process.env, ...env }, stdio: 'inherit' }); } catch (e) { falhas++; } };
+    if (retornos.length) executar('operacoes-suspensas.test.js', { EEAR_ORFAOS_CENARIOS: retornos.join(',') });
+    if (nomes.includes('crash-processo')) executar('duravel-candidato.test.js', { EEAR_DURAVEL_CENARIOS: 'marca', EEAR_DURAVEL_SEM_TRAVAS: '1' });
+    process.exitCode = falhas ? 1 : 0; return;
   }
   console.log('Órfãos: alvo ' + execFileSync('git', ['rev-parse', 'HEAD'], { cwd: alvo, encoding: 'utf8' }).trim());
   if (fixture.emular(alvo, path.join(__dirname, 'orfaos-auditoria.test.js'))) return;

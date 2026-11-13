@@ -18,12 +18,14 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
         for (const p of [A, B]) if (!await f.ate(async () => (await f.estado(p)).act[hj] === 2 && (await p.locator('#sync').innerText()) === 'Progresso salvo na sua conta.')) throw new Error('Base não confirmada.');
         f.rede(ctx, true);
         const linhas = fs.readFileSync(path.join(alvo, 'curso/app.js'), 'utf8').split('\n');
-        const lineNumber = linhas.findIndex(l => n > 1 ? l.includes('const id = identidade, antes = loc.vista') : l.includes('const r = await transacaoConta(o.conta'));
+        const lineNumber = linhas.findIndex(l => n > 1 ? l.includes('const id = identidade, antes = loc.vista') : l.trim() === "case 'tab':");
         if (lineNumber < 0) throw new Error('Revisar o ponto nativo de persistência.');
         const cdp = await ctx.newCDPSession(B); await cdp.send('Debugger.enable');
         await cdp.send('Debugger.setBreakpointByUrl', { url: new URL('app.js', B.url()).href, lineNumber, condition: n > 1 ? '!!S.feito["T:segundo"] && !loc.vista.feito["T:segundo"]' : '!!S.feito["T:primeiro"]' });
         const pausa = new Promise((resolve, reject) => { const t = setTimeout(() => reject(new Error('Breakpoint não atingido')), 10000); cdp.once('Debugger.paused', p => { clearTimeout(t); resolve(p); }); });
-        const acao = B.evaluate(ms => { for (const k of ms) { const e = document.createElement('button'); e.dataset.a = 'marcar'; e.dataset.k = k; document.body.appendChild(e); e.click(); e.remove(); } }, marcas).catch(() => null);
+        // Uma operação: suspende no próximo evento de navegação, no mesmo turno JS, após aceite/render e antes
+        // de criar transações assíncronas. Pausar enfileirar() podia segurar outra transação e impedir a pré-condição.
+        const acao = B.evaluate(ms => { for (const k of ms) { const e = document.createElement('button'); e.dataset.a = 'marcar'; e.dataset.k = k; document.body.appendChild(e); e.click(); e.remove(); } if (ms.length === 1) { const e = document.createElement('button'); e.dataset.a = 'tab'; e.dataset.v = 'plano'; document.body.appendChild(e); e.click(); e.remove(); } }, marcas).catch(() => null);
         const frame = (await pausa).callFrames[0].callFrameId;
         const r = await cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: frame, returnByValue: true, expression: 'JSON.parse(document.getElementById("exp-txt").value).feito' });
         if (!r.result.value['T:primeiro']) throw new Error('Primeira alteração não foi aceita pela UI antes da pausa.');

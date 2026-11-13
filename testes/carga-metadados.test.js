@@ -22,7 +22,8 @@ const checkpoint = p => p.evaluate(() => new Promise((resolve, reject) => {
     const confirmou = await f.ate(async () => { r = await checkpoint(ps[0]); return r && r.st.act[hj] === esperado && (!ultima || r.st.feito[ultima]); }, 60000);
     if (!confirmou) throw new Error('Contagem do checkpoint: esperado ' + esperado + ', obtido ' + (r && r.st.act[hj]));
     const json = JSON.stringify(r.st), meta = JSON.stringify(r.meta);
-    const linha = { fase, atividade: esperado, marcas: Object.keys(r.st.feito).length, bytesEstado: NodeBuffer.byteLength(json), caracteresEstado: json.length, bytesMeta: NodeBuffer.byteLength(meta), bytesCheckpoint: NodeBuffer.byteLength(JSON.stringify(r)), recibos: Object.keys(r.recibos || {}).length, segundos: (Date.now() - inicio) / 1000 };
+    const armazenamento = await ps[0].evaluate(() => navigator.storage.estimate());
+    const linha = { fase, atividade: esperado, marcas: Object.keys(r.st.feito).length, bytesEstado: NodeBuffer.byteLength(json), caracteresEstado: json.length, bytesMeta: NodeBuffer.byteLength(meta), bytesCheckpoint: NodeBuffer.byteLength(JSON.stringify(r)), recibos: Object.keys(r.recibos || {}).length, usoOrigem: armazenamento.usage, quotaOrigem: armazenamento.quota, segundos: (Date.now() - inicio) / 1000 };
     medidas.push(linha); console.log('MEDIDA ' + JSON.stringify(linha)); return r;
   };
   try {

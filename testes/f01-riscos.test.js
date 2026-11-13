@@ -59,10 +59,13 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
           // Modela o limite reconhecido pelo autor: a notificação de remoção não chega à aba antiga.
           await B.addInitScript(() => window.addEventListener('storage', e => e.stopImmediatePropagation(), true));
           await B.reload(); await f.estado(B);
+          if (!await f.ate(async () => (await A.locator('#sync').innerText()) === 'Progresso salvo na sua conta.' && (await B.locator('#sync').innerText()) === 'Progresso salvo na sua conta.')) throw new Error('Base após reabrir B ainda não confirmada.');
           await f.clicar(A, 'dadosapagar'); await A.waitForSelector('[data-a="dadosapagarok"]'); await A.click('[data-a="dadosapagarok"]');
-          const removido = await A.evaluate(k => localStorage.getItem(k) === null, chave);
+          const confirmou = await f.ate(async () => (await A.locator('body').innerText()).includes('Os dados deste aparelho foram apagados.'));
+          const removido = confirmou && await A.evaluate(k => localStorage.getItem(k) === null, chave);
           f.rede(ctx, true); await marcar(B, 'T:novo');
-          const s = await f.estado(B); passou = removido && !s.feito['T:base']; resultado = { removido, restaurado: resumo(s) };
+          let s; const reconciliou = await f.ate(async () => { s = await f.estado(B); return !s.feito['T:base'] && s.feito['T:novo']; });
+          passou = removido && reconciliou; resultado = { confirmou, removido, reconciliou, restaurado: resumo(s) };
         } else if (nome === 'contagens') {
           f.rede(ctx, true);
           const n = 30;

@@ -53,7 +53,23 @@ const srv = http.createServer((q, r) => { const u = decodeURIComponent(q.url.spl
   console.log(`  (configuração da versão nova que a anterior descarta ao gravar: ${cfgPerdida.length ? cfgPerdida.join(', ') : 'nada'})`);
   console.log('\n== 4. volta ao app novo');
   await abrir('b'); await p.waitForTimeout(300); const p5 = await ler();
+  const diagnostico = await p.evaluate(() => new Promise(resolve => {
+    const o = window.indexedDB.open('eear-operacoes', 1); o.onerror = () => resolve({ erro: String(o.error) });
+    o.onsuccess = () => { const db = o.result, t = db.transaction(['contas', 'quarentena'], 'readonly'), q = t.objectStore('contas').get(''), r = t.objectStore('quarentena').getAll();
+      t.oncomplete = () => { db.close(); resolve({ feitoCheckpoint: q.result && q.result.st.feito, recuperar: localStorage.getItem('missao-eear-v1-recuperar'), copiasComEstudo: r.result.filter(x => String(x.texto).includes('T:depois-da-volta')).length }); };
+    };
+  }));
+  console.log('DIAGNÓSTICO retorno de versão: ' + JSON.stringify(diagnostico));
   ok(!erros.length && p5.feito['T:no-novo'] && p5.feito['T:depois-da-volta'] && p5.feito['T:na-main'] && temFc(p5, 'MAT02') && temFc(p5, 'POR02'), 'de volta à versão nova: o estudo feito nas duas continua');
+  // Mantém a exigência automática acima. Este controle adicional distingue perda definitiva de recuperação manual.
+  const ofereceuCopia = await p.locator('[data-a="reccopiar"]').count() > 0;
+  ok(ofereceuCopia && diagnostico.recuperar && diagnostico.recuperar.includes('T:depois-da-volta') && diagnostico.copiasComEstudo > 0, 'reversão: cópia do estudo legado preservada em quarentena e oferecida pela interface');
+  if (diagnostico.recuperar) {
+    await clicar('tab', { v: 'plano' }); await clicar('impabrir'); await p.fill('#imp-txt', diagnostico.recuperar); await clicar('impok');
+    await p.waitForFunction(() => { const s = JSON.parse(localStorage.getItem('missao-eear-v1') || 'null'); return s && s.feito['T:depois-da-volta']; });
+    await abrir('b'); const recuperado = await ler();
+    ok(!erros.length && recuperado.feito['T:no-novo'] && recuperado.feito['T:depois-da-volta'] && recuperado.feito['T:na-main'] && temFc(recuperado, 'MAT02') && temFc(recuperado, 'POR02'), 'reversão: recuperação explícita pela UI preserva o estudo das duas versões após reabrir');
+  }
   await b.close(); srv.close();
   console.log(falhas ? `\n${falhas} falha(s)` : '\ntudo certo'); process.exit(falhas ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });
