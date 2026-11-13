@@ -92,8 +92,21 @@ module.exports = async function testarFalhasNuvem({ b, srv, ok }) {
     const antes = N.tentativas; await A.marcar('T:saindo');
     await A.p.evaluate(() => { window.dispatchEvent(new Event('pagehide')); Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
     await A.p.clock.runFor(1700);
+    const cacheAntes = await A.local('T:saindo'), semEnvio = N.tentativas === antes && !naNuvem('T:saindo');
+    const checkpoint = await A.p.evaluate(() => new Promise((resolve, reject) => {
+      const o = window.indexedDB.open('eear-operacoes', 1); o.onerror = () => reject(o.error);
+      o.onsuccess = () => { const db = o.result, t = db.transaction('contas', 'readonly'), q = t.objectStore('contas').get('claude:falha-saida'); t.oncomplete = () => { db.close(); resolve(q.result && q.result.st); }; };
+    }));
+    N.fora = true; await A.p.close();
+    const reaberta = await A.ctx.newPage(); reaberta.on('pageerror', e => A.erros.push(e.message));
+    await reaberta.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Exportação visível no teste'); } } }));
+    await reaberta.goto(srv.url); await reaberta.waitForFunction(() => document.documentElement.dataset.armazenamento === 'pronto' && localStorage.getItem('missao-eear-conta') === 'claude:falha-saida');
+    await reaberta.click('[data-a="tab"][data-v="plano"]'); await reaberta.click('[data-a="expcopiar"]'); await reaberta.waitForSelector('#exp-txt');
+    const recuperado = JSON.parse(await reaberta.locator('#exp-txt').inputValue());
+    console.log('DIAGNÓSTICO pagehide: ' + JSON.stringify({ cacheAntes, semEnvio, checkpoint: checkpoint && checkpoint.feito, reabertoOffline: recuperado.feito }));
     /* Na saída, nada começa nem o intervalo pendente envia (F02): o estudo fica no aparelho e vai na próxima abertura. */
-    ok(N.tentativas === antes && !naNuvem('T:saindo') && await A.local('T:saindo') && !A.erros.length, 'página fechando: nada é enviado depois de pagehide, nem pelo intervalo pendente (o estudo fica no aparelho)');
+    // Cache é opcional e o escritor da página encerrada deve parar. Durabilidade exige checkpoint + abertura offline.
+    ok(semEnvio && checkpoint && checkpoint.feito['T:base'] && checkpoint.feito['T:saindo'] && recuperado.feito['T:base'] && recuperado.feito['T:saindo'] && !A.erros.length, 'página fechando: nenhum envio após pagehide; checkpoint e reabertura offline preservam o estudo');
     await A.ctx.close();
   }
 };
