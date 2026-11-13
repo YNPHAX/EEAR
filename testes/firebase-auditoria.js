@@ -77,12 +77,14 @@ module.exports = async function ({ ok, req, AU, DOCS, PROJ, campos, gravarComo, 
       await O.ctx.setOffline(true);
       await marcar(O, 'T:aba-1-offline');
       await aba2.evaluate(() => { const b = document.createElement('button'); b.dataset.a = 'marcar'; b.dataset.k = 'T:aba-2-offline'; document.body.appendChild(b); b.click(); b.remove(); });
+      await O.p.close(); // fecha sem esperar a confirmação: o estudo pendente também precisa sobreviver
+      const preservouOffline = await ate(async () => { const s = await aba2.evaluate(k => JSON.parse(localStorage.getItem(k)), chave); return s && s.feito['T:aba-1-offline'] && s.feito['T:aba-2-offline']; });
       const cache = await aba2.evaluate(k => JSON.parse(localStorage.getItem(k)), chave);
-      await O.p.close(); await O.ctx.setOffline(false);
+      await O.ctx.setOffline(false);
       await aba2.evaluate(() => window.dispatchEvent(new Event('online')));
       await ate(async () => { const s = await progresso(uid); return s && s.feito['T:aba-2-offline']; }, 30000);
       const nuvem = await progresso(uid);
-      ok(cache.feito['T:aba-1-offline'] && nuvem.feito['T:aba-1-offline'],
+      ok(preservouOffline && cache.feito['T:aba-1-offline'] && cache.feito['T:aba-2-offline'] && nuvem.feito['T:aba-1-offline'] && nuvem.feito['T:aba-2-offline'],
         `SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=${!!cache.feito['T:aba-1-offline']}, nuvem=${!!nuvem.feito['T:aba-1-offline']}]`);
     } finally { await O.ctx.close(); }
   }

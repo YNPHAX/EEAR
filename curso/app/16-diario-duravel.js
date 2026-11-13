@@ -46,10 +46,11 @@
     loc.quarentinas = loc.quarentinas || new Map(); const ref = id + ':' + origem; if (loc.quarentinas.get(ref) === texto) return; loc.quarentinas.set(ref, texto);
     const copia = progresso || texto;
     try { const k = chave(LS_REC, id); if (!localStorage.getItem(k)) localStorage.setItem(k, copia); } catch (e) { /* a cópia IDB é tentada também */ }
-    abrirDuravel().then(db => {
-      const t = db.transaction('quarentena', 'readwrite', { durability: 'strict' }); t.objectStore('quarentena').add({ conta: id, origem, texto });
-      t.onerror = t.onabort = () => { gravouLocal = false; };
-    }).catch(() => { gravouLocal = false; });
+    const geracao = id === identidade ? loc.gen : null;
+    transacaoConta(id, (r, t) => {
+      if (r && (r.encerrado || (geracao && r.gen !== geracao) || (!geracao && r.apagado))) return;
+      t.objectStore('quarentena').add({ conta: id, origem, texto });
+    }, true).catch(() => { if (id === identidade) { gravouLocal = false; syncInfo(); } });
     if (id === identidade) { recuperar = copia; setTimeout(() => { if (id === identidade) render(); }, 0); }
   }
   function lerDiariosDe(id) {

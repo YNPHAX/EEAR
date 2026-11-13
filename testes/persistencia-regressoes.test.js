@@ -5,7 +5,7 @@ const casos = [
   ['f01-abas', {}], ['noturna-integridade', {}], ['noturna-falhas', {}], ['noturna-seguranca', {}],
   ['noturna-confirmacao', {}], ['duravel-candidato', {}], ['operacoes-interrupcao', {}],
   ['operacoes-suspensas', { EEAR_ORFAOS_CENARIOS: 'segunda-escrita-8s', EEAR_ORFAOS_SEQUENCIAS: '9' }], ['operacoes-falhas', {}], ['operacoes-recuperacao', {}],
-  ['operacoes-exclusao-concorrente', {}], ['operacoes-cache-exclusao', {}]
+  ['operacoes-exclusao-concorrente', {}], ['operacoes-cache-exclusao', {}], ['quarentena-exclusao', {}]
 ];
 let falhas = 0;
 for (const [nome, variaveis] of casos) {

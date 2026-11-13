@@ -15,6 +15,7 @@
   }
   function receberDuravel(r, id) {
     if (id !== identidade || !r || !opValida(r.meta)) return;
+    if (loc.gen && loc.gen !== r.gen) recuperar = null; // exclusão de outra aba também encerra a cópia de recuperação em memória
     if (r.apagado && loc.gen && loc.gen !== r.gen) { nuvem.ref = null; nuvem.on = false; }
     let m = r.meta;
     const ops = (loc.ops || []).filter(o => o.conta === id && operacaoPermitida(r, o));
@@ -24,10 +25,10 @@
     if (JSON.stringify(opSemMeta(S)) !== antes) depoisDeMudarS(); else syncInfo();
   }
   function cachear(r, id) {
-    if (r.apagado) return;
+    if (r.apagado || saindo) return Promise.resolve();
     // Cache opcional sob a mesma transação que serializa exclusões. Uma conferência fora dela não basta.
-    transacaoConta(id, atual => {
-      if (!atual || atual.apagado || atual.gen !== r.gen) return;
+    return transacaoConta(id, atual => {
+      if (saindo || !atual || atual.apagado || atual.gen !== r.gen) return;
       try {
         const texto = localStorage.getItem(chave(LS, id)), hash = resumoDoc(atual.meta);
         if (loc.cacheId === id && loc.cacheHash === hash && loc.cacheTexto === texto) return;
@@ -46,10 +47,10 @@
     loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, r => {
       if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)), legados: Object.fromEntries(diarios.concat(antigos).filter(x => !x.d.delta).map(x => [x.k, x.d.seq])) };
       return aplicarReservas(r, diarios.filter(x => x.d.delta && opValida(x.d.delta)).map(x => x.d));
-    })).then(r => {
+    })).then(async r => {
       if (id !== identidade) return;
       if (mesmoConteudo(opPlano(st), opPlano(r.st))) { loc.cacheId = id; loc.cacheHash = resumoDoc(r.meta); try { loc.cacheTexto = localStorage.getItem(chave(LS, id)); } catch (e) { /* cache opcional */ } }
-      receberDuravel(r, id); cachear(r, id); gravouLocal = true; loc.carregado = true; document.documentElement.dataset.armazenamento = 'pronto'; render(); consolidar();
+      receberDuravel(r, id); await cachear(r, id); gravouLocal = true; loc.carregado = true; document.documentElement.dataset.armazenamento = 'pronto'; render(); consolidar();
     }).catch(e => { if (id !== identidade) return; loc.carregado = true; document.documentElement.dataset.armazenamento = 'reserva'; loc.incompativel = e.code === 'checkpoint-corrompido'; loc.semIDB = e.code !== 'checkpoint-corrompido'; gravouLocal = false; loc.erro = e.message; consolidar(); render(); syncInfo(); });
     loc.timer = setInterval(() => consolidar(), 1500);
   }
@@ -74,7 +75,7 @@
       try { localStorage.removeItem(chave(DIARIO_K, o.conta) + '#' + o.id); } catch (e) { /* reaplicação é idempotente */ }
       if (o.conta !== identidade) return;
       loc.ops = (loc.ops || []).filter(x => x.id !== o.id); loc.pendente = loc.ops.length; loc.confirmando = !!loc.pendente;
-      loc.erro = ''; gravouLocal = true; cachear(r, o.conta); receberDuravel(r, o.conta);
+      loc.erro = ''; gravouLocal = true; await cachear(r, o.conta); receberDuravel(r, o.conta);
     }).catch(e => {
       if (o.conta !== identidade) return;
       loc.erro = e.message; gravouLocal = false; loc.confirmando = false;
