@@ -98,6 +98,35 @@
           "inicio": "2026-11-13T15:47:52Z"
         }
       ]
+    },
+    {
+      "sha": "2dfe0d775ed472098ec706d5eb270013f6e7c973",
+      "runs": [
+        {
+          "id": 43462861783,
+          "nome": "Site",
+          "status": "completed",
+          "conclusao": "success",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43462861783"
+        },
+        {
+          "id": 43462861863,
+          "nome": "App Android",
+          "status": "completed",
+          "conclusao": "success",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43462861863"
+        },
+        {
+          "id": 43462861915,
+          "nome": "Testes",
+          "status": "completed",
+          "conclusao": "failure",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43462861915",
+          "firebase": "success",
+          "plataforma": "failure",
+          "falha": "cenário 4 de epoca-nuvem: falta T:a1 na nuvem legada"
+        }
+      ]
     }
   ],
   "matriz_original": [
@@ -790,6 +819,36 @@
       "positivos": 2,
       "negativos": 0,
       "sha256_log_completo": "553841b1c73bfa13cec365b92ebd63f9f6dfda9bd98d55d5d58fd0e515ab51a6"
+    },
+    {
+      "log": "ci-2dfe-plataforma",
+      "positivos": 243,
+      "negativos": 1,
+      "sha256_log_completo": "5fb03829144fc2afb5f756df37e077bc8556e003c5c15f01683eefe0b462a1fc"
+    },
+    {
+      "log": "epoca4-repro-1",
+      "positivos": 22,
+      "negativos": 0,
+      "sha256_log_completo": "2ebea5ff41d4d79ad39a45e3534e6487e0d9a4ef14a88cd9c955b8770c776475"
+    },
+    {
+      "log": "epoca9-ordem-confirmada",
+      "positivos": 22,
+      "negativos": 1,
+      "sha256_log_completo": "9b3844f6bf83f659cb128f3871523c7d721090754461f9f93d2662ee03d53735"
+    },
+    {
+      "log": "epoca9-ordem-confirmada-2",
+      "positivos": 22,
+      "negativos": 1,
+      "sha256_log_completo": "9b3844f6bf83f659cb128f3871523c7d721090754461f9f93d2662ee03d53735"
+    },
+    {
+      "log": "epoca9-ordem-confirmada-3",
+      "positivos": 22,
+      "negativos": 1,
+      "sha256_log_completo": "c3aba138ac0e7b6f9c2bc69b41758f48ff505e49261380a3266d7679f611a660"
     }
   ],
   "revisao_testes_complementares": "ab61a6c5ae86993f71d991800602bf3b56d80879",
@@ -956,5 +1015,15 @@
       }
     ],
     "falhas": 0
+  },
+  "integridade_legada": {
+    "gravidade": "Alta",
+    "repeticoes_controladas": 3,
+    "falhou_nuvem": true,
+    "preservou_checkpoint": true,
+    "reabrir_A_recuperou": true,
+    "aviso_A_observado": "Progresso salvo na sua conta.",
+    "runtime_alterado": false,
+    "nao_e_falha_de_infraestrutura": true
   }
 }

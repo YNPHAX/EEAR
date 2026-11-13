@@ -1003,3 +1003,359 @@ Carga: 0 falha(s); 21.2 s. Crescimento medido sem compactação.
 
 
 As linhas negativas são preservadas. Falhas de observação/preparação e a limitação de reversão estão classificadas no relatório; nenhuma é apagada para apresentar uma matriz integral verde.
+
+=== ATUALIZAÇÃO: CI final reprovado e contraexemplo controlado ===
+
+=== ci-2dfe-plataforma.log ===
+2026-11-13T16:28:17.8631179Z ✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+2026-11-13T16:28:17.9938764Z ✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+2026-11-13T16:28:18.1152816Z ✓ saida: {"preservou":true}
+2026-11-13T16:28:18.1827284Z   ✓ 69 aulas, sem id repetido
+2026-11-13T16:28:18.1828755Z   ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+2026-11-13T16:28:18.1834804Z   ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+2026-11-13T16:28:18.1867858Z   ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+2026-11-13T16:28:18.1868536Z   ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+2026-11-13T16:28:18.1873609Z   ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+2026-11-13T16:28:18.1876885Z   ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+2026-11-13T16:28:18.1877607Z   ✓ modalidade normal tem aulas de Inglês
+2026-11-13T16:28:18.1878998Z   ✓ modalidade bct tem aulas de Inglês
+2026-11-13T16:28:18.1881470Z   ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+2026-11-13T16:28:18.1882273Z   ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+2026-11-13T16:28:18.1904566Z   ✓ curso/app.js igual à montagem dos 17 arquivos de curso/app/
+2026-11-13T16:28:18.1908218Z   ✓ o modelo reproduz os 15 comportamentos confirmados no serviço real
+2026-11-13T16:28:18.1908888Z   ✓ reproduz o vazamento: com as regras de hoje (sem regra para progresso2), um aluno lê e grava o progresso2 de outra conta
+2026-11-13T16:28:18.1909545Z   ✓ as regras propostas e as de reversão declaram progresso e progresso2 e isolam as contas (leitura e gravação)
+2026-11-13T16:28:18.1910316Z   ✓ propostas: o caminho antigo fica só para leitura do aluno; reversão: volta a ser gravável, e o caminho novo continua gravável só pelo próprio aluno
+2026-11-13T16:28:18.1911194Z   ✓ o dono do curso continua lendo e gravando os dois caminhos (moderação e limpeza)
+2026-11-13T16:28:18.1920030Z   ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+2026-11-13T16:28:18.1920849Z   ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+2026-11-13T16:28:18.1926180Z   ✓ 48 cartões de Física: a conta recalculada confere com o verso
+2026-11-13T16:28:18.1926727Z   ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+2026-11-13T16:28:22.5105453Z   ✓ aluno novo: simulado completo em 4h20
+2026-11-13T16:28:23.4458060Z   ✓ progresso antigo com o padrão de 4h passa a mostrar 4h20
+2026-11-13T16:28:23.4463595Z   ✓ e nada do progresso (notas, cartões, erros, simulados, atividade) muda
+2026-11-13T16:28:23.4464090Z   ✓ sem erro de JavaScript
+2026-11-13T16:28:24.0123657Z   ✓ quem escolheu 4h depois da mudança continua com 4h
+2026-11-13T16:28:24.3889063Z   ✓ plano mostra "meta de 4 acertos em 5" para a aula com 5 questões
+2026-11-13T16:28:24.3889505Z   ✓ e não promete 10 questões
+2026-11-13T16:28:24.3889739Z   ✓ sem erro de JavaScript
+2026-11-13T16:28:25.0938720Z   ✓ normal: trilha de Inglês com 13 aulas
+2026-11-13T16:28:25.0963832Z   ✓ normal: notas das aulas da outra modalidade continuam guardadas
+2026-11-13T16:28:25.0964200Z   ✓ normal: sem erro de JavaScript
+2026-11-13T16:28:25.7919919Z   ✓ bct: trilha de Inglês com 15 aulas
+2026-11-13T16:28:25.7940611Z   ✓ bct: notas das aulas da outra modalidade continuam guardadas
+2026-11-13T16:28:25.7941733Z   ✓ bct: sem erro de JavaScript
+2026-11-13T16:28:26.4741281Z   ✓ FIS18: trilha da matéria com 18 aulas
+2026-11-13T16:28:26.6415014Z   ✓ FIS18: a aula abre pela trilha
+2026-11-13T16:28:26.7967887Z   ✓ FIS18: quiz com 14 questões
+2026-11-13T16:28:26.7995703Z   ✓ FIS18: notas, cartões, erros, simulados e atividade intactos; "continuar" aponta para a aula; sem erro de JavaScript
+2026-11-13T16:28:27.4912869Z   ✓ POR15: trilha da matéria com 15 aulas
+2026-11-13T16:28:27.6606170Z   ✓ POR15: a aula abre pela trilha
+2026-11-13T16:28:27.8146492Z   ✓ POR15: quiz com 10 questões
+2026-11-13T16:28:27.8174424Z   ✓ POR15: notas, cartões, erros, simulados e atividade intactos; "continuar" aponta para a aula; sem erro de JavaScript
+2026-11-13T16:28:28.4626973Z   ✓ certificado antigo de Física aparece como conquistado depois da aula nova
+2026-11-13T16:28:28.8644930Z   ✓ certificado antigo de Física com as aulas, a carga horária, a data e o código originais
+2026-11-13T16:28:29.2609363Z   ✓ certificado antigo de Português com as aulas, a carga horária, a data e o código originais
+2026-11-13T16:28:29.2631780Z   ✓ abrir o curso e ver os certificados sem estudar não grava nada
+2026-11-13T16:28:31.1560048Z   ✓ quiz da FIS18 concluído pela tela
+2026-11-13T16:28:31.1649376Z   ✓ registro gravado do certificado antigo: 17 aulas, 46 h, data e código originais
+2026-11-13T16:28:31.1650001Z   ✓ certificado novo de Física exige as 18 aulas (49 h)
+2026-11-13T16:28:31.1650738Z   ✓ notas, cartões, erros e simulados antigos intactos depois de estudar
+2026-11-13T16:28:31.4133623Z   ✓ Física liberada com as aulas atuais e o certificado de 17 aulas ainda na lista
+2026-11-13T16:28:31.8105373Z   ✓ o certificado antigo continua abrindo para reimprimir
+2026-11-13T16:28:31.8105719Z   ✓ sem erro de JavaScript
+2026-11-13T16:28:32.4447679Z   ✓ sem todas as aulas antigas, nenhum certificado antigo de Física
+2026-11-13T16:28:33.8556528Z   ✓ quiz da FIS17 concluído depois da atualização
+2026-11-13T16:28:34.1203154Z   ✓ completar a FIS17 depois da atualização não dá o certificado antigo: falta a FIS18
+2026-11-13T16:28:34.1203816Z   ✓ o certificado antigo de Português do mesmo aluno continua
+2026-11-13T16:28:34.9960802Z   ✓ nota de 80% sem a data de conclusão não basta para o certificado antigo
+2026-11-13T16:28:35.8941583Z   ✓ progresso que já tinha a FIS18 não ganha o certificado antigo de Física
+2026-11-13T16:28:36.7777663Z   ✓ aluno novo com as aulas antigas não tem certificado: faltam FIS18 e POR15
+2026-11-13T16:28:38.2721299Z   ✓ quiz da POR15 concluído pela tela
+2026-11-13T16:28:38.5272773Z   ✓ concluindo a POR15, sai o certificado de Português com 15 aulas
+2026-11-13T16:28:39.1614865Z   ✓ certificado de Inglês (CFS normal) registrado
+2026-11-13T16:28:39.7276601Z   ✓ depois de trocar para o BCT, o registro do certificado normal continua gravado
+2026-11-13T16:28:40.1128941Z   ✓ no BCT, o certificado de Inglês do CFS normal continua aberto para reimprimir
+2026-11-13T16:28:43.2208097Z   ✓ colar outro progresso troca as notas, mas mantém os certificados conquistados
+2026-11-13T16:28:43.5901505Z   ✓ colar um progresso com os mesmos certificados não duplica nenhum
+2026-11-13T16:28:46.6339576Z   ✓ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem
+2026-11-13T16:28:47.3482801Z   ✓ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união
+2026-11-13T16:28:48.0705912Z   ✓ progresso zerado em outro aparelho: a nuvem não traz de volta os certificados apagados
+2026-11-13T16:28:50.9615515Z   ✓ zerar progresso apaga os certificados registrados e marca quando foi zerado
+2026-11-13T16:28:51.5939784Z   ✓ depois de zerar, abrir de novo não recria certificado antigo
+2026-11-13T16:28:52.1792683Z   ✓ matéria desconhecida no histórico não quebra a aba Simulados
+2026-11-13T16:28:53.1755708Z   ✓ America/Sao_Paulo: sem versão nos dados, nenhum cartão dominado volta antes da hora
+2026-11-13T16:28:53.5672595Z   ✓ America/Sao_Paulo: abrir com cartões em versão nova não altera o progresso gravado
+2026-11-13T16:28:53.7092435Z   ✓ America/Sao_Paulo: no 1º dia voltam só os cartões de desvio 0 (1 de 7)
+2026-11-13T16:28:54.2449479Z   ✓ America/Sao_Paulo: sem estudar, 3 dias depois, ainda voltam 1 (a âncora só fica quando o aluno estuda)
+2026-11-13T16:28:55.0005166Z   ✓ America/Sao_Paulo: ao estudar, a âncora fica no dia local 2026-11-30
+2026-11-13T16:28:55.0006033Z   ✓ America/Sao_Paulo: acerto na versão nova vai para a caixa 3 (volta em 7 dias) e registra a versão vista
+2026-11-13T16:28:55.0006768Z   ✓ America/Sao_Paulo: os cartões ainda não revistos mantêm o histórico intacto
+2026-11-13T16:28:58.6802278Z   ✓ America/Sao_Paulo: os demais voltam distribuídos até o 6º dia (1, 3, 4, 5, 6, 6, 7; esperado 1, 3, 4, 5, 6, 6, 7)
+2026-11-13T16:29:00.6913822Z   ✓ America/Sao_Paulo: depois de revistos, no dia seguinte só vencem os cartões já agendados (1); nenhum se repete fora da data
+2026-11-13T16:29:02.3464149Z   ✓ America/Sao_Paulo: cartão regravado por uma versão antiga do app volta para a revisão da versão nova
+2026-11-13T16:29:02.8751195Z   ✓ America/Sao_Paulo: um cartão que já venceria antes do espalhamento continua vencendo na data original
+2026-11-13T16:29:03.4096104Z   ✓ Asia/Tokyo: sem versão nos dados, nenhum cartão dominado volta antes da hora
+2026-11-13T16:29:03.7888632Z   ✓ Asia/Tokyo: abrir com cartões em versão nova não altera o progresso gravado
+2026-11-13T16:29:03.9417898Z   ✓ Asia/Tokyo: no 1º dia voltam só os cartões de desvio 0 (1 de 7)
+2026-11-13T16:29:04.4761389Z   ✓ Asia/Tokyo: sem estudar, 3 dias depois, ainda voltam 1 (a âncora só fica quando o aluno estuda)
+2026-11-13T16:29:05.2502492Z   ✓ Asia/Tokyo: ao estudar, a âncora fica no dia local 2026-12-01
+2026-11-13T16:29:05.2503139Z   ✓ Asia/Tokyo: acerto na versão nova vai para a caixa 3 (volta em 7 dias) e registra a versão vista
+2026-11-13T16:29:05.2503633Z   ✓ Asia/Tokyo: os cartões ainda não revistos mantêm o histórico intacto
+2026-11-13T16:29:08.9446638Z   ✓ Asia/Tokyo: os demais voltam distribuídos até o 6º dia (1, 3, 4, 5, 6, 6, 7; esperado 1, 3, 4, 5, 6, 6, 7)
+2026-11-13T16:29:10.9579548Z   ✓ Asia/Tokyo: depois de revistos, no dia seguinte só vencem os cartões já agendados (1); nenhum se repete fora da data
+2026-11-13T16:29:12.6133164Z   ✓ Asia/Tokyo: cartão regravado por uma versão antiga do app volta para a revisão da versão nova
+2026-11-13T16:29:13.1239960Z   ✓ Asia/Tokyo: um cartão que já venceria antes do espalhamento continua vencendo na data original
+2026-11-13T16:29:14.8241147Z   ✓ colar progresso leva cartões, versões vistas e âncora
+2026-11-13T16:29:15.4572038Z   ✓ o aparelho que recebeu o progresso mostra os mesmos cartões vencidos que o original
+2026-11-13T16:29:16.0939318Z   ✓ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova
+2026-11-13T16:29:16.7603213Z   ✓ zerar progresso apaga cartões, versões vistas e âncoras
+2026-11-13T16:29:16.7661855Z   ✓ Português: 117 cartões, 100 na versão 2 e 17 sem versão (100/17)
+2026-11-13T16:29:17.3088693Z   ✓ Português: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (19 de 100)
+2026-11-13T16:29:19.7839611Z   ✓ Português: no 1º dia só voltam cartões reformulados, e o acerto os agenda para 7 dias
+2026-11-13T16:29:19.7840860Z   ✓ Português: os 17 cartões mantidos e o registro das aulas ficam intactos
+2026-11-13T16:29:22.9828240Z   ✓ Português: os outros reformulados voltam distribuídos até o 6º dia (16, 30, 45, 56, 70, 81)
+2026-11-13T16:29:33.5946691Z   ✓ Português: cada reformulado volta uma única vez; no 7º dia só vencem os 19 agendados
+2026-11-13T16:29:33.5955096Z   ✓ Inglês: 113 cartões, 87 na versão 2 (86 do Lote 2 e ING14~5) e 26 sem versão
+2026-11-13T16:29:34.1241771Z   ✓ Inglês normal: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (9 de 67)
+2026-11-13T16:29:37.2784878Z   ✓ Inglês normal: sem estudar, a fila não cresce sozinha (9, 9, 9, 9, 9, 9)
+2026-11-13T16:29:38.8817388Z   ✓ Inglês normal: no 1º dia só aparecem cartões de aulas da modalidade
+2026-11-13T16:29:38.8818236Z   ✓ Inglês normal: cartões da outra modalidade e os mantidos ficam intactos
+2026-11-13T16:29:39.4117616Z   ✓ Inglês normal: até o 6º dia voltam todos os demais reformulados da modalidade (58)
+2026-11-13T16:29:39.9413813Z   ✓ Inglês bct: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (11 de 83)
+2026-11-13T16:29:43.0946464Z   ✓ Inglês bct: sem estudar, a fila não cresce sozinha (11, 11, 11, 11, 11, 11)
+2026-11-13T16:29:44.9499362Z   ✓ Inglês bct: no 1º dia só aparecem cartões de aulas da modalidade
+2026-11-13T16:29:44.9500012Z   ✓ Inglês bct: cartões da outra modalidade e os mantidos ficam intactos
+2026-11-13T16:29:45.4771616Z   ✓ Inglês bct: até o 6º dia voltam todos os demais reformulados da modalidade (72)
+2026-11-13T16:29:46.0064613Z   ✓ Matemática: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (14 de 88)
+2026-11-13T16:29:47.7481335Z   ✓ Matemática: no 1º dia só voltam reformulados; os 67 mantidos ficam intactos
+2026-11-13T16:29:48.2772520Z   ✓ Matemática: até o 6º dia voltam os demais reformulados (74)
+2026-11-13T16:29:48.8071777Z   ✓ Física: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (14 de 84)
+2026-11-13T16:29:50.5836622Z   ✓ Física: no 1º dia só voltam reformulados; os 73 mantidos ficam intactos
+2026-11-13T16:29:51.1101943Z   ✓ Física: até o 6º dia voltam os demais reformulados (70)
+2026-11-13T16:30:26.3073961Z   ✓ 320×568 (todas as matérias): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+2026-11-13T16:30:26.3075051Z   ✓ 320×568 (todas as matérias): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+2026-11-13T16:30:26.3075932Z   ✓ 320×568 (todas as matérias): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+2026-11-13T16:30:26.3076977Z   ✓ 320×568 (todas as matérias): os 518 cartões aparecem com frente e verso completos, iguais aos dados (518 conferidos, 519 telas com o repetido)
+2026-11-13T16:30:26.3078111Z   ✓ 320×568 (todas as matérias): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+2026-11-13T16:30:37.1023493Z   ✓ 360×640 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+2026-11-13T16:30:37.1024193Z   ✓ 360×640 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+2026-11-13T16:30:37.1025285Z   ✓ 360×640 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+2026-11-13T16:30:37.1026074Z   ✓ 360×640 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+2026-11-13T16:30:37.1026748Z   ✓ 360×640 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+2026-11-13T16:30:47.7354573Z   ✓ 390×844 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+2026-11-13T16:30:47.7355255Z   ✓ 390×844 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+2026-11-13T16:30:47.7355872Z   ✓ 390×844 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+2026-11-13T16:30:47.7356557Z   ✓ 390×844 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+2026-11-13T16:30:47.7357989Z   ✓ 390×844 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+2026-11-13T16:30:55.0236908Z   ✓ 1280×800 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+2026-11-13T16:30:55.0237596Z   ✓ 1280×800 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+2026-11-13T16:30:55.0238220Z   ✓ 1280×800 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+2026-11-13T16:30:55.0238907Z   ✓ 1280×800 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+2026-11-13T16:30:55.0239659Z   ✓ 1280×800 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+2026-11-13T16:30:56.1175416Z   ✓ fonte do navegador em 24 px (150%), 320 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+2026-11-13T16:30:57.2114776Z   ✓ fonte do navegador em 32 px (200%), 320 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+2026-11-13T16:30:58.2854480Z   ✓ fonte do navegador em 32 px (200%), 360 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+2026-11-13T16:31:00.5605634Z   ✓ nenhum script do progresso colado executa (nome, datas do plano, tentativas, caderno de erros, código do certificado)
+2026-11-13T16:31:00.6559756Z   ✓ o nome com sinais de HTML aparece como texto no certificado
+2026-11-13T16:31:01.8036924Z   ✓ tipos trocados: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+2026-11-13T16:31:02.9541030Z   ✓ valores nulos: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+2026-11-13T16:31:04.1041348Z   ✓ simulado em andamento corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+2026-11-13T16:31:05.2368861Z   ✓ último resultado corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+2026-11-13T16:31:06.4106043Z   ✓ o simulado continua com as 23 questões que ainda existem e a resposta da 1ª questão é mantida
+2026-11-13T16:31:06.5756904Z   ✓ a entrega registra o simulado com 23 questões e guarda a resposta dada
+2026-11-13T16:31:07.3275029Z   ✓ JSON corrompido: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+2026-11-13T16:31:07.4231697Z   ✓ JSON corrompido: "Descartar" apaga só a cópia
+2026-11-13T16:31:08.1655075Z   ✓ formato de uma versão futura: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+2026-11-13T16:31:08.2620609Z   ✓ formato de uma versão futura: "Descartar" apaga só a cópia
+2026-11-13T16:31:08.5883818Z   ✓ progresso válido: nenhuma cópia e nenhum aviso
+2026-11-13T16:31:09.2337648Z   ✓ o aluno é avisado de que o progresso não está sendo salvo, em Hoje e em Plano › Dados
+2026-11-13T16:31:09.6866781Z   ✓ armazenamento normal: sem aviso, "Progresso salvo neste aparelho"
+2026-11-13T16:31:13.6686598Z   ✓ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais
+2026-11-13T16:31:13.6687207Z   ✓ os dois aparelhos convergem para o mesmo progresso
+2026-11-13T16:31:14.3016773Z   ✓ sincronizar de novo sem mudanças não grava nada na nuvem
+2026-11-13T16:31:19.5549138Z   ✓ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota
+2026-11-13T16:31:19.5549833Z   ✓ mesmo cartão nos dois: vale a revisão gravada por último
+2026-11-13T16:31:19.5550574Z   ✓ erro corrigido num aparelho e errado de novo no outro continua no caderno
+2026-11-13T16:31:19.5551173Z   ✓ dois simulados iguais feitos em aparelhos diferentes contam como dois
+2026-11-13T16:31:24.1083416Z   ✓ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica
+2026-11-13T16:31:25.2289727Z   ✓ sem como separar o que veio antes do "Zerar": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje
+2026-11-13T16:31:25.8368469Z   ✓ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado
+2026-11-13T16:31:27.0236505Z   ✓ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte
+2026-11-13T16:31:38.7483298Z   ✓ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto
+2026-11-13T16:31:41.3523280Z   ✓ ao entrar numa conta, o progresso feito sem conta não aparece nela nem vai para a nuvem; fica intacto e o aluno pode levá-lo
+2026-11-13T16:31:43.8937143Z   ✓ "Levar para a conta": a conta recebe o estudo feito sem conta (o nome da conta fica), a nuvem também, e o progresso sem conta continua guardado
+2026-11-13T16:31:45.9015654Z   ✓ conta B: só o progresso dela, sem nada da conta A nem do progresso sem conta
+2026-11-13T16:31:45.9016309Z   ✓ conta C nova: começa vazia, e nada das outras contas é gravado na nuvem dela
+2026-11-13T16:31:45.9016814Z   ✓ de volta à conta A: o progresso dela está como antes, e as nuvens de A e B não se misturaram
+2026-11-13T16:31:46.3328395Z   ✓ conta lembrada sem o serviço que a confirma: o aparelho não mostra o progresso dela, só o sem conta
+2026-11-13T16:31:47.6919376Z   ✓ progresso ilegível na conta B: a cópia de recuperação fica na conta B e não aparece para a conta A
+2026-11-13T16:31:48.6128650Z   ✓ "Baixar meus dados" entrega um arquivo com o progresso deste aparelho
+2026-11-13T16:31:48.6541185Z   ✓ "O que está guardado" mostra o que este aparelho guarda e só a quantidade de outras contas, sem o conteúdo delas
+2026-11-13T16:31:48.7186112Z   ✓ cancelar a exclusão não apaga nada
+2026-11-13T16:31:48.8798749Z   ✓ apagar os dados sem conta, com confirmação, apaga só o progresso sem conta; o de outra conta fica
+2026-11-13T16:31:48.8817722Z   ✓ repetir a confirmação não apaga mais nada nem dá erro
+2026-11-13T16:31:49.7658133Z   ✓ "Apagar também as outras contas": apaga o sem conta e a conta já confirmada na nuvem; a conta com estudo não confirmado fica, com aviso antes e depois [ficou: missao-eear-v1@claude:outra]
+2026-11-13T16:31:50.6492157Z   ✓ com todas as contas confirmadas na nuvem, "Apagar também as outras contas" apaga tudo deste aparelho e diz isso
+2026-11-13T16:31:55.5850719Z   ✓ com conta: apagar deste aparelho fica bloqueado enquanto a nuvem não tem tudo; depois, apaga só a cópia local e a nuvem continua com o progresso
+2026-11-13T16:32:24.8368920Z   ✓ com a trava: 8 marcações feitas ao mesmo tempo em dois aparelhos ficam na nuvem e nos dois aparelhos
+2026-11-13T16:32:57.8383432Z   ✓ sem a trava: nenhuma das 8 marcações simultâneas se perde
+2026-11-13T16:32:57.8384615Z   ✓ sem a trava: o aluno é avisado de que a sincronização com dois aparelhos abertos ao mesmo tempo não é garantida [aviso: Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.]
+2026-11-13T16:32:59.7991620Z   ✓ trava recusada pela nuvem: o progresso chega à conta sem a trava, sem base e com o aviso ao aluno
+2026-11-13T16:33:06.5683251Z   ✓ conta nova: o documento vazio criado pela trava é tratado como conta sem progresso, e não como versão futura
+2026-11-13T16:33:13.9899726Z   ✓ trava ocupada por outro aparelho: nada é gravado enquanto ela vale; a marcação chega depois que ela vence
+2026-11-13T16:33:27.2594035Z   ✓ gravação de um app antigo por cima: a conferência percebe, a união é refeita e a marcação deste aparelho e a do outro ficam
+2026-11-13T16:33:40.1562880Z   ✓ base corrompida ou de outra conta: é ignorada, a sincronização continua e nada é apagado
+2026-11-13T16:33:46.8274703Z   ✓ gravação recusada pela nuvem: o aviso diz que o progresso está salvo neste aparelho (e não na conta), e o estudo fica aqui [aviso: A sincronização com a nuvem parou (a nuvem recusou a gravação). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+2026-11-13T16:34:01.6201985Z   ✓ sem conexão: o aviso diz que o estudo novo está só neste aparelho e vai para a conta quando a conexão voltar; depois, que está salvo na conta [Progresso salvo na sua conta. | Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar. | Progresso salvo na sua conta.]
+2026-11-13T16:34:18.0687490Z   ✓ versão antiga grava por cima depois (sem trava): o estudo deste aparelho que ela não tinha não é apagado, e o dela fica [aparelho: T:antigo,T:novo-1,T:novo-2 | nuvem: T:antigo,T:novo-1,T:novo-2]
+2026-11-13T16:34:24.2095918Z   ✓ exclusão da nuvem bloqueada por padrão: sem botão, sem confirmação, e a ação forçada não apaga nada
+2026-11-13T16:34:43.0138418Z   ✓ apagar da nuvem: sem "APAGAR" nada acontece; com ele, a nuvem fica só com a marca de exclusão (sem progresso), a cópia deste aparelho fica e a outra conta não é tocada
+2026-11-13T16:34:46.0166818Z   ✓ depois de apagar, o que o aluno estuda neste aparelho não volta para a nuvem
+2026-11-13T16:34:53.6684236Z   ✓ reabrir este aparelho ou abrir outro aparelho da mesma conta não restaura a nuvem; a cópia local do outro aparelho fica, com a opção de enviar de novo
+2026-11-13T16:35:04.4941200Z   ✓ versão antiga regravou depois da exclusão: o aparelho que apagou percebe, não mistura a cópia dele e apaga de novo a pedido
+2026-11-13T16:35:21.3470182Z   ✓ sem conexão ao apagar: "nada foi apagado" e a nuvem fica como estava; se outra gravação cobre a exclusão, o app não diz que apagou
+2026-11-13T16:35:33.5933699Z   ✓ "Enviar de novo para a nuvem" (a pedido) desfaz a exclusão com a cópia deste aparelho; antes disso, apagar a última cópia local é permitido, com aviso
+2026-11-13T16:36:12.3099641Z   ✓ versão antiga grava por cima e outro aparelho novo une e grava assinado: as marcações, o caderno de erros e a apostila do aparelho B não somem (nem na nuvem nem nele) [nuvem: T:a1,T:b0,T:b1,T:b2,T:base,T:v1 | B: T:a1,T:b0,T:b1,T:b2,T:base,T:v1 | erros B: MAT03-2,POR02-3]
+2026-11-13T16:37:03.5435825Z   ✓ só aparelhos novos: desmarcar num aparelho desmarca no outro e não volta; marcar de novo também passa para o outro
+2026-11-13T16:37:58.2574814Z   ✓ depois da gravação antiga, os aparelhos novos se reconciliam sem perda e voltam a propagar desmarcações (não há ressurreição)
+2026-11-13T16:38:38.7203924Z   ✗ sem rede, gravação da versão antiga no meio e aparelho fechado com gravação pendente: ao reconectar e ao reabrir, nada se perde [nuvem: T:b1,T:base,T:fecha,T:off,T:v1,T:v2]
+2026-11-13T16:39:31.5174943Z   ✓ nuvem incompatível (antiga, assinatura que não bate, assinada em outra época, versão futura, corrompida): o progresso deste aparelho não é apagado [antigo, sem assinatura: ok; assinatura que não bate: ok; assinado por outro aparelho em outra época: ok; versão futura: ok; corrompido: ok]
+2026-11-13T16:40:19.9446639Z   ✓ concorrência com uma versão antiga gravando por cima: nenhuma marcação dos aparelhos novos se perde, na nuvem nem neles [faltam na nuvem:  | A:  | B: ]
+2026-11-13T16:41:06.6728257Z   ✓ gravação atrasada de outro aparelho chega depois da que este aparelho confirmou: o que ele gravou não é apagado [a gravação de A chegou: true; foi coberta: true | nuvem: T:a1,T:a2,T:b1,T:base | A: T:a1,T:a2,T:b1,T:base]
+2026-11-13T16:41:49.9306558Z   ✓ colar um progresso antigo num aparelho e sincronizar: nada do que estava na nuvem e nos outros aparelhos é apagado [nuvem: T:a1,T:b1,T:b2,T:base | B: T:a1,T:b1,T:b2,T:base]
+2026-11-13T16:42:02.0783752Z   ✓ migração: o caminho novo recebe a união do antigo com o aparelho, sem apagar nada; o caminho antigo não é tocado [novo: T:base,T:local,T:velho1,T:velho2]
+2026-11-13T16:42:17.0880158Z   ✓ isolamento: a conta ana não lê nem grava nada da conta bia (e o app nunca tenta gravar fora do próprio caminho novo)
+2026-11-13T16:43:09.9285605Z   ✓ falha ao ler o caminho antigo e gravações recusadas por falta de rede: nada se perde e a migração acontece ao abrir de novo
+2026-11-13T16:44:03.8435414Z   ✓ desmarcar depois da migração: a marcação não volta do caminho antigo ao reabrir os aparelhos
+2026-11-13T16:44:45.3577405Z   ✓ reversão: o estudo gravado no caminho antigo durante a reversão é unido ao voltar, uma vez (depois de desmarcado, não volta)
+2026-11-13T16:45:08.3835833Z   ✓ dois aparelhos migrando ao mesmo tempo: nada se perde e o caminho antigo não é gravado [faltam na nuvem:  | A:  | B:  | erros: ]
+2026-11-13T16:45:23.0925244Z   ✓ reversão: com as regras de hoje o progresso2 de outra conta vaza (reproduzido); com as regras de reversão fica isolado, e o app segue só no próprio caminho novo
+2026-11-13T16:45:34.2984041Z   ✓ gravação recusada: a sincronização para (sem repetir a gravação recusada), o aviso diz que parou e por quê, e a marcação fica neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem do curso não permite gravar com o seu acesso). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+2026-11-13T16:45:34.4593972Z   ✓ gravação recusada: depois que a nuvem volta a aceitar, abrir o app de novo envia o que ficou no aparelho
+2026-11-13T16:45:47.8817067Z   ✓ cota estourada e servidor ocupado: o app tenta de novo, com espera crescente, e o estudo chega à nuvem (3 tentativas)
+2026-11-13T16:45:58.0914924Z   ✓ sem rede: tentativas espaçadas (3 em 9 s, com a primeira abertura), o estudo fica salvo neste aparelho, e a conexão voltando grava na hora (102 ms) [aviso: Progresso salvo neste aparelho.]
+2026-11-13T16:46:00.7103615Z   ✓ app indo para o fundo: o estudo vai para a nuvem sem esperar o intervalo de 1,5 s (18 ms)
+2026-11-13T16:46:04.5261392Z DIAGNÓSTICO pagehide: {"cacheAntes":false,"semEnvio":true,"checkpoint":{"T:base":true,"T:saindo":true},"reabertoOffline":{"T:base":true,"T:saindo":true}}
+2026-11-13T16:46:04.5262901Z   ✓ página fechando: nenhum envio após pagehide; checkpoint e reabertura offline preservam o estudo
+2026-11-13T16:46:05.8287852Z   ✓ duas abas da mesma conta: a marcação da aba que fechou continua no aparelho e as contagens somam sem perder nem dobrar [feito: T:a1,T:apagar,T:b1,T:b2,T:base | atividade: 5 (esperado 5)]
+2026-11-13T16:46:06.9682684Z   ✓ desmarcar numa aba e estudar na outra: a desmarcação não volta e o estudo fica
+2026-11-13T16:46:08.1150521Z   ✓ desmarcar numa aba e estudar na outra (aba suspensa, sem o aviso): a desmarcação não volta e o estudo fica
+2026-11-13T16:46:09.7749667Z   ✓ "Zerar" numa aba: o que existia antes não volta pela outra aba (nem os certificados), e o que ela estudou depois fica [feito: T:b-depois]
+2026-11-13T16:46:10.9238092Z   ✓ certificados: gravações de duas abas mantêm o mesmo registro, data e código
+2026-11-13T16:46:12.3203996Z   ✓ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:a5,T:apagar,T:b5,T:base]
+2026-11-13T16:46:14.4350262Z   ✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]
+2026-11-13T16:46:15.5815853Z   ✓ cópia apagada em outra aba: a aba aberta não regrava o que foi apagado; só o estudo novo fica [feito: T:depois-de-apagar]
+2026-11-13T16:46:21.2922403Z   ✓ transação interrompida: três abas, B aceita e preservada por mais de 2s; após crash, ambas as marcações e atividade 4 [{"T:A-race":true,"T:B-race":true,"T:base":true}]
+2026-11-13T16:46:27.0596495Z   ✓ transação interrompida: três abas, B aceita e preservada por mais de 2s; após crash, ambas as marcações e atividade 4 [{"T:A-race":true,"T:B-race":true,"T:base":true}]
+2026-11-13T16:46:29.9776321Z   ✓ exclusão concorrente não confirma nem apaga operação aceita fora do checkpoint; após crash, a pendência é recuperada
+2026-11-13T16:46:32.7657947Z   ✓ queda do navegador 1200 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:antes-da-queda,T:base]
+2026-11-13T16:46:34.7227612Z   ✓ queda do navegador 300 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:antes-da-queda,T:base]
+2026-11-13T16:46:36.5240691Z   ✓ isolamento: o diário durável de outra conta não é restaurado na conta aberta [cópia: nenhuma; diário da outra conta no localStorage: não]
+2026-11-13T16:46:36.5762566Z 1 falha(s)
+
+=== epoca4-repro-1.log ===
+  ✓ 69 aulas, sem id repetido
+  ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+  ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+  ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+  ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+  ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ modalidade normal tem aulas de Inglês
+  ✓ modalidade bct tem aulas de Inglês
+  ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+  ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+  ✓ curso/app.js igual à montagem dos 17 arquivos de curso/app/
+  ✓ o modelo reproduz os 15 comportamentos confirmados no serviço real
+  ✓ reproduz o vazamento: com as regras de hoje (sem regra para progresso2), um aluno lê e grava o progresso2 de outra conta
+  ✓ as regras propostas e as de reversão declaram progresso e progresso2 e isolam as contas (leitura e gravação)
+  ✓ propostas: o caminho antigo fica só para leitura do aluno; reversão: volta a ser gravável, e o caminho novo continua gravável só pelo próprio aluno
+  ✓ o dono do curso continua lendo e gravando os dois caminhos (moderação e limpeza)
+  ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+  ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+  ✓ 48 cartões de Física: a conta recalculada confere com o verso
+  ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+  ✓ sem rede, gravação da versão antiga no meio e aparelho fechado com gravação pendente: ao reconectar e ao reabrir, nada se perde [nuvem: T:a1,T:b1,T:base,T:fecha,T:off,T:v1,T:v2]
+tudo certo
+
+=== epoca9-ordem-confirmada.log ===
+  ✓ 69 aulas, sem id repetido
+  ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+  ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+  ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+  ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+  ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ modalidade normal tem aulas de Inglês
+  ✓ modalidade bct tem aulas de Inglês
+  ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+  ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+  ✓ curso/app.js igual à montagem dos 17 arquivos de curso/app/
+  ✓ o modelo reproduz os 15 comportamentos confirmados no serviço real
+  ✓ reproduz o vazamento: com as regras de hoje (sem regra para progresso2), um aluno lê e grava o progresso2 de outra conta
+  ✓ as regras propostas e as de reversão declaram progresso e progresso2 e isolam as contas (leitura e gravação)
+  ✓ propostas: o caminho antigo fica só para leitura do aluno; reversão: volta a ser gravável, e o caminho novo continua gravável só pelo próprio aluno
+  ✓ o dono do curso continua lendo e gravando os dois caminhos (moderação e limpeza)
+  ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+  ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+  ✓ 48 cartões de Física: a conta recalculada confere com o verso
+  ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+  ✗ ordem confirmada B -> A, sobrescrita antiga e reabertura de B: nuvem preserva todas as marcas
+  ✓ nova abertura de A restaura sua alteração confirmada, preservada no checkpoint
+DIAGNÓSTICO ordem confirmada: {"confirmouA":true,"confirmouB":true,"bConheciaA":false,"nuvemAntes":{"T:b1":true,"T:base":true,"T:fecha":true,"T:v2":true},"localA":{"T:a1":true,"T:b1":true,"T:base":true},"checkpointA":{"T:a1":true,"T:b1":true,"T:base":true},"restaurou":true,"nuvemDepois":{"T:a1":true,"T:b1":true,"T:base":true,"T:fecha":true,"T:v2":true}}
+1 falha(s)
+
+=== epoca9-ordem-confirmada-2.log ===
+  ✓ 69 aulas, sem id repetido
+  ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+  ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+  ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+  ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+  ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ modalidade normal tem aulas de Inglês
+  ✓ modalidade bct tem aulas de Inglês
+  ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+  ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+  ✓ curso/app.js igual à montagem dos 17 arquivos de curso/app/
+  ✓ o modelo reproduz os 15 comportamentos confirmados no serviço real
+  ✓ reproduz o vazamento: com as regras de hoje (sem regra para progresso2), um aluno lê e grava o progresso2 de outra conta
+  ✓ as regras propostas e as de reversão declaram progresso e progresso2 e isolam as contas (leitura e gravação)
+  ✓ propostas: o caminho antigo fica só para leitura do aluno; reversão: volta a ser gravável, e o caminho novo continua gravável só pelo próprio aluno
+  ✓ o dono do curso continua lendo e gravando os dois caminhos (moderação e limpeza)
+  ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+  ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+  ✓ 48 cartões de Física: a conta recalculada confere com o verso
+  ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+  ✗ ordem confirmada B -> A, sobrescrita antiga e reabertura de B: nuvem preserva todas as marcas
+  ✓ nova abertura de A restaura sua alteração confirmada, preservada no checkpoint
+DIAGNÓSTICO ordem confirmada: {"confirmouA":true,"confirmouB":true,"bConheciaA":false,"nuvemAntes":{"T:b1":true,"T:base":true,"T:fecha":true,"T:v2":true},"localA":{"T:a1":true,"T:b1":true,"T:base":true},"checkpointA":{"T:a1":true,"T:b1":true,"T:base":true},"restaurou":true,"nuvemDepois":{"T:a1":true,"T:b1":true,"T:base":true,"T:fecha":true,"T:v2":true}}
+1 falha(s)
+
+=== epoca9-ordem-confirmada-3.log ===
+  ✓ 69 aulas, sem id repetido
+  ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+  ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+  ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+  ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+  ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ modalidade normal tem aulas de Inglês
+  ✓ modalidade bct tem aulas de Inglês
+  ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+  ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+  ✓ curso/app.js igual à montagem dos 17 arquivos de curso/app/
+  ✓ o modelo reproduz os 15 comportamentos confirmados no serviço real
+  ✓ reproduz o vazamento: com as regras de hoje (sem regra para progresso2), um aluno lê e grava o progresso2 de outra conta
+  ✓ as regras propostas e as de reversão declaram progresso e progresso2 e isolam as contas (leitura e gravação)
+  ✓ propostas: o caminho antigo fica só para leitura do aluno; reversão: volta a ser gravável, e o caminho novo continua gravável só pelo próprio aluno
+  ✓ o dono do curso continua lendo e gravando os dois caminhos (moderação e limpeza)
+  ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+  ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+  ✓ 48 cartões de Física: a conta recalculada confere com o verso
+  ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+  ✗ ordem confirmada B -> A, sobrescrita antiga e reabertura de B: nuvem preserva todas as marcas
+  ✓ nova abertura de A restaura sua alteração confirmada, preservada no checkpoint
+DIAGNÓSTICO ordem confirmada: {"confirmouA":true,"confirmouB":true,"bConheciaA":false,"avisoA":"Progresso salvo na sua conta.","nuvemAntes":{"T:b1":true,"T:base":true,"T:fecha":true,"T:v2":true},"localA":{"T:a1":true,"T:b1":true,"T:base":true},"checkpointA":{"T:a1":true,"T:b1":true,"T:base":true},"restaurou":true,"nuvemDepois":{"T:a1":true,"T:b1":true,"T:base":true,"T:fecha":true,"T:v2":true}}
+1 falha(s)

@@ -204,4 +204,30 @@ module.exports = async function testarEpocaNuvem({ b, srv, ok }) {
       'colar um progresso antigo num aparelho e sincronizar: nada do que estava na nuvem e nos outros aparelhos é apagado' + ` [nuvem: ${Object.keys(n.feito)} | B: ${Object.keys(lb.feito)}]`);
     await fechar(A, B);
   }
+
+  if (roda(9)) { /* Regressão: confirmação de B precede A; sobrescrita antiga não pode apagar confirmação de A. */
+    N.usuario = 'ep-ordem-confirmada'; N.doc = P0(); N.trava = null; N.atraso = {}; N.semRede = {}; N.foraDoAr = false;
+    const A = await aparelho(null, 'A'); await ate(A.sincronizou); await espera(5500);
+    const lido = copia(N.doc); let B = await aparelho(null, 'B'); await ate(B.sincronizou); await espera(5500);
+    await B.marcar('T:b1');
+    const confirmouB = await ate(async () => tem(N.doc, 'T:b1') && tem((await B.ler(LS_BASE())).st, 'T:b1')); await espera(5500);
+    await A.marcar('T:a1');
+    const confirmouA = await ate(async () => tem(N.doc, 'T:a1') && tem((await A.ler(LS_BASE())).st, 'T:a1')); await espera(5500);
+    const bConheciaA = tem(await B.ler(), 'T:a1');
+    if (!confirmouA || !confirmouB || bConheciaA) throw new Error('Não estabeleceu a ordem confirmada B -> A com B ainda sem a alteração de A.');
+    await B.marcar('T:fecha'); await B.p.close();
+    N.doc = antiga(lido, { 'T:v2': true });
+    B = await reabrir(B); await ate(async () => tem(N.doc, 'T:fecha')); await espera(3000);
+    const nuvemAntes = copia(N.doc), localA = await A.ler(), avisoA = await A.p.locator('#sync').innerText();
+    const checkpointA = await A.p.evaluate(id => new Promise(resolve => {
+      const o = window.indexedDB.open('eear-operacoes', 1); o.onsuccess = () => { const db = o.result, t = db.transaction('contas', 'readonly'), q = t.objectStore('contas').get('claude:' + id); t.oncomplete = () => { db.close(); resolve(q.result && q.result.st); }; };
+    }), N.usuario);
+    const convergiu = ['T:a1', 'T:b1', 'T:fecha', 'T:v2'].every(k => tem(nuvemAntes, k));
+    ok(convergiu, 'ordem confirmada B -> A, sobrescrita antiga e reabertura de B: nuvem preserva todas as marcas');
+    await A.p.reload();
+    const restaurou = await ate(async () => ['T:a1', 'T:b1', 'T:fecha', 'T:v2'].every(k => tem(N.doc, k)));
+    ok(tem(localA, 'T:a1') && tem(checkpointA, 'T:a1') && restaurou && !A.erros.length && !B.erros.length, 'nova abertura de A restaura sua alteração confirmada, preservada no checkpoint');
+    console.log('DIAGNÓSTICO ordem confirmada: ' + JSON.stringify({ confirmouA, confirmouB, bConheciaA, avisoA, nuvemAntes: nuvemAntes.feito, localA: localA.feito, checkpointA: checkpointA.feito, restaurou, nuvemDepois: N.doc.feito }));
+    await fechar(A, B);
+  }
 };

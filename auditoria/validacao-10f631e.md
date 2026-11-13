@@ -2,7 +2,7 @@
 
 Data: 13/11/2026. Branch de trabalho: `codex/eear-correcao-estrutural`.
 
-**Resultado:** matriz principal de persistência, plataforma, Firebase e Hosting executada; nenhuma perda silenciosa foi reproduzida nos cenários aprovados. Permanecem duas restrições confirmadas: crescimento de metadados até impedir sincronização e recuperação manual após reversão para cliente antigo. **Não há aprovação de homologação emitida por esta validação.** A decisão cabe ao responsável e à revisão independente.
+**Resultado:** validação executada, com **falha remanescente no CI final de plataforma**. Firebase e os 13 grupos de persistência passaram. O encerramento do CI revelou remoção remota de uma marca confirmada no backend legado do Claude; um controle com ordem explícita reproduziu o problema, enquanto o checkpoint local de A preservou a marca e uma nova abertura a restaurou. Também permanecem crescimento de metadados até impedir sincronização e recuperação manual após reversão. **Não há aprovação de homologação emitida por esta validação.**
 
 ## SHA e correspondência com o código publicado
 
@@ -23,10 +23,13 @@ Foi criado worktree limpo de 10f631e. A árvore remota do GitHub foi consultada 
 | 10a3239, runtime | [success](https://github.com/YNPHAX/EEAR/actions/runs/43450066806) | [success](https://github.com/YNPHAX/EEAR/actions/runs/43450067103) | [cancelled](https://github.com/YNPHAX/EEAR/actions/runs/43450066800) |
 | 10f631e, documental | [success](https://github.com/YNPHAX/EEAR/actions/runs/43450848164) | [success](https://github.com/YNPHAX/EEAR/actions/runs/43450848128) | [failure](https://github.com/YNPHAX/EEAR/actions/runs/43450848211) |
 | d84f9da, somente testes, mesmo runtime | [success](https://github.com/YNPHAX/EEAR/actions/runs/43456192677) | [success](https://github.com/YNPHAX/EEAR/actions/runs/43456192559) | [success](https://github.com/YNPHAX/EEAR/actions/runs/43456192675) |
+| 2dfe0d7, encerramento adicional | [success](https://github.com/YNPHAX/EEAR/actions/runs/43462861783) | [success](https://github.com/YNPHAX/EEAR/actions/runs/43462861863) | **[failure](https://github.com/YNPHAX/EEAR/actions/runs/43462861915)** |
 
 O cancelamento de 10a3239 ocorreu na sequência de novo push da mesma branch, com `cancel-in-progress: true`; não é uma falha demonstrada do código. Em 10f631e, Firebase e os 13 gates passaram; a plataforma falhou em **uma observação de pagehide**, detalhada abaixo. Não foi falha de infraestrutura. Os jobs de publicação de Site e Android permaneceram `skipped`; o APK foi compilado/verificado no CI, sem execução em dispositivo real.
 
-No CI de d84f9da, ambos os jobs Testes terminaram com success: **241 verificações da plataforma, três do ciclo de sessão, propriedades das operações, Firebase 50/50 e 13 gates**. Isso valida o runtime acima, que não mudou. Não transforma em aprovação a ferramenta de reversão que continua falhando fora desse workflow.
+No CI de d84f9da, ambos os jobs Testes terminaram com success: **241 verificações da plataforma, três do ciclo de sessão, propriedades das operações, Firebase 50/50 e 13 gates**. Esses resultados positivos pertencem ao mesmo runtime. A falha posterior no CI 2dfe0d7 e os controles adversariais abaixo impedem tratá-los como validação integral sem restrições.
+
+**O resultado posterior de 2dfe0d7 prevalece para o encerramento:** Firebase success; plataforma 240 positivas/uma negativa, além do ciclo 3/3. A falha foi `epoca-nuvem.js`, cenário 4: após reconexão, fechamento e sobrescrita de cliente antigo, a nuvem não continha `T:a1`. Não é infraestrutura nem a observação de pagehide já corrigida. A repetição isolada do cenário 4 passou, indicando dependência de ordenação. O novo cenário 9 estabelece explicitamente B confirmado antes de A, reproduz a ausência remota e verifica a recuperação do checkpoint. Ele foi acrescentado à matriz padrão, conservando a falha aberta; não se busca verde excluindo o contraexemplo.
 
 ## Matriz executada
 
@@ -49,6 +52,7 @@ No CI de d84f9da, ambos os jobs Testes terminaram com success: **241 verificaç�
 | Hosting | Autoteste **193/193**, sondas antigas **11/11**, gates **12/12**, parser no Chromium **3/3**, HTTP do Hosting Emulator passou. |
 | Lint, montagem, integridade e builds | Passaram. Site e conteúdo Android gerados localmente; APK verificado pelo CI. |
 | Atualização/reversão com builds reais | Atualização preservou estudo. **Uma falha de união automática permanece** ao voltar de 2f6cad6; dois controles adicionais de cópia/recuperação manual passaram. |
+| Sobrescrita no backend legado, ordem B -> A | **Falha reproduzida:** `T:a1` ausente da nuvem após a sobrescrita antiga; cache e checkpoint de A ainda a contêm; nova abertura de A restaura a marca sem perder B. A asserção de convergência continua reprovada. |
 
 A matriz original e as repetições estão separadas no JSON. Não se somaram execuções repetidas para fabricar uma taxa global de aprovação.
 
@@ -78,6 +82,10 @@ A matriz original e as repetições estão separadas no JSON. Não se somaram ex
 **Reversão.** A asserção antiga de união automática não foi removida, afrouxada ou marcada como aprovada. Seu exit continua 1. Foram acrescentados controles positivos separados de preservação em quarentena, oferta na UI e recuperação explícita por importação seguida de reabertura.
 
 O cliente antigo descarta `_ops`, como registrado no teste. Não foi introduzida união automática de snapshots sem essas identidades: distinguir repetição, remoções e estudo independente exige uma política de migração própria. Preservar a cópia e manter a restrição explícita evita uma correção improvisada que reintroduza F09/F13.
+
+**Última falha de CI, backend legado.** A sequência controlada foi: B confirma `T:b1`; A confirma `T:a1`; verifica-se que B ainda não recebeu A; B aceita `T:fecha` e fecha antes de enviar; um cliente antigo sobrescreve o snapshot remoto; B reabre e envia sua cópia, sem conhecer `T:a1`. A nuvem fica sem A, embora A ainda tenha a alteração no checkpoint. **Três repetições controladas reproduziram a ausência remota.** Na terceira, a UI de A ainda dizia **“Progresso salvo na sua conta.”** Reabrir A restaura a união. O backend legado não tem a barreira de versão/transação do Firestore; seus escritores antigos podem substituir confirmações. Os testes Firebase, cuja regra impede rebaixamento de envelope v2, passaram. O resultado caracteriza falha alta de integridade/confirmação remota nesse caminho legado, não perda definitiva de todas as cópias nem defeito demonstrado no Firestore.
+
+A correção durável desse caminho depende de política do backend legado para escritores antigos ou observação/reconciliação remota com custo e garantias definidos. Fica pendente de correção específica; não houve reestruturação, publicação de regras ou mudança de produção para ocultar a falha.
 
 ## Crescimento dos metadados
 
@@ -116,6 +124,7 @@ Esse estado de **910.368 bytes** foi importado pela UI real conectada ao **Fireb
 |---|---|---|
 | Média | Crescimento sem compactação causal | O estado pode ultrapassar o limite de 900.000 caracteres e parar de sincronizar. Resets não resolvem; dados continuam locais/exportáveis. Exige política de capacidade e desenho de compactação auditado em tarefa própria, sem GC por carência arbitrária. |
 | Média | União automática após reversão não suportada no cenário testado | Estudo feito pelo cliente antigo fica fora do progresso ativo ao retornar ao novo. Há cópia em quarentena, aviso e recuperação explícita pela UI, comprovados. A ferramenta original mantém uma falha. Exige plano de reversão que inclua esse procedimento; não tratar como reversão transparente. |
+| **Alta** | Integridade/confirmação no backend legado após sobrescrita externa | Uma alteração confirmada de A sai da nuvem e fica só no checkpoint de A, com a UI ainda afirmando que está salva na conta. Reprodução controlada em três execuções e falha de CI. Reabrir A recupera; perder essa cópia antes da recuperação é um risco adicional. Requer correção específica do protocolo legado; não se atribui a falha aos cenários aprovados do Firebase. |
 | Limitação de cobertura | Navegadores/dispositivos reais e infraestrutura real | Não se homologaram Safari/iOS, WebViews reais, queda de energia, domínios OAuth reais ou Firebase de homologação. O controle de 30min é relógio simulado. Não são vulnerabilidades adicionais demonstradas. |
 
 O controle isolado do Chromium perdeu localStorage recente após Browser.crash, enquanto os checkpoints da EEAR sobreviveram nos cenários aprovados. Isso reforça a distinção entre reserva/cache e commit, sem converter qualquer falha do app em “limitação do ambiente”.
