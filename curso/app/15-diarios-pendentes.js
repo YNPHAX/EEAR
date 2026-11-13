@@ -105,15 +105,20 @@
     }
     const id = identidade; loc.lendo = true;
     const todos = lerDiariosDe(id), ds = todos.filter(x => x.d.v === 2 && opValida(x.d.delta));
+    // A reserva pode ter falhado por quota e a primeira transação pode ter abortado.
+    // Operações ainda aceitas em memória também precisam de retomada, com os mesmos IDs.
+    const pendentes = new Map(ds.map(x => [x.d.id, x.d]));
+    (loc.ops || []).filter(o => o.conta === id && opValida(o.delta)).forEach(o => pendentes.set(o.id, o));
     transacaoConta(id, r => {
       if (!r) return { gen: opId(), meta: opMeta(S) };
       todos.filter(x => !x.d.delta && !((r.legados || {})[x.k] >= x.d.seq)).forEach(x => quarentenar(x.txt, id, x.k, JSON.stringify(x.d.st)));
-      return aplicarReservas(r, ds.map(x => x.d));
+      return aplicarReservas(r, [...pendentes.values()]);
     }).then(r => {
       if (id !== identidade) return;
       const confirmadas = ds.filter(x => (r.recibos || {})[x.d.id] || !operacaoPermitida(r, x.d));
       confirmadas.forEach(x => { try { if (localStorage.getItem(x.k) === x.txt) localStorage.removeItem(x.k); } catch (e) { /* idempotente */ } });
-      loc.ops = (loc.ops || []).filter(o => !confirmadas.some(x => x.d.id === o.id)); loc.pendente = loc.ops.length; loc.confirmando = !!loc.pendente;
+      const idsConfirmados = new Set([...pendentes.values()].filter(o => (r.recibos || {})[o.id] || !operacaoPermitida(r, o)).map(o => o.id));
+      loc.ops = (loc.ops || []).filter(o => !idsConfirmados.has(o.id)); loc.pendente = loc.ops.length; loc.confirmando = !!loc.pendente;
       gravouLocal = true; receberDuravel(r, id); cachear(r, id);
     }).catch(e => { if (id === identidade) { gravouLocal = false; loc.erro = e.message; syncInfo(); } }).finally(() => { loc.lendo = false; });
   }

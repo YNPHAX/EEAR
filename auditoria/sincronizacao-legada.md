@@ -66,6 +66,20 @@ Isso impede rebaixamento por clientes v1 **quando essas regras estiverem efetiva
 de implantação real, nem uma garantia contra alterações arbitrárias por um dono da conta com acesso a outro cliente
 v2 que viole o protocolo. Os testes desta rodada usam exclusivamente emuladores.
 
+### Defeito adicional reproduzido durante a matriz
+
+Quota real do localStorage combinada com abort real de IndexedDB deixava uma operação aceita apenas em `loc.ops`.
+Depois de liberar o armazenamento, a consolidação só consultava diários do localStorage; como a reserva falhara,
+essa operação não era tentada novamente. O teste `operacoes-dupla-falha.test.js` reproduziu checkpoint com atividade
+2, quando a UI já tinha aceitado atividade 3. A confirmação de armazenamento não era emitida, mas a recuperação
+ficava bloqueada e fechar a aba perderia essa operação. Classificação: **alta**.
+
+A correção inclui as operações pendentes da identidade atual na próxima consolidação transacional, com seus mesmos
+IDs. Elas só saem da memória após recibo confirmado ou rejeição pela política de geração/exclusão. Não muda o formato
+do checkpoint, a união causal nem sua arquitetura. O teste exige reserva realmente ausente, abort efetivo, aviso sem
+confirmação falsa, recuperação automática, contagem 3/3 e reabertura após crash.
+Isso não prova, isoladamente, que todas as negativas observadas em carga tenham a mesma causa.
+
 ## Proposta de backend — não executada
 
 Antes de reabrir o transporte legado, o servidor precisa oferecer, conjuntamente:

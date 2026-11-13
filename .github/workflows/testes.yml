@@ -65,3 +65,5 @@ jobs:
             EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/firebase-emulador.test.js
           NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
             EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/persistencia-regressoes.test.js
+          NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
+            EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/operacoes-dupla-falha.test.js
