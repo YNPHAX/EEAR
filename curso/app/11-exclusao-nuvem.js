@@ -17,7 +17,7 @@
      exclusão recolocou o progresso na nuvem. Fica desligada até o caminho novo com o antigo trancado nas regras
      (auditoria/verificacao-final.md, seção 5) ser implementado e validado no serviço real. Só os testes a ligam.
      O reconhecimento da marca de exclusão continua ativo. */
-  function exclusaoLiberada() { return window.EEAR_EXCLUSAO_NUVEM === true; }
+  function exclusaoLiberada() { return !nuvem.legado && window.EEAR_EXCLUSAO_NUVEM === true; }
   /* A nuvem tem a marca de exclusão, ou regravaram depois de este aparelho apagar: nada é unido nem gravado. */
   function exclusaoNaNuvem(o) {
     if (o && typeof o === 'object' && o.apagado) return nuvem.reenviar ? { ignorar: true } : { apagado: String(o.apagado) };

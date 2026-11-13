@@ -300,9 +300,9 @@
   } catch (e) { /* sem armazenamento local */ }
   S = carregar();
 
-  /* pendente: há estudo deste aparelho que a nuvem ainda não confirmou; semRede: a última tentativa falhou por falta de rede.
-     O aviso nunca diz "salvo na sua conta" enquanto houver algo pendente. */
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false, erro: '', falhas: 0, tRetry: null }; // lida: a nuvem desta conta já foi lida nesta abertura; erro, falhas, tRetry: veja 13-falhas-nuvem.js
+  /* pendente não é confirmação remota. O transporte legado não tem rejeição de escritores antigos no servidor:
+     suas confirmações anteriores não autorizam descartar a cópia local (10-nuvem-claude.js). */
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false, erro: '', falhas: 0, tRetry: null, legado: identidade.indexOf('claude:') === 0 }; // lida: a nuvem desta conta já foi lida nesta abertura; erro, falhas, tRetry: veja 13-falhas-nuvem.js
   let tSave = null;
   function salvar(importado) {
     S.t = Date.now();
@@ -314,7 +314,7 @@
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
   async function gravar(aoFundo) {
-    if (loc.incompativel || saindo || !nuvem.ref || (!lider.ativa && !(aoFundo && document.visibilityState === 'hidden'))) return;
+    if (nuvem.legado || loc.incompativel || saindo || !nuvem.ref || (!lider.ativa && !(aoFundo && document.visibilityState === 'hidden'))) return;
     if (nuvem.busy) { nuvem.again = true; return; }
     const ref = nuvem.ref, conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
@@ -371,8 +371,7 @@
     return { local, u, perdido, ep: ep || novaEpoca(), lin, id: lin[lin.length - 1] || '', gravar: !c || !ep || !lin.length || !uIgual(u, c) };
   }
   /* Lê a nuvem, une e grava. Com transação (Firebase), a leitura e a gravação são atômicas: se outro aparelho gravar no
-     meio, a união é refeita sobre o que ele gravou. Sem transação (link do curso no Claude), veja lerUnirGravar
-     (10-nuvem-claude.js): com a trava da nuvem, a gravação é conferida; sem ela, a união segue sem base.
+     meio, a união é refeita sobre o que ele gravou. Sem transação, o transporte é bloqueado (10-nuvem-claude.js).
      O resultado só é aplicado aqui depois que a nuvem confirmou, e só se a conta continuar a mesma. */
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
@@ -408,6 +407,9 @@
     if (!uIgual(u, p.u)) gravar(); // a união com o que veio depois ainda não está na nuvem
   }
   async function sincronizar(ref, conta) {
+    nuvem.conta = String(conta || '');
+    if (nuvem.conta.indexOf('claude:') === 0 || !ref || typeof ref.transacao !== 'function') { bloquearNuvemLegada(); return; }
+    nuvem.legado = false;
     nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.lida = false; nuvem.erro = ''; nuvem.falhas = 0; nuvem.conta = String(conta || '');
     await liderar(); // trava de líder (14-abas.js): livre, esta aba sincroniza já; senão, quando a líder fechar
     if (lider.ativa) await gravar();
@@ -423,7 +425,7 @@
       if (!id) return;
       usarIdentidade('claude:' + id); // o progresso local passa a ser o desta conta
       await sincronizar(db.doc(caminhoNuvem(id)), 'claude:' + id); // progresso2/<id> (12-caminho-novo.js)
-      migrarCaminhoAntigo(db.doc(caminhoAntigo(id)), 'claude:' + id); // une o progresso/<id> das versões antigas, sem apagar
+      migrarCaminhoAntigo(db.doc(caminhoAntigo(id)), 'claude:' + id); // retorna sem leitura enquanto o transporte legado estiver bloqueado
     } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
   }
 
@@ -2074,6 +2076,7 @@
     if (lider.soltar) lider.soltar(); lider.soltar = null; lider.ativa = false; lider.conta = null; lider.espera = null; // a liderança da nuvem era da conta anterior
     soltarLocal(false); // a fila anterior continua ligada à identidade que a originou
     nuvem.ref = null; nuvem.on = false; nuvem.again = false; nuvem.futura = false; nuvem.bloqueada = false; nuvem.pendente = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.refPausada = null; nuvem.conta = id;
+    nuvem.legado = id.indexOf('claude:') === 0;
     identidade = id;
     try { if (id) localStorage.setItem(LS_CONTA, id); else localStorage.removeItem(LS_CONTA); } catch (e) { /* sem armazenamento */ }
     S = carregar(); QZ = null; FC = null; pedindo = null; msgRec = ''; contaUI.adiado = false;
@@ -2098,6 +2101,7 @@
   /* A cópia desta conta neste aparelho já está na nuvem dela? Só quando é igual à última versão que a nuvem confirmou
      (a base), ou quando não tem estudo. Cópia de recuperação ou ilegível: não está (é o que pode ser perdido). */
   function sincronizadoDe(id) {
+    if (id.indexOf('claude:') === 0) return false; // uma base antiga não é prova contra sobrescritas do servidor legado
     try {
       if (localStorage.getItem(chave(LS_REC, id)) || temPendentes(id)) return false; // diário de outra aba ainda fora da cópia
       const t = localStorage.getItem(chave(LS, id)); if (!t) return true;
@@ -2123,7 +2127,7 @@
     return ['mod', 'fc', 'sims', 'erros', 'ap', 'aula'].some(k => !uIgual(u[k], S[k])) ? a : null;
   }
   /* A nuvem já tem tudo o que está neste aparelho (a última sincronização gravou exatamente o progresso atual)? */
-  function sincronizado() { const b = lerBase(); return !!b && uIgual(b, mesclar(copiar(S))) && !temPendentes(identidade); } // e nenhuma aba com estudo fora da cópia (F10)
+  function sincronizado() { const b = lerBase(); return !nuvem.legado && !!b && uIgual(b, mesclar(copiar(S))) && !temPendentes(identidade); } // e nenhuma aba com estudo fora da cópia (F10)
   function resumoProg(st) { return `${plural(Object.keys(st.mod).length, 'aula estudada', 'aulas estudadas')}, ${plural(Object.keys(st.fc).length, 'flashcard visto', 'flashcards vistos')} e ${plural(st.sims.length, 'simulado', 'simulados')}`; }
 
   /* Aviso na tela Hoje: progresso sem conta que a conta ainda não tem. */
@@ -2158,7 +2162,7 @@
       h += `<ul class="small" style="margin:0"><li>Neste aparelho, ${identidade ? 'nesta conta' : 'sem conta'}: ${resumoProg(S)}${S.cfg.nome ? ', o nome do certificado' : ''} e a configuração do plano.</li>${recuperar ? '<li>Uma cópia de recuperação de um progresso que não pôde ser aberto.</li>' : ''}${lerBase() ? '<li>Uma cópia da última sincronização com a nuvem (para unir o estudo feito em outros aparelhos).</li>' : ''}${outras ? `<li>Progresso de ${plural(outras, 'outra conta', 'outras contas')} que já entraram neste aparelho (não aparece aqui).</li>` : ''}${identidade && !identidade.indexOf('firebase:') ? '<li>Na nuvem (Firebase): o seu login (e-mail) e um documento só com o progresso e a data da última gravação.</li>' : ''}</ul>`;
     } else if (pedindo === 'dadosapagar') {
       const bloq = identidade && !sincronizado() && !nuvem.apagado; // nuvem apagada a pedido: a cópia daqui é a última
-      h += `<div class="confirm"><p>${nuvem.apagado && !bloq ? 'Esta é a última cópia do progresso desta conta (a da nuvem foi apagada). ' : ''}${bloq ? (nuvem.semTrava ? 'Não dá para apagar agora: neste ambiente a nuvem não tem a trava que garante que ela guardou tudo, então a cópia deste aparelho é necessária. Baixe seus dados, se precisar.' : 'Não dá para apagar agora: parte do progresso desta conta ainda não está salva na nuvem e seria perdida. Conecte-se à internet e tente de novo, ou baixe seus dados antes.') : `Apagar deste aparelho ${identidade ? 'o progresso desta conta (a nuvem continua com ele)' : 'todo o progresso feito sem conta, incluindo o nome e a configuração do plano'}? Isso não pode ser desfeito.`}</p><button class="btn sm" data-a="cancelar">Cancelar</button>${bloq ? '' : '<button class="btn sm pri" data-a="dadosapagarok">Apagar deste aparelho</button>'}${!identidade && outras ? `<button class="btn sm" data-a="dadosapagartudo">Apagar também ${plural(outras, 'a outra conta guardada', 'as outras contas guardadas')} aqui</button>${pendentes ? `<p class="small" style="margin:0;flex-basis:100%">${plural(pendentes, 'conta tem', 'contas têm')} progresso que a nuvem ainda não confirmou e não ${pendentes === 1 ? 'será apagada' : 'serão apagadas'}: entre nela para enviá-lo.</p>` : ''}` : ''}</div>`;
+      h += `<div class="confirm"><p>${nuvem.apagado && !bloq ? 'Esta é a última cópia do progresso desta conta (a da nuvem foi apagada). ' : ''}${bloq ? (nuvem.legado ? 'Não dá para apagar com base na confirmação antiga: a nuvem legada permite sobrescritas. Preserve e exporte a cópia deste aparelho.' : 'Não dá para apagar agora: parte do progresso desta conta ainda não está salva na nuvem e seria perdida. Conecte-se à internet e tente de novo, ou baixe seus dados antes.') : `Apagar deste aparelho ${identidade ? 'o progresso desta conta (a nuvem continua com ele)' : 'todo o progresso feito sem conta, incluindo o nome e a configuração do plano'}? Isso não pode ser desfeito.`}</p><button class="btn sm" data-a="cancelar">Cancelar</button>${bloq ? '' : '<button class="btn sm pri" data-a="dadosapagarok">Apagar deste aparelho</button>'}${!identidade && outras ? `<button class="btn sm" data-a="dadosapagartudo">Apagar também ${plural(outras, 'a outra conta guardada', 'as outras contas guardadas')} aqui</button>${pendentes ? `<p class="small" style="margin:0;flex-basis:100%">${plural(pendentes, 'conta tem', 'contas têm')} progresso que a nuvem ainda não confirmou e não ${pendentes === 1 ? 'será apagada' : 'serão apagadas'}: entre nela para enviá-lo.</p>` : ''}` : ''}</div>`;
     }
     return h + blocoNuvemClaude();
   }
@@ -2240,60 +2244,30 @@
       default: break;
     }
   });
-  /* ---------- gravação no link do curso no Claude (nuvem sem transação) ----------
-     A nuvem do Claude grava o documento inteiro, por último quem grava, sem transação. Dois aparelhos que liam juntos
-     e gravavam em seguida perdiam o que o outro gravou (4 de 8 marcações simultâneas no teste), e pior: a base deste
-     aparelho passava a ter o que a nuvem perdeu, e a próxima união tratava isso como apagado no outro aparelho.
-     - Com a trava da nuvem (doc.acquire, cooperativa e de curta duração): ler, unir e gravar só com a trava; depois,
-       ler de novo para conferir. A base só é registrada se a nuvem tem exatamente o que foi gravado e a trava ainda
-       valia; senão, a união é refeita em seguida, com a base anterior (que não tem nada que a nuvem possa ter perdido).
-     - Sem a trava (versão antiga da API, ou recusada): grava, mas apaga a base. A união sem base nunca trata ausência
-       como apagamento, então nada se perde; o preço é que desmarcar algo pode voltar, e o aluno é avisado. Depois de
-       gravar, confere a nuvem de novo pouco depois.
-     Funções declaradas: conectar() só chega aqui depois de esperar a nuvem, com o arquivo inteiro já carregado. */
-  /* A trava não pode ser liberada, só vence. Um nome novo a cada uso (em vez de renovar a mesma) e uma trava curta fazem
-     os aparelhos se alternarem: quem grava sempre não deixa o outro esperando para sempre. */
-  const TRAVA_MS = 5000;
-  function holderNovo() { return 'aba-' + Math.random().toString(36).slice(2) + '-' + Date.now().toString(36); }
-  /* A trava pode criar o documento vazio, ou com campos dela: sem v e sem nenhum campo do progresso, é como se não existisse. */
-  function lerDocClaude(snap) {
-    const o = snap && snap.exists ? snap.data() : null;
-    if (!o || typeof o !== 'object') return o || null;
-    return !('v' in o) && !['t', 'cfg', 'mod', 'fc', 'sims'].some(k => k in o) ? null : o;
+  /* O backend legado (get/set/acquire) não possui transação, CAS ou fencing de escritores no servidor.
+     Um set antigo pode chegar DEPOIS de get conferir a gravação: acquire é apenas cooperativo e expira.
+     Nenhuma espera, assinatura do cliente ou releitura prova que esse snapshot permanecerá protegido.
+     Bloqueio até existir um contrato servidor validado: não escreve, não migra snapshots automaticamente,
+     não confirma remotamente e não autoriza apagar o checkpoint por uma BASE antiga. Firebase usa transação
+     e envelope v2 monotônico; este bloqueio não altera sua implementação. Proposta: auditoria/sincronizacao-legada.md. */
+  function bloquearNuvemLegada() {
+    clearTimeout(nuvem.tRetry); clearTimeout(tSave);
+    nuvem.legado = true; nuvem.ref = null; nuvem.refPausada = null; nuvem.on = false;
+    nuvem.pendente = true; nuvem.semRede = false; nuvem.lida = false;
+    syncInfo();
+  }
+  async function lerUnirGravar() {
+    bloquearNuvemLegada();
+    const e = new Error('Transporte sem proteção contra escritores legados bloqueado.'); e.code = 'legacy-unsafe'; throw e;
   }
   /* Comparação sem depender da ordem das chaves (a nuvem pode devolver o documento em outra ordem). */
   function canonico(x) { return Array.isArray(x) ? x.map(canonico) : x && typeof x === 'object' ? Object.keys(x).sort().reduce((o, k) => { o[k] = canonico(x[k]); return o; }, {}) : x; }
-  function mesmoDoc(a, b) { return JSON.stringify(canonico(a)) === JSON.stringify(canonico(b)); }
+  /* Exclusão legada também fica bloqueada em exclusaoLiberada; helpers mantidos para ler esse formato antigo. */
+  const TRAVA_MS = 5000;
+  function holderNovo() { return 'aba-' + Math.random().toString(36).slice(2) + '-' + Date.now().toString(36); }
   function ocupada(espera) { const e = new Error('nuvem ocupada por outro aparelho'); e.code = 'unavailable'; e.espera = espera; return e; }
-  /* Devolve 'ok' (pode registrar a base), 'conferir' (gravou, mas outro gravou junto: refazer a união) ou 'semtrava'.
-     Só quem tem a trava grava; se ela vencer no meio, é renovada com o mesmo nome antes de gravar (concedida só se
-     ninguém a pegou nesse intervalo, e então ninguém gravou). A base só vale se a conferência terminou com a trava. */
-  async function lerUnirGravar(ref, planejar) {
-    const nome = holderNovo();
-    const travar = async () => {
-      const t = await ref.acquire({ holder: nome, ttlMs: TRAVA_MS });
-      if (!t || !t.acquired) throw ocupada((Date.parse(t && t.expiresAt) || Date.now()) - Date.now());
-      return Math.min(Date.parse(t.expiresAt) || Infinity, Date.now() + TRAVA_MS) - 1000; // margem para a resposta chegar
-    };
-    let fim = 0;
-    if (typeof ref.acquire === 'function' && !nuvem.semTrava) {
-      try { fim = await travar(); }
-      catch (e) { if (e && e.code === 'unavailable') throw e; nuvem.semTrava = true; } // trava recusada: segue sem ela
-    } else nuvem.semTrava = true;
-    if (!fim) { const novo = planejar(lerDocClaude(await ref.get())); if (novo) await ref.set(novo); return novo ? 'semtrava' : 'semtrava-igual'; }
-    const novo = planejar(lerDocClaude(await ref.get()));
-    if (!novo) return 'ok';
-    if (Date.now() > fim) fim = await travar();
-    await ref.set(novo);
-    const visto = lerDocClaude(await ref.get());
-    return mesmoDoc(visto, novo) && Date.now() <= fim ? 'ok' : 'conferir';
-  }
-  /* Depois de uma união aplicada: registra a base só quando é seguro, e agenda a conferência quando não é. */
   function depoisDeGravar(modo, p) {
-    if (modo === 'ok') { gravarBase(p.u, p.ep, p.id); return; }
-    if (modo === 'conferir') { setTimeout(gravar, 2000 + Math.random() * 2000); return; }
-    try { localStorage.removeItem(chave(BASE_K)); } catch (e) { /* sem armazenamento */ } // sem trava: união sem base
-    if (modo === 'semtrava') setTimeout(gravar, 5000 + Math.random() * 2000);
+    if (modo === 'ok' && !nuvem.legado) gravarBase(p.u, p.ep, p.id);
   }
   /* ---------- apagar o progresso da nuvem do curso no Claude, a pedido do próprio aluno ----------
      A API do curso no Claude grava o documento inteiro e não tem gravação condicional; as regras do curso só deixam
@@ -2314,7 +2288,7 @@
      exclusão recolocou o progresso na nuvem. Fica desligada até o caminho novo com o antigo trancado nas regras
      (auditoria/verificacao-final.md, seção 5) ser implementado e validado no serviço real. Só os testes a ligam.
      O reconhecimento da marca de exclusão continua ativo. */
-  function exclusaoLiberada() { return window.EEAR_EXCLUSAO_NUVEM === true; }
+  function exclusaoLiberada() { return !nuvem.legado && window.EEAR_EXCLUSAO_NUVEM === true; }
   /* A nuvem tem a marca de exclusão, ou regravaram depois de este aparelho apagar: nada é unido nem gravado. */
   function exclusaoNaNuvem(o) {
     if (o && typeof o === 'object' && o.apagado) return nuvem.reenviar ? { ignorar: true } : { apagado: String(o.apagado) };
@@ -2409,6 +2383,7 @@
   function caminhoNuvem(id) { return 'progresso2/' + id; }
   function caminhoAntigo(id) { return 'progresso/' + id; }
   async function migrarCaminhoAntigo(refAntigo, conta) {
+    if (nuvem.legado) return; // bloqueio real do transporte inseguro; nenhum snapshot remoto é importado automaticamente
     /* Espera a primeira leitura do caminho novo (para conhecer o cfg.migV1 da nuvem), até 60 s. */
     for (let i = 0; i < 120 && !nuvem.lida && nuvem.ref && nuvem.conta === conta; i++) await new Promise(r => setTimeout(r, 500));
     if (!nuvem.lida) return; // sem conseguir ler o caminho novo, não migra agora (tenta ao abrir de novo)
@@ -2855,6 +2830,7 @@
   }
   async function apagarDuravel(id, definitivo) {
     const r = await transacaoConta(id, (ant, t) => {
+      if (!definitivo && id.indexOf('claude:') === 0 && ant && !ant.apagado) throw new Error('Nada foi apagado: a nuvem legada permite sobrescrever confirmações. Exporte e preserve a cópia deste aparelho.');
       if (!definitivo && ant && opValida(ant.meta) && lerDiariosDe(id).some(x => x.d.delta && operacaoPermitida(ant, x.d) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
       if (!definitivo && id && ant && !ant.apagado) {
         let base = null; try { base = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null'); } catch (e) { /* sem confirmação */ }
@@ -2897,6 +2873,15 @@
   /* Confirmação de gravação é distinta de reserva e de disponibilidade da nuvem. */
   function syncInfo() {
     const el = document.getElementById('sync');
-    if (el) el.textContent = loc.confirmando ? 'Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.' : !gravouLocal ? 'O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.' : loc.semIDB ? 'Este navegador usa uma cópia de reserva sem proteção contra queda. Exporte em Plano › Dados antes de fechar.' : recuperar ? 'Há dados preservados para recuperação. Veja a tela Hoje ou baixe seus dados antes de continuar.' : nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.ref && !lider.ativa ? (sincronizado() ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.') : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? (nuvem.semTrava ? 'Progresso salvo na sua conta. Com o curso aberto em dois aparelhos ao mesmo tempo, a sincronização não é garantida: algo desmarcado pode voltar e algumas contagens podem não somar.' : 'Progresso salvo na sua conta.') : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
+    if (el) {
+      el.dataset.local = !loc.carregado ? 'carregando' : loc.confirmando ? 'pendente' : !gravouLocal ? 'falhou' : loc.semIDB ? 'reserva' : 'confirmado';
+      el.dataset.nuvem = nuvem.legado ? 'bloqueada-legado' : nuvem.erro ? 'falhou' : nuvem.on && !nuvem.pendente ? 'confirmado' : nuvem.ref ? 'pendente' : 'desligada';
+      if (nuvem.legado) {
+        const local = el.dataset.local === 'confirmado' ? 'Checkpoint confirmado neste aparelho.' : el.dataset.local === 'carregando' ? 'Carregando o checkpoint deste aparelho.' : el.dataset.local === 'pendente' ? 'Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.' : el.dataset.local === 'reserva' ? 'Cópia de reserva sem proteção contra queda. Exporte antes de fechar.' : 'O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.';
+        el.textContent = local + (recuperar ? ' Há dados preservados para recuperação; veja a tela Hoje.' : '') + ' Sincronização pendente e bloqueada: a nuvem legada permite que clientes antigos sobrescrevam dados confirmados. Não há confirmação remota segura. Preserve esta cópia e exporte em Plano › Dados.';
+        return;
+      }
+    }
+    if (el) el.textContent = loc.confirmando ? 'Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.' : !gravouLocal ? 'O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.' : loc.semIDB ? 'Este navegador usa uma cópia de reserva sem proteção contra queda. Exporte em Plano › Dados antes de fechar.' : recuperar ? 'Há dados preservados para recuperação. Veja a tela Hoje ou baixe seus dados antes de continuar.' : nuvem.apagado ? 'O progresso desta conta foi apagado da nuvem do curso. O que você estudar aqui fica só neste aparelho.' : nuvem.reapareceu ? 'Uma versão antiga do curso gravou de novo na nuvem depois que você apagou. Veja Plano › Dados.' : nuvem.bloqueada ? 'Progresso salvo neste aparelho, só para esta conta (sincronização com a nuvem ainda não liberada).' : nuvem.futura ? 'A sua conta tem progresso de uma versão mais nova do app: atualize o app. Nada foi gravado na conta.' : nuvem.erro ? avisoErroNuvem() : nuvem.ref && !lider.ativa ? (sincronizado() ? 'Progresso salvo na sua conta.' : 'Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.') : nuvem.on && nuvem.pendente ? (nuvem.semRede ? 'Progresso salvo neste aparelho. Sem conexão com a nuvem agora: o que falta vai para a sua conta quando a conexão voltar.' : 'Progresso salvo neste aparelho; enviando para a sua conta…') : nuvem.on ? 'Progresso salvo na sua conta.' : gravouLocal ? 'Progresso salvo neste aparelho.' : 'O progresso não está sendo salvo neste aparelho.';
   }
 })();

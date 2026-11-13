@@ -111,9 +111,9 @@
   } catch (e) { /* sem armazenamento local */ }
   S = carregar();
 
-  /* pendente: há estudo deste aparelho que a nuvem ainda não confirmou; semRede: a última tentativa falhou por falta de rede.
-     O aviso nunca diz "salvo na sua conta" enquanto houver algo pendente. */
-  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false, erro: '', falhas: 0, tRetry: null }; // lida: a nuvem desta conta já foi lida nesta abertura; erro, falhas, tRetry: veja 13-falhas-nuvem.js
+  /* pendente não é confirmação remota. O transporte legado não tem rejeição de escritores antigos no servidor:
+     suas confirmações anteriores não autorizam descartar a cópia local (10-nuvem-claude.js). */
+  const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false, erro: '', falhas: 0, tRetry: null, legado: identidade.indexOf('claude:') === 0 }; // lida: a nuvem desta conta já foi lida nesta abertura; erro, falhas, tRetry: veja 13-falhas-nuvem.js
   let tSave = null;
   function salvar(importado) {
     S.t = Date.now();
@@ -125,7 +125,7 @@
     if (nuvem.ref) { nuvem.pendente = true; syncInfo(); }
   }
   async function gravar(aoFundo) {
-    if (loc.incompativel || saindo || !nuvem.ref || (!lider.ativa && !(aoFundo && document.visibilityState === 'hidden'))) return;
+    if (nuvem.legado || loc.incompativel || saindo || !nuvem.ref || (!lider.ativa && !(aoFundo && document.visibilityState === 'hidden'))) return;
     if (nuvem.busy) { nuvem.again = true; return; }
     const ref = nuvem.ref, conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
@@ -182,8 +182,7 @@
     return { local, u, perdido, ep: ep || novaEpoca(), lin, id: lin[lin.length - 1] || '', gravar: !c || !ep || !lin.length || !uIgual(u, c) };
   }
   /* Lê a nuvem, une e grava. Com transação (Firebase), a leitura e a gravação são atômicas: se outro aparelho gravar no
-     meio, a união é refeita sobre o que ele gravou. Sem transação (link do curso no Claude), veja lerUnirGravar
-     (10-nuvem-claude.js): com a trava da nuvem, a gravação é conferida; sem ela, a união segue sem base.
+     meio, a união é refeita sobre o que ele gravou. Sem transação, o transporte é bloqueado (10-nuvem-claude.js).
      O resultado só é aplicado aqui depois que a nuvem confirmou, e só se a conta continuar a mesma. */
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
@@ -219,6 +218,9 @@
     if (!uIgual(u, p.u)) gravar(); // a união com o que veio depois ainda não está na nuvem
   }
   async function sincronizar(ref, conta) {
+    nuvem.conta = String(conta || '');
+    if (nuvem.conta.indexOf('claude:') === 0 || !ref || typeof ref.transacao !== 'function') { bloquearNuvemLegada(); return; }
+    nuvem.legado = false;
     nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.lida = false; nuvem.erro = ''; nuvem.falhas = 0; nuvem.conta = String(conta || '');
     await liderar(); // trava de líder (14-abas.js): livre, esta aba sincroniza já; senão, quando a líder fechar
     if (lider.ativa) await gravar();
@@ -234,7 +236,7 @@
       if (!id) return;
       usarIdentidade('claude:' + id); // o progresso local passa a ser o desta conta
       await sincronizar(db.doc(caminhoNuvem(id)), 'claude:' + id); // progresso2/<id> (12-caminho-novo.js)
-      migrarCaminhoAntigo(db.doc(caminhoAntigo(id)), 'claude:' + id); // une o progresso/<id> das versões antigas, sem apagar
+      migrarCaminhoAntigo(db.doc(caminhoAntigo(id)), 'claude:' + id); // retorna sem leitura enquanto o transporte legado estiver bloqueado
     } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
   }
 

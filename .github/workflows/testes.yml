@@ -32,6 +32,8 @@ jobs:
       - name: Testes da plataforma
         run: |
           node testes/operacoes.test.js
+          node testes/legado-contrato.test.js
+          NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/legado-bloqueio.test.js
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/ciclo-sincronia.test.js
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/plataforma.test.js
 

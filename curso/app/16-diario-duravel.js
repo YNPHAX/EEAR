@@ -93,6 +93,7 @@
   }
   async function apagarDuravel(id, definitivo) {
     const r = await transacaoConta(id, (ant, t) => {
+      if (!definitivo && id.indexOf('claude:') === 0 && ant && !ant.apagado) throw new Error('Nada foi apagado: a nuvem legada permite sobrescrever confirmações. Exporte e preserve a cópia deste aparelho.');
       if (!definitivo && ant && opValida(ant.meta) && lerDiariosDe(id).some(x => x.d.delta && operacaoPermitida(ant, x.d) && !mesmoConteudo(opUnir(ant.meta, x.d.delta), ant.meta))) throw new Error('Nada foi apagado: outra aba tem operações pendentes.');
       if (!definitivo && id && ant && !ant.apagado) {
         let base = null; try { base = JSON.parse(localStorage.getItem(chave(BASE_K, id)) || 'null'); } catch (e) { /* sem confirmação */ }

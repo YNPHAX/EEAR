@@ -12,6 +12,7 @@
   function caminhoNuvem(id) { return 'progresso2/' + id; }
   function caminhoAntigo(id) { return 'progresso/' + id; }
   async function migrarCaminhoAntigo(refAntigo, conta) {
+    if (nuvem.legado) return; // bloqueio real do transporte inseguro; nenhum snapshot remoto é importado automaticamente
     /* Espera a primeira leitura do caminho novo (para conhecer o cfg.migV1 da nuvem), até 60 s. */
     for (let i = 0; i < 120 && !nuvem.lida && nuvem.ref && nuvem.conta === conta; i++) await new Promise(r => setTimeout(r, 500));
     if (!nuvem.lida) return; // sem conseguir ler o caminho novo, não migra agora (tenta ao abrir de novo)
