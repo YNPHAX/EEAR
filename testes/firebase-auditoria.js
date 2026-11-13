@@ -52,7 +52,8 @@ module.exports = async function ({ ok, req, AU, DOCS, PROJ, campos, gravarComo, 
     ok(await ate(async () => { const s = await progresso(uid); return s && s.feito['T:offline-reaberto']; }, 30000), 'auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login');
     // Certificado válido de uma versão anterior: um aparelho com estudo e outro sem aquele registro.
     const cert = { s: 'fis', mod: null, ids: ['FIS01'], h: 3, d: '2026-10-17', c: 'AUDIT-CERT', o: 'curso', t: 1792195200000 };
-    await nova.evaluate(([k, c]) => { const s = JSON.parse(localStorage.getItem(k)); s.cfg.certs = [c]; localStorage.setItem(k, JSON.stringify(s)); }, [chave, cert]);
+    const comCert = await nova.evaluate(k => JSON.parse(localStorage.getItem(k)), chave); comCert.cfg.certs = [cert];
+    await require('./importar-fixture.js')(nova, comCert);
     await nova.reload();
     ok(await ate(async () => { const s = await progresso(uid); return s && s.cfg.certs.some(c => c.c === 'AUDIT-CERT'); }), 'auditoria certificados: registro e código preservados ao enviar para o Firestore');
     await B.conectar('sessao-auditoria@exemplo.test', 'auditoria-senha-2', false);

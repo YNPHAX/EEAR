@@ -6,6 +6,7 @@ const fs = require('fs'), path = require('path'), { execFileSync } = require('ch
 const fixture = require('./f01-fixture.js'), alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..'));
 
 (async () => {
+  if (fs.readFileSync(path.join(alvo, 'curso/app/16-diario-duravel.js'), 'utf8').includes("'eear-operacoes'")) { require('./operacoes-interrupcao.test.js'); return; }
   console.log('Concorrência fallback: alvo ' + execFileSync('git', ['rev-parse', 'HEAD'], { cwd: alvo, encoding: 'utf8' }).trim());
   if (fixture.emular(alvo, path.join(__dirname, 'concorrencia-fallback.test.js'))) return;
   const f = await fixture.abrir(alvo), ctx = await f.contexto(), hj = new Date().toISOString().slice(0, 10);

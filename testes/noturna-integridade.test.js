@@ -42,6 +42,7 @@ const sdkAuth = async p => p.evaluate(async () => {
           if (!await sincronizada(A)) throw new Error('Base de A ainda não confirmada.');
           if (nome === 'sair-apagar' || nome === 'excluir-conta') {
             await f.clicar(A, 'marcar', { k: 'T:privado' }); if (!await sincronizada(A)) throw new Error('Estudo privado não confirmou.');
+            await require('./copias-privadas.js')(A, conta.uid, true);
             const antes = await dadosLocais(A, conta.uid);
             if (nome === 'sair-apagar') {
               await f.clicar(A, 'tab', { v: 'plano' });
@@ -58,8 +59,9 @@ const sdkAuth = async p => p.evaluate(async () => {
             const depois = await dadosLocais(A, conta.uid), servidor = await f.ler(conta.uid);
             const mensagem = (await A.locator('body').innerText()).split('\n').filter(l => /apagado|excluído|saiu/.test(l)).join(' ');
             await A.reload(); const aposReabrir = await dadosLocais(A, conta.uid);
-            passou = depois.length === 0 && aposReabrir.length === 0 && (nome === 'sair-apagar' ? !!servidor.feito['T:privado'] : servidor === null);
-            resultado = { dadosAntes: antes.length, dadosDepois: depois.map(x => ({ chave: x.chave, nomeRetido: x.texto.includes('Pessoa Fictícia'), estudoRetido: x.texto.includes('T:privado') })), aposReabrir: aposReabrir.length, servidorExiste: !!servidor, mensagem };
+            const residuosIDB = await require('./copias-privadas.js')(A, conta.uid, false);
+            passou = depois.length === 0 && aposReabrir.length === 0 && residuosIDB.length === 0 && (nome === 'sair-apagar' ? !!servidor.feito['T:privado'] : servidor === null);
+            resultado = { dadosAntes: antes.length, dadosDepois: depois.map(x => ({ chave: x.chave, nomeRetido: x.texto.includes('Pessoa Fictícia'), estudoRetido: x.texto.includes('T:privado') })), aposReabrir: aposReabrir.length, residuosIDB, servidorExiste: !!servidor, mensagem };
           } else {
             extra = await f.contexto(); const B = await f.pagina(extra); await f.entrar(B, conta.email); if (!await sincronizada(B)) throw new Error('Base de B ainda não confirmada.');
             if (nome === 'outra-sessao') {
@@ -86,8 +88,13 @@ const sdkAuth = async p => p.evaluate(async () => {
               f.rede(ctx, false); f.rede(extra, false); await A.evaluate(() => window.dispatchEvent(new Event('online'))); await B.evaluate(() => window.dispatchEvent(new Event('online')));
               const esperado = s => s && s.act[hj] === 4 && (nome === 'simulados-iguais' ? s.sims.length === 2 : s.feito['T:A-independente'] && s.feito['T:B-independente']);
               const convergiu = await f.ate(async () => esperado(await f.ler(conta.uid)));
-              const s = await f.ler(conta.uid); await A.reload(); const reaberto = await f.estado(A);
-              passou = convergiu && esperado(reaberto); resultado = { aceitos, convergiu, esperadoAtividade: 4, atividadeServidor: s.act[hj], simuladosServidor: s.sims.length, atividadeReaberto: reaberto.act[hj], feito: s.feito };
+              const s = await f.ler(conta.uid); await A.reload(); let reaberto;
+              const retomou = await f.ate(async () => { reaberto = await f.estado(A); return esperado(reaberto); });
+              // A leitura inicial agora é assíncrona (checkpoint + Auth). Exigir também durabilidade offline.
+              const gravouCache = await f.ate(async () => A.evaluate(uid => { const t = localStorage.getItem('missao-eear-v1@firebase:' + uid); return t && JSON.parse(t).act; }, conta.uid).then(act => act && act[hj] === 4));
+              f.rede(ctx, true); await A.reload();
+              const duravelOffline = await f.ate(async () => { reaberto = await f.estado(A); return esperado(reaberto); });
+              passou = convergiu && retomou && gravouCache && duravelOffline && esperado(reaberto); resultado = { aceitos, convergiu, esperadoAtividade: 4, atividadeServidor: s.act[hj], simuladosServidor: s.sims.length, atividadeReaberto: reaberto.act[hj], feito: s.feito };
             } else throw new Error('Cenário desconhecido: ' + nome);
           }
         }

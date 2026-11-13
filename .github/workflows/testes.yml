@@ -31,6 +31,7 @@ jobs:
           "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
       - name: Testes da plataforma
         run: |
+          node testes/operacoes.test.js
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/ciclo-sincronia.test.js
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/plataforma.test.js
 
@@ -60,3 +61,5 @@ jobs:
         run: |
           NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
             EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/firebase-emulador.test.js
+          NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
+            EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/persistencia-regressoes.test.js

@@ -21,8 +21,8 @@ module.exports = async function testarAbas({ b, srv, base, ok }) {
       const clicar = (a, d) => p.evaluate(([a, d]) => { const x = document.createElement('button'); x.dataset.a = a; Object.assign(x.dataset, d || {}); document.body.appendChild(x); x.click(); x.remove(); }, [a, d]);
       return { p, clicar, marcar: k => clicar('marcar', { k }) };
     };
+    await ctx.addInitScript(([k, s]) => { if (!localStorage.getItem(k)) localStorage.setItem(k, JSON.stringify(s)); }, [K, semente()]);
     const A = await aba(false);
-    await A.p.evaluate(([k, s]) => localStorage.setItem(k, JSON.stringify(s)), [K, semente()]); await A.p.reload(); await A.p.waitForTimeout(300);
     const ler = () => A.p.evaluate(k => JSON.parse(localStorage.getItem(k)), K).catch(() => null);
     /* A consolidação entre abas é assíncrona (vez da trava local): espera até 3 s a cópia ter a marcação k da outra aba e
        só então confere tudo (as asserções não mudam; com a máquina ocupada, 150 ms podiam não bastar). */

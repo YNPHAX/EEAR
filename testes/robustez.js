@@ -8,9 +8,9 @@ module.exports = async function testarRobustez({ b, srv, base, ok }) {
   const abrir = async (estado, opcoes) => {
     const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 860 } }), p = await ctx.newPage(), erros = [];
     p.on('pageerror', e => erros.push(e.message));
-    if (opcoes && opcoes.semGravar) await p.addInitScript(() => { window.Storage.prototype.setItem = function () { throw new window.DOMException('cheio', 'QuotaExceededError'); }; });
+    if (opcoes && opcoes.semGravar) await p.addInitScript(() => { Object.defineProperty(window, 'indexedDB', { get: () => undefined }); window.Storage.prototype.setItem = function () { throw new window.DOMException('cheio', 'QuotaExceededError'); }; });
+    if (estado != null) await p.addInitScript(([k, s]) => { if (!sessionStorage.getItem('fixture-robustez')) { localStorage.setItem(k, s); sessionStorage.setItem('fixture-robustez', '1'); } }, [LS, typeof estado === 'string' ? estado : JSON.stringify(estado)]);
     await p.goto(srv.url);
-    if (estado != null) { await p.evaluate(([k, s]) => localStorage.setItem(k, s), [LS, typeof estado === 'string' ? estado : JSON.stringify(estado)]); await p.goto(srv.url); }
     await p.waitForTimeout(200);
     return { ctx, p, erros };
   };
@@ -72,7 +72,7 @@ module.exports = async function testarRobustez({ b, srv, base, ok }) {
     const st = await p.evaluate(k => JSON.parse(localStorage.getItem(k)), LS), a = st.ativo, respondidas = Object.keys(a.resp);
     /* Simula uma atualização que tirou a 2ª questão do curso: o id passa a não existir. */
     const sumiu = a.ids[1]; a.ids[1] = 'POR99-999'; a.resp['POR99-999'] = a.resp[sumiu]; delete a.resp[sumiu];
-    await p.evaluate(([k, s]) => localStorage.setItem(k, s), [LS, JSON.stringify(st)]); await p.reload(); await p.waitForTimeout(200);
+    await clicar(p, 'tab', { v: 'plano' }); await clicar(p, 'impabrir'); await p.fill('#imp-txt', JSON.stringify(st)); await p.check('#imp-substituir'); await clicar(p, 'impok'); await p.reload(); await p.waitForTimeout(200);
     await clicar(p, 'go', { v: 'sim' }); await p.waitForTimeout(100);
     const tela = await p.locator('main').innerText();
     ok(!erros.length && /Questão \d+ de 23/.test(tela) && respondidas.length === 2, `o simulado continua com as 23 questões que ainda existem e a resposta da 1ª questão é mantida${erros.length ? ' — ' + erros[0] : ''}`);

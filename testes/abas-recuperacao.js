@@ -1,61 +1,31 @@
-/* Diários pendentes (curso/app/15-diarios-pendentes.js), com pontos de parada reais do Chromium e queda real da página
-   (Page.crash), sem falsificar leituras ou gravações:
-   1. sem Web Locks: a aba marca, grava o diário e cai antes de consolidar; a aba que abre depois recupera a marcação
-      (F11 de auditoria/firebase-codex-61e1d32.md);
-   2. "Apagar os dados deste aparelho" numa aba enquanto outra tem um diário ainda fora da cópia principal: o diário
-      pendente não é apagado, e o estudo dele volta depois que a outra aba cai (F10; aqui sem conta, onde apagar não exige
-      a nuvem; com conta, o bloqueio da exclusão está em testes/firebase-auditoria.js e na auditoria do Codex).
-   Se a linha do ponto de parada mudar, o teste falha explicitamente. Usado por testes/plataforma.test.js. */
+/* Regressões de interrupção e exclusão na arquitetura IDB. Nenhum get/put falsificado.
+   A operação de outra aba está aceita e reservada, mas sua transação é abortada por Page.crash. */
 const fs = require('fs'), path = require('path');
 module.exports = async function testarRecuperacao({ b, srv, saida, base, ok }) {
-  console.log('\n== diários pendentes: queda sem Web Locks e exclusão com diário de outra aba');
-  const K = 'missao-eear-v1', tem = (s, k) => !!(s && s.feito && s.feito[k]);
-  const linha = fs.readFileSync(path.join(saida, 'app.js'), 'utf8').split('\n').findIndex(l => l === '    loc.escritora = true;');
-  if (linha < 0) { ok(false, 'diários pendentes: o ponto de parada depois da gravação do diário não foi encontrado (revisar o teste)'); return; }
-  const clicar = (p, a, d) => p.evaluate(([a, d]) => { const x = document.createElement('button'); x.dataset.a = a; Object.assign(x.dataset, d || {}); document.body.appendChild(x); x.click(); x.remove(); }, [a, d]);
-  const exportado = async p => { await clicar(p, 'tab', { v: 'plano' }); await clicar(p, 'expcopiar'); await p.waitForSelector('#exp-txt'); return JSON.parse(await p.locator('#exp-txt').inputValue()); };
-  /* Marca k na página p e a faz cair logo depois de gravar o diário (antes de qualquer consolidação). */
-  async function marcarECair(ctx, p, k) {
-    const cdp = await ctx.newCDPSession(p); await cdp.send('Debugger.enable');
-    await cdp.send('Debugger.setBreakpointByUrl', { url: new URL('app.js', p.url()).href, lineNumber: linha + 1 });
-    const parou = new Promise((res, rej) => { const t = setTimeout(() => rej(new Error('ponto de parada não atingido')), 10000); cdp.once('Debugger.paused', r => { clearTimeout(t); res(r); }); });
-    clicar(p, 'marcar', { k }).catch(() => null); await parou;
-    return async () => { const caiu = p.waitForEvent('crash', { timeout: 10000 }); cdp.send('Page.crash').catch(() => null); await caiu; await p.close(); };
-  }
-  const ate = async (f, ms) => { const fim = Date.now() + ms; while (Date.now() < fim) { if (await f()) return true; await new Promise(r => setTimeout(r, 200)); } return false; };
-  const semente = () => Object.assign(base({}), { t: Date.now() - 60000, feito: { 'T:base': true } });
-
-  { // 1. sem Web Locks
-    const ctx = await b.newContext({ serviceWorkers: 'block' });
-    try {
-      await ctx.addInitScript(() => Object.defineProperty(navigator, 'locks', { get: () => undefined, configurable: true }));
-      const A = await ctx.newPage(); await A.goto(srv.url);
-      await A.evaluate(([k, s]) => localStorage.setItem(k, JSON.stringify(s)), [K, semente()]); await A.reload(); await A.waitForTimeout(400);
-      const cair = await marcarECair(ctx, A, 'T:sem-trava');
-      const B = await ctx.newPage(); await B.goto(srv.url);
-      const antes = await B.evaluate(k => JSON.parse(localStorage.getItem(k)), K);
-      await cair();
-      const t0 = Date.now(), voltou = await ate(async () => tem(await B.evaluate(k => JSON.parse(localStorage.getItem(k)), K), 'T:sem-trava'), 20000);
-      const s = await exportado(B);
-      ok(!tem(antes, 'T:sem-trava') && voltou && tem(s, 'T:sem-trava') && tem(s, 'T:base'),
-        `sem Web Locks: a aba que caiu depois de gravar o diário não perde a marcação; outra aba a recupera [cópia antes: ${!tem(antes, 'T:sem-trava') ? 'sem' : 'com'} a marcação; recuperada em ${Date.now() - t0} ms]`);
-    } catch (e) { ok(false, 'sem Web Locks: o cenário não terminou — ' + e.message); } finally { await ctx.close(); }
-  }
-  { // 2. exclusão com diário pendente de outra aba
-    const ctx = await b.newContext({ serviceWorkers: 'block' });
-    try {
-      const A = await ctx.newPage(); await A.goto(srv.url);
-      await A.evaluate(([k, s]) => localStorage.setItem(k, JSON.stringify(s)), [K, semente()]); await A.reload(); await A.waitForTimeout(400);
-      const B = await ctx.newPage(); await B.goto(srv.url); await B.waitForTimeout(400);
-      const cair = await marcarECair(ctx, B, 'T:pendente');
-      await clicar(A, 'tab', { v: 'plano' }); await clicar(A, 'dadosapagar'); await clicar(A, 'dadosapagarok'); await A.waitForTimeout(300);
-      const diarios = await A.evaluate(() => Object.keys(localStorage).filter(k => k.indexOf('missao-eear-v1-diario#') === 0).map(k => localStorage.getItem(k)).filter(v => v.indexOf('T:pendente') >= 0).length);
-      await cair(); await A.close();
-      const C = await ctx.newPage(); await C.goto(srv.url);
-      const voltou = await ate(async () => tem(await C.evaluate(k => JSON.parse(localStorage.getItem(k)), K), 'T:pendente'), 20000);
-      const s = await exportado(C);
-      ok(diarios === 1 && voltou && tem(s, 'T:pendente') && !tem(s, 'T:base'),
-        `apagar os dados com um diário pendente de outra aba: o diário fica, e o estudo dele volta depois que a aba cai (o resto continua apagado) [diários com a marcação depois de apagar: ${diarios}; feito: ${Object.keys(s.feito)}]`);
-    } catch (e) { ok(false, 'exclusão com diário pendente: o cenário não terminou — ' + e.message); } finally { await ctx.close(); }
-  }
+  console.log('\n== recuperação e exclusão com transação pendente');
+  await require('./abas-interrupcao.js')({ b, srv, saida, base, ok });
+  const ctx = await b.newContext({ serviceWorkers: 'block' });
+  try {
+    await ctx.addInitScript(([k, s]) => { if (!localStorage.getItem(k)) localStorage.setItem(k, JSON.stringify(s)); Object.defineProperty(navigator, 'locks', { get: () => undefined }); }, ['missao-eear-v1', Object.assign(base({}), { feito: { 'T:base': true } })]);
+    const abrir = async () => { const p = await ctx.newPage(); await p.goto(srv.url); await p.waitForFunction(() => document.documentElement.dataset.armazenamento !== 'carregando'); return p; };
+    const A = await abrir(), B = await abrir();
+    const clicar = (p, a, d = {}) => p.evaluate(([a, d]) => { const x = document.createElement('button'); x.dataset.a = a; Object.assign(x.dataset, d); document.body.appendChild(x); x.click(); x.remove(); }, [a, d]);
+    const fonte = fs.readFileSync(path.join(saida, 'app.js'), 'utf8'), lineNumber = fonte.split('\n').findIndex(l => l.includes('resultado = editar(q.result || null, t);'));
+    if (lineNumber < 0) throw new Error('Revisar ponto nativo da transação.');
+    const dbp = await ctx.newCDPSession(B); await dbp.send('Debugger.enable'); const parouB = new Promise(r => dbp.once('Debugger.paused', r)); await dbp.send('Debugger.pause'); await parouB;
+    const cdp = await ctx.newCDPSession(A); await cdp.send('Debugger.enable');
+    await cdp.send('Debugger.setBreakpointByUrl', { url: new URL('app.js', A.url()).href, lineNumber, condition: '(loc.ops || []).some(o => o.st.feito["T:pendente"]) && !(q.result && q.result.st && q.result.st.feito["T:pendente"])' });
+    const pausa = new Promise((resolve, reject) => { const t = setTimeout(() => reject(new Error('Ponto não atingido')), 10000); cdp.once('Debugger.paused', p => { clearTimeout(t); resolve(p); }); });
+    const acao = clicar(A, 'marcar', { k: 'T:pendente' }).catch(() => null); await pausa;
+    await dbp.send('Debugger.resume'); await dbp.send('Debugger.disable');
+    await clicar(B, 'tab', { v: 'plano' }); await clicar(B, 'dadosapagar'); await clicar(B, 'dadosapagarok');
+    const reservado = await B.evaluate(() => Object.keys(localStorage).some(k => k.startsWith('missao-eear-v1-diario#') && localStorage.getItem(k).includes('T:pendente')));
+    const sucessoPrematuro = (await B.locator('main').innerText()).includes('Os dados deste aparelho foram apagados.');
+    const caiu = A.waitForEvent('crash'); cdp.send('Page.crash').catch(() => null); await caiu; await A.close(); await acao;
+    const voltou = await B.waitForFunction(() => { const s = JSON.parse(localStorage.getItem('missao-eear-v1') || 'null'); return s && s.feito['T:pendente']; }, null, { timeout: 15000 }).then(() => true).catch(() => false);
+    if (!voltou) console.log('DIAGNÓSTICO exclusão pendente: ' + JSON.stringify(await B.evaluate(() => ({ principal: localStorage.getItem('missao-eear-v1'), reservas: Object.keys(localStorage).filter(k => k.startsWith('missao-eear-v1-diario#')).map(k => localStorage.getItem(k)), tela: document.getElementById('app').innerText }))));
+    const st = await B.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1')));
+    const aviso = await B.locator('main').innerText();
+    ok(voltou && reservado && !sucessoPrematuro && st && st.feito['T:pendente'] && aviso.includes('Nada foi apagado'), 'exclusão concorrente não confirma nem apaga operação aceita fora do checkpoint; após crash, a pendência é recuperada');
+  } catch (e) { ok(false, 'exclusão com operação pendente: ' + e.message); } finally { await ctx.close(); }
 };

@@ -13,7 +13,7 @@ module.exports = async function testarDuravel({ srv, base, ok }) {
   for (const espera of [1200, 300]) {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'eear-duravel-')); let ctx;
     try {
-      ctx = await abrir(dir); let p = ctx.pages()[0] || await ctx.newPage(); await p.goto(srv.url);
+      ctx = await abrir(dir); let p = ctx.pages()[0] || await ctx.newPage(); await p.goto(new URL('__perfil-legado-sem-app', srv.url).href);
       await p.evaluate(([k, s]) => localStorage.setItem(k, JSON.stringify(s)), [K, Object.assign(base({}), { t: Date.now() - 60000, feito: { 'T:base': true } })]);
       await ctx.close(); // a semente chega ao disco (fechamento limpo)
       ctx = await abrir(dir); p = ctx.pages()[0] || await ctx.newPage(); await p.goto(srv.url); await p.waitForTimeout(400);

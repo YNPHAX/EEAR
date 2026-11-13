@@ -35,7 +35,7 @@ module.exports = async function testarCelular({ E, b, srv, base, ok }) {
     const p = await ctx.newPage(), erros = []; p.on('pageerror', e => erros.push(e.message));
     const mod = {}; mods.forEach(m => { mod[m.id] = { lido: '2026-11-01' }; });
     const st = Object.assign(base({ modalidade: 'normal' }), { mod, fc: {}, erros: {}, sims: [] });
-    await p.goto(srv.url); await p.evaluate(s => localStorage.setItem('missao-eear-v1', s), JSON.stringify(st)); await p.goto(srv.url); await p.waitForTimeout(250);
+    await p.addInitScript(s => { if (!sessionStorage.getItem('fixture-celular')) { localStorage.setItem('missao-eear-v1', s); sessionStorage.setItem('fixture-celular', '1'); } }, JSON.stringify(st)); await p.goto(srv.url); await p.waitForTimeout(250);
     await p.click('[data-a="tab"][data-v="treino"]');
     await p.locator(mat ? `[data-a="fcini"][data-s="${mat}"]` : '[data-a="fcini"]:not([data-s])').click();
     await p.waitForSelector('[data-a="fcvirar"]');
@@ -86,7 +86,7 @@ module.exports = async function testarCelular({ E, b, srv, base, ok }) {
     p.on('pageerror', e => erros.push(e.message));
     const cdp = await ctx.newCDPSession(p); await cdp.send('Page.enable'); await cdp.send('Page.setFontSizes', { fontSizes: { standard: px } });
     const st = Object.assign(base({ modalidade: 'normal' }), { sims: [{ d: '2026-10-03', tipo: 'completo', r: { por: [18, 24], ing: [15, 24], mat: [12, 24], fis: [10, 24] }, min: 200 }] });
-    await p.goto(srv.url); await p.evaluate(s => localStorage.setItem('missao-eear-v1', s), JSON.stringify(st)); await p.goto(srv.url); await p.waitForTimeout(200);
+    await p.addInitScript(s => { if (!sessionStorage.getItem('fixture-celular')) { localStorage.setItem('missao-eear-v1', s); sessionStorage.setItem('fixture-celular', '1'); } }, JSON.stringify(st)); await p.goto(srv.url); await p.waitForTimeout(200);
     const rolam = [];
     for (const [nome, a, attrs] of passos) {
       await clicar(p, a, attrs); await p.waitForTimeout(80);

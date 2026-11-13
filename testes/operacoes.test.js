@@ -44,5 +44,12 @@ const migrado = opEstado(v1); assert.strictEqual(migrado.mod.POR01.best, 0.9); a
 const apagado = copia(migrado); apagado.mod = {}; apagado.cfg.certs = [];
 const dz = opDelta(v1, migrado, apagado, 'Z-v1');
 const reunido = opEstado(opUnir(opUnir(v1, dz), v1)); assert.strictEqual(reunido.mod.POR01, undefined); assert.strictEqual(reunido.cfg.certs.length, 0);
+const eb = base(); eb.erros = { q: 2 }; const em = opSemente(eb), corrigiu = copia(eb), errou = copia(eb); delete corrigiu.erros.q; errou.erros.q++;
+const ec = opDelta(em, eb, corrigiu, 'EC'), en = opDelta(em, eb, errou, 'EN');
+assert.strictEqual(opEstado(opUnir(opUnir(em, ec), en)).erros.q, 3, 'erro concorrente mantém contagem anterior quando a correção não o observou');
+const apenasCorrigido = opUnir(em, ec), depoisErro = copia(opEstado(apenasCorrigido)); depoisErro.erros.q = 1;
+assert.strictEqual(opEstado(opUnir(apenasCorrigido, opDelta(apenasCorrigido, opEstado(apenasCorrigido), depoisErro, 'EN2'))).erros.q, 1);
+const resetErro = copia(eb); resetErro.erros = {}; resetErro.cfg.certsZ = Date.now(); const er = opDelta(em, eb, resetErro, 'ER');
+assert.strictEqual(opEstado(opUnir(opUnir(em, er), en)).erros.q, 1, 'reset não restaura erros anteriores, mas preserva incremento concorrente');
 assert.strictEqual(opValida({ v: 2, n: 1, r: { '["cfg","__proto__","x"]': [1, 'x', true] }, c: {}, s: {} }), false);
 console.log('Operações: propriedades de união, repetição, dois resets, 4 produtores/120 alterações e caminhos maliciosos passaram.');

@@ -39,14 +39,20 @@ async function testarNavegador(E) {
   async function abrir(estado) {
     const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 860 } }), p = await ctx.newPage(), erros = [];
     p.on('pageerror', e => erros.push(e.message));
+    if (estado) await p.addInitScript(s => { if (!sessionStorage.getItem('fixture-plataforma')) { localStorage.setItem('missao-eear-v1', JSON.stringify(s)); sessionStorage.setItem('fixture-plataforma', '1'); } }, estado);
     await p.goto(srv.url);
-    if (estado) { await p.evaluate(s => localStorage.setItem('missao-eear-v1', JSON.stringify(s)), estado); await p.goto(srv.url); }
     await p.waitForTimeout(250);
     return { ctx, p, erros, aba: async v => { await p.click(`[data-a="tab"][data-v="${v}"]`); await p.waitForTimeout(150); return p.locator('main').innerText(); },
       salvo: () => p.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1'))) };
   }
-  const intactos = (a, d) => ['mod', 'fc', 'erros', 'sims', 'act', 'ultAula'].every(k => JSON.stringify(a[k]) === JSON.stringify(d[k]));
+  const intactos = (a, d) => ['mod', 'fc', 'erros', 'sims', 'act', 'ultAula'].every(k => require('util').isDeepStrictEqual(a[k], d[k]));
 
+  // Seleção de grupos só para desenvolvimento; sem variável o CI continua executando toda a matriz.
+  if (process.env.EEAR_GRUPOS) {
+    const grupos = { robustez: testarRobustez, contas: testarContas, abas: testarAbas, interrupcao: testarInterrupcao, recuperacao: testarRecuperacao, duravel: testarDuravel, sincronia: testarSincronia, nuvem: testarNuvemClaude, exclusao: testarExclusaoNuvem, epoca: testarEpocaNuvem, progresso2: testarProgresso2, falhas: testarFalhasNuvem };
+    for (const nome of process.env.EEAR_GRUPOS.split(',')) { if (!grupos[nome]) throw new Error('Grupo desconhecido: ' + nome); await grupos[nome]({ E, b, srv, saida, base, servir, ok }); }
+    await b.close(); srv.fechar(); fs.rmSync(saida, { recursive: true, force: true }); return;
+  }
   console.log('\n== simulado completo no tempo do edital (4h20)');
   {
     const { ctx, p } = await abrir(null);
@@ -178,7 +184,7 @@ async function testarNavegador(E) {
       const velho = fis.find(r => r.ids.length === 17), novo = fis.find(r => r.ids.length === 18);
       ok(velho && velho.o === 'anterior' && velho.d === '2026-10-17' && velho.c === 'MTMO-FZKM' && velho.h === 46 && velho.mod === null, 'registro gravado do certificado antigo: 17 aulas, 46 h, data e código originais');
       ok(novo && novo.o === 'curso' && novo.h === 49 && novo.ids.includes('FIS18'), 'certificado novo de Física exige as 18 aulas (49 h)');
-      ok(fisPor.every(id => JSON.stringify(st.mod[id]) === JSON.stringify(antes.mod[id])) && JSON.stringify([st.fc, st.erros, st.sims]) === JSON.stringify([antes.fc, antes.erros, antes.sims]), 'notas, cartões, erros e simulados antigos intactos depois de estudar');
+      ok(fisPor.every(id => require('util').isDeepStrictEqual(st.mod[id], antes.mod[id])) && require('util').isDeepStrictEqual([st.fc, st.erros, st.sims], [antes.fc, antes.erros, antes.sims]), 'notas, cartões, erros e simulados antigos intactos depois de estudar');
       const c2 = await card(p, 'fis');
       ok(/liberado/i.test(c2) && /17 aulas/.test(c2), 'Física liberada com as aulas atuais e o certificado de 17 aulas ainda na lista');
       ok(tem(await verCert(p, 'fis', '[data-i]'), ORIGINAL.fis), 'o certificado antigo continua abrindo para reimprimir');
@@ -228,7 +234,7 @@ async function testarNavegador(E) {
       await fazerQuiz(r.p, 'FIS18'); const comCert = await r.salvo(); await r.ctx.close();
       r = await abrir(comCert);
       const outro = legado(ids('MAT', 3)); outro.cfg.certs = [];
-      const colar = async o => { await r.p.click('[data-a="tab"][data-v="plano"]'); await r.p.waitForTimeout(80); await r.p.click('[data-a="impabrir"]'); await r.p.fill('#imp-txt', JSON.stringify(o)); await r.p.click('[data-a="impok"]'); await r.p.waitForTimeout(120); };
+      const colar = async o => { await r.p.click('[data-a="tab"][data-v="plano"]'); await r.p.waitForTimeout(80); await r.p.click('[data-a="impabrir"]'); await r.p.fill('#imp-txt', JSON.stringify(o)); await r.p.check('#imp-substituir'); await r.p.click('[data-a="impok"]'); await r.p.waitForTimeout(120); };
       await colar(outro);
       let st = await r.salvo();
       ok(certs(st) === certs(comCert) && Object.keys(st.mod).length === 3, 'colar outro progresso troca as notas, mas mantém os certificados conquistados');

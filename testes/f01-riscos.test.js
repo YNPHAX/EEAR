@@ -76,6 +76,11 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
         } else if (nome === 'escrita-interrompida') {
           f.rede(ctx, true);
           const linhas = fs.readFileSync(path.join(alvo, 'curso/app.js'), 'utf8').split('\n');
+          if (linhas.some(l => l.includes('resultado = editar(q.result || null, t);'))) {
+            const C = await f.pagina(ctx); await f.clicar(C, 'tab', { v: 'plano' }); await C.waitForSelector('[data-a="contasair"]');
+            await require('./operacoes-interrupcao.js')({ ctx, paginas: [A, B, C], clicar: f.clicar, estado: f.estado, fonte: linhas.join('\n'), abrir: () => f.pagina(ctx) });
+            console.log('✓ escrita-interrompida: ponto nativo transacional, três abas e contagem 4'); continue;
+          }
           const diario = linhas.some(l => l === '  function consolidarAgora(vivos, mortas) { // mortas (aba com a trava, sem nova consulta): só esses órfãos; os demais, depois');
           const aposLeitura = linhas.findIndex(l => l === (diario ? '    let atual = txt0 != null ? estadoDe(txt0) : null;' : '    let u = st;'));
           const aposEscrita = linhas.findIndex(l => l === (diario ? '      gravouLocal = true; txt = novo;' : '    lembrarLocal(txt, u);'));

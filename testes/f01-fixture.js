@@ -60,7 +60,7 @@ async function abrir(alvo) {
     return ctx;
   }
   const pagina = async ctx => { const p = await ctx.newPage(); await p.goto(url); return p; };
-  const clicar = (p, a, d = {}) => p.evaluate(([a, d]) => { const b = document.createElement('button'); b.dataset.a = a; Object.assign(b.dataset, d); document.body.appendChild(b); b.click(); b.remove(); }, [a, d]);
+  const clicar = async (p, a, d = {}) => { await p.waitForFunction(() => document.documentElement.dataset.armazenamento !== 'carregando'); return p.evaluate(([a, d]) => { const b = document.createElement('button'); b.dataset.a = a; Object.assign(b.dataset, d); document.body.appendChild(b); b.click(); b.remove(); }, [a, d]); };
   const plano = p => clicar(p, 'tab', { v: 'plano' });
   const estado = async p => { await plano(p); await clicar(p, 'expcopiar'); await p.waitForSelector('#exp-txt'); return JSON.parse(await p.locator('#exp-txt').inputValue()); };
   const importar = async (p, s) => { await plano(p); await clicar(p, 'impabrir'); await p.fill('#imp-txt', JSON.stringify(s)); await clicar(p, 'impok'); };

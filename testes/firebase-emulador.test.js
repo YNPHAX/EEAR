@@ -81,7 +81,7 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
   await limpar();
   const A = await aparelho();
   const anon = { v: 1, t: Date.now() - 9000, cfg: { nome: 'Sem Conta' }, mod: { POR01: { lido: hj, best: 0.9, tent: 1, ok: hj } }, fc: {}, sims: [] };
-  await A.p.evaluate(s => localStorage.setItem('missao-eear-v1', JSON.stringify(s)), anon); await A.p.reload(); await A.p.waitForTimeout(300);
+  await require('./perfil-legado.js')(A.p, srv.url, 'missao-eear-v1', anon); await A.p.waitForTimeout(300);
   await A.conectar('ana@exemplo.test', 'senha-ana-1', true); const uidA = await A.uid();
   await marcar(A, 'T:ana1'); await ate(async () => { const x = await progresso(uidA); return x && x.feito && x.feito['T:ana1']; });
   const docA = await docAdmin(uidA);
@@ -138,10 +138,10 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
   console.log('\n== versão futura, regras e exclusão de conta');
   { const C = await aparelho(); await C.conectar('caio@exemplo.test', 'senha-caio-1', true); const uidC = await C.uid(); await marcar(C, 'T:caio1');
     await ate(async () => { const x = await progresso(uidC); return x && x.feito['T:caio1']; });
-    await req(`${DOCS}/alunos/${uidC}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: { v: { integerValue: '2' }, dados: { stringValue: '{"formato":"novo"}' }, t: { integerValue: '1' } } }) });
+    await req(`${DOCS}/alunos/${uidC}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: { v: { integerValue: '3' }, dados: { stringValue: '{"formato":"novo"}' }, t: { integerValue: '1' } } }) });
     await marcar(C, 'T:caio2'); await espera(3500);
     const f = await docAdmin(uidC); await C.plano();
-    const futuraOk = f.v.integerValue === '2' && f.dados.stringValue === '{"formato":"novo"}' && /versão mais nova/.test(await C.p.locator('#sync').innerText()) && (await C.ler('missao-eear-v1@firebase:' + uidC)).feito['T:caio2'];
+    const futuraOk = f.v.integerValue === '3' && f.dados.stringValue === '{"formato":"novo"}' && /versão mais nova/.test(await C.p.locator('#sync').innerText()) && (await C.ler('missao-eear-v1@firebase:' + uidC)).feito['T:caio2'];
     ok(futuraOk, 'documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho');
     // documento corrompido (dados ilegíveis): nada é gravado por cima e o app continua funcionando com o progresso local
     await req(`${DOCS}/alunos/${uidC}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: { v: { integerValue: '1' }, dados: { stringValue: '{{{ não é JSON' }, t: { integerValue: '1' } } }) });
@@ -154,7 +154,7 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     const lerB = await req(`${DOCS}/alunos/${ana.localId}`, { headers: { Authorization: 'Bearer ' + bia.idToken } });
     const gravaB = await gravarComo(bia.idToken, ana.localId, campos(1, { v: 1 }));
     const extra = await gravarComo(ana.idToken, ana.localId, campos(1, { v: 1 }, { email: { stringValue: 'ana@exemplo.test' } }));
-    const valido = await gravarComo(ana.idToken, ana.localId, campos(1, await progresso(ana.localId)));
+    const valido = await gravarComo(ana.idToken, ana.localId, campos(2, await progresso(ana.localId)));
     await req(`${DOCS}/alunos/${ana.localId}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: campos(3, { v: 3 }) }) });
     const rebaixa = await gravarComo(ana.idToken, ana.localId, campos(1, { v: 1 }));
     const apagaB = await req(`${DOCS}/alunos/${ana.localId}`, { method: 'DELETE', headers: { Authorization: 'Bearer ' + bia.idToken } });
@@ -170,7 +170,7 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     const outro = await req(`${DOCS}:commit`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer ' + ana.idToken }, body: JSON.stringify({ writes: [{ update: { name: `projects/${PROJ}/databases/(default)/documents/assinaturas/${ana.localId}`, fields: { ativa: { booleanValue: true } } } }] }) });
     const semT = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '1' }, dados: { stringValue: '{}' } });
     const grande = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '1' }, dados: { stringValue: 'x'.repeat(900001) }, t: { integerValue: '1' } });
-    const proprioBia = await gravarComo(bia.idToken, bia.localId, campos(1, { v: 1 }));
+    const proprioBia = await gravarComo(bia.idToken, bia.localId, campos(2, { v: 1 }));
     ok(lista.st === 403 && (consulta.st === 403 || (Array.isArray(consulta.j) && consulta.j.some(x => x.error))), `regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista ${lista.st}, consulta ${consulta.st}]`);
     ok(semLogin.st === 403 && semLoginGrava.st === 403, `regras: sem login, nada é lido nem gravado [leitura ${semLogin.st}, gravação ${semLoginGrava.st}]`);
     ok(outro.st === 403, 'regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno');
@@ -182,7 +182,8 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
        nada some do aparelho */
     const R = await aparelho(); await R.conectar('rui@exemplo.test', 'senha-rui-1', true); const uidR = await R.uid();
     await marcar(R, 'T:rui1'); await ate(async () => { const x = await progresso(uidR); return x && x.feito && x.feito['T:rui1']; });
-    await R.p.evaluate(k => { const s = JSON.parse(localStorage.getItem(k)); s.cfg.anotacoes = 'x'.repeat(950000); localStorage.setItem(k, JSON.stringify(s)); }, 'missao-eear-v1@firebase:' + uidR);
+    const grandeR = await R.ler('missao-eear-v1@firebase:' + uidR); grandeR.cfg.anotacoes = 'x'.repeat(950000);
+    await require('./importar-fixture.js')(R.p, grandeR);
     await R.p.reload(); await R.p.waitForTimeout(2500); await marcar(R, 'T:rui-grande'); await espera(4000); await R.plano();
     const aviso = await R.p.locator('#sync').innerText(), local = await R.ler('missao-eear-v1@firebase:' + uidR), nuvemR = await progresso(uidR);
     ok(/parou/.test(aviso) && /recusou/.test(aviso) && /nada foi apagado/.test(aviso) && local.feito['T:rui-grande'] && local.feito['T:rui1'] && !nuvemR.feito['T:rui-grande'] && !R.erros.length,
@@ -206,7 +207,7 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
 
   let E = null;
   try { E = await aparelho(); const anon2 = { v: 1, t: Date.now(), cfg: { nome: 'Sem Conta' }, mod: { MAT01: { lido: hj } }, fc: {}, sims: [] };
-    await E.p.evaluate(s => localStorage.setItem('missao-eear-v1', JSON.stringify(s)), anon2); await E.p.reload(); await E.p.waitForTimeout(300);
+    await require('./perfil-legado.js')(E.p, srv.url, 'missao-eear-v1', anon2); await E.p.waitForTimeout(300);
     await E.conectar('davi@exemplo.test', 'senha-davi-1', true); const uidD = await E.uid(); await marcar(E, 'T:davi1');
     await ate(async () => { const x = await progresso(uidD); return x && x.feito['T:davi1']; });
     await E.plano(); await E.clicar('contaexcluir'); await E.p.waitForTimeout(100);

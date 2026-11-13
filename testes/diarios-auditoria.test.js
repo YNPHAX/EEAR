@@ -12,18 +12,21 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
   const cenarios = (process.env.EEAR_DIARIOS_CENARIOS || 'apos-diario,apos-diario-crash,sem-web-locks,sem-web-locks-crash,exclusao-com-diario-pendente,concorrencia-intensa,sem-notificacoes,lider-suspensa').split(',');
   const cert = { s: 'fis', mod: null, ids: ['FIS01'], h: 3, d: '2026-10-17', c: 'DIARIO-CERT', o: 'curso', t: 1792195200000 };
   let falhas = 0;
-  const abrirParado = async (ctx, p, aposSalvar = false) => {
+  const transacional = fs.readFileSync(path.join(alvo, 'curso/app.js'), 'utf8').includes('resultado = editar(q.result || null, t);');
+  const abrirParado = async (ctx, p, aposSalvar = false, observador) => {
     const linhas = fs.readFileSync(path.join(alvo, 'curso/app.js'), 'utf8').split('\n');
-    const numero = aposSalvar ? linhas.findIndex(l => l === '    const k = chave(LS);') : linhas.findIndex(l => l === '    loc.escritora = true;');
+    const numero = transacional ? linhas.findIndex(l => l.includes('resultado = editar(q.result || null, t);')) : aposSalvar ? linhas.findIndex(l => l === '    const k = chave(LS);') : linhas.findIndex(l => l === '    loc.escritora = true;');
     if (numero < 0) throw new Error('Revisar ponto posterior ao setItem do diário para este snapshot.');
     const cdp = await ctx.newCDPSession(p); await cdp.send('Debugger.enable');
-    const condition = aposSalvar ? '!!S.feito["T:aceita"] && !JSON.parse(localStorage.getItem(chave(LS))).feito["T:aceita"]' : undefined;
+    let obs;
+    if (transacional && observador) { obs = await ctx.newCDPSession(observador); await obs.send('Debugger.enable'); const pausa = new Promise(r => obs.once('Debugger.paused', r)); await obs.send('Debugger.pause'); await pausa; }
+    const condition = transacional ? '(loc.ops || []).some(o => o.st.feito["T:aceita"] || o.st.feito["T:orfao"]) && !(q.result && q.result.st && (q.result.st.feito["T:aceita"] || q.result.st.feito["T:orfao"]))' : aposSalvar ? '!!S.feito["T:aceita"] && !JSON.parse(localStorage.getItem(chave(LS))).feito["T:aceita"]' : undefined;
     const bp = await cdp.send('Debugger.setBreakpointByUrl', { url: new URL('app.js', p.url()).href, lineNumber: numero, columnNumber: 0, ...(condition ? { condition } : {}) });
     const parada = new Promise((resolve, reject) => {
       const t = setTimeout(() => reject(new Error('O diário não atingiu o breakpoint')), 10000);
       cdp.once('Debugger.paused', r => { clearTimeout(t); resolve(r); });
     });
-    return { cdp, bp, parada };
+    return { cdp, bp, parada, liberar: async () => { if (obs) { await obs.send('Debugger.resume'); await obs.send('Debugger.disable'); } } };
   };
   try {
     for (const nome of cenarios) {
@@ -47,10 +50,10 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
         if (nome.startsWith('apos-diario') || nome.startsWith('sem-web-locks')) {
           f.rede(ctx, true);
           const semTrava = nome.startsWith('sem-web-locks');
-          const trava = await abrirParado(ctx, A, semTrava), gravando = marcar(A, 'T:aceita').catch(() => null);
+          const trava = await abrirParado(ctx, A, semTrava, B), gravando = marcar(A, 'T:aceita').catch(() => null);
           const parada = await trava.parada;
           const raw = await trava.cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: parada.callFrames[0].callFrameId,
-            expression: 'localStorage.getItem(chaveDiario(loc.tab))', returnByValue: true });
+            expression: transacional ? 'localStorage.getItem(chaveDiario(loc.ops.find(o => o.st.feito["T:aceita"]).id))' : 'localStorage.getItem(chaveDiario(loc.tab))', returnByValue: true });
           const diario = JSON.parse(raw.result.value), duravel = !!diario.st.feito['T:aceita'];
           const principal = await trava.cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: parada.callFrames[0].callFrameId,
             expression: 'JSON.parse(localStorage.getItem(chave(LS)))', returnByValue: true });
@@ -58,6 +61,7 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
           const ui = await trava.cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: parada.callFrames[0].callFrameId,
             expression: '!!(document.getElementById("exp-txt") && JSON.parse(document.getElementById("exp-txt").value).feito["T:aceita"])', returnByValue: true });
           const aceitaNaExportacao = ui.result.value === true;
+          await trava.liberar();
           const vistoEmOutraAba = await diariosCom(B, 'T:aceita');
           if (nome.endsWith('-crash')) {
             const caiu = A.waitForEvent('crash', { timeout: 10000 });
@@ -79,13 +83,14 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
           resultado = { webLocks: await B.evaluate(() => !!navigator.locks), interrupcao: nome.endsWith('-crash') ? 'Page.crash' : 'fechamento', duravel, vistoEmOutraAba, aceitaNaExportacao, principalJaContinha, ponto: parada.callFrames[0].location, aposHandlerDeSalvar: semTrava, recuperado, chegou, exportado: s.feito, diariosAntesExcluir: restantes, ofereceuExcluir, diarioDepois, aviso };
         } else if (nome === 'exclusao-com-diario-pendente') {
           f.rede(ctx, true);
-          const trava = await abrirParado(ctx, B, true), gravando = marcar(B, 'T:aceita').catch(() => null);
+          const trava = await abrirParado(ctx, B, true, A), gravando = marcar(B, 'T:aceita').catch(() => null);
           const pausa = await trava.parada;
           const ui = await trava.cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: pausa.callFrames[0].callFrameId,
             expression: '!!(document.getElementById("exp-txt") && JSON.parse(document.getElementById("exp-txt").value).feito["T:aceita"])', returnByValue: true });
           const principal = await trava.cdp.send('Debugger.evaluateOnCallFrame', { callFrameId: pausa.callFrames[0].callFrameId,
             expression: 'JSON.parse(localStorage.getItem(chave(LS)))', returnByValue: true });
           const principalJaContinha = !!principal.result.value.feito['T:aceita'];
+          await trava.liberar();
           const duraveisAntes = await diariosCom(A, 'T:aceita');
           const avisoAntes = await A.locator('#sync').innerText();
           await f.clicar(A, 'dadosapagar');
@@ -117,7 +122,7 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
           resultado = { paginas: paginas.length, alteracoes: esperadas, totalEsperado: total, atividade: s.act[hj], marcacoes: Object.keys(s.feito).length, convergiu, recuperado, chegou };
         } else if (nome === 'sem-notificacoes') {
           f.rede(ctx, true); await marcar(A, 'T:ativa'); await f.ate(async () => (await cache(A)).feito['T:ativa']);
-          const trava = await abrirParado(ctx, B), gravando = marcar(B, 'T:orfao').catch(() => null); await trava.parada;
+          const trava = await abrirParado(ctx, B, false, A), gravando = marcar(B, 'T:orfao').catch(() => null); await trava.parada; await trava.liberar();
           await B.close(); await gravando;
           let s; const recuperouViva = await f.ate(async () => { s = await f.estado(A); return s.feito['T:orfao']; }, 6000);
           const diarios = await diariosCom(A, 'T:orfao');
@@ -128,14 +133,14 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
         } else if (nome === 'lider-suspensa') {
           await marcar(B, 'T:identificar-lider');
           const papelB = await B.locator('#sync').innerText();
-          const lider = /Outra aba/.test(papelB) ? A : B, seguidora = lider === A ? B : A;
+          const lider = transacional ? await require('./papel-nuvem.js')(A, conta.uid) ? A : B : /Outra aba/.test(papelB) ? A : B, seguidora = lider === A ? B : A;
           if (!(await f.ate(async () => { const s = await f.ler(conta.uid); return s && s.feito['T:identificar-lider']; }))) throw new Error('Probe de liderança não chegou ao servidor.');
           const cdp = await ctx.newCDPSession(lider);
           await lider.evaluate(() => { Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
           await cdp.send('Page.setWebLifecycleState', { state: 'frozen' });
           await marcar(seguidora, 'T:com-lider-congelada');
           const aviso = await seguidora.locator('#sync').innerText();
-          if (!/Outra aba/.test(aviso)) throw new Error('A página ativa não confirmou papel de seguidora: ' + aviso);
+          if (!transacional && !/Outra aba/.test(aviso)) throw new Error('A página ativa não confirmou papel de seguidora: ' + aviso);
           const local = await f.ate(async () => (await cache(seguidora)).feito['T:com-lider-congelada']);
           const enviouCongelada = await f.ate(async () => { const s = await f.ler(conta.uid); return s && s.feito['T:com-lider-congelada']; }, 6000);
           await cdp.send('Page.setWebLifecycleState', { state: 'active' });

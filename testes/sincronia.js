@@ -23,11 +23,12 @@ module.exports = async function testarSincronia({ b, srv, base, ok }) {
         acquire: async o => { const r = await window.__nuvemGet(); if (r.off) fora(); return { acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + (o.ttlMs || 30000)).toISOString() }; }
       }) }) };
     });
+    await ctx.route('**/app.js', async rota => { const resposta = await rota.fetch(); const fonte = await resposta.text(); await rota.fulfill({ response: resposta, body: fonte.replace(/\}\)\(\);\s*$/, 'window.__estudarFixture = s => { S = mesclar(s); salvar(); render(); };\n})();') }); });
     const p = await ctx.newPage(); p.on('pageerror', e => erros.push(e.message));
     const ler = k => p.evaluate(k => JSON.parse(localStorage.getItem(k)), k || LS());
-    /* "Estudar": altera o progresso como o app faria e reabre o app (a abertura sincroniza). */
-    const estudar = async f => { const s = await ler(); f(s); s.t = Date.now(); await p.evaluate(([k, x]) => localStorage.setItem(k, JSON.stringify(x)), [LS(), s]); await p.reload(); await p.waitForTimeout(300); };
-    return { p, ctx, erros, ler, estudar, abrir: async estado => { await p.goto(srv.url); if (estado) { await p.evaluate(([k, x]) => localStorage.setItem(k, JSON.stringify(x)), [LS(), estado]); await p.reload(); } await p.waitForTimeout(400); } };
+    /* Gancho só no transporte HTTP deste teste: alterar S e chamar salvar real, sem escrever no cache nem simular importação. */
+    const estudar = async f => { const s = await ler(); f(s); s.t = Date.now(); await p.evaluate(s => window.__estudarFixture(s), s); await p.reload(); await p.waitForTimeout(300); };
+    return { p, ctx, erros, ler, estudar, abrir: async estado => { if (estado) await p.addInitScript(([k, x]) => { if (!sessionStorage.getItem('fixture-sincronia')) { localStorage.setItem(k, JSON.stringify(x)); sessionStorage.setItem('fixture-sincronia', '1'); } }, [LS(), estado]); await p.goto(srv.url); await p.waitForTimeout(400); } };
   }
   const D = new Date(), hj = D.getFullYear() + '-' + String(D.getMonth() + 1).padStart(2, '0') + '-' + String(D.getDate()).padStart(2, '0');
   const P0 = () => Object.assign(base({}), { t: Date.now() - 60000, act: { [hj]: 1 }, erros: { 'MAT03-2': 1, 'POR01-3': 2 } });
@@ -52,9 +53,9 @@ module.exports = async function testarSincronia({ b, srv, base, ok }) {
 
     // 2. o mesmo cartão, a mesma aula e o mesmo erro mexidos nos dois aparelhos
     nuvem.offline = { A: true, B: true };
-    await A.estudar(s => { s.fc['POR01~0'] = [3, 88888]; s.mod.POR01.tent += 1; s.mod.POR01.best = 0.95; delete s.erros['POR01-3']; s.sims.push({ d: hj, tipo: 'diag', r: { por: [5, 10] }, min: 30 }); });
+    await A.estudar(s => { s.fc['POR01~0'] = [3, 88888]; s.mod.POR01.tent += 1; s.mod.POR01.best = 0.95; delete s.erros['POR01-3']; s.sims.push({ id: 'novo-simulado-' + require('crypto').randomUUID(), d: hj, tipo: 'diag', r: { por: [5, 10] }, min: 30 }); });
     await new Promise(r => setTimeout(r, 30));
-    await B.estudar(s => { s.fc['POR01~0'] = [0, 77777]; s.mod.POR01.tent += 1; s.erros['POR01-3'] += 1; s.sims.push({ d: hj, tipo: 'diag', r: { por: [5, 10] }, min: 30 }); });
+    await B.estudar(s => { s.fc['POR01~0'] = [0, 77777]; s.mod.POR01.tent += 1; s.erros['POR01-3'] += 1; s.sims.push({ id: 'novo-simulado-' + require('crypto').randomUUID(), d: hj, tipo: 'diag', r: { por: [5, 10] }, min: 30 }); });
     nuvem.offline = {};
     await esperar(async () => nuvem.doc.mod.POR01.tent >= 4);
     await A.p.reload(); await A.p.waitForTimeout(500);

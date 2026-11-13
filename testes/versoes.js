@@ -23,7 +23,7 @@ module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, 
       const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 860 }, timezoneId: tz });
       const p = await ctx.newPage(), erros = []; p.on('pageerror', e => erros.push(e.message));
       await p.clock.setFixedTime(new Date(ms));
-      await p.goto(url); if (estado) { await p.evaluate(s => localStorage.setItem('missao-eear-v1', s), typeof estado === 'string' ? estado : JSON.stringify(estado)); await p.goto(url); }
+      if (estado) await p.addInitScript(s => { if (!sessionStorage.getItem('fixture-versoes')) { localStorage.setItem('missao-eear-v1', s); sessionStorage.setItem('fixture-versoes', '1'); } }, typeof estado === 'string' ? estado : JSON.stringify(estado)); await p.goto(url);
       await p.waitForTimeout(250);
       const guardado = () => p.evaluate(() => localStorage.getItem('missao-eear-v1'));
       const vencidos = async () => { await p.click('[data-a="tab"][data-v="hoje"]'); await p.waitForTimeout(100); return Number(await p.locator('.grid2 .card').first().locator('.score').innerText()); };
@@ -108,7 +108,7 @@ module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, 
       const ctx = await b.newContext({ serviceWorkers: 'block', timezoneId: tz }), p = await ctx.newPage();
       await p.clock.setFixedTime(new Date(T0 + DIA));
       await ctx.addInitScript(d => { window.claude = { use: async k => k === 'user' ? { id: async () => 'aluno-1' } : { doc: c => /^progresso\//.test(c) ? { get: async () => ({ exists: false, data: () => null }), set: async () => { const e = new Error('regras'); e.code = 'invalid_argument'; throw e; }, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + 5000).toISOString() }) } : ({ get: async () => ({ exists: true, data: () => JSON.parse(JSON.stringify(d)) }), set: async () => {}, acquire: async o => ({ acquired: true, holder: o.holder, expiresAt: new Date(Date.now() + o.ttlMs).toISOString() }) }) } }; }, nuvem);
-      await p.goto(srv2.url); await p.evaluate(s => localStorage.setItem('missao-eear-v1@claude:aluno-1', JSON.stringify(s)), st0); await p.goto(srv2.url); await p.waitForTimeout(500);
+      await p.addInitScript(s => { if (!sessionStorage.getItem('fixture-versoes-conta')) { localStorage.setItem('missao-eear-v1@claude:aluno-1', JSON.stringify(s)); sessionStorage.setItem('fixture-versoes-conta', '1'); } }, st0); await p.goto(srv2.url); await p.waitForTimeout(500);
       const sinc = await p.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1@claude:aluno-1')));
       ok(JSON.stringify([sinc.fc, sinc.cfg.fcv, sinc.cfg.fcAncora]) === JSON.stringify([nuvem.fc, nuvem.cfg.fcv, nuvem.cfg.fcAncora]), 'sincronização simulada: cartões e versões vêm juntos da nuvem mais nova');
       await ctx.close();
@@ -143,7 +143,7 @@ module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, 
       ok(await r.guardado() === antes && await r.vencidos() === ate(0), `Português: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (${ate(0)} de 100)`);
       const dia0 = await revisarTudo(r.p); let st = JSON.parse(await r.guardado()); const salvo = await r.guardado(); await r.ctx.close();
       ok(dia0.length === ate(0) && dia0.every(id => versao[id] === 2 && st.fc[id][0] === 3 && st.fc[id][1] === D + 7), 'Português: no 1º dia só voltam cartões reformulados, e o acerto os agenda para 7 dias');
-      ok(iguais.every(id => JSON.stringify(st.fc[id]) === JSON.stringify([6, D + 50]) && !(st.cfg.fcv || {})[id]) && JSON.stringify(st.mod) === JSON.stringify(st0.mod), 'Português: os 17 cartões mantidos e o registro das aulas ficam intactos');
+      ok(iguais.every(id => JSON.stringify(st.fc[id]) === JSON.stringify([6, D + 50]) && !(st.cfg.fcv || {})[id]) && require('util').isDeepStrictEqual(st.mod, st0.mod), 'Português: os 17 cartões mantidos e o registro das aulas ficam intactos');
       const porDia = [], vistos = new Set(dia0);
       for (let k = 1; k <= 6; k++) { r = await abrirEm(srv.url, salvo, T0 + k * DIA, tz); porDia.push(await r.vencidos()); await r.ctx.close(); }
       const esperado = [1, 2, 3, 4, 5, 6].map(k => novos.filter(id => !vistos.has(id) && desvio(id) <= k).length);

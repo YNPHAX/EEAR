@@ -16,8 +16,16 @@ module.exports = async function testarContas({ b, srv, base, ok }) {
     });
     const p = await ctx.newPage(); p.on('pageerror', e => erros.push(e.message));
     const ler = k => p.evaluate(k => JSON.parse(localStorage.getItem(k)), k);
-    const gravar = (k, v) => p.evaluate(([k, v]) => localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)), [k, v]);
-    return { ctx, p, erros, ler, gravar, abrir: async () => { await p.reload(); await p.waitForTimeout(600); } };
+    // Prepara uma cópia de versão antiga, sem checkpoint dessa identidade. Não altera o runtime.
+    const gravar = async (k, v) => {
+      if (!p.url().endsWith('__perfil-legado-fixture')) await p.goto(srv.url + '__perfil-legado-fixture');
+      if (/^missao-eear-v1(?:@|$)/.test(k)) await p.evaluate(k => new Promise(resolve => {
+        const o = window.indexedDB.open('eear-operacoes', 1); o.onupgradeneeded = () => o.transaction.abort(); o.onerror = () => resolve();
+        o.onsuccess = () => { const db = o.result; if (!db.objectStoreNames.contains('contas')) { db.close(); resolve(); return; } const t = db.transaction('contas', 'readwrite'); t.objectStore('contas').delete(k.includes('@') ? k.slice(k.indexOf('@') + 1) : ''); t.oncomplete = () => { db.close(); resolve(); }; };
+      }), k);
+      await p.evaluate(([k, v]) => localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)), [k, v]);
+    };
+    return { ctx, p, erros, ler, gravar, abrir: async () => { await p.goto(srv.url); await p.waitForTimeout(600); } };
   }
   const hj = new Date().toISOString().slice(0, 10);
   const semConta = () => Object.assign(base({ nome: 'Aluno sem conta' }), { t: Date.now() - 5000, mod: { POR01: { best: 0.9, tent: 2, lido: '2026-10-01', ok: '2026-10-01' }, MAT02: { lido: hj, tent: 1, best: 0.5 } }, erros: { 'MAT03-2': 1 } });
@@ -44,8 +52,8 @@ module.exports = async function testarContas({ b, srv, base, ok }) {
 
     // 4. conta lembrada, mas o serviço da conta não está disponível: o aparelho mostra o progresso sem conta
     const ctx2 = await b.newContext({ serviceWorkers: 'block' }), p2 = await ctx2.newPage();
-    await p2.goto(srv.url); await p2.evaluate(([a, c]) => { localStorage.setItem('missao-eear-v1', JSON.stringify(a)); localStorage.setItem('missao-eear-v1@claude:ana', JSON.stringify(c)); localStorage.setItem('missao-eear-conta', 'claude:ana'); }, [anon, sA]);
-    await p2.reload(); await p2.waitForTimeout(300);
+    await p2.addInitScript(([a, c]) => { if (!sessionStorage.getItem('fixture-conta-sem-servico')) { localStorage.setItem('missao-eear-v1', JSON.stringify(a)); localStorage.setItem('missao-eear-v1@claude:ana', JSON.stringify(c)); localStorage.setItem('missao-eear-conta', 'claude:ana'); sessionStorage.setItem('fixture-conta-sem-servico', '1'); } }, [anon, sA]);
+    await p2.goto(srv.url); await p2.waitForTimeout(300);
     ok(/Missão de hoje, Aluno\b/.test(await p2.locator('main').innerText()) && !/Ana/.test(await p2.locator('main').innerText()), 'conta lembrada sem o serviço que a confirma: o aparelho não mostra o progresso dela, só o sem conta');
     await ctx2.close();
 
@@ -63,7 +71,7 @@ module.exports = async function testarContas({ b, srv, base, ok }) {
     await A.p.click('[data-a="tab"][data-v="plano"]');
     const [arq] = await Promise.all([A.p.waitForEvent('download'), A.p.click('[data-a="dadosbaixar"]')]);
     const baixado = JSON.parse(require('fs').readFileSync(await arq.path(), 'utf8'));
-    ok(JSON.stringify(baixado.progresso.mod) === JSON.stringify(anon.mod) && baixado.conta === null && /missao-eear-meus-dados-\d{4}-\d{2}-\d{2}\.json/.test(arq.suggestedFilename()), '"Baixar meus dados" entrega um arquivo com o progresso deste aparelho');
+    ok(require('util').isDeepStrictEqual(baixado.progresso.mod, anon.mod) && baixado.conta === null && /missao-eear-meus-dados-\d{4}-\d{2}-\d{2}\.json/.test(arq.suggestedFilename()), '"Baixar meus dados" entrega um arquivo com o progresso deste aparelho');
     await A.p.click('[data-a="dadosver"]'); const lista = await A.p.locator('main').innerText();
     ok(/2 aulas estudadas/.test(lista) && /1 outra conta/.test(lista) && !/outra@|Aluno sem conta.*Aluno sem conta/.test(lista), '"O que está guardado" mostra o que este aparelho guarda e só a quantidade de outras contas, sem o conteúdo delas');
     await A.p.click('[data-a="dadosapagar"]'); await A.p.click('[data-a="cancelar"]');

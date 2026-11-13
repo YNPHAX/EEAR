@@ -71,7 +71,7 @@ module.exports = async function testarExclusaoNuvem({ b, srv, base, ok }) {
 
   // 2. reabrir este aparelho não restaura; outro aparelho da mesma conta, com cópia local, também não
   await A.p.reload(); await A.p.waitForTimeout(2000);
-  const B = await aparelho('ana'); await B.p.evaluate(([k, s]) => localStorage.setItem(k, JSON.stringify(s)), [LS('ana'), Object.assign(P('Ana'), { t: Date.now(), feito: { 'T:base': true, 'T:aparelhoB': true } })]);
+  const B = await aparelho('ana'); await require('./perfil-legado.js')(B.p, srv.url, LS('ana'), Object.assign(P('Ana'), { t: Date.now(), feito: { 'T:base': true, 'T:aparelhoB': true } }));
   await B.p.reload(); await B.dados(); // B espera a trava que A abriu ao reabrir
   await ate(async () => /foi apagado da nuvem/.test(await B.tela()), 20000);
   const telaB = await B.tela(), localB = await B.ler();

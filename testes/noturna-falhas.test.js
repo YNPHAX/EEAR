@@ -16,7 +16,13 @@ const seed = () => ({ v: 1, t: Date.now() - 20000, cfg: { nome: 'Quota Fictícia
       try {
         if (nome === 'indexeddb-indisponivel') await ctx.addInitScript(() => Object.defineProperty(window, 'indexedDB', { get: () => { throw new window.DOMException('Capacidade indisponível no teste', 'SecurityError'); } }));
         const conta = await f.conta('falhas-' + nome, seed()), A = await f.pagina(ctx); await f.entrar(A, conta.email);
-        if (!await f.ate(async () => (await A.locator('#sync').innerText()) === 'Progresso salvo na sua conta.')) throw new Error('Base inicial não confirmada.');
+        const baseConfirmada = await f.ate(async () => {
+          const aviso = await A.locator('#sync').innerText();
+          if (nome !== 'indexeddb-indisponivel') return aviso === 'Progresso salvo na sua conta.';
+          const remoto = await f.ler(conta.uid), local = await f.estado(A);
+          return /sem proteção contra queda/.test(aviso) && remoto && remoto.feito['T:base'] && local.feito['T:base'] && remoto.act[hj] === 2 && local.act[hj] === 2;
+        });
+        if (!baseConfirmada) throw new Error('Base inicial não confirmada.');
         const k = 'missao-eear-v1@firebase:' + conta.uid, pre = 'missao-eear-v1-diario@firebase:' + conta.uid + '#';
         const cache = p => p.evaluate(k => JSON.parse(localStorage.getItem(k)), k);
         let passou = false, resultado;
@@ -59,8 +65,10 @@ const seed = () => ({ v: 1, t: Date.now() - 20000, cfg: { nome: 'Quota Fictícia
             const chegou = await f.ate(async () => correto(await f.ler(conta.uid)));
             passou = convergiu && reabriu && chegou; resultado = { abas: ps.length, alteracoes: n * ps.length, esperado: total, atividade: s.act[hj], marcacoes: Object.keys(s.feito).length, convergiu, reabriu, chegou, duracaoMs: Date.now() - inicio };
           } else if (nome === 'lider-pausada') {
-            await f.clicar(B, 'marcar', { k: 'T:probe' }); const papelB = await B.locator('#sync').innerText();
-            const lider = /Outra aba/.test(papelB) ? A : B, seguidora = lider === A ? B : A;
+            await f.clicar(B, 'marcar', { k: 'T:probe' });
+            const lider = await require('./papel-nuvem.js')(A, conta.uid) ? A : await require('./papel-nuvem.js')(B, conta.uid) ? B : null;
+            if (!lider) throw new Error('Não comprovou liderança por clientId do Web Locks.');
+            const seguidora = lider === A ? B : A;
             if (!await f.ate(async () => { const s = await f.ler(conta.uid); return s && s.feito['T:probe']; })) throw new Error('Probe não confirmou na nuvem.');
             const cdp = await ctx.newCDPSession(lider); await cdp.send('Debugger.enable');
             await lider.evaluate(() => { Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true }); document.dispatchEvent(new Event('visibilitychange')); });
