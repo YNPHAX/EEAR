@@ -1,0 +1,394 @@
+Continuidade Codex — 12–13/11/2026. Somente dados fictícios, emuladores e transportes controlados.
+Runtime entregue: 10a3239990eecbb8e66cdfe982687b7962c42af7
+SHA256 curso/app.js: 676a0d0860f3d9ee20797d2dcce09bdfc9676cc5c51f1b76cd316c72e52c10a4
+O SHA mostrado por F01 no início é o HEAD anterior, pois o commit da mesma árvore foi criado durante a execução; o runtime não foi alterado entre build, teste e publicação.
+
+=== F01 FINAL (árvore posteriormente publicada como 10a3239; mesmo app.js) | f01-encerramento.log ===
+F01: alvo /workspace/eear-dev, commit 0a04662c6936a3b971f21d1b66cf3f3d4ff75b0b
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-dev/testes/f01-abas.test.js"
+F01: alvo /workspace/eear-dev, commit 0a04662c6936a3b971f21d1b66cf3f3d4ff75b0b
+✓ dispositivos: {"aceitoA":["T:A","T:base","T:remover"],"aceitoB":["T:B","T:base","T:remover"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ fechar-A: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ fechar-B: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ desmarcar: {"aceitoA":["T:B","T:base"],"aceitoB":["T:B","T:base"],"offline":true,"servidor":true,"paginas":[true]}
+✓ zerar: {"aceitoA":["T:depois-zerar"],"aceitoB":["T:depois-zerar"],"offline":true,"servidor":true,"paginas":[true]}
+✓ certificado: {"aceitoA":["T:B","T:base","T:remover"],"aceitoB":["T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ reconectar: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ zerar-duplo: {"aceitoA":["T:A","T:B"],"aceitoB":["T:A","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+F01: 8/8 cenários passaram; 0 falha(s). Parecer não alterado automaticamente.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+=== CICLO FINAL — original sem mudar asserções | ciclo-final-2.log ===
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}
+
+=== QUARENTENA ANTES — falha real | quarentena-exclusao-antes.log ===
+✗ quarentena-apos-exclusao: {"confirmou":true,"copiasPessoais":1}
+
+=== QUARENTENA DEPOIS — mesma exigência | quarentena-exclusao-depois.log ===
+✓ quarentena-apos-exclusao: {"confirmou":true,"copiasPessoais":0}
+
+=== EXCLUSÃO APÓS ÚLTIMA CONFERÊNCIA — antes | exclusao-ultima-conferencia-antes.log ===
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-dev/testes/operacoes-exclusao-concorrente.test.js"
+Exclusão após conferir pendências: {"nova":"oadc44e3c-a7aa-48b9-8932-20df0b12c90e","anterior":"of8300588-4c8c-488f-b86f-d5ce865f7f58","apagado":true}
+✗ exclusao-apos-ultima-conferencia: {"aceitou":true,"reserva":true,"recuperou":false,"mensagem":"Os dados deste aparelho foram apagados.","feito":{},"esperado":1}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-dev/testes/operacoes-exclusao-concorrente.test.js"" exited with code 1
+
+=== EXCLUSÃO APÓS ÚLTIMA CONFERÊNCIA — depois | exclusao-ultima-conferencia-depois.log ===
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-dev/testes/operacoes-exclusao-concorrente.test.js"
+Exclusão após conferir pendências: {"nova":"oed71cc13-3a02-49e2-9a1e-a85caec2b00a","anterior":"o3019a9cd-a6e8-4d36-a9fa-fd89a51732db","apagado":true}
+✓ exclusao-apos-ultima-conferencia: {"aceitou":true,"reserva":true,"recuperou":true,"mensagem":"Os dados deste aparelho foram apagados.","feito":{"T:aceita-depois-da-conferencia":true},"atividade":1,"esperado":1}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+=== CACHE ANTES — exclusão confirmada | cache-exclusao-antes-3.log ===
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-dev/testes/operacoes-cache-exclusao.test.js"
+✗ cache-atrasado-apos-exclusao: {"confirmou":true,"reconciliou":true,"feito":{},"residuos":["missao-eear-v1"]}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-dev/testes/operacoes-cache-exclusao.test.js"" exited with code 1
+
+=== CACHE DEPOIS — serialização transacional | cache-exclusao-transacional.log ===
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-dev/testes/operacoes-cache-exclusao.test.js"
+✓ cache-atrasado-apos-exclusao: {"serializado":true,"confirmouPausada":false,"confirmou":true,"reconciliou":true,"feito":{},"residuos":[]}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+=== RECUPERAÇÃO IDB / CORRUPÇÃO / PURGE — desenvolvimento | recuperacao-nova-4.log ===
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-dev/testes/operacoes-recuperacao.test.js"
+Preparando autoauditoria de recuperação
+Abrindo com IndexedDB indisponível
+App carregado
+Importação preparada
+Estudo aceito
+IndexedDB restabelecido
+✓ indexeddb-restabelecido: {"aviso":"Este navegador usa uma cópia de reserva sem proteção contra queda. Exporte em Plano › Dados antes de fechar.","confirmou":true,"reabriu":true}
+✓ checkpoint-corrompido-preservado: {"preservou":true,"aceitou":false,"aviso":"O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados."}
+✓ exclusao-confirmada-elimina-quarentena: {"apagou":true,"cacheLimpo":true}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+=== HOSTING parser real | hosting-parser-final.log ===
+✓ canonica-ativa: {"gateExit": 0, "configExecutada": true, "projetoRuntime": "eear-teste", "deveriaAceitar": true}
+✓ canonica-em-script-texto: {"gateExit": 1, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+✓ canonica-em-template-com-comentario: {"gateExit": 1, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+Contexto H02: 0 falha(s). Sem deploy, SDK ou Firebase real.
+
+=== HOSTING gates | hosting-gates-final.log ===
+✓ artefato e destino de teste: exit=0; esperado=permitir
+✓ destino de produção: exit=1; esperado=recusar
+✓ destino vazio: exit=1; esperado=recusar
+✓ pasta ausente: exit=2; esperado=recusar
+✓ artefato oficial: exit=1; esperado=recusar
+✓ configuração divergente: exit=1; esperado=recusar
+✓ duas configurações literais: exit=1; esperado=recusar
+✓ arquivo proibido pelo verificador de conteúdo: exit=1; esperado=recusar
+✓ configuração apenas em comentário não habilita homologação: exit=1; esperado=recusar
+✓ configuração sobrescrita por script antes do app: exit=1; esperado=recusar
+✓ configuração em comentário JavaScript não habilita homologação: exit=1; esperado=recusar
+✓ configuração em script não executável não habilita homologação: exit=1; esperado=recusar
+Gates: 0 falha(s). Sem deploy; configurações fictícias não executaram SDK.
+
+=== HOSTING HTTP local | hosting-http-final.log ===
+i  emulators: Starting emulators: hosting
+i  emulators: Detected demo project ID "demo-eear-hosting", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  hosting[demo-eear-hosting]: Serving hosting files from: site
+✔  hosting[demo-eear-hosting]: Local server: http://127.0.0.1:5200
+i  Running script: node "/tmp/eear-hosting-emu-wV1pWp/provar.js"
+i  hosting: 127.0.0.1 - - [12/Nov/2026:23:39:12 +0000] "GET / HTTP/1.1" 200 - "-" "node"
+{"url":"/","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/index.html","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [12/Nov/2026:23:39:12 +0000] "GET /index.html HTTP/1.1" 200 - "-" "node"
+{"url":"/app.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [12/Nov/2026:23:39:12 +0000] "GET /sw.js HTTP/1.1" 200 - "-" "node"
+{"url":"/sw.js","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [12/Nov/2026:23:39:12 +0000] "GET /app.js HTTP/1.1" 200 - "-" "node"
+i  hosting: 127.0.0.1 - - [12/Nov/2026:23:39:12 +0000] "GET /manifest.webmanifest HTTP/1.1" 200 805 "-" "node"
+{"url":"/manifest.webmanifest","status":200,"nosniff":"nosniff","robots":"noindex, nofollow","cache":"no-cache","referer":"strict-origin-when-cross-origin"}
+{"url":"/__/auth/handler","status":404,"nosniff":"nosniff","robots":"noindex, nofollow","cache":null,"referer":"strict-origin-when-cross-origin"}
+i  hosting: 127.0.0.1 - - [12/Nov/2026:23:39:12 +0000] "GET /__/auth/handler HTTP/1.1" 404 154 "-" "node"
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  hosting: Stopping Hosting Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+=== AUTOTESTE | autoteste-final.log ===
+OK: autoteste da verificação (193 casos)
+
+=== ENVIO AO FUNDO / PAGEHIDE | falhas-fundo-final.log ===
+
+== dados do curso
+  ✓ 69 aulas, sem id repetido
+  ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+  ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+  ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+  ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+  ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ modalidade normal tem aulas de Inglês
+  ✓ modalidade bct tem aulas de Inglês
+  ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+  ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+  ✓ curso/app.js igual à montagem dos 17 arquivos de curso/app/
+
+== regras da nuvem do curso no Claude (web/regras-claude.json; modelo calibrado com o serviço real)
+  ✓ o modelo reproduz os 15 comportamentos confirmados no serviço real
+  ✓ reproduz o vazamento: com as regras de hoje (sem regra para progresso2), um aluno lê e grava o progresso2 de outra conta
+  ✓ as regras propostas e as de reversão declaram progresso e progresso2 e isolam as contas (leitura e gravação)
+  ✓ propostas: o caminho antigo fica só para leitura do aluno; reversão: volta a ser gravável, e o caminho novo continua gravável só pelo próprio aluno
+  ✓ o dono do curso continua lendo e gravando os dois caminhos (moderação e limpeza)
+
+== contas dos flashcards de Matemática (recalculadas)
+  ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+  ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+
+== contas dos flashcards de Física (recalculadas)
+  ✓ 48 cartões de Física: a conta recalculada confere com o verso
+  ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+
+== falhas da nuvem: tentar de novo, avisar quando parar, nunca apagar (nuvem fictícia)
+  ✓ gravação recusada: a sincronização para (sem repetir a gravação recusada), o aviso diz que parou e por quê, e a marcação fica neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem do curso não permite gravar com o seu acesso). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ gravação recusada: depois que a nuvem volta a aceitar, abrir o app de novo envia o que ficou no aparelho
+  ✓ cota estourada e servidor ocupado: o app tenta de novo, com espera crescente, e o estudo chega à nuvem (3 tentativas)
+  ✓ sem rede: tentativas espaçadas (3 em 9 s, com a primeira abertura), o estudo fica salvo neste aparelho, e a conexão voltando grava na hora (102 ms) [aviso: Progresso salvo neste aparelho.]
+  ✓ app indo para o fundo: o estudo vai para a nuvem sem esperar o intervalo de 1,5 s (21 ms)
+  ✓ página fechando: nada é enviado depois de pagehide, nem pelo intervalo pendente (o estudo fica no aparelho)
+
+tudo certo
+
+=== MATRIZ INTERMEDIÁRIA ae975a5: resultados selecionados, não equivalem ao SHA final ===
+✓ dispositivos: {"aceitoA":["T:A","T:base","T:remover"],"aceitoB":["T:B","T:base","T:remover"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ fechar-A: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ fechar-B: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ desmarcar: {"aceitoA":["T:B","T:base"],"aceitoB":["T:B","T:base"],"offline":true,"servidor":true,"paginas":[true]}
+✓ zerar: {"aceitoA":["T:depois-zerar"],"aceitoB":["T:depois-zerar"],"offline":true,"servidor":true,"paginas":[true]}
+✓ certificado: {"aceitoA":["T:B","T:base","T:remover"],"aceitoB":["T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ reconectar: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ zerar-duplo: {"aceitoA":["T:A","T:B"],"aceitoB":["T:A","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+GATE f01-abas: PASSOU
+✓ sair-apagar: {"dadosAntes":2,"dadosDepois":[],"aposReabrir":0,"residuosIDB":[],"servidorExiste":true,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem."}
+✓ excluir-conta: {"dadosAntes":2,"dadosDepois":[],"aposReabrir":0,"residuosIDB":[],"servidorExiste":false,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos."}
+✓ outra-sessao: {"aceitoOffline":true,"documentoApagado":true,"novoLoginHTTP":400,"outraSessaoAindaConectada":true,"documentoRecriado":false,"nomeRecriado":false,"feito":null}
+✓ diario-corrompido: {"preservadoExato":true,"original":true,"backup":true,"restantes":1,"avisoRecuperacao":1}
+✓ diario-futuro: {"preservadoExato":true,"original":true,"backup":true,"restantes":1,"avisoRecuperacao":1}
+✓ atividade-dispositivos: {"aceitos":{"A":3,"B":3,"simuladosA":0,"simuladosB":0,"registrosIguais":true,"idsDistintos":null},"convergiu":true,"esperadoAtividade":4,"atividadeServidor":4,"simuladosServidor":0,"atividadeReaberto":4,"feito":{"T:A-independente":true,"T:B-independente":true,"T:base":true}}
+✓ simulados-iguais: {"aceitos":{"A":3,"B":3,"simuladosA":1,"simuladosB":1,"registrosIguais":false,"idsDistintos":true},"convergiu":true,"esperadoAtividade":4,"atividadeServidor":4,"simuladosServidor":2,"atividadeReaberto":4,"feito":{"T:base":true}}
+GATE noturna-integridade: PASSOU
+✓ quota-real: {"quota":{"caracteres":5239113,"negou":true},"aceitaNaUI":true,"principal":false,"diario":false,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","alertas":[],"avisou":false,"recuperou":true}
+✓ seis-abas: {"abas":6,"alteracoes":150,"esperado":152,"atividade":152,"marcacoes":150,"convergiu":true,"reabriu":true,"chegou":true,"duracaoMs":6963}
+✓ lider-pausada: {"local":true,"principal":true,"diario":false,"enviouPausada":true,"enviouRetorno":true,"aviso":"Progresso salvo na sua conta.","lider":"A"}
+✗ indexeddb-indisponivel: FALHA DE PREPARAÇÃO/EXECUÇÃO: Base inicial não confirmada.
+GATE noturna-falhas: FALHOU
+✓ regras: {"resultados":[{"caso":"próprio get","esperado":200,"observado":200},{"caso":"outro UID get","esperado":403,"observado":403},{"caso":"sem autenticação","esperado":403,"observado":403},{"caso":"listagem","esperado":403,"observado":403},{"caso":"subcoleção","esperado":403,"observado":403},{"caso":"query só do UID próprio continua list","esperado":403,"observado":403},{"caso":"agregação count","esperado":403,"observado":403},{"caso":"batch misto próprio/outro UID","esperado":403,"observado":403}],"batchAtomicoPreservouProprio":true}
+✓ dias: {"campo":"dias","tipoInvalido":"null","erros":[],"acessoDados":1,"tipoPersistido":"object","corpoCaracteres":7976}
+✓ excl: {"campo":"excl","tipoInvalido":"objeto","erros":[],"acessoDados":1,"tipoPersistido":"object","corpoCaracteres":7976}
+✓ nome: {"campo":"nome","tipoInvalido":"objeto","erros":[],"acessoDados":1,"tipoPersistido":"string","corpoCaracteres":7976}
+GATE noturna-seguranca: PASSOU
+✓ commit-sem-confirmacao: {"confirmarAntesNovoEstudo":false,"commitHTTP":200,"baseAntes":2,"servidorAntes":3,"aceito":true,"voltou":true,"offlineAtividade":3,"chegou":true,"visivel":true,"atividadeFinal":4,"servidorFinal":4,"marcacoesFinais":{"T:ack-interrompido":true,"T:apos-reabrir":true,"T:base":true},"certificado":true}
+GATE noturna-confirmacao: PASSOU
+✓ marca: {"aceito":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"oafce3879-3ec0-4277-ada1-48aff5e21cac","principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"oafce3879-3ec0-4277-ada1-48aff5e21cac","principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0,"certs":["DURAVEL-CERT"]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ zerar: {"aceito":{"feito":{},"act":{},"z":1794527070841},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{},"act":{},"certsZ":1794527070841,"certs":[]},"geracao":"o8cdefef4-7972-4858-b402-3b51a6a28d6e","principal":{"feito":{},"act":{},"certsZ":1794527070841,"certs":[]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{},"act":{},"certsZ":1794527070841,"certs":[]},"geracao":"o8cdefef4-7972-4858-b402-3b51a6a28d6e","principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{},"act":{},"z":1794527070841,"certs":[]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ zerar-estudar: {"aceito":{"feito":{"T:novo":true},"act":{"2026-11-12":1},"z":1794527079237},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{"T:novo":true},"act":{"2026-11-12":1},"certsZ":1794527079237,"certs":[]},"geracao":"ob2f50e99-dcc1-4eca-97e5-f24cbae69946","principal":{"feito":{"T:novo":true},"act":{"2026-11-12":1},"certsZ":1794527079237,"certs":[]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{"T:novo":true},"act":{"2026-11-12":1},"certsZ":1794527079237,"certs":[]},"geracao":"ob2f50e99-dcc1-4eca-97e5-f24cbae69946","principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{"T:novo":true},"act":{"2026-11-12":1},"z":1794527079237,"certs":[]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ duas-quedas: {"aceito":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"of6bf1721-95e1-477d-9739-009fdd7741af","principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"of6bf1721-95e1-477d-9739-009fdd7741af","principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"z":0,"certs":["DURAVEL-CERT"]},"depoisLimpeza":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"of6bf1721-95e1-477d-9739-009fdd7741af","principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"segundaPre":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"of6bf1721-95e1-477d-9739-009fdd7741af","principal":{"feito":{"T:base":true},"act":{"2026-11-12":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperouSegunda":true,"segundoEstado":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-12":3}}}
+GATE duravel-candidato: PASSOU
+Ponto nativo: leitura anterior à operação confirmada, {"pronta":"done","feito":{"T:base":true},"id":"firebase:IHk6oI7ZliSplzqofqv50cciMLb1","operacoes":["o89112db8-f869-4a2f-9699-e5ace478fbc6"]}
+✓ F13-transacao: {"Baceita":true,"reservaAntes":true,"reservaDepois2500ms":true,"feito":{"T:A-race":true,"T:B-race":true,"T:base":true},"atividade":4,"chegou":true}
+GATE operacoes-interrupcao: PASSOU
+✓ segunda-escrita-8s: {"quantidade":9,"webLocks":false,"eventosStorage":false,"adotou":true,"esperado":11,"observado":11,"local":true,"servidor":true,"reabriu":true}
+GATE operacoes-suspensas: PASSOU
+✓ transacao-abortada: {"avisou":true,"reserva":true,"recuperou":true,"feito":{"T:abortada":true,"T:base":true}}
+✓ carga-bloqueada: {"bloqueou":true,"feito":{"T:abortada":true,"T:base":true,"T:depois-carga":true}}
+GATE operacoes-falhas: PASSOU
+✓ indexeddb-restabelecido: {"aviso":"Este navegador usa uma cópia de reserva sem proteção contra queda. Exporte em Plano › Dados antes de fechar.","confirmou":true,"reabriu":true}
+✓ checkpoint-corrompido-preservado: {"preservou":true,"aceitou":false,"aviso":"O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados."}
+✓ exclusao-confirmada-elimina-quarentena: {"apagou":true,"cacheLimpo":true}
+✓ importacao-incompativel-preservada: {"importou":false,"preservou":true}
+GATE operacoes-recuperacao: PASSOU
+
+=== FIREBASE 0a04662 — 49/50, falha de observação do cache síncrono, servidor preservado ===
+  ✓ conta nova: o documento só tem v, dados, t e atualizado (sem e-mail), e o progresso sem conta não foi levado sozinho
+  ✓ o progresso sem conta continua intacto e o aluno pode levá-lo para a conta
+  ✓ levar para a conta (pedido pelo aluno): o progresso sem conta vai para a nuvem da conta e continua guardado sem conta
+  ✓ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte
+  ✓ conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A
+  ✓ troca de conta com gravação pendente: o estudo de B não vai para A e continua na cópia de B neste aparelho
+  ✓ sair apagando: bloqueado enquanto há estudo fora da nuvem; depois, apaga só a cópia deste aparelho e a nuvem continua com tudo
+  ✓ sem erro de JavaScript nos fluxos de conta
+  ✓ com transação: 12 marcações feitas ao mesmo tempo em dois aparelhos, nenhuma perdida na nuvem
+  ✓ documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho
+  ✓ documento corrompido na nuvem: o app não grava por cima, não trava e guarda o estudo no aparelho
+  ✓ regras: uma conta não lê, não grava e não apaga o documento de outra
+  ✓ regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito
+  ✓ regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 3)
+  ✓ regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista 403, consulta 403]
+  ✓ regras: sem login, nada é lido nem gravado [leitura 403, gravação 403]
+  ✓ regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno
+  ✓ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito
+  ✓ regras: o próprio aluno pode apagar o documento dele
+  ✓ gravação recusada pelas regras: a sincronização para, o aviso diz por quê, e o estudo continua neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem recusou o formato do progresso). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ app aberto sem internet: o login não carrega e o aviso diz que tenta de novo; com a conexão de volta, o login aparece sem recarregar
+  ✓ build de homologação: o cartão da conta avisa que é o projeto de teste e pede só contas e dados fictícios
+  ✓ excluir a conta: senha errada ou confirmação diferente de EXCLUIR não excluem nada
+  ✓ excluir a conta: apaga o documento, o login e a cópia local da conta; o progresso sem conta fica; a mensagem diz o que foi apagado
+  ✓ conta encerrada em outra aba: esta aba passa ao progresso sem conta; o que se estuda depois não vai para a conta, e a cópia da conta fica intacta
+  ✓ página fechada antes de gravar na nuvem: o estudo ficou no aparelho e vai para a nuvem quando o app abre de novo
+  ✓ sessão invalidada no servidor: o app volta ao progresso sem conta, e a cópia da conta neste aparelho e a nuvem continuam com tudo
+  ✓ conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha, e nenhuma das duas contas é excluída
+  ✓ exclusão parcial: a mensagem diz que o progresso na nuvem foi apagado e a conta não; o login e a cópia deste aparelho continuam
+  ✓ exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos
+  ✓ auditoria regras: recusa v texto na criação [403]
+  ✓ auditoria regras: recusa v zero na criação [403]
+  ✓ auditoria regras: recusa v fracionária na criação [403]
+  ✓ auditoria regras: recusa dados mapa na criação [403]
+  ✓ auditoria regras: recusa t texto na criação [403]
+  ✓ auditoria regras: recusa campo extra na criação [403]
+  ✓ auditoria regras: recusa criação sem v [403]
+  ✓ auditoria regras: recusa criação sem dados [403]
+  ✓ auditoria regras: recusa criação sem t [403]
+  ✓ auditoria regras: atualizado é obrigatório e deve corresponder à hora do servidor
+  ✓ auditoria regras: criação válida aceita; campo extra na atualização e subcoleção do próprio UID recusados
+  ✓ auditoria sessão: progresso inicial confirmado no servidor
+  ✓ auditoria sessão: fechar e reabrir com emuladores indisponíveis preserva o estudo pendente
+  ✓ auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login
+  ✓ auditoria certificados: registro e código preservados ao enviar para o Firestore
+  ✓ auditoria certificados: segundo dispositivo recebe o mesmo código, data e registro
+  ✓ auditoria certificados: gravação do segundo dispositivo mantém certificado e progresso anterior
+  ✗ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=false, nuvem=true]
+  ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail
+  ✓ excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem
+1 falha(s)
+
+=== PLATAFORMA INTERMEDIÁRIA round7 — 4 falhas, não resultado final ===
+  ✗ colar outro progresso troca as notas, mas mantém os certificados conquistados
+  ✗ o simulado continua com as 23 questões que ainda existem e a resposta da 1ª questão é mantida
+  ✗ a entrega registra o simulado com 23 questões e guarda a resposta dada
+  ✗ app indo para o fundo: o estudo vai para a nuvem sem esperar o intervalo de 1,5 s (-10 ms)
+4 falha(s)
+
+=== GRUPOS AFETADOS APÓS CORREÇÕES (robustez, contas, abas, recuperação, durabilidade) ===
+  ✓ 69 aulas, sem id repetido
+  ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+  ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+  ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+  ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+  ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ modalidade normal tem aulas de Inglês
+  ✓ modalidade bct tem aulas de Inglês
+  ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+  ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+  ✓ curso/app.js igual à montagem dos 17 arquivos de curso/app/
+  ✓ o modelo reproduz os 15 comportamentos confirmados no serviço real
+  ✓ reproduz o vazamento: com as regras de hoje (sem regra para progresso2), um aluno lê e grava o progresso2 de outra conta
+  ✓ as regras propostas e as de reversão declaram progresso e progresso2 e isolam as contas (leitura e gravação)
+  ✓ propostas: o caminho antigo fica só para leitura do aluno; reversão: volta a ser gravável, e o caminho novo continua gravável só pelo próprio aluno
+  ✓ o dono do curso continua lendo e gravando os dois caminhos (moderação e limpeza)
+  ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+  ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+  ✓ 48 cartões de Física: a conta recalculada confere com o verso
+  ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+  ✓ nenhum script do progresso colado executa (nome, datas do plano, tentativas, caderno de erros, código do certificado)
+  ✓ o nome com sinais de HTML aparece como texto no certificado
+  ✓ tipos trocados: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ valores nulos: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ simulado em andamento corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ último resultado corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ o simulado continua com as 23 questões que ainda existem e a resposta da 1ª questão é mantida
+  ✓ a entrega registra o simulado com 23 questões e guarda a resposta dada
+  ✓ JSON corrompido: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+  ✓ JSON corrompido: "Descartar" apaga só a cópia
+  ✓ formato de uma versão futura: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+  ✓ formato de uma versão futura: "Descartar" apaga só a cópia
+  ✓ progresso válido: nenhuma cópia e nenhum aviso
+  ✓ o aluno é avisado de que o progresso não está sendo salvo, em Hoje e em Plano › Dados
+  ✓ armazenamento normal: sem aviso, "Progresso salvo neste aparelho"
+  ✓ ao entrar numa conta, o progresso feito sem conta não aparece nela nem vai para a nuvem; fica intacto e o aluno pode levá-lo
+  ✓ "Levar para a conta": a conta recebe o estudo feito sem conta (o nome da conta fica), a nuvem também, e o progresso sem conta continua guardado
+  ✓ conta B: só o progresso dela, sem nada da conta A nem do progresso sem conta
+  ✓ conta C nova: começa vazia, e nada das outras contas é gravado na nuvem dela
+  ✓ de volta à conta A: o progresso dela está como antes, e as nuvens de A e B não se misturaram
+  ✓ conta lembrada sem o serviço que a confirma: o aparelho não mostra o progresso dela, só o sem conta
+  ✓ progresso ilegível na conta B: a cópia de recuperação fica na conta B e não aparece para a conta A
+  ✓ "Baixar meus dados" entrega um arquivo com o progresso deste aparelho
+  ✓ "O que está guardado" mostra o que este aparelho guarda e só a quantidade de outras contas, sem o conteúdo delas
+  ✓ cancelar a exclusão não apaga nada
+  ✓ apagar os dados sem conta, com confirmação, apaga só o progresso sem conta; o de outra conta fica
+  ✓ repetir a confirmação não apaga mais nada nem dá erro
+  ✓ "Apagar também as outras contas": apaga o sem conta e a conta já confirmada na nuvem; a conta com estudo não confirmado fica, com aviso antes e depois [ficou: missao-eear-v1@claude:outra]
+  ✓ com todas as contas confirmadas na nuvem, "Apagar também as outras contas" apaga tudo deste aparelho e diz isso
+  ✓ com conta: apagar deste aparelho fica bloqueado enquanto a nuvem não tem tudo; depois, apaga só a cópia local e a nuvem continua com o progresso
+  ✓ duas abas da mesma conta: a marcação da aba que fechou continua no aparelho e as contagens somam sem perder nem dobrar [feito: T:a1,T:apagar,T:b1,T:b2,T:base | atividade: 5 (esperado 5)]
+  ✓ desmarcar numa aba e estudar na outra: a desmarcação não volta e o estudo fica
+  ✓ desmarcar numa aba e estudar na outra (aba suspensa, sem o aviso): a desmarcação não volta e o estudo fica
+  ✓ "Zerar" numa aba: o que existia antes não volta pela outra aba (nem os certificados), e o que ela estudou depois fica [feito: T:b-depois]
+  ✓ certificados: gravações de duas abas mantêm o mesmo registro, data e código
+  ✓ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:a5,T:apagar,T:b5,T:base]
+  ✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]
+  ✓ cópia apagada em outra aba: a aba aberta não regrava o que foi apagado; só o estudo novo fica [feito: T:depois-de-apagar]
+  ✓ transação interrompida: três abas, B aceita e preservada por mais de 2s; após crash, ambas as marcações e atividade 4 [{"T:A-race":true,"T:B-race":true,"T:base":true}]
+  ✓ exclusão concorrente não confirma nem apaga operação aceita fora do checkpoint; após crash, a pendência é recuperada
+  ✓ queda do navegador 1200 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:antes-da-queda,T:base]
+  ✓ queda do navegador 300 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:antes-da-queda,T:base]
+  ✓ isolamento: o diário durável de outra conta não é restaurado na conta aberta [cópia: nenhuma; diário da outra conta no localStorage: não]
+tudo certo

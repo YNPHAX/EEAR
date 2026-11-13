@@ -2,6 +2,8 @@
 
 Branch exclusiva: `codex/eear-correcao-estrutural`, criada a partir de `2f6cad6ebba53d0f86319dcada671fe9396f8111`. As branches Claude, auditoria e main não são alteradas.
 
+Encerramento de 13/11/2026: relatório, resultados, commits e limitações em [continuidade-codex.md](continuidade-codex.md). O runtime final é 10a3239; não há aprovação para homologação.
+
 ## Estado recuperado
 
 A API do GitHub confirmou `claude/eear-study-hydwqt` ainda em 2f6cad6. A listagem completa de branches não contém uma reestruturação posterior. Foram inspecionados os worktrees disponíveis, refs locais e commits inacessíveis por refs (`git fsck`, somente leitura): os commits locais extras pertencem às auditorias anteriores, não ao trabalho inacabado descrito pelo usuário. Não há arquivos não commitados do ambiente Claude disponíveis neste executor.
