@@ -1,0 +1,960 @@
+{
+  "candidato": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+  "runtime": "10a3239990eecbb8e66cdfe982687b7962c42af7",
+  "app_sha256": "676a0d0860f3d9ee20797d2dcce09bdfc9676cc5c51f1b76cd316c72e52c10a4",
+  "ci": [
+    {
+      "sha": "10a3239990eecbb8e66cdfe982687b7962c42af7",
+      "runs": [
+        {
+          "id": 43450066806,
+          "nome": "Site",
+          "status": "completed",
+          "conclusao": "success",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43450066806",
+          "head_sha": "10a3239990eecbb8e66cdfe982687b7962c42af7",
+          "inicio": "2026-11-13T15:11:25Z"
+        },
+        {
+          "id": 43450067103,
+          "nome": "App Android",
+          "status": "completed",
+          "conclusao": "success",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43450067103",
+          "head_sha": "10a3239990eecbb8e66cdfe982687b7962c42af7",
+          "inicio": "2026-11-13T15:11:25Z"
+        },
+        {
+          "id": 43450066800,
+          "nome": "Testes",
+          "status": "completed",
+          "conclusao": "cancelled",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43450066800",
+          "head_sha": "10a3239990eecbb8e66cdfe982687b7962c42af7",
+          "inicio": "2026-11-13T15:11:25Z"
+        }
+      ]
+    },
+    {
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "runs": [
+        {
+          "id": 43450848164,
+          "nome": "Site",
+          "status": "completed",
+          "conclusao": "success",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43450848164",
+          "head_sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+          "inicio": "2026-11-13T15:15:55Z"
+        },
+        {
+          "id": 43450848128,
+          "nome": "App Android",
+          "status": "completed",
+          "conclusao": "success",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43450848128",
+          "head_sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+          "inicio": "2026-11-13T15:15:55Z"
+        },
+        {
+          "id": 43450848211,
+          "nome": "Testes",
+          "status": "completed",
+          "conclusao": "failure",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43450848211",
+          "head_sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+          "inicio": "2026-11-13T15:15:55Z"
+        }
+      ]
+    },
+    {
+      "sha": "d84f9da5ea0891d2037dfbc7a8b13e25cd460193",
+      "runs": [
+        {
+          "id": 43456192677,
+          "nome": "Site",
+          "status": "completed",
+          "conclusao": "success",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43456192677",
+          "head_sha": "d84f9da5ea0891d2037dfbc7a8b13e25cd460193",
+          "inicio": "2026-11-13T15:47:52Z"
+        },
+        {
+          "id": 43456192559,
+          "nome": "App Android",
+          "status": "completed",
+          "conclusao": "success",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43456192559",
+          "head_sha": "d84f9da5ea0891d2037dfbc7a8b13e25cd460193",
+          "inicio": "2026-11-13T15:47:52Z"
+        },
+        {
+          "id": 43456192675,
+          "nome": "Testes",
+          "status": "completed",
+          "conclusao": "success",
+          "url": "https://github.com/YNPHAX/EEAR/actions/runs/43456192675",
+          "head_sha": "d84f9da5ea0891d2037dfbc7a8b13e25cd460193",
+          "inicio": "2026-11-13T15:47:52Z"
+        }
+      ]
+    }
+  ],
+  "matriz_original": [
+    {
+      "teste": "firebase-emulador",
+      "script": "firebase-emulador",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 0,
+      "segundos": 163.7,
+      "env_adicional": {}
+    },
+    {
+      "teste": "persistencia-regressoes",
+      "script": "persistencia-regressoes",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 0,
+      "segundos": 657.5,
+      "env_adicional": {}
+    },
+    {
+      "teste": "f01-riscos",
+      "script": "f01-riscos",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 1,
+      "segundos": 35.9,
+      "env_adicional": {
+        "EEAR_F01_RISCOS": "zerar-nuvem,zerar-unica,suspensa,exclusao-surda,contagens,escrita-interrompida"
+      }
+    },
+    {
+      "teste": "diarios-auditoria",
+      "script": "diarios-auditoria",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 0,
+      "segundos": 60.3,
+      "env_adicional": {}
+    },
+    {
+      "teste": "concorrencia-fallback",
+      "script": "concorrencia-fallback",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 0,
+      "segundos": 33.0,
+      "env_adicional": {
+        "EEAR_F13_PONTO": "ultima-conferencia"
+      }
+    },
+    {
+      "teste": "orfaos-auditoria",
+      "script": "orfaos-auditoria",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 1,
+      "segundos": 73.0,
+      "env_adicional": {}
+    },
+    {
+      "teste": "orfaos-30min-9",
+      "script": "orfaos-auditoria",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 0,
+      "segundos": 39.2,
+      "env_adicional": {
+        "EEAR_ORFAOS_CENARIOS": "segunda-escrita-30min",
+        "EEAR_ORFAOS_SEQUENCIAS": "9"
+      }
+    },
+    {
+      "teste": "duravel-sem-travas",
+      "script": "duravel-candidato",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 0,
+      "segundos": 69.8,
+      "env_adicional": {
+        "EEAR_DURAVEL_SEM_TRAVAS": "1"
+      }
+    },
+    {
+      "teste": "migracao-8bd32d2",
+      "script": "diario-legado-auditoria",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 0,
+      "segundos": 25.7,
+      "env_adicional": {
+        "EEAR_REPO_LEGADO": "/tmp/eear-8bd32d2"
+      }
+    },
+    {
+      "teste": "migracao-2f6cad6",
+      "script": "diario-legado-auditoria",
+      "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+      "exit": 0,
+      "segundos": 37.4,
+      "env_adicional": {
+        "EEAR_REPO_LEGADO": "/tmp/eear-2f6cad6"
+      }
+    }
+  ],
+  "matriz_complementar": [
+    {
+      "nome": "f01-riscos-preparacao",
+      "exit": 0,
+      "segundos": 39.4,
+      "runtime": "10a3239",
+      "alvo": "10f631e",
+      "preparacao": "branch dev; asserções fortalecidas"
+    },
+    {
+      "nome": "orfaos-preparacao",
+      "exit": 0,
+      "segundos": 80.0,
+      "runtime": "10a3239",
+      "alvo": "10f631e",
+      "preparacao": "branch dev; asserções fortalecidas"
+    },
+    {
+      "nome": "limite-metadados",
+      "exit": 0,
+      "segundos": 24.0,
+      "runtime": "10a3239",
+      "alvo": "10f631e",
+      "preparacao": "branch dev; asserções fortalecidas"
+    }
+  ],
+  "carga_navegador": {
+    "alvo": "/tmp/eear-validacao-10f631e",
+    "rodadas": 500,
+    "abas": 4,
+    "medidas": [
+      {
+        "fase": "base",
+        "atividade": 2,
+        "marcas": 1,
+        "bytesEstado": 2113,
+        "caracteresEstado": 2111,
+        "bytesMeta": 1607,
+        "bytesCheckpoint": 3867,
+        "recibos": 1,
+        "segundos": 3.915
+      },
+      {
+        "fase": "rodada-50",
+        "atividade": 202,
+        "marcas": 201,
+        "bytesEstado": 32835,
+        "caracteresEstado": 32833,
+        "bytesMeta": 28367,
+        "bytesCheckpoint": 70349,
+        "recibos": 201,
+        "segundos": 12.394
+      },
+      {
+        "fase": "rodada-100",
+        "atividade": 402,
+        "marcas": 401,
+        "bytesEstado": 63635,
+        "caracteresEstado": 63633,
+        "bytesMeta": 55167,
+        "bytesCheckpoint": 136949,
+        "recibos": 401,
+        "segundos": 21.573
+      },
+      {
+        "fase": "rodada-150",
+        "atividade": 602,
+        "marcas": 601,
+        "bytesEstado": 94835,
+        "caracteresEstado": 94833,
+        "bytesMeta": 82167,
+        "bytesCheckpoint": 204149,
+        "recibos": 601,
+        "segundos": 30.799
+      },
+      {
+        "fase": "rodada-200",
+        "atividade": 802,
+        "marcas": 801,
+        "bytesEstado": 126035,
+        "caracteresEstado": 126033,
+        "bytesMeta": 109167,
+        "bytesCheckpoint": 271349,
+        "recibos": 801,
+        "segundos": 43.617
+      },
+      {
+        "fase": "rodada-250",
+        "atividade": 1002,
+        "marcas": 1001,
+        "bytesEstado": 157236,
+        "caracteresEstado": 157234,
+        "bytesMeta": 136167,
+        "bytesCheckpoint": 338550,
+        "recibos": 1001,
+        "segundos": 117.774
+      },
+      {
+        "fase": "rodada-300",
+        "atividade": 1202,
+        "marcas": 1201,
+        "bytesEstado": 188436,
+        "caracteresEstado": 188434,
+        "bytesMeta": 163167,
+        "bytesCheckpoint": 405750,
+        "recibos": 1201,
+        "segundos": 144.724
+      },
+      {
+        "fase": "rodada-350",
+        "atividade": 1402,
+        "marcas": 1401,
+        "bytesEstado": 219636,
+        "caracteresEstado": 219634,
+        "bytesMeta": 190167,
+        "bytesCheckpoint": 472950,
+        "recibos": 1401,
+        "segundos": 180.11
+      },
+      {
+        "fase": "rodada-400",
+        "atividade": 1602,
+        "marcas": 1601,
+        "bytesEstado": 250836,
+        "caracteresEstado": 250834,
+        "bytesMeta": 217167,
+        "bytesCheckpoint": 540150,
+        "recibos": 1601,
+        "segundos": 217.596
+      },
+      {
+        "fase": "rodada-450",
+        "atividade": 1802,
+        "marcas": 1801,
+        "bytesEstado": 282036,
+        "caracteresEstado": 282034,
+        "bytesMeta": 244167,
+        "bytesCheckpoint": 607350,
+        "recibos": 1801,
+        "segundos": 259.626
+      },
+      {
+        "fase": "rodada-500",
+        "atividade": 2002,
+        "marcas": 2001,
+        "bytesEstado": 313236,
+        "caracteresEstado": 313234,
+        "bytesMeta": 271167,
+        "bytesCheckpoint": 674550,
+        "recibos": 2001,
+        "segundos": 319.466
+      },
+      {
+        "fase": "reset-1",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 351907,
+        "caracteresEstado": 351905,
+        "bytesMeta": 351482,
+        "bytesCheckpoint": 793626,
+        "recibos": 2003,
+        "segundos": 323.022
+      },
+      {
+        "fase": "reset-2",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352083,
+        "caracteresEstado": 352081,
+        "bytesMeta": 351658,
+        "bytesCheckpoint": 794068,
+        "recibos": 2005,
+        "segundos": 326.016
+      },
+      {
+        "fase": "reset-3",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352259,
+        "caracteresEstado": 352257,
+        "bytesMeta": 351834,
+        "bytesCheckpoint": 794510,
+        "recibos": 2007,
+        "segundos": 328.455
+      },
+      {
+        "fase": "reset-4",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352435,
+        "caracteresEstado": 352433,
+        "bytesMeta": 352010,
+        "bytesCheckpoint": 794952,
+        "recibos": 2009,
+        "segundos": 331.213
+      },
+      {
+        "fase": "reset-5",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352611,
+        "caracteresEstado": 352609,
+        "bytesMeta": 352186,
+        "bytesCheckpoint": 795394,
+        "recibos": 2011,
+        "segundos": 333.912
+      },
+      {
+        "fase": "reset-6",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352787,
+        "caracteresEstado": 352785,
+        "bytesMeta": 352362,
+        "bytesCheckpoint": 795836,
+        "recibos": 2013,
+        "segundos": 335.372
+      },
+      {
+        "fase": "reset-7",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352963,
+        "caracteresEstado": 352961,
+        "bytesMeta": 352538,
+        "bytesCheckpoint": 796278,
+        "recibos": 2015,
+        "segundos": 338.032
+      },
+      {
+        "fase": "reset-8",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353139,
+        "caracteresEstado": 353137,
+        "bytesMeta": 352714,
+        "bytesCheckpoint": 796720,
+        "recibos": 2017,
+        "segundos": 340.266
+      },
+      {
+        "fase": "reset-9",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353315,
+        "caracteresEstado": 353313,
+        "bytesMeta": 352890,
+        "bytesCheckpoint": 797162,
+        "recibos": 2019,
+        "segundos": 342.719
+      },
+      {
+        "fase": "reset-10",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353491,
+        "caracteresEstado": 353489,
+        "bytesMeta": 353066,
+        "bytesCheckpoint": 797604,
+        "recibos": 2021,
+        "segundos": 344.82
+      }
+    ],
+    "falhas": 0
+  },
+  "carga_nucleo": {
+    "alvo": "/tmp/eear-validacao-10f631e",
+    "sha256": "724c9f19dc92e4639489cde195153a49128f89f107bc56dbd3ab56619cae575e",
+    "normalizador": "identidade; estado mínimo válido",
+    "medidas": [
+      {
+        "acoes": 1000,
+        "bytesEstado": 150368,
+        "bytesMeta": 132325,
+        "segundos": 4.127
+      },
+      {
+        "acoes": 2000,
+        "bytesEstado": 302368,
+        "bytesMeta": 265325,
+        "segundos": 14.816
+      },
+      {
+        "acoes": 3000,
+        "bytesEstado": 454368,
+        "bytesMeta": 398325,
+        "segundos": 35.65
+      },
+      {
+        "acoes": 4000,
+        "bytesEstado": 606368,
+        "bytesMeta": 531325,
+        "segundos": 64.835
+      },
+      {
+        "acoes": 5000,
+        "bytesEstado": 758368,
+        "bytesMeta": 664325,
+        "segundos": 94.769
+      },
+      {
+        "acoes": 6000,
+        "bytesEstado": 910368,
+        "bytesMeta": 797325,
+        "segundos": 126.16
+      },
+      {
+        "acoes": 7000,
+        "bytesEstado": 1062368,
+        "bytesMeta": 930325,
+        "segundos": 172.785
+      },
+      {
+        "acoes": 8000,
+        "bytesEstado": 1214368,
+        "bytesMeta": 1063325,
+        "segundos": 221.821
+      },
+      {
+        "acoes": 9000,
+        "bytesEstado": 1366368,
+        "bytesMeta": 1196325,
+        "segundos": 289.443
+      },
+      {
+        "acoes": 10000,
+        "bytesEstado": 1518371,
+        "bytesMeta": 1329326,
+        "segundos": 360.582
+      },
+      {
+        "acoes": 11000,
+        "bytesEstado": 1672371,
+        "bytesMeta": 1463326,
+        "segundos": 418.372
+      },
+      {
+        "acoes": 12000,
+        "bytesEstado": 1826371,
+        "bytesMeta": 1597326,
+        "segundos": 499.621
+      }
+    ],
+    "primeiraAcima": {
+      "acoes": 6000,
+      "bytesEstado": 910368,
+      "bytesMeta": 797325,
+      "segundos": 126.16
+    }
+  },
+  "fontes": {
+    "sha": "10f631eb4c091399e04c89098ee2414ca58ec04c",
+    "runtime_sha": "10a3239990eecbb8e66cdfe982687b7962c42af7",
+    "limpo": "",
+    "arquivos": {
+      "curso/app/01-base.js": "a3a27a1b4c9e51ca4ba050a16b76ec5aaedcaedefd926815329d0192b3c33084",
+      "curso/app/02-progresso-nuvem.js": "46a75f242ad0be7368669361819bb357b5cd3776b4adeff92f588894ddbc1acd",
+      "curso/app/03-plano.js": "c5785b516bcffd24c6edf3fb7adfd2f2bbfbed097f8355c21a303c00506a2625",
+      "curso/app/04-telas.js": "f68008541e897979767bfc57968e228a49ab56fec3699c8b0f3b8e332291cfe1",
+      "curso/app/05-aula-apostila.js": "da81e3bc618a7fe663921a1814e2ca1e00bce648950c5b6d842ed6965b153134",
+      "curso/app/06-simulados-render.js": "f8f60ce1b69dc3204380af5a8530d8fd68feb0742091d071c528fa596b58bf0c",
+      "curso/app/07-eventos.js": "06be6fb685cc03d38dad2be11609e9cd5596419a72e92e0d81632ce546e377ad",
+      "curso/app/08-uniao-nuvem.js": "6ce6245bf421596cb6b765443d370d3e8dd0ff26b601063d1b71f32172dd47d5",
+      "curso/app/09-contas.js": "f1b18897de8ddbb1d909e9c9c342a5524a5aa07fc1a8560e4f7576b24ca9f65a",
+      "curso/app/10-nuvem-claude.js": "1289ec46f749234366ed1a9930f4e6c248e7b82453e6be67d4a302db8f6af60c",
+      "curso/app/11-exclusao-nuvem.js": "192db6359218982e5314c202da486563f660040c6205dc7298c83c5445b34afb",
+      "curso/app/12-caminho-novo.js": "11d7853491bb7ba6887812c0925d39de19ca46e8d82bc9ffea0222668b97a634",
+      "curso/app/13-falhas-nuvem.js": "e6cc2309189009acc3468950fa640f931084b4af2cb4382769a5c5d1d059b05a",
+      "curso/app/14-abas.js": "724c9f19dc92e4639489cde195153a49128f89f107bc56dbd3ab56619cae575e",
+      "curso/app/15-diarios-pendentes.js": "0a2c2084215003f0263897b7db45b87932d81729c52f2cffea3a29a0a0309120",
+      "curso/app/16-diario-duravel.js": "29aacffd4e42d5fdaf11b5628385bc34e795d3b2ac1a799547df90ed08667243",
+      "curso/app/17-estado-persistencia.js": "0ce2cd510298de78f05b72e35d300ed7c1f8e9e5a69c49193bd36bea20b70845"
+    },
+    "app.js": "676a0d0860f3d9ee20797d2dcce09bdfc9676cc5c51f1b76cd316c72e52c10a4",
+    "github_blob_verificado": true,
+    "divergencias_github": [],
+    "hashes_depois": {
+      "curso/app/01-base.js": "a3a27a1b4c9e51ca4ba050a16b76ec5aaedcaedefd926815329d0192b3c33084",
+      "curso/app/02-progresso-nuvem.js": "46a75f242ad0be7368669361819bb357b5cd3776b4adeff92f588894ddbc1acd",
+      "curso/app/03-plano.js": "c5785b516bcffd24c6edf3fb7adfd2f2bbfbed097f8355c21a303c00506a2625",
+      "curso/app/04-telas.js": "f68008541e897979767bfc57968e228a49ab56fec3699c8b0f3b8e332291cfe1",
+      "curso/app/05-aula-apostila.js": "da81e3bc618a7fe663921a1814e2ca1e00bce648950c5b6d842ed6965b153134",
+      "curso/app/06-simulados-render.js": "f8f60ce1b69dc3204380af5a8530d8fd68feb0742091d071c528fa596b58bf0c",
+      "curso/app/07-eventos.js": "06be6fb685cc03d38dad2be11609e9cd5596419a72e92e0d81632ce546e377ad",
+      "curso/app/08-uniao-nuvem.js": "6ce6245bf421596cb6b765443d370d3e8dd0ff26b601063d1b71f32172dd47d5",
+      "curso/app/09-contas.js": "f1b18897de8ddbb1d909e9c9c342a5524a5aa07fc1a8560e4f7576b24ca9f65a",
+      "curso/app/10-nuvem-claude.js": "1289ec46f749234366ed1a9930f4e6c248e7b82453e6be67d4a302db8f6af60c",
+      "curso/app/11-exclusao-nuvem.js": "192db6359218982e5314c202da486563f660040c6205dc7298c83c5445b34afb",
+      "curso/app/12-caminho-novo.js": "11d7853491bb7ba6887812c0925d39de19ca46e8d82bc9ffea0222668b97a634",
+      "curso/app/13-falhas-nuvem.js": "e6cc2309189009acc3468950fa640f931084b4af2cb4382769a5c5d1d059b05a",
+      "curso/app/14-abas.js": "724c9f19dc92e4639489cde195153a49128f89f107bc56dbd3ab56619cae575e",
+      "curso/app/15-diarios-pendentes.js": "0a2c2084215003f0263897b7db45b87932d81729c52f2cffea3a29a0a0309120",
+      "curso/app/16-diario-duravel.js": "29aacffd4e42d5fdaf11b5628385bc34e795d3b2ac1a799547df90ed08667243",
+      "curso/app/17-estado-persistencia.js": "0ce2cd510298de78f05b72e35d300ed7c1f8e9e5a69c49193bd36bea20b70845"
+    },
+    "inalterado": true
+  },
+  "contagem_logs": [
+    {
+      "log": "plataforma-10f631e",
+      "positivos": 240,
+      "negativos": 1,
+      "sha256_log_completo": "d5888fd399245796dda3c35b3748e7b0086adfca8ed90e48956afbb188100181"
+    },
+    {
+      "log": "ci-d84-plataforma",
+      "positivos": 244,
+      "negativos": 0,
+      "sha256_log_completo": "f56b367d82747ed7fad7982a051fc1417deec88a3392ad46104478bed511ea2c"
+    },
+    {
+      "log": "firebase-emulador",
+      "positivos": 50,
+      "negativos": 0,
+      "sha256_log_completo": "45af4840ae7094d0f9c0f2c9e37013f37e52b469fab559dc8829f2cac68d6301"
+    },
+    {
+      "log": "persistencia-regressoes",
+      "positivos": 39,
+      "negativos": 0,
+      "sha256_log_completo": "8ecca506b1114514d842d397064ae739963db4510ec32644e31255b7595be0e4"
+    },
+    {
+      "log": "ciclo",
+      "positivos": 3,
+      "negativos": 0,
+      "sha256_log_completo": "998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2"
+    },
+    {
+      "log": "f01-riscos",
+      "positivos": 5,
+      "negativos": 1,
+      "sha256_log_completo": "535643ade4098b26c0b426aca1be07264301a4ac8d89fb869d18ebd75eeeb96d"
+    },
+    {
+      "log": "f01-riscos-preparacao",
+      "positivos": 6,
+      "negativos": 0,
+      "sha256_log_completo": "05101e64e99da91986e8f0ee936b5fe6ed992580f5219ec026ae1fbf8ba1240e"
+    },
+    {
+      "log": "diarios-auditoria",
+      "positivos": 8,
+      "negativos": 0,
+      "sha256_log_completo": "b8509d3daf13d0b5a0619fb18509a972fb1338b7ce35eae53f6282c6338027db"
+    },
+    {
+      "log": "concorrencia-fallback",
+      "positivos": 1,
+      "negativos": 0,
+      "sha256_log_completo": "59afa216cf269ee4a2f74e13c75caff4e50e614fa97a4eb5a5d8eb8ec94a9fad"
+    },
+    {
+      "log": "orfaos-auditoria",
+      "positivos": 2,
+      "negativos": 1,
+      "sha256_log_completo": "4605d60aa637d9788d526c1e45cebc3aa4e2358c230a58cae788c54653c9d74f"
+    },
+    {
+      "log": "orfaos-preparacao",
+      "positivos": 4,
+      "negativos": 0,
+      "sha256_log_completo": "5ca94e8fb908c80d96fbaef89dd38a6e40e784b7d52bc55d13e5f04b1e0ee51b"
+    },
+    {
+      "log": "orfaos-30min-9",
+      "positivos": 1,
+      "negativos": 0,
+      "sha256_log_completo": "dcc47df30a8bc11eedcd756528bbbaee73aa679e6be3284255f0557cc9f53666"
+    },
+    {
+      "log": "duravel-sem-travas",
+      "positivos": 4,
+      "negativos": 0,
+      "sha256_log_completo": "05258e8e5f0405492dd7adf953050dacd122e77fbd221717ae5a962750659d2e"
+    },
+    {
+      "log": "migracao-8bd32d2",
+      "positivos": 1,
+      "negativos": 0,
+      "sha256_log_completo": "fbe83dc777a282eb15bc010bcc52dbaf526d648cd703391643461d1d0626ffa6"
+    },
+    {
+      "log": "migracao-2f6cad6",
+      "positivos": 1,
+      "negativos": 0,
+      "sha256_log_completo": "1f4f333aaba19dec9b3b5b24a616f80e0582d068b5c2760ce88ac680a3462b2e"
+    },
+    {
+      "log": "pagehide-diagnostico",
+      "positivos": 27,
+      "negativos": 1,
+      "sha256_log_completo": "31538ddae73ae4d1039bfdf27fefdc2cf65ae5106bdff1acbe37f0769d541eb0"
+    },
+    {
+      "log": "pagehide-regressao",
+      "positivos": 27,
+      "negativos": 0,
+      "sha256_log_completo": "24ea86e1ad7175df0178892a606d8f29e21e4ef475f29cce271e7c7843fd1d41"
+    },
+    {
+      "log": "rollback-recuperacao",
+      "positivos": 8,
+      "negativos": 1,
+      "sha256_log_completo": "bf3e375c247ceecc4770343f3906195ae5560a50a52539d04a62751032818abe"
+    },
+    {
+      "log": "carga",
+      "positivos": 2,
+      "negativos": 0,
+      "sha256_log_completo": "27be3a1a15dce0ceaf8ad2e07b0b9ace500a69eb4fcc8d62bff3e0a15a8a7137"
+    },
+    {
+      "log": "nucleo",
+      "positivos": 0,
+      "negativos": 0,
+      "sha256_log_completo": "fd9313ee248c7a54fa8d5cc633d470c762e859a21a21c18adf7b0287a46ad751"
+    },
+    {
+      "log": "limite-metadados",
+      "positivos": 1,
+      "negativos": 0,
+      "sha256_log_completo": "34fe130f26aee9062a74dd3f8fd2f41f2fc8153171cbc347faac5a173cb7555e"
+    },
+    {
+      "log": "hosting",
+      "positivos": 11,
+      "negativos": 0,
+      "sha256_log_completo": "7f46dc3ddb02fdd68eed4f2c1491bce8ff8f5b855e6ef8c9840ad46a073a4f82"
+    },
+    {
+      "log": "hosting-gates",
+      "positivos": 12,
+      "negativos": 0,
+      "sha256_log_completo": "e84514813e87c43910dfddd1c5439cd466f410027d587f94d845496e7751ffaa"
+    },
+    {
+      "log": "hosting-contexto",
+      "positivos": 3,
+      "negativos": 0,
+      "sha256_log_completo": "185dacb48259c093dca7986c92bdd5bc9e54e3e9e9ab9b756174bda047be2a8d"
+    },
+    {
+      "log": "hosting-http",
+      "positivos": 0,
+      "negativos": 0,
+      "sha256_log_completo": "258a532f8b589796e57a0c396ee6480761391c0b30013a9da8c88c949ca58184"
+    },
+    {
+      "log": "storage-controle",
+      "positivos": 0,
+      "negativos": 0,
+      "sha256_log_completo": "2f3abb37640c0b38a54a99830e4153b4d300cfd7b3bf230dc52e0be6b9709d4a"
+    },
+    {
+      "log": "autoteste",
+      "positivos": 0,
+      "negativos": 0,
+      "sha256_log_completo": "34d6f3d15c4f421c6c0c690a16c483b4146785920f89cad0e0ba0bac9018a02b"
+    },
+    {
+      "log": "validar",
+      "positivos": 0,
+      "negativos": 0,
+      "sha256_log_completo": "dd48626daec175d2e7c17c94c77e334f5d8d4a88a4cf513381beaae428d93d89"
+    },
+    {
+      "log": "workflows",
+      "positivos": 0,
+      "negativos": 0,
+      "sha256_log_completo": "81a41b921ef2727b31b12154c2cb2408a84f268c9a715d1bfdbbf8ae65045c06"
+    },
+    {
+      "log": "build-site",
+      "positivos": 0,
+      "negativos": 0,
+      "sha256_log_completo": "aea411d66946a3c5822a965aac0e4decaaee9124d01fd76a3190d0b8bb002357"
+    },
+    {
+      "log": "build-app",
+      "positivos": 0,
+      "negativos": 0,
+      "sha256_log_completo": "5a13305eede138ee8bf44e3fd87857772948c882400a99d3e1cd7db4a7275990"
+    },
+    {
+      "log": "lint",
+      "positivos": 0,
+      "negativos": 0,
+      "sha256_log_completo": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "log": "carga-smoke",
+      "positivos": 2,
+      "negativos": 0,
+      "sha256_log_completo": "553841b1c73bfa13cec365b92ebd63f9f6dfda9bd98d55d5d58fd0e515ab51a6"
+    }
+  ],
+  "revisao_testes_complementares": "ab61a6c5ae86993f71d991800602bf3b56d80879",
+  "carga_controle_observacional": {
+    "alvo": "/tmp/eear-validacao-10f631e",
+    "rodadas": 10,
+    "abas": 4,
+    "medidas": [
+      {
+        "fase": "base",
+        "atividade": 2,
+        "marcas": 1,
+        "bytesEstado": 2113,
+        "caracteresEstado": 2111,
+        "bytesMeta": 1607,
+        "bytesCheckpoint": 3867,
+        "recibos": 1,
+        "usoOrigem": 368640,
+        "quotaOrigem": 2147852288,
+        "segundos": 2.383
+      },
+      {
+        "fase": "rodada-10",
+        "atividade": 42,
+        "marcas": 41,
+        "bytesEstado": 8194,
+        "caracteresEstado": 8192,
+        "bytesMeta": 6927,
+        "bytesCheckpoint": 17068,
+        "recibos": 41,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 3.393
+      },
+      {
+        "fase": "reset-1",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 9267,
+        "caracteresEstado": 9265,
+        "bytesMeta": 8842,
+        "bytesCheckpoint": 20146,
+        "recibos": 43,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 4.239
+      },
+      {
+        "fase": "reset-2",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 9443,
+        "caracteresEstado": 9441,
+        "bytesMeta": 9018,
+        "bytesCheckpoint": 20588,
+        "recibos": 45,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 5.853
+      },
+      {
+        "fase": "reset-3",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 9619,
+        "caracteresEstado": 9617,
+        "bytesMeta": 9194,
+        "bytesCheckpoint": 21030,
+        "recibos": 47,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 7.423
+      },
+      {
+        "fase": "reset-4",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 9795,
+        "caracteresEstado": 9793,
+        "bytesMeta": 9370,
+        "bytesCheckpoint": 21472,
+        "recibos": 49,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 9.022
+      },
+      {
+        "fase": "reset-5",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 9971,
+        "caracteresEstado": 9969,
+        "bytesMeta": 9546,
+        "bytesCheckpoint": 21914,
+        "recibos": 51,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 10.321
+      },
+      {
+        "fase": "reset-6",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 10147,
+        "caracteresEstado": 10145,
+        "bytesMeta": 9722,
+        "bytesCheckpoint": 22356,
+        "recibos": 53,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 11.893
+      },
+      {
+        "fase": "reset-7",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 10323,
+        "caracteresEstado": 10321,
+        "bytesMeta": 9898,
+        "bytesCheckpoint": 22798,
+        "recibos": 55,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 13.496
+      },
+      {
+        "fase": "reset-8",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 10499,
+        "caracteresEstado": 10497,
+        "bytesMeta": 10074,
+        "bytesCheckpoint": 23240,
+        "recibos": 57,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 14.771
+      },
+      {
+        "fase": "reset-9",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 10675,
+        "caracteresEstado": 10673,
+        "bytesMeta": 10250,
+        "bytesCheckpoint": 23682,
+        "recibos": 59,
+        "usoOrigem": 299008,
+        "quotaOrigem": 2147782656,
+        "segundos": 16.282
+      },
+      {
+        "fase": "reset-10",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 10851,
+        "caracteresEstado": 10849,
+        "bytesMeta": 10426,
+        "bytesCheckpoint": 24124,
+        "recibos": 61,
+        "usoOrigem": 299008,
+        "quotaOrigem": 2147782656,
+        "segundos": 17.861
+      }
+    ],
+    "falhas": 0
+  }
+}

@@ -1,5 +1,7 @@
 # Continuidade de desenvolvimento EEAR — 12–13/11/2026
 
+Atualização posterior: a validação solicitada de 10f631e foi concluída em [validacao-10f631e.md](validacao-10f631e.md), com resultados completos, CI dos dois SHAs, observações de testes corrigidas sem mudar runtime e restrições remanescentes. O texto abaixo é o registro histórico da entrega anterior.
+
 **Homologação não aprovada.** Entrega de uma implementação candidata, com regressões reproduzidas e corrigidas, para auditoria independente. A matriz integral ainda precisa terminar contra o último runtime. Resultados de versões intermediárias e CI verde de build não substituem essa validação.
 
 Branch exclusiva: `codex/eear-correcao-estrutural`. Base verificável: `2f6cad6ebba53d0f86319dcada671fe9396f8111`. Runtime entregue: **`10a3239990eecbb8e66cdfe982687b7962c42af7`**. O commit documental posterior não altera runtime nem testes. SHA256 de `curso/app.js`: `676a0d0860f3d9ee20797d2dcce09bdfc9676cc5c51f1b76cd316c72e52c10a4`.
