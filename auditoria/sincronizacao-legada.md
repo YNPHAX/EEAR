@@ -80,6 +80,14 @@ do checkpoint, a união causal nem sua arquitetura. O teste exige reserva realme
 confirmação falsa, recuperação automática, contagem 3/3 e reabertura após crash.
 Isso não prova, isoladamente, que todas as negativas observadas em carga tenham a mesma causa.
 
+Outra negativa revelou cache localStorage antigo, com checkpoint/UI/servidor corretos. Na abertura, o app comparava
+o estado **já reconstruído** de `_ops`/diários com o checkpoint e associava seu hash ao texto bruto do cache, sem
+provar que esse texto também fora atualizado. A rotina seguinte podia então ignorar indefinidamente o cache antigo.
+`cache-restaurado.test.js` reproduz deterministicamente cache 2/checkpoint 3/interface 3. A otimização foi removida:
+`cachear` volta a conferir o conteúdo bruto e regrava somente quando necessário, dentro da mesma transação já usada.
+Classificação: **média**; nessa reprodução, o checkpoint permanecia íntegro. Não se afrouxaram as exigências antigas
+de atualização do cache. Os logs de `simulados-iguais` agora discriminam seus critérios, sem mudar as asserções.
+
 ## Proposta de backend — não executada
 
 Antes de reabrir o transporte legado, o servidor precisa oferecer, conjuntamente:

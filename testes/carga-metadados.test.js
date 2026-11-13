@@ -20,7 +20,13 @@ const checkpoint = p => p.evaluate(() => new Promise((resolve, reject) => {
   const medir = async (fase, esperado, ultima) => {
     let r;
     const confirmou = await f.ate(async () => { r = await checkpoint(ps[0]); return r && r.st.act[hj] === esperado && (!ultima || r.st.feito[ultima]); }, 60000);
-    if (!confirmou) throw new Error('Contagem do checkpoint: esperado ' + esperado + ', obtido ' + (r && r.st.act[hj]));
+    if (!confirmou) {
+      const exportados = await Promise.all(ps.map(p => f.estado(p)));
+      const reservas = await ps[0].evaluate(() => Object.fromEntries(Object.keys(localStorage).filter(k => k.startsWith('missao-eear-v1-diario')).map(k => [k, localStorage.getItem(k)])));
+      console.log('DIAGNÓSTICO carga: ' + JSON.stringify({ fase, esperado, observado: r && r.st.act[hj], marcas: r && Object.keys(r.st.feito).length, abas: exportados.map(s => ({ act: s.act, marcas: Object.keys(s.feito).length })), reservas: Object.keys(reservas).length }));
+      if (process.env.EEAR_CARGA_FALHA) fs.writeFileSync(process.env.EEAR_CARGA_FALHA, JSON.stringify({ fase, esperado, checkpoint: r, exportados, reservas }));
+      throw new Error('Contagem do checkpoint: esperado ' + esperado + ', obtido ' + (r && r.st.act[hj]));
+    }
     const json = JSON.stringify(r.st), meta = JSON.stringify(r.meta);
     const armazenamento = await ps[0].evaluate(() => navigator.storage.estimate());
     const linha = { fase, atividade: esperado, marcas: Object.keys(r.st.feito).length, bytesEstado: NodeBuffer.byteLength(json), caracteresEstado: json.length, bytesMeta: NodeBuffer.byteLength(meta), bytesCheckpoint: NodeBuffer.byteLength(JSON.stringify(r)), recibos: Object.keys(r.recibos || {}).length, usoOrigem: armazenamento.usage, quotaOrigem: armazenamento.quota, segundos: (Date.now() - inicio) / 1000 };

@@ -2623,7 +2623,7 @@
       return aplicarReservas(r, diarios.filter(x => x.d.delta && opValida(x.d.delta)).map(x => x.d));
     })).then(async r => {
       if (id !== identidade) return;
-      if (mesmoConteudo(opPlano(st), opPlano(r.st))) { loc.cacheId = id; loc.cacheHash = resumoDoc(r.meta); try { loc.cacheTexto = localStorage.getItem(chave(LS, id)); } catch (e) { /* cache opcional */ } }
+      // st já pode ter sido reconstruído de _ops/diários; igualdade em memória não prova atualização do cache bruto.
       receberDuravel(r, id); await cachear(r, id); gravouLocal = true; loc.carregado = true; document.documentElement.dataset.armazenamento = 'pronto'; render(); consolidar();
     }).catch(e => { if (id !== identidade) return; loc.carregado = true; document.documentElement.dataset.armazenamento = 'reserva'; loc.incompativel = e.code === 'checkpoint-corrompido'; loc.semIDB = e.code !== 'checkpoint-corrompido'; gravouLocal = false; loc.erro = e.message; consolidar(); render(); syncInfo(); });
     loc.timer = setInterval(() => consolidar(), 1500);

@@ -94,7 +94,7 @@ const sdkAuth = async p => p.evaluate(async () => {
               const gravouCache = await f.ate(async () => A.evaluate(uid => { const t = localStorage.getItem('missao-eear-v1@firebase:' + uid); return t && JSON.parse(t).act; }, conta.uid).then(act => act && act[hj] === 4));
               f.rede(ctx, true); await A.reload();
               const duravelOffline = await f.ate(async () => { reaberto = await f.estado(A); return esperado(reaberto); });
-              passou = convergiu && retomou && gravouCache && duravelOffline && esperado(reaberto); resultado = { aceitos, convergiu, esperadoAtividade: 4, atividadeServidor: s.act[hj], simuladosServidor: s.sims.length, atividadeReaberto: reaberto.act[hj], feito: s.feito };
+              passou = convergiu && retomou && gravouCache && duravelOffline && esperado(reaberto); resultado = { aceitos, convergiu, retomou, gravouCache, duravelOffline, esperadoAtividade: 4, atividadeServidor: s.act[hj], simuladosServidor: s.sims.length, atividadeReaberto: reaberto.act[hj], simuladosReaberto: reaberto.sims.length, feito: s.feito };
             } else throw new Error('Cenário desconhecido: ' + nome);
           }
         }
