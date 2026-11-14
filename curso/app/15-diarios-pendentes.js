@@ -3,6 +3,17 @@
     return !r.encerrado && typeof o.id === 'string' && !['__proto__', 'constructor', 'prototype'].includes(o.id) && !(r.ignoradas || {})[o.id]
       && (!o.gen || o.gen === r.gen || o.local === true);
   }
+  function operacaoResolvida(r, o) {
+    return !!((r.recibos || {})[o.id] || r.encerrado || (r.ignoradas || {})[o.id]
+      || (o.origem === 'remoto' && o.gen && o.gen !== r.gen));
+  }
+  function preservarRecusadas(r, ops) {
+    const recusada = ops.find(o => !operacaoResolvida(r, o) && !operacaoPermitida(r, o));
+    if (!recusada) return false;
+    // Diários antigos sem origem explícita são ambíguos. Não os confirmar, apagar ou reaplicar silenciosamente.
+    recuperar = JSON.stringify(recusada.st); loc.erro = 'Há uma operação de outra geração preservada para recuperação.';
+    gravouLocal = false; return true;
+  }
   function aplicarReservas(r, ops) {
     const u = Object.assign({}, r, { recibos: Object.assign({}, r.recibos || {}) });
     ops.forEach(o => { if (operacaoPermitida(r, o) && !u.recibos[o.id]) { u.meta = opUnir(u.meta, o.delta); u.recibos[o.id] = true; u.apagado = false; } });
@@ -64,7 +75,7 @@
     let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
     if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
-    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: !remoto, delta, st: opCopiar(S) };
+    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: remoto !== true, origem: remoto === true ? 'remoto' : remoto ? 'importacao' : 'local', delta, st: opCopiar(S) };
     loc.ops = (loc.ops || []).concat([o]); loc.pendente = loc.ops.length; loc.confirmando = true;
     // Reserva imutável. Falhar aqui não impede a transação IDB; nenhuma mensagem de confirmação antecipada.
     try { localStorage.setItem(chaveDiario(oid), JSON.stringify(o)); } catch (e) { loc.reservaFalhou = true; }
@@ -76,7 +87,8 @@
       const r = await transacaoConta(o.conta, ant => {
         return aplicarReservas(ant || { gen: o.gen || opId(), meta: opSemente(novoEstado()) }, [o]);
       });
-      // A transação já terminou. Só agora se pode remover esta operação da reserva.
+      // Só recibo durável ou descarte explicitamente autorizado permite coletar a reserva.
+      if (!operacaoResolvida(r, o)) throw new Error('Operação preservada no diário; a geração mudou. Exporte seus dados para recuperação.');
       try { localStorage.removeItem(chave(DIARIO_K, o.conta) + '#' + o.id); } catch (e) { /* reaplicação é idempotente */ }
       if (o.conta !== identidade) return;
       loc.ops = (loc.ops || []).filter(x => x.id !== o.id); loc.pendente = loc.ops.length; loc.confirmando = !!loc.pendente;
@@ -120,11 +132,11 @@
       return aplicarReservas(r, [...pendentes.values()]);
     }).then(r => {
       if (id !== identidade) return;
-      const confirmadas = ds.filter(x => (r.recibos || {})[x.d.id] || !operacaoPermitida(r, x.d));
+      const confirmadas = ds.filter(x => operacaoResolvida(r, x.d));
       confirmadas.forEach(x => { try { if (localStorage.getItem(x.k) === x.txt) localStorage.removeItem(x.k); } catch (e) { /* idempotente */ } });
-      const idsConfirmados = new Set([...pendentes.values()].filter(o => (r.recibos || {})[o.id] || !operacaoPermitida(r, o)).map(o => o.id));
+      const idsConfirmados = new Set([...pendentes.values()].filter(o => operacaoResolvida(r, o)).map(o => o.id));
       loc.ops = (loc.ops || []).filter(o => !idsConfirmados.has(o.id)); loc.pendente = loc.ops.length; loc.confirmando = !!loc.pendente;
-      gravouLocal = true; receberDuravel(r, id); cachear(r, id);
+      receberDuravel(r, id); gravouLocal = !preservarRecusadas(r, [...pendentes.values()]); syncInfo(); cachear(r, id);
     }).catch(e => { if (id === identidade) { gravouLocal = false; loc.erro = e.message; syncInfo(); } }).finally(() => { loc.lendo = false; });
   }
   function temPendentes(id) {

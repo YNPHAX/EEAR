@@ -29,7 +29,9 @@ service cloud.firestore {
       allow create: if dono(uid) && !exists(/databases/$(database)/documents/contasExcluidas/$(uid)) && documentoValido();
       allow update: if dono(uid) && !exists(/databases/$(database)/documents/contasExcluidas/$(uid)) && documentoValido()
         && (!('v' in resource.data) || request.resource.data.v >= resource.data.v);
-      allow delete: if dono(uid);
+      // Um cliente anterior sem a barreira atômica é recusado antes de apagar o documento/Auth.
+      allow delete: if dono(uid)
+        && getAfter(/databases/$(database)/documents/contasExcluidas/$(uid)).data.v == 1;
     }
     // Tombstone mínimo: bloqueia escritores com tokens antigos. Imutável; não contém nome ou progresso.
     match /contasExcluidas/{uid} {

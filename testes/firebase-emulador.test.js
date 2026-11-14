@@ -183,7 +183,12 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     ok(outro.st === 403, 'regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno');
     ok(semT.st === 403 && grande.st === 403 && proprioBia.st === 200, 'regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito');
     const apagaA = await req(`${DOCS}/alunos/${ana.localId}`, { method: 'DELETE', headers: { Authorization: 'Bearer ' + ana.idToken } });
-    ok(apagaA.st === 200 && !(await docAdmin(ana.localId)), 'regras: o próprio aluno pode apagar o documento dele'); }
+    ok(apagaA.st === 403 && !!(await docAdmin(ana.localId)), 'regras: exclusão direta antiga sem barreira é recusada e preserva o documento');
+    const atomica = await req(`${DOCS}:commit`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer ' + ana.idToken }, body: JSON.stringify({ writes: [
+      { update: { name: `projects/${PROJ}/databases/(default)/documents/contasExcluidas/${ana.localId}`, fields: { v: { integerValue: '1' } } }, updateTransforms: [{ fieldPath: 'excluida', setToServerValue: 'REQUEST_TIME' }] },
+      { delete: `projects/${PROJ}/databases/(default)/documents/alunos/${ana.localId}` }
+    ] }) });
+    ok(atomica.st === 200 && !(await docAdmin(ana.localId)), 'regras: o próprio aluno apaga atomicamente com barreira durável contra recriação'); }
 
   { /* gravação recusada pelas regras reais (progresso acima do limite): a sincronização para, o aviso diz por quê e
        nada some do aparelho */

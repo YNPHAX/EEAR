@@ -1,5 +1,5 @@
   /* ---------- conta do aluno no site: login e progresso na nuvem (Firebase, quando configurado) ---------- */
-  const conta = { pronto: !FB, user: null, api: null, msg: '', email: '', iniciando: false };
+  const conta = { pronto: !FB, user: null, api: null, msg: '', email: '', iniciando: false, geracao: 0 };
   function erroConta(e) {
     const c = (e && e.code) || '';
     return ({
@@ -33,9 +33,13 @@
       auth.languageCode = 'pt';
       /* Emuladores do Firebase (só para testes, e só quando o app roda em localhost). */
       if (FB.emuladores && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { au.connectAuthEmulator(auth, FB.emuladores.auth, { disableWarnings: true }); fs.connectFirestoreEmulator(db, FB.emuladores.firestore[0], FB.emuladores.firestore[1]); }
-      conta.api = { au, fs, auth, db };
+      conta.api = { au, fs, auth, db, appSDK: mods[0] };
       au.getRedirectResult(auth).catch(e => { conta.msg = erroConta(e); render(); });
       au.onAuthStateChanged(auth, u => {
+        conta.geracao++;
+        const op = contaUI.exclusao;
+        if (op && op.saindo && !u && conta.user && conta.user.uid === op.uid) op.geracao = conta.geracao;
+        else if (op) { contaUI.exclusao = null; contaUI.ocupado = false; contaUI.msg = ''; }
         conta.user = u; conta.pronto = true;
         if (u) ligarNuvem(u);
         else { nuvem.fb = false; if (identidade.indexOf('firebase:') === 0) usarIdentidade(''); } // sessão encerrada: volta ao progresso sem conta, sem apagar nada

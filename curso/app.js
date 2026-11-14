@@ -414,7 +414,7 @@
     if (lider.ativa) await gravar();
   }
   /* ---------- conta do aluno no site: login e progresso na nuvem (Firebase, quando configurado) ---------- */
-  const conta = { pronto: !FB, user: null, api: null, msg: '', email: '', iniciando: false };
+  const conta = { pronto: !FB, user: null, api: null, msg: '', email: '', iniciando: false, geracao: 0 };
   function erroConta(e) {
     const c = (e && e.code) || '';
     return ({
@@ -448,9 +448,13 @@
       auth.languageCode = 'pt';
       /* Emuladores do Firebase (só para testes, e só quando o app roda em localhost). */
       if (FB.emuladores && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { au.connectAuthEmulator(auth, FB.emuladores.auth, { disableWarnings: true }); fs.connectFirestoreEmulator(db, FB.emuladores.firestore[0], FB.emuladores.firestore[1]); }
-      conta.api = { au, fs, auth, db };
+      conta.api = { au, fs, auth, db, appSDK: mods[0] };
       au.getRedirectResult(auth).catch(e => { conta.msg = erroConta(e); render(); });
       au.onAuthStateChanged(auth, u => {
+        conta.geracao++;
+        const op = contaUI.exclusao;
+        if (op && op.saindo && !u && conta.user && conta.user.uid === op.uid) op.geracao = conta.geracao;
+        else if (op) { contaUI.exclusao = null; contaUI.ocupado = false; contaUI.msg = ''; }
         conta.user = u; conta.pronto = true;
         if (u) ligarNuvem(u);
         else { nuvem.fb = false; if (identidade.indexOf('firebase:') === 0) usarIdentidade(''); } // sessão encerrada: volta ao progresso sem conta, sem apagar nada
@@ -2074,18 +2078,15 @@
   function progressoSemConta() { try { const t = localStorage.getItem(LS); const o = t && JSON.parse(t); return o && o.v === 1 ? mesclar(o) : null; } catch (e) { return null; } }
   /* O progresso desta conta unido ao feito sem conta. Os "Zerar" de cada lado não se cruzam e a configuração da conta fica. */
   function unirImportacao(a) {
-    const l = copiar(S), c = copiar(a); delete l.cfg.certsZ; delete c.cfg.certsZ;
-    const u = unirProgresso(null, mesclar(l), mesclar(c)).st;
-    Object.keys(S.cfg).forEach(k => { if (!['certs', 'fcv', 'fcAncora'].includes(k)) u.cfg[k] = copiar(S.cfg[k]); });
-    return mesclar(u);
+    return opEstado(opUnir(opMeta(S), opTransferencia(a)));
   }
   /* Há estudo sem conta neste aparelho que a conta em uso ainda não tem? */
   function novidadeSemConta() {
     if (!identidade) return null;
     const a = progressoSemConta();
-    if (!a || semEstudo(a)) return null;
+    if (!a) return null;
     const u = unirImportacao(a);
-    return ['mod', 'fc', 'sims', 'erros', 'ap', 'aula'].some(k => !uIgual(u[k], S[k])) ? a : null;
+    return (['mod', 'fc', 'sims', 'erros', 'ap', 'aula', 'feito', 'act'].some(k => !uIgual(u[k], S[k])) || !uIgual(u.cfg.certs, S.cfg.certs)) ? a : null;
   }
   /* A nuvem já tem tudo o que está neste aparelho (a última sincronização gravou exatamente o progresso atual)? */
   function sincronizado() { const b = lerBase(); return !nuvem.legado && !!b && uIgual(b, mesclar(copiar(S))) && !temPendentes(identidade); } // e nenhuma aba com estudo fora da cópia (F10)
@@ -2129,7 +2130,7 @@
   }
   async function baixarDados() {
     const id = identidade;
-    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: opCopiar(S), copiaDeRecuperacao: recuperar };
+    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: opCopiar(S), copiaDeRecuperacao: recuperar, diariosPendentes: lerDiariosDe(id).map(x => ({ chave: x.k, texto: x.txt })) };
     try { dados.quarentena = await copiasQuarentena(id, false); } catch (e) { dados.quarentena = []; }
     if (id !== identidade) return;
     if (window.EEAR_APK) { pedindo = 'exp'; render(); return; } // no app Android não há download de arquivo: mostra o código para copiar
@@ -2157,11 +2158,16 @@
     if (!u || contaUI.ocupado) return;
     if (val('conta-confirma') !== 'EXCLUIR') { contaUI.msg = 'Digite EXCLUIR para confirmar. Nada foi excluído.'; render(); return; }
     contaUI.ocupado = true;
-    const id = identidade, { au, fs } = api;
-    let passo = 'confirmar';
+    const id = identidade, { au, fs } = api, op = { uid: u.uid, geracao: conta.geracao };
+    contaUI.exclusao = op;
+    const atual = () => contaUI.exclusao === op && conta.geracao === op.geracao && api.auth.currentUser === u && identidade === id;
+    let passo = 'confirmar', isolada = null;
     try {
       if ((u.providerData || []).some(p => p && p.providerId === 'password')) await au.reauthenticateWithCredential(u, au.EmailAuthProvider.credential(u.email, (document.getElementById('conta-senha') || {}).value || ''));
       else await au.reauthenticateWithPopup(u, new au.GoogleAuthProvider());
+      if (!atual()) return;
+      isolada = await authExclusaoIsolada(api, u);
+      if (!atual()) return;
       passo = 'nuvem'; nuvem.ref = null; clearTimeout(tSave);
       await fs.runTransaction(api.db, async tx => {
         const marca = fs.doc(api.db, 'contasExcluidas', u.uid), antiga = await tx.get(marca);
@@ -2169,22 +2175,28 @@
         tx.delete(fs.doc(api.db, 'alunos', u.uid));
       });
       passo = 'conta';
-      await au.deleteUser(u);
-      usarIdentidade(''); await apagarLocal(id, true);
-      contaUI.msg = 'Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos.';
-      pedindo = null;
+      // deleteUser encerra a sessão do Auth ao qual o User pertence. Nunca usar o Auth compartilhado aqui.
+      await au.deleteUser(isolada.auth.currentUser);
+      if (atual()) { op.saindo = true; await au.signOut(api.auth); }
+      await apagarLocal(id, true); // identidade capturada: a conclusão de A nunca apaga B
+      if (contaUI.exclusao === op && op.saindo && !api.auth.currentUser && conta.geracao === op.geracao) {
+        contaUI.msg = 'Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos.';
+        pedindo = null;
+      }
     } catch (e) {
-      contaUI.msg = passo === 'confirmar' ? 'Não foi possível confirmar sua identidade (senha incorreta ou janela fechada). Nada foi excluído.'
+      if (atual()) contaUI.msg = passo === 'confirmar' ? 'Não foi possível confirmar sua identidade (senha incorreta ou janela fechada). Nada foi excluído.'
         : passo === 'nuvem' ? 'Não foi possível apagar o progresso na nuvem agora. Nada foi excluído.'
           : 'O progresso na nuvem foi apagado, mas a conta não pôde ser excluída agora. A cópia deste aparelho continua aqui. Tente de novo.';
+    } finally {
+      if (isolada) await api.appSDK.deleteApp(isolada.app).catch(() => null);
+      if (contaUI.exclusao === op) { contaUI.exclusao = null; contaUI.ocupado = false; render(); }
     }
-    contaUI.ocupado = false; render();
   }
   document.addEventListener('click', async ev => {
     const b = ev.target.closest('[data-a]');
     if (!b) return;
     switch (b.dataset.a) {
-      case 'contalevar': { const a = novidadeSemConta(); if (a) { S = unirImportacao(a); salvar(); contaUI.msg = 'O progresso feito sem conta foi levado para esta conta. Ele continua guardado também sem conta neste aparelho.'; } render(); break; }
+      case 'contalevar': { const a = novidadeSemConta(); if (a) { const importado = opTransferencia(a); S = unirImportacao(a); loc.meta = opMeta(S); loc.vista = opCopiar(S); salvar({ importado }); contaUI.msg = 'O progresso feito sem conta foi levado para esta conta. Ele continua guardado também sem conta neste aparelho.'; } render(); break; }
       case 'contaadiar': contaUI.adiado = true; render(); break;
       case 'contasair': contaUI.msg = ''; pedindo = 'sair'; render(); break;
       case 'contasairmanter': sairConta(false); break;
@@ -2205,6 +2217,18 @@
       default: break;
     }
   });
+  // Auth transitório em memória: uma resposta atrasada de deleteUser só pode encerrar esta instância.
+  // updateCurrentUser clona o User para o Auth isolado, preservando a reautenticação recente.
+  async function authExclusaoIsolada(api, usuario) {
+    const app = api.appSDK.initializeApp(api.auth.app.options, 'exclusao-' + opId());
+    try {
+      const auth = api.au.getAuth(app);
+      if (FB.emuladores && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) api.au.connectAuthEmulator(auth, FB.emuladores.auth, { disableWarnings: true });
+      await api.au.setPersistence(auth, api.au.inMemoryPersistence);
+      await api.au.updateCurrentUser(auth, usuario);
+      return { app, auth };
+    } catch (e) { await api.appSDK.deleteApp(app).catch(() => null); throw e; }
+  }
   /* Transporte legado permanentemente desativado nesta arquitetura: não solicita db, doc, get, set ou acquire.
      Somente a identidade fornecida pelo host pode abrir sua cópia LOCAL quando Firebase não está configurado.
      Firebase tem precedência: nem hot.ready nem resposta antiga do host podem trocar sua sessão. */
@@ -2393,14 +2417,26 @@
       Object.keys(mapa[k].a).filter(id => id.indexOf('@v1:') === 0).forEach(id => { let a; try { a = JSON.parse(id.slice(4)); } catch (e) { return; } if (a[0] < barreira[0] || (a[0] === barreira[0] && a[1] <= barreira[1])) mapa[k].x[id] = true; });
     })); return r;
   }
+  function opIdsVivos(c) {
+    const vivos = Object.keys(c.a).filter(id => !c.x[id]), retirados = new Set();
+    Object.keys(c.l || {}).forEach(l => { const viu = c.l[l], concorrente = vivos.some(id => !viu[id] && !((c.o || {})[id] || {})[l]); if (!concorrente) Object.keys(viu).forEach(id => retirados.add(id)); });
+    return vivos.filter(id => !retirados.has(id));
+  }
+  // Transferir preserva as identidades, mas não leva ordens de apagar nem a configuração de outra origem.
+  // Os tombstones do destino continuam cobrindo contribuições que ele já recebeu e zerou.
+  function opTransferencia(st) {
+    const m = opMeta(st), u = opVazio(); u.n = m.n;
+    Object.keys(m.r).forEach(k => { const p = opCaminho(k), r = m.r[k]; if (r.length === 3 && (p[0] !== 'cfg' || ['fcv', 'fcAncora'].includes(p[1]))) u.r[k] = opCopiar(r); });
+    Object.keys(m.c).forEach(k => { const c = m.c[k]; u.c[k] = { a: Object.fromEntries(opIdsVivos(c).map(id => [id, c.a[id]])), x: {} }; });
+    Object.keys(m.s).forEach(k => { const c = m.s[k]; u.s[k] = { a: Object.fromEntries(Object.keys(c.a).filter(id => !c.x[id]).map(id => [id, opCopiar(c.a[id])])), x: {} }; });
+    return u;
+  }
   function opEstado(m) {
     m = opMigrar(m);
     const out = {}, campos = {};
     Object.keys(m.r).forEach(k => { if (m.r[k].length === 3) campos[k] = m.r[k][2]; });
     Object.keys(m.s).forEach(k => { const c = m.s[k], vals = Object.keys(c.a).filter(id => !c.x[id]).map(id => c.a[id]).sort((a, b) => a.d.localeCompare(b.d) || (Number(!a.c) - Number(!b.c)) || JSON.stringify(a).localeCompare(JSON.stringify(b))); if (vals.length) campos[k] = vals[0]; });
-    Object.keys(m.c).forEach(k => { const c = m.c[k], vivos = Object.keys(c.a).filter(id => !c.x[id]), retirados = new Set();
-      Object.keys(c.l || {}).forEach(l => { const viu = c.l[l], concorrente = vivos.some(id => !viu[id] && !((c.o || {})[id] || {})[l]); if (!concorrente) Object.keys(viu).forEach(id => retirados.add(id)); });
-      const ids = vivos.filter(id => !retirados.has(id)); if (ids.length) campos[k] = opMaximo(opCaminho(k)) ? ids.reduce((n, id) => Math.max(n, c.a[id]), 0) : ids.reduce((n, id) => n + c.a[id], 0); });
+    Object.keys(m.c).forEach(k => { const c = m.c[k], ids = opIdsVivos(c); if (ids.length) campos[k] = opMaximo(opCaminho(k)) ? ids.reduce((n, id) => Math.max(n, c.a[id]), 0) : ids.reduce((n, id) => n + c.a[id], 0); });
     Object.keys(m.c).forEach(k => { if (campos[k] !== undefined && (!Number.isFinite(campos[k]) || (!opMaximo(opCaminho(k)) && !Number.isSafeInteger(campos[k])))) throw new Error('Contagem fora do limite seguro; nada foi substituído.'); });
     Object.keys(campos).sort((a, b) => JSON.parse(a).length - JSON.parse(b).length || a.localeCompare(b)).forEach(k => {
       const p = opCaminho(k); if (!p) return; let o = out;
@@ -2443,6 +2479,17 @@
   function operacaoPermitida(r, o) {
     return !r.encerrado && typeof o.id === 'string' && !['__proto__', 'constructor', 'prototype'].includes(o.id) && !(r.ignoradas || {})[o.id]
       && (!o.gen || o.gen === r.gen || o.local === true);
+  }
+  function operacaoResolvida(r, o) {
+    return !!((r.recibos || {})[o.id] || r.encerrado || (r.ignoradas || {})[o.id]
+      || (o.origem === 'remoto' && o.gen && o.gen !== r.gen));
+  }
+  function preservarRecusadas(r, ops) {
+    const recusada = ops.find(o => !operacaoResolvida(r, o) && !operacaoPermitida(r, o));
+    if (!recusada) return false;
+    // Diários antigos sem origem explícita são ambíguos. Não os confirmar, apagar ou reaplicar silenciosamente.
+    recuperar = JSON.stringify(recusada.st); loc.erro = 'Há uma operação de outra geração preservada para recuperação.';
+    gravouLocal = false; return true;
   }
   function aplicarReservas(r, ops) {
     const u = Object.assign({}, r, { recibos: Object.assign({}, r.recibos || {}) });
@@ -2505,7 +2552,7 @@
     let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
     if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
-    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: !remoto, delta, st: opCopiar(S) };
+    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: remoto !== true, origem: remoto === true ? 'remoto' : remoto ? 'importacao' : 'local', delta, st: opCopiar(S) };
     loc.ops = (loc.ops || []).concat([o]); loc.pendente = loc.ops.length; loc.confirmando = true;
     // Reserva imutável. Falhar aqui não impede a transação IDB; nenhuma mensagem de confirmação antecipada.
     try { localStorage.setItem(chaveDiario(oid), JSON.stringify(o)); } catch (e) { loc.reservaFalhou = true; }
@@ -2517,7 +2564,8 @@
       const r = await transacaoConta(o.conta, ant => {
         return aplicarReservas(ant || { gen: o.gen || opId(), meta: opSemente(novoEstado()) }, [o]);
       });
-      // A transação já terminou. Só agora se pode remover esta operação da reserva.
+      // Só recibo durável ou descarte explicitamente autorizado permite coletar a reserva.
+      if (!operacaoResolvida(r, o)) throw new Error('Operação preservada no diário; a geração mudou. Exporte seus dados para recuperação.');
       try { localStorage.removeItem(chave(DIARIO_K, o.conta) + '#' + o.id); } catch (e) { /* reaplicação é idempotente */ }
       if (o.conta !== identidade) return;
       loc.ops = (loc.ops || []).filter(x => x.id !== o.id); loc.pendente = loc.ops.length; loc.confirmando = !!loc.pendente;
@@ -2561,11 +2609,11 @@
       return aplicarReservas(r, [...pendentes.values()]);
     }).then(r => {
       if (id !== identidade) return;
-      const confirmadas = ds.filter(x => (r.recibos || {})[x.d.id] || !operacaoPermitida(r, x.d));
+      const confirmadas = ds.filter(x => operacaoResolvida(r, x.d));
       confirmadas.forEach(x => { try { if (localStorage.getItem(x.k) === x.txt) localStorage.removeItem(x.k); } catch (e) { /* idempotente */ } });
-      const idsConfirmados = new Set([...pendentes.values()].filter(o => (r.recibos || {})[o.id] || !operacaoPermitida(r, o)).map(o => o.id));
+      const idsConfirmados = new Set([...pendentes.values()].filter(o => operacaoResolvida(r, o)).map(o => o.id));
       loc.ops = (loc.ops || []).filter(o => !idsConfirmados.has(o.id)); loc.pendente = loc.ops.length; loc.confirmando = !!loc.pendente;
-      gravouLocal = true; receberDuravel(r, id); cachear(r, id);
+      receberDuravel(r, id); gravouLocal = !preservarRecusadas(r, [...pendentes.values()]); syncInfo(); cachear(r, id);
     }).catch(e => { if (id === identidade) { gravouLocal = false; loc.erro = e.message; syncInfo(); } }).finally(() => { loc.lendo = false; });
   }
   function temPendentes(id) {
@@ -2744,7 +2792,17 @@
   async function descartarRecuperacao() {
     const id = identidade;
     try { await copiasQuarentena(id, true); } catch (e) { if (window.indexedDB) { msgDados = 'Não foi possível confirmar a exclusão da cópia. Tente novamente.'; render(); return; } }
-    try { localStorage.removeItem(chave(LS_REC, id)); } catch (e) { return; }
+    try {
+      const diarios = lerDiariosDe(id).filter(x => x.d.delta && opValida(x.d.delta));
+      const r = await transacaoConta(id, ant => {
+        if (!ant) return;
+        const ignoradas = Object.assign({}, ant.ignoradas || {});
+        diarios.filter(x => !operacaoResolvida(ant, x.d) && !operacaoPermitida(ant, x.d)).forEach(x => { ignoradas[x.d.id] = true; });
+        return Object.assign({}, ant, { ignoradas });
+      }, true);
+      diarios.filter(x => r && operacaoResolvida(r, x.d)).forEach(x => { if (localStorage.getItem(x.k) === x.txt) localStorage.removeItem(x.k); });
+      localStorage.removeItem(chave(LS_REC, id));
+    } catch (e) { msgDados = 'Não foi possível confirmar a exclusão da cópia. Tente novamente.'; render(); return; }
     if (id === identidade) { recuperar = null; msgRec = ''; pedindo = null; render(); }
   }
   /* Confirmação de gravação é distinta de reserva e de disponibilidade da nuvem. */

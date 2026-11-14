@@ -130,6 +130,16 @@
   async function descartarRecuperacao() {
     const id = identidade;
     try { await copiasQuarentena(id, true); } catch (e) { if (window.indexedDB) { msgDados = 'Não foi possível confirmar a exclusão da cópia. Tente novamente.'; render(); return; } }
-    try { localStorage.removeItem(chave(LS_REC, id)); } catch (e) { return; }
+    try {
+      const diarios = lerDiariosDe(id).filter(x => x.d.delta && opValida(x.d.delta));
+      const r = await transacaoConta(id, ant => {
+        if (!ant) return;
+        const ignoradas = Object.assign({}, ant.ignoradas || {});
+        diarios.filter(x => !operacaoResolvida(ant, x.d) && !operacaoPermitida(ant, x.d)).forEach(x => { ignoradas[x.d.id] = true; });
+        return Object.assign({}, ant, { ignoradas });
+      }, true);
+      diarios.filter(x => r && operacaoResolvida(r, x.d)).forEach(x => { if (localStorage.getItem(x.k) === x.txt) localStorage.removeItem(x.k); });
+      localStorage.removeItem(chave(LS_REC, id));
+    } catch (e) { msgDados = 'Não foi possível confirmar a exclusão da cópia. Tente novamente.'; render(); return; }
     if (id === identidade) { recuperar = null; msgRec = ''; pedindo = null; render(); }
   }

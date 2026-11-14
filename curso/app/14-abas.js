@@ -70,14 +70,26 @@
       Object.keys(mapa[k].a).filter(id => id.indexOf('@v1:') === 0).forEach(id => { let a; try { a = JSON.parse(id.slice(4)); } catch (e) { return; } if (a[0] < barreira[0] || (a[0] === barreira[0] && a[1] <= barreira[1])) mapa[k].x[id] = true; });
     })); return r;
   }
+  function opIdsVivos(c) {
+    const vivos = Object.keys(c.a).filter(id => !c.x[id]), retirados = new Set();
+    Object.keys(c.l || {}).forEach(l => { const viu = c.l[l], concorrente = vivos.some(id => !viu[id] && !((c.o || {})[id] || {})[l]); if (!concorrente) Object.keys(viu).forEach(id => retirados.add(id)); });
+    return vivos.filter(id => !retirados.has(id));
+  }
+  // Transferir preserva as identidades, mas não leva ordens de apagar nem a configuração de outra origem.
+  // Os tombstones do destino continuam cobrindo contribuições que ele já recebeu e zerou.
+  function opTransferencia(st) {
+    const m = opMeta(st), u = opVazio(); u.n = m.n;
+    Object.keys(m.r).forEach(k => { const p = opCaminho(k), r = m.r[k]; if (r.length === 3 && (p[0] !== 'cfg' || ['fcv', 'fcAncora'].includes(p[1]))) u.r[k] = opCopiar(r); });
+    Object.keys(m.c).forEach(k => { const c = m.c[k]; u.c[k] = { a: Object.fromEntries(opIdsVivos(c).map(id => [id, c.a[id]])), x: {} }; });
+    Object.keys(m.s).forEach(k => { const c = m.s[k]; u.s[k] = { a: Object.fromEntries(Object.keys(c.a).filter(id => !c.x[id]).map(id => [id, opCopiar(c.a[id])])), x: {} }; });
+    return u;
+  }
   function opEstado(m) {
     m = opMigrar(m);
     const out = {}, campos = {};
     Object.keys(m.r).forEach(k => { if (m.r[k].length === 3) campos[k] = m.r[k][2]; });
     Object.keys(m.s).forEach(k => { const c = m.s[k], vals = Object.keys(c.a).filter(id => !c.x[id]).map(id => c.a[id]).sort((a, b) => a.d.localeCompare(b.d) || (Number(!a.c) - Number(!b.c)) || JSON.stringify(a).localeCompare(JSON.stringify(b))); if (vals.length) campos[k] = vals[0]; });
-    Object.keys(m.c).forEach(k => { const c = m.c[k], vivos = Object.keys(c.a).filter(id => !c.x[id]), retirados = new Set();
-      Object.keys(c.l || {}).forEach(l => { const viu = c.l[l], concorrente = vivos.some(id => !viu[id] && !((c.o || {})[id] || {})[l]); if (!concorrente) Object.keys(viu).forEach(id => retirados.add(id)); });
-      const ids = vivos.filter(id => !retirados.has(id)); if (ids.length) campos[k] = opMaximo(opCaminho(k)) ? ids.reduce((n, id) => Math.max(n, c.a[id]), 0) : ids.reduce((n, id) => n + c.a[id], 0); });
+    Object.keys(m.c).forEach(k => { const c = m.c[k], ids = opIdsVivos(c); if (ids.length) campos[k] = opMaximo(opCaminho(k)) ? ids.reduce((n, id) => Math.max(n, c.a[id]), 0) : ids.reduce((n, id) => n + c.a[id], 0); });
     Object.keys(m.c).forEach(k => { if (campos[k] !== undefined && (!Number.isFinite(campos[k]) || (!opMaximo(opCaminho(k)) && !Number.isSafeInteger(campos[k])))) throw new Error('Contagem fora do limite seguro; nada foi substituído.'); });
     Object.keys(campos).sort((a, b) => JSON.parse(a).length - JSON.parse(b).length || a.localeCompare(b)).forEach(k => {
       const p = opCaminho(k); if (!p) return; let o = out;

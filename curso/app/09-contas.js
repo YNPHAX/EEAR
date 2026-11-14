@@ -50,18 +50,15 @@
   function progressoSemConta() { try { const t = localStorage.getItem(LS); const o = t && JSON.parse(t); return o && o.v === 1 ? mesclar(o) : null; } catch (e) { return null; } }
   /* O progresso desta conta unido ao feito sem conta. Os "Zerar" de cada lado não se cruzam e a configuração da conta fica. */
   function unirImportacao(a) {
-    const l = copiar(S), c = copiar(a); delete l.cfg.certsZ; delete c.cfg.certsZ;
-    const u = unirProgresso(null, mesclar(l), mesclar(c)).st;
-    Object.keys(S.cfg).forEach(k => { if (!['certs', 'fcv', 'fcAncora'].includes(k)) u.cfg[k] = copiar(S.cfg[k]); });
-    return mesclar(u);
+    return opEstado(opUnir(opMeta(S), opTransferencia(a)));
   }
   /* Há estudo sem conta neste aparelho que a conta em uso ainda não tem? */
   function novidadeSemConta() {
     if (!identidade) return null;
     const a = progressoSemConta();
-    if (!a || semEstudo(a)) return null;
+    if (!a) return null;
     const u = unirImportacao(a);
-    return ['mod', 'fc', 'sims', 'erros', 'ap', 'aula'].some(k => !uIgual(u[k], S[k])) ? a : null;
+    return (['mod', 'fc', 'sims', 'erros', 'ap', 'aula', 'feito', 'act'].some(k => !uIgual(u[k], S[k])) || !uIgual(u.cfg.certs, S.cfg.certs)) ? a : null;
   }
   /* A nuvem já tem tudo o que está neste aparelho (a última sincronização gravou exatamente o progresso atual)? */
   function sincronizado() { const b = lerBase(); return !nuvem.legado && !!b && uIgual(b, mesclar(copiar(S))) && !temPendentes(identidade); } // e nenhuma aba com estudo fora da cópia (F10)
@@ -105,7 +102,7 @@
   }
   async function baixarDados() {
     const id = identidade;
-    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: opCopiar(S), copiaDeRecuperacao: recuperar };
+    const dados = { app: 'Missão EEAR', geradoEm: new Date().toISOString(), conta: identidade ? { tipo: identidade.split(':')[0], email: (conta.user && conta.user.email) || null } : null, progresso: opCopiar(S), copiaDeRecuperacao: recuperar, diariosPendentes: lerDiariosDe(id).map(x => ({ chave: x.k, texto: x.txt })) };
     try { dados.quarentena = await copiasQuarentena(id, false); } catch (e) { dados.quarentena = []; }
     if (id !== identidade) return;
     if (window.EEAR_APK) { pedindo = 'exp'; render(); return; } // no app Android não há download de arquivo: mostra o código para copiar
@@ -133,11 +130,16 @@
     if (!u || contaUI.ocupado) return;
     if (val('conta-confirma') !== 'EXCLUIR') { contaUI.msg = 'Digite EXCLUIR para confirmar. Nada foi excluído.'; render(); return; }
     contaUI.ocupado = true;
-    const id = identidade, { au, fs } = api;
-    let passo = 'confirmar';
+    const id = identidade, { au, fs } = api, op = { uid: u.uid, geracao: conta.geracao };
+    contaUI.exclusao = op;
+    const atual = () => contaUI.exclusao === op && conta.geracao === op.geracao && api.auth.currentUser === u && identidade === id;
+    let passo = 'confirmar', isolada = null;
     try {
       if ((u.providerData || []).some(p => p && p.providerId === 'password')) await au.reauthenticateWithCredential(u, au.EmailAuthProvider.credential(u.email, (document.getElementById('conta-senha') || {}).value || ''));
       else await au.reauthenticateWithPopup(u, new au.GoogleAuthProvider());
+      if (!atual()) return;
+      isolada = await authExclusaoIsolada(api, u);
+      if (!atual()) return;
       passo = 'nuvem'; nuvem.ref = null; clearTimeout(tSave);
       await fs.runTransaction(api.db, async tx => {
         const marca = fs.doc(api.db, 'contasExcluidas', u.uid), antiga = await tx.get(marca);
@@ -145,22 +147,28 @@
         tx.delete(fs.doc(api.db, 'alunos', u.uid));
       });
       passo = 'conta';
-      await au.deleteUser(u);
-      usarIdentidade(''); await apagarLocal(id, true);
-      contaUI.msg = 'Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos.';
-      pedindo = null;
+      // deleteUser encerra a sessão do Auth ao qual o User pertence. Nunca usar o Auth compartilhado aqui.
+      await au.deleteUser(isolada.auth.currentUser);
+      if (atual()) { op.saindo = true; await au.signOut(api.auth); }
+      await apagarLocal(id, true); // identidade capturada: a conclusão de A nunca apaga B
+      if (contaUI.exclusao === op && op.saindo && !api.auth.currentUser && conta.geracao === op.geracao) {
+        contaUI.msg = 'Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos.';
+        pedindo = null;
+      }
     } catch (e) {
-      contaUI.msg = passo === 'confirmar' ? 'Não foi possível confirmar sua identidade (senha incorreta ou janela fechada). Nada foi excluído.'
+      if (atual()) contaUI.msg = passo === 'confirmar' ? 'Não foi possível confirmar sua identidade (senha incorreta ou janela fechada). Nada foi excluído.'
         : passo === 'nuvem' ? 'Não foi possível apagar o progresso na nuvem agora. Nada foi excluído.'
           : 'O progresso na nuvem foi apagado, mas a conta não pôde ser excluída agora. A cópia deste aparelho continua aqui. Tente de novo.';
+    } finally {
+      if (isolada) await api.appSDK.deleteApp(isolada.app).catch(() => null);
+      if (contaUI.exclusao === op) { contaUI.exclusao = null; contaUI.ocupado = false; render(); }
     }
-    contaUI.ocupado = false; render();
   }
   document.addEventListener('click', async ev => {
     const b = ev.target.closest('[data-a]');
     if (!b) return;
     switch (b.dataset.a) {
-      case 'contalevar': { const a = novidadeSemConta(); if (a) { S = unirImportacao(a); salvar(); contaUI.msg = 'O progresso feito sem conta foi levado para esta conta. Ele continua guardado também sem conta neste aparelho.'; } render(); break; }
+      case 'contalevar': { const a = novidadeSemConta(); if (a) { const importado = opTransferencia(a); S = unirImportacao(a); loc.meta = opMeta(S); loc.vista = opCopiar(S); salvar({ importado }); contaUI.msg = 'O progresso feito sem conta foi levado para esta conta. Ele continua guardado também sem conta neste aparelho.'; } render(); break; }
       case 'contaadiar': contaUI.adiado = true; render(); break;
       case 'contasair': contaUI.msg = ''; pedindo = 'sair'; render(); break;
       case 'contasairmanter': sairConta(false); break;
