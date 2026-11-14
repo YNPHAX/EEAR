@@ -42,14 +42,19 @@
     document.documentElement.dataset.armazenamento = 'carregando'; loc.incompativel = false;
     loc.quarentinas = new Map();
     clearInterval(loc.timer); loc.ops = []; loc.gen = null; loc.fila = Promise.resolve(); loc.pendente = 0;
-    const id = identidade, st = opCopiar(loc.vista || novoEstado()), diarios = lerDiariosDe(id);
+    const id = identidade, st = opCopiar(loc.vista || novoEstado()), diarios = lerDiariosDe(id), origem = loc.origem;
+    loc.origem = null; // só a carga em andamento conserva essa comparação temporária
     try { const raw = JSON.parse(localStorage.getItem(chave(LS)) || 'null'); if (raw && raw._abas) st._abas = raw._abas; } catch (e) { /* cache ilegível preservado por carregar */ }
     loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, r => {
       if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)), legados: Object.fromEntries(diarios.concat(antigos).filter(x => !x.d.delta).map(x => [x.k, x.d.seq])) };
       return aplicarReservas(r, diarios.filter(x => x.d.delta && opValida(x.d.delta)).map(x => x.d));
     })).then(async r => {
       if (id !== identidade) return;
-      // st já pode ter sido reconstruído de _ops/diários; igualdade em memória não prova atualização do cache bruto.
+      // Preserva a abertura sem estudo de um cache antigo cuja normalização não mudou o progresso.
+      // A comparação usa a projeção ANTERIOR à recuperação; st já pode conter _ops/diários ausentes do cache bruto.
+      if (origem && mesmoConteudo(opPlano(origem.st), opPlano(r.st)) && (!origem.st.cfg._ops || mesmoConteudo(opMeta(origem.st), r.meta))) {
+        try { if (localStorage.getItem(chave(LS, id)) === origem.texto) { loc.cacheId = id; loc.cacheHash = resumoDoc(r.meta); loc.cacheTexto = origem.texto; } } catch (e) { /* cache opcional */ }
+      }
       receberDuravel(r, id); await cachear(r, id); gravouLocal = true; loc.carregado = true; document.documentElement.dataset.armazenamento = 'pronto'; render(); consolidar();
     }).catch(e => { if (id !== identidade) return; loc.carregado = true; document.documentElement.dataset.armazenamento = 'reserva'; loc.incompativel = e.code === 'checkpoint-corrompido'; loc.semIDB = e.code !== 'checkpoint-corrompido'; gravouLocal = false; loc.erro = e.message; consolidar(); render(); syncInfo(); });
     loc.timer = setInterval(() => consolidar(), 1500);

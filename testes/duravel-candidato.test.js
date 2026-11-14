@@ -60,7 +60,10 @@ const resumo = r => ({ checkpoint: r.checkpoint && { feito: r.checkpoint.feito, 
         const atual = antes.ls.reduce((a, b) => !a || b.d.seq > a.d.seq ? b : a, null);
         const campos = s => JSON.stringify([s.feito, s.act, s.cfg.certsZ || 0, s.cfg.certs]);
         const confirmouIDB = antes.checkpoint ? campos(antes.checkpoint) === campos(aceito) : atual && antes.idb.some(x => x.k === atual.k && x.d.seq === atual.d.seq);
-        if (!confirmouIDB || (nome.startsWith('zerar') && (!aceito.cfg.certsZ || aceito.feito['T:base'])) || (nome !== 'zerar' && !aceito.feito['T:novo'])) throw new Error('Não comprovou aceitação e commit efetivo do diário novo.');
+        if (!confirmouIDB || (nome.startsWith('zerar') && (!aceito.cfg.certsZ || aceito.feito['T:base'])) || (nome !== 'zerar' && !aceito.feito['T:novo'])) {
+          console.log('DIAGNÓSTICO preparação durável: ' + JSON.stringify({ nome, aceito: { feito: aceito.feito, act: aceito.act, z: aceito.cfg.certsZ || 0 }, confirmouIDB, antes: resumo(antes) }));
+          throw new Error('Não comprovou aceitação e commit efetivo do diário novo.');
+        }
         await delay(300); await cair(ctx, p); ctx = null;
         if (nome === 'duas-quedas') await delay(2500); // diário confirmado, mas já além da carência de 2 s na recuperação
         ctx = await abrir(dir); const antesDoApp = await sondar(ctx);

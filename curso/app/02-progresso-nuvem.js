@@ -100,6 +100,7 @@
       recuperar = localStorage.getItem(chave(LS_REC));
       localStorage.removeItem(chave(ABAS_K));
     } catch (e) { /* sem armazenamento local */ }
+    loc.origem = { texto: t, st: opCopiar(st) }; // projeção normalizada ANTES de incorporar _ops/diários
     try { st = opEstado(metaMigrada(st, lerDiariosDe(identidade))); } catch (e) { /* cópia original permanece exportável */ }
     loc.carregado = false; loc.semIDB = false; loc.pendente = 0; partirDe(t, st); abrirAbas(); // 14-abas.js: diários de abas que fecharam são absorvidos logo depois
     return st;
