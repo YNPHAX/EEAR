@@ -42,6 +42,7 @@ jobs:
       - name: Testes da plataforma
         run: |
           node testes/operacoes.test.js
+          node testes/transferencia-identidades.test.js
           node testes/legado-contrato.test.js
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/legado-bloqueio.test.js
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/ciclo-sincronia.test.js
@@ -95,6 +96,33 @@ jobs:
             node testes/depurador-transacao.test.js
           NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
             EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/sincronia-firebase.test.js
+
+  bloqueadores-auditoria:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Dependências isoladas dos testes adversariais
+        run: |
+          npm install --prefix "$RUNNER_TEMP/ia" --no-save --no-audit --no-fund firebase-tools@15.35.0 firebase@12.19.0 playwright@1.63.0
+          "$RUNNER_TEMP/ia/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Reproduções anteriores e critérios novos obrigatórios
+        run: |
+          git fetch --no-tags origin a35ea9a769c150e561dfbde3205525b96bbfbfe7 2f6cad6ebba53d0f86319dcada671fe9396f8111
+          git worktree add --detach "$RUNNER_TEMP/ia-reprovado" a35ea9a769c150e561dfbde3205525b96bbfbfe7
+          git worktree add --detach "$RUNNER_TEMP/ia-legado" 2f6cad6ebba53d0f86319dcada671fe9396f8111
+          NODE_PATH="$RUNNER_TEMP/ia/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/ia/node_modules/firebase" \
+            EEAR_FIREBASE_CLI="$RUNNER_TEMP/ia/node_modules/.bin/firebase" EEAR_REPO_REPROVADO="$RUNNER_TEMP/ia-reprovado" \
+            EEAR_REPO_LEGADO="$RUNNER_TEMP/ia-legado" node testes/bloqueadores-auditoria.test.js
 
   # Evidência histórica opcional, com saída original: não mascara a falha nem integra o gate Firebase.
   historico-legado:
