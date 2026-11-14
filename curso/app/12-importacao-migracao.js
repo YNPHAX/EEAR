@@ -14,7 +14,7 @@
     const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
     const meta = opMeta(S); let hash;
     try { hash = identidadeImportacao(o); } catch (e) { msgDados = 'Não foi possível identificar este código com segurança. Nada foi alterado; preserve a cópia original.'; render(); return; }
-    if (!conhecida && !opValida(colado.cfg._ops) && importacaoRecebida(meta, hash)) { pedindo = null; msgDados = 'Este código já foi aplicado. O estudo novo, as correções e o Zerar foram mantidos.'; render(); return; }
+    if (!conhecida && !opValida(colado.cfg._ops) && importacaoRecebida(meta, hash)) { pedindo = null; msgDados = loc.pendente || loc.confirmando || !gravouLocal ? 'Este código já está na fila. Aguarde a confirmação do armazenamento; mantenha a aba aberta.' : 'Este código já foi aplicado. O estudo novo, as correções e o Zerar foram mantidos.'; consolidar(); render(); return; }
     let importado;
     try {
       if (conhecida) importado = opMeta(colado);

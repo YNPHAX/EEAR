@@ -35,3 +35,14 @@ const z5 = copia(a.opEstado(r5)); z5.act = {};
 const origemZerada = a.opUnir(r5, a.opDelta(r5, a.opEstado(r5), z5, 'e:Z-ORIGEM'));
 assert.strictEqual(a.opEstado(a.opUnir(solo5, a.opTransferencia(a.opEstado(origemZerada)))).act.dia, 5);
 console.log('✓ Transferência conserva créditos de migração sem propagar Zerar da outra origem.');
+// Correção repetida no destino continua removendo apenas o que observou; erro concorrente é preservado.
+const levado = a.opUnir(ec, a.opTransferencia(a.opEstado(en))), corrigirDeNovo = copia(a.opEstado(levado)); delete corrigirDeNovo.erros.q;
+const novamente = a.opUnir(levado, a.opDelta(levado, a.opEstado(levado), corrigirDeNovo, 'e:CORRIGIU2'));
+assert.strictEqual(a.opEstado(a.opUnir(novamente, a.opTransferencia(a.opEstado(en)))).erros.q, undefined);
+const concorrente = copia(a.opEstado(en)); concorrente.erros.q++;
+const novoConcorrente = a.opUnir(en, a.opDelta(en, a.opEstado(en), concorrente, 'e:CONCORRENTE'));
+assert.strictEqual(a.opEstado(a.opUnir(novamente, a.opTransferencia(a.opEstado(novoConcorrente)))).erros.q, 2);
+const viuCorrecao = a.opEstado(novamente), depoisViu = copia(viuCorrecao); depoisViu.erros.q = 1;
+const novoPosterior = a.opUnir(novamente, a.opDelta(novamente, viuCorrecao, depoisViu, 'e:POSTERIOR'));
+assert.strictEqual(a.opEstado(a.opUnir(novamente, a.opTransferencia(a.opEstado(novoPosterior)))).erros.q, 1);
+console.log('✓ Correção após Levar, repetição, erro concorrente 2/2 e erro posterior 1/1.');

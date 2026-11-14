@@ -474,9 +474,9 @@
     nuvem.fb = true;
     if (FB.sincronizar !== true) { nuvem.bloqueada = true; syncInfo(); return; }
     const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid);
-    const paraDoc = o => ({ v: 2, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
-    /* Envelope Firebase v2 impede escritores antigos de remover identidades; uma versão futura (v > 2): devolve só a versão, para a união recusar e nada ser gravado por cima. */
-    const deDoc = x => (!x ? null : Number(x.v) > 2 ? { v: Number(x.v) } : JSON.parse(x.dados));
+    const paraDoc = o => ({ v: 3, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
+    /* Envelope Firebase v3 exige a política de importação idempotente; escritores v1/v2 são recusados pelas regras monotônicas. Uma versão futura (v > 3): devolve só a versão, para a união recusar e nada ser gravado por cima. */
+    const deDoc = x => (!x ? null : Number(x.v) > 3 ? { v: Number(x.v) } : JSON.parse(x.dados));
     const ref = {
       transacao: f => fs.runTransaction(db, async tx => { const s = await tx.get(doc), novo = f(deDoc(s.exists() ? s.data() : null)); if (novo) tx.set(doc, paraDoc(novo)); })
     };
@@ -2341,7 +2341,7 @@
     const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
     const meta = opMeta(S); let hash;
     try { hash = identidadeImportacao(o); } catch (e) { msgDados = 'Não foi possível identificar este código com segurança. Nada foi alterado; preserve a cópia original.'; render(); return; }
-    if (!conhecida && !opValida(colado.cfg._ops) && importacaoRecebida(meta, hash)) { pedindo = null; msgDados = 'Este código já foi aplicado. O estudo novo, as correções e o Zerar foram mantidos.'; render(); return; }
+    if (!conhecida && !opValida(colado.cfg._ops) && importacaoRecebida(meta, hash)) { pedindo = null; msgDados = loc.pendente || loc.confirmando || !gravouLocal ? 'Este código já está na fila. Aguarde a confirmação do armazenamento; mantenha a aba aberta.' : 'Este código já foi aplicado. O estudo novo, as correções e o Zerar foram mantidos.'; consolidar(); render(); return; }
     let importado;
     try {
       if (conhecida) importado = opMeta(colado);
