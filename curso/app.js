@@ -262,6 +262,8 @@
     if (z) cfg.certsZ = z; else delete cfg.certsZ;
     return JSON.stringify([cfg.certs, cfg.certsZ || 0]) !== antes;
   }
+  /* Configuração compartilhada, lida antes de selecionar o perfil local ou iniciar o adaptador Firebase. */
+  const FB = window.EEAR_FIREBASE || null, FB_VERSAO = '12.19.0';
   /* Progresso que este app não consegue ler (corrompido, ou gravado por uma versão futura com outro formato): antes que o
      primeiro salvar() grave por cima, uma cópia fica em LS_REC, e a tela Hoje oferece copiá-la. */
   const LS_REC = 'missao-eear-v1-recuperar';
@@ -296,7 +298,7 @@
   try {
     /* Com Firebase configurado, só sua sessão pode selecionar a identidade; dados legados continuam preservados. */
     const c = localStorage.getItem(LS_CONTA) || '';
-    if ((c.indexOf('firebase:') === 0 && window.EEAR_FIREBASE) || (c.indexOf('claude:') === 0 && !window.EEAR_FIREBASE && window.claude)) identidade = c;
+    if ((c.indexOf('firebase:') === 0 && FB) || (c.indexOf('claude:') === 0 && !FB && window.claude)) identidade = c;
   } catch (e) { /* sem armazenamento local */ }
   S = carregar();
   /* pendente não é confirmação remota. O transporte legado não tem rejeição de escritores antigos no servidor:
@@ -412,7 +414,6 @@
     if (lider.ativa) await gravar();
   }
   /* ---------- conta do aluno no site: login e progresso na nuvem (Firebase, quando configurado) ---------- */
-  const FB = window.EEAR_FIREBASE || null, FB_VERSAO = '12.19.0';
   const conta = { pronto: !FB, user: null, api: null, msg: '', email: '', iniciando: false };
   function erroConta(e) {
     const c = (e && e.code) || '';

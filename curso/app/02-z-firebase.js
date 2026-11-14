@@ -1,5 +1,4 @@
   /* ---------- conta do aluno no site: login e progresso na nuvem (Firebase, quando configurado) ---------- */
-  const FB = window.EEAR_FIREBASE || null, FB_VERSAO = '12.19.0';
   const conta = { pronto: !FB, user: null, api: null, msg: '', email: '', iniciando: false };
   function erroConta(e) {
     const c = (e && e.code) || '';

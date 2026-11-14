@@ -13,7 +13,7 @@ configuração e auditoria independentes. CI verde nesta separação não aprova
 | `curso/app/02-progresso-nuvem.js`, antigo módulo misto | Somente orquestração da união e confirmação, exige `firebase:` e adaptador transacional. Não há fallback leitura/gravação. |
 | `02-certificados.js` | Cálculo/migração de certificados, movido sem mudar o algoritmo. |
 | `02-persistencia-local.js`, `14-abas.js`, `15-diarios-pendentes.js`, `16-diario-duravel.js`, `18-operacoes-*.js` | Estado local, reservas imutáveis, checkpoint IndexedDB, recuperação, geração de exclusão e operações idempotentes. Não dependem de Firebase para estudar. Módulos 14–16 e núcleo de operações preservados. |
-| `02-z-firebase.js` | Auth e único adaptador: `runTransaction`, envelope Firestore v2. Não expõe `get/set` avulsos ao conciliador. Inicializado antes de `07-eventos.js`. |
+| `02-configuracao.js`, `02-z-firebase.js` | Auth e único adaptador: `runTransaction`, envelope Firestore v2. Não expõe `get/set` avulsos ao conciliador. Configuração lida uma vez, antes de selecionar o perfil local; adaptador inicializado antes de `07-eventos.js`. |
 | `08-uniao-nuvem.js` | União pura, leitura de versões antigas e assinatura/linhagem de compatibilidade. Assinatura FNV é identificação de conteúdo, não criptografia/autorização. |
 | `09-contas.js`, `17-estado-persistencia.js` | UID, exportação, exclusão local, exclusão Firebase com marcador permanente, confirmação local distinta da remota. Legado não autoriza apagar cópia local. |
 | `10-nuvem-claude.js`, `window.claude.use` | Somente leitura da identidade do host para abrir seu perfil LOCAL quando não há Firebase. Não solicita `db/doc/get/set/acquire`. Não há flag de reativação. SDK/hot legado é ignorado por inteiro quando há configuração Firebase. |
@@ -80,6 +80,10 @@ instrumentam somente o transporte em memória e assim são identificados, não c
   continua pendente. Perda da resposta após commit é recuperada por IDs idempotentes; não por contagem de tentativas.
 - Firebase armazena nome do certificado se informado e progresso; exportação pode conter e-mail. Tratar backups
   como dados pessoais. Não foi aplicado dado real, nem acessado Firebase real nesta rodada.
+- As regras Firestore validam o envelope e o UID; não interpretam JSON nem provam monotonicidade de `_ops`.
+  O envelope v2 rejeita escritores v1 sobre documento v2, mas um cliente defeituoso/autorizado que imite v2 ainda
+  pode substituir dados. A garantia de união depende do adaptador oficial transacional; não é proteção contra
+  um usuário autenticado modificando o próprio cliente. Não se promete conversão ou bloqueio do serviço legado.
 - Crescimento causal de `_ops` é linear, inclusive após Zerar. Limite remoto continua explícito; carga antiga
   demonstrou recusa perto de 900 mil caracteres. Não há compactação nova nem promessa de crescimento ilimitado.
   Ver medições anteriores e relatório desta validação. Backup, capacidade e retenção precisam de decisão posterior.

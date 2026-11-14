@@ -32,6 +32,6 @@
   try {
     /* Com Firebase configurado, só sua sessão pode selecionar a identidade; dados legados continuam preservados. */
     const c = localStorage.getItem(LS_CONTA) || '';
-    if ((c.indexOf('firebase:') === 0 && window.EEAR_FIREBASE) || (c.indexOf('claude:') === 0 && !window.EEAR_FIREBASE && window.claude)) identidade = c;
+    if ((c.indexOf('firebase:') === 0 && FB) || (c.indexOf('claude:') === 0 && !FB && window.claude)) identidade = c;
   } catch (e) { /* sem armazenamento local */ }
   S = carregar();

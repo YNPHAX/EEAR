@@ -27,6 +27,7 @@ const seed = () => ({ v: 1, t: Date.now() - 20000, cfg: { nome: 'Pessoa Fictíci
     await f.clicar(A, 'marcar', { k: 'T:oficial' });
     await exigir(async () => (await f.ler(cred.uid)).feito['T:oficial'], 'Firebase deve receber estudo mesmo com SDK antigo travado.');
     await confirmado(A); assert.deepStrictEqual(calls, []); assert.deepStrictEqual(erros, []);
+    assert((await A.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1@claude:outra-pessoa')))).feito['T:privada-legada'], 'A migração não apaga a origem.');
     console.log('✓ Firebase tem prioridade: zero user/db/hot legados, checkpoint e confirmação remota efetiva.');
 
     const cert = { s: 'fis', mod: null, ids: ['FIS01'], h: 3, d: '2026-10-17', c: 'MIGRACAO-FB-CERT', o: 'curso', t: 1792195200000 };
