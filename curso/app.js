@@ -1005,7 +1005,7 @@
       <p class="small muted" style="margin:0">Copie o código do progresso aqui e cole no outro aparelho, em Plano › Dados › Colar progresso. Vale entre o site, o app e o link do curso.</p>
       <div class="row"><button class="btn" data-a="expcopiar">Copiar meu progresso</button><button class="btn" data-a="impabrir">Colar progresso</button></div>
       ${pedindo === 'exp' ? `<div class="field"><label for="exp-txt">Selecione e copie o código</label><textarea id="exp-txt" class="codigo" readonly rows="4">${esc(JSON.stringify(S))}</textarea></div>` : ''}
-      ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>O estudo do código será unido ao deste aparelho. As preferências do código serão carregadas.</p><label><input type="checkbox" id="imp-substituir"> Substituir o estudo deste aparelho pelo código, mantendo os certificados conquistados</label><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
+      ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>O estudo do código será unido ao deste aparelho. Repetir um código não desfaz Zerar nem correções já feitas. Cópias antigas diferentes podem conter atividades sobrepostas; para unir origens independentes com contagens exatas, use códigos exportados pelo app atualizado. As preferências do código serão carregadas.</p><label><input type="checkbox" id="imp-substituir"> Substituir o estudo deste aparelho pelo código, mantendo os certificados conquistados</label><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
       ${blocoDados()}
       ${msgDados ? `<p class="small" role="status" style="margin:0">${msgDados}</p>` : ''}
       <div class="sync" id="sync"></div></section>`;
@@ -2262,6 +2262,69 @@
     nuvem.ref = null; nuvem.on = false;
     nuvem.apagado = p.apagado || ''; nuvem.reapareceu = !!p.reapareceu;
   }
+  /* SHA-256 síncrono: a aceitação do clique não antecede o cálculo da identidade.
+     Sem rede/dependência e sem hash curto sujeito a colisões triviais. Vetores NIST em testes. */
+  function hashImportacao(texto) {
+    const bytes = new TextEncoder().encode(texto), tamanho = Math.ceil((bytes.length + 9) / 64) * 64;
+    const dados = new Uint8Array(tamanho); dados.set(bytes); dados[bytes.length] = 128;
+    const view = new DataView(dados.buffer); view.setUint32(tamanho - 8, Math.floor(bytes.length / 536870912)); view.setUint32(tamanho - 4, bytes.length * 8 >>> 0);
+    const k = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    const h = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19], w = new Int32Array(64), rot = (n, b) => n >>> b | n << 32 - b;
+    for (let off = 0; off < tamanho; off += 64) {
+      for (let i = 0; i < 64; i++) { if (i < 16) w[i] = view.getInt32(off + i * 4); else { const x = w[i - 15], y = w[i - 2]; w[i] = w[i - 16] + (rot(x, 7) ^ rot(x, 18) ^ x >>> 3) + w[i - 7] + (rot(y, 17) ^ rot(y, 19) ^ y >>> 10) | 0; } }
+      let [a,b,c,d,e,f,g,z] = h;
+      for (let i = 0; i < 64; i++) { const t = z + (rot(e, 6) ^ rot(e, 11) ^ rot(e, 25)) + (e & f ^ ~e & g) + k[i] + w[i] | 0, u = (rot(a, 2) ^ rot(a, 13) ^ rot(a, 22)) + (a & b ^ a & c ^ b & c) | 0; z = g; g = f; f = e; e = d + t | 0; d = c; c = b; b = a; a = t + u | 0; }
+      [a,b,c,d,e,f,g,z].forEach((v, i) => { h[i] = h[i] + v | 0; });
+    }
+    return h.map(x => (x >>> 0).toString(16).padStart(8, '0')).join('');
+  }
+  function identidadeImportacao(o) {
+    const x = opSemMeta(o); delete x.t; delete x._abas; delete x.sinc; delete x.ep; delete x.lin;
+    if (x.cfg) { delete x.cfg._importacoes; if (o.cfg && opValida(o.cfg._ops)) x.cfg._origemOperacional = opCopiar(opMigrar(o.cfg._ops)); }
+    const ordenar = x => Array.isArray(x) ? x.map(ordenar) : x && typeof x === 'object' ? Object.fromEntries(Object.keys(x).sort().map(k => [k, ordenar(x[k])])) : x;
+    return hashImportacao('eear-importacao-v1\n' + JSON.stringify(ordenar(x)));
+  }
+  function reciboImportacao(hash) { return JSON.stringify(['cfg', '_importacoes', hash]); }
+  function importacaoRecebida(m, hash) { const r = m.r[reciboImportacao(hash)], pre = 'i:' + hash; return !!(r && r.length === 3 && r[2] === true) || Object.values(m.c).some(c => Object.keys(c.a).some(id => id === pre || id.startsWith(pre + ':'))); }
+  function dadosContadores(st, m) {
+    const origem = opPlano(opEstado(m)), campos = opPlano(st);
+    [...new Set(Object.keys(campos).concat(Object.keys(m.c)))].forEach(k => {
+      const p = opCaminho(k); if (!p || p.length < 2 || !opContador(p)) return;
+      let o = st; p.slice(0, -1).forEach(x => { if (!o[x] || typeof o[x] !== 'object') o[x] = {}; o = o[x]; });
+      if (origem[k] === undefined) delete o[p[p.length - 1]]; else o[p[p.length - 1]] = origem[k];
+    });
+  }
+  /* Cópia sem proveniência: unidades estáveis do mesmo conteúdo. As unidades já cobertas pela
+     história observada são tombstones, não uma subtração nem um novo UUID para a mesma diferença.
+     e:* identifica alterações desta versão; nunca são consumidas como crédito de história antiga. */
+  function operacoesLegadas(m, st, hash, substituir) {
+    const d = opVazio(), campos = opPlano(st); d.n = Math.max(m.n, Date.now()) + 1;
+    d.r[reciboImportacao(hash)] = [d.n, 'i:' + hash, true];
+    let unidades = 0;
+    Object.keys(campos).forEach(k => {
+      const p = opCaminho(k); if (!p || p.length < 2 || !opContador(p)) return;
+      const v = campos[k]; if (!Number.isFinite(v) || v < 0 || (!opMaximo(p) && !Number.isSafeInteger(v))) throw new Error('O código contém uma contagem inválida. Nenhum dado foi alterado.');
+      const c = { a: {}, x: {} }, atual = m.c[k], pre = 'i:' + hash + ':', lidas = Object.fromEntries(Object.keys(atual && atual.l || {}).map(id => [id, true]));
+      if (opMaximo(p)) c.a['i:' + hash] = v;
+      else {
+        unidades += v; if (unidades > 10000) throw new Error('Esta cópia antiga tem contagens grandes demais para uma migração segura. Preserve o arquivo; nenhum dado foi alterado.');
+        let credito = 0, pos = 0;
+        const cobertura = substituir || !atual ? [] : opIdsVivos(atual).filter(id => !id.startsWith('e:') && !id.startsWith(pre)).sort().map(id => ({ id, ate: credito += atual.a[id] }));
+        for (let i = 0; i < v; i++) {
+          const id = pre + i.toString(36); if (atual && Object.prototype.hasOwnProperty.call(atual.a, id)) continue;
+          c.a[id] = 1;
+          if (p[0] === 'erros' || i < credito) { c.o = c.o || {}; c.o[id] = p[0] === 'erros' ? opCopiar(lidas) : {}; }
+          if (i < credito) { while (cobertura[pos].ate <= i) pos++; c.x[id] = true; c.o[id]['@coberto:' + cobertura[pos].id] = true; }
+        }
+      }
+      d.c[k] = c;
+    }); return d;
+  }
+  function substituirContadores(local, origem) {
+    const d = opVazio();
+    Object.keys(local.c).forEach(k => { const c = local.c[k], preservadas = (origem.c[k] || {}).a || {}; d.c[k] = { a: {}, x: {} }; Object.keys(c.a).forEach(id => { if (!Object.prototype.hasOwnProperty.call(preservadas, id)) d.c[k].x[id] = true; }); });
+    return opUnir(opUnir(local, origem), d);
+  }
   /* Importação explícita de arquivo/código antigo, independente do transporte de sincronização.
      Identidade/e-mail do backup nunca escolhem uma conta de destino. O progresso só entra na identidade atual. */
   function lerImportacao(texto) {
@@ -2276,16 +2339,29 @@
     const local = opCopiar(S), colado = mesclar(o);
     if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); return; }
     const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
-    const importado = conhecida ? opMeta(colado) : opVazio();
-    const combinado = conhecida ? opCombinarEstados(S, colado) : S;
-    loc.meta = opMeta(combinado); loc.vista = opCopiar(combinado);
+    const meta = opMeta(S); let hash;
+    try { hash = identidadeImportacao(o); } catch (e) { msgDados = 'Não foi possível identificar este código com segurança. Nada foi alterado; preserve a cópia original.'; render(); return; }
+    if (!conhecida && !opValida(colado.cfg._ops) && importacaoRecebida(meta, hash)) { pedindo = null; msgDados = 'Este código já foi aplicado. O estudo novo, as correções e o Zerar foram mantidos.'; render(); return; }
+    let importado;
+    try {
+      if (conhecida) importado = opMeta(colado);
+      else if (opValida(colado.cfg._ops)) {
+        const base = opEstado(colado.cfg._ops);
+        importado = opUnir(opMeta(base), opDelta(opMeta(base), base, colado, 'e:editar:' + hash));
+      } else importado = operacoesLegadas(meta, colado, hash, substituir);
+    } catch (e) { msgDados = e.message; render(); return; }
+    const m = substituir ? substituirContadores(meta, importado) : opUnir(meta, importado);
+    const combinado = opEstado(m);
     const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
-    S = substituir ? mesclar(c) : unirProgresso(null, l, c).st;
-    const certs = S.cfg.certs;
+    S = substituir ? mesclar(c) : opValida(colado.cfg._ops) ? combinado : unirProgresso(null, l, c).st;
+    dadosContadores(S, m); // não recriar uma operação para números já representados pelos IDs importados
+    const certs = S.cfg.certs, recebidas = combinado.cfg._importacoes;
     S.cfg = Object.assign({}, colado.cfg, { certs });
+    if (recebidas) S.cfg._importacoes = opCopiar(recebidas); else delete S.cfg._importacoes;
     S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(colado.cfg.certsZ) || 0);
     juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
-    pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado }); render();
+    loc.meta = m; loc.vista = opCopiar(combinado);
+    pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado, idImportacao: hash }); render();
 
   }
   function blocoMigracaoLegada() {
@@ -2426,8 +2502,12 @@
   // Os tombstones do destino continuam cobrindo contribuições que ele já recebeu e zerou.
   function opTransferencia(st) {
     const m = opMeta(st), u = opVazio(); u.n = m.n;
-    Object.keys(m.r).forEach(k => { const p = opCaminho(k), r = m.r[k]; if (r.length === 3 && (p[0] !== 'cfg' || ['fcv', 'fcAncora'].includes(p[1]))) u.r[k] = opCopiar(r); });
-    Object.keys(m.c).forEach(k => { const c = m.c[k]; u.c[k] = { a: Object.fromEntries(opIdsVivos(c).map(id => [id, c.a[id]])), x: {} }; });
+    Object.keys(m.r).forEach(k => { const p = opCaminho(k), r = m.r[k]; if (r.length === 3 && (p[0] !== 'cfg' || ['fcv', 'fcAncora', '_importacoes'].includes(p[1]))) u.r[k] = opCopiar(r); });
+    Object.keys(m.c).forEach(k => {
+      const c = m.c[k], vivos = opIdsVivos(c), creditos = Object.keys(c.x).filter(id => Object.keys((c.o || {})[id] || {}).some(x => x.startsWith('@coberto:') && vivos.includes(x.slice(9)))), ids = vivos.concat(creditos.filter(id => !vivos.includes(id)));
+      u.c[k] = { a: Object.fromEntries(ids.filter(id => Object.prototype.hasOwnProperty.call(c.a, id)).map(id => [id, c.a[id]])), x: Object.fromEntries(creditos.map(id => [id, true])) };
+      if (c.o) u.c[k].o = Object.fromEntries(ids.filter(id => c.o[id]).map(id => [id, opCopiar(c.o[id])]));
+    });
     Object.keys(m.s).forEach(k => { const c = m.s[k]; u.s[k] = { a: Object.fromEntries(Object.keys(c.a).filter(id => !c.x[id]).map(id => [id, opCopiar(c.a[id])])), x: {} }; });
     return u;
   }
@@ -2548,8 +2628,8 @@
     loc.timer = setInterval(() => consolidar(), 1500);
   }
   function persistir(remoto) {
-    const id = identidade, antes = loc.vista || novoEstado(), meta = loc.meta || opMeta(antes), oid = opId();
-    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
+    const id = identidade, antes = loc.vista || novoEstado(), meta = loc.meta || opMeta(antes), oid = 'e:' + opId();
+    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, remoto && remoto.idImportacao ? 'e:i:' + remoto.idImportacao : oid);
     if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
     const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: remoto !== true, origem: remoto === true ? 'remoto' : remoto ? 'importacao' : 'local', delta, st: opCopiar(S) };

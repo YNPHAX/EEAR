@@ -79,8 +79,12 @@
   // Os tombstones do destino continuam cobrindo contribuições que ele já recebeu e zerou.
   function opTransferencia(st) {
     const m = opMeta(st), u = opVazio(); u.n = m.n;
-    Object.keys(m.r).forEach(k => { const p = opCaminho(k), r = m.r[k]; if (r.length === 3 && (p[0] !== 'cfg' || ['fcv', 'fcAncora'].includes(p[1]))) u.r[k] = opCopiar(r); });
-    Object.keys(m.c).forEach(k => { const c = m.c[k]; u.c[k] = { a: Object.fromEntries(opIdsVivos(c).map(id => [id, c.a[id]])), x: {} }; });
+    Object.keys(m.r).forEach(k => { const p = opCaminho(k), r = m.r[k]; if (r.length === 3 && (p[0] !== 'cfg' || ['fcv', 'fcAncora', '_importacoes'].includes(p[1]))) u.r[k] = opCopiar(r); });
+    Object.keys(m.c).forEach(k => {
+      const c = m.c[k], vivos = opIdsVivos(c), creditos = Object.keys(c.x).filter(id => Object.keys((c.o || {})[id] || {}).some(x => x.startsWith('@coberto:') && vivos.includes(x.slice(9)))), ids = vivos.concat(creditos.filter(id => !vivos.includes(id)));
+      u.c[k] = { a: Object.fromEntries(ids.filter(id => Object.prototype.hasOwnProperty.call(c.a, id)).map(id => [id, c.a[id]])), x: Object.fromEntries(creditos.map(id => [id, true])) };
+      if (c.o) u.c[k].o = Object.fromEntries(ids.filter(id => c.o[id]).map(id => [id, opCopiar(c.o[id])]));
+    });
     Object.keys(m.s).forEach(k => { const c = m.s[k]; u.s[k] = { a: Object.fromEntries(Object.keys(c.a).filter(id => !c.x[id]).map(id => [id, opCopiar(c.a[id])])), x: {} }; });
     return u;
   }

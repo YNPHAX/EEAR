@@ -71,8 +71,8 @@
     loc.timer = setInterval(() => consolidar(), 1500);
   }
   function persistir(remoto) {
-    const id = identidade, antes = loc.vista || novoEstado(), meta = loc.meta || opMeta(antes), oid = opId();
-    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, oid);
+    const id = identidade, antes = loc.vista || novoEstado(), meta = loc.meta || opMeta(antes), oid = 'e:' + opId();
+    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, remoto && remoto.idImportacao ? 'e:i:' + remoto.idImportacao : oid);
     if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
     const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: remoto !== true, origem: remoto === true ? 'remoto' : remoto ? 'importacao' : 'local', delta, st: opCopiar(S) };

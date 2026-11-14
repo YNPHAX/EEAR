@@ -1,0 +1,37 @@
+/* Usa as funções reais; SHA-256 confrontado com Node crypto, incluindo Unicode e milhões de bytes.
+   Não substitui os testes de UI/servidor. Prova união, IDs, crédito, reset e contexto de correção. */
+const fs = require('fs'), vm = require('vm'), assert = require('assert'), nodeCrypto = require('crypto'), { TextEncoder: Encoder } = require('util');
+const base = () => ({ v: 1, t: 0, cfg: { certs: [] }, mod: {}, aula: {}, erros: {}, act: {}, feito: {}, sims: [] });
+const c = { window: {}, navigator: {}, loc: {}, TextEncoder: Encoder, novoEstado: base, mesclar: x => x, certValido: x => !!x.c, certChave: x => x.c };
+vm.createContext(c);
+vm.runInContext(['curso/app/14-abas.js','curso/app/12-identidades-importacao.js'].map(f => fs.readFileSync(f, 'utf8')).join('\n') + ';this.api={hashImportacao,identidadeImportacao,opSemente,opUnir,opEstado,opDelta,operacoesLegadas,opTransferencia,importacaoRecebida};', c);
+const a = c.api, copia = x => JSON.parse(JSON.stringify(x));
+for (const s of ['', 'abc', 'ação 🚀 你好', 'a'.repeat(55), 'a'.repeat(56), 'a'.repeat(64), 'a'.repeat(1000000)]) assert.strictEqual(a.hashImportacao(s), nodeCrypto.createHash('sha256').update(s).digest('hex'));
+const st = n => Object.assign(base(), { act: { dia: n } }), inicial = a.opSemente(st(2)), arquivo = st(5), hash = a.identidadeImportacao(arquivo);
+assert.strictEqual(hash, a.identidadeImportacao(Object.assign({}, arquivo, { t: 500 })));
+let d = a.operacoesLegadas(inicial, arquivo, hash, false), m = a.opUnir(inicial, d);
+assert.strictEqual(a.opEstado(m).act.dia, 5); assert(a.importacaoRecebida(m, hash));
+const deOutraBase = a.operacoesLegadas(a.opSemente(base()), arquivo, hash, false);
+assert.strictEqual(a.opEstado(a.opUnir(m, deOutraBase)).act.dia, 5, 'Mesmo backup e bases diferentes não duplicam suas unidades.');
+assert.strictEqual(a.opEstado(a.opUnir(a.opUnir(inicial, d), d)).act.dia, 5);
+const antes = a.opEstado(inicial), novo = copia(antes); novo.act.dia++;
+const incremento = a.opDelta(inicial, antes, novo, 'e:ESTUDO'), comNovo = a.opUnir(inicial, incremento);
+assert.strictEqual(a.opEstado(a.opUnir(comNovo, a.operacoesLegadas(comNovo, arquivo, hash, false))).act.dia, 6, 'Estudo novo não é consumido como crédito antigo.');
+const zero = copia(a.opEstado(m)); zero.act = {}; zero.feito = {};
+const reset = a.opUnir(m, a.opDelta(m, a.opEstado(m), zero, 'e:ZERAR'));
+assert.strictEqual(a.opEstado(a.opUnir(reset, deOutraBase)).act.dia, undefined, 'Repetição não desfaz tombstones do reset.');
+const limpo = a.opSemente(base()); assert.strictEqual(a.opEstado(a.opUnir(limpo, deOutraBase)).act.dia, 5, 'Zerar antes de observar o backup não perde sua primeira importação.');
+assert.throws(() => a.operacoesLegadas(inicial, st(10001), 'limite', false));
+const erro = base(); erro.erros.q = 2; const em = a.opSemente(erro), corrigiu = copia(erro); delete corrigiu.erros.q;
+const ec = a.opUnir(em, a.opDelta(em, erro, corrigiu, 'CORRIGIU')), eb = a.opEstado(ec), posterior = copia(eb); posterior.erros.q = 1;
+const en = a.opUnir(ec, a.opDelta(ec, eb, posterior, 'e:ERRO-NOVO'));
+assert.strictEqual(a.opEstado(a.opUnir(ec, a.opTransferencia(a.opEstado(en)))).erros.q, 1);
+console.log('✓ SHA-256, unidades estáveis, bases distintas, repetição, estudo novo, reset, limite e causalidade de erros.');
+// Crédito não é um reset: viaja com a contribuição que o cobre; Zerar na origem não apaga o destino.
+const old2 = st(2), h2 = a.identidadeImportacao(old2), r2 = a.opUnir(a.opSemente(base()), a.operacoesLegadas(a.opSemente(base()), old2, h2, false));
+const r5 = a.opUnir(r2, a.operacoesLegadas(r2, arquivo, hash, false)), solo5 = a.opUnir(a.opSemente(base()), deOutraBase);
+assert.strictEqual(a.opEstado(a.opUnir(solo5, a.opTransferencia(a.opEstado(r5)))).act.dia, 5);
+const z5 = copia(a.opEstado(r5)); z5.act = {};
+const origemZerada = a.opUnir(r5, a.opDelta(r5, a.opEstado(r5), z5, 'e:Z-ORIGEM'));
+assert.strictEqual(a.opEstado(a.opUnir(solo5, a.opTransferencia(a.opEstado(origemZerada)))).act.dia, 5);
+console.log('✓ Transferência conserva créditos de migração sem propagar Zerar da outra origem.');

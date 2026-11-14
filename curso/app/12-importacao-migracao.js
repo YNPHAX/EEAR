@@ -12,16 +12,29 @@
     const local = opCopiar(S), colado = mesclar(o);
     if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); return; }
     const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
-    const importado = conhecida ? opMeta(colado) : opVazio();
-    const combinado = conhecida ? opCombinarEstados(S, colado) : S;
-    loc.meta = opMeta(combinado); loc.vista = opCopiar(combinado);
+    const meta = opMeta(S); let hash;
+    try { hash = identidadeImportacao(o); } catch (e) { msgDados = 'Não foi possível identificar este código com segurança. Nada foi alterado; preserve a cópia original.'; render(); return; }
+    if (!conhecida && !opValida(colado.cfg._ops) && importacaoRecebida(meta, hash)) { pedindo = null; msgDados = 'Este código já foi aplicado. O estudo novo, as correções e o Zerar foram mantidos.'; render(); return; }
+    let importado;
+    try {
+      if (conhecida) importado = opMeta(colado);
+      else if (opValida(colado.cfg._ops)) {
+        const base = opEstado(colado.cfg._ops);
+        importado = opUnir(opMeta(base), opDelta(opMeta(base), base, colado, 'e:editar:' + hash));
+      } else importado = operacoesLegadas(meta, colado, hash, substituir);
+    } catch (e) { msgDados = e.message; render(); return; }
+    const m = substituir ? substituirContadores(meta, importado) : opUnir(meta, importado);
+    const combinado = opEstado(m);
     const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
-    S = substituir ? mesclar(c) : unirProgresso(null, l, c).st;
-    const certs = S.cfg.certs;
+    S = substituir ? mesclar(c) : opValida(colado.cfg._ops) ? combinado : unirProgresso(null, l, c).st;
+    dadosContadores(S, m); // não recriar uma operação para números já representados pelos IDs importados
+    const certs = S.cfg.certs, recebidas = combinado.cfg._importacoes;
     S.cfg = Object.assign({}, colado.cfg, { certs });
+    if (recebidas) S.cfg._importacoes = opCopiar(recebidas); else delete S.cfg._importacoes;
     S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(colado.cfg.certsZ) || 0);
     juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
-    pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado }); render();
+    loc.meta = m; loc.vista = opCopiar(combinado);
+    pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado, idImportacao: hash }); render();
 
   }
   function blocoMigracaoLegada() {
