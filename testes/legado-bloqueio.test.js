@@ -34,7 +34,7 @@ const inicial = nome => ({ v: 1, t: Date.now() - 60000, cfg: { nome, alvo: 'cfs2
       }
       window.EEAR_EXCLUSAO_NUVEM = true; // nem a flag antiga de teste pode contornar a política
       const chamada = op => () => window.__chamadaLegada(op);
-      window.claude = { use: async k => k === 'user' ? { id: async () => id } : { doc: () => ({ get: chamada('get'), set: chamada('set'), acquire: chamada('acquire'), transacao: chamada('transacao') }) } };
+      window.claude = { use: async k => k === 'user' ? { id: async () => id } : await window.__chamadaLegada('use:' + k) || { doc: () => ({ get: chamada('get'), set: chamada('set'), acquire: chamada('acquire'), transacao: chamada('transacao') }) } };
     }, { id, locks, st: inicial('Pessoa fictícia ' + id) });
     return ctx;
   }

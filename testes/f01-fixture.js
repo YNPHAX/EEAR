@@ -29,6 +29,9 @@ async function abrir(alvo) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'eear-f01-site-')), saida = path.join(dir, 'site');
   const cfg = path.join(dir, 'sem-firebase.json'); fs.writeFileSync(cfg, 'null');
   execFileSync('python3', ['web/build.py', saida], { cwd: alvo, stdio: 'ignore', env: Object.assign({}, process.env, { EEAR_FIREBASE_CONFIG: cfg }) });
+  const bundle = fs.readFileSync(path.join(alvo, 'curso/app.js'));
+  if (!bundle.equals(fs.readFileSync(path.join(saida, 'app.js')))) throw new Error('O build não serviu exatamente o bundle publicado.');
+  console.log('Runtime publicado SHA256: ' + require('crypto').createHash('sha256').update(bundle).digest('hex'));
   const ix = path.join(saida, 'index.html'), original = fs.readFileSync(ix, 'utf8');
   if (original.includes('window.EEAR_FIREBASE') || !original.includes('window.EEAR_SITE = "site";')) throw new Error('Build da fixture não está isolado.');
   fs.writeFileSync(ix, original.replace('window.EEAR_SITE = "site";', `window.EEAR_SITE = "site"; window.EEAR_FIREBASE = ${JSON.stringify({

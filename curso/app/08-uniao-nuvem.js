@@ -1,3 +1,4 @@
+  function canonico(x) { return Array.isArray(x) ? x.map(canonico) : x && typeof x === 'object' ? Object.keys(x).sort().reduce((o, k) => { o[k] = canonico(x[k]); return o; }, {}) : x; }
   /* ---------- união do progresso entre aparelhos ----------
      A nuvem guardava o progresso inteiro do último aparelho que gravou: quem estudava offline em dois aparelhos perdia o
      que fez num deles. Agora cada sincronização une os dois lados em três vias. A base é a última versão que este

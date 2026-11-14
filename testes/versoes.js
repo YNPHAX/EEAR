@@ -2,7 +2,7 @@
    com progresso antigo. Usado por testes/plataforma.test.js, que monta o site e abre o navegador. */
 const fs = require('fs'), os = require('os'), path = require('path');
 
-module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, ok }) {
+module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, ok, historico = false }) {
   console.log('\n== versão dos flashcards (cópia do site com os 7 cartões da POR02 na versão 2)');
   {
     /* Cópia isolada do site montado: os cartões da POR02 ganham a versão 2, como numa reformulação. Nada do curso muda. */
@@ -103,6 +103,7 @@ module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, 
       r = await abrirEm(srv2.url, origem, T0 + DIA, tz);
       ok(await r.vencidos() === vImp, 'o aparelho que recebeu o progresso mostra os mesmos cartões vencidos que o original');
       await r.ctx.close();
+      if (historico) {
       // nuvem simulada mais nova, com versões vistas: o aparelho fica com elas, sem misturar com as próprias
       const nuvem = JSON.parse(JSON.stringify(origem)); nuvem.t = Date.now() + 60000;
       const ctx = await b.newContext({ serviceWorkers: 'block', timezoneId: tz }), p = await ctx.newPage();
@@ -112,6 +113,7 @@ module.exports = async function testarVersoes({ E, b, srv, saida, base, servir, 
       const sinc = await p.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1@claude:aluno-1')));
       ok(JSON.stringify([sinc.fc, sinc.cfg.fcv, sinc.cfg.fcAncora]) === JSON.stringify([nuvem.fc, nuvem.cfg.fcv, nuvem.cfg.fcAncora]), 'sincronização simulada: cartões e versões vêm juntos da nuvem mais nova');
       await ctx.close();
+      }
       r = await abrirEm(srv2.url, origem, T0 + DIA, tz);
       await r.p.click('[data-a="tab"][data-v="plano"]'); await r.p.click('[data-a="zerar"]'); await r.p.waitForTimeout(50); await r.p.click('[data-a="zerarok"]'); await r.p.waitForTimeout(100);
       const z = JSON.parse(await r.guardado());

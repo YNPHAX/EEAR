@@ -101,7 +101,7 @@
       const bloq = identidade && !sincronizado() && !nuvem.apagado; // nuvem apagada a pedido: a cópia daqui é a última
       h += `<div class="confirm"><p>${nuvem.apagado && !bloq ? 'Esta é a última cópia do progresso desta conta (a da nuvem foi apagada). ' : ''}${bloq ? (nuvem.legado ? 'Não dá para apagar com base na confirmação antiga: a nuvem legada permite sobrescritas. Preserve e exporte a cópia deste aparelho.' : 'Não dá para apagar agora: parte do progresso desta conta ainda não está salva na nuvem e seria perdida. Conecte-se à internet e tente de novo, ou baixe seus dados antes.') : `Apagar deste aparelho ${identidade ? 'o progresso desta conta (a nuvem continua com ele)' : 'todo o progresso feito sem conta, incluindo o nome e a configuração do plano'}? Isso não pode ser desfeito.`}</p><button class="btn sm" data-a="cancelar">Cancelar</button>${bloq ? '' : '<button class="btn sm pri" data-a="dadosapagarok">Apagar deste aparelho</button>'}${!identidade && outras ? `<button class="btn sm" data-a="dadosapagartudo">Apagar também ${plural(outras, 'a outra conta guardada', 'as outras contas guardadas')} aqui</button>${pendentes ? `<p class="small" style="margin:0;flex-basis:100%">${plural(pendentes, 'conta tem', 'contas têm')} progresso que a nuvem ainda não confirmou e não ${pendentes === 1 ? 'será apagada' : 'serão apagadas'}: entre nela para enviá-lo.</p>` : ''}` : ''}</div>`;
     }
-    return h + blocoNuvemClaude();
+    return h + blocoMigracaoLegada();
   }
   async function baixarDados() {
     const id = identidade;

@@ -5,6 +5,7 @@ const fs = require('fs'), os = require('os'), path = require('path'), http = req
 const { execFileSync } = require('child_process');
 
 const RAIZ = path.resolve(__dirname, '..');
+const historico = process.env.EEAR_HISTORICO_LEGADO === '1';
 let falhas = 0;
 const ok = (cond, msg) => { console.log(`${cond ? '  ✓' : '  ✗'} ${msg}`); if (!cond) falhas++; };
 
@@ -47,10 +48,10 @@ async function testarNavegador(E) {
   }
   const intactos = (a, d) => ['mod', 'fc', 'erros', 'sims', 'act', 'ultAula'].every(k => require('util').isDeepStrictEqual(a[k], d[k]));
 
-  // Seleção de grupos só para desenvolvimento; sem variável o CI continua executando toda a matriz.
+  // Grupos legados só são acessíveis pelo runner histórico; os critérios originais continuam intactos.
   if (process.env.EEAR_GRUPOS) {
     const grupos = { robustez: testarRobustez, contas: testarContas, abas: testarAbas, interrupcao: testarInterrupcao, recuperacao: testarRecuperacao, duravel: testarDuravel, sincronia: testarSincronia, nuvem: testarNuvemClaude, exclusao: testarExclusaoNuvem, epoca: testarEpocaNuvem, progresso2: testarProgresso2, falhas: testarFalhasNuvem };
-    for (const nome of process.env.EEAR_GRUPOS.split(',')) { if (!grupos[nome]) throw new Error('Grupo desconhecido: ' + nome); await grupos[nome]({ E, b, srv, saida, base, servir, ok }); }
+    for (const nome of process.env.EEAR_GRUPOS.split(',')) { if (!grupos[nome]) throw new Error('Grupo desconhecido: ' + nome); if (!historico && ['contas', 'sincronia', 'nuvem', 'exclusao', 'epoca', 'progresso2', 'falhas'].includes(nome)) throw new Error('Use testes/historicos-legado.test.js para o grupo histórico ' + nome); await grupos[nome]({ E, b, srv, saida, base, servir, ok }); }
     await b.close(); srv.fechar(); fs.rmSync(saida, { recursive: true, force: true }); return;
   }
   console.log('\n== simulado completo no tempo do edital (4h20)');
@@ -242,7 +243,7 @@ async function testarNavegador(E) {
       ok(certs(st) === certs(comCert), 'colar um progresso com os mesmos certificados não duplica nenhum');
       await r.ctx.close();
     }
-    { // 8. sincronização com a nuvem (simulada): não perde certificados e respeita o "Zerar progresso"
+    if (historico) { // 8. sincronização com a nuvem (simulada): não perde certificados e respeita o "Zerar progresso"
       let r = await abrir(legado(fisPor)); await fazerQuiz(r.p, 'FIS18'); const local = await r.salvo(); await r.ctx.close();
       const nuvem = async (estado, doc) => {
         const ctx = await b.newContext({ serviceWorkers: 'block' }), p = await ctx.newPage(), erros = [];
@@ -287,9 +288,10 @@ async function testarNavegador(E) {
     ok(!erros.length, 'matéria desconhecida no histórico não quebra a aba Simulados' + (erros.length ? ': ' + erros[0] : ''));
     await ctx.close();
   }
-  await testarVersoes({ E, b, srv, saida, base, servir, ok });
+  await testarVersoes({ E, b, srv, saida, base, servir, ok, historico });
   await testarCelular({ E, b, srv, base, ok });
   await testarRobustez({ b, srv, base, ok });
+  if (historico) {
   await testarSincronia({ b, srv, base, ok });
   await testarContas({ b, srv, base, ok });
   await testarNuvemClaude({ b, srv, base, ok });
@@ -297,6 +299,7 @@ async function testarNavegador(E) {
   await testarEpocaNuvem({ b, srv, ok });
   await testarProgresso2({ b, srv, ok });
   await testarFalhasNuvem({ b, srv, ok });
+  }
   await testarAbas({ b, srv, base, ok });
   await testarInterrupcao({ b, srv, saida, base, ok });
   await testarRecuperacao({ b, srv, saida, base, ok });
@@ -309,7 +312,8 @@ async function testarNavegador(E) {
 (async () => {
   const E = carregarDados();
   testarDados(E);
-  require('./regras-nuvem.js').testarRegras(ok);
+  console.log(historico ? 'HISTÓRICO LEGADO: critérios originais, transporte desativado; não representa sincronização Firebase.' : 'PLATAFORMA OFICIAL: armazenamento e UI locais. Firebase é validado separadamente nos emuladores. Histórico: node testes/historicos-legado.test.js (incompatibilidade conhecida; não executado neste comando).');
+  if (historico) require('./regras-nuvem.js').testarRegras(ok);
   testarContasMat(E);
   testarContasFis(E);
   await testarNavegador(E);

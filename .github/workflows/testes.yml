@@ -6,6 +6,11 @@ on:
   push:
     branches: [main, 'claude/**', 'codex/**']
   workflow_dispatch:
+    inputs:
+      historico_legado:
+        description: 'Executar critérios históricos do transporte desativado (incompatibilidade conhecida)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -69,3 +74,27 @@ jobs:
             EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/operacoes-dupla-falha.test.js
           NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
             node testes/cache-restaurado.test.js
+          NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
+            EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/sincronia-firebase.test.js
+
+  # Evidência histórica opcional, com saída original: não mascara a falha nem integra o gate Firebase.
+  historico-legado:
+    if: github.event_name == 'workflow_dispatch' && inputs.historico_legado
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Instalar o navegador histórico
+        run: |
+          npm install --prefix "$RUNNER_TEMP/pw" --no-save --no-audit --no-fund playwright@1.63.0
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Critérios históricos sem alterar asserções
+        shell: bash
+        run: |
+          set -o pipefail
+          NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/historicos-legado.test.js 2>&1 | tee historico-legado.log

@@ -6,7 +6,7 @@
       el.dataset.nuvem = nuvem.legado ? 'bloqueada-legado' : nuvem.erro ? 'falhou' : nuvem.on && !nuvem.pendente ? 'confirmado' : nuvem.ref ? 'pendente' : 'desligada';
       if (nuvem.legado) {
         const local = el.dataset.local === 'confirmado' ? 'Checkpoint confirmado neste aparelho.' : el.dataset.local === 'carregando' ? 'Carregando o checkpoint deste aparelho.' : el.dataset.local === 'pendente' ? 'Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.' : el.dataset.local === 'reserva' ? 'Cópia de reserva sem proteção contra queda. Exporte antes de fechar.' : 'O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.';
-        el.textContent = local + (recuperar ? ' Há dados preservados para recuperação; veja a tela Hoje.' : '') + ' Sincronização pendente e bloqueada: a nuvem legada permite que clientes antigos sobrescrevam dados confirmados. Não há confirmação remota segura. Preserve esta cópia e exporte em Plano › Dados.';
+        el.textContent = local + (recuperar ? ' Há dados preservados para recuperação; veja a tela Hoje.' : '') + ' Sincronização antiga desativada: clientes antigos poderiam sobrescrever dados confirmados. Não há confirmação remota segura. Preserve esta cópia e exporte em Plano › Dados para importar na conta Firebase desejada.';
         return;
       }
     }

@@ -262,7 +262,6 @@
     if (z) cfg.certsZ = z; else delete cfg.certsZ;
     return JSON.stringify([cfg.certs, cfg.certsZ || 0]) !== antes;
   }
-
   /* Progresso que este app não consegue ler (corrompido, ou gravado por uma versão futura com outro formato): antes que o
      primeiro salvar() grave por cima, uma cópia fica em LS_REC, e a tela Hoje oferece copiá-la. */
   const LS_REC = 'missao-eear-v1-recuperar';
@@ -295,12 +294,11 @@
     return st;
   }
   try {
-    /* A conta lembrada só vale onde ela pode ser confirmada (Firebase configurado, ou o link do curso no Claude). */
+    /* Com Firebase configurado, só sua sessão pode selecionar a identidade; dados legados continuam preservados. */
     const c = localStorage.getItem(LS_CONTA) || '';
-    if ((c.indexOf('firebase:') === 0 && window.EEAR_FIREBASE) || (c.indexOf('claude:') === 0 && window.claude)) identidade = c;
+    if ((c.indexOf('firebase:') === 0 && window.EEAR_FIREBASE) || (c.indexOf('claude:') === 0 && !window.EEAR_FIREBASE && window.claude)) identidade = c;
   } catch (e) { /* sem armazenamento local */ }
   S = carregar();
-
   /* pendente não é confirmação remota. O transporte legado não tem rejeição de escritores antigos no servidor:
      suas confirmações anteriores não autorizam descartar a cópia local (10-nuvem-claude.js). */
   const nuvem = { ref: null, on: false, busy: false, again: false, fb: false, futura: false, conta: null, pendente: false, semRede: false, apagado: '', reapareceu: false, refPausada: null, reenviar: false, lida: false, erro: '', falhas: 0, tRetry: null, legado: identidade.indexOf('claude:') === 0 }; // lida: a nuvem desta conta já foi lida nesta abertura; erro, falhas, tRetry: veja 13-falhas-nuvem.js
@@ -337,9 +335,8 @@
   /* Calcula a união deste aparelho com o progresso da nuvem (o), sem efeito nenhum: dentro de uma transação, pode rodar
      de novo com uma leitura mais nova. Devolve o que gravar na nuvem (ou null) e o que aplicar aqui depois. */
   function planejarUniao(o) {
-    const ex = exclusaoNaNuvem(o); // marca de exclusão (11-exclusao-nuvem.js): nada é unido nem gravado
-    if (ex && !ex.ignorar) return ex;
-    if (ex) o = null; // o aluno pediu para enviar de novo: a marca é substituída pelo progresso deste aparelho
+    const ex = exclusaoNaNuvem(o); // formatos antigos de exclusão (11-formatos-legados.js): nada é unido nem gravado
+    if (ex) return ex;
     if (o && (typeof o !== 'object' || o.v !== 1)) return { futura: true };
     const local = mesclar(JSON.parse(JSON.stringify(S)));
     let u = local, perdido = null, c = null, operacional = false, assinado = true, ep = '', lin = [];
@@ -377,7 +374,7 @@
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
-    let p = null, modo = 'ok';
+    let p = null;
     const planejar = o => {
       if (!atual()) return null; // inclusive callbacks repetidos pelo Firestore após troca de conta
       p = planejarUniao(o);
@@ -385,13 +382,12 @@
       p.id = novoIdGravacao(); // esta gravação entra na linhagem; a base, se confirmada, a representa
       return assinar(Object.assign(JSON.parse(JSON.stringify(p.u)), { ep: p.ep, lin: p.lin.concat(p.id).slice(-LIN_MAX) }));
     };
-    if (ref.transacao) await ref.transacao(planejar);
-    else modo = await lerUnirGravar(ref, planejar);
+    if (typeof ref.transacao !== 'function') throw new Error('Sincronização Firebase exige transação.');
+    await ref.transacao(planejar);
     if (!atual()) return; // não sobrescreve o cache de outra sessão/abertura nem confirma a leitura dela
     nuvem.lida = true; // mesmo sem nada a gravar (nuvem e aparelho vazios): a migração do caminho antigo pode seguir
     if (nuvem.conta !== conta0 || !p || p.nada) return;
     if (p.apagado || p.reapareceu) { pausarPorExclusao(ref, p); render(); return; }
-    nuvem.reenviar = false; // "Enviar de novo" atendido: a nuvem tem o progresso deste aparelho
     if (p.futura) { nuvem.ref = null; nuvem.on = false; nuvem.futura = true; return; }
     if (p.perdido) { recuperar = JSON.stringify(p.perdido); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
     /* O que o aluno fez enquanto a gravação viajava também fica: união da cópia usada no cálculo com o estado atual. */
@@ -403,33 +399,18 @@
       if (V.v === 'inicio') V = { v: 'hoje' };
       render();
     }
-    nuvem.on = true; nuvem.semRede = false; nuvem.pendente = modo === 'conferir' || !uIgual(S, p.u);
-    depoisDeGravar(modo, p);
+    nuvem.on = true; nuvem.semRede = false; nuvem.pendente = !uIgual(S, p.u);
+    gravarBase(p.u, p.ep, p.id);
     if (!uIgual(u, p.u)) gravar(); // a união com o que veio depois ainda não está na nuvem
   }
   async function sincronizar(ref, conta) {
     nuvem.conta = String(conta || '');
-    if (nuvem.conta.indexOf('claude:') === 0 || !ref || typeof ref.transacao !== 'function') { bloquearNuvemLegada(); return; }
+    if (nuvem.conta.indexOf('firebase:') !== 0 || !ref || typeof ref.transacao !== 'function') { bloquearNuvemLegada(); return; }
     nuvem.legado = false;
     nuvem.ref = ref; nuvem.futura = false; nuvem.semTrava = false; nuvem.semRede = false; nuvem.apagado = ''; nuvem.reapareceu = false; nuvem.lida = false; nuvem.erro = ''; nuvem.falhas = 0; nuvem.conta = String(conta || '');
     await liderar(); // trava de líder (14-abas.js): livre, esta aba sincroniza já; senão, quando a líder fechar
     if (lider.ativa) await gravar();
   }
-  async function conectar() {
-    const cl = window.claude;
-    if (!cl || typeof cl.use !== 'function') return;
-    try {
-      const res = await Promise.all([cl.use('db'), cl.use('user')]);
-      const db = res[0], user = res[1];
-      if (!db || !user) return;
-      const id = await user.id();
-      if (!id) return;
-      usarIdentidade('claude:' + id); // o progresso local passa a ser o desta conta
-      await sincronizar(db.doc(caminhoNuvem(id)), 'claude:' + id); // progresso2/<id> (12-caminho-novo.js)
-      migrarCaminhoAntigo(db.doc(caminhoAntigo(id)), 'claude:' + id); // retorna sem leitura enquanto o transporte legado estiver bloqueado
-    } catch (e) { nuvem.ref = null; nuvem.on = false; syncInfo(); }
-  }
-
   /* ---------- conta do aluno no site: login e progresso na nuvem (Firebase, quando configurado) ---------- */
   const FB = window.EEAR_FIREBASE || null, FB_VERSAO = '12.19.0';
   const conta = { pronto: !FB, user: null, api: null, msg: '', email: '', iniciando: false };
@@ -492,8 +473,6 @@
     /* Envelope Firebase v2 impede escritores antigos de remover identidades; uma versão futura (v > 2): devolve só a versão, para a união recusar e nada ser gravado por cima. */
     const deDoc = x => (!x ? null : Number(x.v) > 2 ? { v: Number(x.v) } : JSON.parse(x.dados));
     const ref = {
-      get: async () => { const s = await fs.getDoc(doc), x = s.exists() ? s.data() : null; return { exists: !!x, data: () => deDoc(x) }; },
-      set: o => fs.setDoc(doc, paraDoc(o)),
       transacao: f => fs.runTransaction(db, async tx => { const s = await tx.get(doc), novo = f(deDoc(s.exists() ? s.data() : null)); if (novo) tx.set(doc, paraDoc(novo)); })
     };
     sincronizar(ref, id);
@@ -507,7 +486,7 @@
     if (!FB) return '';
     if (!conta.pronto) return '<section class="card"><h2 class="h2">Sua conta</h2><p class="small muted" style="margin:0">Carregando o login…</p></section>';
     if (conta.user) return cartaoContaLogada(conta.user);
-    return `<section class="card" id="conta"><h2 class="h2">Entrar ou criar conta</h2><p class="small" style="margin:0">Com uma conta grátis, seu progresso fica salvo na nuvem e você continua no celular, no computador ou no app.</p>
+    return `<section class="card" id="conta"><h2 class="h2">Entrar ou criar conta</h2><p class="small" style="margin:0">A conta Firebase do curso sincroniza seu progresso entre celular, computador e app. O login do ambiente antigo não substitui esta conta.</p>
       ${window.EEAR_SITE === 'site' ? '<div class="row"><button class="btn pri" data-a="fbgoogle">Entrar com Google</button></div>' : ''}
       <form class="form" onsubmit="return false"><div class="field"><label for="fb-email">E-mail</label><input type="email" id="fb-email" autocomplete="email" value="${esc(conta.email)}"></div><div class="field"><label for="fb-senha">Senha</label><input type="password" id="fb-senha" autocomplete="current-password"></div></form>
       <div class="row"><button class="btn" data-a="fbentrar">Entrar</button><button class="btn" data-a="fbcriar">Criar conta</button><button class="btn ghost" data-a="fbsenha">Esqueci a senha</button></div>
@@ -1819,28 +1798,7 @@
       }
       case 'recdescartar': descartarRecuperacao(); break;
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
-      case 'impok': {
-        const t = document.getElementById('imp-txt'), substituir = !!(document.getElementById('imp-substituir') || {}).checked;
-        let o = null;
-        try { o = JSON.parse((t && t.value || '').trim()); } catch (e) { o = null; }
-        if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); break; }
-        // Importar acrescenta estudo; ausência no código antigo não é uma ordem de apagar progresso novo.
-        const local = opCopiar(S), colado = mesclar(o);
-        if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); break; }
-        const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
-        const importado = conhecida ? opMeta(colado) : opVazio();
-        const combinado = conhecida ? opCombinarEstados(S, colado) : S;
-        loc.meta = opMeta(combinado); loc.vista = opCopiar(combinado);
-        const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
-        S = substituir ? mesclar(c) : unirProgresso(null, l, c).st;
-        const certs = S.cfg.certs;
-        S.cfg = Object.assign({}, colado.cfg, { certs });
-        S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(colado.cfg.certsZ) || 0);
-        juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
-        pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado }); render();
-
-        break;
-      }
+      case 'impok': { const t = document.getElementById('imp-txt'); importarCodigo(t && t.value, !!(document.getElementById('imp-substituir') || {}).checked); break; }
       case 'instalar': if (instalar) { const p = instalar; instalar = null; p.prompt(); p.userChoice.then(() => render(), () => render()); } break;
       case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Math.max(Date.now(), (Number(cfg.certsZ) || 0) + 1); delete S.cfg.fcv; delete S.cfg.fcAncora; pedindo = null; salvar(); go('hoje'); break; }
       default: break;
@@ -1875,15 +1833,16 @@
   });
 
   /* Mantém a tela atual (quiz, flashcards) quando uma nova versão da página é publicada. */
-  const hot = window.claude && window.claude.hot;
+  const hot = !FB && window.claude && window.claude.hot;
   try { if (hot && typeof hot.snapshot === 'function') hot.snapshot(() => ({ V, QZ, FC, mapa })); } catch (e) { /* ignora */ }
   function iniciar(data) {
     if (data && data.V && data.V.v) { V = data.V; QZ = data.QZ || null; FC = data.FC || null; mapa = !!data.mapa; }
     render();
-    conectar();
+    conectarLegadoLocal();
     contaIniciar();
   }
   if (hot && typeof hot.ready === 'function') hot.ready(iniciar); else iniciar((hot && hot.data) || {});
+  function canonico(x) { return Array.isArray(x) ? x.map(canonico) : x && typeof x === 'object' ? Object.keys(x).sort().reduce((o, k) => { o[k] = canonico(x[k]); return o; }, {}) : x; }
   /* ---------- união do progresso entre aparelhos ----------
      A nuvem guardava o progresso inteiro do último aparelho que gravou: quem estudava offline em dois aparelhos perdia o
      que fez num deles. Agora cada sincronização une os dois lados em três vias. A base é a última versão que este
@@ -2165,7 +2124,7 @@
       const bloq = identidade && !sincronizado() && !nuvem.apagado; // nuvem apagada a pedido: a cópia daqui é a última
       h += `<div class="confirm"><p>${nuvem.apagado && !bloq ? 'Esta é a última cópia do progresso desta conta (a da nuvem foi apagada). ' : ''}${bloq ? (nuvem.legado ? 'Não dá para apagar com base na confirmação antiga: a nuvem legada permite sobrescritas. Preserve e exporte a cópia deste aparelho.' : 'Não dá para apagar agora: parte do progresso desta conta ainda não está salva na nuvem e seria perdida. Conecte-se à internet e tente de novo, ou baixe seus dados antes.') : `Apagar deste aparelho ${identidade ? 'o progresso desta conta (a nuvem continua com ele)' : 'todo o progresso feito sem conta, incluindo o nome e a configuração do plano'}? Isso não pode ser desfeito.`}</p><button class="btn sm" data-a="cancelar">Cancelar</button>${bloq ? '' : '<button class="btn sm pri" data-a="dadosapagarok">Apagar deste aparelho</button>'}${!identidade && outras ? `<button class="btn sm" data-a="dadosapagartudo">Apagar também ${plural(outras, 'a outra conta guardada', 'as outras contas guardadas')} aqui</button>${pendentes ? `<p class="small" style="margin:0;flex-basis:100%">${plural(pendentes, 'conta tem', 'contas têm')} progresso que a nuvem ainda não confirmou e não ${pendentes === 1 ? 'será apagada' : 'serão apagadas'}: entre nela para enviá-lo.</p>` : ''}` : ''}</div>`;
     }
-    return h + blocoNuvemClaude();
+    return h + blocoMigracaoLegada();
   }
   async function baixarDados() {
     const id = identidade;
@@ -2245,161 +2204,67 @@
       default: break;
     }
   });
-  /* O backend legado (get/set/acquire) não possui transação, CAS ou fencing de escritores no servidor.
-     Um set antigo pode chegar DEPOIS de get conferir a gravação: acquire é apenas cooperativo e expira.
-     Nenhuma espera, assinatura do cliente ou releitura prova que esse snapshot permanecerá protegido.
-     Bloqueio até existir um contrato servidor validado: não escreve, não migra snapshots automaticamente,
-     não confirma remotamente e não autoriza apagar o checkpoint por uma BASE antiga. Firebase usa transação
-     e envelope v2 monotônico; este bloqueio não altera sua implementação. Proposta: auditoria/sincronizacao-legada.md. */
+  /* Transporte legado permanentemente desativado nesta arquitetura: não solicita db, doc, get, set ou acquire.
+     Somente a identidade fornecida pelo host pode abrir sua cópia LOCAL quando Firebase não está configurado.
+     Firebase tem precedência: nem hot.ready nem resposta antiga do host podem trocar sua sessão. */
   function bloquearNuvemLegada() {
     clearTimeout(nuvem.tRetry); clearTimeout(tSave);
     nuvem.legado = true; nuvem.ref = null; nuvem.refPausada = null; nuvem.on = false;
-    nuvem.pendente = true; nuvem.semRede = false; nuvem.lida = false;
+    nuvem.pendente = false; nuvem.semRede = false; nuvem.lida = false;
     syncInfo();
   }
-  async function lerUnirGravar() {
-    bloquearNuvemLegada();
-    const e = new Error('Transporte sem proteção contra escritores legados bloqueado.'); e.code = 'legacy-unsafe'; throw e;
+  async function conectarLegadoLocal() {
+    if (FB) return;
+    const cl = window.claude;
+    if (!cl || typeof cl.use !== 'function') return;
+    try {
+      const user = await cl.use('user'), id = user && await user.id();
+      if (!id || FB || conta.user) return;
+      usarIdentidade('claude:' + id);
+      bloquearNuvemLegada();
+    } catch (e) { syncInfo(); } // falhar no host nunca confirma nem modifica a sincronização oficial
   }
-  /* Comparação sem depender da ordem das chaves (a nuvem pode devolver o documento em outra ordem). */
-  function canonico(x) { return Array.isArray(x) ? x.map(canonico) : x && typeof x === 'object' ? Object.keys(x).sort().reduce((o, k) => { o[k] = canonico(x[k]); return o; }, {}) : x; }
-  /* Exclusão legada também fica bloqueada em exclusaoLiberada; helpers mantidos para ler esse formato antigo. */
-  const TRAVA_MS = 5000;
-  function holderNovo() { return 'aba-' + Math.random().toString(36).slice(2) + '-' + Date.now().toString(36); }
-  function ocupada(espera) { const e = new Error('nuvem ocupada por outro aparelho'); e.code = 'unavailable'; e.espera = espera; return e; }
-  function depoisDeGravar(modo, p) {
-    if (modo === 'ok' && !nuvem.legado) gravarBase(p.u, p.ep, p.id);
-  }
-  /* ---------- apagar o progresso da nuvem do curso no Claude, a pedido do próprio aluno ----------
-     A API do curso no Claude grava o documento inteiro e não tem gravação condicional; as regras do curso só deixam
-     cada aluno gravar progresso2/<o próprio id> (o caminho antigo, progresso/<id>, fica só para leitura; 12-caminho-novo.js). Por isso:
-     - a exclusão grava uma marca (v: 2, apagado: data, sem nenhum progresso) com a trava e confere a gravação. A marca
-       tem v: 2 para que nenhuma versão a adote como progresso: a versão do PR #22 a trata como "versão mais nova" e não
-       grava por cima; a versão antiga (sem união) não a lê como progresso e não apaga a cópia local dela;
-     - outro aparelho com esta versão, ao encontrar a marca, para de sincronizar e mantém a cópia local; só volta a
-       enviar se o aluno pedir ("Enviar de novo para a nuvem");
-     - este aparelho guarda que apagou (missao-eear-v1-apagado@conta). Se depois encontrar progresso na nuvem, foi uma
-       versão antiga, aberta em outro aparelho, que regravou às cegas: avisa e oferece apagar de novo, sem unir;
-     - limite documentado: uma aba antiga já aberta no momento da exclusão regrava a cada estudo, e a API não tem como
-       impedir. Este aparelho detecta e avisa; não há garantia contra isso enquanto houver abas antigas abertas. */
+  /* Leitura defensiva das marcas de exclusão antigas. Não existe operação de gravação/exclusão no serviço legado.
+     Uma marca em backup/progresso remoto incompatível pausa a união; nunca é substituída automaticamente. */
   function chaveApagado() { return chave('missao-eear-v1-apagado'); }
   function apagadoAqui() { try { return !!localStorage.getItem(chaveApagado()); } catch (e) { return false; } }
-  function podeApagarNuvem() { return identidade.indexOf('claude:') === 0 && !!(nuvem.ref || nuvem.refPausada); }
-  /* BLOQUEADA (verificação final, 2026-11-09): com o build real da versão publicada, uma aba antiga aberta antes da
-     exclusão recolocou o progresso na nuvem. Fica desligada até o caminho novo com o antigo trancado nas regras
-     (auditoria/verificacao-final.md, seção 5) ser implementado e validado no serviço real. Só os testes a ligam.
-     O reconhecimento da marca de exclusão continua ativo. */
-  function exclusaoLiberada() { return !nuvem.legado && window.EEAR_EXCLUSAO_NUVEM === true; }
-  /* A nuvem tem a marca de exclusão, ou regravaram depois de este aparelho apagar: nada é unido nem gravado. */
   function exclusaoNaNuvem(o) {
-    if (o && typeof o === 'object' && o.apagado) return nuvem.reenviar ? { ignorar: true } : { apagado: String(o.apagado) };
-    if (o && apagadoAqui() && !nuvem.reenviar) return { reapareceu: true };
+    if (o && typeof o === 'object' && o.apagado) return { apagado: String(o.apagado) };
+    if (o && apagadoAqui()) return { reapareceu: true };
     return null;
   }
   function pausarPorExclusao(ref, p) {
-    nuvem.ref = null; nuvem.on = false; nuvem.refPausada = ref;
+    nuvem.ref = null; nuvem.on = false;
     nuvem.apagado = p.apagado || ''; nuvem.reapareceu = !!p.reapareceu;
   }
-  async function apagarNuvem() {
-    const ref = nuvem.ref || nuvem.refPausada, id = identidade;
-    if (!exclusaoLiberada()) return;
-    if (!ref || contaUI.ocupado || id.indexOf('claude:') !== 0) return;
-    contaUI.ocupado = true; clearTimeout(tSave); nuvem.ref = null; // nada mais desta conta é enviado daqui
-    for (let i = 0; nuvem.busy && i < 40; i++) await new Promise(r => setTimeout(r, 250)); // espera a gravação em curso
-    const marca = { v: 2, apagado: new Date().toISOString(), t: Number.MAX_SAFE_INTEGER };
-    let passo = 'gravar';
-    try {
-      if (typeof ref.acquire === 'function') { // trava ocupada (outro aparelho, ou este mesmo ao abrir): espera ela vencer
-        for (let i = 0; ; i++) {
-          let tr = null;
-          try { tr = await ref.acquire({ holder: holderNovo(), ttlMs: TRAVA_MS }); } catch (e) { if (e && e.code === 'unavailable') throw e; }
-          if (!tr || tr.acquired) break;
-          if (i === 2) throw ocupada(0);
-          await new Promise(r => setTimeout(r, Math.max(0, (Date.parse(tr.expiresAt) || Date.now()) - Date.now()) + 300));
-        }
-      }
-      await ref.set(marca);
-      passo = 'conferir';
-      const snap = await ref.get(), o = snap && snap.exists ? snap.data() : null;
-      if (!o || o.apagado !== marca.apagado) throw new Error('outra gravação depois da exclusão');
-      if (identidade === id) {
-        try { localStorage.setItem(chaveApagado(), JSON.stringify({ quando: marca.apagado })); localStorage.removeItem(chave(BASE_K)); } catch (e) { /* sem armazenamento */ }
-        pausarPorExclusao(ref, { apagado: marca.apagado });
-        msgDados = 'O progresso desta conta foi apagado da nuvem do curso. Este aparelho ainda tem uma cópia; para apagá-la também, use "Apagar os dados deste aparelho".';
-        pedindo = null;
-      }
-    } catch (e) {
-      if (passo === 'gravar') { nuvem.ref = ref; msgDados = 'Não foi possível apagar agora (sem conexão, ou outro aparelho gravando). Nada foi apagado da nuvem.'; }
-      else { nuvem.refPausada = ref; msgDados = 'O pedido foi enviado, mas não deu para confirmar que a nuvem foi apagada (outro aparelho pode ter gravado ao mesmo tempo). Tente de novo.'; }
-    }
-    contaUI.ocupado = false; render();
+  /* Importação explícita de arquivo/código antigo, independente do transporte de sincronização.
+     Identidade/e-mail do backup nunca escolhem uma conta de destino. O progresso só entra na identidade atual. */
+  function lerImportacao(texto) {
+    const o = JSON.parse(String(texto || '').trim());
+    return o && o.app === 'Missão EEAR' && o.progresso ? o.progresso : o;
   }
-  /* Volta a enviar este aparelho para a nuvem, a pedido do aluno (desfaz a exclusão com o que este aparelho tem). */
-  async function reenviarNuvem() {
-    const ref = nuvem.refPausada;
-    if (!ref || contaUI.ocupado) return;
-    try { localStorage.removeItem(chaveApagado()); } catch (e) { /* sem armazenamento */ }
-    nuvem.reenviar = true; nuvem.apagado = ''; nuvem.reapareceu = false; msgDados = '';
-    await sincronizar(ref, nuvem.conta); // o pedido vale até uma gravação dar certo (conciliar o desliga), mesmo com a trava ocupada
-    render();
-  }
-  function blocoNuvemClaude() {
-    if (!podeApagarNuvem()) return '';
-    const data = q => { const d = new Date(q); return isNaN(d) ? '' : ' em ' + d.toLocaleDateString('pt-BR'); };
-    if (pedindo === 'nuvemapagar' && exclusaoLiberada()) {
-      return `<div class="confirm"><p><b>Apagar meu progresso da nuvem do curso</b> apaga a cópia guardada na sua conta. Este aparelho mantém a cópia dele. Feche o curso nos outros aparelhos antes: uma versão antiga aberta pode gravar de novo.</p>
-        <div class="field"><label for="nuvem-confirma">Digite APAGAR para confirmar</label><input id="nuvem-confirma" autocomplete="off"></div>
-        <button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="nuvemapagarok">Apagar da nuvem</button></div>`;
-    }
-    if (nuvem.apagado || nuvem.reapareceu) {
-      return `<div class="confirm"><p>${nuvem.apagado ? `O progresso desta conta foi apagado da nuvem do curso${data(nuvem.apagado)}. O que você estudar aqui fica só neste aparelho.` : 'Depois que você apagou o progresso da nuvem, uma versão antiga do curso, aberta em outro aparelho, gravou de novo. Feche ou recarregue o curso nos outros aparelhos e apague de novo.'}</p>${nuvem.reapareceu && exclusaoLiberada() ? '<button class="btn sm" data-a="nuvemapagar">Apagar de novo da nuvem</button>' : ''}<button class="btn sm" data-a="nuvemreenviar">Enviar de novo para a nuvem</button></div>`;
-    }
-    return exclusaoLiberada() ? '<div class="row"><button class="btn ghost" data-a="nuvemapagar">Apagar meu progresso da nuvem do curso</button></div>' : '';
-  }
-  document.addEventListener('click', ev => {
-    const b = ev.target.closest('[data-a]');
-    if (!b) return;
-    switch (b.dataset.a) {
-      case 'nuvemapagar': if (!exclusaoLiberada()) break; msgDados = ''; pedindo = 'nuvemapagar'; render(); break;
-      case 'nuvemapagarok': {
-        const t = ((document.getElementById('nuvem-confirma') || {}).value || '').trim();
-        if (t !== 'APAGAR') { msgDados = 'Digite APAGAR para confirmar. Nada foi apagado.'; render(); break; }
-        apagarNuvem(); break;
-      }
-      case 'nuvemreenviar': reenviarNuvem(); break;
-      default: break;
-    }
-  });
-  /* ---------- caminho novo da nuvem do Claude (progresso2) e migração do caminho antigo ----------
-     Versões antigas do app (a publicada no Claude) gravam o progresso inteiro por cima de progresso/<id>, às cegas, a
-     cada estudo. O que existia só na nuvem podia ser coberto por elas, e nenhum aparelho novo tinha como recuperar.
-     Barreira: esta versão sincroniza só em progresso2/<id>, que as versões antigas não conhecem, e as regras do curso,
-     publicadas junto com ela, deixam progresso/<id> só para leitura dos alunos (auditoria/integracao-segura.md, seção 4):
-     uma aba antiga aberta tem a gravação recusada e para de sincronizar, com o estudo guardado no aparelho dela.
-     Migração: depois de sincronizar o caminho novo, o documento antigo é lido e unido ao progresso deste aparelho SEM
-     base (nada se apaga). O resumo do documento antigo fica em cfg.migV1 (vai para a nuvem com o resto): se ele não
-     mudar, não é unido de novo (desmarcações feitas depois não voltam); se mudar (gravação de uma aba antiga antes de
-     as regras valerem, ou um período de reversão com a versão antiga no ar), é unido mais uma vez. O caminho antigo
-     nunca é gravado por esta versão. Funções declaradas: conectar() as chama depois que o arquivo inteiro carregou. */
-  function caminhoNuvem(id) { return 'progresso2/' + id; }
-  function caminhoAntigo(id) { return 'progresso/' + id; }
-  async function migrarCaminhoAntigo(refAntigo, conta) {
-    if (nuvem.legado) return; // bloqueio real do transporte inseguro; nenhum snapshot remoto é importado automaticamente
-    /* Espera a primeira leitura do caminho novo (para conhecer o cfg.migV1 da nuvem), até 60 s. */
-    for (let i = 0; i < 120 && !nuvem.lida && nuvem.ref && nuvem.conta === conta; i++) await new Promise(r => setTimeout(r, 500));
-    if (!nuvem.lida) return; // sem conseguir ler o caminho novo, não migra agora (tenta ao abrir de novo)
-    if (!refAntigo || nuvem.conta !== conta || !nuvem.ref || nuvem.apagado || nuvem.reapareceu || nuvem.futura) return;
+  function importarCodigo(texto, substituir) {
     let o = null;
-    try { const s = await refAntigo.get(); o = s && s.exists ? s.data() : null; } catch (e) { return; } // tenta de novo ao abrir de novo
-    if (!o || typeof o !== 'object' || o.v !== 1 || nuvem.conta !== conta) return; // nada a migrar (ou uma marca de exclusão)
-    const h = resumoDoc(o);
-    if (S.cfg.migV1 && S.cfg.migV1.h === h) return; // já unido
-    const r = unirProgresso(null, mesclar(JSON.parse(JSON.stringify(S))), mesclar(semAssinatura(JSON.parse(JSON.stringify(o)))));
-    if (r.perdido) { recuperar = JSON.stringify(r.perdido); try { localStorage.setItem(chave(LS_REC), recuperar); } catch (e) { /* sem espaço */ } }
-    if (nuvem.conta !== conta) return;
-    S = r.st; S.cfg.migV1 = { h, em: Date.now() };
-    salvar(); // a próxima gravação leva a união para progresso2
-    render();
+    try { o = lerImportacao(texto); } catch (e) { o = null; }
+    if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); return; }
+    // Importar acrescenta estudo; ausência no código antigo não é uma ordem de apagar progresso novo.
+    const local = opCopiar(S), colado = mesclar(o);
+    if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); return; }
+    const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
+    const importado = conhecida ? opMeta(colado) : opVazio();
+    const combinado = conhecida ? opCombinarEstados(S, colado) : S;
+    loc.meta = opMeta(combinado); loc.vista = opCopiar(combinado);
+    const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
+    S = substituir ? mesclar(c) : unirProgresso(null, l, c).st;
+    const certs = S.cfg.certs;
+    S.cfg = Object.assign({}, colado.cfg, { certs });
+    S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(colado.cfg.certsZ) || 0);
+    juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
+    pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado }); render();
+
+  }
+  function blocoMigracaoLegada() {
+    return '<p class="small muted" role="note">Dados de versões anteriores: use Copiar meu progresso ou Baixar meus dados no perfil de origem e importe o código ou o conteúdo do arquivo na conta desejada. A sincronização antiga está desativada. Nenhuma conta ou nuvem antiga é convertida automaticamente.</p>';
   }
   /* ---------- falhas da nuvem: tentar de novo sem perder nada, e dizer ao aluno quando a sincronização parou ----------
      O estudo é sempre gravado primeiro neste aparelho (salvar); a nuvem é uma cópia conciliada depois. Quando a nuvem
@@ -2889,7 +2754,7 @@
       el.dataset.nuvem = nuvem.legado ? 'bloqueada-legado' : nuvem.erro ? 'falhou' : nuvem.on && !nuvem.pendente ? 'confirmado' : nuvem.ref ? 'pendente' : 'desligada';
       if (nuvem.legado) {
         const local = el.dataset.local === 'confirmado' ? 'Checkpoint confirmado neste aparelho.' : el.dataset.local === 'carregando' ? 'Carregando o checkpoint deste aparelho.' : el.dataset.local === 'pendente' ? 'Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.' : el.dataset.local === 'reserva' ? 'Cópia de reserva sem proteção contra queda. Exporte antes de fechar.' : 'O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.';
-        el.textContent = local + (recuperar ? ' Há dados preservados para recuperação; veja a tela Hoje.' : '') + ' Sincronização pendente e bloqueada: a nuvem legada permite que clientes antigos sobrescrevam dados confirmados. Não há confirmação remota segura. Preserve esta cópia e exporte em Plano › Dados.';
+        el.textContent = local + (recuperar ? ' Há dados preservados para recuperação; veja a tela Hoje.' : '') + ' Sincronização antiga desativada: clientes antigos poderiam sobrescrever dados confirmados. Não há confirmação remota segura. Preserve esta cópia e exporte em Plano › Dados para importar na conta Firebase desejada.';
         return;
       }
     }
