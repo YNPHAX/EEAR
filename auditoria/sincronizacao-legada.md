@@ -145,3 +145,12 @@ A reversão para `2f6cad6` continua sem união automática garantida: esse clien
 O teste antigo e a evidência de quarentena/recuperação explícita ficam preservados. Não se promete rollback
 transparente nem se modifica IndexedDB para acomodar esse downgrade. Conservar exportação e perfil original;
 qualquer importação de recuperação deve ser explícita e verificada antes de descartar cópias.
+
+## Preparação e prova do teste Firebase
+
+A verificação de sair mantendo deixou de depender do substring `/Sem/` no Plano (o CSS pode renderizar SEMANA).
+Ela exige agora UID encerrado, exportação pública com nome/aulas/cartões/simulados anônimos e ausência da marca da
+conta, conservando a cópia local da conta. As ações sintéticas aguardam somente o término da carga, respeitando
+botões desabilitados do produto; não aguardam descarregar gravações pendentes. Isso fortalece a prova de isolamento
+e não relaxa os critérios de integridade, transação, Google ou regras. A nova repetição completa passou 50/50 no
+mesmo bundle d165485. Negativas originais e sua análise estão no relatório final.

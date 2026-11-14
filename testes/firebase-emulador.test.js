@@ -66,7 +66,7 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 900 } }), erros = [];
     await ctx.route('https://www.gstatic.com/firebasejs/12.19.0/**', r => r.fulfill({ status: 200, contentType: 'text/javascript', body: fs.readFileSync(path.join(SDK, path.basename(new URL(r.request().url()).pathname))) }));
     const p = await ctx.newPage(); p.on('pageerror', e => erros.push(e.message));
-    const clicar = (a, d) => p.evaluate(([a, d]) => { const x = document.createElement('button'); x.dataset.a = a; Object.assign(x.dataset, d || {}); document.body.appendChild(x); x.click(); x.remove(); }, [a, d]);
+    const clicar = async (a, d) => { await p.waitForFunction(() => document.documentElement.dataset.armazenamento !== 'carregando'); return p.evaluate(([a, d]) => { const x = document.createElement('button'); x.dataset.a = a; Object.assign(x.dataset, d || {}); document.body.appendChild(x); x.click(); x.remove(); }, [a, d]); };
     const ler = k => p.evaluate(k => JSON.parse(localStorage.getItem(k)), k);
     const plano = async () => { await clicar('tab', { v: 'plano' }); await p.waitForTimeout(150); };
     const conectar = async (email, senha, criar) => { await plano(); await p.waitForSelector('#fb-email', { timeout: 15000 }); await p.fill('#fb-email', email); await p.fill('#fb-senha', senha); await clicar(criar ? 'fbcriar' : 'fbentrar'); await p.waitForSelector('[data-a="contasair"]', { timeout: 15000 }); await p.waitForTimeout(800); };
@@ -94,7 +94,14 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
   // sair mantendo; outra pessoa entra no mesmo aparelho
   await A.plano(); await A.clicar('contasair'); await A.p.waitForTimeout(100); await A.clicar('contasairmanter'); await A.p.waitForSelector('#fb-email', { timeout: 15000 });
   const cacheA = await A.ler('missao-eear-v1@firebase:' + uidA);
-  ok(!!cacheA && cacheA.feito['T:ana1'] && /Sem/.test(await A.p.locator('main').innerText()), 'sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte');
+  // Plano pode exibir SEMANA por CSS, sem mostrar o nome do aluno. Comprova o estado vivo pelo exportador público.
+  await A.p.evaluate(() => Object.defineProperty(navigator, 'clipboard', { value: { writeText: async () => { throw new Error('Usar exportação visível do teste'); } }, configurable: true }));
+  await A.clicar('expcopiar'); await A.p.waitForSelector('#exp-txt'); const semContaVivo = JSON.parse(await A.p.locator('#exp-txt').inputValue());
+  const saiuMantendo = !!cacheA && cacheA.feito['T:ana1'] && (await A.uid()) === '' && semContaVivo.cfg.nome === anon.cfg.nome &&
+    require('util').isDeepStrictEqual(semContaVivo.mod, anon.mod) && require('util').isDeepStrictEqual(semContaVivo.fc, anon.fc) &&
+    require('util').isDeepStrictEqual(semContaVivo.sims, anon.sims) && Object.keys(semContaVivo.feito).length === 0;
+  if (!saiuMantendo) console.log('DIAGNÓSTICO sair mantendo: ' + JSON.stringify({ cache: cacheA && cacheA.feito, identidade: await A.uid(), nome: semContaVivo.cfg.nome, mod: semContaVivo.mod, feito: semContaVivo.feito }));
+  ok(saiuMantendo, 'sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte');
   await A.conectar('bia@exemplo.test', 'senha-bia-1', true); const uidB = await A.uid();
   await marcar(A, 'T:bia1'); await ate(async () => { const x = await progresso(uidB); return x && x.feito && x.feito['T:bia1']; });
   const pB = await progresso(uidB), localB = await A.ler('missao-eear-v1@firebase:' + uidB);

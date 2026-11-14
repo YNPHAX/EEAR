@@ -1,5 +1,7 @@
 # Validação concluída do candidato EEAR 10f631e
 
+**Atualização posterior:** correção direcionada e resultados do runtime `d165485` em [correcao-legada-d165485.md](correcao-legada-d165485.md). A sincronização legada permanece bloqueada, sem aprovação de homologação.
+
 Data: 13/11/2026. Branch de trabalho: `codex/eear-correcao-estrutural`.
 
 **Resultado:** validação executada, com **falha remanescente no CI final de plataforma**. Firebase e os 13 grupos de persistência passaram. O encerramento do CI revelou remoção remota de uma marca confirmada no backend legado do Claude; um controle com ordem explícita reproduziu o problema, enquanto o checkpoint local de A preservou a marca e uma nova abertura a restaurou. Também permanecem crescimento de metadados até impedir sincronização e recuperação manual após reversão. **Não há aprovação de homologação emitida por esta validação.**

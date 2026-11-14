@@ -1,0 +1,662 @@
+{
+  "runtime_sha": "d16548547806575c1d32491a32d6166226f2096d",
+  "bundle_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+  "manifesto": {
+    "runtime_sha": "d16548547806575c1d32491a32d6166226f2096d",
+    "arquivos": {
+      "curso/app.js": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "curso/app/01-base.js": "a3a27a1b4c9e51ca4ba050a16b76ec5aaedcaedefd926815329d0192b3c33084",
+      "curso/app/02-progresso-nuvem.js": "97bc9eabcef868c3d9876ae25d9cb6419a346559ba85ffe1bc3506165cf24567",
+      "curso/app/03-plano.js": "c5785b516bcffd24c6edf3fb7adfd2f2bbfbed097f8355c21a303c00506a2625",
+      "curso/app/04-telas.js": "f68008541e897979767bfc57968e228a49ab56fec3699c8b0f3b8e332291cfe1",
+      "curso/app/05-aula-apostila.js": "da81e3bc618a7fe663921a1814e2ca1e00bce648950c5b6d842ed6965b153134",
+      "curso/app/06-simulados-render.js": "f8f60ce1b69dc3204380af5a8530d8fd68feb0742091d071c528fa596b58bf0c",
+      "curso/app/07-eventos.js": "06be6fb685cc03d38dad2be11609e9cd5596419a72e92e0d81632ce546e377ad",
+      "curso/app/08-uniao-nuvem.js": "6ce6245bf421596cb6b765443d370d3e8dd0ff26b601063d1b71f32172dd47d5",
+      "curso/app/09-contas.js": "45db9dd1c837dc7cf9fb9c8f01695a0ed1ff6192956265af2b058e11ee5bfece",
+      "curso/app/10-nuvem-claude.js": "57b164a8438873d7d3a60bf7be8d20e46b7f5a2d966fe735d13c045916d34d98",
+      "curso/app/11-exclusao-nuvem.js": "5179bdd39d8cbb3f8f341af7b410af7f46d52943aad0d86dc76c8ecf0f613024",
+      "curso/app/12-caminho-novo.js": "791d2132b1f3401fca2367b77d8df6bff85798f45ed700abd3227cab5e82c991",
+      "curso/app/13-falhas-nuvem.js": "e6cc2309189009acc3468950fa640f931084b4af2cb4382769a5c5d1d059b05a",
+      "curso/app/14-abas.js": "724c9f19dc92e4639489cde195153a49128f89f107bc56dbd3ab56619cae575e",
+      "curso/app/15-diarios-pendentes.js": "838037c5cc8c19c41e14897ed36c6bca1e5a02389ac996a78d21ea85f056d25e",
+      "curso/app/16-diario-duravel.js": "8cd6ccf7e5012d209019b8dc6f3ec051f218d7ec31b70a3cf12d7a12d0f4939f",
+      "curso/app/17-estado-persistencia.js": "e9bdbfd7e0f1aee3bf85cdfd036a7e0ab5a262561d9b474a774f1620d7e959f8",
+      "testes/f01-abas.test.js": "b367dd5e599c71bb570a90f2f87ea7e24676c1ddebf7e023cdde23df7e6ee777",
+      "testes/epoca-nuvem.js": "efb3c40d0b618ff5da715fd840f59dfa600b21032245b85a95c65fcaef0695ed",
+      "testes/persistencia-regressoes.test.js": "34b401ab3e0f935ce18d32eb5d465861aa581d077784cde8988d15a408ba0118",
+      "web/firestore.rules": "7f75ff5c7d903345fad443204c9f070ed665bf50578cb7d83bb044cd2e38bd70"
+    },
+    "builds": {
+      "/tmp/eear-legado-fix/site-encerramento/app.js": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "/tmp/eear-legado-fix/app-encerramento/app.js": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e"
+    },
+    "arquivos_alterados": [
+      ".github/workflows/testes.yml",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "auditoria/sincronizacao-legada.md",
+      "curso/app.js",
+      "curso/app/02-progresso-nuvem.js",
+      "curso/app/09-contas.js",
+      "curso/app/10-nuvem-claude.js",
+      "curso/app/11-exclusao-nuvem.js",
+      "curso/app/12-caminho-novo.js",
+      "curso/app/15-diarios-pendentes.js",
+      "curso/app/16-diario-duravel.js",
+      "curso/app/17-estado-persistencia.js",
+      "testes/cache-restaurado.test.js",
+      "testes/carga-metadados.test.js",
+      "testes/duravel-candidato.test.js",
+      "testes/legado-bloqueio.test.js",
+      "testes/legado-contrato.test.js",
+      "testes/noturna-integridade.test.js",
+      "testes/operacoes-dupla-falha.test.js"
+    ]
+  },
+  "matriz_final_original": [
+    {
+      "teste": "firebase-emulador",
+      "exit": 1,
+      "segundos": 208.8,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {}
+    },
+    {
+      "teste": "f01-riscos",
+      "exit": 0,
+      "segundos": 35.2,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {
+        "EEAR_F01_RISCOS": "zerar-nuvem,zerar-unica,suspensa,exclusao-surda,contagens,escrita-interrompida"
+      }
+    },
+    {
+      "teste": "diarios-auditoria",
+      "exit": 0,
+      "segundos": 40.6,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {}
+    },
+    {
+      "teste": "concorrencia-fallback",
+      "exit": 0,
+      "segundos": 19.4,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {
+        "EEAR_F13_PONTO": "ultima-conferencia"
+      }
+    },
+    {
+      "teste": "orfaos-auditoria",
+      "exit": 0,
+      "segundos": 68.9,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {}
+    },
+    {
+      "teste": "orfaos-30min",
+      "exit": 0,
+      "segundos": 23.9,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {
+        "EEAR_ORFAOS_CENARIOS": "segunda-escrita-30min",
+        "EEAR_ORFAOS_SEQUENCIAS": "9"
+      }
+    },
+    {
+      "teste": "duravel-sem-travas",
+      "exit": 0,
+      "segundos": 46.4,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {
+        "EEAR_DURAVEL_SEM_TRAVAS": "1"
+      }
+    },
+    {
+      "teste": "migracao-8bd",
+      "exit": 0,
+      "segundos": 12.6,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {
+        "EEAR_REPO_LEGADO": "/tmp/eear-8bd32d2"
+      }
+    },
+    {
+      "teste": "migracao-2f6",
+      "exit": 0,
+      "segundos": 12.6,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {
+        "EEAR_REPO_LEGADO": "/tmp/eear-2f6cad6"
+      }
+    },
+    {
+      "teste": "metadados-limite",
+      "exit": 0,
+      "segundos": 17.6,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {
+        "EEAR_CARGA_ESTADO": "/tmp/eear-legado-fix/estado-limite-14.json"
+      }
+    },
+    {
+      "teste": "persistencia-regressoes",
+      "exit": 0,
+      "segundos": 313.9,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {}
+    },
+    {
+      "teste": "operacoes-dupla-falha",
+      "exit": 0,
+      "segundos": 13.3,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {}
+    },
+    {
+      "teste": "cache-restaurado",
+      "exit": 0,
+      "segundos": 5.4,
+      "runtime_sha256": "3586150aa69bc5b2c921f04c6afda8ce94c52cd3c13cdad9f9e08592de85dc1e",
+      "opcoes": {}
+    }
+  ],
+  "firebase_repeticao": {
+    "resultado": "50/50",
+    "positivas": 50,
+    "negativas": 0,
+    "runtime_identico": true,
+    "alteracao_teste": "saída exige UID vazio/exportação anônima exata, e ações aguardam término de carga sem aguardar pendências",
+    "comando": "node testes/firebase-emulador.test.js",
+    "log": "firebase-emulador-criterios-dados.log"
+  },
+  "ci_runtimes": [
+    {
+      "sha": "1cbcc8b2fe9cb6ab07778b2e645db757e414ea36",
+      "site": 43482561285,
+      "android": 43482562161,
+      "testes": 43482561883,
+      "site_result": "success",
+      "android_result": "success",
+      "testes_result": "failure",
+      "firebase_job_result": "success",
+      "motivo": "plataforma exige backend legado bloqueado"
+    },
+    {
+      "sha": "430ce0a6351a9261091c650a3cf6510c44ab5095",
+      "site": 43486716043,
+      "android": 43486715994,
+      "testes": 43486716038,
+      "site_result": "success",
+      "android_result": "success",
+      "testes_result": "failure",
+      "firebase_job_result": "success",
+      "motivo": "plataforma exige backend legado bloqueado"
+    },
+    {
+      "sha": "60addbff19b397fb9455e245f4423573bf778bab",
+      "site": 43488385381,
+      "android": 43488385340,
+      "testes": 43488385420,
+      "site_result": "success",
+      "android_result": "success",
+      "testes_result": "failure",
+      "firebase_job_result": "failure",
+      "motivo": "preparo de zerar-estudar não confirmou commit; regressão de leitura sem estudo na plataforma, além do legado"
+    },
+    {
+      "sha": "d16548547806575c1d32491a32d6166226f2096d",
+      "site": 43544900102,
+      "android": 43544900087,
+      "testes": 43544900074,
+      "site_result": "success",
+      "android_result": "success",
+      "testes_result": "failure",
+      "firebase_job_result": "failure",
+      "motivo": "assertiva incidental /Sem/ no Plano; plataforma exige legado bloqueado; repetição local com prova de dados fortalece o teste"
+    }
+  ],
+  "carga_final": {
+    "alvo": "/tmp/eear-legado-encerramento",
+    "rodadas": 500,
+    "abas": 4,
+    "medidas": [
+      {
+        "fase": "base",
+        "atividade": 2,
+        "marcas": 1,
+        "bytesEstado": 2113,
+        "caracteresEstado": 2111,
+        "bytesMeta": 1607,
+        "bytesCheckpoint": 3867,
+        "recibos": 1,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 2.061
+      },
+      {
+        "fase": "rodada-50",
+        "atividade": 202,
+        "marcas": 201,
+        "bytesEstado": 32835,
+        "caracteresEstado": 32833,
+        "bytesMeta": 28367,
+        "bytesCheckpoint": 70349,
+        "recibos": 201,
+        "usoOrigem": 307200,
+        "quotaOrigem": 2147790848,
+        "segundos": 6.802
+      },
+      {
+        "fase": "rodada-100",
+        "atividade": 402,
+        "marcas": 401,
+        "bytesEstado": 63635,
+        "caracteresEstado": 63633,
+        "bytesMeta": 55167,
+        "bytesCheckpoint": 136949,
+        "recibos": 401,
+        "usoOrigem": 319488,
+        "quotaOrigem": 2147803136,
+        "segundos": 14.196
+      },
+      {
+        "fase": "rodada-150",
+        "atividade": 602,
+        "marcas": 601,
+        "bytesEstado": 94835,
+        "caracteresEstado": 94833,
+        "bytesMeta": 82167,
+        "bytesCheckpoint": 204149,
+        "recibos": 601,
+        "usoOrigem": 339968,
+        "quotaOrigem": 2147823616,
+        "segundos": 21.18
+      },
+      {
+        "fase": "rodada-200",
+        "atividade": 802,
+        "marcas": 801,
+        "bytesEstado": 126035,
+        "caracteresEstado": 126033,
+        "bytesMeta": 109167,
+        "bytesCheckpoint": 271349,
+        "recibos": 801,
+        "usoOrigem": 348160,
+        "quotaOrigem": 2147831808,
+        "segundos": 29.973
+      },
+      {
+        "fase": "rodada-250",
+        "atividade": 1002,
+        "marcas": 1001,
+        "bytesEstado": 157236,
+        "caracteresEstado": 157234,
+        "bytesMeta": 136167,
+        "bytesCheckpoint": 338550,
+        "recibos": 1001,
+        "usoOrigem": 364544,
+        "quotaOrigem": 2147848192,
+        "segundos": 39.74
+      },
+      {
+        "fase": "rodada-300",
+        "atividade": 1202,
+        "marcas": 1201,
+        "bytesEstado": 188436,
+        "caracteresEstado": 188434,
+        "bytesMeta": 163167,
+        "bytesCheckpoint": 405750,
+        "recibos": 1201,
+        "usoOrigem": 385024,
+        "quotaOrigem": 2147868672,
+        "segundos": 50.894
+      },
+      {
+        "fase": "rodada-350",
+        "atividade": 1402,
+        "marcas": 1401,
+        "bytesEstado": 219636,
+        "caracteresEstado": 219634,
+        "bytesMeta": 190167,
+        "bytesCheckpoint": 472950,
+        "recibos": 1401,
+        "usoOrigem": 417792,
+        "quotaOrigem": 2147901440,
+        "segundos": 63.898
+      },
+      {
+        "fase": "rodada-400",
+        "atividade": 1602,
+        "marcas": 1601,
+        "bytesEstado": 250836,
+        "caracteresEstado": 250834,
+        "bytesMeta": 217167,
+        "bytesCheckpoint": 540150,
+        "recibos": 1601,
+        "usoOrigem": 462848,
+        "quotaOrigem": 2147946496,
+        "segundos": 74.249
+      },
+      {
+        "fase": "rodada-450",
+        "atividade": 1802,
+        "marcas": 1801,
+        "bytesEstado": 282036,
+        "caracteresEstado": 282034,
+        "bytesMeta": 244167,
+        "bytesCheckpoint": 607350,
+        "recibos": 1801,
+        "usoOrigem": 495616,
+        "quotaOrigem": 2147979264,
+        "segundos": 88.074
+      },
+      {
+        "fase": "rodada-500",
+        "atividade": 2002,
+        "marcas": 2001,
+        "bytesEstado": 313236,
+        "caracteresEstado": 313234,
+        "bytesMeta": 271167,
+        "bytesCheckpoint": 674550,
+        "recibos": 2001,
+        "usoOrigem": 532480,
+        "quotaOrigem": 2148016128,
+        "segundos": 100.729
+      },
+      {
+        "fase": "reset-1",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 351907,
+        "caracteresEstado": 351905,
+        "bytesMeta": 351482,
+        "bytesCheckpoint": 793626,
+        "recibos": 2003,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 101.886
+      },
+      {
+        "fase": "reset-2",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352083,
+        "caracteresEstado": 352081,
+        "bytesMeta": 351658,
+        "bytesCheckpoint": 794068,
+        "recibos": 2005,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 103.396
+      },
+      {
+        "fase": "reset-3",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352259,
+        "caracteresEstado": 352257,
+        "bytesMeta": 351834,
+        "bytesCheckpoint": 794510,
+        "recibos": 2007,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 104.396
+      },
+      {
+        "fase": "reset-4",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352435,
+        "caracteresEstado": 352433,
+        "bytesMeta": 352010,
+        "bytesCheckpoint": 794952,
+        "recibos": 2009,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 105.444
+      },
+      {
+        "fase": "reset-5",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352611,
+        "caracteresEstado": 352609,
+        "bytesMeta": 352186,
+        "bytesCheckpoint": 795394,
+        "recibos": 2011,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 106.476
+      },
+      {
+        "fase": "reset-6",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352787,
+        "caracteresEstado": 352785,
+        "bytesMeta": 352362,
+        "bytesCheckpoint": 795836,
+        "recibos": 2013,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 107.783
+      },
+      {
+        "fase": "reset-7",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352963,
+        "caracteresEstado": 352961,
+        "bytesMeta": 352538,
+        "bytesCheckpoint": 796278,
+        "recibos": 2015,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 109.936
+      },
+      {
+        "fase": "reset-8",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353139,
+        "caracteresEstado": 353137,
+        "bytesMeta": 352714,
+        "bytesCheckpoint": 796720,
+        "recibos": 2017,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 111.374
+      },
+      {
+        "fase": "reset-9",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353315,
+        "caracteresEstado": 353313,
+        "bytesMeta": 352890,
+        "bytesCheckpoint": 797162,
+        "recibos": 2019,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 112.318
+      },
+      {
+        "fase": "reset-10",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353491,
+        "caracteresEstado": 353489,
+        "bytesMeta": 353066,
+        "bytesCheckpoint": 797604,
+        "recibos": 2021,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 114.363
+      }
+    ],
+    "falhas": 0
+  },
+  "nucleo_12000": {
+    "alvo": "/tmp/eear-legado-candidato-final",
+    "sha256": "724c9f19dc92e4639489cde195153a49128f89f107bc56dbd3ab56619cae575e",
+    "normalizador": "identidade; estado mínimo válido",
+    "medidas": [
+      {
+        "acoes": 1000,
+        "bytesEstado": 150368,
+        "bytesMeta": 132325,
+        "segundos": 1.581
+      },
+      {
+        "acoes": 2000,
+        "bytesEstado": 302368,
+        "bytesMeta": 265325,
+        "segundos": 6.458
+      },
+      {
+        "acoes": 3000,
+        "bytesEstado": 454368,
+        "bytesMeta": 398325,
+        "segundos": 15.087
+      },
+      {
+        "acoes": 4000,
+        "bytesEstado": 606368,
+        "bytesMeta": 531325,
+        "segundos": 28.102
+      },
+      {
+        "acoes": 5000,
+        "bytesEstado": 758368,
+        "bytesMeta": 664325,
+        "segundos": 44.634
+      },
+      {
+        "acoes": 6000,
+        "bytesEstado": 910368,
+        "bytesMeta": 797325,
+        "segundos": 66.927
+      },
+      {
+        "acoes": 7000,
+        "bytesEstado": 1062368,
+        "bytesMeta": 930325,
+        "segundos": 94.565
+      },
+      {
+        "acoes": 8000,
+        "bytesEstado": 1214368,
+        "bytesMeta": 1063325,
+        "segundos": 124.661
+      },
+      {
+        "acoes": 9000,
+        "bytesEstado": 1366368,
+        "bytesMeta": 1196325,
+        "segundos": 159.333
+      },
+      {
+        "acoes": 10000,
+        "bytesEstado": 1518371,
+        "bytesMeta": 1329326,
+        "segundos": 197.171
+      },
+      {
+        "acoes": 11000,
+        "bytesEstado": 1672371,
+        "bytesMeta": 1463326,
+        "segundos": 238.111
+      },
+      {
+        "acoes": 12000,
+        "bytesEstado": 1826371,
+        "bytesMeta": 1597326,
+        "segundos": 348.672
+      }
+    ],
+    "primeiraAcima": {
+      "acoes": 6000,
+      "bytesEstado": 910368,
+      "bytesMeta": 797325,
+      "segundos": 66.927
+    }
+  },
+  "subcontagem_anterior": {
+    "fase": "rodada-300",
+    "esperado": 1202,
+    "checkpoint": {
+      "2026-11-13": 1199
+    },
+    "marcas": 1198,
+    "faltantes": [
+      "T:carga-0-267",
+      "T:carga-2-267",
+      "T:carga-3-267"
+    ],
+    "reservas": 0,
+    "exportacoes": [
+      {
+        "act": {
+          "2026-11-13": 1200
+        },
+        "marcas": 1199
+      },
+      {
+        "act": {
+          "2026-11-13": 1199
+        },
+        "marcas": 1198
+      },
+      {
+        "act": {
+          "2026-11-13": 1200
+        },
+        "marcas": 1199
+      },
+      {
+        "act": {
+          "2026-11-13": 1200
+        },
+        "marcas": 1199
+      }
+    ]
+  },
+  "reversao": {
+    "positivas": 8,
+    "negativas": 1,
+    "uniao_automatica": "FALHOU",
+    "quarentena_e_recuperacao_explicita": "PASSOU"
+  },
+  "refs_preservadas": {
+    "claude/eear-study-hydwqt": "2f6cad6ebba53d0f86319dcada671fe9396f8111",
+    "codex/auditoria-firebase-eear": "758beed207fc2196d05573e245fe43f0836dc407",
+    "main_consultada": "7f9ba7f122e315d8bef8dc4db2c6187470a608cd"
+  },
+  "restricoes": {
+    "merge": false,
+    "deploy": false,
+    "regras_publicadas": false,
+    "firebase_real": false,
+    "dados_reais": false
+  },
+  "parecer": "REPROVADO para liberar sincronização legada; não é aprovação de homologação",
+  "versoes_locais": {
+    "node": "v24.22.1",
+    "java": "openjdk version \"21.0.13\" 2026-10-20",
+    "playwright": "1.63.0",
+    "firebase": "12.19.0",
+    "cli": "15.35.0"
+  },
+  "diagnostico_saida": {
+    "cache_conta": {
+      "T:ana1": true
+    },
+    "nome_anonimo_original": "Sem Conta",
+    "main_continha_Sem": false,
+    "main_continha_SEMANA": true,
+    "cartao_login_presente": true
+  },
+  "teste_firebase_entrega_sha256": "46c0c5909a2d8b81815d2faf9a1f0881029c583e5d44a0479c7058dabb6bbbe4"
+}
