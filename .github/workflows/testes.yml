@@ -43,6 +43,7 @@ jobs:
         run: |
           node testes/operacoes.test.js
           node testes/transferencia-identidades.test.js
+          node testes/importacoes-propriedades.test.js
           node testes/legado-contrato.test.js
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/legado-bloqueio.test.js
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/ciclo-sincronia.test.js
@@ -123,6 +124,33 @@ jobs:
           NODE_PATH="$RUNNER_TEMP/ia/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/ia/node_modules/firebase" \
             EEAR_FIREBASE_CLI="$RUNNER_TEMP/ia/node_modules/.bin/firebase" EEAR_REPO_REPROVADO="$RUNNER_TEMP/ia-reprovado" \
             EEAR_REPO_LEGADO="$RUNNER_TEMP/ia-legado" node testes/bloqueadores-auditoria.test.js
+
+  importacao-idempotente:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Dependências isoladas de IA05 e IA06
+        run: |
+          npm install --prefix "$RUNNER_TEMP/imp" --no-save --no-audit --no-fund firebase-tools@15.35.0 firebase@12.19.0 playwright@1.63.0
+          "$RUNNER_TEMP/imp/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Reproduzir base e validar identidades, reset, causalidade e versão
+        run: |
+          git fetch --no-tags origin a6366a849871db3de3554f28fa1400f10aff0f0c a35ea9a769c150e561dfbde3205525b96bbfbfe7 2f6cad6ebba53d0f86319dcada671fe9396f8111
+          git worktree add --detach "$RUNNER_TEMP/imp-a636" a6366a849871db3de3554f28fa1400f10aff0f0c
+          git worktree add --detach "$RUNNER_TEMP/imp-2f6" 2f6cad6ebba53d0f86319dcada671fe9396f8111
+          NODE_PATH="$RUNNER_TEMP/imp/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/imp/node_modules/firebase" \
+            EEAR_FIREBASE_CLI="$RUNNER_TEMP/imp/node_modules/.bin/firebase" EEAR_REPO_REPROVADO_IA05="$RUNNER_TEMP/imp-a636" \
+            EEAR_REPO_LEGADO="$RUNNER_TEMP/imp-2f6" node testes/importacoes-regressoes.test.js
 
   # Evidência histórica opcional, com saída original: não mascara a falha nem integra o gate Firebase.
   historico-legado:
