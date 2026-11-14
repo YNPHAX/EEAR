@@ -1,0 +1,2469 @@
+{
+  "data_utc": "2026-11-14T15:06:03.692082+00:00",
+  "parecer": "REPROVADO",
+  "candidato": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+  "runtime": "650007b5eeb2d0bcb41f9277e5d370afe5a1edc2",
+  "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+  "git_tree": "23f73e3de078eeac9d84c18fd54edfc10fb05523",
+  "branch_auditoria": "auditoria/firebase-a35ea9a-final",
+  "commit_testes_iniciais": "980d3b0ea223755a5b3f411b989cd8b56a3c8c2f",
+  "vinculo_executor": "Agente também participou da implementação anterior; reexecução/testes novos independentes, não revisão organizacional externa.",
+  "ambiente": {
+    "node": "24.22.1",
+    "java": "21.0.13",
+    "playwright": "1.63.0",
+    "firebase": "12.19.0",
+    "firebase_tools": "15.35.0",
+    "eslint": "9.17.0"
+  },
+  "arquivos_github_verificados": [
+    {
+      "arquivo": ".firebaserc",
+      "git_blob": "1dd45666eeb706b0c4cce4d8f1cc44b81d3a589b",
+      "sha256": "bbcbb111f45c1fb82956d3fa4c5a137c4095bc04ba40ed87508e08d3804d0f4e",
+      "bytes": 52
+    },
+    {
+      "arquivo": ".github/workflows/android.yml",
+      "git_blob": "e9a16a498eafb0b85b2de31fe6db36fab5cc300c",
+      "sha256": "084c83397f42bfddda216cce6bc9136103d4521e8204c36228cb7d725aa43dba",
+      "bytes": 3946
+    },
+    {
+      "arquivo": ".github/workflows/site.yml",
+      "git_blob": "dc0366b6f98e3665f009d560ad02876e75175c94",
+      "sha256": "496eb237158d7809235e17b0d853e174c0428629bee5891f55b953dd3ec49ff3",
+      "bytes": 2291
+    },
+    {
+      "arquivo": ".github/workflows/testes.yml",
+      "git_blob": "88816dff0cb9ca484def5c2e21b5a3ae56fa6edc",
+      "sha256": "365443d77c81cfde52f0e05de438b637e9b05afc95e005d1622cf1fff79c9a35",
+      "bytes": 6034
+    },
+    {
+      "arquivo": ".github/workflows/videos.yml",
+      "git_blob": "96f055b51b54db6c2bd2841d54497a512cf15b0a",
+      "sha256": "0eb605b167dbbc4e29f9b2b8563ffc42dcc36393307afc59f17dc699042ca7f6",
+      "bytes": 539
+    },
+    {
+      "arquivo": "app/package.json",
+      "git_blob": "88826aea474a1ca4cc3ebd75543fd89ea3a65194",
+      "sha256": "4426d1aa649043e5fe66558bfc782e784c82055c9ac5dde5f7b78d5ff69e6d1b",
+      "bytes": 719
+    },
+    {
+      "arquivo": "curso/app.js",
+      "git_blob": "b486a6517eecf3ec63d51b2be7a556bab9a692d6",
+      "sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "bytes": 237332
+    },
+    {
+      "arquivo": "curso/app/01-base.js",
+      "git_blob": "565e32e9c4b0f5a9d22cbb57f725cdd86cc913a5",
+      "sha256": "a3a27a1b4c9e51ca4ba050a16b76ec5aaedcaedefd926815329d0192b3c33084",
+      "bytes": 12136
+    },
+    {
+      "arquivo": "curso/app/02-certificados.js",
+      "git_blob": "e379dcd84c4a3a26cf30f3bfd3852c0d1029f20b",
+      "sha256": "26365b3737c80f72e9ecc75159bf72b8540228e2f7811e809545f716b64d8111",
+      "bytes": 6012
+    },
+    {
+      "arquivo": "curso/app/02-configuracao.js",
+      "git_blob": "c66beaa4504b9105c35d0869bce074c0ad987f64",
+      "sha256": "160fbae8f84b135a39d9546961e0a847d8cbbe59281b6f8b13ede9e4efcd5eec",
+      "bytes": 177
+    },
+    {
+      "arquivo": "curso/app/02-persistencia-local.js",
+      "git_blob": "b4f1107f8ea60c4cc799091f6104a98a8e355007",
+      "sha256": "52935b0091ed0dd77fd4ad744c73682fad8a36a4f829018359270e51047dffe0",
+      "bytes": 2889
+    },
+    {
+      "arquivo": "curso/app/02-progresso-nuvem.js",
+      "git_blob": "805aada4e7628fe65fc9cde75d52a9842de86b41",
+      "sha256": "d77d73cafbfe0396322ceb7a099726eba503f16a2109cf62f371a20a6a39901b",
+      "bytes": 9332
+    },
+    {
+      "arquivo": "curso/app/02-z-firebase.js",
+      "git_blob": "1e6217c85decbb35cda02b51e0b93f7e5970996b",
+      "sha256": "33a57fb38c6cb01eb21f3466a2c46c5008183a924f1db61ded1b5995e98c4b6a",
+      "bytes": 8316
+    },
+    {
+      "arquivo": "curso/app/03-plano.js",
+      "git_blob": "6f2f3530bf9676fca5365606b4d5e2f41e28597f",
+      "sha256": "c5785b516bcffd24c6edf3fb7adfd2f2bbfbed097f8355c21a303c00506a2625",
+      "bytes": 18722
+    },
+    {
+      "arquivo": "curso/app/04-telas.js",
+      "git_blob": "c31e6c2fb20abcbb255e8169341481c118cb8e09",
+      "sha256": "f68008541e897979767bfc57968e228a49ab56fec3699c8b0f3b8e332291cfe1",
+      "bytes": 35136
+    },
+    {
+      "arquivo": "curso/app/05-aula-apostila.js",
+      "git_blob": "6ee5900348ff897eabcda0336b414d5689c2659e",
+      "sha256": "da81e3bc618a7fe663921a1814e2ca1e00bce648950c5b6d842ed6965b153134",
+      "bytes": 34509
+    },
+    {
+      "arquivo": "curso/app/06-simulados-render.js",
+      "git_blob": "8341d571c4ca49726cd3650bca80f7bc5fe266e5",
+      "sha256": "f8f60ce1b69dc3204380af5a8530d8fd68feb0742091d071c528fa596b58bf0c",
+      "bytes": 17482
+    },
+    {
+      "arquivo": "curso/app/07-eventos.js",
+      "git_blob": "83e3634e3ff325b9cd4dbe7c466657b7bc618df5",
+      "sha256": "134a0a3347df187969716dc85fa5f5b8629ae66643dff42852c02681c769237f",
+      "bytes": 13482
+    },
+    {
+      "arquivo": "curso/app/08-uniao-nuvem.js",
+      "git_blob": "06b18eced3822157e60b6636eb80e7c4065833c6",
+      "sha256": "d0d468014b806cef7fc7b204587e16c93d073937253985f2ea3a95fbc9d9020a",
+      "bytes": 16058
+    },
+    {
+      "arquivo": "curso/app/09-contas.js",
+      "git_blob": "a106d87a59809a2685571315df7ff57d8ae08b9f",
+      "sha256": "300ef33e68a78a93a513c47baa00dc81940bdd279656b171fc315f820136f328",
+      "bytes": 17177
+    },
+    {
+      "arquivo": "curso/app/10-nuvem-claude.js",
+      "git_blob": "7d681ec946dec0ce71a3c7d43f6407841b61b0df",
+      "sha256": "659c8fb95ca42e9873e48872fe559ad0439a404a91aff5ac6433fbbde55a156e",
+      "bytes": 1038
+    },
+    {
+      "arquivo": "curso/app/11-formatos-legados.js",
+      "git_blob": "bd49e91d1d0d3946b06b9181609c4bcd18ff25c9",
+      "sha256": "d8cb544da8f56d96c78577f32736a1888b0835f1934f4c4aea9e9abbd678c4ff",
+      "bytes": 772
+    },
+    {
+      "arquivo": "curso/app/12-importacao-migracao.js",
+      "git_blob": "b140410152a4921ba57594a59153101bbd24f3f3",
+      "sha256": "c55192aa868a7be9b513511ab2e898ca3274125192f98e1e65cae0e726697234",
+      "bytes": 2386
+    },
+    {
+      "arquivo": "curso/app/13-falhas-nuvem.js",
+      "git_blob": "c9ab3862bb3a43a2ee2a50d5e986417a62df932a",
+      "sha256": "e6cc2309189009acc3468950fa640f931084b4af2cb4382769a5c5d1d059b05a",
+      "bytes": 4189
+    },
+    {
+      "arquivo": "curso/app/14-abas.js",
+      "git_blob": "3414d31b6ef56491e28d1177ecacde80278916ab",
+      "sha256": "724c9f19dc92e4639489cde195153a49128f89f107bc56dbd3ab56619cae575e",
+      "bytes": 11192
+    },
+    {
+      "arquivo": "curso/app/15-diarios-pendentes.js",
+      "git_blob": "046a90948f5bfa3f4f146d8191c03d5486385b60",
+      "sha256": "838037c5cc8c19c41e14897ed36c6bca1e5a02389ac996a78d21ea85f056d25e",
+      "bytes": 12925
+    },
+    {
+      "arquivo": "curso/app/16-diario-duravel.js",
+      "git_blob": "1df733244ed0afd6a78b640db4d59503ef77e741",
+      "sha256": "8cd6ccf7e5012d209019b8dc6f3ec051f218d7ec31b70a3cf12d7a12d0f4939f",
+      "bytes": 10301
+    },
+    {
+      "arquivo": "curso/app/17-estado-persistencia.js",
+      "git_blob": "2780d5e16dfdeca49359dbea6d84bd5e27286b7f",
+      "sha256": "b9a2c08af48a9df57dcd42115077fd74971b2e5d4b9b216b6c3394c6994cb0f6",
+      "bytes": 3023
+    },
+    {
+      "arquivo": "firebase.json",
+      "git_blob": "ce3d75f1c7758b4bc6b95ac5ad02abaac611b370",
+      "sha256": "fe602a2225b018b60ba2a2343984c6a521a4157aa067e22397a4aa2810cf2125",
+      "bytes": 1068
+    },
+    {
+      "arquivo": "testes/abas-duravel.js",
+      "git_blob": "e67a8b308022f8096671003d4cf0085e5eddcca6",
+      "sha256": "00fd9e6a33fa447dff2c3e90394fd0672cf97e086a565782e7a3df8423441c96",
+      "bytes": 4604
+    },
+    {
+      "arquivo": "testes/abas-interrupcao.js",
+      "git_blob": "2798ecb19cd21e98d5d879b448befc3fd2208853",
+      "sha256": "5e006f66e0535e2e88e33ce3edc4035222f4ba7a31bdd5320d06beb531ed6875",
+      "bytes": 2746
+    },
+    {
+      "arquivo": "testes/abas-recuperacao.js",
+      "git_blob": "d01fe689b489ebe7e0e01441dfcc18a06b5d5031",
+      "sha256": "d41e56427122eb71b7377ecad2068c55db14ead3cfd4acbc9f894f92587149a3",
+      "bytes": 3994
+    },
+    {
+      "arquivo": "testes/abas.js",
+      "git_blob": "5065d5668dd7090fbed18589ea416aeebdb2e6a0",
+      "sha256": "3c14cc310d00a8744c1c7e5b49a1b5548984890d3697d66f1e562d157c145154",
+      "bytes": 8323
+    },
+    {
+      "arquivo": "testes/atualizacao-transacional.test.js",
+      "git_blob": "b24c44fc6b7c718b7d854e2e1be4c7fcb26f120d",
+      "sha256": "3a9393af778125fc187d86231c1194999c4909cf39468e49e422e0da96dbef48",
+      "bytes": 4543
+    },
+    {
+      "arquivo": "testes/atualizacao.js",
+      "git_blob": "8d289e1a7cc42418dc41f4749bfd47b09ad9c98e",
+      "sha256": "cf1215e8959833f1def9772818300b64986de94362fd0989a0366224b360a10e",
+      "bytes": 8806
+    },
+    {
+      "arquivo": "testes/cache-restaurado.test.js",
+      "git_blob": "1d44f26112e056569d910c0b1c2e4e6165b43e77",
+      "sha256": "a0c8bda67fc35ac43a1a0da3da11c847ec05f46ee4d2d07e60442a0971f57a29",
+      "bytes": 3975
+    },
+    {
+      "arquivo": "testes/carga-metadados.test.js",
+      "git_blob": "c789426d82855b666b5fe44535aa4a09192206ec",
+      "sha256": "e9ed10633671d4d4c59361c0dc7374fcc53373678a3b9ac38954ef3611907c89",
+      "bytes": 6695
+    },
+    {
+      "arquivo": "testes/carga-nucleo.test.js",
+      "git_blob": "f7d77b122a131a8b19b29e97f8cace254ff4340c",
+      "sha256": "8c385ddcd004b7081cab0a7a6cd65cd05778cb5cdca4f7ba3f627e4f7d2aefe6",
+      "bytes": 3481
+    },
+    {
+      "arquivo": "testes/celular.js",
+      "git_blob": "b834fe93f390c641ebee8d3760ac8d6c6c170858",
+      "sha256": "9eb391bec6421ea060cbc1adc3e69f1baf8d3110fd1d658e221b8cb94240ec40",
+      "bytes": 10483
+    },
+    {
+      "arquivo": "testes/ciclo-sincronia.test.js",
+      "git_blob": "38eff3df9ef4396b02d024d36d5bded2d5d66171",
+      "sha256": "a6899f1b92cf80167d92bfce50b2d8e1425ec784550758669dc1d3f7129ad409",
+      "bytes": 4641
+    },
+    {
+      "arquivo": "testes/comparar-conteudo.js",
+      "git_blob": "acccbbabaaa65829afd3da251e68f49fc9e097d4",
+      "sha256": "638c32735ebe804c9dc30e6dfbce5093fe7365473804eb2d122b257a2325459f",
+      "bytes": 2228
+    },
+    {
+      "arquivo": "testes/concorrencia-fallback.test.js",
+      "git_blob": "a35c118c5032494a808b6524a56545b9a61d56cf",
+      "sha256": "678fb6b043a622e9767460c21fdfe98427619bcf10699e66bb84d453f31776c8",
+      "bytes": 7471
+    },
+    {
+      "arquivo": "testes/contas.js",
+      "git_blob": "f63552810fcff622e99071188360342a0e90544e",
+      "sha256": "70ef736fa682e0676cd5066032caa4aa783a0e8fbf00f5d82f12bf14e601ba1e",
+      "bytes": 13434
+    },
+    {
+      "arquivo": "testes/copias-privadas.js",
+      "git_blob": "7170eae922dd7a61f3876565f1d209cfab7e663e",
+      "sha256": "e85f99746484a530ecd2881ede3a16320496c2d5f0e9a2181e838caaaaf5f130",
+      "bytes": 1787
+    },
+    {
+      "arquivo": "testes/dados.js",
+      "git_blob": "8a3aa0cf06f7bf2ead97bba30eed901457c14305",
+      "sha256": "0addd12ecd3b9bca102aecb3759f34b8372598f5a1955079ca4c7690ac453a9f",
+      "bytes": 17744
+    },
+    {
+      "arquivo": "testes/depurador-transacao.test.js",
+      "git_blob": "19741a22cebe076be29a6069158403ee7efbe198",
+      "sha256": "40af9ae4607fd5594c2bc47c747662b1f0474c060583ccd0d3fa1e88d4c062ac",
+      "bytes": 3080
+    },
+    {
+      "arquivo": "testes/diario-legado-auditoria.test.js",
+      "git_blob": "f94240e3065f2f5ad5707220392e1ec871b2e615",
+      "sha256": "9839619f38ab7203c6911fb8ce69f49dca53110735a3332bd90021265a326897",
+      "bytes": 4453
+    },
+    {
+      "arquivo": "testes/diarios-auditoria.test.js",
+      "git_blob": "8203fc8f0b98b7e5c6261f241371e97d31a0d59b",
+      "sha256": "a16ec6a8521fc452c364aab274a6088585686e4b3fada0a552d1f645260a9322",
+      "bytes": 15197
+    },
+    {
+      "arquivo": "testes/duravel-candidato.test.js",
+      "git_blob": "e82856b1b801b2bfaeb5d757080a2bb8ce06d8c8",
+      "sha256": "378dbefb4b8a2d9e1801228855ca6b8bb7654aa45553a7db155e23c970bd7974",
+      "bytes": 9591
+    },
+    {
+      "arquivo": "testes/epoca-nuvem.js",
+      "git_blob": "170b96c0a10b617506f5ff26933919d0858dbe64",
+      "sha256": "efb3c40d0b618ff5da715fd840f59dfa600b21032245b85a95c65fcaef0695ed",
+      "bytes": 21164
+    },
+    {
+      "arquivo": "testes/exclusao-nuvem.js",
+      "git_blob": "8bab08dc957cc1fc3cbb2cf5b16383ee9dd67692",
+      "sha256": "32ce4b4b9f7b52ee9a0fd9c3e2903fd0b12848b4103e6f09ad0e47515e9ccf32",
+      "bytes": 10089
+    },
+    {
+      "arquivo": "testes/f01-abas.test.js",
+      "git_blob": "c3c2ad2765dce7841c475387d09e97649a63e1ec",
+      "sha256": "b367dd5e599c71bb570a90f2f87ea7e24676c1ddebf7e023cdde23df7e6ee777",
+      "bytes": 6679
+    },
+    {
+      "arquivo": "testes/f01-fixture.js",
+      "git_blob": "be3f242bbee32acf6f243718e7ce8ba5a0069bf1",
+      "sha256": "d6672414363a564e48839e6dcc16096a6c8c4cf2d45834f8e3b945bdc3e02b5a",
+      "bytes": 8047
+    },
+    {
+      "arquivo": "testes/f01-riscos.test.js",
+      "git_blob": "e226f140dbee854f8bbed83d0e30ec81a5dcaa69",
+      "sha256": "47c7ebd904ca640087c606cba166b4a8434f23881893c7766af4c9d171064adc",
+      "bytes": 10917
+    },
+    {
+      "arquivo": "testes/falhas-nuvem.js",
+      "git_blob": "7a6ac9abb0465f88ac6500d837714bd48002d454",
+      "sha256": "f4b8aace3174a52603b3c6af1a7c38d42cdcdb7df1fbf6be7270451dc099c728",
+      "bytes": 10490
+    },
+    {
+      "arquivo": "testes/firebase-auditoria.js",
+      "git_blob": "0ceacebef5471e6fc7e88e9b0eb0ae41677cc5d4",
+      "sha256": "9e2fdb7d8bd284ff38c0a4159805c0c5a2be9bcdd0f3f386ffc81a7637ee25a3",
+      "bytes": 7750
+    },
+    {
+      "arquivo": "testes/firebase-emulador.test.js",
+      "git_blob": "896e1abdc6f2f4682b8ee10f925594de3c61446e",
+      "sha256": "46c0c5909a2d8b81815d2faf9a1f0881029c583e5d44a0479c7058dabb6bbbe4",
+      "bytes": 37025
+    },
+    {
+      "arquivo": "testes/historicos-legado.test.js",
+      "git_blob": "46582648a4af34031b18d24dcd01f29375c458b9",
+      "sha256": "72915c9c520397c5c7314edabaf54f5d6b4974d0ea0ddde55afbe7b971260234",
+      "bytes": 797
+    },
+    {
+      "arquivo": "testes/hosting-auditoria.py",
+      "git_blob": "abeb5ce032d9c38d060ac484b80fc18b7d59c958",
+      "sha256": "eaa620afb1278fef6588d598a2d4b70ea3167e3023f1352ea17debbbd77cef93",
+      "bytes": 3659
+    },
+    {
+      "arquivo": "testes/hosting-contexto-auditoria.py",
+      "git_blob": "10cea411d1482351951c3be98646bd9999275c32",
+      "sha256": "42aba9fef032eb22a2bb64f7faf1e406bbea51b388b51a9593e9bb54a9d17ef2",
+      "bytes": 3612
+    },
+    {
+      "arquivo": "testes/hosting-gates-auditoria.py",
+      "git_blob": "1b5d4d657b82f3f1ba7ab0894288a8145c373e90",
+      "sha256": "eb62f7886e8154a56b2d56636a2e3775a881949afc740daf380581690249c7ac",
+      "bytes": 4147
+    },
+    {
+      "arquivo": "testes/importar-fixture.js",
+      "git_blob": "9e2768908ed190a50feeec492440eceb3cb9f556",
+      "sha256": "4228fb75fc488aa46a03a61b80a1940d06d505b3eee3718e8dc26b9639543471",
+      "bytes": 822
+    },
+    {
+      "arquivo": "testes/isolamento-firebase.js",
+      "git_blob": "839ae4b125a983442bc475e0ec5611ecc214b7f6",
+      "sha256": "173ceee8f43f250a9b92122a902a1c0977f837f17224460c4b1a45d96c13944e",
+      "bytes": 6600
+    },
+    {
+      "arquivo": "testes/legado-bloqueio.test.js",
+      "git_blob": "31d105aa677718d15d446222e7728023066ab16d",
+      "sha256": "6777152f65e258fbef86cf478b94a0c371ea9dea14f894b9d1acdc8ec6497432",
+      "bytes": 9202
+    },
+    {
+      "arquivo": "testes/legado-contrato.test.js",
+      "git_blob": "8be89fdda6adff2843e87c70ae9171dc70fb9337",
+      "sha256": "8fea37148e682bf46018ea6499fcc9455b6718f94bdac89834475ecf9f08ff21",
+      "bytes": 3081
+    },
+    {
+      "arquivo": "testes/metadados-limite.test.js",
+      "git_blob": "867923d046886d3aedc4d8e9c9a8bd5443bb9543",
+      "sha256": "466f0681609e7c22858c58825dba2279ff9b20cf2dc14197bd611f1f8024e0ab",
+      "bytes": 2979
+    },
+    {
+      "arquivo": "testes/noturna-confirmacao.test.js",
+      "git_blob": "3ec1c66a00e52767c1a7603933a1f578c4f83069",
+      "sha256": "c6bec79b49c583ffca61953aba0df1832e617d39dfc6aa2cee2f9efef9fddb20",
+      "bytes": 4960
+    },
+    {
+      "arquivo": "testes/noturna-falhas.test.js",
+      "git_blob": "7d910b778297b91e1467b30c3ff253b9c305f6ce",
+      "sha256": "f75042455207639aa3d849b3475223bc3fec6bf6d76252b7fd062937b1bd30d2",
+      "bytes": 9065
+    },
+    {
+      "arquivo": "testes/noturna-integridade.test.js",
+      "git_blob": "6774837abb3b920d82f7434358f48a0a9c7d975c",
+      "sha256": "8975c1538bb704e6049c2739452e6c383a9a4955c43820e962852dedb7bca948",
+      "bytes": 11403
+    },
+    {
+      "arquivo": "testes/noturna-seguranca.test.js",
+      "git_blob": "ba0c634f15b640eade8d96fb478a2193fbf9d056",
+      "sha256": "b325ba7e74fcff58234e69317d7ee2532a6ed2c1a41e94a02e6bc6da5f3af5fb",
+      "bytes": 5795
+    },
+    {
+      "arquivo": "testes/nuvem-claude.js",
+      "git_blob": "53a142f164fb337c7d2d0391c0199a7178b32b26",
+      "sha256": "f3018e6367dff26d3580cbc50295af0370ba4244afca07413e6778c4d3e33cfb",
+      "bytes": 14483
+    },
+    {
+      "arquivo": "testes/operacoes-cache-exclusao.test.js",
+      "git_blob": "ab34162ae1a3d51e86b98724d6c3734233107daf",
+      "sha256": "667d8e82542f45eb67e871dbb826775dbbd30878df593d9ec668e38bc4c6e076",
+      "bytes": 4179
+    },
+    {
+      "arquivo": "testes/operacoes-dupla-falha.test.js",
+      "git_blob": "ab0bb5e3e0b1002dfc4dc6eea1f39e6dfc1190d0",
+      "sha256": "336f221cd789ead7866a540fbd85cce466b944fb0438bed8d093da33f9bcc260",
+      "bytes": 3779
+    },
+    {
+      "arquivo": "testes/operacoes-exclusao-concorrente.test.js",
+      "git_blob": "a85ef2a21fe5eebf39e0c32808a6f51ad8b13b66",
+      "sha256": "51e2355f00882f970b67da5bfd5b92dc212e721fbeaf94d34852d6a1912b964a",
+      "bytes": 3756
+    },
+    {
+      "arquivo": "testes/operacoes-falhas.test.js",
+      "git_blob": "a7ce3c05348f793a30cbe2b3580c62092721a7af",
+      "sha256": "456eb7977412466ad31ace202ff59b769ec50ec878114bf029dd5e5fd12fd8c4",
+      "bytes": 3919
+    },
+    {
+      "arquivo": "testes/operacoes-interrupcao.js",
+      "git_blob": "69b9bf0f14d016fae4286c2702058bd37db5f415",
+      "sha256": "d285231be71da6e1d904dff0b07aae2233e837303ed8ed8ea16bfc3cd8e663f0",
+      "bytes": 5324
+    },
+    {
+      "arquivo": "testes/operacoes-interrupcao.test.js",
+      "git_blob": "b961f8d0594b0df01867e418aa1196745bc87e9c",
+      "sha256": "4ae4872fcd1386da45e6f7da26a3cc4cb98e8d1f6421411d08c9e9ee33210f0d",
+      "bytes": 2102
+    },
+    {
+      "arquivo": "testes/operacoes-recuperacao.test.js",
+      "git_blob": "7cae0bf4534ea2c477d3ab14cd7824b18d56c1bc",
+      "sha256": "eae66daff45adcd0a34bfe3cb03a755d7481c69dc3ee3f843857714484a18f42",
+      "bytes": 6085
+    },
+    {
+      "arquivo": "testes/operacoes-suspensas.test.js",
+      "git_blob": "15cb8e1191ec64337a68c1bdbb98cfe402370395",
+      "sha256": "0815e0434d45dca9f22ad1cae4c420d39d92601c91534542e87f1bc5cdecb5c4",
+      "bytes": 5497
+    },
+    {
+      "arquivo": "testes/operacoes.test.js",
+      "git_blob": "358f74c0b73ec5887e509edee1f82b736ace23cd",
+      "sha256": "5561ac4666c4928f5859efd93e892970c51e74e15b4b60d23f04c2184422e76b",
+      "bytes": 5615
+    },
+    {
+      "arquivo": "testes/orfaos-auditoria.test.js",
+      "git_blob": "ca38cb8ac6f3eea43848baf263dddc6899ef789a",
+      "sha256": "a968307824b81ebf14f480c4520ed10e2a6c7d22a6a04064b97e9e8cb90a2919",
+      "bytes": 15176
+    },
+    {
+      "arquivo": "testes/papel-nuvem.js",
+      "git_blob": "1b1ea5dd4791c7c9a95788b17c22ec500e08aed7",
+      "sha256": "a168e9d41851c0774ff9c06000f9db7ab4c319c39c47edbe7fc9818501ddf58d",
+      "bytes": 797
+    },
+    {
+      "arquivo": "testes/perfil-legado.js",
+      "git_blob": "f6d58c77d7cc2839322734a45f963457ccfc650b",
+      "sha256": "053fde8bb3f8fd71a03e79aa2d3a3621372147b4e494d84a22dd65776fc3c77c",
+      "bytes": 1065
+    },
+    {
+      "arquivo": "testes/persistencia-regressoes.test.js",
+      "git_blob": "f8a01bf5403351d2c18ddffd05651a775eceb4df",
+      "sha256": "34b401ab3e0f935ce18d32eb5d465861aa581d077784cde8988d15a408ba0118",
+      "bytes": 1153
+    },
+    {
+      "arquivo": "testes/plataforma.test.js",
+      "git_blob": "f52f8d17d2603c2e59a2cafa6f08973bd4a55574",
+      "sha256": "329a7a9529df5e40a0a8e10546b0cc50030882160003a6c788e90f0720a2c68d",
+      "bytes": 25973
+    },
+    {
+      "arquivo": "testes/progresso2-nuvem.js",
+      "git_blob": "7ce845ea9bffa1227c8d71e1e77933b6e44bf792",
+      "sha256": "4e863723f8a0560a4b9d329d83825474e378c7dc366ad008d20fe263a077366e",
+      "bytes": 12888
+    },
+    {
+      "arquivo": "testes/quarentena-exclusao.test.js",
+      "git_blob": "4745f0c349b1bbafbe6179e46a909b47549b9dee",
+      "sha256": "d53f9f24df4d26c9ccd664298c132184952961301bc33bffe937c9a2beacbe9b",
+      "bytes": 3143
+    },
+    {
+      "arquivo": "testes/regras-nuvem.js",
+      "git_blob": "008129899a1e35b26e118b45a61c29b8250847d3",
+      "sha256": "e6ebe7832472a512093739645c5a02b6a7eef7bd934aac681ed897603816e2c2",
+      "bytes": 6554
+    },
+    {
+      "arquivo": "testes/robustez.js",
+      "git_blob": "5d87ee923a5981b4c4c619a677ab07208480cf33",
+      "sha256": "a2dc78d6444a175b871cae24128c9a1331c25678ad7a0ffae85b36631ff2afa4",
+      "bytes": 10184
+    },
+    {
+      "arquivo": "testes/sincronia-firebase.test.js",
+      "git_blob": "51c0281011a2669a69518706c7147f78ad84da00",
+      "sha256": "e3bc78659c8fa2dcd17ce72f6c286a07410916faf685e5abed77c0ade28d9f58",
+      "bytes": 7150
+    },
+    {
+      "arquivo": "testes/sincronia.js",
+      "git_blob": "bf1e1154bf92cf76be88ffe5b606867b69b13112",
+      "sha256": "69fb5e4a8c45adc1dfd46252e19fcc36e1387f2bf1e1ecd21d96c0e95a938647",
+      "bytes": 12285
+    },
+    {
+      "arquivo": "testes/storage-crash-controle.js",
+      "git_blob": "3192eb1de48123e5b599b649833c8465a1bb3be3",
+      "sha256": "773a903f12f9328953dbd19a7a1caf90e50f0f618ea3d65dce7b7512208297ab",
+      "bytes": 1985
+    },
+    {
+      "arquivo": "testes/versoes-misturadas.js",
+      "git_blob": "bdf437ec4d81bc146d4a28bf538a83619a6fd9a5",
+      "sha256": "58b4a3dd40badf2f72f58129cf99332b1f5b4d3a56570cfda86e4faa43ec65e8",
+      "bytes": 8926
+    },
+    {
+      "arquivo": "testes/versoes.js",
+      "git_blob": "a9b9d5e5feb38ef22cd4daac44e50a2343d1372b",
+      "sha256": "b0a8e4884ac5b000df1ab28137f46ad03610d7026a1af2fdd3ca56faa7abc5c8",
+      "bytes": 22232
+    },
+    {
+      "arquivo": "web/build.py",
+      "git_blob": "26659a529b8e72160be3881328995aa9d0161281",
+      "sha256": "35ba3d94493f8cca8a2c485025905f1b52d2b270b9604cc991370ac86db7fcbf",
+      "bytes": 13043
+    },
+    {
+      "arquivo": "web/conferir_videos.py",
+      "git_blob": "0bf2ef3801dfeed57b7f9b814b9de453c8768d53",
+      "sha256": "1fdd09cbae1009227cc01c31faeda0690308599ac6352ab7b37fb0b6e0d3e3f5",
+      "bytes": 2201
+    },
+    {
+      "arquivo": "web/firebase.homologacao.exemplo.json",
+      "git_blob": "808136337efe7e8ace9919bb4957d1110d63f69a",
+      "sha256": "1e66fdaa629686afe2c3f163ab1f4d2b13e24708ec19ca219fd340c117f4abef",
+      "bytes": 206
+    },
+    {
+      "arquivo": "web/firestore.rules",
+      "git_blob": "18205f13682e9aa38961824c1af445d1bc1fb9f0",
+      "sha256": "7f75ff5c7d903345fad443204c9f070ed665bf50578cb7d83bb044cd2e38bd70",
+      "bytes": 2639
+    },
+    {
+      "arquivo": "web/fontes/Barlow-400-latin-ext.woff2",
+      "git_blob": "5c6eb7a330f8f5a19e93864290e83ce7d04bbea0",
+      "sha256": "122b24bc2a90b0abe189f5229768bf2e9ba641324fe2459b48850079625934f1",
+      "bytes": 14268
+    },
+    {
+      "arquivo": "web/fontes/Barlow-400-latin.woff2",
+      "git_blob": "3914af46036a03369558f46123f337ce0e8c5ce6",
+      "sha256": "b0a8ad37ac45f5fb22ced461576db72e44e295107aad7a9c8a7a4bad728fd03b",
+      "bytes": 22196
+    },
+    {
+      "arquivo": "web/fontes/Barlow-400i-latin-ext.woff2",
+      "git_blob": "aa6c8cc5399832e650a06fa7981140288e411fd2",
+      "sha256": "dcc40914416cf9c17ca57deeed46b2eea1749b2b3a57db34147ed0ee004b866b",
+      "bytes": 15300
+    },
+    {
+      "arquivo": "web/fontes/Barlow-400i-latin.woff2",
+      "git_blob": "190e104878a2e4c75d3500389787f729544cbf5b",
+      "sha256": "7a306c56f630df002deeafbd521738e20795d765feea65030def2e80f9a3d62f",
+      "bytes": 24484
+    },
+    {
+      "arquivo": "web/fontes/Barlow-500-latin-ext.woff2",
+      "git_blob": "4966af7fbefcfa491e92d4c1f76f4f3ff2500f7e",
+      "sha256": "3facdf66b60778c7e64693013be7799e6686b2488dad65525b4036e211ab03e0",
+      "bytes": 14416
+    },
+    {
+      "arquivo": "web/fontes/Barlow-500-latin.woff2",
+      "git_blob": "b1d06c6db025bd438736e9192a33569d353906c6",
+      "sha256": "cd759df8ef9efc98fee14307b4eb5ba27f08b1f8f2f3ad2872432e25c89907a8",
+      "bytes": 22008
+    },
+    {
+      "arquivo": "web/fontes/Barlow-600-latin-ext.woff2",
+      "git_blob": "3d7c7a2d9371ca6e7a0ec125b0697870cb553f3a",
+      "sha256": "b7f099c421968b583734bc631e6706bff8fc23908112a219f5f0e37f59b03b32",
+      "bytes": 14968
+    },
+    {
+      "arquivo": "web/fontes/Barlow-600-latin.woff2",
+      "git_blob": "b1a019f9d0eb0043beac510d1c932e8bc58cbbcc",
+      "sha256": "4b52ddd4836b592df0e4832b8286956883cdc651b015126bdd18f184b7f90cc3",
+      "bytes": 22772
+    },
+    {
+      "arquivo": "web/fontes/Barlow-700-latin-ext.woff2",
+      "git_blob": "09f68715b7506c7d8ed9c848bd11bf2db1ff43a6",
+      "sha256": "88c786d5fa8700a201615bc7b8ede09d209ec5d08cc3dd0a30ea1c4baff3476f",
+      "bytes": 14836
+    },
+    {
+      "arquivo": "web/fontes/Barlow-700-latin.woff2",
+      "git_blob": "4ee6cd865407b088a6c37b0a9e42938d3026d003",
+      "sha256": "2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289",
+      "bytes": 22788
+    },
+    {
+      "arquivo": "web/fontes/IBMPlexMono-500-latin-ext.woff2",
+      "git_blob": "6f33f8c0578588d14260678edb9bffe9c10d2bd3",
+      "sha256": "6bb06407c97584b0867a959e05e8874693bfeb8c317de190811c51598f2d99ea",
+      "bytes": 13432
+    },
+    {
+      "arquivo": "web/fontes/IBMPlexMono-500-latin.woff2",
+      "git_blob": "090f82f7ec7997047324e07650865305a099969a",
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
+      "bytes": 14888
+    },
+    {
+      "arquivo": "web/fontes/IBMPlexMono-600-latin-ext.woff2",
+      "git_blob": "c0b57de452cf226f844eca7ca22ea9a5ac1b6cdf",
+      "sha256": "32057cf50dd14bdb21a2c93766c4a2c43e4abe688ea3922df3203cac7751a98b",
+      "bytes": 14328
+    },
+    {
+      "arquivo": "web/fontes/IBMPlexMono-600-latin.woff2",
+      "git_blob": "67aeeb0104a02cf060b813abf6dcb6fdb97b7512",
+      "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83",
+      "bytes": 15620
+    },
+    {
+      "arquivo": "web/fontes/OFL-barlow.txt",
+      "git_blob": "2f22ba6ca4dbc12145ae40b14c3368f387cba0e2",
+      "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+      "bytes": 4377
+    },
+    {
+      "arquivo": "web/fontes/OFL-ibmplexmono.txt",
+      "git_blob": "c35c4c618fab33da8695177b3a6cefe0810b7b28",
+      "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "bytes": 4456
+    },
+    {
+      "arquivo": "web/fontes/OFL-sairacondensed.txt",
+      "git_blob": "c8129c7dd7ee999c6c30a1e2688c1b316e771444",
+      "sha256": "0e2ccc5da1dd979f08ba82bca2fb61592506a1e58d3cbfc26d904f0db71bd812",
+      "bytes": 4403
+    },
+    {
+      "arquivo": "web/fontes/SairaCondensed-600-latin-ext.woff2",
+      "git_blob": "5ae9fddf2db334c2029c35e2150174ea7e4c62fa",
+      "sha256": "0bf20d8abc9843a3039af6c678237d795ac09fa3695cfeaa8e29be246bfed6c6",
+      "bytes": 14736
+    },
+    {
+      "arquivo": "web/fontes/SairaCondensed-600-latin.woff2",
+      "git_blob": "c385d8cb446f989ac641625b1871422dc9efd067",
+      "sha256": "d20f5b8d2d6a1a236cf776fa3ac0bec671503824cbed5dedf656b61930dc87ee",
+      "bytes": 17980
+    },
+    {
+      "arquivo": "web/fontes/SairaCondensed-700-latin-ext.woff2",
+      "git_blob": "5a15f45abc9a647d88ec729a42a1592de73fd026",
+      "sha256": "f15c9a22d2d8f00bebdf7f005f95b75e502813de13ad70879a5c8bba65d6f4ea",
+      "bytes": 14716
+    },
+    {
+      "arquivo": "web/fontes/SairaCondensed-700-latin.woff2",
+      "git_blob": "3b036b709840eab20923b403beb6df2be3699324",
+      "sha256": "eb1cf59a1f785a890ac30d69bb59fffef3989fef4e7a2ae2367c85e861077fda",
+      "bytes": 17808
+    },
+    {
+      "arquivo": "web/fontes/fontes.css",
+      "git_blob": "ada695227ce90f11f6b6ee7bdd379657a1d81b25",
+      "sha256": "33aa3f9f9b2c09c6d5fe03c812b32787c333aedb6421911be5a0aa3f3137e8b6",
+      "bytes": 6692
+    },
+    {
+      "arquivo": "web/icones/apple-touch-icon.png",
+      "git_blob": "ff04ea744f17a1ba9fd0aace1d7fd9b43a3359a6",
+      "sha256": "1651826c90b5622db0b8f8c5cb22fd726be92ce7dcb49fbd1a09c58b347af2f4",
+      "bytes": 5120
+    },
+    {
+      "arquivo": "web/icones/favicon.png",
+      "git_blob": "b1cf20b9a0d4707ea04583b64b1c0c928084b26b",
+      "sha256": "68a9d88ee39fbcde5cf8163a7e7eb0dc0823912cd0ba8998f045b26da08bd75b",
+      "bytes": 3350
+    },
+    {
+      "arquivo": "web/icones/gerar_icones.py",
+      "git_blob": "cc454cf535ce59eff08fa4a7b987b17354e5cf80",
+      "sha256": "2f9f2304c53c8adee75319b97fb6e6b5f2f83f43df7134d4596d5b78c83a74eb",
+      "bytes": 2128
+    },
+    {
+      "arquivo": "web/icones/icone-192.png",
+      "git_blob": "1149ecf3de4eaba562f46b7bc3ec4250e15bfeb5",
+      "sha256": "d19b1fb09fdce2f45ff69720739160cd7550a393a49cdd31f09fd63977523e32",
+      "bytes": 9218
+    },
+    {
+      "arquivo": "web/icones/icone-512.png",
+      "git_blob": "8af968fa162ac2104d00206b48d936ec6ea00e1a",
+      "sha256": "34d61c1b84e50cf860ad111685e66b65cba6f45bbb9f96f1d128288544d237ad",
+      "bytes": 27075
+    },
+    {
+      "arquivo": "web/icones/icone-maskable-512.png",
+      "git_blob": "7b97a46743f93e838b703ccc9c0c89f027c8cac0",
+      "sha256": "ebdd541822be66149cabe33d90e3d83d5840999379ff1885fe2b6d93ed744eef",
+      "bytes": 18930
+    },
+    {
+      "arquivo": "web/impressoes-restritas.json",
+      "git_blob": "5a5d5d3b9f392fc17d2f7110ee7e29392e1d84c3",
+      "sha256": "419bf017056738211b48f1c7f2bb0330a55a892b4d3b6a11c443cb8df6ee1740",
+      "bytes": 188333
+    },
+    {
+      "arquivo": "web/legal/privacidade.html",
+      "git_blob": "c90478765f20eca82ec39e222037979e14912274",
+      "sha256": "56bb4d8c0a5f41e1bdde921b68c92f4367b7e2b011c4e9b67e458696281e5343",
+      "bytes": 8503
+    },
+    {
+      "arquivo": "web/legal/termos.html",
+      "git_blob": "2662f77ebb380cc1029cd03855983b1a43708bcf",
+      "sha256": "273539df7590fd29fafef5e7ca275bcc4285bf8870ecbb58e63f873f2f1feab6",
+      "bytes": 3523
+    },
+    {
+      "arquivo": "web/montar_app.py",
+      "git_blob": "c8219f7a10612953ac32bbaa49f7261295732afd",
+      "sha256": "fb61db2756dbf45410d492aa8b36cc84bc3cd5e46744d0c39443b3bfd302850c",
+      "bytes": 1376
+    },
+    {
+      "arquivo": "web/regras-claude.json",
+      "git_blob": "7da694b4e0ee47de70c244021ea4aae4472d18c6",
+      "sha256": "3b544594be66a6a3f003ad39ab93b99dd8159c219ad33b8a1ab46e697f13e29e",
+      "bytes": 1184
+    },
+    {
+      "arquivo": "web/sw.js",
+      "git_blob": "ddb62f8d383d450c56735d4c46bd407b6171f358",
+      "sha256": "20bbf431a2e27251b1642df345afdaa4d0497807b11882579b28eb07a9d2025f",
+      "bytes": 1671
+    },
+    {
+      "arquivo": "web/verificar_publicacao.py",
+      "git_blob": "9b40f1e4e4a008204c11f78c4c68260d1aa61965",
+      "sha256": "6210cdf70d74f72355ab3a9093bb926b52a665467fe169deb9cdbb95bcbc9ddb",
+      "bytes": 110036
+    }
+  ],
+  "testes_originais": [
+    {
+      "arquivo": "testes/f01-abas.test.js",
+      "sha256": "b367dd5e599c71bb570a90f2f87ea7e24676c1ddebf7e023cdde23df7e6ee777",
+      "criterios_alterados": false
+    },
+    {
+      "arquivo": "testes/persistencia-regressoes.test.js",
+      "sha256": "34b401ab3e0f935ce18d32eb5d465861aa581d077784cde8988d15a408ba0118",
+      "criterios_alterados": false
+    },
+    {
+      "arquivo": "testes/firebase-emulador.test.js",
+      "sha256": "46c0c5909a2d8b81815d2faf9a1f0881029c583e5d44a0479c7058dabb6bbbe4",
+      "criterios_alterados": false
+    },
+    {
+      "arquivo": "testes/duravel-candidato.test.js",
+      "sha256": "378dbefb4b8a2d9e1801228855ca6b8bb7654aa45553a7db155e23c970bd7974",
+      "criterios_alterados": false
+    },
+    {
+      "arquivo": "testes/operacoes-interrupcao.js",
+      "sha256": "d285231be71da6e1d904dff0b07aae2233e837303ed8ed8ea16bfc3cd8e663f0",
+      "criterios_alterados": false
+    }
+  ],
+  "testes_novos": [
+    {
+      "arquivo": "testes/a35-contas-adversarial.test.js",
+      "sha256": "509807c9c781989faa74a5296e3d26278153acb79d3e4ff676bfceef9b0dc7be",
+      "bytes": 8264
+    },
+    {
+      "arquivo": "testes/a35-fixture.js",
+      "sha256": "2068df322ff9cc7d5e612b30b2f0c1223d381a035a5b8d7ab9515ca7d4649616",
+      "bytes": 8359
+    },
+    {
+      "arquivo": "testes/a35-importacao-exclusao.test.js",
+      "sha256": "8aa8bf100ec6c51394cf52dfb2276cfa1436076effd87d44bea0ae9a0d1b5f78",
+      "bytes": 5752
+    },
+    {
+      "arquivo": "testes/a35-levar-reimportacao.test.js",
+      "sha256": "7f3fef8c928a3bc181673af384af56d28dd7c994bcaf92776627990e7ae82969",
+      "bytes": 3816
+    },
+    {
+      "arquivo": "testes/a35-retorno-firebase-antigo.test.js",
+      "sha256": "d214790ba3b7cfc1f2921ea79d6fa0f19a23e4bf93daa15a51f20fa5395593f2",
+      "bytes": 3907
+    }
+  ],
+  "matrizes": {
+    "emuladores": [
+      {
+        "teste": "firebase-emulador",
+        "exit": 0,
+        "segundos": 180.6,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/firebase-emulador.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "persistencia-regressoes",
+        "exit": 0,
+        "segundos": 444.9,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/persistencia-regressoes.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "sincronia-firebase",
+        "exit": 0,
+        "segundos": 29.8,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/sincronia-firebase.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "f01-riscos",
+        "exit": 0,
+        "segundos": 33.2,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/f01-riscos.test.js"
+        ],
+        "opcoes": {
+          "EEAR_F01_RISCOS": "zerar-nuvem,zerar-unica,suspensa,exclusao-surda,contagens,escrita-interrompida"
+        }
+      },
+      {
+        "teste": "diarios-auditoria",
+        "exit": 0,
+        "segundos": 47.5,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/diarios-auditoria.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "concorrencia-fallback",
+        "exit": 0,
+        "segundos": 20.8,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/concorrencia-fallback.test.js"
+        ],
+        "opcoes": {
+          "EEAR_F13_PONTO": "ultima-conferencia"
+        }
+      },
+      {
+        "teste": "orfaos-auditoria",
+        "exit": 0,
+        "segundos": 72.9,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/orfaos-auditoria.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "orfaos-30min",
+        "exit": 0,
+        "segundos": 27.1,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/orfaos-auditoria.test.js"
+        ],
+        "opcoes": {
+          "EEAR_ORFAOS_CENARIOS": "segunda-escrita-30min",
+          "EEAR_ORFAOS_SEQUENCIAS": "9"
+        }
+      },
+      {
+        "teste": "duravel-sem-travas",
+        "exit": 1,
+        "segundos": 46.0,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/duravel-candidato.test.js"
+        ],
+        "opcoes": {
+          "EEAR_DURAVEL_SEM_TRAVAS": "1"
+        }
+      },
+      {
+        "teste": "migracao-8bd",
+        "exit": 0,
+        "segundos": 13.0,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/diario-legado-auditoria.test.js"
+        ],
+        "opcoes": {
+          "EEAR_REPO_LEGADO": "/tmp/eear-8bd32d2"
+        }
+      },
+      {
+        "teste": "migracao-2f6",
+        "exit": 0,
+        "segundos": 12.9,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/diario-legado-auditoria.test.js"
+        ],
+        "opcoes": {
+          "EEAR_REPO_LEGADO": "/tmp/eear-2f6cad6"
+        }
+      },
+      {
+        "teste": "operacoes-dupla-falha",
+        "exit": 0,
+        "segundos": 13.4,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/operacoes-dupla-falha.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "cache-restaurado",
+        "exit": 0,
+        "segundos": 5.4,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/cache-restaurado.test.js"
+        ],
+        "opcoes": {}
+      }
+    ],
+    "locais": [
+      {
+        "teste": "operacoes",
+        "exit": 0,
+        "segundos": 0.3,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/operacoes.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "legado-contrato",
+        "exit": 0,
+        "segundos": 0.0,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/legado-contrato.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "legado-bloqueio",
+        "exit": 0,
+        "segundos": 10.7,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/legado-bloqueio.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "depurador-transacao",
+        "exit": 0,
+        "segundos": 6.4,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/depurador-transacao.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "ciclo-sincronia",
+        "exit": 0,
+        "segundos": 5.7,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/ciclo-sincronia.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "plataforma",
+        "exit": 0,
+        "segundos": 254.8,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/plataforma.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "historicos-legado",
+        "exit": 1,
+        "segundos": 377.8,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/historicos-legado.test.js"
+        ],
+        "opcoes": {}
+      },
+      {
+        "teste": "historico-epoca9",
+        "exit": 1,
+        "segundos": 129.9,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/historicos-legado.test.js"
+        ],
+        "opcoes": {
+          "EEAR_GRUPOS": "epoca",
+          "EEAR_EPOCA": "9"
+        }
+      }
+    ],
+    "builds": [
+      {
+        "teste": "montagem",
+        "exit": 0,
+        "segundos": 0.0,
+        "comando": [
+          "python3",
+          "-I",
+          "web/montar_app.py",
+          "--conferir"
+        ]
+      },
+      {
+        "teste": "autoteste",
+        "exit": 0,
+        "segundos": 1.6,
+        "comando": [
+          "python3",
+          "-I",
+          "web/verificar_publicacao.py",
+          "autoteste"
+        ]
+      },
+      {
+        "teste": "integridade",
+        "exit": 0,
+        "segundos": 0.2,
+        "comando": [
+          "python3",
+          "-I",
+          "web/verificar_publicacao.py",
+          "validar"
+        ]
+      },
+      {
+        "teste": "workflows",
+        "exit": 0,
+        "segundos": 0.1,
+        "comando": [
+          "python3",
+          "-I",
+          "web/verificar_publicacao.py",
+          "conferir-workflows"
+        ]
+      },
+      {
+        "teste": "hosting",
+        "exit": 0,
+        "segundos": 23.0,
+        "comando": [
+          "python3",
+          "testes/hosting-auditoria.py",
+          "/tmp/eear-audit-a35-source"
+        ]
+      },
+      {
+        "teste": "hosting-gates",
+        "exit": 0,
+        "segundos": 31.0,
+        "comando": [
+          "python3",
+          "testes/hosting-gates-auditoria.py",
+          "/tmp/eear-audit-a35-source"
+        ]
+      },
+      {
+        "teste": "hosting-contexto",
+        "exit": 0,
+        "segundos": 15.4,
+        "comando": [
+          "python3",
+          "testes/hosting-contexto-auditoria.py",
+          "/tmp/eear-audit-a35-source"
+        ]
+      },
+      {
+        "teste": "build-site",
+        "exit": 0,
+        "segundos": 4.6,
+        "comando": [
+          "python3",
+          "web/build.py",
+          "/tmp/eear-audit-a35-20261114/site"
+        ]
+      },
+      {
+        "teste": "verificar-site",
+        "exit": 0,
+        "segundos": 2.2,
+        "comando": [
+          "python3",
+          "-I",
+          "web/verificar_publicacao.py",
+          "verificar",
+          "/tmp/eear-audit-a35-20261114/site",
+          "--site"
+        ]
+      },
+      {
+        "teste": "build-app",
+        "exit": 0,
+        "segundos": 3.7,
+        "comando": [
+          "python3",
+          "web/build.py",
+          "/tmp/eear-audit-a35-20261114/app",
+          "--app"
+        ]
+      },
+      {
+        "teste": "verificar-app",
+        "exit": 0,
+        "segundos": 2.0,
+        "comando": [
+          "python3",
+          "-I",
+          "web/verificar_publicacao.py",
+          "verificar",
+          "/tmp/eear-audit-a35-20261114/app",
+          "--app"
+        ]
+      },
+      {
+        "teste": "lint",
+        "exit": 0,
+        "segundos": 3.4,
+        "comando": [
+          "/tmp/eear-audit-deps/node_modules/.bin/eslint",
+          "curso/app.js",
+          "curso/app",
+          "curso/dados",
+          "web/sw.js",
+          "testes"
+        ]
+      }
+    ],
+    "carga": [
+      {
+        "teste": "carga-nucleo",
+        "exit": 0,
+        "segundos": 378.3,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/carga-nucleo.test.js"
+        ],
+        "opcoes": {
+          "EEAR_CARGA_ESTADO": "/tmp/eear-audit-a35-20261114/estado-limite.json",
+          "EEAR_CARGA_SAIDA": "/tmp/eear-audit-a35-20261114/carga-nucleo.json"
+        }
+      },
+      {
+        "teste": "carga-metadados",
+        "exit": 0,
+        "segundos": 129.9,
+        "commit": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+        "comando": [
+          "node",
+          "/tmp/eear-audit-a35-source/testes/carga-metadados.test.js"
+        ],
+        "opcoes": {
+          "EEAR_CARGA_SAIDA": "/tmp/eear-audit-a35-20261114/carga-metadados.json",
+          "EEAR_CARGA_FALHA": "/tmp/eear-audit-a35-20261114/carga-falha.json"
+        }
+      }
+    ],
+    "atualizacao": [
+      {
+        "teste": "reversao-2f6",
+        "exit": 1,
+        "origem": "2f6cad6ebba53d0f86319dcada671fe9396f8111",
+        "candidato": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "segundos": 12.0
+      },
+      {
+        "teste": "atualizacao-transacional",
+        "exit": 0,
+        "origem": "d16548547806575c1d32491a32d6166226f2096d",
+        "candidato": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+        "segundos": 5.5
+      }
+    ],
+    "duravel_repeticoes": [
+      {
+        "repeticao": 0,
+        "cenarios": "marca,zerar,zerar-estudar,duas-quedas",
+        "exit": 0,
+        "segundos": 47.8
+      },
+      {
+        "repeticao": 1,
+        "cenarios": "zerar-estudar",
+        "exit": 0,
+        "segundos": 19.6
+      },
+      {
+        "repeticao": 2,
+        "cenarios": "zerar-estudar",
+        "exit": 0,
+        "segundos": 19.8
+      },
+      {
+        "repeticao": 3,
+        "cenarios": "zerar-estudar",
+        "exit": 0,
+        "segundos": 20.0
+      }
+    ],
+    "barreira_app_real": [
+      {
+        "teste": "montar-homologacao-app",
+        "exit": 0
+      },
+      {
+        "teste": "recusar-no-modo-oficial",
+        "exit": 1
+      }
+    ]
+  },
+  "ci_candidato": [
+    {
+      "sha": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+      "id": 43602331048,
+      "name": "Site",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43602331048",
+      "jobs": [
+        {
+          "id": 132469561999,
+          "name": "montar",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 43602331048,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Montar o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Conferir o JavaScript",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Conferir que nada restrito vai para o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/upload-pages-artifact@v3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 132469630001,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 43602331048,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    },
+    {
+      "sha": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+      "id": 43602331057,
+      "name": "App Android",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43602331057",
+      "jobs": [
+        {
+          "id": 132469561913,
+          "name": "apk",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 43602331057,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Conteúdo do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Conferir que nada restrito vai para o app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Projeto Android",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Versão do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Compilar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Separar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Conferir o APK compilado",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25
+            }
+          ]
+        },
+        {
+          "id": 132470045409,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 43602331057,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    },
+    {
+      "sha": "a35ea9a769c150e561dfbde3205525b96bbfbfe7",
+      "id": 43602331050,
+      "name": "Testes",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43602331050",
+      "jobs": [
+        {
+          "id": 132469562017,
+          "name": "plataforma",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 43602331050,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Instalar o Playwright e o Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Barreiras de Hosting (H01–H03, sem deploy)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Testes da plataforma",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Atualização entre versões transacionais, sem serviços externos",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 132469562186,
+          "name": "firebase-emulador",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 43602331050,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Instalar o firebase-tools, o SDK web do Firebase e o Playwright",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Testes nos emuladores",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 132469562967,
+          "name": "historico-legado",
+          "status": "completed",
+          "conclusion": "skipped",
+          "run_id": 43602331050,
+          "logs_url": null,
+          "steps": null
+        }
+      ]
+    }
+  ],
+  "carga_navegador": {
+    "alvo": "/tmp/eear-audit-a35-source",
+    "rodadas": 500,
+    "abas": 4,
+    "medidas": [
+      {
+        "fase": "base",
+        "atividade": 2,
+        "marcas": 1,
+        "bytesEstado": 2113,
+        "caracteresEstado": 2111,
+        "bytesMeta": 1607,
+        "bytesCheckpoint": 3867,
+        "recibos": 1,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 3.354
+      },
+      {
+        "fase": "rodada-50",
+        "atividade": 202,
+        "marcas": 201,
+        "bytesEstado": 32835,
+        "caracteresEstado": 32833,
+        "bytesMeta": 28367,
+        "bytesCheckpoint": 70349,
+        "recibos": 201,
+        "usoOrigem": 307200,
+        "quotaOrigem": 2147790848,
+        "segundos": 10.853
+      },
+      {
+        "fase": "rodada-100",
+        "atividade": 402,
+        "marcas": 401,
+        "bytesEstado": 63635,
+        "caracteresEstado": 63633,
+        "bytesMeta": 55167,
+        "bytesCheckpoint": 136949,
+        "recibos": 401,
+        "usoOrigem": 319488,
+        "quotaOrigem": 2147803136,
+        "segundos": 18.421
+      },
+      {
+        "fase": "rodada-150",
+        "atividade": 602,
+        "marcas": 601,
+        "bytesEstado": 94835,
+        "caracteresEstado": 94833,
+        "bytesMeta": 82167,
+        "bytesCheckpoint": 204149,
+        "recibos": 601,
+        "usoOrigem": 339968,
+        "quotaOrigem": 2147823616,
+        "segundos": 26.06
+      },
+      {
+        "fase": "rodada-200",
+        "atividade": 802,
+        "marcas": 801,
+        "bytesEstado": 126035,
+        "caracteresEstado": 126033,
+        "bytesMeta": 109167,
+        "bytesCheckpoint": 271349,
+        "recibos": 801,
+        "usoOrigem": 348160,
+        "quotaOrigem": 2147831808,
+        "segundos": 33.236
+      },
+      {
+        "fase": "rodada-250",
+        "atividade": 1002,
+        "marcas": 1001,
+        "bytesEstado": 157236,
+        "caracteresEstado": 157234,
+        "bytesMeta": 136167,
+        "bytesCheckpoint": 338550,
+        "recibos": 1001,
+        "usoOrigem": 364544,
+        "quotaOrigem": 2147848192,
+        "segundos": 40.305
+      },
+      {
+        "fase": "rodada-300",
+        "atividade": 1202,
+        "marcas": 1201,
+        "bytesEstado": 188436,
+        "caracteresEstado": 188434,
+        "bytesMeta": 163167,
+        "bytesCheckpoint": 405750,
+        "recibos": 1201,
+        "usoOrigem": 385024,
+        "quotaOrigem": 2147868672,
+        "segundos": 47.933
+      },
+      {
+        "fase": "rodada-350",
+        "atividade": 1402,
+        "marcas": 1401,
+        "bytesEstado": 219636,
+        "caracteresEstado": 219634,
+        "bytesMeta": 190167,
+        "bytesCheckpoint": 472950,
+        "recibos": 1401,
+        "usoOrigem": 417792,
+        "quotaOrigem": 2147901440,
+        "segundos": 56.428
+      },
+      {
+        "fase": "rodada-400",
+        "atividade": 1602,
+        "marcas": 1601,
+        "bytesEstado": 250836,
+        "caracteresEstado": 250834,
+        "bytesMeta": 217167,
+        "bytesCheckpoint": 540150,
+        "recibos": 1601,
+        "usoOrigem": 458752,
+        "quotaOrigem": 2147942400,
+        "segundos": 66.552
+      },
+      {
+        "fase": "rodada-450",
+        "atividade": 1802,
+        "marcas": 1801,
+        "bytesEstado": 282036,
+        "caracteresEstado": 282034,
+        "bytesMeta": 244167,
+        "bytesCheckpoint": 607350,
+        "recibos": 1801,
+        "usoOrigem": 495616,
+        "quotaOrigem": 2147979264,
+        "segundos": 77.517
+      },
+      {
+        "fase": "rodada-500",
+        "atividade": 2002,
+        "marcas": 2001,
+        "bytesEstado": 313236,
+        "caracteresEstado": 313234,
+        "bytesMeta": 271167,
+        "bytesCheckpoint": 674550,
+        "recibos": 2001,
+        "usoOrigem": 528384,
+        "quotaOrigem": 2148012032,
+        "segundos": 93.31
+      },
+      {
+        "fase": "reset-1",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 351907,
+        "caracteresEstado": 351905,
+        "bytesMeta": 351482,
+        "bytesCheckpoint": 793626,
+        "recibos": 2003,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 97.149
+      },
+      {
+        "fase": "reset-2",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352083,
+        "caracteresEstado": 352081,
+        "bytesMeta": 351658,
+        "bytesCheckpoint": 794068,
+        "recibos": 2005,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 100.339
+      },
+      {
+        "fase": "reset-3",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352259,
+        "caracteresEstado": 352257,
+        "bytesMeta": 351834,
+        "bytesCheckpoint": 794510,
+        "recibos": 2007,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 102.227
+      },
+      {
+        "fase": "reset-4",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352435,
+        "caracteresEstado": 352433,
+        "bytesMeta": 352010,
+        "bytesCheckpoint": 794952,
+        "recibos": 2009,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 105.441
+      },
+      {
+        "fase": "reset-5",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352611,
+        "caracteresEstado": 352609,
+        "bytesMeta": 352186,
+        "bytesCheckpoint": 795394,
+        "recibos": 2011,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 108.024
+      },
+      {
+        "fase": "reset-6",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352787,
+        "caracteresEstado": 352785,
+        "bytesMeta": 352362,
+        "bytesCheckpoint": 795836,
+        "recibos": 2013,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 110.429
+      },
+      {
+        "fase": "reset-7",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352963,
+        "caracteresEstado": 352961,
+        "bytesMeta": 352538,
+        "bytesCheckpoint": 796278,
+        "recibos": 2015,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 113.816
+      },
+      {
+        "fase": "reset-8",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353139,
+        "caracteresEstado": 353137,
+        "bytesMeta": 352714,
+        "bytesCheckpoint": 796720,
+        "recibos": 2017,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 116.665
+      },
+      {
+        "fase": "reset-9",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353315,
+        "caracteresEstado": 353313,
+        "bytesMeta": 352890,
+        "bytesCheckpoint": 797162,
+        "recibos": 2019,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 118.831
+      },
+      {
+        "fase": "reset-10",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353491,
+        "caracteresEstado": 353489,
+        "bytesMeta": 353066,
+        "bytesCheckpoint": 797604,
+        "recibos": 2021,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 121.028
+      }
+    ],
+    "falhas": 0
+  },
+  "carga_nucleo": {
+    "alvo": "/tmp/eear-audit-a35-source",
+    "sha256": "724c9f19dc92e4639489cde195153a49128f89f107bc56dbd3ab56619cae575e",
+    "normalizador": "identidade; estado mínimo válido",
+    "medidas": [
+      {
+        "acoes": 1000,
+        "bytesEstado": 150368,
+        "bytesMeta": 132325,
+        "segundos": 2.827
+      },
+      {
+        "acoes": 2000,
+        "bytesEstado": 302368,
+        "bytesMeta": 265325,
+        "segundos": 8.938
+      },
+      {
+        "acoes": 3000,
+        "bytesEstado": 454368,
+        "bytesMeta": 398325,
+        "segundos": 19.777
+      },
+      {
+        "acoes": 4000,
+        "bytesEstado": 606368,
+        "bytesMeta": 531325,
+        "segundos": 35.256
+      },
+      {
+        "acoes": 5000,
+        "bytesEstado": 758368,
+        "bytesMeta": 664325,
+        "segundos": 55.726
+      },
+      {
+        "acoes": 6000,
+        "bytesEstado": 910368,
+        "bytesMeta": 797325,
+        "segundos": 80.37
+      },
+      {
+        "acoes": 7000,
+        "bytesEstado": 1062368,
+        "bytesMeta": 930325,
+        "segundos": 112.574
+      },
+      {
+        "acoes": 8000,
+        "bytesEstado": 1214368,
+        "bytesMeta": 1063325,
+        "segundos": 146.91
+      },
+      {
+        "acoes": 9000,
+        "bytesEstado": 1366368,
+        "bytesMeta": 1196325,
+        "segundos": 193.34
+      },
+      {
+        "acoes": 10000,
+        "bytesEstado": 1518371,
+        "bytesMeta": 1329326,
+        "segundos": 248.877
+      },
+      {
+        "acoes": 11000,
+        "bytesEstado": 1672371,
+        "bytesMeta": 1463326,
+        "segundos": 306.462
+      },
+      {
+        "acoes": 12000,
+        "bytesEstado": 1826371,
+        "bytesMeta": 1597326,
+        "segundos": 377.966
+      }
+    ],
+    "primeiraAcima": {
+      "acoes": 6000,
+      "bytesEstado": 910368,
+      "bytesMeta": 797325,
+      "segundos": 80.37
+    }
+  },
+  "limites_metodo": [
+    "Sem Firebase real, dados reais ou OAuth real",
+    "Sem dispositivos móveis físicos ou queda de energia",
+    "APK compilado/verificado no CI, não reconstruído localmente",
+    "Primeira negativa de durabilidade sem Web Locks preservada; pré-condição não estabeleceu estado UI igual ao checkpoint; causa não comprovada"
+  ],
+  "achados": [
+    {
+      "id": "IA01",
+      "gravidade": "alta",
+      "teste": "testes/a35-importacao-exclusao.test.js",
+      "exit": 1,
+      "controles_positivos": 2,
+      "variantes_reprovadas": 4,
+      "efeito": "Importação após corte de exclusão desaparece, sem reserva ou recuperação, inclusive sem crash"
+    },
+    {
+      "id": "IA02",
+      "gravidade": "alta",
+      "testes": [
+        "testes/a35-contas-adversarial.test.js",
+        "testes/a35-levar-reimportacao.test.js"
+      ],
+      "exit": 1,
+      "efeitos": [
+        "2/4 ao levar 2+2",
+        "3/5 ao levar 3+2",
+        "6/5 após Levar+importar, também após repetir e reabrir"
+      ],
+      "controles": [
+        "Importação direta com IDs preservados 4/4",
+        "Importação direta em conta de controle 5/5"
+      ]
+    },
+    {
+      "id": "IA03",
+      "gravidade": "media",
+      "teste": "testes/a35-contas-adversarial.test.js",
+      "exit": 1,
+      "efeito": "Resposta antiga da exclusão de A encerra sessão B; dados remotos B não apagados"
+    },
+    {
+      "id": "IA04",
+      "gravidade": "alta",
+      "teste": "testes/a35-retorno-firebase-antigo.test.js",
+      "exit": 1,
+      "cliente_anterior": "2f6cad6ebba53d0f86319dcada671fe9396f8111",
+      "efeito": "Auth excluída e tombstone ausente; sessão candidata recria nome e progresso no Firebase emulado"
+    }
+  ],
+  "restricoes": {
+    "runtime_alterado": false,
+    "testes_originais_alterados": false,
+    "merge": false,
+    "deploy": false,
+    "regras_publicadas": false,
+    "firebase_real": false,
+    "dados_reais": false
+  },
+  "logs": [
+    {
+      "arquivo": "firebase-emulador.log",
+      "bytes": 6345,
+      "sha256": "b49cc9293a4aa0d057c686af1b5a334743e154b3c44688bf96db52a6ae0724f3",
+      "positivas": 50,
+      "negativas": 0
+    },
+    {
+      "arquivo": "persistencia-regressoes.log",
+      "bytes": 24336,
+      "sha256": "b2cdbae4cdddfd833e2a51b98f083b5091b60bfa086483fc5ccd63bb8e970ef9",
+      "positivas": 39,
+      "negativas": 0
+    },
+    {
+      "arquivo": "sincronia-firebase.log",
+      "bytes": 1612,
+      "sha256": "5e9c5a298d16eef5647cb1e026bf67d934903ff2e35da89221b690e0c4b99170",
+      "positivas": 4,
+      "negativas": 0
+    },
+    {
+      "arquivo": "f01-riscos.log",
+      "bytes": 3141,
+      "sha256": "a18bfe7a198a7406e794f89dc45f1a7998cc1269a83e1487ed9a62c9d38fb5f3",
+      "positivas": 6,
+      "negativas": 0
+    },
+    {
+      "arquivo": "diarios-auditoria.log",
+      "bytes": 3738,
+      "sha256": "368ce5b237b7a54bd553b2868e50a39b74bd4cd0e271f022bbab1357566f65c7",
+      "positivas": 8,
+      "negativas": 0
+    },
+    {
+      "arquivo": "concorrencia-fallback.log",
+      "bytes": 1463,
+      "sha256": "351fc1b6d21f98b48a37e7e99066a3841cf6cb35cbf28c26894e94a07ddc9def",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "orfaos-auditoria.log",
+      "bytes": 3558,
+      "sha256": "e0a6e29d7c3629f9f75c5089f17c8a45e5b92233883834bd30e39166355c5335",
+      "positivas": 4,
+      "negativas": 0
+    },
+    {
+      "arquivo": "orfaos-30min.log",
+      "bytes": 1163,
+      "sha256": "92130e5d5c8dea20486fcc80dd4b482b98b1aa5a212ef1797774271b831d4b3a",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "duravel-sem-travas.log",
+      "bytes": 4930,
+      "sha256": "774cfda42de83c7526072f83cb1aaa6bb70154b28432fc59544377fb2e9feb69",
+      "positivas": 3,
+      "negativas": 1
+    },
+    {
+      "arquivo": "duravel-repeticao-0.log",
+      "bytes": 5162,
+      "sha256": "5d6bb36b6e53029905ed0296fc97ac44211a71c4d43e947ade344514c86772f6",
+      "positivas": 4,
+      "negativas": 0
+    },
+    {
+      "arquivo": "duravel-repeticao-1.log",
+      "bytes": 2015,
+      "sha256": "4e0a6a7b9e70c9d6b9cf9f87c888a1bd30d31c27d46439b892b02142c3b5752f",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "duravel-repeticao-2.log",
+      "bytes": 2015,
+      "sha256": "e4b40e44224a716392c107d06dca5efc6c137990f9eed5a19202180bf487a955",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "duravel-repeticao-3.log",
+      "bytes": 2015,
+      "sha256": "c858ed6d5e2192ab0eed727f0360a2a55402edf2974b641d481eddb24a34b6c5",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "migracao-8bd.log",
+      "bytes": 1428,
+      "sha256": "e09c191a67480ffa29d22b1bb768f9b85b83c2646b0ce45fb94ead99ce6b9e4b",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "migracao-2f6.log",
+      "bytes": 1448,
+      "sha256": "72b825f1c78854c869a8d77085336144c71e5a00663fb4815577b7bc59d7ac11",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "operacoes-dupla-falha.log",
+      "bytes": 1248,
+      "sha256": "61628e3b2dc1c6929f883daf667fd4e5e8c16c3d11e6919867ab19366bb41338",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "cache-restaurado.log",
+      "bytes": 434,
+      "sha256": "2ac9482bf268db0591ffc0cccf6b58a501bb7b101128eeba501583309a71b1da",
+      "positivas": 2,
+      "negativas": 0
+    },
+    {
+      "arquivo": "metadados-limite.log",
+      "bytes": 1426,
+      "sha256": "e141702d841ee33d8b0b6f2a68a6a9e4e8ee381a23c63a9fe3dd26edb0866fe3",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "plataforma.log",
+      "bytes": 17317,
+      "sha256": "c3dd5816cbc3ea897c18de921fd4cc28e9740b3043d39ea47b4c14f69752f0dd",
+      "positivas": 166,
+      "negativas": 0
+    },
+    {
+      "arquivo": "ciclo-sincronia.log",
+      "bytes": 186,
+      "sha256": "998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2",
+      "positivas": 3,
+      "negativas": 0
+    },
+    {
+      "arquivo": "legado-bloqueio.log",
+      "bytes": 480,
+      "sha256": "b94f8fee44dc730c43d45fc70b6eb0cb0f7ffcc8893b16a1483a3db1512671e3",
+      "positivas": 3,
+      "negativas": 0
+    },
+    {
+      "arquivo": "depurador-transacao.log",
+      "bytes": 214,
+      "sha256": "0e5d0138e920ade4a6d7e601df1ddb60dc9c0f5886598b0f50c30c2a72aa2bc5",
+      "positivas": 1,
+      "negativas": 0
+    },
+    {
+      "arquivo": "historicos-legado.log",
+      "bytes": 18033,
+      "sha256": "4538803ce437750a19d1e254d1eb6abaae2e8219753cff88378c8308ae3a4190",
+      "positivas": 159,
+      "negativas": 14
+    },
+    {
+      "arquivo": "historico-epoca9.log",
+      "bytes": 2548,
+      "sha256": "3ce94a9da2c63a0330574e75be47b9d2d62f9cd5024c858709fab71acd1b9fce",
+      "positivas": 21,
+      "negativas": 0
+    },
+    {
+      "arquivo": "hosting.log",
+      "bytes": 746,
+      "sha256": "7f46dc3ddb02fdd68eed4f2c1491bce8ff8f5b855e6ef8c9840ad46a073a4f82",
+      "positivas": 11,
+      "negativas": 0
+    },
+    {
+      "arquivo": "hosting-gates.log",
+      "bytes": 893,
+      "sha256": "e84514813e87c43910dfddd1c5439cd466f410027d587f94d845496e7751ffaa",
+      "positivas": 12,
+      "negativas": 0
+    },
+    {
+      "arquivo": "hosting-contexto.log",
+      "bytes": 430,
+      "sha256": "185dacb48259c093dca7986c92bdd5bc9e54e3e9e9ab9b756174bda047be2a8d",
+      "positivas": 3,
+      "negativas": 0
+    },
+    {
+      "arquivo": "barreira-app-real.log",
+      "bytes": 728,
+      "sha256": "5fec4e98c6db5353836b058a03c8d7d850bda5b408c94bfdd44e9b5f8be484b3",
+      "positivas": 0,
+      "negativas": 0
+    },
+    {
+      "arquivo": "build-site.log",
+      "bytes": 359,
+      "sha256": "cf4cc2d15142880c2ae8f95d53779e310e99371c156cf52d376d408cc4bd1e7f",
+      "positivas": 0,
+      "negativas": 0
+    },
+    {
+      "arquivo": "build-app.log",
+      "bytes": 356,
+      "sha256": "ffe946d7090da1a7d47cdf0a72291a2f883683de0fc4c24e70549af9d2caf6ca",
+      "positivas": 0,
+      "negativas": 0
+    },
+    {
+      "arquivo": "lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "positivas": 0,
+      "negativas": 0
+    },
+    {
+      "arquivo": "carga-nucleo.log",
+      "bytes": 1264,
+      "sha256": "24a4ad7bfe739097397cfb9a112040d274d8c7e2d17b66e59e7d9458879eb119",
+      "positivas": 0,
+      "negativas": 0
+    },
+    {
+      "arquivo": "carga-metadados.log",
+      "bytes": 5153,
+      "sha256": "1b9e7bf1863fdf2651b58fc4bd474220fc617c1ab15003c74b1a84840002047e",
+      "positivas": 2,
+      "negativas": 0
+    },
+    {
+      "arquivo": "reversao-2f6.log",
+      "bytes": 2708,
+      "sha256": "d264209473deeae0fcccc825c334c46a167884df255cbf16000430f025524dd1",
+      "positivas": 8,
+      "negativas": 1
+    },
+    {
+      "arquivo": "atualizacao-transacional.log",
+      "bytes": 999,
+      "sha256": "2163b7d889b6cf504686c725ad1f628f2053435a9b9308917c0d3d738382b2e0",
+      "positivas": 6,
+      "negativas": 0
+    },
+    {
+      "arquivo": "adversarial-importacao-exclusao.log",
+      "bytes": 1230,
+      "sha256": "b739ec45c858fc3fe87e8beac78a05a5026fef3cea41b8b67f6bbd10f7a9f60c",
+      "positivas": 1,
+      "negativas": 1
+    },
+    {
+      "arquivo": "adversarial-importacao-exclusao-ampliado.log",
+      "bytes": 3960,
+      "sha256": "281d037f3df07c1fca21d09c75fdd457e8cc596d28e40da24d1d405b483cf231",
+      "positivas": 2,
+      "negativas": 4
+    },
+    {
+      "arquivo": "adversarial-contas.log",
+      "bytes": 1531,
+      "sha256": "c3b54c21061bc091fdb8ee82eb1449cb44abf327b163cb66545735df683cc7a8",
+      "positivas": 0,
+      "negativas": 0
+    },
+    {
+      "arquivo": "adversarial-contas-2.log",
+      "bytes": 1518,
+      "sha256": "aa0228c8a305263890181828c1da968b6c6f40be1abc48e28fa50e727922cbb3",
+      "positivas": 0,
+      "negativas": 1
+    },
+    {
+      "arquivo": "adversarial-contas-3.log",
+      "bytes": 1605,
+      "sha256": "188b31fb6a8e888ca17ac35af5d6a93a7ddd6d315d33322810af8a031280f0d2",
+      "positivas": 0,
+      "negativas": 2
+    },
+    {
+      "arquivo": "adversarial-contas-final.log",
+      "bytes": 1707,
+      "sha256": "af9b6ba85122bd824a5f59a32d559d8e9afa3aa4fb2797c0bc733a10717d04b3",
+      "positivas": 1,
+      "negativas": 2
+    },
+    {
+      "arquivo": "adversarial-retorno-firebase-antigo.log",
+      "bytes": 1419,
+      "sha256": "8247ca442b1441729bf384077f369c60691962299f470cc78b66b93ccdb2669d",
+      "positivas": 0,
+      "negativas": 1
+    },
+    {
+      "arquivo": "adversarial-levar-reimportacao.log",
+      "bytes": 1466,
+      "sha256": "f2696906ad69d91ca8f40cb190db49905408896ab656fb352b8921d82ad1b2f3",
+      "positivas": 1,
+      "negativas": 2
+    }
+  ],
+  "evidencias_sha256": "257ac33d266086f662981228d545aba08af0ad5672a5975cec43773c775249a6",
+  "arquivos_publicados": [
+    "testes/a35-contas-adversarial.test.js",
+    "testes/a35-fixture.js",
+    "testes/a35-importacao-exclusao.test.js",
+    "testes/a35-levar-reimportacao.test.js",
+    "testes/a35-retorno-firebase-antigo.test.js",
+    "auditoria/auditoria-independente-a35ea9a.md",
+    "auditoria/a35ea9a-independente-resultados.json",
+    "auditoria/a35ea9a-independente-evidencias.txt"
+  ]
+}
