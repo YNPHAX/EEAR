@@ -1,0 +1,1897 @@
+{
+  "data_utc": "2026-11-14T13:53:38.348313+00:00",
+  "branch": "codex/eear-correcao-estrutural",
+  "base": "e47ae417bf5eb56eeb1c5f5763aac0cddf7937bd",
+  "runtime": "650007b5eeb2d0bcb41f9277e5d370afe5a1edc2",
+  "testes": "eb8d464c2efb053b9c3660fa8797a08cc843db8f",
+  "bundle_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+  "ambiente": {
+    "node_local": "v24.22.1",
+    "node_ci": "22",
+    "java": "OpenJDK 21.0.13",
+    "playwright": "1.63.0",
+    "firebase": "12.19.0",
+    "firebase_tools": "15.35.0",
+    "projetos": "demo-eear, demo-eear-f01, demo-eear-hosting; configs eear-teste fictícias em builds locais"
+  },
+  "arquivos_alterados": [
+    {
+      "status": "M",
+      "arquivo": ".github/workflows/testes.yml"
+    },
+    {
+      "status": "M",
+      "arquivo": "AGENTS.md"
+    },
+    {
+      "status": "M",
+      "arquivo": "CLAUDE.md"
+    },
+    {
+      "status": "A",
+      "arquivo": "auditoria/firebase-transporte-oficial.md"
+    },
+    {
+      "status": "M",
+      "arquivo": "curso/app.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "curso/app/02-certificados.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "curso/app/02-configuracao.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "curso/app/02-persistencia-local.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "curso/app/02-progresso-nuvem.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "curso/app/02-z-firebase.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "curso/app/07-eventos.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "curso/app/08-uniao-nuvem.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "curso/app/09-contas.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "curso/app/10-nuvem-claude.js"
+    },
+    {
+      "status": "D",
+      "arquivo": "curso/app/11-exclusao-nuvem.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "curso/app/11-formatos-legados.js"
+    },
+    {
+      "status": "D",
+      "arquivo": "curso/app/12-caminho-novo.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "curso/app/12-importacao-migracao.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "curso/app/17-estado-persistencia.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "testes/atualizacao-transacional.test.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "testes/depurador-transacao.test.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "testes/f01-fixture.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "testes/historicos-legado.test.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "testes/legado-bloqueio.test.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "testes/operacoes-interrupcao.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "testes/plataforma.test.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "testes/sincronia-firebase.test.js"
+    },
+    {
+      "status": "M",
+      "arquivo": "testes/versoes.js"
+    },
+    {
+      "status": "A",
+      "arquivo": "auditoria/consolidacao-firebase-oficial.md"
+    },
+    {
+      "status": "A",
+      "arquivo": "auditoria/firebase-oficial-resultados.json"
+    },
+    {
+      "status": "A",
+      "arquivo": "auditoria/firebase-oficial-evidencias.txt"
+    }
+  ],
+  "matriz_emuladores": [
+    {
+      "teste": "firebase-emulador",
+      "exit": 0,
+      "segundos": 188.9,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "persistencia-regressoes",
+      "exit": 0,
+      "segundos": 373.0,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "sincronia-firebase",
+      "exit": 0,
+      "segundos": 26.8,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "f01-riscos",
+      "exit": 0,
+      "segundos": 26.9,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_F01_RISCOS": "zerar-nuvem,zerar-unica,suspensa,exclusao-surda,contagens,escrita-interrompida"
+      }
+    },
+    {
+      "teste": "diarios-auditoria",
+      "exit": 0,
+      "segundos": 37.5,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "concorrencia-fallback",
+      "exit": 0,
+      "segundos": 18.2,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_F13_PONTO": "ultima-conferencia"
+      }
+    },
+    {
+      "teste": "orfaos-auditoria",
+      "exit": 0,
+      "segundos": 67.5,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "orfaos-30min",
+      "exit": 0,
+      "segundos": 24.8,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_ORFAOS_CENARIOS": "segunda-escrita-30min",
+        "EEAR_ORFAOS_SEQUENCIAS": "9"
+      }
+    },
+    {
+      "teste": "duravel-sem-travas",
+      "exit": 0,
+      "segundos": 46.0,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_DURAVEL_SEM_TRAVAS": "1"
+      }
+    },
+    {
+      "teste": "migracao-8bd",
+      "exit": 0,
+      "segundos": 12.4,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_REPO_LEGADO": "/tmp/eear-8bd32d2"
+      }
+    },
+    {
+      "teste": "migracao-2f6",
+      "exit": 0,
+      "segundos": 13.1,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_REPO_LEGADO": "/tmp/eear-2f6cad6"
+      }
+    },
+    {
+      "teste": "operacoes-dupla-falha",
+      "exit": 0,
+      "segundos": 13.2,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "cache-restaurado",
+      "exit": 0,
+      "segundos": 5.3,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "metadados-limite",
+      "exit": 0,
+      "segundos": 17.2,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_CARGA_ESTADO": "/tmp/eear-firebase-oficial/estado-limite.json"
+      }
+    }
+  ],
+  "locais": [
+    {
+      "teste": "operacoes",
+      "exit": 0,
+      "segundos": 1.4,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "legado-contrato",
+      "exit": 0,
+      "segundos": 0.1,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "legado-bloqueio",
+      "exit": 0,
+      "segundos": 28.8,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "ciclo-sincronia",
+      "exit": 0,
+      "segundos": 11.9,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "plataforma",
+      "exit": 0,
+      "segundos": 296.9,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "historicos-legado",
+      "exit": 1,
+      "segundos": 311.0,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {}
+    },
+    {
+      "teste": "historico-epoca9",
+      "exit": 1,
+      "segundos": 127.9,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_GRUPOS": "epoca",
+        "EEAR_EPOCA": "9"
+      }
+    }
+  ],
+  "builds_hosting_lint": [
+    {
+      "teste": "autoteste",
+      "exit": 0,
+      "segundos": 4.2,
+      "comando": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "autoteste"
+      ]
+    },
+    {
+      "teste": "integridade",
+      "exit": 0,
+      "segundos": 0.8,
+      "comando": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "validar"
+      ]
+    },
+    {
+      "teste": "workflows",
+      "exit": 0,
+      "segundos": 0.2,
+      "comando": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "conferir-workflows"
+      ]
+    },
+    {
+      "teste": "hosting",
+      "exit": 0,
+      "segundos": 41.7,
+      "comando": [
+        "python3",
+        "testes/hosting-auditoria.py",
+        "/tmp/eear-firebase-oficial-final"
+      ]
+    },
+    {
+      "teste": "hosting-gates",
+      "exit": 0,
+      "segundos": 33.3,
+      "comando": [
+        "python3",
+        "testes/hosting-gates-auditoria.py",
+        "/tmp/eear-firebase-oficial-final"
+      ]
+    },
+    {
+      "teste": "hosting-contexto",
+      "exit": 0,
+      "segundos": 18.9,
+      "comando": [
+        "python3",
+        "testes/hosting-contexto-auditoria.py",
+        "/tmp/eear-firebase-oficial-final"
+      ]
+    },
+    {
+      "teste": "build-site",
+      "exit": 0,
+      "segundos": 6.3,
+      "comando": [
+        "python3",
+        "web/build.py",
+        "/tmp/eear-firebase-oficial/final/site"
+      ]
+    },
+    {
+      "teste": "verificar-site",
+      "exit": 0,
+      "segundos": 3.4,
+      "comando": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "verificar",
+        "/tmp/eear-firebase-oficial/final/site",
+        "--site"
+      ]
+    },
+    {
+      "teste": "build-app",
+      "exit": 0,
+      "segundos": 5.0,
+      "comando": [
+        "python3",
+        "web/build.py",
+        "/tmp/eear-firebase-oficial/final/app",
+        "--app"
+      ]
+    },
+    {
+      "teste": "verificar-app",
+      "exit": 0,
+      "segundos": 2.5,
+      "comando": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "verificar",
+        "/tmp/eear-firebase-oficial/final/app",
+        "--app"
+      ]
+    },
+    {
+      "teste": "lint",
+      "exit": 0,
+      "segundos": 2.8,
+      "comando": [
+        "/tmp/eear-audit-deps/node_modules/.bin/eslint",
+        "curso/app.js",
+        "curso/app",
+        "curso/dados",
+        "web/sw.js",
+        "testes"
+      ]
+    }
+  ],
+  "carga": [
+    {
+      "teste": "carga-nucleo",
+      "exit": 0,
+      "segundos": 397.1,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_CARGA_ESTADO": "/tmp/eear-firebase-oficial/final/estado-limite.json",
+        "EEAR_CARGA_SAIDA": "/tmp/eear-firebase-oficial/final/carga-nucleo.json"
+      }
+    },
+    {
+      "teste": "carga-metadados",
+      "exit": 0,
+      "segundos": 119.3,
+      "runtime_sha256": "124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48",
+      "opcoes": {
+        "EEAR_CARGA_SAIDA": "/tmp/eear-firebase-oficial/final/carga-metadados.json",
+        "EEAR_CARGA_FALHA": "/tmp/eear-firebase-oficial/final/carga-falha.json"
+      }
+    }
+  ],
+  "medidas_navegador": {
+    "alvo": "/tmp/eear-firebase-oficial-final",
+    "rodadas": 500,
+    "abas": 4,
+    "medidas": [
+      {
+        "fase": "base",
+        "atividade": 2,
+        "marcas": 1,
+        "bytesEstado": 2113,
+        "caracteresEstado": 2111,
+        "bytesMeta": 1607,
+        "bytesCheckpoint": 3867,
+        "recibos": 1,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 1.473
+      },
+      {
+        "fase": "rodada-50",
+        "atividade": 202,
+        "marcas": 201,
+        "bytesEstado": 32835,
+        "caracteresEstado": 32833,
+        "bytesMeta": 28367,
+        "bytesCheckpoint": 70349,
+        "recibos": 201,
+        "usoOrigem": 307200,
+        "quotaOrigem": 2147790848,
+        "segundos": 5.901
+      },
+      {
+        "fase": "rodada-100",
+        "atividade": 402,
+        "marcas": 401,
+        "bytesEstado": 63635,
+        "caracteresEstado": 63633,
+        "bytesMeta": 55167,
+        "bytesCheckpoint": 136949,
+        "recibos": 401,
+        "usoOrigem": 319488,
+        "quotaOrigem": 2147803136,
+        "segundos": 10.641
+      },
+      {
+        "fase": "rodada-150",
+        "atividade": 602,
+        "marcas": 601,
+        "bytesEstado": 94835,
+        "caracteresEstado": 94833,
+        "bytesMeta": 82167,
+        "bytesCheckpoint": 204149,
+        "recibos": 601,
+        "usoOrigem": 339968,
+        "quotaOrigem": 2147823616,
+        "segundos": 17.945
+      },
+      {
+        "fase": "rodada-200",
+        "atividade": 802,
+        "marcas": 801,
+        "bytesEstado": 126035,
+        "caracteresEstado": 126033,
+        "bytesMeta": 109167,
+        "bytesCheckpoint": 271349,
+        "recibos": 801,
+        "usoOrigem": 344064,
+        "quotaOrigem": 2147827712,
+        "segundos": 25.755
+      },
+      {
+        "fase": "rodada-250",
+        "atividade": 1002,
+        "marcas": 1001,
+        "bytesEstado": 157236,
+        "caracteresEstado": 157234,
+        "bytesMeta": 136167,
+        "bytesCheckpoint": 338550,
+        "recibos": 1001,
+        "usoOrigem": 364544,
+        "quotaOrigem": 2147848192,
+        "segundos": 34.017
+      },
+      {
+        "fase": "rodada-300",
+        "atividade": 1202,
+        "marcas": 1201,
+        "bytesEstado": 188436,
+        "caracteresEstado": 188434,
+        "bytesMeta": 163167,
+        "bytesCheckpoint": 405750,
+        "recibos": 1201,
+        "usoOrigem": 389120,
+        "quotaOrigem": 2147872768,
+        "segundos": 46.656
+      },
+      {
+        "fase": "rodada-350",
+        "atividade": 1402,
+        "marcas": 1401,
+        "bytesEstado": 219636,
+        "caracteresEstado": 219634,
+        "bytesMeta": 190167,
+        "bytesCheckpoint": 472950,
+        "recibos": 1401,
+        "usoOrigem": 417792,
+        "quotaOrigem": 2147901440,
+        "segundos": 57.512
+      },
+      {
+        "fase": "rodada-400",
+        "atividade": 1602,
+        "marcas": 1601,
+        "bytesEstado": 250836,
+        "caracteresEstado": 250834,
+        "bytesMeta": 217167,
+        "bytesCheckpoint": 540150,
+        "recibos": 1601,
+        "usoOrigem": 458752,
+        "quotaOrigem": 2147942400,
+        "segundos": 69.12
+      },
+      {
+        "fase": "rodada-450",
+        "atividade": 1802,
+        "marcas": 1801,
+        "bytesEstado": 282036,
+        "caracteresEstado": 282034,
+        "bytesMeta": 244167,
+        "bytesCheckpoint": 607350,
+        "recibos": 1801,
+        "usoOrigem": 495616,
+        "quotaOrigem": 2147979264,
+        "segundos": 81.167
+      },
+      {
+        "fase": "rodada-500",
+        "atividade": 2002,
+        "marcas": 2001,
+        "bytesEstado": 313236,
+        "caracteresEstado": 313234,
+        "bytesMeta": 271167,
+        "bytesCheckpoint": 674550,
+        "recibos": 2001,
+        "usoOrigem": 532480,
+        "quotaOrigem": 2148016128,
+        "segundos": 92.291
+      },
+      {
+        "fase": "reset-1",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 351907,
+        "caracteresEstado": 351905,
+        "bytesMeta": 351482,
+        "bytesCheckpoint": 793626,
+        "recibos": 2003,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 95.478
+      },
+      {
+        "fase": "reset-2",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352083,
+        "caracteresEstado": 352081,
+        "bytesMeta": 351658,
+        "bytesCheckpoint": 794068,
+        "recibos": 2005,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 97.863
+      },
+      {
+        "fase": "reset-3",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352259,
+        "caracteresEstado": 352257,
+        "bytesMeta": 351834,
+        "bytesCheckpoint": 794510,
+        "recibos": 2007,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 99.741
+      },
+      {
+        "fase": "reset-4",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352435,
+        "caracteresEstado": 352433,
+        "bytesMeta": 352010,
+        "bytesCheckpoint": 794952,
+        "recibos": 2009,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 102.404
+      },
+      {
+        "fase": "reset-5",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352611,
+        "caracteresEstado": 352609,
+        "bytesMeta": 352186,
+        "bytesCheckpoint": 795394,
+        "recibos": 2011,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 104.596
+      },
+      {
+        "fase": "reset-6",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352787,
+        "caracteresEstado": 352785,
+        "bytesMeta": 352362,
+        "bytesCheckpoint": 795836,
+        "recibos": 2013,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 107.585
+      },
+      {
+        "fase": "reset-7",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352963,
+        "caracteresEstado": 352961,
+        "bytesMeta": 352538,
+        "bytesCheckpoint": 796278,
+        "recibos": 2015,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 109.004
+      },
+      {
+        "fase": "reset-8",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353139,
+        "caracteresEstado": 353137,
+        "bytesMeta": 352714,
+        "bytesCheckpoint": 796720,
+        "recibos": 2017,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 110.088
+      },
+      {
+        "fase": "reset-9",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353315,
+        "caracteresEstado": 353313,
+        "bytesMeta": 352890,
+        "bytesCheckpoint": 797162,
+        "recibos": 2019,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 112.074
+      },
+      {
+        "fase": "reset-10",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353491,
+        "caracteresEstado": 353489,
+        "bytesMeta": 353066,
+        "bytesCheckpoint": 797604,
+        "recibos": 2021,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 113.623
+      }
+    ],
+    "falhas": 0
+  },
+  "medidas_nucleo": {
+    "alvo": "/tmp/eear-firebase-oficial-final",
+    "sha256": "724c9f19dc92e4639489cde195153a49128f89f107bc56dbd3ab56619cae575e",
+    "normalizador": "identidade; estado mínimo válido",
+    "medidas": [
+      {
+        "acoes": 1000,
+        "bytesEstado": 150368,
+        "bytesMeta": 132325,
+        "segundos": 3.123
+      },
+      {
+        "acoes": 2000,
+        "bytesEstado": 302368,
+        "bytesMeta": 265325,
+        "segundos": 11.203
+      },
+      {
+        "acoes": 3000,
+        "bytesEstado": 454368,
+        "bytesMeta": 398325,
+        "segundos": 26.437
+      },
+      {
+        "acoes": 4000,
+        "bytesEstado": 606368,
+        "bytesMeta": 531325,
+        "segundos": 46.71
+      },
+      {
+        "acoes": 5000,
+        "bytesEstado": 758368,
+        "bytesMeta": 664325,
+        "segundos": 68.914
+      },
+      {
+        "acoes": 6000,
+        "bytesEstado": 910368,
+        "bytesMeta": 797325,
+        "segundos": 96.634
+      },
+      {
+        "acoes": 7000,
+        "bytesEstado": 1062368,
+        "bytesMeta": 930325,
+        "segundos": 139.025
+      },
+      {
+        "acoes": 8000,
+        "bytesEstado": 1214368,
+        "bytesMeta": 1063325,
+        "segundos": 186.949
+      },
+      {
+        "acoes": 9000,
+        "bytesEstado": 1366368,
+        "bytesMeta": 1196325,
+        "segundos": 231.301
+      },
+      {
+        "acoes": 10000,
+        "bytesEstado": 1518371,
+        "bytesMeta": 1329326,
+        "segundos": 282.876
+      },
+      {
+        "acoes": 11000,
+        "bytesEstado": 1672371,
+        "bytesMeta": 1463326,
+        "segundos": 336.131
+      },
+      {
+        "acoes": 12000,
+        "bytesEstado": 1826371,
+        "bytesMeta": 1597326,
+        "segundos": 396.718
+      }
+    ],
+    "primeiraAcima": {
+      "acoes": 6000,
+      "bytesEstado": 910368,
+      "bytesMeta": 797325,
+      "segundos": 96.634
+    }
+  },
+  "criterios_preservados": [
+    {
+      "arquivo": "testes/sincronia.js",
+      "identico": true,
+      "sha256": "69fb5e4a8c45adc1dfd46252e19fcc36e1387f2bf1e1ecd21d96c0e95a938647"
+    },
+    {
+      "arquivo": "testes/contas.js",
+      "identico": true,
+      "sha256": "70ef736fa682e0676cd5066032caa4aa783a0e8fbf00f5d82f12bf14e601ba1e"
+    },
+    {
+      "arquivo": "testes/nuvem-claude.js",
+      "identico": true,
+      "sha256": "f3018e6367dff26d3580cbc50295af0370ba4244afca07413e6778c4d3e33cfb"
+    },
+    {
+      "arquivo": "testes/exclusao-nuvem.js",
+      "identico": true,
+      "sha256": "32ce4b4b9f7b52ee9a0fd9c3e2903fd0b12848b4103e6f09ad0e47515e9ccf32"
+    },
+    {
+      "arquivo": "testes/epoca-nuvem.js",
+      "identico": true,
+      "sha256": "efb3c40d0b618ff5da715fd840f59dfa600b21032245b85a95c65fcaef0695ed"
+    },
+    {
+      "arquivo": "testes/progresso2-nuvem.js",
+      "identico": true,
+      "sha256": "4e863723f8a0560a4b9d329d83825474e378c7dc366ad008d20fe263a077366e"
+    },
+    {
+      "arquivo": "testes/falhas-nuvem.js",
+      "identico": true,
+      "sha256": "f4b8aace3174a52603b3c6af1a7c38d42cdcdb7df1fbf6be7270451dc099c728"
+    },
+    {
+      "arquivo": "testes/regras-nuvem.js",
+      "identico": true,
+      "sha256": "e6ebe7832472a512093739645c5a02b6a7eef7bd934aac681ed897603816e2c2"
+    },
+    {
+      "arquivo": "testes/f01-abas.test.js",
+      "identico": true,
+      "sha256": "b367dd5e599c71bb570a90f2f87ea7e24676c1ddebf7e023cdde23df7e6ee777"
+    },
+    {
+      "arquivo": "testes/persistencia-regressoes.test.js",
+      "identico": true,
+      "sha256": "34b401ab3e0f935ce18d32eb5d465861aa581d077784cde8988d15a408ba0118"
+    },
+    {
+      "arquivo": "testes/plataforma.test.js:certificados-nuvem",
+      "corpo_identico": true,
+      "sha256": "8c508c94e74d0c76786075beaaec71bbc1f8063f36b35442a228f4ad2b52b443"
+    },
+    {
+      "arquivo": "testes/versoes.js:cartoes-nuvem",
+      "corpo_identico": true,
+      "sha256": "91917f2c15fb7a4bd0737f0eb8bd2f0e3f423b81bc7af4e3b1498e6b4f2cb371"
+    },
+    {
+      "arquivo": "curso/app/14-abas.js",
+      "identico": true,
+      "sha256": "724c9f19dc92e4639489cde195153a49128f89f107bc56dbd3ab56619cae575e"
+    },
+    {
+      "arquivo": "curso/app/15-diarios-pendentes.js",
+      "identico": true,
+      "sha256": "838037c5cc8c19c41e14897ed36c6bca1e5a02389ac996a78d21ea85f056d25e"
+    },
+    {
+      "arquivo": "curso/app/16-diario-duravel.js",
+      "identico": true,
+      "sha256": "8cd6ccf7e5012d209019b8dc6f3ec051f218d7ec31b70a3cf12d7a12d0f4939f"
+    },
+    {
+      "arquivo": "testes/operacoes-interrupcao.js:intercalacao-e-assercoes",
+      "corpo_identico": true,
+      "sha256": "6af431313457bf15fb6625b64062bb4d194167c50fa0a8fce26f949a0da24860"
+    }
+  ],
+  "ci": [
+    {
+      "sha": "650007b5eeb2d0bcb41f9277e5d370afe5a1edc2",
+      "id": 43599541574,
+      "name": "Testes",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43599541574",
+      "jobs": [
+        {
+          "id": 132461132417,
+          "name": "firebase-emulador",
+          "status": "completed",
+          "conclusion": "failure",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Instalar o firebase-tools, o SDK web do Firebase e o Playwright",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Testes nos emuladores",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 132461132657,
+          "name": "plataforma",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Instalar o Playwright e o Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Barreiras de Hosting (H01–H03, sem deploy)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Testes da plataforma",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 132461133707,
+          "name": "historico-legado",
+          "status": "completed",
+          "conclusion": "skipped",
+          "steps": null
+        }
+      ]
+    },
+    {
+      "sha": "650007b5eeb2d0bcb41f9277e5d370afe5a1edc2",
+      "id": 43599541579,
+      "name": "Site",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43599541579",
+      "jobs": [
+        {
+          "id": 132461132499,
+          "name": "montar",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Montar o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Conferir o JavaScript",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Conferir que nada restrito vai para o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/upload-pages-artifact@v3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 132461220171,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped",
+          "steps": null
+        }
+      ]
+    },
+    {
+      "sha": "650007b5eeb2d0bcb41f9277e5d370afe5a1edc2",
+      "id": 43599541619,
+      "name": "App Android",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43599541619",
+      "jobs": [
+        {
+          "id": 132461132735,
+          "name": "apk",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Conteúdo do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Conferir que nada restrito vai para o app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Projeto Android",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Versão do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Compilar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Separar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Conferir o APK compilado",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25
+            }
+          ]
+        },
+        {
+          "id": 132461552964,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped",
+          "steps": null
+        }
+      ]
+    },
+    {
+      "sha": "eb8d464c2efb053b9c3660fa8797a08cc843db8f",
+      "id": 43601009386,
+      "name": "Site",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43601009386",
+      "jobs": [
+        {
+          "id": 132465540495,
+          "name": "montar",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Montar o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Conferir o JavaScript",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Conferir que nada restrito vai para o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Run actions/upload-pages-artifact@v3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 132465610930,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped",
+          "steps": null
+        }
+      ]
+    },
+    {
+      "sha": "eb8d464c2efb053b9c3660fa8797a08cc843db8f",
+      "id": 43601009391,
+      "name": "App Android",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43601009391",
+      "jobs": [
+        {
+          "id": 132465540508,
+          "name": "apk",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Conteúdo do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Conferir que nada restrito vai para o app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Projeto Android",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Versão do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Compilar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Separar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Conferir o APK compilado",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25
+            }
+          ]
+        },
+        {
+          "id": 132465962187,
+          "name": "publicar",
+          "status": "completed",
+          "conclusion": "skipped",
+          "steps": null
+        }
+      ]
+    },
+    {
+      "sha": "eb8d464c2efb053b9c3660fa8797a08cc843db8f",
+      "id": 43601009460,
+      "name": "Testes",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/YNPHAX/EEAR/actions/runs/43601009460",
+      "jobs": [
+        {
+          "id": 132465540403,
+          "name": "firebase-emulador",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Instalar o firebase-tools, o SDK web do Firebase e o Playwright",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Testes nos emuladores",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            }
+          ]
+        },
+        {
+          "id": 132465540643,
+          "name": "plataforma",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Instalar o Playwright e o Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Barreiras de Hosting (H01–H03, sem deploy)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Testes da plataforma",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Atualização entre versões transacionais, sem serviços externos",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            }
+          ]
+        },
+        {
+          "id": 132465541456,
+          "name": "historico-legado",
+          "status": "completed",
+          "conclusion": "skipped",
+          "steps": null
+        }
+      ]
+    }
+  ],
+  "persistencia_com_helper_eb8d464": {
+    "grupos_aprovados": 13,
+    "grupos_reprovados": 0,
+    "log": "persistencia-eb8d464.log",
+    "exit": 0
+  },
+  "atualizacao": [
+    {
+      "teste": "reversao-2f6",
+      "exit": 1,
+      "segundos": 17.9,
+      "origem": "/tmp/eear-2f6cad6",
+      "destino_sha": "650007b5eeb2d0bcb41f9277e5d370afe5a1edc2"
+    },
+    {
+      "teste": "atualizacao-d165",
+      "exit": 1,
+      "segundos": 12.9,
+      "origem": "/tmp/eear-legado-encerramento",
+      "destino_sha": "650007b5eeb2d0bcb41f9277e5d370afe5a1edc2"
+    }
+  ],
+  "historico": {
+    "plataforma_antiga": {
+      "exit": 1,
+      "positivas": 159,
+      "negativas": 14,
+      "interrompeu": "TypeError em contas.js; módulos seguintes não aprovados"
+    },
+    "epoca_9": {
+      "exit": 1,
+      "resultado": "precondição B -> A não estabelecida pelo transporte bloqueado; 21 verificações de dados não são o cenário 9"
+    },
+    "reversao_2f6": {
+      "exit": 1,
+      "positivas": 8,
+      "negativas": 1,
+      "recuperacao_manual": true
+    },
+    "d165_no_teste_historico": {
+      "exit": 1,
+      "negativas": 3,
+      "causa": "fixture escreve cache após criar IDB vazio; controle de quarentena exige arquitetura anterior"
+    },
+    "atualizacao_transacional": {
+      "exit": 0,
+      "etapas": 6
+    }
+  },
+  "integridade_restricoes": {
+    "merge": false,
+    "deploy": false,
+    "publicacao_regras": false,
+    "firebase_real": false,
+    "dados_reais": false,
+    "compactacao_nova": false,
+    "homologacao_aprovada": false
+  },
+  "logs": [
+    {
+      "origem": "firebase-emulador.log",
+      "bytes": 6351,
+      "sha256": "0a2031ef296af16f6773014474300249863272a98cbcfc78a51d5441f263553a"
+    },
+    {
+      "origem": "persistencia-regressoes.log",
+      "bytes": 24322,
+      "sha256": "9ebde0e1284316627018d73562f43a2812d4395a595fba36e010e15ae686f80d"
+    },
+    {
+      "origem": "persistencia-eb8d464.log",
+      "bytes": 24276,
+      "sha256": "111895be76a3f0ea7ebea4fb97d633f30921bf16aaae5ecbb4f6d53eea900f6d"
+    },
+    {
+      "origem": "sincronia-firebase.log",
+      "bytes": 1618,
+      "sha256": "2b7230a98fccfdb42c4d883259506888f7bdadf1be80382ac5e2627d3b08bd13"
+    },
+    {
+      "origem": "f01-riscos.log",
+      "bytes": 3043,
+      "sha256": "cca2e3c49e6747964269b0ea8c371c68717ea71e1e2d128ee027f73f1d3d6097"
+    },
+    {
+      "origem": "diarios-auditoria.log",
+      "bytes": 3744,
+      "sha256": "fce35168d05b8555acaa164c36078843d1bfd253be0541c447c977e5719ba029"
+    },
+    {
+      "origem": "concorrencia-fallback.log",
+      "bytes": 1365,
+      "sha256": "e21a461310d61d5bdef0889b3691c0907faeec7ac8ed53e01866633bdc623172"
+    },
+    {
+      "origem": "orfaos-auditoria.log",
+      "bytes": 3570,
+      "sha256": "fe881e2f29b42a56c2e358418ee0951ffdfcefc8736e847bc875104c861fcb01"
+    },
+    {
+      "origem": "orfaos-30min.log",
+      "bytes": 1169,
+      "sha256": "071366ef4bd74241dd7b03d6d35803fbe45a613839a7627b6e6b9c2e193e1708"
+    },
+    {
+      "origem": "duravel-sem-travas.log",
+      "bytes": 5141,
+      "sha256": "5c862aa9b0fa09911082ccccca4b77c4feb038c2c79fad257fab80f97512c536"
+    },
+    {
+      "origem": "migracao-8bd.log",
+      "bytes": 1434,
+      "sha256": "c6a4e35ffa0335c1aea990a675318ce5bc2c3ea6e6d0dc7d85bde5f893801981"
+    },
+    {
+      "origem": "migracao-2f6.log",
+      "bytes": 1454,
+      "sha256": "0cc0ec50a4a3b2eaba07d005ac95ad574774f846d2818889dcba245b747bf047"
+    },
+    {
+      "origem": "operacoes-dupla-falha.log",
+      "bytes": 1254,
+      "sha256": "37b0fe05e8a88f1539b5eca444ccabaa59c236bc0bdb37236ee36fb9d25231fb"
+    },
+    {
+      "origem": "cache-restaurado.log",
+      "bytes": 434,
+      "sha256": "2ac9482bf268db0591ffc0cccf6b58a501bb7b101128eeba501583309a71b1da"
+    },
+    {
+      "origem": "metadados-limite.log",
+      "bytes": 1431,
+      "sha256": "0bdb744e558817627fa9befe635be6baeef35c55af2caccaddc0cf90133d4034"
+    },
+    {
+      "origem": "plataforma.log",
+      "bytes": 17109,
+      "sha256": "f63ceb578f8c245ab1fc712efb64a94cf8c5ea0688dc0dfb19a392460e7f698a"
+    },
+    {
+      "origem": "legado-bloqueio.log",
+      "bytes": 480,
+      "sha256": "b94f8fee44dc730c43d45fc70b6eb0cb0f7ffcc8893b16a1483a3db1512671e3"
+    },
+    {
+      "origem": "ciclo-sincronia.log",
+      "bytes": 186,
+      "sha256": "998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2"
+    },
+    {
+      "origem": "historicos-legado.log",
+      "bytes": 18051,
+      "sha256": "baa8f402bcda5c7b0b08736c0ea09fe352d0a5a13b74e597b58fd2b87d9191c9"
+    },
+    {
+      "origem": "historico-epoca9.log",
+      "bytes": 2566,
+      "sha256": "365775cd59a1c5c0a1461979f84faaa9b9739f99d1f98cbc3e1ee8066d34489a"
+    },
+    {
+      "origem": "hosting.log",
+      "bytes": 746,
+      "sha256": "7f46dc3ddb02fdd68eed4f2c1491bce8ff8f5b855e6ef8c9840ad46a073a4f82"
+    },
+    {
+      "origem": "hosting-gates.log",
+      "bytes": 893,
+      "sha256": "e84514813e87c43910dfddd1c5439cd466f410027d587f94d845496e7751ffaa"
+    },
+    {
+      "origem": "hosting-contexto.log",
+      "bytes": 430,
+      "sha256": "185dacb48259c093dca7986c92bdd5bc9e54e3e9e9ab9b756174bda047be2a8d"
+    },
+    {
+      "origem": "hosting-http.log",
+      "bytes": 2073,
+      "sha256": "841adaa08e49ef435c41ae158f19147ce20b9730facd1749cb06a51e771c8e2d"
+    },
+    {
+      "origem": "lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "origem": "build-site.log",
+      "bytes": 367,
+      "sha256": "84b060e8dca901f8b1ac7bfb932510c9e35953cb3b1270330885e27cfec62f9c"
+    },
+    {
+      "origem": "build-app.log",
+      "bytes": 364,
+      "sha256": "66edfb1162b2e519ac14c38f4adac98c4bf0615190148caaa9568ad2130b3a43"
+    },
+    {
+      "origem": "carga-nucleo.log",
+      "bytes": 1268,
+      "sha256": "f75e7b95f152efaae539a4cd032057b42b59378c125872cac3dae519b219d99b"
+    },
+    {
+      "origem": "carga-metadados.log",
+      "bytes": 5157,
+      "sha256": "d6d8366ad5d7b96a8713ef0f052b4f51b5bc770f64474dda0df665417e66c897"
+    },
+    {
+      "origem": "reversao-2f6.log",
+      "bytes": 2748,
+      "sha256": "abab452f14b62d2832d646b47e59a8cbf157e9c25aef6ea10824c4ed394de1c6"
+    },
+    {
+      "origem": "atualizacao-d165.log",
+      "bytes": 1429,
+      "sha256": "e813034cc036606b7be8ce9fda0f9a78aca0d11cb795ab9a3cc36b78966ac931"
+    },
+    {
+      "origem": "atualizacao-transacional.log",
+      "bytes": 586,
+      "sha256": "c526128f2ead060d1ce084b078ace28085f3c37ec66e55d0625a3685b6b06df7"
+    },
+    {
+      "origem": "interrupcao-preparacao-nova.log",
+      "bytes": 1981,
+      "sha256": "ae239c053cfa2221e496df24eea367a1ffe4b20d579d33e3efcceaa2906ffe4c"
+    },
+    {
+      "origem": "depurador-transacao.log",
+      "bytes": 214,
+      "sha256": "0e5d0138e920ade4a6d7e601df1ddb60dc9c0f5886598b0f50c30c2a72aa2bc5"
+    },
+    {
+      "origem": "importacao-comparacao.log",
+      "bytes": 419,
+      "sha256": "af3b7987fc5bcb89ce8ac58063d06f809095c360c2ac4defb1fadeb2938c19f7"
+    },
+    {
+      "origem": "ci-650007b-firebase.log",
+      "bytes": 81790,
+      "sha256": "347fcec80cab8c9bd9972602fed57398e2073d9434259074cf38d2d21b610518"
+    },
+    {
+      "origem": "ci-eb8d464-132465540403.log",
+      "bytes": 87006,
+      "sha256": "ce8f047bc48da665cfb84f347ec2390b9197600878b7b707fef55809438b262d"
+    },
+    {
+      "origem": "ci-eb8d464-132465540643.log",
+      "bytes": 67300,
+      "sha256": "141440083a6446feb1d4fcd0d30018c97817dab75947cb44400ca53970798fa8"
+    },
+    {
+      "origem": "infra-porta-ocupada/persistencia-regressoes.log",
+      "bytes": 9039,
+      "sha256": "2540a407c1f36efba6bf035d9a5e53b58592b065719762b7a6ba859fdc4c1fd5"
+    },
+    {
+      "origem": "/tmp/eear-firebase-oficial/hosting.log",
+      "bytes": 746,
+      "sha256": "a9390d4082bf09dc5a1d03c758cb2a19933deddc58c0336ebf2572204a57f5e6"
+    },
+    {
+      "origem": "/tmp/eear-firebase-oficial/hosting-contexto-correcao.log",
+      "bytes": 1508,
+      "sha256": "dfaf3235943e69f2e091e0479dc20d60402a66cf261af9f096f5c192ad6db19b"
+    },
+    {
+      "origem": "metadados-limite-estado-final.log",
+      "bytes": 1418,
+      "sha256": "b7a2a9b81ca551c66c4ada4c53dabd6ad3a2b4a75aaff3f60e0da25a8325d0b6"
+    }
+  ],
+  "limite_estado_gerado_no_runtime_final": {
+    "exit": 0,
+    "entrada": "/tmp/eear-firebase-oficial/final/estado-limite.json",
+    "runtime_gerador": "650007b5eeb2d0bcb41f9277e5d370afe5a1edc2",
+    "log": "metadados-limite-estado-final.log"
+  },
+  "refs_observadas": [
+    {
+      "ref": "main",
+      "sha": "7f9ba7f122e315d8bef8dc4db2c6187470a608cd"
+    },
+    {
+      "ref": "claude/eear-study-hydwqt",
+      "sha": "2f6cad6ebba53d0f86319dcada671fe9396f8111"
+    },
+    {
+      "ref": "codex/auditoria-firebase-eear",
+      "sha": "758beed207fc2196d05573e245fe43f0836dc407"
+    },
+    {
+      "ref": "codex/eear-correcao-estrutural",
+      "sha": "eb8d464c2efb053b9c3660fa8797a08cc843db8f"
+    }
+  ],
+  "artefatos_evidencias": {
+    "relatorio": "auditoria/consolidacao-firebase-oficial.md",
+    "evidencias": "auditoria/firebase-oficial-evidencias.txt",
+    "evidencias_sha256": "b92dc2b6f0ce6559e92f1a4875b985bb7ccc4bf58a268cd5b6f3e9b533ce282f",
+    "normalizacao": "Saídas agregadas sem ANSI/espaços finais; hashes individuais dos logs brutos."
+  }
+}

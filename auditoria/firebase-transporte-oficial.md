@@ -12,7 +12,7 @@ configuração e auditoria independentes. CI verde nesta separação não aprova
 |---|---|
 | `curso/app/02-progresso-nuvem.js`, antigo módulo misto | Somente orquestração da união e confirmação, exige `firebase:` e adaptador transacional. Não há fallback leitura/gravação. |
 | `02-certificados.js` | Cálculo/migração de certificados, movido sem mudar o algoritmo. |
-| `02-persistencia-local.js`, `14-abas.js`, `15-diarios-pendentes.js`, `16-diario-duravel.js`, `18-operacoes-*.js` | Estado local, reservas imutáveis, checkpoint IndexedDB, recuperação, geração de exclusão e operações idempotentes. Não dependem de Firebase para estudar. Módulos 14–16 e núcleo de operações preservados. |
+| `02-persistencia-local.js`, `14-abas.js`, `15-diarios-pendentes.js`, `16-diario-duravel.js` | Estado local, reservas imutáveis, checkpoint IndexedDB, recuperação, geração de exclusão e operações idempotentes. Não dependem de Firebase para estudar. Módulos 14–16 e núcleo de operações preservados. |
 | `02-configuracao.js`, `02-z-firebase.js` | Auth e único adaptador: `runTransaction`, envelope Firestore v2. Não expõe `get/set` avulsos ao conciliador. Configuração lida uma vez, antes de selecionar o perfil local; adaptador inicializado antes de `07-eventos.js`. |
 | `08-uniao-nuvem.js` | União pura, leitura de versões antigas e assinatura/linhagem de compatibilidade. Assinatura FNV é identificação de conteúdo, não criptografia/autorização. |
 | `09-contas.js`, `17-estado-persistencia.js` | UID, exportação, exclusão local, exclusão Firebase com marcador permanente, confirmação local distinta da remota. Legado não autoriza apagar cópia local. |
@@ -67,6 +67,10 @@ instrumentam somente o transporte em memória e assim são identificados, não c
    o arquivo original: as cópias de recuperação/quarentena exigem análise e importação explícita separadas.
 4. Conferir nome, tarefas, contagens, cartões e certificados. Reimportação do mesmo arquivo não deve duplicar
    contagens. Importar ausência não ordena apagar estudo posterior; substituir é uma escolha explícita existente.
+   Duas cópias antigas sem IDs de operação podem compartilhar as mesmas contagens; não é possível deduzir
+   automaticamente a soma sem duplicar atividades sobrepostas. Preservar ambas e conferir manualmente os
+   agregados. A contagem exata por união idempotente vale para operações identificadas, não para inventar
+   identidade causal ausente em snapshots históricos.
 5. Esperar checkpoint local confirmado **e** sincronização Firebase confirmada; validar em outro dispositivo.
    Só então considerar apagar uma cópia local através das guardas do app. Não apagar o único backup externo.
 6. Regras v2 rejeitam atualização incompatível do documento por cliente anterior. Marcador de conta excluída bloqueia
@@ -94,5 +98,9 @@ instrumentam somente o transporte em memória e assim são identificados, não c
 - Chromium em modo móvel não prova Safari/iOS/WebViews físicos. IndexedDB pode ser removido pelo SO/usuário ou sofrer
   quota, modo privado e perda de energia. Sem Web Locks, a integridade vem das transações IDB; não de heartbeat ou
   carência de dois segundos. Uma UI não pode prometer sobreviver a remoção do armazenamento pelo navegador.
+- Excluir uma conta remove Auth, documento de progresso e cópia do aparelho que executa a ação; conserva
+  o marcador mínimo UID/data que impede recriação. Backups externos e caches de outros dispositivos não
+  são apagados remotamente; reconectar não garante limpeza automática dessas cópias. Retenção do marcador
+  e política de eliminação precisam ser definidas antes da operação oficial.
 - OAuth Google foi exercitado somente no Auth Emulator; domínios autorizados, redirecionamento real, certificados,
   configurações de produção e regras instaladas exigem validação autorizada separada. Não há homologação aprovada.
