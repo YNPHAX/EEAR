@@ -4,9 +4,27 @@ module.exports = async function interromper({ ctx, paginas, clicar, estado, font
   const [A, B, C] = paginas, linhas = fonte.split('\n');
   const lineNumber = linhas.findIndex(l => l.includes('resultado = editar(q.result || null, t);'));
   if (lineNumber < 0) throw new Error('Ponto nativo da transação não encontrado.');
-  // Suspende os observadores até a leitura de A; sem isso eles podem confirmar A antes do breakpoint.
+  // Pausa somente DENTRO de oncomplete: Debugger.pause arbitrário pode prender uma transação
+  // de B/C e impedir A de atingir seu breakpoint. Não é evidência de perda do aplicativo.
+  const ociosa = linhas.findIndex(l => l.includes('t.oncomplete = () => resultado instanceof Error'));
+  if (ociosa < 0) throw new Error('Revisar ponto de transação concluída dos observadores.');
   const observadores = [];
-  for (const p of [B, C]) { const d = await ctx.newCDPSession(p); await d.send('Debugger.enable'); const parada = new Promise(r => d.once('Debugger.paused', r)); await d.send('Debugger.pause'); await parada; observadores.push(d); }
+  for (const p of [B, C]) {
+    const d = await ctx.newCDPSession(p); await d.send('Debugger.enable');
+    const parada = new Promise((resolve, reject) => { const t = setTimeout(() => reject(new Error('Observador não concluiu a transação')), 10000); d.once('Debugger.paused', r => { clearTimeout(t); resolve(r); }); });
+    const bp = await d.send('Debugger.setBreakpointByUrl', { url: new URL('app.js', p.url()).href, lineNumber: ociosa, columnNumber: linhas[ociosa].indexOf('resultado instanceof Error') });
+    const ponto = await parada;
+    const prova = await d.send('Debugger.evaluateOnCallFrame', { callFrameId: ponto.callFrames[0].callFrameId, returnByValue: true, expression: '(()=>{try{s.get(id);return "ativa";}catch(e){return e.name;}})()' });
+    if (prova.result.value !== 'TransactionInactiveError') throw new Error('Observador pausado antes do término da transação: ' + JSON.stringify(prova));
+    await d.send('Debugger.removeBreakpoint', { breakpointId: bp.breakpointId }); observadores.push(d);
+  }
+  // Barreira readwrite SEM alterações confirma que nenhum observador pausado segura a fila IDB.
+  await A.evaluate(() => new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('Observadores pausados ainda bloqueiam IndexedDB')), 10000);
+    const o = window.indexedDB.open('eear-operacoes', 1); o.onerror = () => { clearTimeout(timer); reject(o.error); };
+    o.onsuccess = () => { const db = o.result, t = db.transaction(['contas', 'quarentena'], 'readwrite'); t.oncomplete = () => { clearTimeout(timer); db.close(); resolve(); }; t.onerror = t.onabort = () => { clearTimeout(timer); db.close(); reject(t.error); }; };
+  }));
+  console.log('Preparação nativa: dois observadores em oncomplete inativo; barreira IDB concluída sem alterações.');
   const cdp = await ctx.newCDPSession(A); await cdp.send('Debugger.enable');
   await cdp.send('Debugger.setBreakpointByUrl', { url: new URL('app.js', A.url()).href, lineNumber, condition: '(loc.ops || []).some(o => o.st.feito["T:A-race"]) && !(q.result && q.result.st && q.result.st.feito["T:A-race"])' });
   const parada = new Promise((resolve, reject) => { const t = setTimeout(() => reject(new Error('Transação não atingiu o breakpoint')), 10000); cdp.once('Debugger.paused', p => { clearTimeout(t); resolve(p); }); });

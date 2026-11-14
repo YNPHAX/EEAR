@@ -47,6 +47,18 @@ jobs:
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/ciclo-sincronia.test.js
           NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/plataforma.test.js
 
+      - name: Atualização entre versões transacionais, sem serviços externos
+        run: |
+          git fetch --no-tags --depth=1 origin d16548547806575c1d32491a32d6166226f2096d
+          mkdir -p "$RUNNER_TEMP/eear-origem"
+          git archive d16548547806575c1d32491a32d6166226f2096d | tar -x -C "$RUNNER_TEMP/eear-origem"
+          printf 'null' > "$RUNNER_TEMP/firebase-null.json"
+          EEAR_FIREBASE_CONFIG="$RUNNER_TEMP/firebase-null.json" python3 web/build.py "$RUNNER_TEMP/eear-site-atual"
+          cd "$RUNNER_TEMP/eear-origem"
+          EEAR_FIREBASE_CONFIG="$RUNNER_TEMP/firebase-null.json" python3 web/build.py "$RUNNER_TEMP/eear-site-anterior"
+          cd "$GITHUB_WORKSPACE"
+          NODE_PATH="$RUNNER_TEMP/pw/node_modules" node testes/atualizacao-transacional.test.js "$RUNNER_TEMP/eear-site-anterior" "$RUNNER_TEMP/eear-site-atual"
+
   # Contas, transações, regras do Firestore e exclusão de conta nos emuladores oficiais do Firebase (projeto de teste
   # "demo-eear": nenhum serviço real e nenhuma credencial). Roda em paralelo com o job acima.
   firebase-emulador:
@@ -79,6 +91,8 @@ jobs:
             EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/operacoes-dupla-falha.test.js
           NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
             node testes/cache-restaurado.test.js
+          NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
+            node testes/depurador-transacao.test.js
           NODE_PATH="$RUNNER_TEMP/fb/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/fb/node_modules/firebase" \
             EEAR_FIREBASE_CLI="$RUNNER_TEMP/fb/node_modules/.bin/firebase" node testes/sincronia-firebase.test.js
 

@@ -23,6 +23,7 @@ configuração e auditoria independentes. CI verde nesta separação não aprova
 | `web/regras-claude.json` | Evidência histórica de ACL; permanece no repositório. Não é autorização do Firebase nem contrato novo implementado no servidor. |
 | `curso/index.html` (`claude` viewport), `web/build.py` | Metadado do host, removido na saída de site/app; não é transporte. O build/verificador de Hosting não é contornado. |
 | `.github/workflows/*` com `claude/**` | Filtro de branches, não dependência de sincronização. CI não publica em push. |
+| `web/legal/privacidade.html`, `web/legal/termos.html` | Descrevem a versão pública sem contas. Pendência para ativação oficial: política específica de Auth/Firestore, retenção/localização, marcador UID de exclusão e dados pessoais; não são declarações de conformidade do ambiente de teste. |
 | `web/firebase.homologacao.exemplo.json`, `.firebaserc`, `firebase.json`, `web/firestore.rules` | Configuração de teste, emuladores/predeploy e isolamento UID. Nenhuma alteração de regras ou configuração de projeto real nesta rodada. |
 | `testes/perfil-legado.js`, `atualizacao.js`, `versoes-misturadas.js`, `diario-legado-auditoria.test.js` | Ferramentas/fixtures de compatibilidade de formatos e atualização; continuam disponíveis. Parte usa versões antigas ou nuvem fictícia legada e deve ser identificada no resultado. |
 | `auditoria/*` anteriores | Relatórios e falhas históricas preservados, incluindo a sobrescrita adversarial do cenário 9 e CI reprovado de `e47ae417`. |
