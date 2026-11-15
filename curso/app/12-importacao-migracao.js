@@ -23,10 +23,14 @@
         importado = opUnir(opMeta(base), opDelta(opMeta(base), base, colado, 'e:editar:' + hash));
       } else importado = operacoesLegadas(meta, colado, hash, substituir);
     } catch (e) { msgDados = e.message; render(); return; }
-    const m = substituir ? substituirContadores(meta, importado) : opUnir(meta, importado);
+    if (substituir && opValida(colado.cfg._ops) && mesmoConteudo(opUnir(meta, importado), meta)) {
+      pedindo = null; msgDados = loc.pendente || loc.confirmando || !gravouLocal ? 'Este código já está na fila. Aguarde a confirmação do armazenamento; mantenha a aba aberta.' : 'Este código já foi aplicado. O estudo novo, as correções e o Zerar foram mantidos.'; consolidar(); render(); return;
+    }
+    if (substituir) importado = substituirContadores(meta, importado);
+    const m = opUnir(meta, importado);
     const combinado = opEstado(m);
     const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
-    S = substituir ? mesclar(c) : opValida(colado.cfg._ops) ? combinado : unirProgresso(null, l, c).st;
+    S = substituir ? opValida(colado.cfg._ops) ? estadoSubstituido(m, importado) : mesclar(c) : opValida(colado.cfg._ops) ? combinado : unirProgresso(null, l, c).st;
     dadosContadores(S, m); // não recriar uma operação para números já representados pelos IDs importados
     const certs = S.cfg.certs, recebidas = combinado.cfg._importacoes;
     S.cfg = Object.assign({}, colado.cfg, { certs });

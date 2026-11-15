@@ -26,7 +26,8 @@
     const origem = opPlano(opEstado(m)), campos = opPlano(st);
     [...new Set(Object.keys(campos).concat(Object.keys(m.c)))].forEach(k => {
       const p = opCaminho(k); if (!p || p.length < 2 || !opContador(p)) return;
-      let o = st; p.slice(0, -1).forEach(x => { if (!o[x] || typeof o[x] !== 'object') o[x] = {}; o = o[x]; });
+      let o = st;
+      for (const x of p.slice(0, -1)) { if (!o[x] || typeof o[x] !== 'object') { if (origem[k] === undefined) return; o[x] = {}; } o = o[x]; }
       if (origem[k] === undefined) delete o[p[p.length - 1]]; else o[p[p.length - 1]] = origem[k];
     });
   }
@@ -60,5 +61,11 @@
   function substituirContadores(local, origem) {
     const d = opVazio();
     Object.keys(local.c).forEach(k => { const c = local.c[k], preservadas = (origem.c[k] || {}).a || {}; d.c[k] = { a: {}, x: {} }; Object.keys(c.a).forEach(id => { if (!Object.prototype.hasOwnProperty.call(preservadas, id)) d.c[k].x[id] = true; }); });
-    return opUnir(opUnir(local, origem), d);
+    return opUnir(origem, d); // as remoções precisam viajar no diário importado, não só na projeção em memória
+  }
+  function estadoSubstituido(m, origem) {
+    const vista = opCopiar(m);
+    // Só campos presentes na origem, mas com as remoções/versões mais novas já observadas no destino.
+    Object.keys(vista.r).forEach(k => { if (opCaminho(k)[0] !== 'cfg' && !Object.prototype.hasOwnProperty.call(origem.r, k)) delete vista.r[k]; });
+    return opEstado(vista);
   }
