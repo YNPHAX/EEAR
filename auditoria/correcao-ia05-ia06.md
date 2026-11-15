@@ -75,7 +75,7 @@ Além do teste original por UI/SDK/Firestore emulados, propriedades exigem corre
 
 ## Compatibilidade: envelope Firebase v4
 
-O leitor atual aceita envelopes anteriores para migração e grava **v4**. Operações e IndexedDB continuam **v2**. As regras existentes recusam update com versão menor que a do documento; não houve alteração ou publicação de regra nesta rodada.
+O leitor atual aceita envelopes anteriores para migração e grava **v4**. Os metadados das operações continuam **v2**; o banco IndexedDB `eear-operacoes` continua na **versão 1**, com os mesmos stores. As regras existentes recusam update com versão menor que a do documento; não houve alteração ou publicação de regra nesta rodada.
 
 Os builds reais **a6366a8/v2 e af32954/v3** recebem aviso de versão futura, conservam seu estudo local após reabrir, recebem **403** ao tentar gravar a versão antiga e não alteram o documento v4. A barreira só vale após a gravação v4 e exige o contrato de regras correto no ambiente posteriormente autorizado.
 
