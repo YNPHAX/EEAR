@@ -14,6 +14,7 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
   try {
     const A = await abrir(); await f.importar(A, { v: 1, cfg: {}, act: { [hj]: 2 } }); await contar(A, 2);
     await f.importar(A, arquivo); const backup = await contar(A, 5);
+    assert.strictEqual(backup.cfg.nome, arquivo.cfg.nome, 'Preferências da primeira importação precisam estar no checkpoint, além da projeção em memória.');
     await f.clicar(A, 'marcar', { k: 'T:nova' }); await contar(A, 6); await f.importar(A, arquivo); await contar(A, 6);
     await f.clicar(A, 'zerar'); await f.clicar(A, 'zerarok'); await f.clicar(A, 'marcar', { k: 'T:pos-reset' });
     await f.importar(A, arquivo); let s = await contar(A, 1); assert(s.feito['T:pos-reset'] && !s.feito['T:antiga']);

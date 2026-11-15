@@ -26,12 +26,13 @@ const aposRemover = a.opUnir(observada, a.opDelta(observada, a.opEstado(observad
 const atrasada = a.operacoesLegadas(inicial, antigaComMarca, ha, false);
 assert.deepStrictEqual(copia(primeira.r['["feito","T"]']), copia(atrasada.r['["feito","T"]']), 'O registro da mesma origem também é estável, independentemente do horário do clique.');
 assert.deepStrictEqual(copia(a.opEstado(a.opUnir(aposRemover, atrasada)).feito), {}, 'Importação atrasada não restaura marcação observada e removida em outro dispositivo.');
-const certBase = st(2); certBase.feito.base = true; certBase.cfg.certs = [{ s: 'fis', mod: null, ids: ['FIS01'], h: 3, d: '2026-10-17', c: 'FICTICIO', o: 'curso', t: 1 }];
+const certBase = st(2); certBase.feito.base = true; certBase.mod.POR01 = { best: .9 }; certBase.cfg.certs = [{ s: 'fis', mod: null, ids: ['FIS01'], h: 3, d: '2026-10-17', c: 'FICTICIO', o: 'curso', t: 1 }];
 const antesCert = a.opSemente(certBase), srcCert = copia(certBase); srcCert.act.dia = 3; srcCert.feito.nova = true;
 const hCert = a.identidadeImportacao(srcCert), impCert = a.operacoesLegadas(antesCert, srcCert, hCert, false), sc = Object.keys(impCert.s)[0];
 assert.strictEqual(impCert.r['["feito","base"]'], undefined, 'Importação aceita não reinsere a marcação já coberta se uma exclusão local cortar a base.');
 assert(impCert.s[sc].x['i:' + hCert], 'Certificado já coberto tem crédito durável.');
 const cortado = a.opEstado(a.opUnir(a.opSemente(base()), impCert)); assert.deepStrictEqual(copia(cortado.feito), { nova: true }); assert.deepStrictEqual(copia(cortado.cfg.certs), []); assert.strictEqual(cortado.act.dia, 1);
+assert.deepStrictEqual(copia(cortado.mod), {}, 'Nota já coberta não volta depois da exclusão concorrente da base.');
 const recebidoCert = a.opUnir(antesCert, impCert), repetidoCert = a.operacoesLegadas(recebidoCert, srcCert, hCert, false);
 assert.deepStrictEqual(copia(a.opEstado(a.opUnir(recebidoCert, repetidoCert)).cfg.certs), certBase.cfg.certs, 'Gerar outra vez a mesma origem não apaga o próprio certificado.');
 const levouCert = a.opTransferencia(a.opEstado(recebidoCert)); assert(levouCert.s[sc].x['i:' + hCert]);

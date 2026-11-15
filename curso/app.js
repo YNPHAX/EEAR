@@ -2322,7 +2322,11 @@
       // Como a união histórica: texto/nulo não é atividade. Não rejeitar os campos válidos do arquivo.
       const v = typeof campos[k] === 'number' ? campos[k] : 0; if (!Number.isFinite(v) || v < 0 || (!opMaximo(p) && !Number.isSafeInteger(v))) throw new Error('O código contém uma contagem inválida. Nenhum dado foi alterado.');
       const c = { a: {}, x: {} }, atual = m.c[k], pre = 'i:' + hash + ':', lidas = Object.fromEntries(Object.keys(atual && atual.l || {}).map(id => [id, true]));
-      if (opMaximo(p)) c.a['i:' + hash] = v;
+      if (opMaximo(p)) {
+        const id = 'i:' + hash; c.a[id] = v;
+        const cobertas = !substituir && atual && !Object.prototype.hasOwnProperty.call(atual.a, id) ? opIdsVivos(atual).filter(x => atual.a[x] >= v) : [];
+        if (cobertas.length) { c.x[id] = true; c.o = { [id]: Object.fromEntries(cobertas.map(x => ['@coberto:' + x, true])) }; }
+      }
       else {
         unidades += v; if (unidades > 10000) throw new Error('Esta cópia antiga tem contagens grandes demais para uma migração segura. Preserve o arquivo; nenhum dado foi alterado.');
         let credito = 0, pos = 0;
@@ -2380,13 +2384,14 @@
     if (substituir) importado = substituirContadores(meta, importado);
     const m = opUnir(meta, importado);
     const combinado = opEstado(m);
-    S = substituir ? estadoSubstituido(m, importado, colado) : combinado;
+    S = substituir ? estadoSubstituido(m, importado, colado) : opCopiar(combinado);
     dadosContadores(S, m); // não recriar uma operação para números já representados pelos IDs importados
     const certs = S.cfg.certs, recebidas = combinado.cfg._importacoes;
     S.cfg = Object.assign({}, colado.cfg, { certs });
     ['fcv', 'fcAncora', 'certsZ'].forEach(k => { if (Object.prototype.hasOwnProperty.call(combinado.cfg, k)) S.cfg[k] = opCopiar(combinado.cfg[k]); else delete S.cfg[k]; });
     if (recebidas) S.cfg._importacoes = opCopiar(recebidas); else delete S.cfg._importacoes;
-    S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(combinado.cfg.certsZ) || 0);
+    const zeradoEm = Math.max(Number(local.cfg.certsZ) || 0, Number(combinado.cfg.certsZ) || 0);
+    if (zeradoEm) S.cfg.certsZ = zeradoEm; else delete S.cfg.certsZ;
     juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
     loc.meta = m; loc.vista = opCopiar(combinado);
     pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado, idImportacao: hash }); render();

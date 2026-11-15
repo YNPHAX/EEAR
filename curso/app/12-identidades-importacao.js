@@ -58,7 +58,11 @@
       // Como a união histórica: texto/nulo não é atividade. Não rejeitar os campos válidos do arquivo.
       const v = typeof campos[k] === 'number' ? campos[k] : 0; if (!Number.isFinite(v) || v < 0 || (!opMaximo(p) && !Number.isSafeInteger(v))) throw new Error('O código contém uma contagem inválida. Nenhum dado foi alterado.');
       const c = { a: {}, x: {} }, atual = m.c[k], pre = 'i:' + hash + ':', lidas = Object.fromEntries(Object.keys(atual && atual.l || {}).map(id => [id, true]));
-      if (opMaximo(p)) c.a['i:' + hash] = v;
+      if (opMaximo(p)) {
+        const id = 'i:' + hash; c.a[id] = v;
+        const cobertas = !substituir && atual && !Object.prototype.hasOwnProperty.call(atual.a, id) ? opIdsVivos(atual).filter(x => atual.a[x] >= v) : [];
+        if (cobertas.length) { c.x[id] = true; c.o = { [id]: Object.fromEntries(cobertas.map(x => ['@coberto:' + x, true])) }; }
+      }
       else {
         unidades += v; if (unidades > 10000) throw new Error('Esta cópia antiga tem contagens grandes demais para uma migração segura. Preserve o arquivo; nenhum dado foi alterado.');
         let credito = 0, pos = 0;
