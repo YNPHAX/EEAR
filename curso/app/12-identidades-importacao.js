@@ -39,7 +39,8 @@
     let unidades = 0;
     Object.keys(campos).forEach(k => {
       const p = opCaminho(k); if (!p || p.length < 2 || !opContador(p)) return;
-      const v = campos[k]; if (!Number.isFinite(v) || v < 0 || (!opMaximo(p) && !Number.isSafeInteger(v))) throw new Error('O código contém uma contagem inválida. Nenhum dado foi alterado.');
+      // Como a união histórica: texto/nulo não é atividade. Não rejeitar os campos válidos do arquivo.
+      const v = typeof campos[k] === 'number' ? campos[k] : 0; if (!Number.isFinite(v) || v < 0 || (!opMaximo(p) && !Number.isSafeInteger(v))) throw new Error('O código contém uma contagem inválida. Nenhum dado foi alterado.');
       const c = { a: {}, x: {} }, atual = m.c[k], pre = 'i:' + hash + ':', lidas = Object.fromEntries(Object.keys(atual && atual.l || {}).map(id => [id, true]));
       if (opMaximo(p)) c.a['i:' + hash] = v;
       else {
