@@ -154,6 +154,32 @@ jobs:
             EEAR_FIREBASE_CLI="$RUNNER_TEMP/imp/node_modules/.bin/firebase" EEAR_REPO_REPROVADO_IA05="$RUNNER_TEMP/imp-a636" \
             EEAR_REPO_LEGADO="$RUNNER_TEMP/imp-2f6" EEAR_REPO_CLIENTE_V3="$RUNNER_TEMP/imp-v3" node testes/importacoes-regressoes.test.js
 
+  integridade-propriedades:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Dependências isoladas de IA07, IA08 e crash
+        run: |
+          npm install --prefix "$RUNNER_TEMP/prop" --no-save --no-audit --no-fund firebase-tools@15.35.0 firebase@12.19.0 playwright@1.63.0
+          "$RUNNER_TEMP/prop/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Negativos originais e propriedades obrigatórias do candidato
+        run: |
+          git fetch --no-tags origin c186008012ba12709fc07c08e36532471a894a8c
+          git worktree add --detach "$RUNNER_TEMP/prop-c186" c186008012ba12709fc07c08e36532471a894a8c
+          NODE_PATH="$RUNNER_TEMP/prop/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/prop/node_modules/firebase" \
+            EEAR_FIREBASE_CLI="$RUNNER_TEMP/prop/node_modules/.bin/firebase" EEAR_REPO_REPROVADO_IA07="$RUNNER_TEMP/prop-c186" \
+            EEAR_AUDITORIA_SAIDA="$RUNNER_TEMP/prop-evidencias" node testes/integridade-regressoes.test.js
+
   # Evidência histórica opcional, com saída original: não mascara a falha nem integra o gate Firebase.
   historico-legado:
     if: github.event_name == 'workflow_dispatch' && inputs.historico_legado
