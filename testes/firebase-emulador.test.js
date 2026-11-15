@@ -179,9 +179,9 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     const semLogin = await req(`${DOCS}/alunos/${ana.localId}`); // sem o cabeçalho Authorization: visitante sem sessão
     const semLoginGrava = await req(`${DOCS}:commit`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ writes: [{ update: { name: `projects/${PROJ}/databases/(default)/documents/alunos/${ana.localId}`, fields: campos(4, { v: 4 }) }, updateTransforms: [{ fieldPath: 'atualizado', setToServerValue: 'REQUEST_TIME' }] }] }) });
     const outro = await req(`${DOCS}:commit`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer ' + ana.idToken }, body: JSON.stringify({ writes: [{ update: { name: `projects/${PROJ}/databases/(default)/documents/assinaturas/${ana.localId}`, fields: { ativa: { booleanValue: true } } } }] }) });
-    const semT = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '1' }, dados: { stringValue: '{}' } });
-    const grande = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '1' }, dados: { stringValue: 'x'.repeat(900001) }, t: { integerValue: '1' } });
-    const proprioBia = await gravarComo(bia.idToken, bia.localId, campos(3, { v: 1 }));
+    const semT = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '4' }, dados: { stringValue: '{}' } });
+    const grande = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '4' }, dados: { stringValue: 'x'.repeat(900001) }, t: { integerValue: '1' } });
+    const proprioBia = await gravarComo(bia.idToken, bia.localId, campos(4, { v: 1 }));
     ok(lista.st === 403 && (consulta.st === 403 || (Array.isArray(consulta.j) && consulta.j.some(x => x.error))), `regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista ${lista.st}, consulta ${consulta.st}]`);
     ok(semLogin.st === 403 && semLoginGrava.st === 403, `regras: sem login, nada é lido nem gravado [leitura ${semLogin.st}, gravação ${semLoginGrava.st}]`);
     ok(outro.st === 403, 'regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno');
