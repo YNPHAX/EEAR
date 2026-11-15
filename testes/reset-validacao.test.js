@@ -20,14 +20,18 @@ async function armazenamento(p){return p.evaluate(()=>new Promise((resolve,rejec
    const ui=await f.estado(p);assert.strictEqual(ui.act[hj],5);assert(ui.feito['T:preservada']&&!ui.feito['T:indevida']);
    resultados.push({literal,recusou:true,preservou:true,copias:depois.quarentena.length});
   }
+  for(const campo of ['id','_sid']){
+   const texto=JSON.stringify({v:1,cfg:{},sims:[{d:'2026-11-15',r:{por:[1,2]},[campo]:'__proto__'}]});await f.clicar(p,'impabrir');await p.fill('#imp-txt',texto);await f.clicar(p,'impok');
+   assert(await f.ate(async()=>(await armazenamento(p)).quarentena.some(q=>q.texto===texto)));assert.deepStrictEqual((await armazenamento(p)).conta,inicial.conta);resultados.push({campo,recusou:true,preservou:true});
+  }
   const cd=await c.newCDPSession(p),caiu=p.waitForEvent('crash');cd.send('Page.crash').catch(()=>null);await caiu;await p.close();p=await f.pagina(c);await f.clicar(p,'tab',{v:'plano'});
-  await p.waitForFunction(()=>document.querySelector('#sync')?.dataset.local==='confirmado');const reaberto=await armazenamento(p);assert.strictEqual(reaberto.conta.st.act[hj],5);assert.strictEqual(reaberto.quarentena.length,14);
+  await p.waitForFunction(()=>document.querySelector('#sync')?.dataset.local==='confirmado');const reaberto=await armazenamento(p);assert.strictEqual(reaberto.conta.st.act[hj],5);assert.strictEqual(reaberto.quarentena.length,16);
   // Um checkpoint antigo com marcador inseguro também não pode ser normalizado e sobrescrito em silêncio.
   await p.evaluate(()=>new Promise((resolve,reject)=>{const o=window.indexedDB.open('eear-operacoes',1);o.onsuccess=()=>{const db=o.result,t=db.transaction('contas','readwrite'),s=t.objectStore('contas'),q=s.get('');q.onsuccess=()=>{const r=q.result;r.meta.r['["cfg","certsZ"]']=[0,'legado',1e30];r.st.cfg.certsZ=1e30;s.put(r,'');};t.oncomplete=()=>{db.close();resolve();};t.onerror=()=>reject(t.error);};}));
   await p.reload();await f.clicar(p,'tab',{v:'plano'});assert(await f.ate(async()=>(await p.locator('#sync').getAttribute('data-local'))==='falhou'));
   const corrompido=await armazenamento(p);assert.strictEqual(corrompido.conta.st.cfg.certsZ,1e30);assert(corrompido.quarentena.some(q=>q.origem==='checkpoint'&&q.texto.includes('1e+30')));
   await p.waitForTimeout(3400);const repetido=await armazenamento(p);console.log('DIAGNÓSTICO quarentena incompatível: '+corrompido.quarentena.length+' → '+repetido.quarentena.length);assert.strictEqual(repetido.quarentena.length,corrompido.quarentena.length,'Checkpoint incompatível não deve gerar cópias infinitas no polling');
   resultados.push({checkpointAntigoPreservado:true,indicador:await p.locator('#sync').innerText(),checkpoint:corrompido.conta});
-  fs.writeFileSync(saida,JSON.stringify(resultados,null,2));console.log('✓ 14 marcadores/JSON inválidos: recusa, cópia integral, checkpoint intacto e recuperação após crash; checkpoint antigo inseguro preservado.');
+  fs.writeFileSync(saida,JSON.stringify(resultados,null,2));console.log('✓ 14 marcadores/JSON inválidos e dois IDs reservados: recusa, cópia integral, checkpoint intacto e recuperação após crash; checkpoint antigo inseguro preservado.');
  }finally{await c.close();await f.fechar();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

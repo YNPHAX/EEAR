@@ -10,6 +10,8 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
     const p = await f.pagina(c); await f.importar(p, { v: 1, cfg: { nome: 'Fictícia' }, feito: { 'T:importada-antiga': true } });
     const st = await f.estado(p); await p.waitForFunction(() => document.querySelector('#sync').dataset.local === 'confirmado');
     await f.clicar(p, 'dadosapagar'); await f.clicar(p, 'dadosapagarok');
+    // A reserva abaixo deve chegar DEPOIS da exclusão confirmada, não durante o corte assíncrono.
+    assert(await f.ate(async () => (await p.locator('body').innerText()).includes('Os dados deste aparelho foram apagados.')));
     const reserva = { v: 2, id: 'importacao-esquema-anterior', conta: '', gen: 'geracao-anterior', local: false, st, delta: st.cfg._ops };
     const chave = 'missao-eear-v1-diario#' + reserva.id;
     await p.evaluate(([k, v]) => localStorage.setItem(k, JSON.stringify(v)), [chave, reserva]); await p.reload(); await f.clicar(p, 'tab', { v: 'plano' });

@@ -2,7 +2,7 @@
 const assert=require('assert'),fs=require('fs'),vm=require('vm');
 const base=()=>({v:1,cfg:{certs:[]},sims:[],mod:{},aula:{},act:{},erros:{},feito:{}});
 const c={window:{},navigator:{},loc:{},novoEstado:base,mesclar:x=>x,certValido:x=>!!x.c,certChave:x=>x.c};vm.createContext(c);
-vm.runInContext(fs.readFileSync('curso/app/14-abas.js','utf8')+';this.api={opVazio,opMigrar,opSemente,opUnir,opEstado,opPlano,opDelta,opMarcadorResetValido};',c);
+vm.runInContext(fs.readFileSync('curso/app/14-abas.js','utf8')+';this.api={opVazio,opMigrar,opSemente,opUnir,opEstado,opPlano,opDelta,opMarcadorResetValido,opValida};',c);
 const a=c.api,copia=x=>JSON.parse(JSON.stringify(x));
 const X={d:'2026-11-15',tipo:'materia',mat:'por',r:{por:[1,2]},min:5},Y={min:5,r:{por:[1,2]},mat:'por',tipo:'materia',d:'2026-11-15'};
 const chave=x=>JSON.stringify(['sims',JSON.stringify(x)+'#0']),kX=chave(X),kY=chave(Y);
@@ -42,3 +42,13 @@ if(process.env.EEAR_REPO_REPROVADO_IA07){
 const intactos=require('./plataforma-persistencia.js').simuladosIntactos,origem=[X],guardado=copia(a.opEstado(a.opSemente({...base(),sims:origem})).sims);assert(intactos(origem,guardado,false));
 for(const mudar of [s=>s[0]._sid+='errado',s=>s[0].r.por.reverse(),s=>s[0].min++,s=>s.push({...s[0]})]){const outro=copia(guardado);mudar(outro);assert(!intactos(origem,outro,false));}
 assert(!intactos(origem,guardado,true),'Histórico continua literal, sem adaptação do formato');
+
+// Um ID explícito é opaco, inclusive se parecer o antigo JSON#índice.
+const opaco=JSON.stringify(X)+'#0',comId={...base(),sims:[{...X,id:opaco}]},mId=a.opSemente(comId),vId=a.opEstado(mId),zId=copia(vId);zId.sims=[];
+const resultadoId=a.opEstado(a.opUnir(mId,a.opDelta(mId,vId,zId,'e:RESET-OPACO')));console.log('ID OPACO APÓS RESET:',JSON.stringify({id:opaco,esperado:0,estado:resultadoId}));assert.strictEqual(resultadoId.sims.length,0);
+
+for(const id of ['', 'sim:opaco', '{}#0', 'null#0', '[]#0', JSON.stringify(Y)+'#7', '@sim:v1:opaco#0', 'ação\"/😀']){
+ const raw={...base(),sims:[{...X,id}]},m=a.opSemente(raw);assert(a.opValida(m));const v=a.opEstado(m),z=copia(v);z.sims=[];const apagado=a.opUnir(m,a.opDelta(m,v,z,'e:ZERO'));assert.strictEqual(a.opEstado(a.opUnir(apagado,m)).sims.length,0);
+}
+for(const id of ['__proto__','prototype','constructor']){assert.throws(()=>a.opSemente({...base(),sims:[{...X,id}]}));assert.throws(()=>a.opSemente({...base(),sims:[{...X,_sid:id}]}));}
+const inconsistente=a.opVazio();inconsistente.r[JSON.stringify(['sims','outro-id'])]=[0,'ilegivel',{...X,_sid:'id-diferente'}];assert(!a.opValida(inconsistente));
