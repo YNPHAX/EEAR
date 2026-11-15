@@ -1,0 +1,4597 @@
+{
+  "candidato": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+  "runtime": "5a8965b8f3b1678521601526e412cfe51d1ef02e",
+  "testes": "ae8f3a0140b048e2996b40c98fbb977f699ae77d",
+  "participacaoAnterior": "Mesmo agente Codex implementou 5a8965b; não há independência organizacional de outro autor.",
+  "parecer": "REPROVADO para homologação controlada; produção não autorizada",
+  "integridade": {
+    "commit": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+    "tree": "942b07c3c5d5b6aa729f30d2b7d5f575a0f6a0c2",
+    "appSha256": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+    "arquivosConferidos": [
+      {
+        "path": ".firebaserc",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1dd45666eeb706b0c4cce4d8f1cc44b81d3a589b",
+        "size": 52,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1dd45666eeb706b0c4cce4d8f1cc44b81d3a589b"
+      },
+      {
+        "path": ".github/workflows/android.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e9a16a498eafb0b85b2de31fe6db36fab5cc300c",
+        "size": 3946,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e9a16a498eafb0b85b2de31fe6db36fab5cc300c"
+      },
+      {
+        "path": ".github/workflows/site.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dc0366b6f98e3665f009d560ad02876e75175c94",
+        "size": 2291,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/dc0366b6f98e3665f009d560ad02876e75175c94"
+      },
+      {
+        "path": ".github/workflows/testes.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fe9eef7f27e26d4698cc44df994ed925495a2b9d",
+        "size": 7496,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/fe9eef7f27e26d4698cc44df994ed925495a2b9d"
+      },
+      {
+        "path": ".github/workflows/videos.yml",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "96f055b51b54db6c2bd2841d54497a512cf15b0a",
+        "size": 539,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/96f055b51b54db6c2bd2841d54497a512cf15b0a"
+      },
+      {
+        "path": "curso/app.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "acf76035224d6c5d0607ac3a1f9afc5c8e7adf89",
+        "size": 241652,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/acf76035224d6c5d0607ac3a1f9afc5c8e7adf89"
+      },
+      {
+        "path": "curso/app/01-base.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "565e32e9c4b0f5a9d22cbb57f725cdd86cc913a5",
+        "size": 12136,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/565e32e9c4b0f5a9d22cbb57f725cdd86cc913a5"
+      },
+      {
+        "path": "curso/app/02-certificados.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e379dcd84c4a3a26cf30f3bfd3852c0d1029f20b",
+        "size": 6012,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e379dcd84c4a3a26cf30f3bfd3852c0d1029f20b"
+      },
+      {
+        "path": "curso/app/02-configuracao.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c66beaa4504b9105c35d0869bce074c0ad987f64",
+        "size": 177,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c66beaa4504b9105c35d0869bce074c0ad987f64"
+      },
+      {
+        "path": "curso/app/02-persistencia-local.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b4f1107f8ea60c4cc799091f6104a98a8e355007",
+        "size": 2889,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b4f1107f8ea60c4cc799091f6104a98a8e355007"
+      },
+      {
+        "path": "curso/app/02-progresso-nuvem.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "805aada4e7628fe65fc9cde75d52a9842de86b41",
+        "size": 9332,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/805aada4e7628fe65fc9cde75d52a9842de86b41"
+      },
+      {
+        "path": "curso/app/02-z-firebase.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "80765d249ad19c69e3435ec8db517501c41a501a",
+        "size": 8606,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/80765d249ad19c69e3435ec8db517501c41a501a"
+      },
+      {
+        "path": "curso/app/03-plano.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6f2f3530bf9676fca5365606b4d5e2f41e28597f",
+        "size": 18722,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6f2f3530bf9676fca5365606b4d5e2f41e28597f"
+      },
+      {
+        "path": "curso/app/04-telas.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c31e6c2fb20abcbb255e8169341481c118cb8e09",
+        "size": 35136,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c31e6c2fb20abcbb255e8169341481c118cb8e09"
+      },
+      {
+        "path": "curso/app/05-aula-apostila.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6ee5900348ff897eabcda0336b414d5689c2659e",
+        "size": 34509,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6ee5900348ff897eabcda0336b414d5689c2659e"
+      },
+      {
+        "path": "curso/app/06-simulados-render.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8341d571c4ca49726cd3650bca80f7bc5fe266e5",
+        "size": 17482,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8341d571c4ca49726cd3650bca80f7bc5fe266e5"
+      },
+      {
+        "path": "curso/app/07-eventos.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "83e3634e3ff325b9cd4dbe7c466657b7bc618df5",
+        "size": 13482,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/83e3634e3ff325b9cd4dbe7c466657b7bc618df5"
+      },
+      {
+        "path": "curso/app/08-uniao-nuvem.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "06b18eced3822157e60b6636eb80e7c4065833c6",
+        "size": 16058,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/06b18eced3822157e60b6636eb80e7c4065833c6"
+      },
+      {
+        "path": "curso/app/09-contas.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2a63e2eea224cecdb9a47259514540cf924f8937",
+        "size": 18017,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2a63e2eea224cecdb9a47259514540cf924f8937"
+      },
+      {
+        "path": "curso/app/09-exclusao-firebase.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f800cbb846ea78b88b6fc40f373c6dbeb0886e48",
+        "size": 789,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f800cbb846ea78b88b6fc40f373c6dbeb0886e48"
+      },
+      {
+        "path": "curso/app/10-nuvem-claude.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7d681ec946dec0ce71a3c7d43f6407841b61b0df",
+        "size": 1038,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7d681ec946dec0ce71a3c7d43f6407841b61b0df"
+      },
+      {
+        "path": "curso/app/11-formatos-legados.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bd49e91d1d0d3946b06b9181609c4bcd18ff25c9",
+        "size": 772,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bd49e91d1d0d3946b06b9181609c4bcd18ff25c9"
+      },
+      {
+        "path": "curso/app/12-importacao-migracao.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b140410152a4921ba57594a59153101bbd24f3f3",
+        "size": 2386,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b140410152a4921ba57594a59153101bbd24f3f3"
+      },
+      {
+        "path": "curso/app/13-falhas-nuvem.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c9ab3862bb3a43a2ee2a50d5e986417a62df932a",
+        "size": 4189,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c9ab3862bb3a43a2ee2a50d5e986417a62df932a"
+      },
+      {
+        "path": "curso/app/14-abas.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3a27f169d08c9c96bf1b3f7ed69f3c5d5a6c09d7",
+        "size": 12046,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3a27f169d08c9c96bf1b3f7ed69f3c5d5a6c09d7"
+      },
+      {
+        "path": "curso/app/15-diarios-pendentes.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "63d4712a4b9959a55898703b1462c4c93a32ea05",
+        "size": 13788,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/63d4712a4b9959a55898703b1462c4c93a32ea05"
+      },
+      {
+        "path": "curso/app/16-diario-duravel.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "60c0911edac2e9aa71df6efde26f656e363f62e2",
+        "size": 10985,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/60c0911edac2e9aa71df6efde26f656e363f62e2"
+      },
+      {
+        "path": "curso/app/17-estado-persistencia.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2780d5e16dfdeca49359dbea6d84bd5e27286b7f",
+        "size": 3023,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2780d5e16dfdeca49359dbea6d84bd5e27286b7f"
+      },
+      {
+        "path": "curso/dados/base.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "776df3db67a52580b2c053dd079d4dbf5c0d8df8",
+        "size": 2282,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/776df3db67a52580b2c053dd079d4dbf5c0d8df8"
+      },
+      {
+        "path": "curso/dados/fis1.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0373d93af95ea0d1f222ee39eddfb9e16dd275f0",
+        "size": 28002,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/0373d93af95ea0d1f222ee39eddfb9e16dd275f0"
+      },
+      {
+        "path": "curso/dados/fis2.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "76996c22d060baf7919fcd70bde7519dac9eb285",
+        "size": 22853,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/76996c22d060baf7919fcd70bde7519dac9eb285"
+      },
+      {
+        "path": "curso/dados/fis3.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c1366a2af9c0411e6ead969f879b6636160197d1",
+        "size": 22542,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c1366a2af9c0411e6ead969f879b6636160197d1"
+      },
+      {
+        "path": "curso/dados/fis4.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2e24b5eddb8e9c77b8f537bb36f95845864d1a5f",
+        "size": 28487,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2e24b5eddb8e9c77b8f537bb36f95845864d1a5f"
+      },
+      {
+        "path": "curso/dados/fis5.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c579508b99e918dda4738643c3d336275aa16e9e",
+        "size": 17495,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c579508b99e918dda4738643c3d336275aa16e9e"
+      },
+      {
+        "path": "curso/dados/ing1.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "595fce9cc784172c4b308683b4abcb02244cce38",
+        "size": 27626,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/595fce9cc784172c4b308683b4abcb02244cce38"
+      },
+      {
+        "path": "curso/dados/ing2.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b573f29cb55bc564f6a7748698163d6228a5aa12",
+        "size": 24642,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b573f29cb55bc564f6a7748698163d6228a5aa12"
+      },
+      {
+        "path": "curso/dados/ing3.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a3ab5b0961a60d0521cc1b1c965464103ae329e2",
+        "size": 35852,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a3ab5b0961a60d0521cc1b1c965464103ae329e2"
+      },
+      {
+        "path": "curso/dados/ing4.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3ed7008ff95ad0d407adaf8a9e193c677afc79d6",
+        "size": 6820,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3ed7008ff95ad0d407adaf8a9e193c677afc79d6"
+      },
+      {
+        "path": "curso/dados/mat1.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "800ea3118ebab042578f6f55ec30a80faf3962cb",
+        "size": 23828,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/800ea3118ebab042578f6f55ec30a80faf3962cb"
+      },
+      {
+        "path": "curso/dados/mat2.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "453051d8832da9414b0716c9c132bcc0ff3ce18d",
+        "size": 22187,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/453051d8832da9414b0716c9c132bcc0ff3ce18d"
+      },
+      {
+        "path": "curso/dados/mat3.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "96b4286eaae72927b2d5f97fc6bf6b385e930d64",
+        "size": 23667,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/96b4286eaae72927b2d5f97fc6bf6b385e930d64"
+      },
+      {
+        "path": "curso/dados/mat4.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "43d614a0aa3566ec0675b2c955bc13466b042f2b",
+        "size": 22016,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/43d614a0aa3566ec0675b2c955bc13466b042f2b"
+      },
+      {
+        "path": "curso/dados/por1.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1faacc7a7ac85d26786a3b1c8e986e1b088eb217",
+        "size": 42747,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1faacc7a7ac85d26786a3b1c8e986e1b088eb217"
+      },
+      {
+        "path": "curso/dados/por2.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a4d503cfcd892f83628c9f7110c21d9bf57bb18e",
+        "size": 43169,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a4d503cfcd892f83628c9f7110c21d9bf57bb18e"
+      },
+      {
+        "path": "curso/dados/por3.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f623689e34b294e5934a3d297f16c65f6ada86c4",
+        "size": 35173,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f623689e34b294e5934a3d297f16c65f6ada86c4"
+      },
+      {
+        "path": "curso/dados/por4.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "109d851ade481a9f31e9f4836315193670905563",
+        "size": 10186,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/109d851ade481a9f31e9f4836315193670905563"
+      },
+      {
+        "path": "curso/dados/provas.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6c025e48b079c49f530f4ff56bdb2396d83208f1",
+        "size": 111276,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6c025e48b079c49f530f4ff56bdb2396d83208f1"
+      },
+      {
+        "path": "curso/dados/videoaulas.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5b7473a66aee7cb18d53e47960c29bdec8bf1dc8",
+        "size": 18766,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5b7473a66aee7cb18d53e47960c29bdec8bf1dc8"
+      },
+      {
+        "path": "curso/dados/videos.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c5510546e4613dce54a740e870ff957529153d8e",
+        "size": 3669,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c5510546e4613dce54a740e870ff957529153d8e"
+      },
+      {
+        "path": "curso/index.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dca0104b3e8fd1bd339517cc894ff8aac4fe94c7",
+        "size": 34052,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/dca0104b3e8fd1bd339517cc894ff8aac4fe94c7"
+      },
+      {
+        "path": "curso/marca/inphax.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b1410d64da83634645a3bc01e9589fd06c73121e",
+        "size": 7182,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b1410d64da83634645a3bc01e9589fd06c73121e"
+      },
+      {
+        "path": "curso/marca/x.svg",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0452d5af10da0c23a53809927a2fb92d066cdc96",
+        "size": 245,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/0452d5af10da0c23a53809927a2fb92d066cdc96"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q01.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8798be4a5c4c28779bb72d8e14582b1f05fbef67",
+        "size": 36606,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8798be4a5c4c28779bb72d8e14582b1f05fbef67"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q02.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c63b1857ce297fae09411fccd4a61f21a22db0b4",
+        "size": 23074,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c63b1857ce297fae09411fccd4a61f21a22db0b4"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q03.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8128f4f0edacf26b970647281bbf3da81c72e1e1",
+        "size": 44710,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8128f4f0edacf26b970647281bbf3da81c72e1e1"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q04.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "aaf0d4ed3227dd5e5ce92ab8d2fc142c5aaa2ac3",
+        "size": 96274,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/aaf0d4ed3227dd5e5ce92ab8d2fc142c5aaa2ac3"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q05.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1491924aa3e1abc94712d5a9bf999bde7a8ba112",
+        "size": 42642,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1491924aa3e1abc94712d5a9bf999bde7a8ba112"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q06.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5c88876b7fba43b09ba62f74f7b180005aaca537",
+        "size": 63076,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5c88876b7fba43b09ba62f74f7b180005aaca537"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q07.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5a5b35d435c88f2ffeae29d74d7c8498afdb4135",
+        "size": 48218,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5a5b35d435c88f2ffeae29d74d7c8498afdb4135"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q08.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf93f3faf262ad3c35db0c3be092e43ef7bdc74e",
+        "size": 62310,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bf93f3faf262ad3c35db0c3be092e43ef7bdc74e"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q09.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cc202c9787500a25fa0b758187943290d6411357",
+        "size": 48664,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/cc202c9787500a25fa0b758187943290d6411357"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q10.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "10bf2f73a4edd05b718c97b5fc0ccaf311599686",
+        "size": 42154,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/10bf2f73a4edd05b718c97b5fc0ccaf311599686"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q11.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "de77004eda81124cfdd8b65d93eaefc29670932a",
+        "size": 49174,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/de77004eda81124cfdd8b65d93eaefc29670932a"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q12.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c6d5388c28fe4c288f12105dbd3b8b239577113c",
+        "size": 86622,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c6d5388c28fe4c288f12105dbd3b8b239577113c"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q13.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b7448db1e9de16cc3681ebc5f9095d61e1f75a59",
+        "size": 69380,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b7448db1e9de16cc3681ebc5f9095d61e1f75a59"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q14.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "24c3e38f4b273bde4a7cc3dfbbe0f2888a9f6e5b",
+        "size": 40032,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/24c3e38f4b273bde4a7cc3dfbbe0f2888a9f6e5b"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q15.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d30a4b40adbd84ac80149ea47cf62b66df11cca8",
+        "size": 141398,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/d30a4b40adbd84ac80149ea47cf62b66df11cca8"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q16.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "40d4fa606aa1ed79f10c7ecb2a98ab9cceebf0e7",
+        "size": 85118,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/40d4fa606aa1ed79f10c7ecb2a98ab9cceebf0e7"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q17.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4d16da220ffe4bbf239f9f534dcdbd89346a2a1d",
+        "size": 60254,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4d16da220ffe4bbf239f9f534dcdbd89346a2a1d"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q18.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b4a14487d72dbbc5754999fdfe8a87a7691e325",
+        "size": 53312,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/9b4a14487d72dbbc5754999fdfe8a87a7691e325"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q19.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6c24a81039937d41dc769ef307a64b2bf4d936b4",
+        "size": 100182,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6c24a81039937d41dc769ef307a64b2bf4d936b4"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q20.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "15f407b837fc32f60cf4b5f26957545a7cf997d3",
+        "size": 44762,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/15f407b837fc32f60cf4b5f26957545a7cf997d3"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q21.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f571b161a76ea0572953b9be6646d58726f3fadb",
+        "size": 72354,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f571b161a76ea0572953b9be6646d58726f3fadb"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q22.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e8f15b055c3635c87d89ff9459ef2e53928023d5",
+        "size": 71280,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e8f15b055c3635c87d89ff9459ef2e53928023d5"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q23.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2e0f1de9eaddddad78474b2b3529686ad43e7c3a",
+        "size": 33488,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2e0f1de9eaddddad78474b2b3529686ad43e7c3a"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q24.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6f7eef6f16f140e21a903b65764bc18568e20ade",
+        "size": 79096,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6f7eef6f16f140e21a903b65764bc18568e20ade"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q25.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3fef40be44af0f0d30e6d02766e5316a181b8b50",
+        "size": 9832,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3fef40be44af0f0d30e6d02766e5316a181b8b50"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q26.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0953aee844af9b86e456e5b46f2dc6f7c56d286b",
+        "size": 15608,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/0953aee844af9b86e456e5b46f2dc6f7c56d286b"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q27.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "86ecdbf995e36fda7a031c41a180e6c07d855b50",
+        "size": 14558,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/86ecdbf995e36fda7a031c41a180e6c07d855b50"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q28.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b2121ba197f4415add33a8a171df828acb1aaae6",
+        "size": 10520,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b2121ba197f4415add33a8a171df828acb1aaae6"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q29.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "445e1697a77288f9fda6cd0fde4533eb8b97b3ab",
+        "size": 17230,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/445e1697a77288f9fda6cd0fde4533eb8b97b3ab"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q30.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "70fdc1c5a720b5c13f64a45ee957bc0e393c87e5",
+        "size": 20038,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/70fdc1c5a720b5c13f64a45ee957bc0e393c87e5"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q31.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "83eecc6ed0bf35db0fd0596c8b9214c4b8d31bb2",
+        "size": 15116,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/83eecc6ed0bf35db0fd0596c8b9214c4b8d31bb2"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q32.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "44943427b353391306836de1e4541502d732bb90",
+        "size": 10714,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/44943427b353391306836de1e4541502d732bb90"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q33.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2ef1afa571bf045cff1e24d09be48e7bb5adf8e4",
+        "size": 8044,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2ef1afa571bf045cff1e24d09be48e7bb5adf8e4"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q34.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c3c78f66489cc6f990bbceb3afcf46e55315d199",
+        "size": 19378,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c3c78f66489cc6f990bbceb3afcf46e55315d199"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q35.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e5db64b17c210110d3f7df807aac609af8cae0d9",
+        "size": 9952,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e5db64b17c210110d3f7df807aac609af8cae0d9"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q36.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "944c4c8e9cb09304871e06f326c6a29b643ed749",
+        "size": 28444,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/944c4c8e9cb09304871e06f326c6a29b643ed749"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q37.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "92c2cdbb2c0d8624e962e18ff647a6636fbc16f6",
+        "size": 18456,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/92c2cdbb2c0d8624e962e18ff647a6636fbc16f6"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q38.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d6317cbefece242b15d5ef3e16f079341e459738",
+        "size": 13380,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/d6317cbefece242b15d5ef3e16f079341e459738"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q39.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ab200cafda54c6f8f18dda11e2e1df81bed3897e",
+        "size": 22394,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ab200cafda54c6f8f18dda11e2e1df81bed3897e"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q40.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "775d1bcee2746d9756db82ad39b6d5f1fc67711b",
+        "size": 5670,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/775d1bcee2746d9756db82ad39b6d5f1fc67711b"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q41.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2cf7cd068367b6e4af5d79a2d3360b3d5beeb88c",
+        "size": 8800,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2cf7cd068367b6e4af5d79a2d3360b3d5beeb88c"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q42.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a8db922ca2b4b9eae4853163ad740af1fea7a44a",
+        "size": 47020,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a8db922ca2b4b9eae4853163ad740af1fea7a44a"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q43.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6493e3e8f3e787887d6b3e252980e316efeada29",
+        "size": 12822,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6493e3e8f3e787887d6b3e252980e316efeada29"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q44.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "56ca0d082f9deb8c43f86072b4e5c2037fd3821a",
+        "size": 9854,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/56ca0d082f9deb8c43f86072b4e5c2037fd3821a"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q45.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e84fac9e578de0ab8db55f9ca0bd28a91177a3d7",
+        "size": 13932,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e84fac9e578de0ab8db55f9ca0bd28a91177a3d7"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q46.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "59873f39b41313c58e07e0a113fa3abdc97af567",
+        "size": 20074,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/59873f39b41313c58e07e0a113fa3abdc97af567"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q47.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8e5fa189b667c7204b2e308673a19254ece508f2",
+        "size": 39360,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8e5fa189b667c7204b2e308673a19254ece508f2"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q48.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "33502a783d22339ffb46b2d1c7297bda34350989",
+        "size": 19324,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/33502a783d22339ffb46b2d1c7297bda34350989"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q49.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7bda5fc347b9fb90105a674ec3989f50a8b41e73",
+        "size": 38898,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7bda5fc347b9fb90105a674ec3989f50a8b41e73"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q50.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "27e91d7d66322bc11944b81ae96168f416ad2044",
+        "size": 42594,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/27e91d7d66322bc11944b81ae96168f416ad2044"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q51.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c936cf8c2c8e834d674f731288113b3fb2883c31",
+        "size": 80400,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c936cf8c2c8e834d674f731288113b3fb2883c31"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q52.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ac0d6bf1aab149ad9174d108999014533787e3a7",
+        "size": 79776,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ac0d6bf1aab149ad9174d108999014533787e3a7"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q53.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8931c1d561a341f9b61e09620390bd9ae4df10b1",
+        "size": 69994,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8931c1d561a341f9b61e09620390bd9ae4df10b1"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q54.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "388fa33764b8436dc5467b70563e0f8fb1a62417",
+        "size": 65128,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/388fa33764b8436dc5467b70563e0f8fb1a62417"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q55.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5932b9539077920f242efb48b9ff1020ff70c1c7",
+        "size": 58422,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5932b9539077920f242efb48b9ff1020ff70c1c7"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q56.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "37765932e05e7ddf7f1a58845a7fb72be8553347",
+        "size": 47874,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/37765932e05e7ddf7f1a58845a7fb72be8553347"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q57.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0eac029d636a22116ed9f1df842815a1e823efd5",
+        "size": 73564,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/0eac029d636a22116ed9f1df842815a1e823efd5"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q58.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e9911514814d0977fce23968a3af0b932519f95a",
+        "size": 81260,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e9911514814d0977fce23968a3af0b932519f95a"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q59.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e399cab1ea77d80396ad8a0ea28071048800d5ec",
+        "size": 80120,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e399cab1ea77d80396ad8a0ea28071048800d5ec"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q60.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "35a0d7001e0fcaca575900ba8038306200d592db",
+        "size": 61600,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/35a0d7001e0fcaca575900ba8038306200d592db"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q61.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "43f1407fddf0ccd7542040b26c90aebf7ec0d3bc",
+        "size": 50750,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/43f1407fddf0ccd7542040b26c90aebf7ec0d3bc"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q62.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "34796cdbb7f525f2b379634cf884773280ea3822",
+        "size": 42710,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/34796cdbb7f525f2b379634cf884773280ea3822"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q63.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "52579c4a1eadb1a564545dab1dc0eb0f019cecee",
+        "size": 43304,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/52579c4a1eadb1a564545dab1dc0eb0f019cecee"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q64.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4d3cf80f110df50dd31999cdcfadcff0eb2b504d",
+        "size": 44752,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4d3cf80f110df50dd31999cdcfadcff0eb2b504d"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q65.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "703f9eeaf8a5f807b0bd430ac66760632705758a",
+        "size": 44218,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/703f9eeaf8a5f807b0bd430ac66760632705758a"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q66.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "17363008e108e7e14089846c56a9feace388f4f6",
+        "size": 54260,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/17363008e108e7e14089846c56a9feace388f4f6"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q67.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "407791324791dd915138653217b282f4642b571b",
+        "size": 83222,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/407791324791dd915138653217b282f4642b571b"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q68.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9ce19daf6b29d2c9d181c1f8d96b66152b76554a",
+        "size": 41728,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/9ce19daf6b29d2c9d181c1f8d96b66152b76554a"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q69.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "27b022da8160bf96443a698b6bf87974351fe530",
+        "size": 25384,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/27b022da8160bf96443a698b6bf87974351fe530"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q70.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3b412a15b450eb7a8f21e6d35ee07d77e5479e9e",
+        "size": 67580,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3b412a15b450eb7a8f21e6d35ee07d77e5479e9e"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q71.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a833ace2b690917bfac9516cf87c74d6b7cf827e",
+        "size": 71654,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a833ace2b690917bfac9516cf87c74d6b7cf827e"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q72.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4e0470a9f6bbafc7006679d0a345dd4aea273993",
+        "size": 85364,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4e0470a9f6bbafc7006679d0a345dd4aea273993"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q73.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f0e8a0b2dcd3d60e8527dc572d2db6fc5d8ebb14",
+        "size": 11432,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f0e8a0b2dcd3d60e8527dc572d2db6fc5d8ebb14"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q74.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e288ce1203adff81e6e58eb57100b82c595effc6",
+        "size": 24820,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e288ce1203adff81e6e58eb57100b82c595effc6"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q75.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0666d8d62f49e6c25ac31cdee83769529100fd88",
+        "size": 19554,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/0666d8d62f49e6c25ac31cdee83769529100fd88"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q76.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bd659debacfddb9ce3b4c8cb2d96de17de865238",
+        "size": 13868,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bd659debacfddb9ce3b4c8cb2d96de17de865238"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q77.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5a8c5a1810f905db4baa27f906f5537c938474eb",
+        "size": 23788,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5a8c5a1810f905db4baa27f906f5537c938474eb"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q78.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f89aef1e38e73a94ce1c019d8decc72ca2c3b3c7",
+        "size": 27276,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f89aef1e38e73a94ce1c019d8decc72ca2c3b3c7"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q79.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "90d3d50f24b0f1d72f3818dfe13246375200b1bb",
+        "size": 23662,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/90d3d50f24b0f1d72f3818dfe13246375200b1bb"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q80.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1e3ead4896de4deae9db182067c13209de9ec5ed",
+        "size": 31888,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1e3ead4896de4deae9db182067c13209de9ec5ed"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q81.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "83aa308bd7f2c4e107c5c188e95513120f2edbea",
+        "size": 10442,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/83aa308bd7f2c4e107c5c188e95513120f2edbea"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q82.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8fe731b61212204aeb5f4e666302ffe22964ff9a",
+        "size": 57354,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8fe731b61212204aeb5f4e666302ffe22964ff9a"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q83.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f5b78fb90de7884aac65d66d31a6b0e2f26c5053",
+        "size": 70896,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f5b78fb90de7884aac65d66d31a6b0e2f26c5053"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q84.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7b4a6dd24e02b3ca8cb6ac82ff6cee542ceb4f3a",
+        "size": 38078,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7b4a6dd24e02b3ca8cb6ac82ff6cee542ceb4f3a"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q85.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1ebc08d1765472f1ad6b4bd5a5ff33c206f27fa8",
+        "size": 9800,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1ebc08d1765472f1ad6b4bd5a5ff33c206f27fa8"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q86.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8703ff03e5bbd0bdaec28429d508148a6efe2f8c",
+        "size": 50870,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8703ff03e5bbd0bdaec28429d508148a6efe2f8c"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q87.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6dad5e54aaf4794552f4caa4566e21327aca625e",
+        "size": 35766,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6dad5e54aaf4794552f4caa4566e21327aca625e"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q88.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4448aafb4f1162f04571e62d69c726318d2a60d1",
+        "size": 42308,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4448aafb4f1162f04571e62d69c726318d2a60d1"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q89.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2a135266223612a184d21b3e9d883601eeca08e6",
+        "size": 9718,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2a135266223612a184d21b3e9d883601eeca08e6"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q90.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b858780c419c6da03554191f183aa4ab7ea8d2cc",
+        "size": 22114,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b858780c419c6da03554191f183aa4ab7ea8d2cc"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q91.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c535b03b482aeb29c118bb278ba0402fe4e7e7ac",
+        "size": 31282,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c535b03b482aeb29c118bb278ba0402fe4e7e7ac"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q92.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3aea8b3028d055c270bfff6c27d07b6d267991f8",
+        "size": 46714,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3aea8b3028d055c270bfff6c27d07b6d267991f8"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q93.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "74bbea727980f75c212fba86a6eb522dedf13bef",
+        "size": 22302,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/74bbea727980f75c212fba86a6eb522dedf13bef"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q94.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "47dc3c99785dcbabbe43607760710d97931350cf",
+        "size": 15612,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/47dc3c99785dcbabbe43607760710d97931350cf"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q95.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6e2a7f8e4cb36a55fe4a7b5f111de0ae7e8b1050",
+        "size": 79672,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6e2a7f8e4cb36a55fe4a7b5f111de0ae7e8b1050"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/q96.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c383c45dbeb6c73f17cfe928e218ab6815df6ef7",
+        "size": 37980,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c383c45dbeb6c73f17cfe928e218ab6815df6ef7"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/t01.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ac5a10e259f3e57662d7fb18484982da16d73db7",
+        "size": 86270,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ac5a10e259f3e57662d7fb18484982da16d73db7"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/t02.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ecd2c3170836f8b6db8a860e4973419d85640854",
+        "size": 37936,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ecd2c3170836f8b6db8a860e4973419d85640854"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/t03.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e7ef2089a4024b44e83e2b2aae513f8715356f3c",
+        "size": 74862,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e7ef2089a4024b44e83e2b2aae513f8715356f3c"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/t04.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "904a4c522a94b43a853c139f6449b26a592240eb",
+        "size": 140470,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/904a4c522a94b43a853c139f6449b26a592240eb"
+      },
+      {
+        "path": "curso/provas/cfs1_2025/t05.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f56bd5112a7afff57cdce4211c4cdd98070f9b43",
+        "size": 132716,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f56bd5112a7afff57cdce4211c4cdd98070f9b43"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q01.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2cab75f4b4529fe83a917afa8edacd6ebbec9d7d",
+        "size": 66808,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2cab75f4b4529fe83a917afa8edacd6ebbec9d7d"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q02.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "200f7de55b91d5505ff68c960b4890c807ef6ce4",
+        "size": 24364,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/200f7de55b91d5505ff68c960b4890c807ef6ce4"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q03.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a98f1b29bb76565bbe9284dda6a659c4c3f5ce6e",
+        "size": 55262,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a98f1b29bb76565bbe9284dda6a659c4c3f5ce6e"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q04.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4b8395cf49ce1dce37a34512b422b34ec98ba27f",
+        "size": 64020,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4b8395cf49ce1dce37a34512b422b34ec98ba27f"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q05.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "828c385882fd84549b935b675a064514bd97c9ef",
+        "size": 35984,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/828c385882fd84549b935b675a064514bd97c9ef"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q06.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ba5e545585761bc0702322a830bf720ed91ffe91",
+        "size": 34668,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ba5e545585761bc0702322a830bf720ed91ffe91"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q07.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5624d2c151a7ef0d69e2a6de0932df064f87abea",
+        "size": 43136,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5624d2c151a7ef0d69e2a6de0932df064f87abea"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q08.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3b1d5fb9c50b621cf722ee0efd6af5389ab4ab2c",
+        "size": 65420,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3b1d5fb9c50b621cf722ee0efd6af5389ab4ab2c"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q09.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "58200cf384a6a62e052726c7f1386ff913206897",
+        "size": 52180,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/58200cf384a6a62e052726c7f1386ff913206897"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q10.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4cf688147ccd27b9ea97d61a2124338eb7116164",
+        "size": 66500,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4cf688147ccd27b9ea97d61a2124338eb7116164"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q11.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1d6b51b3088511adb56c1cd099f97d52009d0de0",
+        "size": 32198,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1d6b51b3088511adb56c1cd099f97d52009d0de0"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q12.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "33e93b49abb5bff88bca4f32e6a5d6a9580f02b5",
+        "size": 31224,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/33e93b49abb5bff88bca4f32e6a5d6a9580f02b5"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q13.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0757fd44388d4bfb1a94dd2feb1a6ff92a144b93",
+        "size": 67478,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/0757fd44388d4bfb1a94dd2feb1a6ff92a144b93"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q14.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dd33d5a8fb9befad511b5e971cb98b194e4da686",
+        "size": 32206,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/dd33d5a8fb9befad511b5e971cb98b194e4da686"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q15.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "df7f7e4eb8562eb1c59934f0ddb31e1286ea5f5b",
+        "size": 29000,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/df7f7e4eb8562eb1c59934f0ddb31e1286ea5f5b"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q16.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c795fe7d88ce8f43e0ada4db45bc10e6f0d175b2",
+        "size": 23776,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c795fe7d88ce8f43e0ada4db45bc10e6f0d175b2"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q17.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c83671752b948abd4894621157681d2657702207",
+        "size": 33508,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c83671752b948abd4894621157681d2657702207"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q18.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "87de5e3b149660fcc81420868234b7a94ec949bb",
+        "size": 46088,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/87de5e3b149660fcc81420868234b7a94ec949bb"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q19.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "100cab6ff816b7ee43fb72e78aa18c0ba02cbe99",
+        "size": 18098,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/100cab6ff816b7ee43fb72e78aa18c0ba02cbe99"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q20.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d99ed20a90ae400db817be147e1a088bd8fb2572",
+        "size": 34426,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/d99ed20a90ae400db817be147e1a088bd8fb2572"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q21.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c67fb08d9c1d3015ceacc5e190ac53b1f94c0562",
+        "size": 38450,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c67fb08d9c1d3015ceacc5e190ac53b1f94c0562"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q22.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fd86be60cd2c88c0dd3afb897eba1d100c404af2",
+        "size": 77538,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/fd86be60cd2c88c0dd3afb897eba1d100c404af2"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q23.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf8b14dd1f8d6340cf1b8bb600531805e5d6eef5",
+        "size": 44610,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bf8b14dd1f8d6340cf1b8bb600531805e5d6eef5"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q24.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b6a8c44adccd210dfe29f375638b314b273799c",
+        "size": 50930,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/9b6a8c44adccd210dfe29f375638b314b273799c"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q25.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6302f853c5e8237655854bb2c12610459e0a48b2",
+        "size": 18808,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6302f853c5e8237655854bb2c12610459e0a48b2"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q26.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4b801dabf4ab8015fe018e8d3d8ad1c49c8fd976",
+        "size": 20538,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4b801dabf4ab8015fe018e8d3d8ad1c49c8fd976"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q27.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f8cf528f6f0e05f72c95027ef5e0dfb2daaa3cc8",
+        "size": 47160,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f8cf528f6f0e05f72c95027ef5e0dfb2daaa3cc8"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q28.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ec6cfe024242256b2764b164bc84b717e7d59f7a",
+        "size": 13820,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ec6cfe024242256b2764b164bc84b717e7d59f7a"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q29.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c294dc00df5b0563739aa85134cf76f398dfcdde",
+        "size": 16270,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c294dc00df5b0563739aa85134cf76f398dfcdde"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q30.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ae6b1edb7c7f9085cb204469a8bea528e137dd11",
+        "size": 23744,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ae6b1edb7c7f9085cb204469a8bea528e137dd11"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q31.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7dd9fdb2158242757f577f4f2d0e31b3c0b1f90e",
+        "size": 27166,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7dd9fdb2158242757f577f4f2d0e31b3c0b1f90e"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q32.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "da4977465be552c36a47b98b0a29eeb687c32dc4",
+        "size": 22752,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/da4977465be552c36a47b98b0a29eeb687c32dc4"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q33.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "19c545dd62f501ba8be2d591a6e4397e45a169b0",
+        "size": 13526,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/19c545dd62f501ba8be2d591a6e4397e45a169b0"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q34.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0c1eca9c231abcdece73129d0c3b91259ec934c8",
+        "size": 17264,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/0c1eca9c231abcdece73129d0c3b91259ec934c8"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q35.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "002febb503fec69f97b5384379200d2ddcc31184",
+        "size": 9710,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/002febb503fec69f97b5384379200d2ddcc31184"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q36.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf143b5e3b89a30da2283b8f7c2c6a1614225815",
+        "size": 15286,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bf143b5e3b89a30da2283b8f7c2c6a1614225815"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q37.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d44337c66f92d95530c7251aeddd5d1c923eac35",
+        "size": 24776,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/d44337c66f92d95530c7251aeddd5d1c923eac35"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q38.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "edfe9e7040a292cf668ff6835df578bb3b6b1f97",
+        "size": 16590,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/edfe9e7040a292cf668ff6835df578bb3b6b1f97"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q39.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7047b7985de446c0ba74879a05689c27c66af569",
+        "size": 13924,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7047b7985de446c0ba74879a05689c27c66af569"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q40.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2c1a81ea32703a7c23eca8e95360e8cd00484483",
+        "size": 16132,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2c1a81ea32703a7c23eca8e95360e8cd00484483"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q41.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9e55baa39d66473d90825b98065c0573738b15ce",
+        "size": 9672,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/9e55baa39d66473d90825b98065c0573738b15ce"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q42.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3591582106c4e5a4ac671b1729ada215f46adfe3",
+        "size": 9982,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3591582106c4e5a4ac671b1729ada215f46adfe3"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q43.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c13cdfc9ebc376cae529e6efaa6be5b3d982ccc1",
+        "size": 7546,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c13cdfc9ebc376cae529e6efaa6be5b3d982ccc1"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q44.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "490b3c961fe6258d47d4bfa3b2a64eef0fc29a31",
+        "size": 14644,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/490b3c961fe6258d47d4bfa3b2a64eef0fc29a31"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q45.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c30d3b55d0c7c7ed37514935fcc50f3d0e264ea3",
+        "size": 22884,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c30d3b55d0c7c7ed37514935fcc50f3d0e264ea3"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q46.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "169722650e3eb3d7729854ad335b53010a688edf",
+        "size": 22276,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/169722650e3eb3d7729854ad335b53010a688edf"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q47.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "734fb288a540eb2404f286498a3b59afedfbdc64",
+        "size": 33092,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/734fb288a540eb2404f286498a3b59afedfbdc64"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q48.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "42f333c9943f90af0147a3a90fa66350057e4f26",
+        "size": 9578,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/42f333c9943f90af0147a3a90fa66350057e4f26"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q49.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6ce31f22cb007163943931ae183902e26be96d00",
+        "size": 27448,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6ce31f22cb007163943931ae183902e26be96d00"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q50.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a9a50490ef63476d21f58359954d81933c2c631b",
+        "size": 91136,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a9a50490ef63476d21f58359954d81933c2c631b"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q51.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8885ea167bb09e8b29035f77382928dbd3b117f4",
+        "size": 47436,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8885ea167bb09e8b29035f77382928dbd3b117f4"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q52.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "987ec7014fd16e25cbab697acadf12612a56d7d1",
+        "size": 41298,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/987ec7014fd16e25cbab697acadf12612a56d7d1"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q53.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "32f11c2a87ba3fc53aeb88c3a07fb99206ae4ed3",
+        "size": 69198,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/32f11c2a87ba3fc53aeb88c3a07fb99206ae4ed3"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q54.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "71b7b718612b2a07643951e0a98a8959e3d46aed",
+        "size": 56186,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/71b7b718612b2a07643951e0a98a8959e3d46aed"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q55.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f611140a1b196007e83d5a8c42aa99744559656a",
+        "size": 73646,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f611140a1b196007e83d5a8c42aa99744559656a"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q56.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "69b5c8365ce8a4a3b524b69c1fa65ef2c99f0fd4",
+        "size": 50326,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/69b5c8365ce8a4a3b524b69c1fa65ef2c99f0fd4"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q57.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7e91921b959c326c261d9da05f6107a62f582842",
+        "size": 41418,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7e91921b959c326c261d9da05f6107a62f582842"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q58.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "21be174c5112431020fc57e185d22c35c1b25000",
+        "size": 42552,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/21be174c5112431020fc57e185d22c35c1b25000"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q59.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bfcaeaf03f923b6db99c5d3936df5435a20fb05c",
+        "size": 76654,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bfcaeaf03f923b6db99c5d3936df5435a20fb05c"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q60.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "dcaf8e46c44308a71ab7a45e852451f153bad565",
+        "size": 62570,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/dcaf8e46c44308a71ab7a45e852451f153bad565"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q61.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2296944543d3691a1812444360edde7672226c89",
+        "size": 36356,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2296944543d3691a1812444360edde7672226c89"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q62.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b9732683d2fad254b24ad9446347ede914253e5f",
+        "size": 115022,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b9732683d2fad254b24ad9446347ede914253e5f"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q63.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bcd8a16c67b093107d2f122060e3634b0326d6ab",
+        "size": 70548,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bcd8a16c67b093107d2f122060e3634b0326d6ab"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q64.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ccde7340f3e6f66ff8a80668a124a60fc568230b",
+        "size": 63500,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ccde7340f3e6f66ff8a80668a124a60fc568230b"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q65.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f9358315b083d42a66b74377df6f0f75eb648afe",
+        "size": 27668,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f9358315b083d42a66b74377df6f0f75eb648afe"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q66.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d9d23f6a2037596ee86459b9a6a2434f41301b6e",
+        "size": 24980,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/d9d23f6a2037596ee86459b9a6a2434f41301b6e"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q67.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5ffdeced24c3b61d8ab488c748af5247da94702b",
+        "size": 76110,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5ffdeced24c3b61d8ab488c748af5247da94702b"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q68.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "138b7c1ac9b1ed7326cb9dcd9e285e967ec60e60",
+        "size": 63662,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/138b7c1ac9b1ed7326cb9dcd9e285e967ec60e60"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q69.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7d7db71e53e13df6473494c880b7697b9401d2ab",
+        "size": 78706,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7d7db71e53e13df6473494c880b7697b9401d2ab"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q70.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "74778d45173f30753abb4771d35a2e7ddf76a1f8",
+        "size": 51672,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/74778d45173f30753abb4771d35a2e7ddf76a1f8"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q71.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "efcb85a92047ee56ee5218be52755a0ac18624ed",
+        "size": 79708,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/efcb85a92047ee56ee5218be52755a0ac18624ed"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q72.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "63b7eeb574890398c76478e46f61620b9ba43b75",
+        "size": 45926,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/63b7eeb574890398c76478e46f61620b9ba43b75"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q73.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5c7e421eb7463479091030971dd91f5ff6735061",
+        "size": 52864,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5c7e421eb7463479091030971dd91f5ff6735061"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q74.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a7627e5da31118938a6cb449a84ac1e48db1f630",
+        "size": 19220,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a7627e5da31118938a6cb449a84ac1e48db1f630"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q75.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "37e3dce146819d93e4bfb0eb1729c2f18c84220b",
+        "size": 20910,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/37e3dce146819d93e4bfb0eb1729c2f18c84220b"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q76.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e4d2f6c4ae0674e03a5ab120dd8ea002ec93d25a",
+        "size": 7908,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e4d2f6c4ae0674e03a5ab120dd8ea002ec93d25a"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q77.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c81ae3aa725ab243670438f9cb36ef1115eb2c7a",
+        "size": 22392,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c81ae3aa725ab243670438f9cb36ef1115eb2c7a"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q78.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ba5730df71c6f47103c05289cf1288bd4ef66d93",
+        "size": 21490,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ba5730df71c6f47103c05289cf1288bd4ef66d93"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q79.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "914022bf53d3b872a54e7af56ae42a8e02af8d39",
+        "size": 29494,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/914022bf53d3b872a54e7af56ae42a8e02af8d39"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q80.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "beac153003f4a3eba1e76c45c57d55303470cebd",
+        "size": 20178,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/beac153003f4a3eba1e76c45c57d55303470cebd"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q81.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7ad435bdd274115ad8310781b6a6b6e223619e79",
+        "size": 13832,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7ad435bdd274115ad8310781b6a6b6e223619e79"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q82.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6d508e670b50d35618b75fd25a766abc906c61ff",
+        "size": 14286,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6d508e670b50d35618b75fd25a766abc906c61ff"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q83.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5f4711906f54f25986a70055e464f6bd1dd80438",
+        "size": 30524,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5f4711906f54f25986a70055e464f6bd1dd80438"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q84.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c87f4fee960f3d65eaa267c74b9cc49c478792b0",
+        "size": 21714,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c87f4fee960f3d65eaa267c74b9cc49c478792b0"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q85.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "32c2f02374086cb742f4ddfd45f62a441f57750d",
+        "size": 13430,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/32c2f02374086cb742f4ddfd45f62a441f57750d"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q86.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "64696a5c51dae3026d42f3c1405375084c5f5b1d",
+        "size": 7476,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/64696a5c51dae3026d42f3c1405375084c5f5b1d"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q87.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "571358b67d385750e11986a9fa3b575fa1f16bdd",
+        "size": 21834,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/571358b67d385750e11986a9fa3b575fa1f16bdd"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q88.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8c8da6a2f7af9c3d12a704df74a1a6fb33f57cd9",
+        "size": 16676,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8c8da6a2f7af9c3d12a704df74a1a6fb33f57cd9"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q89.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fb7c95e496bf29941673704198a0e78d6da8fb3a",
+        "size": 22196,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/fb7c95e496bf29941673704198a0e78d6da8fb3a"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q90.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6ffc676a35c11b0caa49ffdccc1214c59da2b5a8",
+        "size": 38508,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6ffc676a35c11b0caa49ffdccc1214c59da2b5a8"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q91.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1782d8b47684ab52d30dc9c6e827d5362f1af532",
+        "size": 18328,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1782d8b47684ab52d30dc9c6e827d5362f1af532"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q92.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bab66484c108d9a35b0040ba8399e703ca19e421",
+        "size": 25804,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bab66484c108d9a35b0040ba8399e703ca19e421"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q93.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2d933e2b4ad6a57bd921c47275e9cce27984cc98",
+        "size": 14630,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2d933e2b4ad6a57bd921c47275e9cce27984cc98"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q94.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "59d0b17104c1de705e00c5510a2f49c7d5482a54",
+        "size": 20292,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/59d0b17104c1de705e00c5510a2f49c7d5482a54"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q95.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2c22fe746b00ff14b79d89d5453b3b47e4df4e74",
+        "size": 22240,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2c22fe746b00ff14b79d89d5453b3b47e4df4e74"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/q96.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fb53c1c364661f01c72d339f3495a4a9cdb6a0c2",
+        "size": 27588,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/fb53c1c364661f01c72d339f3495a4a9cdb6a0c2"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/t01.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "96eff7e9ce7d7d1ae853efca3a2f8469ba39653d",
+        "size": 46980,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/96eff7e9ce7d7d1ae853efca3a2f8469ba39653d"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/t02.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "546d32f2e0bda2af87fb4a487d06e860de97ba4f",
+        "size": 92112,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/546d32f2e0bda2af87fb4a487d06e860de97ba4f"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/t03.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "19b24a0483eb5829c109e718964e3b88e3da0762",
+        "size": 98822,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/19b24a0483eb5829c109e718964e3b88e3da0762"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/t04.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5021bfa1922aa7008bd516903def17401bcd2515",
+        "size": 72440,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5021bfa1922aa7008bd516903def17401bcd2515"
+      },
+      {
+        "path": "curso/provas/cfs2_2025/t05.webp",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2a0e9d227022f68899551e401615aa4797e7163f",
+        "size": 94926,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2a0e9d227022f68899551e401615aa4797e7163f"
+      },
+      {
+        "path": "firebase.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ce3d75f1c7758b4bc6b95ac5ad02abaac611b370",
+        "size": 1068,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ce3d75f1c7758b4bc6b95ac5ad02abaac611b370"
+      },
+      {
+        "path": "testes/a35-contas-adversarial.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "985ee5f4ce27bbbd430d2092142cf574b74fa982",
+        "size": 8264,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/985ee5f4ce27bbbd430d2092142cf574b74fa982"
+      },
+      {
+        "path": "testes/a35-fixture.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5e64ef53736cf757a909c0ba4616474f353458f1",
+        "size": 8359,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5e64ef53736cf757a909c0ba4616474f353458f1"
+      },
+      {
+        "path": "testes/a35-importacao-exclusao.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cc1fee1aae96c06914af27c7faef60501323e683",
+        "size": 5752,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/cc1fee1aae96c06914af27c7faef60501323e683"
+      },
+      {
+        "path": "testes/a35-levar-reimportacao.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "90d4e4974fac0f6c60009c07ef11152e79818380",
+        "size": 3816,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/90d4e4974fac0f6c60009c07ef11152e79818380"
+      },
+      {
+        "path": "testes/a35-retorno-firebase-antigo.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "529aa12d372ced0c614443b66af236a87c7f1b02",
+        "size": 3907,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/529aa12d372ced0c614443b66af236a87c7f1b02"
+      },
+      {
+        "path": "testes/abas-duravel.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e67a8b308022f8096671003d4cf0085e5eddcca6",
+        "size": 4604,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e67a8b308022f8096671003d4cf0085e5eddcca6"
+      },
+      {
+        "path": "testes/abas-interrupcao.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2798ecb19cd21e98d5d879b448befc3fd2208853",
+        "size": 2746,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2798ecb19cd21e98d5d879b448befc3fd2208853"
+      },
+      {
+        "path": "testes/abas-recuperacao.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d01fe689b489ebe7e0e01441dfcc18a06b5d5031",
+        "size": 3994,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/d01fe689b489ebe7e0e01441dfcc18a06b5d5031"
+      },
+      {
+        "path": "testes/abas.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5065d5668dd7090fbed18589ea416aeebdb2e6a0",
+        "size": 8323,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5065d5668dd7090fbed18589ea416aeebdb2e6a0"
+      },
+      {
+        "path": "testes/atualizacao-transacional.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b24c44fc6b7c718b7d854e2e1be4c7fcb26f120d",
+        "size": 4543,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b24c44fc6b7c718b7d854e2e1be4c7fcb26f120d"
+      },
+      {
+        "path": "testes/atualizacao.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8d289e1a7cc42418dc41f4749bfd47b09ad9c98e",
+        "size": 8806,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8d289e1a7cc42418dc41f4749bfd47b09ad9c98e"
+      },
+      {
+        "path": "testes/bloqueadores-auditoria.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "91c90a3aba48812b5fdd94fdf18f371e97776147",
+        "size": 2349,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/91c90a3aba48812b5fdd94fdf18f371e97776147"
+      },
+      {
+        "path": "testes/cache-restaurado.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1d44f26112e056569d910c0b1c2e4e6165b43e77",
+        "size": 3975,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1d44f26112e056569d910c0b1c2e4e6165b43e77"
+      },
+      {
+        "path": "testes/carga-metadados.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c789426d82855b666b5fe44535aa4a09192206ec",
+        "size": 6695,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c789426d82855b666b5fe44535aa4a09192206ec"
+      },
+      {
+        "path": "testes/carga-nucleo.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f7d77b122a131a8b19b29e97f8cace254ff4340c",
+        "size": 3481,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f7d77b122a131a8b19b29e97f8cace254ff4340c"
+      },
+      {
+        "path": "testes/celular.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b834fe93f390c641ebee8d3760ac8d6c6c170858",
+        "size": 10483,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b834fe93f390c641ebee8d3760ac8d6c6c170858"
+      },
+      {
+        "path": "testes/ciclo-sincronia.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "38eff3df9ef4396b02d024d36d5bded2d5d66171",
+        "size": 4641,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/38eff3df9ef4396b02d024d36d5bded2d5d66171"
+      },
+      {
+        "path": "testes/comparar-conteudo.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "acccbbabaaa65829afd3da251e68f49fc9e097d4",
+        "size": 2228,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/acccbbabaaa65829afd3da251e68f49fc9e097d4"
+      },
+      {
+        "path": "testes/concorrencia-fallback.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a35c118c5032494a808b6524a56545b9a61d56cf",
+        "size": 7471,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a35c118c5032494a808b6524a56545b9a61d56cf"
+      },
+      {
+        "path": "testes/contas.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f63552810fcff622e99071188360342a0e90544e",
+        "size": 13434,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f63552810fcff622e99071188360342a0e90544e"
+      },
+      {
+        "path": "testes/copias-privadas.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7170eae922dd7a61f3876565f1d209cfab7e663e",
+        "size": 1787,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7170eae922dd7a61f3876565f1d209cfab7e663e"
+      },
+      {
+        "path": "testes/dados.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8a3aa0cf06f7bf2ead97bba30eed901457c14305",
+        "size": 17744,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8a3aa0cf06f7bf2ead97bba30eed901457c14305"
+      },
+      {
+        "path": "testes/depurador-transacao.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "19741a22cebe076be29a6069158403ee7efbe198",
+        "size": 3080,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/19741a22cebe076be29a6069158403ee7efbe198"
+      },
+      {
+        "path": "testes/diario-geracao-antiga.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e3f0a754d310668f9470dea8b2286c4ee9080718",
+        "size": 2535,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e3f0a754d310668f9470dea8b2286c4ee9080718"
+      },
+      {
+        "path": "testes/diario-legado-auditoria.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f94240e3065f2f5ad5707220392e1ec871b2e615",
+        "size": 4453,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f94240e3065f2f5ad5707220392e1ec871b2e615"
+      },
+      {
+        "path": "testes/diarios-auditoria.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8203fc8f0b98b7e5c6261f241371e97d31a0d59b",
+        "size": 15197,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8203fc8f0b98b7e5c6261f241371e97d31a0d59b"
+      },
+      {
+        "path": "testes/duravel-candidato.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e82856b1b801b2bfaeb5d757080a2bb8ce06d8c8",
+        "size": 9591,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e82856b1b801b2bfaeb5d757080a2bb8ce06d8c8"
+      },
+      {
+        "path": "testes/epoca-nuvem.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "170b96c0a10b617506f5ff26933919d0858dbe64",
+        "size": 21164,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/170b96c0a10b617506f5ff26933919d0858dbe64"
+      },
+      {
+        "path": "testes/exclusao-auth-atrasada.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f0fdb5fc9713c1353a4928b1767850289a509951",
+        "size": 3062,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f0fdb5fc9713c1353a4928b1767850289a509951"
+      },
+      {
+        "path": "testes/exclusao-nuvem.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8bab08dc957cc1fc3cbb2cf5b16383ee9dd67692",
+        "size": 10089,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8bab08dc957cc1fc3cbb2cf5b16383ee9dd67692"
+      },
+      {
+        "path": "testes/exclusao-protocolo.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6f3e0c897ce1b4b8f7680da5cbef8d37e6cb96a4",
+        "size": 5198,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6f3e0c897ce1b4b8f7680da5cbef8d37e6cb96a4"
+      },
+      {
+        "path": "testes/f01-abas.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c3c2ad2765dce7841c475387d09e97649a63e1ec",
+        "size": 6679,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c3c2ad2765dce7841c475387d09e97649a63e1ec"
+      },
+      {
+        "path": "testes/f01-fixture.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "be3f242bbee32acf6f243718e7ce8ba5a0069bf1",
+        "size": 8047,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/be3f242bbee32acf6f243718e7ce8ba5a0069bf1"
+      },
+      {
+        "path": "testes/f01-riscos.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e226f140dbee854f8bbed83d0e30ec81a5dcaa69",
+        "size": 10917,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e226f140dbee854f8bbed83d0e30ec81a5dcaa69"
+      },
+      {
+        "path": "testes/falhas-nuvem.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7a6ac9abb0465f88ac6500d837714bd48002d454",
+        "size": 10490,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7a6ac9abb0465f88ac6500d837714bd48002d454"
+      },
+      {
+        "path": "testes/firebase-auditoria.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0ceacebef5471e6fc7e88e9b0eb0ae41677cc5d4",
+        "size": 7750,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/0ceacebef5471e6fc7e88e9b0eb0ae41677cc5d4"
+      },
+      {
+        "path": "testes/firebase-emulador.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e19a2eebe2b73a10832eed97600b0b2aedc403ad",
+        "size": 37720,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/e19a2eebe2b73a10832eed97600b0b2aedc403ad"
+      },
+      {
+        "path": "testes/historicos-legado.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "46582648a4af34031b18d24dcd01f29375c458b9",
+        "size": 797,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/46582648a4af34031b18d24dcd01f29375c458b9"
+      },
+      {
+        "path": "testes/hosting-auditoria.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "abeb5ce032d9c38d060ac484b80fc18b7d59c958",
+        "size": 3659,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/abeb5ce032d9c38d060ac484b80fc18b7d59c958"
+      },
+      {
+        "path": "testes/hosting-contexto-auditoria.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "10cea411d1482351951c3be98646bd9999275c32",
+        "size": 3612,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/10cea411d1482351951c3be98646bd9999275c32"
+      },
+      {
+        "path": "testes/hosting-gates-auditoria.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1b5d4d657b82f3f1ba7ab0894288a8145c373e90",
+        "size": 4147,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1b5d4d657b82f3f1ba7ab0894288a8145c373e90"
+      },
+      {
+        "path": "testes/importar-fixture.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9e2768908ed190a50feeec492440eceb3cb9f556",
+        "size": 822,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/9e2768908ed190a50feeec492440eceb3cb9f556"
+      },
+      {
+        "path": "testes/isolamento-firebase.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "839ae4b125a983442bc475e0ec5611ecc214b7f6",
+        "size": 6600,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/839ae4b125a983442bc475e0ec5611ecc214b7f6"
+      },
+      {
+        "path": "testes/legado-bloqueio.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "31d105aa677718d15d446222e7728023066ab16d",
+        "size": 9202,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/31d105aa677718d15d446222e7728023066ab16d"
+      },
+      {
+        "path": "testes/legado-contrato.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8be89fdda6adff2843e87c70ae9171dc70fb9337",
+        "size": 3081,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8be89fdda6adff2843e87c70ae9171dc70fb9337"
+      },
+      {
+        "path": "testes/metadados-limite.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "867923d046886d3aedc4d8e9c9a8bd5443bb9543",
+        "size": 2979,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/867923d046886d3aedc4d8e9c9a8bd5443bb9543"
+      },
+      {
+        "path": "testes/noturna-confirmacao.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3ec1c66a00e52767c1a7603933a1f578c4f83069",
+        "size": 4960,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3ec1c66a00e52767c1a7603933a1f578c4f83069"
+      },
+      {
+        "path": "testes/noturna-falhas.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7d910b778297b91e1467b30c3ff253b9c305f6ce",
+        "size": 9065,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7d910b778297b91e1467b30c3ff253b9c305f6ce"
+      },
+      {
+        "path": "testes/noturna-integridade.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6774837abb3b920d82f7434358f48a0a9c7d975c",
+        "size": 11403,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6774837abb3b920d82f7434358f48a0a9c7d975c"
+      },
+      {
+        "path": "testes/noturna-seguranca.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ba0c634f15b640eade8d96fb478a2193fbf9d056",
+        "size": 5795,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ba0c634f15b640eade8d96fb478a2193fbf9d056"
+      },
+      {
+        "path": "testes/nuvem-claude.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "53a142f164fb337c7d2d0391c0199a7178b32b26",
+        "size": 14483,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/53a142f164fb337c7d2d0391c0199a7178b32b26"
+      },
+      {
+        "path": "testes/operacoes-cache-exclusao.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ab34162ae1a3d51e86b98724d6c3734233107daf",
+        "size": 4179,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ab34162ae1a3d51e86b98724d6c3734233107daf"
+      },
+      {
+        "path": "testes/operacoes-dupla-falha.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ab0bb5e3e0b1002dfc4dc6eea1f39e6dfc1190d0",
+        "size": 3779,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ab0bb5e3e0b1002dfc4dc6eea1f39e6dfc1190d0"
+      },
+      {
+        "path": "testes/operacoes-exclusao-concorrente.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a85ef2a21fe5eebf39e0c32808a6f51ad8b13b66",
+        "size": 3756,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a85ef2a21fe5eebf39e0c32808a6f51ad8b13b66"
+      },
+      {
+        "path": "testes/operacoes-falhas.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a7ce3c05348f793a30cbe2b3580c62092721a7af",
+        "size": 3919,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a7ce3c05348f793a30cbe2b3580c62092721a7af"
+      },
+      {
+        "path": "testes/operacoes-interrupcao.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "69b9bf0f14d016fae4286c2702058bd37db5f415",
+        "size": 5324,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/69b9bf0f14d016fae4286c2702058bd37db5f415"
+      },
+      {
+        "path": "testes/operacoes-interrupcao.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b961f8d0594b0df01867e418aa1196745bc87e9c",
+        "size": 2102,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b961f8d0594b0df01867e418aa1196745bc87e9c"
+      },
+      {
+        "path": "testes/operacoes-recuperacao.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7cae0bf4534ea2c477d3ab14cd7824b18d56c1bc",
+        "size": 6085,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7cae0bf4534ea2c477d3ab14cd7824b18d56c1bc"
+      },
+      {
+        "path": "testes/operacoes-suspensas.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "15cb8e1191ec64337a68c1bdbb98cfe402370395",
+        "size": 5497,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/15cb8e1191ec64337a68c1bdbb98cfe402370395"
+      },
+      {
+        "path": "testes/operacoes.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "358f74c0b73ec5887e509edee1f82b736ace23cd",
+        "size": 5615,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/358f74c0b73ec5887e509edee1f82b736ace23cd"
+      },
+      {
+        "path": "testes/orfaos-auditoria.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ca38cb8ac6f3eea43848baf263dddc6899ef789a",
+        "size": 15176,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ca38cb8ac6f3eea43848baf263dddc6899ef789a"
+      },
+      {
+        "path": "testes/papel-nuvem.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1b1ea5dd4791c7c9a95788b17c22ec500e08aed7",
+        "size": 797,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1b1ea5dd4791c7c9a95788b17c22ec500e08aed7"
+      },
+      {
+        "path": "testes/perfil-legado.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f6d58c77d7cc2839322734a45f963457ccfc650b",
+        "size": 1065,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f6d58c77d7cc2839322734a45f963457ccfc650b"
+      },
+      {
+        "path": "testes/persistencia-regressoes.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f8a01bf5403351d2c18ddffd05651a775eceb4df",
+        "size": 1153,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f8a01bf5403351d2c18ddffd05651a775eceb4df"
+      },
+      {
+        "path": "testes/plataforma.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f52f8d17d2603c2e59a2cafa6f08973bd4a55574",
+        "size": 25973,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/f52f8d17d2603c2e59a2cafa6f08973bd4a55574"
+      },
+      {
+        "path": "testes/progresso2-nuvem.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7ce845ea9bffa1227c8d71e1e77933b6e44bf792",
+        "size": 12888,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7ce845ea9bffa1227c8d71e1e77933b6e44bf792"
+      },
+      {
+        "path": "testes/quarentena-exclusao.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4745f0c349b1bbafbe6179e46a909b47549b9dee",
+        "size": 3143,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4745f0c349b1bbafbe6179e46a909b47549b9dee"
+      },
+      {
+        "path": "testes/regras-nuvem.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "008129899a1e35b26e118b45a61c29b8250847d3",
+        "size": 6554,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/008129899a1e35b26e118b45a61c29b8250847d3"
+      },
+      {
+        "path": "testes/robustez.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5d87ee923a5981b4c4c619a677ab07208480cf33",
+        "size": 10184,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5d87ee923a5981b4c4c619a677ab07208480cf33"
+      },
+      {
+        "path": "testes/sincronia-firebase.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "51c0281011a2669a69518706c7147f78ad84da00",
+        "size": 7150,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/51c0281011a2669a69518706c7147f78ad84da00"
+      },
+      {
+        "path": "testes/sincronia.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bf1e1154bf92cf76be88ffe5b606867b69b13112",
+        "size": 12285,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bf1e1154bf92cf76be88ffe5b606867b69b13112"
+      },
+      {
+        "path": "testes/storage-crash-controle.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3192eb1de48123e5b599b649833c8465a1bb3be3",
+        "size": 1985,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3192eb1de48123e5b599b649833c8465a1bb3be3"
+      },
+      {
+        "path": "testes/transferencia-crashes.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fdb5ae3079a2a81f3a7ebae983fa19a8f112d687",
+        "size": 4666,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/fdb5ae3079a2a81f3a7ebae983fa19a8f112d687"
+      },
+      {
+        "path": "testes/transferencia-identidades.test.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b4abc4a9f9122395ca1e89bae30af7dff8b38ba",
+        "size": 2847,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/9b4abc4a9f9122395ca1e89bae30af7dff8b38ba"
+      },
+      {
+        "path": "testes/versoes-misturadas.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bdf437ec4d81bc146d4a28bf538a83619a6fd9a5",
+        "size": 8926,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/bdf437ec4d81bc146d4a28bf538a83619a6fd9a5"
+      },
+      {
+        "path": "testes/versoes.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a9b9d5e5feb38ef22cd4daac44e50a2343d1372b",
+        "size": 22232,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/a9b9d5e5feb38ef22cd4daac44e50a2343d1372b"
+      },
+      {
+        "path": "web/build.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "26659a529b8e72160be3881328995aa9d0161281",
+        "size": 13043,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/26659a529b8e72160be3881328995aa9d0161281"
+      },
+      {
+        "path": "web/conferir_videos.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0bf2ef3801dfeed57b7f9b814b9de453c8768d53",
+        "size": 2201,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/0bf2ef3801dfeed57b7f9b814b9de453c8768d53"
+      },
+      {
+        "path": "web/firebase.homologacao.exemplo.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "808136337efe7e8ace9919bb4957d1110d63f69a",
+        "size": 206,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/808136337efe7e8ace9919bb4957d1110d63f69a"
+      },
+      {
+        "path": "web/firestore.rules",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c7f48ae092901bf46583915d81affa1206579d8f",
+        "size": 2827,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c7f48ae092901bf46583915d81affa1206579d8f"
+      },
+      {
+        "path": "web/fontes/Barlow-400-latin-ext.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5c6eb7a330f8f5a19e93864290e83ce7d04bbea0",
+        "size": 14268,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5c6eb7a330f8f5a19e93864290e83ce7d04bbea0"
+      },
+      {
+        "path": "web/fontes/Barlow-400-latin.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3914af46036a03369558f46123f337ce0e8c5ce6",
+        "size": 22196,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3914af46036a03369558f46123f337ce0e8c5ce6"
+      },
+      {
+        "path": "web/fontes/Barlow-400i-latin-ext.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "aa6c8cc5399832e650a06fa7981140288e411fd2",
+        "size": 15300,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/aa6c8cc5399832e650a06fa7981140288e411fd2"
+      },
+      {
+        "path": "web/fontes/Barlow-400i-latin.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "190e104878a2e4c75d3500389787f729544cbf5b",
+        "size": 24484,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/190e104878a2e4c75d3500389787f729544cbf5b"
+      },
+      {
+        "path": "web/fontes/Barlow-500-latin-ext.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4966af7fbefcfa491e92d4c1f76f4f3ff2500f7e",
+        "size": 14416,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4966af7fbefcfa491e92d4c1f76f4f3ff2500f7e"
+      },
+      {
+        "path": "web/fontes/Barlow-500-latin.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b1d06c6db025bd438736e9192a33569d353906c6",
+        "size": 22008,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b1d06c6db025bd438736e9192a33569d353906c6"
+      },
+      {
+        "path": "web/fontes/Barlow-600-latin-ext.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3d7c7a2d9371ca6e7a0ec125b0697870cb553f3a",
+        "size": 14968,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3d7c7a2d9371ca6e7a0ec125b0697870cb553f3a"
+      },
+      {
+        "path": "web/fontes/Barlow-600-latin.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b1a019f9d0eb0043beac510d1c932e8bc58cbbcc",
+        "size": 22772,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b1a019f9d0eb0043beac510d1c932e8bc58cbbcc"
+      },
+      {
+        "path": "web/fontes/Barlow-700-latin-ext.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "09f68715b7506c7d8ed9c848bd11bf2db1ff43a6",
+        "size": 14836,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/09f68715b7506c7d8ed9c848bd11bf2db1ff43a6"
+      },
+      {
+        "path": "web/fontes/Barlow-700-latin.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4ee6cd865407b088a6c37b0a9e42938d3026d003",
+        "size": 22788,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/4ee6cd865407b088a6c37b0a9e42938d3026d003"
+      },
+      {
+        "path": "web/fontes/IBMPlexMono-500-latin-ext.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6f33f8c0578588d14260678edb9bffe9c10d2bd3",
+        "size": 13432,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/6f33f8c0578588d14260678edb9bffe9c10d2bd3"
+      },
+      {
+        "path": "web/fontes/IBMPlexMono-500-latin.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "090f82f7ec7997047324e07650865305a099969a",
+        "size": 14888,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/090f82f7ec7997047324e07650865305a099969a"
+      },
+      {
+        "path": "web/fontes/IBMPlexMono-600-latin-ext.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c0b57de452cf226f844eca7ca22ea9a5ac1b6cdf",
+        "size": 14328,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c0b57de452cf226f844eca7ca22ea9a5ac1b6cdf"
+      },
+      {
+        "path": "web/fontes/IBMPlexMono-600-latin.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "67aeeb0104a02cf060b813abf6dcb6fdb97b7512",
+        "size": 15620,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/67aeeb0104a02cf060b813abf6dcb6fdb97b7512"
+      },
+      {
+        "path": "web/fontes/OFL-barlow.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2f22ba6ca4dbc12145ae40b14c3368f387cba0e2",
+        "size": 4377,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2f22ba6ca4dbc12145ae40b14c3368f387cba0e2"
+      },
+      {
+        "path": "web/fontes/OFL-ibmplexmono.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c35c4c618fab33da8695177b3a6cefe0810b7b28",
+        "size": 4456,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c35c4c618fab33da8695177b3a6cefe0810b7b28"
+      },
+      {
+        "path": "web/fontes/OFL-sairacondensed.txt",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c8129c7dd7ee999c6c30a1e2688c1b316e771444",
+        "size": 4403,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c8129c7dd7ee999c6c30a1e2688c1b316e771444"
+      },
+      {
+        "path": "web/fontes/SairaCondensed-600-latin-ext.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5ae9fddf2db334c2029c35e2150174ea7e4c62fa",
+        "size": 14736,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5ae9fddf2db334c2029c35e2150174ea7e4c62fa"
+      },
+      {
+        "path": "web/fontes/SairaCondensed-600-latin.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c385d8cb446f989ac641625b1871422dc9efd067",
+        "size": 17980,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c385d8cb446f989ac641625b1871422dc9efd067"
+      },
+      {
+        "path": "web/fontes/SairaCondensed-700-latin-ext.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5a15f45abc9a647d88ec729a42a1592de73fd026",
+        "size": 14716,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5a15f45abc9a647d88ec729a42a1592de73fd026"
+      },
+      {
+        "path": "web/fontes/SairaCondensed-700-latin.woff2",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3b036b709840eab20923b403beb6df2be3699324",
+        "size": 17808,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/3b036b709840eab20923b403beb6df2be3699324"
+      },
+      {
+        "path": "web/fontes/fontes.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ada695227ce90f11f6b6ee7bdd379657a1d81b25",
+        "size": 6692,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ada695227ce90f11f6b6ee7bdd379657a1d81b25"
+      },
+      {
+        "path": "web/icones/apple-touch-icon.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ff04ea744f17a1ba9fd0aace1d7fd9b43a3359a6",
+        "size": 5120,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ff04ea744f17a1ba9fd0aace1d7fd9b43a3359a6"
+      },
+      {
+        "path": "web/icones/favicon.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b1cf20b9a0d4707ea04583b64b1c0c928084b26b",
+        "size": 3350,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/b1cf20b9a0d4707ea04583b64b1c0c928084b26b"
+      },
+      {
+        "path": "web/icones/gerar_icones.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cc454cf535ce59eff08fa4a7b987b17354e5cf80",
+        "size": 2128,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/cc454cf535ce59eff08fa4a7b987b17354e5cf80"
+      },
+      {
+        "path": "web/icones/icone-192.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1149ecf3de4eaba562f46b7bc3ec4250e15bfeb5",
+        "size": 9218,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/1149ecf3de4eaba562f46b7bc3ec4250e15bfeb5"
+      },
+      {
+        "path": "web/icones/icone-512.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8af968fa162ac2104d00206b48d936ec6ea00e1a",
+        "size": 27075,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/8af968fa162ac2104d00206b48d936ec6ea00e1a"
+      },
+      {
+        "path": "web/icones/icone-maskable-512.png",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7b97a46743f93e838b703ccc9c0c89f027c8cac0",
+        "size": 18930,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7b97a46743f93e838b703ccc9c0c89f027c8cac0"
+      },
+      {
+        "path": "web/impressoes-restritas.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5a5d5d3b9f392fc17d2f7110ee7e29392e1d84c3",
+        "size": 188333,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/5a5d5d3b9f392fc17d2f7110ee7e29392e1d84c3"
+      },
+      {
+        "path": "web/legal/privacidade.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c90478765f20eca82ec39e222037979e14912274",
+        "size": 8503,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c90478765f20eca82ec39e222037979e14912274"
+      },
+      {
+        "path": "web/legal/termos.html",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2662f77ebb380cc1029cd03855983b1a43708bcf",
+        "size": 3523,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/2662f77ebb380cc1029cd03855983b1a43708bcf"
+      },
+      {
+        "path": "web/montar_app.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c8219f7a10612953ac32bbaa49f7261295732afd",
+        "size": 1376,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/c8219f7a10612953ac32bbaa49f7261295732afd"
+      },
+      {
+        "path": "web/regras-claude.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7da694b4e0ee47de70c244021ea4aae4472d18c6",
+        "size": 1184,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/7da694b4e0ee47de70c244021ea4aae4472d18c6"
+      },
+      {
+        "path": "web/sw.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ddb62f8d383d450c56735d4c46bd407b6171f358",
+        "size": 1671,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/ddb62f8d383d450c56735d4c46bd407b6171f358"
+      },
+      {
+        "path": "web/verificar_publicacao.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b40f1e4e4a008204c11f78c4c68260d1aa61965",
+        "size": 110036,
+        "url": "https://api.github.com/repos/YNPHAX/EEAR/git/blobs/9b40f1e4e4a008204c11f78c4c68260d1aa61965"
+      }
+    ],
+    "gitStatus": ""
+  },
+  "matrizes": {
+    "bloqueadores-resultados.json": [
+      {
+        "nome": "bloqueadores-originais",
+        "comando": "node testes/bloqueadores-auditoria.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 337.74,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      }
+    ],
+    "build-resultados.json": [
+      {
+        "nome": "site",
+        "buildExit": 0,
+        "verificarExit": 0,
+        "appSha256": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f"
+      },
+      {
+        "nome": "app",
+        "buildExit": 0,
+        "verificarExit": 0,
+        "appSha256": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f"
+      },
+      {
+        "nome": "d165",
+        "buildExit": 0,
+        "commit": "d16548547806575c1d32491a32d6166226f2096d"
+      },
+      {
+        "nome": "2f6",
+        "buildExit": 0,
+        "commit": "2f6cad6ebba53d0f86319dcada671fe9396f8111"
+      }
+    ],
+    "local-resultados.json": [
+      {
+        "nome": "montagem",
+        "comando": "python3 -I web/montar_app.py --conferir",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 0.08,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "integridade",
+        "comando": "python3 -I web/verificar_publicacao.py validar",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 0.41,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "workflows",
+        "comando": "python3 -I web/verificar_publicacao.py conferir-workflows",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 0.14,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "lint",
+        "comando": "/tmp/eear-audit-deps/node_modules/.bin/eslint curso/app.js curso/app curso/dados web/sw.js testes",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 3.62,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "hosting-autoteste",
+        "comando": "python3 -I web/verificar_publicacao.py autoteste",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 2.55,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "hosting-sondas",
+        "comando": "python3 testes/hosting-auditoria.py .",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 20.94,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "hosting-gates",
+        "comando": "python3 testes/hosting-gates-auditoria.py .",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 28.71,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "hosting-contextos",
+        "comando": "python3 testes/hosting-contexto-auditoria.py .",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 14.88,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "operacoes",
+        "comando": "node testes/operacoes.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 0.32,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "transferencia-algebra",
+        "comando": "node testes/transferencia-identidades.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 0.05,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "legado-contrato",
+        "comando": "node testes/legado-contrato.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 0.04,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "legado-bloqueio",
+        "comando": "node testes/legado-bloqueio.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 8.21,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "ciclo",
+        "comando": "node testes/ciclo-sincronia.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 6.75,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "plataforma",
+        "comando": "node testes/plataforma.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 276.25,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "cache",
+        "comando": "node testes/cache-restaurado.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 6.85,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "depurador",
+        "comando": "node testes/depurador-transacao.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 7.0,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "carga-nucleo",
+        "comando": "node testes/carga-nucleo.test.js",
+        "variaveis": {
+          "EEAR_CARGA_ESTADO": "/tmp/eear-audit2-20261114/estado-limite.json"
+        },
+        "exit": 0,
+        "segundos": 386.26,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "carga-navegador",
+        "comando": "node testes/carga-metadados.test.js",
+        "variaveis": {
+          "EEAR_CARGA_SAIDA": "/tmp/eear-audit2-20261114/carga-medidas.json"
+        },
+        "exit": 0,
+        "segundos": 115.22,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      }
+    ],
+    "firebase-resultados.json": [
+      {
+        "nome": "firebase-51",
+        "comando": "node testes/firebase-emulador.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 185.15,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "persistencia-13",
+        "comando": "node testes/persistencia-regressoes.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 386.41,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "dupla-falha",
+        "comando": "node testes/operacoes-dupla-falha.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 16.26,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "sincronia-firebase",
+        "comando": "node testes/sincronia-firebase.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 30.74,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "f01-riscos",
+        "comando": "node testes/f01-riscos.test.js",
+        "variaveis": {
+          "EEAR_F01_RISCOS": "zerar-nuvem,zerar-unica,suspensa,exclusao-surda,contagens,escrita-interrompida"
+        },
+        "exit": 0,
+        "segundos": 45.47,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "diarios",
+        "comando": "node testes/diarios-auditoria.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 53.06,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "orfaos-9",
+        "comando": "node testes/orfaos-auditoria.test.js",
+        "variaveis": {
+          "EEAR_ORFAOS_CENARIOS": "segunda-escrita-30min",
+          "EEAR_ORFAOS_SEQUENCIAS": "9"
+        },
+        "exit": 0,
+        "segundos": 29.78,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "crash-sem-locks",
+        "comando": "node testes/duravel-candidato.test.js",
+        "variaveis": {
+          "EEAR_DURAVEL_SEM_TRAVAS": "1"
+        },
+        "exit": 0,
+        "segundos": 54.74,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "migracao-8bd",
+        "comando": "node testes/diario-legado-auditoria.test.js",
+        "variaveis": {
+          "EEAR_REPO_LEGADO": "/tmp/eear-8bd32d2"
+        },
+        "exit": 0,
+        "segundos": 29.93,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "migracao-2f6",
+        "comando": "node testes/diario-legado-auditoria.test.js",
+        "variaveis": {},
+        "exit": 0,
+        "segundos": 34.0,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      },
+      {
+        "nome": "metadados-limite",
+        "comando": "node testes/metadados-limite.test.js",
+        "variaveis": {
+          "EEAR_CARGA_ESTADO": "/tmp/eear-audit2-20261114/estado-limite.json"
+        },
+        "exit": 0,
+        "segundos": 31.47,
+        "sha256Antes": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "sha256Depois": "ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f",
+        "arquivosConferidos": 370
+      }
+    ]
+  },
+  "historico": {
+    "exit": 1,
+    "observacao": "Critérios históricos inalterados; transporte deliberadamente bloqueado."
+  },
+  "atualizacao": "transacional 0\ndowngrade2f6 1\n",
+  "novos": "a636-importacao-dispositivos 1\na636-sessoes-abas 1\nsessoes-abas-final 0\nregras-dependencia 0\nerros-base-a35 1\nmatriz-nova-final 1\nimportacoes-base-a35 1\n",
+  "novosExecutaveis": [
+    {
+      "nome": "a636-importacoes-concorrentes",
+      "exit": "1"
+    },
+    {
+      "nome": "a636-transferencia-erros",
+      "exit": "1"
+    },
+    {
+      "nome": "a636-importacao-dispositivos",
+      "exit": "1"
+    },
+    {
+      "nome": "a636-sessoes-abas",
+      "exit": "0"
+    },
+    {
+      "nome": "a636-abort-exclusao",
+      "exit": "0"
+    },
+    {
+      "nome": "a636-regras-dependencia",
+      "exit": "0"
+    }
+  ],
+  "carga": {
+    "alvo": "/tmp/eear-audit2-runtime",
+    "rodadas": 500,
+    "abas": 4,
+    "medidas": [
+      {
+        "fase": "base",
+        "atividade": 2,
+        "marcas": 1,
+        "bytesEstado": 2113,
+        "caracteresEstado": 2111,
+        "bytesMeta": 1607,
+        "bytesCheckpoint": 3867,
+        "recibos": 1,
+        "usoOrigem": 294912,
+        "quotaOrigem": 2147778560,
+        "segundos": 1.405
+      },
+      {
+        "fase": "rodada-50",
+        "atividade": 202,
+        "marcas": 201,
+        "bytesEstado": 32835,
+        "caracteresEstado": 32833,
+        "bytesMeta": 28367,
+        "bytesCheckpoint": 70349,
+        "recibos": 201,
+        "usoOrigem": 307200,
+        "quotaOrigem": 2147790848,
+        "segundos": 4.48
+      },
+      {
+        "fase": "rodada-100",
+        "atividade": 402,
+        "marcas": 401,
+        "bytesEstado": 63635,
+        "caracteresEstado": 63633,
+        "bytesMeta": 55167,
+        "bytesCheckpoint": 136949,
+        "recibos": 401,
+        "usoOrigem": 319488,
+        "quotaOrigem": 2147803136,
+        "segundos": 9.064
+      },
+      {
+        "fase": "rodada-150",
+        "atividade": 602,
+        "marcas": 601,
+        "bytesEstado": 94835,
+        "caracteresEstado": 94833,
+        "bytesMeta": 82167,
+        "bytesCheckpoint": 204149,
+        "recibos": 601,
+        "usoOrigem": 339968,
+        "quotaOrigem": 2147823616,
+        "segundos": 12.723
+      },
+      {
+        "fase": "rodada-200",
+        "atividade": 802,
+        "marcas": 801,
+        "bytesEstado": 126035,
+        "caracteresEstado": 126033,
+        "bytesMeta": 109167,
+        "bytesCheckpoint": 271349,
+        "recibos": 801,
+        "usoOrigem": 348160,
+        "quotaOrigem": 2147831808,
+        "segundos": 17.364
+      },
+      {
+        "fase": "rodada-250",
+        "atividade": 1002,
+        "marcas": 1001,
+        "bytesEstado": 157236,
+        "caracteresEstado": 157234,
+        "bytesMeta": 136167,
+        "bytesCheckpoint": 338550,
+        "recibos": 1001,
+        "usoOrigem": 364544,
+        "quotaOrigem": 2147848192,
+        "segundos": 24.223
+      },
+      {
+        "fase": "rodada-300",
+        "atividade": 1202,
+        "marcas": 1201,
+        "bytesEstado": 188436,
+        "caracteresEstado": 188434,
+        "bytesMeta": 163167,
+        "bytesCheckpoint": 405750,
+        "recibos": 1201,
+        "usoOrigem": 385024,
+        "quotaOrigem": 2147868672,
+        "segundos": 32.506
+      },
+      {
+        "fase": "rodada-350",
+        "atividade": 1402,
+        "marcas": 1401,
+        "bytesEstado": 219636,
+        "caracteresEstado": 219634,
+        "bytesMeta": 190167,
+        "bytesCheckpoint": 472950,
+        "recibos": 1401,
+        "usoOrigem": 421888,
+        "quotaOrigem": 2147905536,
+        "segundos": 40.907
+      },
+      {
+        "fase": "rodada-400",
+        "atividade": 1602,
+        "marcas": 1601,
+        "bytesEstado": 250836,
+        "caracteresEstado": 250834,
+        "bytesMeta": 217167,
+        "bytesCheckpoint": 540150,
+        "recibos": 1601,
+        "usoOrigem": 462848,
+        "quotaOrigem": 2147946496,
+        "segundos": 53.581
+      },
+      {
+        "fase": "rodada-450",
+        "atividade": 1802,
+        "marcas": 1801,
+        "bytesEstado": 282036,
+        "caracteresEstado": 282034,
+        "bytesMeta": 244167,
+        "bytesCheckpoint": 607350,
+        "recibos": 1801,
+        "usoOrigem": 495616,
+        "quotaOrigem": 2147979264,
+        "segundos": 68.961
+      },
+      {
+        "fase": "rodada-500",
+        "atividade": 2002,
+        "marcas": 2001,
+        "bytesEstado": 313236,
+        "caracteresEstado": 313234,
+        "bytesMeta": 271167,
+        "bytesCheckpoint": 674550,
+        "recibos": 2001,
+        "usoOrigem": 532480,
+        "quotaOrigem": 2148016128,
+        "segundos": 85.962
+      },
+      {
+        "fase": "reset-1",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 351907,
+        "caracteresEstado": 351905,
+        "bytesMeta": 351482,
+        "bytesCheckpoint": 793626,
+        "recibos": 2003,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 88.297
+      },
+      {
+        "fase": "reset-2",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352083,
+        "caracteresEstado": 352081,
+        "bytesMeta": 351658,
+        "bytesCheckpoint": 794068,
+        "recibos": 2005,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 91.065
+      },
+      {
+        "fase": "reset-3",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352259,
+        "caracteresEstado": 352257,
+        "bytesMeta": 351834,
+        "bytesCheckpoint": 794510,
+        "recibos": 2007,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 92.716
+      },
+      {
+        "fase": "reset-4",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352435,
+        "caracteresEstado": 352433,
+        "bytesMeta": 352010,
+        "bytesCheckpoint": 794952,
+        "recibos": 2009,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 94.1
+      },
+      {
+        "fase": "reset-5",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352611,
+        "caracteresEstado": 352609,
+        "bytesMeta": 352186,
+        "bytesCheckpoint": 795394,
+        "recibos": 2011,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 95.779
+      },
+      {
+        "fase": "reset-6",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352787,
+        "caracteresEstado": 352785,
+        "bytesMeta": 352362,
+        "bytesCheckpoint": 795836,
+        "recibos": 2013,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 97.765
+      },
+      {
+        "fase": "reset-7",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 352963,
+        "caracteresEstado": 352961,
+        "bytesMeta": 352538,
+        "bytesCheckpoint": 796278,
+        "recibos": 2015,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 99.47
+      },
+      {
+        "fase": "reset-8",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353139,
+        "caracteresEstado": 353137,
+        "bytesMeta": 352714,
+        "bytesCheckpoint": 796720,
+        "recibos": 2017,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 101.571
+      },
+      {
+        "fase": "reset-9",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353315,
+        "caracteresEstado": 353313,
+        "bytesMeta": 352890,
+        "bytesCheckpoint": 797162,
+        "recibos": 2019,
+        "usoOrigem": 442368,
+        "quotaOrigem": 2147926016,
+        "segundos": 103.59
+      },
+      {
+        "fase": "reset-10",
+        "atividade": 1,
+        "marcas": 1,
+        "bytesEstado": 353491,
+        "caracteresEstado": 353489,
+        "bytesMeta": 353066,
+        "bytesCheckpoint": 797604,
+        "recibos": 2021,
+        "usoOrigem": 446464,
+        "quotaOrigem": 2147930112,
+        "segundos": 106.395
+      }
+    ],
+    "falhas": 0
+  },
+  "ci": [
+    {
+      "run": 43642326669,
+      "total_count": 2,
+      "jobs": [
+        {
+          "id": 132592396396,
+          "run_id": 43642326669,
+          "workflow_name": "Site",
+          "head_branch": "codex/eear-correcao-estrutural",
+          "run_url": "https://api.github.com/repos/YNPHAX/EEAR/actions/runs/43642326669",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVVUbMM8AAAAe3x9obA",
+          "head_sha": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+          "url": "https://api.github.com/repos/YNPHAX/EEAR/actions/jobs/132592396396",
+          "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43642326669/job/132592396396",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-14T21:20:52Z",
+          "started_at": "2026-11-14T21:20:54Z",
+          "completed_at": "2026-11-14T21:21:07Z",
+          "name": "montar",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-14T21:20:54Z",
+              "completed_at": "2026-11-14T21:20:55Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-14T21:20:55Z",
+              "completed_at": "2026-11-14T21:20:56Z"
+            },
+            {
+              "name": "Montar o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-14T21:20:56Z",
+              "completed_at": "2026-11-14T21:21:00Z"
+            },
+            {
+              "name": "Conferir o JavaScript",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-14T21:21:00Z",
+              "completed_at": "2026-11-14T21:21:00Z"
+            },
+            {
+              "name": "Conferir que nada restrito vai para o site",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-14T21:21:00Z",
+              "completed_at": "2026-11-14T21:21:04Z"
+            },
+            {
+              "name": "Run actions/upload-pages-artifact@v3",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-14T21:21:04Z",
+              "completed_at": "2026-11-14T21:21:05Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-11-14T21:21:05Z",
+              "completed_at": "2026-11-14T21:21:06Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-11-14T21:21:06Z",
+              "completed_at": "2026-11-14T21:21:06Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/YNPHAX/EEAR/check-runs/132592396396",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000000450,
+          "runner_name": "GitHub Actions 1000000450",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        },
+        {
+          "id": 132592471991,
+          "run_id": 43642326669,
+          "workflow_name": "Site",
+          "head_branch": "codex/eear-correcao-estrutural",
+          "run_url": "https://api.github.com/repos/YNPHAX/EEAR/actions/runs/43642326669",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVVUbMM8AAAAe3yCPtw",
+          "head_sha": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+          "url": "https://api.github.com/repos/YNPHAX/EEAR/actions/jobs/132592471991",
+          "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43642326669/job/132592471991",
+          "status": "completed",
+          "conclusion": "skipped",
+          "created_at": "2026-11-14T21:21:08Z",
+          "started_at": "2026-11-14T21:21:08Z",
+          "completed_at": "2026-11-14T21:21:07Z",
+          "name": "publicar",
+          "steps": [],
+          "check_run_url": "https://api.github.com/repos/YNPHAX/EEAR/check-runs/132592471991",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": null,
+          "runner_name": null,
+          "runner_group_id": null,
+          "runner_group_name": null
+        }
+      ]
+    },
+    {
+      "run": 43642326647,
+      "total_count": 2,
+      "jobs": [
+        {
+          "id": 132592396588,
+          "run_id": 43642326647,
+          "workflow_name": "App Android",
+          "head_branch": "codex/eear-correcao-estrutural",
+          "run_url": "https://api.github.com/repos/YNPHAX/EEAR/actions/runs/43642326647",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVVUbMM8AAAAe3x9pLA",
+          "head_sha": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+          "url": "https://api.github.com/repos/YNPHAX/EEAR/actions/jobs/132592396588",
+          "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43642326647/job/132592396588",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-14T21:20:52Z",
+          "started_at": "2026-11-14T21:20:54Z",
+          "completed_at": "2026-11-14T21:22:41Z",
+          "name": "apk",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-14T21:20:54Z",
+              "completed_at": "2026-11-14T21:20:56Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-14T21:20:56Z",
+              "completed_at": "2026-11-14T21:20:57Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-14T21:20:57Z",
+              "completed_at": "2026-11-14T21:20:58Z"
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-14T21:20:58Z",
+              "completed_at": "2026-11-14T21:20:58Z"
+            },
+            {
+              "name": "Conteúdo do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-14T21:20:58Z",
+              "completed_at": "2026-11-14T21:21:03Z"
+            },
+            {
+              "name": "Conferir que nada restrito vai para o app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-14T21:21:03Z",
+              "completed_at": "2026-11-14T21:21:07Z"
+            },
+            {
+              "name": "Projeto Android",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-11-14T21:21:07Z",
+              "completed_at": "2026-11-14T21:21:12Z"
+            },
+            {
+              "name": "Versão do app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-11-14T21:21:12Z",
+              "completed_at": "2026-11-14T21:21:12Z"
+            },
+            {
+              "name": "Compilar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9,
+              "started_at": "2026-11-14T21:21:12Z",
+              "completed_at": "2026-11-14T21:22:29Z"
+            },
+            {
+              "name": "Separar o APK",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10,
+              "started_at": "2026-11-14T21:22:29Z",
+              "completed_at": "2026-11-14T21:22:29Z"
+            },
+            {
+              "name": "Conferir o APK compilado",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-11-14T21:22:29Z",
+              "completed_at": "2026-11-14T21:22:39Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12,
+              "started_at": "2026-11-14T21:22:39Z",
+              "completed_at": "2026-11-14T21:22:39Z"
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22,
+              "started_at": "2026-11-14T21:22:39Z",
+              "completed_at": "2026-11-14T21:22:39Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23,
+              "started_at": "2026-11-14T21:22:39Z",
+              "completed_at": "2026-11-14T21:22:39Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24,
+              "started_at": "2026-11-14T21:22:39Z",
+              "completed_at": "2026-11-14T21:22:39Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25,
+              "started_at": "2026-11-14T21:22:39Z",
+              "completed_at": "2026-11-14T21:22:39Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/YNPHAX/EEAR/check-runs/132592396588",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000000453,
+          "runner_name": "GitHub Actions 1000000453",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        },
+        {
+          "id": 132592900409,
+          "run_id": 43642326647,
+          "workflow_name": "App Android",
+          "head_branch": "codex/eear-correcao-estrutural",
+          "run_url": "https://api.github.com/repos/YNPHAX/EEAR/actions/runs/43642326647",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVVUbMM8AAAAe3ycZOQ",
+          "head_sha": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+          "url": "https://api.github.com/repos/YNPHAX/EEAR/actions/jobs/132592900409",
+          "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43642326647/job/132592900409",
+          "status": "completed",
+          "conclusion": "skipped",
+          "created_at": "2026-11-14T21:22:41Z",
+          "started_at": "2026-11-14T21:22:41Z",
+          "completed_at": "2026-11-14T21:22:41Z",
+          "name": "publicar",
+          "steps": [],
+          "check_run_url": "https://api.github.com/repos/YNPHAX/EEAR/check-runs/132592900409",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": null,
+          "runner_name": null,
+          "runner_group_id": null,
+          "runner_group_name": null
+        }
+      ]
+    },
+    {
+      "run": 43642326690,
+      "total_count": 4,
+      "jobs": [
+        {
+          "id": 132592396301,
+          "run_id": 43642326690,
+          "workflow_name": "Testes",
+          "head_branch": "codex/eear-correcao-estrutural",
+          "run_url": "https://api.github.com/repos/YNPHAX/EEAR/actions/runs/43642326690",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVVUbMM8AAAAe3x9oDQ",
+          "head_sha": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+          "url": "https://api.github.com/repos/YNPHAX/EEAR/actions/jobs/132592396301",
+          "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43642326690/job/132592396301",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-14T21:20:52Z",
+          "started_at": "2026-11-14T21:20:54Z",
+          "completed_at": "2026-11-14T21:26:28Z",
+          "name": "bloqueadores-auditoria",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-14T21:20:55Z",
+              "completed_at": "2026-11-14T21:20:55Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-14T21:20:55Z",
+              "completed_at": "2026-11-14T21:20:57Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-14T21:20:57Z",
+              "completed_at": "2026-11-14T21:21:01Z"
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-14T21:21:01Z",
+              "completed_at": "2026-11-14T21:21:01Z"
+            },
+            {
+              "name": "Dependências isoladas dos testes adversariais",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-14T21:21:01Z",
+              "completed_at": "2026-11-14T21:21:45Z"
+            },
+            {
+              "name": "Reproduções anteriores e critérios novos obrigatórios",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-14T21:21:45Z",
+              "completed_at": "2026-11-14T21:26:22Z"
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10,
+              "started_at": "2026-11-14T21:26:22Z",
+              "completed_at": "2026-11-14T21:26:22Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-11-14T21:26:22Z",
+              "completed_at": "2026-11-14T21:26:22Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-11-14T21:26:22Z",
+              "completed_at": "2026-11-14T21:26:22Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-11-14T21:26:22Z",
+              "completed_at": "2026-11-14T21:26:22Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/YNPHAX/EEAR/check-runs/132592396301",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000000449,
+          "runner_name": "GitHub Actions 1000000449",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        },
+        {
+          "id": 132592396450,
+          "run_id": 43642326690,
+          "workflow_name": "Testes",
+          "head_branch": "codex/eear-correcao-estrutural",
+          "run_url": "https://api.github.com/repos/YNPHAX/EEAR/actions/runs/43642326690",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVVUbMM8AAAAe3x9oog",
+          "head_sha": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+          "url": "https://api.github.com/repos/YNPHAX/EEAR/actions/jobs/132592396450",
+          "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43642326690/job/132592396450",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-14T21:20:52Z",
+          "started_at": "2026-11-14T21:20:54Z",
+          "completed_at": "2026-11-14T21:30:07Z",
+          "name": "firebase-emulador",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-14T21:20:54Z",
+              "completed_at": "2026-11-14T21:20:57Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-14T21:20:57Z",
+              "completed_at": "2026-11-14T21:21:02Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-14T21:21:02Z",
+              "completed_at": "2026-11-14T21:21:05Z"
+            },
+            {
+              "name": "Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-14T21:21:05Z",
+              "completed_at": "2026-11-14T21:21:05Z"
+            },
+            {
+              "name": "Instalar o firebase-tools, o SDK web do Firebase e o Playwright",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-14T21:21:05Z",
+              "completed_at": "2026-11-14T21:21:50Z"
+            },
+            {
+              "name": "Testes nos emuladores",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-14T21:21:50Z",
+              "completed_at": "2026-11-14T21:30:05Z"
+            },
+            {
+              "name": "Post Run actions/setup-java@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10,
+              "started_at": "2026-11-14T21:30:05Z",
+              "completed_at": "2026-11-14T21:30:05Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-11-14T21:30:05Z",
+              "completed_at": "2026-11-14T21:30:05Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-11-14T21:30:05Z",
+              "completed_at": "2026-11-14T21:30:05Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-11-14T21:30:05Z",
+              "completed_at": "2026-11-14T21:30:05Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/YNPHAX/EEAR/check-runs/132592396450",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000000451,
+          "runner_name": "GitHub Actions 1000000451",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        },
+        {
+          "id": 132592396534,
+          "run_id": 43642326690,
+          "workflow_name": "Testes",
+          "head_branch": "codex/eear-correcao-estrutural",
+          "run_url": "https://api.github.com/repos/YNPHAX/EEAR/actions/runs/43642326690",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVVUbMM8AAAAe3x9o9g",
+          "head_sha": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+          "url": "https://api.github.com/repos/YNPHAX/EEAR/actions/jobs/132592396534",
+          "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43642326690/job/132592396534",
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-14T21:20:52Z",
+          "started_at": "2026-11-14T21:20:54Z",
+          "completed_at": "2026-11-14T21:25:34Z",
+          "name": "plataforma",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-14T21:20:54Z",
+              "completed_at": "2026-11-14T21:20:55Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-14T21:20:55Z",
+              "completed_at": "2026-11-14T21:20:56Z"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-14T21:20:56Z",
+              "completed_at": "2026-11-14T21:20:57Z"
+            },
+            {
+              "name": "Instalar o Playwright e o Chromium",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-14T21:20:57Z",
+              "completed_at": "2026-11-14T21:21:11Z"
+            },
+            {
+              "name": "Barreiras de Hosting (H01–H03, sem deploy)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-14T21:21:11Z",
+              "completed_at": "2026-11-14T21:21:58Z"
+            },
+            {
+              "name": "Testes da plataforma",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-14T21:21:58Z",
+              "completed_at": "2026-11-14T21:25:24Z"
+            },
+            {
+              "name": "Atualização entre versões transacionais, sem serviços externos",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-11-14T21:25:24Z",
+              "completed_at": "2026-11-14T21:25:32Z"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-11-14T21:25:32Z",
+              "completed_at": "2026-11-14T21:25:32Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-11-14T21:25:32Z",
+              "completed_at": "2026-11-14T21:25:32Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-11-14T21:25:32Z",
+              "completed_at": "2026-11-14T21:25:32Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/YNPHAX/EEAR/check-runs/132592396534",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": 1000000452,
+          "runner_name": "GitHub Actions 1000000452",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        },
+        {
+          "id": 132592397857,
+          "run_id": 43642326690,
+          "workflow_name": "Testes",
+          "head_branch": "codex/eear-correcao-estrutural",
+          "run_url": "https://api.github.com/repos/YNPHAX/EEAR/actions/runs/43642326690",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVVUbMM8AAAAe3x9uIQ",
+          "head_sha": "a6366a849871db3de3554f28fa1400f10aff0f0c",
+          "url": "https://api.github.com/repos/YNPHAX/EEAR/actions/jobs/132592397857",
+          "html_url": "https://github.com/YNPHAX/EEAR/actions/runs/43642326690/job/132592397857",
+          "status": "completed",
+          "conclusion": "skipped",
+          "created_at": "2026-11-14T21:20:52Z",
+          "started_at": "2026-11-14T21:20:52Z",
+          "completed_at": "2026-11-14T21:20:52Z",
+          "name": "historico-legado",
+          "steps": [],
+          "check_run_url": "https://api.github.com/repos/YNPHAX/EEAR/check-runs/132592397857",
+          "labels": [
+            "ubuntu-latest"
+          ],
+          "runner_id": null,
+          "runner_name": null,
+          "runner_group_id": null,
+          "runner_group_name": null
+        }
+      ]
+    }
+  ],
+  "refsPreservadas": [
+    {
+      "ref": "refs/heads/main",
+      "sha": "7f9ba7f122e315d8bef8dc4db2c6187470a608cd"
+    },
+    {
+      "ref": "refs/heads/claude/eear-study-hydwqt",
+      "sha": "2f6cad6ebba53d0f86319dcada671fe9396f8111"
+    },
+    {
+      "ref": "refs/heads/codex/eear-correcao-estrutural",
+      "sha": "a6366a849871db3de3554f28fa1400f10aff0f0c"
+    },
+    {
+      "ref": "refs/heads/codex/auditoria-firebase-eear",
+      "sha": "758beed207fc2196d05573e245fe43f0836dc407"
+    },
+    {
+      "ref": "refs/heads/auditoria/firebase-a35ea9a-final",
+      "sha": "2db9c15f0aff39eedc92e19785216639951efca2"
+    }
+  ],
+  "barreiraAndroid": {
+    "build": 0,
+    "verificadorOficial": 1
+  },
+  "logs": [
+    {
+      "nome": "a636-importacao-dispositivos.log",
+      "bytes": 1370,
+      "sha256": "cc0c15ed4ba9d001a8ff3340476fb2cef6fb2758ab294ce19284260240246fcd"
+    },
+    {
+      "nome": "a636-sessoes-abas.log",
+      "bytes": 1128,
+      "sha256": "80e8f2dec55b86f2dd49940154f85f9707fa56a5d8dc70fd93a0ff36e87a9a09"
+    },
+    {
+      "nome": "atualizacao-transacional.log",
+      "bytes": 586,
+      "sha256": "c526128f2ead060d1ce084b078ace28085f3c37ec66e55d0625a3685b6b06df7"
+    },
+    {
+      "nome": "bloqueadores-originais.log",
+      "bytes": 21261,
+      "sha256": "da9e50887eed8d24a2113d38abe54f639ced824197d0eb77d69379043709c664"
+    },
+    {
+      "nome": "build-2f6.log",
+      "bytes": 363,
+      "sha256": "2a913a350ce7573c9c0c205044ea4baeb613afb6b4df9dd4833a8eb53535a759"
+    },
+    {
+      "nome": "build-app.log",
+      "bytes": 362,
+      "sha256": "54492010e765e40dfb1665d13030d175b4761fa876f398c73b218278fc4cd0d2"
+    },
+    {
+      "nome": "build-d165.log",
+      "bytes": 365,
+      "sha256": "e1b3a96c6f31a4218293604a2a3adb48319fb6df37e207b9bad43fb176d60d46"
+    },
+    {
+      "nome": "build-site.log",
+      "bytes": 365,
+      "sha256": "1c7623ef59ee2f8c94de16e2ab074d5f26aad26536e924cb04a2d5ece90208d1"
+    },
+    {
+      "nome": "cache.log",
+      "bytes": 434,
+      "sha256": "ecb125963ad01cd42855fba6e6789993a78960309d95b5f89883477059999b4d"
+    },
+    {
+      "nome": "carga-navegador.log",
+      "bytes": 5140,
+      "sha256": "4639daedc0f923a35ec88c1902400f8cebc497e192f1ca20750f172a9881b44f"
+    },
+    {
+      "nome": "carga-nucleo.log",
+      "bytes": 1267,
+      "sha256": "463cec0cc9d8ee4205d1844d559678eaef2d70b9796b007157e2dc66aa2dc361"
+    },
+    {
+      "nome": "ciclo.log",
+      "bytes": 186,
+      "sha256": "998be7de36dc9da7d880c5d4482bdd845dbe3ac883e1d5769bda1456377a1de2"
+    },
+    {
+      "nome": "crash-sem-locks.log",
+      "bytes": 5160,
+      "sha256": "417b37ea8b37bf85a833535da7487dd2b8b52ab2939b5c3836d21807dff77c0e"
+    },
+    {
+      "nome": "depurador.log",
+      "bytes": 214,
+      "sha256": "0e8c1febcd6383d4497cb2fdf9599d6329fd2148f6c23cfb958bcbbbe0af8878"
+    },
+    {
+      "nome": "diarios.log",
+      "bytes": 3736,
+      "sha256": "141f1e0ad6046ea5f755bbce2d6ac7e52ee6dd1415d079298d721727e786d6ee"
+    },
+    {
+      "nome": "downgrade-2f6.log",
+      "bytes": 2351,
+      "sha256": "638824297e05b36ad5aa5a116fde694190e6412e43398fbe549ba14a6f03e734"
+    },
+    {
+      "nome": "dupla-falha.log",
+      "bytes": 1246,
+      "sha256": "704f940f70c2923ec6f2cbaa1a847dde21b3412e83a177db8c29600ee817e996"
+    },
+    {
+      "nome": "f01-riscos.log",
+      "bytes": 3139,
+      "sha256": "ff805b1442589dccebe609356af8aa652c8e865ddd81ef4b3eb4ef1797ba488d"
+    },
+    {
+      "nome": "firebase-51.log",
+      "bytes": 6460,
+      "sha256": "b75525d702b8b7b8693514590e771a6674303a3c89a9bdae84b6c6d8ee1079d8"
+    },
+    {
+      "nome": "historicos-legado.log",
+      "bytes": 18027,
+      "sha256": "c2d3a6179770e24616109809476ce9c20f54119dd1988a61d9c0bb3e1429d47f"
+    },
+    {
+      "nome": "homol-app-barreira.log",
+      "bytes": 701,
+      "sha256": "4692ce7dcaa6fd139c9ff39b50d3a54c06d62df0c92d101a65f385f015adb8c7"
+    },
+    {
+      "nome": "hosting-autoteste.log",
+      "bytes": 43,
+      "sha256": "34d6f3d15c4f421c6c0c690a16c483b4146785920f89cad0e0ba0bac9018a02b"
+    },
+    {
+      "nome": "hosting-contextos.log",
+      "bytes": 430,
+      "sha256": "185dacb48259c093dca7986c92bdd5bc9e54e3e9e9ab9b756174bda047be2a8d"
+    },
+    {
+      "nome": "hosting-gates.log",
+      "bytes": 893,
+      "sha256": "e84514813e87c43910dfddd1c5439cd466f410027d587f94d845496e7751ffaa"
+    },
+    {
+      "nome": "hosting-sondas.log",
+      "bytes": 746,
+      "sha256": "7f46dc3ddb02fdd68eed4f2c1491bce8ff8f5b855e6ef8c9840ad46a073a4f82"
+    },
+    {
+      "nome": "integridade.log",
+      "bytes": 173,
+      "sha256": "dd48626daec175d2e7c17c94c77e334f5d8d4a88a4cf513381beaae428d93d89"
+    },
+    {
+      "nome": "legado-bloqueio.log",
+      "bytes": 480,
+      "sha256": "b0806676f82bb2b7281b4e520ef3bf0b04ab36fbc8382cf70e96b6fca7a0babf"
+    },
+    {
+      "nome": "legado-contrato.log",
+      "bytes": 172,
+      "sha256": "d67e7b2a2908a77410fceff3d18fca09b3e43808ea760989856370f3fe14fafb"
+    },
+    {
+      "nome": "lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "nome": "metadados-limite.log",
+      "bytes": 1423,
+      "sha256": "a15403a403edcc1d958309cec260d935a700156ec1762ca16924ca031a702929"
+    },
+    {
+      "nome": "migracao-2f6.log",
+      "bytes": 1446,
+      "sha256": "e8f26f4d9eb473d09b63b710395ba3a2428475aa1995d65a8cc2376a1da827d7"
+    },
+    {
+      "nome": "migracao-8bd.log",
+      "bytes": 1426,
+      "sha256": "c070963fab3c4d4a1031858f769d98e097f7efd5b9872c5857a178609ab18523"
+    },
+    {
+      "nome": "montagem.log",
+      "bytes": 49,
+      "sha256": "9b3ae19dfdb6b5c58cef33fb4764ff0845710e86e461c43bace420305d0d749b"
+    },
+    {
+      "nome": "novo-abort-exclusao.log",
+      "bytes": 247,
+      "sha256": "cde3dd615754d0af94b9e37645c991c7fc26dfcfc4f12bd0eb88ad16bd0735f4"
+    },
+    {
+      "nome": "novo-erros-base-a35.log",
+      "bytes": 2118,
+      "sha256": "fbe648826166fb0dce4bd951735f9382dd94e823760001ee1d02bf380da43cbf"
+    },
+    {
+      "nome": "novo-erros.log",
+      "bytes": 1808,
+      "sha256": "3d2c2525286da9bddabd7e7a07f4ad168b69d82ddb3366c86d81a248f01f5b12"
+    },
+    {
+      "nome": "novo-importacoes-base-a35.log",
+      "bytes": 4394,
+      "sha256": "4cb05125ef41181b39fd11caa8c07c967d0526c5feaedeaede205bc2d9d51cd2"
+    },
+    {
+      "nome": "novo-importacoes.log",
+      "bytes": 4553,
+      "sha256": "6710ec32363fdaa106815316b78a7ddbd22e51d0a66f5eddf9b9958f74fb3f37"
+    },
+    {
+      "nome": "novo-regras-dependencia.log",
+      "bytes": 1731,
+      "sha256": "5f3419959151bab68577ede42bec8a050085cccbec2d64b5012670a48fa41949"
+    },
+    {
+      "nome": "novos-matriz-integral.log",
+      "bytes": 11319,
+      "sha256": "a72a781b6e69eb56e4a10e773179f44a06d00dde43f20d54504eeeb711067817"
+    },
+    {
+      "nome": "operacoes.log",
+      "bytes": 125,
+      "sha256": "351faf77708e414bcf693d41baf1cf85198c1209ec32c4123110ce4f04bd3a13"
+    },
+    {
+      "nome": "orfaos-9.log",
+      "bytes": 1161,
+      "sha256": "0771b0ec3654fb92118c31645d2503918a9cd452bc4eba5c70f63a0f64498322"
+    },
+    {
+      "nome": "persistencia-13.log",
+      "bytes": 24320,
+      "sha256": "46a8691d60c3898714d67496103836d2c26c80638775f1d1d749d6393e6e0e51"
+    },
+    {
+      "nome": "plataforma.log",
+      "bytes": 17317,
+      "sha256": "63cc1dbdc7fcf7f50307e8c6c62efe10cd0e1e48de14397f8d09c3b0d9e60f95"
+    },
+    {
+      "nome": "preparacao-importacoes-1.log",
+      "bytes": 412,
+      "sha256": "4f5b6cc58c895ba0234e92e81cb3174d536157b071e2febdbeea34eb1a546b25"
+    },
+    {
+      "nome": "preparacao-importacoes-2.log",
+      "bytes": 375,
+      "sha256": "dc963d45ed0f05cbc7dafcaaff9157074ffe4f1c973c68b5a3d3a6fe9cb57690"
+    },
+    {
+      "nome": "preparacao-sessoes-abas-1.log",
+      "bytes": 1374,
+      "sha256": "5b4bedd9f6ec0865f1155b9ef6f110b2184c60edf5c8c1a571bfb2dc286f8559"
+    },
+    {
+      "nome": "sincronia-firebase.log",
+      "bytes": 1610,
+      "sha256": "b70a96d618f928f4bc884eb7e8dc9a61b295a1fa971849131b528e841a952ea1"
+    },
+    {
+      "nome": "transferencia-algebra.log",
+      "bytes": 130,
+      "sha256": "40034523f55b98a1ce913fa17c301477c41ac55e9f58b43ccc9e36e82b0fd448"
+    },
+    {
+      "nome": "verificar-app.log",
+      "bytes": 57,
+      "sha256": "bfcd3177fdf59f82c12f645d7e5f48d6b1155a295deaab280a18dde0f2e76754"
+    },
+    {
+      "nome": "verificar-site.log",
+      "bytes": 58,
+      "sha256": "40ca2f70e4a40a1485703196f9a5b792e0987420bea3b65559c4093124cb2b7a"
+    },
+    {
+      "nome": "workflows.log",
+      "bytes": 64,
+      "sha256": "81a41b921ef2727b31b12154c2cb2408a84f268c9a715d1bfdbbf8ae65045c06"
+    }
+  ],
+  "comandosOriginais": "import os,sys,json,subprocess,time,hashlib\nfrom pathlib import Path\nrepo=Path('/tmp/eear-audit2-runtime');out=Path('/tmp/eear-audit2-20261114');g=sys.argv[1]\nenv=dict(os.environ,NODE_PATH='/tmp/eear-audit-deps/node_modules',PLAYWRIGHT_BROWSERS_PATH='/tmp/eear-audit-browsers',EEAR_FIREBASE_SDK='/tmp/eear-audit-deps/node_modules/firebase',EEAR_FIREBASE_CLI='/tmp/eear-audit-deps/node_modules/.bin/firebase',EEAR_REPO_ALVO=str(repo),EEAR_REPO_LEGADO='/tmp/eear-2f6cad6',EEAR_REPO_REPROVADO='/tmp/eear-audit-a35-source')\ntree=json.loads((out/'github-tree.json').read_text());entradas=[x for x in tree['tree'] if x['type']=='blob' and (x['path'].startswith(('curso/','web/','testes/','.github/workflows/')) or x['path'] in ['firebase.json','.firebaserc'])]\ndef conferir():\n for x in entradas:\n  p=repo/x['path'];b=p.read_bytes();s=hashlib.sha1(b'blob '+str(len(b)).encode()+b'\\0'+b).hexdigest()\n  assert s==x['sha'],x['path']\n return hashlib.sha256((repo/'curso/app.js').read_bytes()).hexdigest()\ncasos={\n'firebase': [('firebase-51','node testes/firebase-emulador.test.js',{}),('persistencia-13','node testes/persistencia-regressoes.test.js',{}),('dupla-falha','node testes/operacoes-dupla-falha.test.js',{}),('sincronia-firebase','node testes/sincronia-firebase.test.js',{}),('f01-riscos','node testes/f01-riscos.test.js',{'EEAR_F01_RISCOS':'zerar-nuvem,zerar-unica,suspensa,exclusao-surda,contagens,escrita-interrompida'}),('diarios','node testes/diarios-auditoria.test.js',{}),('orfaos-9','node testes/orfaos-auditoria.test.js',{'EEAR_ORFAOS_CENARIOS':'segunda-escrita-30min','EEAR_ORFAOS_SEQUENCIAS':'9'}),('crash-sem-locks','node testes/duravel-candidato.test.js',{'EEAR_DURAVEL_SEM_TRAVAS':'1'}),('migracao-8bd','node testes/diario-legado-auditoria.test.js',{'EEAR_REPO_LEGADO':'/tmp/eear-8bd32d2'}),('migracao-2f6','node testes/diario-legado-auditoria.test.js',{}),('metadados-limite','node testes/metadados-limite.test.js',{'EEAR_CARGA_ESTADO':str(out/'estado-limite.json')})],\n'bloqueadores':[('bloqueadores-originais','node testes/bloqueadores-auditoria.test.js',{})],\n'local':[('montagem','python3 -I web/montar_app.py --conferir',{}),('integridade','python3 -I web/verificar_publicacao.py validar',{}),('workflows','python3 -I web/verificar_publicacao.py conferir-workflows',{}),('lint','/tmp/eear-audit-deps/node_modules/.bin/eslint curso/app.js curso/app curso/dados web/sw.js testes',{}),('hosting-autoteste','python3 -I web/verificar_publicacao.py autoteste',{}),('hosting-sondas','python3 testes/hosting-auditoria.py .',{}),('hosting-gates','python3 testes/hosting-gates-auditoria.py .',{}),('hosting-contextos','python3 testes/hosting-contexto-auditoria.py .',{}),('operacoes','node testes/operacoes.test.js',{}),('transferencia-algebra','node testes/transferencia-identidades.test.js',{}),('legado-contrato','node testes/legado-contrato.test.js',{}),('legado-bloqueio','node testes/legado-bloqueio.test.js',{}),('ciclo','node testes/ciclo-sincronia.test.js',{}),('plataforma','node testes/plataforma.test.js',{}),('cache','node testes/cache-restaurado.test.js',{}),('depurador','node testes/depurador-transacao.test.js',{}),('carga-nucleo','node testes/carga-nucleo.test.js',{'EEAR_CARGA_ESTADO':str(out/'estado-limite.json')}),('carga-navegador','node testes/carga-metadados.test.js',{'EEAR_CARGA_SAIDA':str(out/'carga-medidas.json')})]\n}[g]\nr=[]\nfor nome,cmd,variaveis in casos:\n h=conferir();start=time.time()\n if nome=='metadados-limite' and not (out/'estado-limite.json').exists():\n  print('Carga ainda não produziu entrada de limite; grupo pendente, não aprovado.',flush=True);break\n with (out/(nome+'.log')).open('w') as f:p=subprocess.run(cmd.split(),cwd=repo,env=dict(env,**variaveis),stdout=f,stderr=subprocess.STDOUT)\n depois=conferir();x=dict(nome=nome,comando=cmd,variaveis=variaveis,exit=p.returncode,segundos=round(time.time()-start,2),sha256Antes=h,sha256Depois=depois,arquivosConferidos=len(entradas));r.append(x);(out/(g+'-resultados.json')).write_text(json.dumps(r,indent=2));print(json.dumps(x),flush=True)\n"
+}

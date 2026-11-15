@@ -1,0 +1,1632 @@
+Evidências da segunda auditoria. SHA a6366a849871db3de3554f28fa1400f10aff0f0c. Negativas do candidato permanecem negativas; controles históricos/contrafactuais e preparações estão identificados no relatório.
+
+
+===== a636-importacao-dispositivos.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a636-importacao-dispositivos.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✗ mesmo-backup-dois-dispositivos: {"arquivoSha256":"440c8bfe4a29f5f436c3deee7e3bd337f813fdb1c040de4215450b8cdab60b86","base":2,"atividadeNoArquivo":5,"esperado":5,"remoto":8,"novoDispositivo":8,"aviso":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit2/testes/a636-importacao-dispositivos.test.js"" exited with code 1
+
+
+===== a636-sessoes-abas.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a636-sessoes-abas.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ A excluída; duas abas permanecem em B; estudo de B confirmado antes/depois da resposta A; nenhum dado B apagado.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== atualizacao-transacional.log =====
+✓ troca 1, versão a: tarefas, contagem 3/3, aulas, cartões, erros e certificado preservados.
+✓ troca 2, versão b: tarefas, contagem 4/4, aulas, cartões, erros e certificado preservados.
+✓ troca 3, versão a: tarefas, contagem 5/5, aulas, cartões, erros e certificado preservados.
+✓ troca 4, versão b: tarefas, contagem 6/6, aulas, cartões, erros e certificado preservados.
+✓ Zerar + estudo na versão a: exatamente 1/1, sem restaurar certificados ou tarefas anteriores.
+✓ Zerar + estudo na versão b: exatamente 1/1, sem restaurar certificados ou tarefas anteriores.
+
+
+===== bloqueadores-originais.log =====
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+✓ marcar-controle, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"of866d4d0-b0b8-4fef-ba95-2757e092a193","geracaoNova":"oc12f08da-cd13-4f79-873c-31d43cbd38ad","apagado":true,"ignoradas":["ofc2444c7-31a0-4785-9eb0-69ff818c8531"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"of866d4d0-b0b8-4fef-ba95-2757e092a193","id":"o5464cd78-0a42-43f1-b2b5-3d1d9f45c0a3"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✗ importacao, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o00690efc-a9af-496c-81bb-125cca9d113d","geracaoNova":"oe985d414-6c8d-4b34-8af9-ed7aef61c1ad","apagado":true,"ignoradas":["o0a7161fd-7934-4a07-b45b-a01c62a1d4c1"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"o00690efc-a9af-496c-81bb-125cca9d113d","id":"odcd8e180-dba3-4fd6-8cb2-98aedc420cc3"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✗ importacao-sem-crash, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o778364bb-0fc4-4b71-95cb-f7524dd2a8ce","geracaoNova":"o01923a9a-3a01-4ae5-be98-7fde4be30266","apagado":true,"ignoradas":["o908f37a9-25bc-4467-9568-27e7bebcbe7a"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"o778364bb-0fc4-4b71-95cb-f7524dd2a8ce","id":"o88d874d8-64e2-47da-8f63-90feb30661c3"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ marcar-controle, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"oadcec102-c270-434b-9e6d-cdf2ac7497b6","geracaoNova":"odec122e5-2838-446e-97e4-bf7e6418f20b","apagado":true,"ignoradas":["o32c7bb0f-f691-4c8e-8fd1-8bb449c5bb55"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"oadcec102-c270-434b-9e6d-cdf2ac7497b6","id":"o8e3f9fc9-5457-4747-840c-403affc3a83a"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✗ importacao, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"oecd7d14b-7f10-4b36-a4d5-8030ef984733","geracaoNova":"o997aa7f8-3e67-4525-8be7-39442c78c662","apagado":true,"ignoradas":["o5b90b567-6b9d-41c6-9231-39576cbfbd27"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"oecd7d14b-7f10-4b36-a4d5-8030ef984733","id":"o67e6c6e3-969b-4fe6-ad57-2a150cc8cdb1"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✗ importacao-sem-crash, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o1a922cd2-d50d-4359-b787-0fea673b121f","geracaoNova":"odadb53ff-2147-4174-b971-91e3a662da3c","apagado":true,"ignoradas":["oaddea870-86ae-4423-8968-a0c7bcad8590"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"o1a922cd2-d50d-4359-b787-0fea673b121f","id":"ocadf4446-7279-4eba-9bba-7fdf394c0534"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+CONTROLE NEGATIVO a35-importacao-exclusao em a35ea9a: REPRODUZIU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/a35-contas-adversarial.test.js"
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+✗ levar-operacoes-identificadas: {"anon":2,"contaAntes":2,"esperado":4,"local":2,"remoto":2,"tarefas":{"T:anon1":true,"T:anon2":true,"T:R1":true,"T:R2":true,"T:remota":true},"opsAnon":["o60776d34-b8a3-4de9-aae1-269057c25ba8","o89f7f226-2b64-47cf-a375-8671a3f3d490"],"opsContaAntes":["o35e8c8de-683d-4ee7-93d8-b532fb553207","o78764ce3-a65b-4c41-9a32-40b0f67188f9"]}
+✓ controle-importacao-ids-preservados: {"esperado":4,"local":4,"remoto":4,"depoisRepetirReabrir":4}
+✗ exclusao-resposta-de-sessao-antiga: {"http":200,"uidA":"lG9E5vH3fLGMYnegRKFRPS2Um4yO","uidB":"CrzuuJGKuP0dcRAY2QIslHRBV8V1","authAtual":{"uid":null,"local":null},"antesResposta":{"T:B":true},"depois":{},"remotoB":{"T:B":true},"aviso":"Progresso salvo neste aparelho."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/tmp/eear-audit2-runtime/testes/a35-contas-adversarial.test.js"" exited with code 1
+CONTROLE NEGATIVO a35-contas-adversarial em a35ea9a: REPRODUZIU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/a35-levar-reimportacao.test.js"
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+✗ levar-3-mais-2: {"esperado":5,"local":3,"servidor":3,"idsAnon":["ob0272d35-8f75-4df5-86b3-4883ce7dfa35","o9fd9a631-ca8d-47cf-a2ea-98e2f67e8e04","o8c1766ee-6cbc-4215-b0fd-8493de1784bc"],"idsBase":["oe052a884-4b49-470b-aefb-04f65760d413","ob37f0945-08b4-423a-8037-0092ffd90896"]}
+✗ reimportar-apos-levar: {"esperado":5,"depoisImportar":6,"depoisRepetirReabrir":6,"servidor":6,"aviso":"Progresso salvo na sua conta."}
+✓ controle-importar-diretamente-5-de-5: {"esperado":5,"local":5,"servidor":5}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/tmp/eear-audit2-runtime/testes/a35-levar-reimportacao.test.js"" exited with code 1
+CONTROLE NEGATIVO a35-levar-reimportacao em a35ea9a: REPRODUZIU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/a35-retorno-firebase-antigo.test.js"
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+✗ exclusao-firebase-anterior: {"candidato":"a35ea9a","produtorAntigo":"2f6cad6ebba53d0f86319dcada671fe9396f8111","docV2Apagado":true,"authExcluidaHTTP":400,"marcadorHTTP":404,"recriou":true,"nomeRestaurado":"Pessoa Fictícia Excluída","feitoRestaurado":{"T:apos-exclusao-legitima":true,"T:privada":true},"avisoAtual":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/tmp/eear-audit2-runtime/testes/a35-retorno-firebase-antigo.test.js"" exited with code 1
+CONTROLE NEGATIVO a35-retorno-firebase-antigo em a35ea9a: REPRODUZIU
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ marcar-controle, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"oc1002821-81d7-41b2-8a99-164d9a35168d","geracaoNova":"of009943e-e38b-43b2-8d12-cf4baa7dc0c8","apagado":true,"ignoradas":["oc096eba9-a751-4e53-8518-6cc243c47752"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"oc1002821-81d7-41b2-8a99-164d9a35168d","id":"o6a354ce8-63e1-48e4-8c27-63b826d8d039"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ importacao, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"ofc4f0c5f-ef75-4c5d-9b9d-d330a543aa59","geracaoNova":"o60626cad-acfa-43de-a33f-b4880d420e49","apagado":true,"ignoradas":["o00f96849-0051-4e4a-b832-38c27215bfee"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"ofc4f0c5f-ef75-4c5d-9b9d-d330a543aa59","id":"o9809a7cb-9e14-4497-9eeb-145ae98b9f5d"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ importacao-sem-crash, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o4eab198d-2dfa-40b1-afde-3ea5e4f5e8b3","geracaoNova":"o64190b83-dc6d-4b5f-828b-6ce8dd3cad78","apagado":true,"ignoradas":["ob3061d48-0d00-48ce-abe8-b06725515e4a"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o4eab198d-2dfa-40b1-afde-3ea5e4f5e8b3","id":"o3d81534e-73ab-4b63-b6f2-9e2d4cb1d2a6"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ marcar-controle, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"odfa6b9cc-6dda-4c21-b96b-6703950980df","geracaoNova":"oec7f94a9-5396-43a8-b901-c7ef230752fc","apagado":true,"ignoradas":["od43baafb-9dd5-4721-acd3-fdf626b04211"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"odfa6b9cc-6dda-4c21-b96b-6703950980df","id":"oba439f6a-7eb9-4cfd-b44d-c543298149cd"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ importacao, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o42ed1587-8154-45ea-9de0-42aa317d7ad1","geracaoNova":"o426a0efd-1389-43e4-8a25-bc0af776613b","apagado":true,"ignoradas":["offe463eb-f76d-4e77-a5ba-b6185396de1e"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o42ed1587-8154-45ea-9de0-42aa317d7ad1","id":"o4e7f44c6-9af8-426a-8258-0a5f8a58c729"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ importacao-sem-crash, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o28cfb9f5-01e6-43c3-a6b8-350ae6fd02c4","geracaoNova":"od6e9113d-c484-45f2-93f9-b825fe9ce530","apagado":true,"ignoradas":["o1c36a4fb-6135-40c2-bb60-6071251eda6e"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o28cfb9f5-01e6-43c3-a6b8-350ae6fd02c4","id":"oedea2c12-f7fb-4d03-b5d4-6f124ff69d52"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+GATE BLOQUEADOR a35-importacao-exclusao: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/a35-contas-adversarial.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ levar-operacoes-identificadas: {"anon":2,"contaAntes":2,"esperado":4,"local":4,"remoto":4,"tarefas":{"T:anon1":true,"T:anon2":true,"T:R1":true,"T:R2":true,"T:remota":true},"opsAnon":["obaa12070-d692-4097-8be2-104624338a01","o815c2eb4-011b-4767-a111-12f77c9717c8"],"opsContaAntes":["o1f6052d7-14ca-4158-ab97-e5f412b4fea1","o26aed427-6d84-4f36-84c6-6a4472fd1932"]}
+✓ controle-importacao-ids-preservados: {"esperado":4,"local":4,"remoto":4,"depoisRepetirReabrir":4}
+✓ exclusao-resposta-de-sessao-antiga: {"http":200,"uidA":"tD0cQRzzAoda3udWJAICmNDnKfma","uidB":"r1ZVgSd68yczWPsQRiLnoOZYMYnu","authAtual":{"uid":"r1ZVgSd68yczWPsQRiLnoOZYMYnu","local":"firebase:r1ZVgSd68yczWPsQRiLnoOZYMYnu"},"antesResposta":{"T:B":true},"depois":{"T:B":true},"remotoB":{"T:B":true,"T:depois-troca":true},"aviso":"Progresso salvo na sua conta."}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR a35-contas-adversarial: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/a35-levar-reimportacao.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ levar-3-mais-2: {"esperado":5,"local":5,"servidor":5,"idsAnon":["o2f7c35af-3b69-49af-a883-2d545021bdaf","o94986e08-945b-4d0d-9b6e-67c1999f2f44","o7b0f02bc-50cf-4850-b4c1-9ef939e8b373"],"idsBase":["o701be4fd-2b66-4766-9808-ddffb98e7a51","oc3f39474-a00f-459a-8ae0-3c3be5f52bef"]}
+✓ reimportar-apos-levar: {"esperado":5,"depoisImportar":5,"depoisRepetirReabrir":5,"servidor":5,"aviso":"Progresso salvo na sua conta."}
+✓ controle-importar-diretamente-5-de-5: {"esperado":5,"local":5,"servidor":5}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR a35-levar-reimportacao: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/exclusao-protocolo.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+✓ Cliente Firebase 2f6cad6: exclusão recusada, Auth e documento preservados; DELETE direto 403. SDK commit recusado
+✓ Exclusão atual completa, tombstone imutável, token antigo 403 em leitura/gravação, reconexão não recria; estudo offline preservado localmente.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR exclusao-protocolo: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/exclusao-auth-atrasada.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Resposta Auth deleteUser atrasada de A não encerra B, não altera seu perfil e não impede novo estudo remoto; cópia A removida.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR exclusao-auth-atrasada: PASSOU
+✓ Transferência: 5 IDs exatos, repetição, configuração, certificados, Zerar de cada origem, novo estudo e erros retirados.
+GATE BLOQUEADOR transferencia-identidades: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/transferencia-crashes.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Levar sem aula, 5/5 após Browser.crash, segunda queda, reimportação e outro dispositivo; sem Web Locks.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR transferencia-crashes: PASSOU
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Diário ambíguo antigo preservado após reabertura, recuperável, sem confirmação falsa; descarte explícito não ressuscita.
+GATE BLOQUEADOR diario-geracao-antiga: PASSOU
+
+
+===== build-2f6.log =====
+OK: autoteste da verificação (193 casos)
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+OK: nada restrito em /tmp/eear-audit2-20261114/build-2f6
+site em /tmp/eear-audit2-20261114/build-2f6: 257 arquivos, 9.7 MB (202 imagens de provas)
+
+
+===== build-app.log =====
+OK: autoteste da verificação (193 casos)
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+OK: nada restrito em /tmp/eear-audit2-20261114/build-app
+app em /tmp/eear-audit2-20261114/build-app: 257 arquivos, 9.7 MB (202 imagens de provas)
+
+
+===== build-d165.log =====
+OK: autoteste da verificação (193 casos)
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+OK: nada restrito em /tmp/eear-audit2-20261114/build-d165
+site em /tmp/eear-audit2-20261114/build-d165: 257 arquivos, 9.7 MB (202 imagens de provas)
+
+
+===== build-site.log =====
+OK: autoteste da verificação (193 casos)
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+OK: nada restrito em /tmp/eear-audit2-20261114/build-site
+site em /tmp/eear-audit2-20261114/build-site: 257 arquivos, 9.7 MB (202 imagens de provas)
+
+
+===== cache.log =====
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+DIAGNÓSTICO cache-restaurado: {"preparado":{"idb":3,"cache":2,"metaPreservada":true},"atualizou":true,"atividadeCache":3,"atividadeExportada":3,"marcaCache":true,"marcaExportada":true}
+✓ recuperação regrava o cache antigo sem alterar o checkpoint confirmado.
+✓ abrir certificado legado sem estudar preserva exatamente o cache original.
+
+
+===== carga-navegador.log =====
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+{"alvo":"/tmp/eear-audit2-runtime","appSha256":"ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f","rodadas":500,"abas":4,"firebase":"bloqueado","webLocks":false,"eventosStorage":false}
+MEDIDA {"fase":"base","atividade":2,"marcas":1,"bytesEstado":2113,"caracteresEstado":2111,"bytesMeta":1607,"bytesCheckpoint":3867,"recibos":1,"usoOrigem":294912,"quotaOrigem":2147778560,"segundos":1.405}
+MEDIDA {"fase":"rodada-50","atividade":202,"marcas":201,"bytesEstado":32835,"caracteresEstado":32833,"bytesMeta":28367,"bytesCheckpoint":70349,"recibos":201,"usoOrigem":307200,"quotaOrigem":2147790848,"segundos":4.48}
+MEDIDA {"fase":"rodada-100","atividade":402,"marcas":401,"bytesEstado":63635,"caracteresEstado":63633,"bytesMeta":55167,"bytesCheckpoint":136949,"recibos":401,"usoOrigem":319488,"quotaOrigem":2147803136,"segundos":9.064}
+MEDIDA {"fase":"rodada-150","atividade":602,"marcas":601,"bytesEstado":94835,"caracteresEstado":94833,"bytesMeta":82167,"bytesCheckpoint":204149,"recibos":601,"usoOrigem":339968,"quotaOrigem":2147823616,"segundos":12.723}
+MEDIDA {"fase":"rodada-200","atividade":802,"marcas":801,"bytesEstado":126035,"caracteresEstado":126033,"bytesMeta":109167,"bytesCheckpoint":271349,"recibos":801,"usoOrigem":348160,"quotaOrigem":2147831808,"segundos":17.364}
+MEDIDA {"fase":"rodada-250","atividade":1002,"marcas":1001,"bytesEstado":157236,"caracteresEstado":157234,"bytesMeta":136167,"bytesCheckpoint":338550,"recibos":1001,"usoOrigem":364544,"quotaOrigem":2147848192,"segundos":24.223}
+MEDIDA {"fase":"rodada-300","atividade":1202,"marcas":1201,"bytesEstado":188436,"caracteresEstado":188434,"bytesMeta":163167,"bytesCheckpoint":405750,"recibos":1201,"usoOrigem":385024,"quotaOrigem":2147868672,"segundos":32.506}
+MEDIDA {"fase":"rodada-350","atividade":1402,"marcas":1401,"bytesEstado":219636,"caracteresEstado":219634,"bytesMeta":190167,"bytesCheckpoint":472950,"recibos":1401,"usoOrigem":421888,"quotaOrigem":2147905536,"segundos":40.907}
+MEDIDA {"fase":"rodada-400","atividade":1602,"marcas":1601,"bytesEstado":250836,"caracteresEstado":250834,"bytesMeta":217167,"bytesCheckpoint":540150,"recibos":1601,"usoOrigem":462848,"quotaOrigem":2147946496,"segundos":53.581}
+MEDIDA {"fase":"rodada-450","atividade":1802,"marcas":1801,"bytesEstado":282036,"caracteresEstado":282034,"bytesMeta":244167,"bytesCheckpoint":607350,"recibos":1801,"usoOrigem":495616,"quotaOrigem":2147979264,"segundos":68.961}
+MEDIDA {"fase":"rodada-500","atividade":2002,"marcas":2001,"bytesEstado":313236,"caracteresEstado":313234,"bytesMeta":271167,"bytesCheckpoint":674550,"recibos":2001,"usoOrigem":532480,"quotaOrigem":2148016128,"segundos":85.962}
+✓ carga: 2000 marcas, atividade 2002, certificado e quatro abas
+MEDIDA {"fase":"reset-1","atividade":1,"marcas":1,"bytesEstado":351907,"caracteresEstado":351905,"bytesMeta":351482,"bytesCheckpoint":793626,"recibos":2003,"usoOrigem":442368,"quotaOrigem":2147926016,"segundos":88.297}
+MEDIDA {"fase":"reset-2","atividade":1,"marcas":1,"bytesEstado":352083,"caracteresEstado":352081,"bytesMeta":351658,"bytesCheckpoint":794068,"recibos":2005,"usoOrigem":442368,"quotaOrigem":2147926016,"segundos":91.065}
+MEDIDA {"fase":"reset-3","atividade":1,"marcas":1,"bytesEstado":352259,"caracteresEstado":352257,"bytesMeta":351834,"bytesCheckpoint":794510,"recibos":2007,"usoOrigem":442368,"quotaOrigem":2147926016,"segundos":92.716}
+MEDIDA {"fase":"reset-4","atividade":1,"marcas":1,"bytesEstado":352435,"caracteresEstado":352433,"bytesMeta":352010,"bytesCheckpoint":794952,"recibos":2009,"usoOrigem":442368,"quotaOrigem":2147926016,"segundos":94.1}
+MEDIDA {"fase":"reset-5","atividade":1,"marcas":1,"bytesEstado":352611,"caracteresEstado":352609,"bytesMeta":352186,"bytesCheckpoint":795394,"recibos":2011,"usoOrigem":446464,"quotaOrigem":2147930112,"segundos":95.779}
+MEDIDA {"fase":"reset-6","atividade":1,"marcas":1,"bytesEstado":352787,"caracteresEstado":352785,"bytesMeta":352362,"bytesCheckpoint":795836,"recibos":2013,"usoOrigem":442368,"quotaOrigem":2147926016,"segundos":97.765}
+MEDIDA {"fase":"reset-7","atividade":1,"marcas":1,"bytesEstado":352963,"caracteresEstado":352961,"bytesMeta":352538,"bytesCheckpoint":796278,"recibos":2015,"usoOrigem":442368,"quotaOrigem":2147926016,"segundos":99.47}
+MEDIDA {"fase":"reset-8","atividade":1,"marcas":1,"bytesEstado":353139,"caracteresEstado":353137,"bytesMeta":352714,"bytesCheckpoint":796720,"recibos":2017,"usoOrigem":442368,"quotaOrigem":2147926016,"segundos":101.571}
+MEDIDA {"fase":"reset-9","atividade":1,"marcas":1,"bytesEstado":353315,"caracteresEstado":353313,"bytesMeta":352890,"bytesCheckpoint":797162,"recibos":2019,"usoOrigem":442368,"quotaOrigem":2147926016,"segundos":103.59}
+MEDIDA {"fase":"reset-10","atividade":1,"marcas":1,"bytesEstado":353491,"caracteresEstado":353489,"bytesMeta":353066,"bytesCheckpoint":797604,"recibos":2021,"usoOrigem":446464,"quotaOrigem":2147930112,"segundos":106.395}
+✓ reabertura após carga/reset: nenhum progresso antigo reaparece
+Carga: 0 falha(s); 110.4 s. Crescimento medido sem compactação.
+
+
+===== carga-nucleo.log =====
+NÚCLEO {"acoes":1000,"bytesEstado":150368,"bytesMeta":132325,"segundos":1.754}
+NÚCLEO {"acoes":2000,"bytesEstado":302368,"bytesMeta":265325,"segundos":9.013}
+NÚCLEO {"acoes":3000,"bytesEstado":454368,"bytesMeta":398325,"segundos":20.538}
+NÚCLEO {"acoes":4000,"bytesEstado":606368,"bytesMeta":531325,"segundos":34.623}
+NÚCLEO {"acoes":5000,"bytesEstado":758368,"bytesMeta":664325,"segundos":52.826}
+NÚCLEO {"acoes":6000,"bytesEstado":910368,"bytesMeta":797325,"segundos":78.865}
+NÚCLEO {"acoes":7000,"bytesEstado":1062368,"bytesMeta":930325,"segundos":113.55}
+NÚCLEO {"acoes":8000,"bytesEstado":1214368,"bytesMeta":1063325,"segundos":152.192}
+NÚCLEO {"acoes":9000,"bytesEstado":1366368,"bytesMeta":1196325,"segundos":197.563}
+NÚCLEO {"acoes":10000,"bytesEstado":1518371,"bytesMeta":1329326,"segundos":246.721}
+NÚCLEO {"acoes":11000,"bytesEstado":1672371,"bytesMeta":1463326,"segundos":318.955}
+NÚCLEO {"acoes":12000,"bytesEstado":1826371,"bytesMeta":1597326,"segundos":385.877}
+NÚCLEO RESET {"marcas":1,"atividade":1,"bytesEstado":2137837,"bytesMeta":2137651}
+Núcleo: 12.000 operações em lotes, repetição, contagens e reset passaram; primeiro ponto amostrado acima de 900.000: {"acoes":6000,"bytesEstado":910368,"bytesMeta":797325,"segundos":78.865}
+
+
+===== ciclo.log =====
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}
+
+
+===== crash-sem-locks.log =====
+Durável independente: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/duravel-candidato.test.js"
+Durável independente: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ marca: {"aceito":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"z":0},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"off2ec937-8ce4-4949-81e1-904dd1f0e6ab","principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"off2ec937-8ce4-4949-81e1-904dd1f0e6ab","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"z":0,"certs":["DURAVEL-CERT"]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ zerar: {"aceito":{"feito":{},"act":{},"z":1794693852234},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{},"act":{},"certsZ":1794693852234,"certs":[]},"geracao":"oa9505b2d-1669-4278-8c16-cbde0d5c48a1","principal":{"feito":{},"act":{},"certsZ":1794693852234,"certs":[]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{},"act":{},"certsZ":1794693852234,"certs":[]},"geracao":"oa9505b2d-1669-4278-8c16-cbde0d5c48a1","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{},"act":{},"z":1794693852234,"certs":[]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ zerar-estudar: {"aceito":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"z":1794693860857},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"certsZ":1794693860857,"certs":[]},"geracao":"obc3db60f-e3af-4004-8253-aa55bfee0cea","principal":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"certsZ":1794693860857,"certs":[]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"certsZ":1794693860857,"certs":[]},"geracao":"obc3db60f-e3af-4004-8253-aa55bfee0cea","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"z":1794693860857,"certs":[]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ duas-quedas: {"aceito":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"z":0},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"o8e324f4f-8c0a-4950-941a-6ae4184e5dfd","principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"o8e324f4f-8c0a-4950-941a-6ae4184e5dfd","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"z":0,"certs":["DURAVEL-CERT"]},"depoisLimpeza":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"o8e324f4f-8c0a-4950-941a-6ae4184e5dfd","principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"segundaPre":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"o8e324f4f-8c0a-4950-941a-6ae4184e5dfd","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperouSegunda":true,"segundoEstado":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3}}}
+Durável: 0 falha(s) em 4 cenários.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== depurador.log =====
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Controle: pausa em transação real bloqueou a barreira de outra aba; retomar liberou a fila sem alterar o checkpoint.
+
+
+===== diarios.log =====
+Diários: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/diarios-auditoria.test.js"
+Diários: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ apos-diario: {"webLocks":true,"interrupcao":"fechamento","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"28","lineNumber":2695,"columnNumber":12},"aposHandlerDeSalvar":false,"recuperado":true,"chegou":true,"exportado":{"T:aceita":true,"T:base":true},"diariosAntesExcluir":0,"ofereceuExcluir":false,"diarioDepois":0,"aviso":"Progresso salvo na sua conta."}
+✓ apos-diario-crash: {"webLocks":true,"interrupcao":"Page.crash","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"28","lineNumber":2695,"columnNumber":12},"aposHandlerDeSalvar":false,"recuperado":true,"chegou":true,"exportado":{"T:aceita":true,"T:base":true},"diariosAntesExcluir":0,"ofereceuExcluir":false,"diarioDepois":0,"aviso":"Progresso salvo na sua conta."}
+✓ sem-web-locks: {"webLocks":false,"interrupcao":"fechamento","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"29","lineNumber":2695,"columnNumber":12},"aposHandlerDeSalvar":true,"recuperado":true,"chegou":true,"exportado":{"T:aceita":true,"T:base":true},"diariosAntesExcluir":0,"ofereceuExcluir":false,"diarioDepois":0,"aviso":"Progresso salvo na sua conta."}
+✓ sem-web-locks-crash: {"webLocks":false,"interrupcao":"Page.crash","duravel":true,"vistoEmOutraAba":1,"aceitaNaExportacao":true,"principalJaContinha":false,"ponto":{"scriptId":"29","lineNumber":2695,"columnNumber":12},"aposHandlerDeSalvar":true,"recuperado":true,"chegou":true,"exportado":{"T:aceita":true,"T:base":true},"diariosAntesExcluir":0,"ofereceuExcluir":false,"diarioDepois":0,"aviso":"Progresso salvo na sua conta."}
+✓ exclusao-com-diario-pendente: {"webLocks":true,"aceitaNaExportacao":true,"principalJaContinha":false,"duraveisAntes":1,"avisoAntes":"Progresso salvo na sua conta.","ofereceuExcluir":false,"duraveisDepois":1,"recuperado":true,"chegou":true,"exportado":{"T:aceita":true,"T:base":true},"servidor":{"T:aceita":true,"T:base":true}}
+✓ concorrencia-intensa: {"paginas":4,"alteracoes":200,"totalEsperado":202,"atividade":202,"marcacoes":201,"convergiu":true,"recuperado":true,"chegou":true}
+✓ sem-notificacoes: {"recuperouViva":true,"diarios":0,"recuperouFria":true,"estado":{"T:ativa":true,"T:base":true,"T:orfao":true}}
+✓ lider-suspensa: {"lider":"A","papelB":"Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta.","local":true,"enviouCongelada":true,"enviouDepois":true,"aviso":"Aguardando confirmação do armazenamento neste aparelho. Mantenha a aba aberta."}
+Diários: 0 falha(s) em 8 cenários.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== downgrade-2f6.log =====
+
+== 1. estudo na versão anterior
+  ✓ na versão anterior: o progresso antigo abre e o aluno marca uma tarefa e revisa um cartão
+
+== 2. atualização para a versão nova
+  ✓ na versão nova: aulas, notas, cartões, erros, tarefas, simulados e o nome continuam iguais
+  ✓ na versão nova: abre sem erro de JavaScript
+  ✓ na versão nova: o aluno estuda (tarefa e cartão)
+
+== 3. reversão: a versão anterior volta ao ar
+  ✓ versão anterior com o progresso gravado pela nova: abre Hoje, Plano e Treino sem erro de JavaScript
+  ✓ versão anterior com o progresso da nova: nenhum estudo some
+  (configuração da versão nova que a anterior descarta ao gravar: _ops)
+
+== 4. volta ao app novo
+DIAGNÓSTICO retorno de versão: {"feitoCheckpoint":{"T:antigo":true,"T:na-main":true,"T:no-novo":true},"recuperar":"{\"v\":1,\"t\":1794694216116,\"cfg\":{\"modalidade\":\"normal\",\"alvo\":\"cfs2-2027\",\"prova\":\"2027-05-30\",\"inicio\":\"2026-10-01\",\"horas\":3,\"dias\":[0,1,2,3,4,5,6],\"simDia\":0,\"tempoSim\":260,\"excl\":[],\"cv\":2,\"certs\":[],\"nome\":\"Aluna Antiga\",\"fcv\":{\"POR02~1\":[2,20772]},\"fcAncora\":{\"FIS02:2\":\"2026-11-14\",\"ING07:2\":\"2026-11-14\",\"MAT01:2\":\"2026-11-14\",\"POR01:2\":\"2026-11-14\"}},\"mod\":{\"FIS02\":{\"best\":1,\"lido\":\"2026-10-04\",\"ok\":\"2026-10-04\",\"tent\":1},\"MAT01\":{\"best\":0.6,\"lido\":\"2026-10-03\",\"tent\":1},\"MAT02\":{\"lido\":\"2026-11-14\"},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-02\",\"ok\":\"2026-10-02\",\"tent\":2},\"POR02\":{\"lido\":\"2026-11-14\"}},\"fc\":{\"FIS02~0\":[3,20410],\"ING07~2\":[1,20395],\"MAT01~1\":[1,20390],\"MAT02~4\":[0,20772],\"POR01~0\":[2,20400],\"POR02~1\":[1,20772]},\"erros\":{\"MAT01-2\":1},\"sims\":[{\"d\":\"2026-10-05\",\"tipo\":\"materia\",\"mat\":\"por\",\"prova\":null,\"r\":{\"por\":[18,24]},\"min\":50}],\"diag\":null,\"feito\":{\"T:antigo\":true,\"T:na-main\":true,\"T:no-novo\":true,\"T:depois-da-volta\":true},\"act\":{\"2026-10-02\":3,\"2026-11-14\":3},\"ativo\":null,\"ult\":null,\"ap\":{},\"aula\":{},\"ultAula\":\"POR01\"}","copiasComEstudo":1}
+  ✗ de volta à versão nova: o estudo feito nas duas continua
+  ✓ reversão: cópia do estudo legado preservada em quarentena e oferecida pela interface
+  ✓ reversão: recuperação explícita pela UI preserva o estudo das duas versões após reabrir
+
+1 falha(s)
+
+
+===== dupla-falha.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/operacoes-dupla-falha.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+DIAGNÓSTICO dupla-falha: {"aceito":true,"semReserva":true,"falhou":true,"recuperou":true,"checkpoint":{"T:base":true,"T:dupla-falha":true},"atividade":3}
+✓ quota real + abort IDB: aviso sem falsa confirmação, recuperação automática, 3/3 e crash.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== f01-riscos.log =====
+Riscos F01: a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/f01-riscos.test.js"
+Riscos F01: a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ zerar-nuvem: {"aceito":{"t":1794693710547,"certsZ":1794693710474,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}},"offline":{"t":1794693710547,"certsZ":1794693710474,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}},"servidor":{"t":1794693710547,"certsZ":1794693710474,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}},"antesReabrir":{"t":1794693710547,"certsZ":1794693710474,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794693710547,"certsZ":1794693710474,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}}}
+✓ zerar-unica: {"aceito":{"t":1794693716151,"certsZ":1794693716101,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}},"offline":{"t":1794693716151,"certsZ":1794693716101,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}},"servidor":{"t":1794693716151,"certsZ":1794693716101,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}},"antesReabrir":{"t":1794693716151,"certsZ":1794693716101,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}},"aviso":"Progresso salvo na sua conta.","reaberto":{"t":1794693716151,"certsZ":1794693716101,"certs":[],"feito":{"T:depois":true},"act":{"2026-11-14":1}}}
+✓ suspensa: {"t":1794693721936,"certsZ":1794693721859,"certs":[],"feito":{"T:apos-suspensao":true},"act":{"2026-11-14":1}}
+✓ exclusao-surda: {"confirmou":true,"removido":true,"reconciliou":true,"restaurado":{"t":1794693724969,"certsZ":0,"certs":[],"feito":{"T:novo":true},"act":{"2026-11-14":1}}}
+✓ contagens: {"esperado":62,"A":62,"B":62,"cache":62,"marcacoes":61}
+Preparação nativa: dois observadores em oncomplete inativo; barreira IDB concluída sem alterações.
+Ponto nativo: leitura anterior à operação confirmada, {"pronta":"done","feito":{"T:base":true},"id":"firebase:NS5E4SXulTA2yPQVsJvIWyha33kg","operacoes":["o381d3026-70d1-480f-b4b9-d5398fdaf4a2"]}
+✓ escrita-interrompida: ponto nativo transacional, três abas e contagem 4
+Riscos: 0 falha(s) em 6 investigações.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== firebase-51.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/firebase-emulador.test.js"
+
+== contas, isolamento e documento mínimo
+  ✓ conta nova: o documento só tem v, dados, t e atualizado (sem e-mail), e o progresso sem conta não foi levado sozinho
+  ✓ o progresso sem conta continua intacto e o aluno pode levá-lo para a conta
+  ✓ levar para a conta (pedido pelo aluno): o progresso sem conta vai para a nuvem da conta e continua guardado sem conta
+  ✓ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte
+  ✓ conta B no mesmo aparelho: nada da conta A nem do progresso sem conta vai para B, e nada de B vai para A
+  ✓ troca de conta com gravação pendente: o estudo de B não vai para A e continua na cópia de B neste aparelho
+  ✓ sair apagando: bloqueado enquanto há estudo fora da nuvem; depois, apaga só a cópia deste aparelho e a nuvem continua com tudo
+  ✓ sem erro de JavaScript nos fluxos de conta
+
+== gravações simultâneas na mesma conta (dois aparelhos)
+  ✓ com transação: 12 marcações feitas ao mesmo tempo em dois aparelhos, nenhuma perdida na nuvem
+  (comparação, sem transação, com a gravação de reserva: 12 de 12 marcações perdidas — T:d1-0, T:d2-0, T:d1-1, T:d2-1, T:d1-2, T:d2-2, T:d1-3, T:d2-3, T:d1-4, T:d2-4, T:d1-5, T:d2-5)
+
+== versão futura, regras e exclusão de conta
+  ✓ documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho
+  ✓ documento corrompido na nuvem: o app não grava por cima, não trava e guarda o estudo no aparelho
+  ✓ regras: uma conta não lê, não grava e não apaga o documento de outra
+  ✓ regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito
+  ✓ regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 3)
+  ✓ regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista 403, consulta 403]
+  ✓ regras: sem login, nada é lido nem gravado [leitura 403, gravação 403]
+  ✓ regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno
+  ✓ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito
+  ✓ regras: exclusão direta antiga sem barreira é recusada e preserva o documento
+  ✓ regras: o próprio aluno apaga atomicamente com barreira durável contra recriação
+  ✓ gravação recusada pelas regras: a sincronização para, o aviso diz por quê, e o estudo continua neste aparelho [aviso: A sincronização com a nuvem parou (a nuvem recusou o formato do progresso). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar).]
+  ✓ app aberto sem internet: o login não carrega e o aviso diz que tenta de novo; com a conexão de volta, o login aparece sem recarregar
+  ✓ build de homologação: o cartão da conta avisa que é o projeto de teste e pede só contas e dados fictícios
+  ✓ excluir a conta: senha errada ou confirmação diferente de EXCLUIR não excluem nada
+  ✓ excluir a conta: apaga o documento, o login e a cópia local da conta; o progresso sem conta fica; a mensagem diz o que foi apagado
+
+== sessão, interrupções e recuperação
+  ✓ conta encerrada em outra aba: esta aba passa ao progresso sem conta; o que se estuda depois não vai para a conta, e a cópia da conta fica intacta
+  ✓ página fechada antes de gravar na nuvem: o estudo ficou no aparelho e vai para a nuvem quando o app abre de novo
+  ✓ sessão invalidada no servidor: o app volta ao progresso sem conta, e a cópia da conta neste aparelho e a nuvem continuam com tudo
+  ✓ conta trocada em outra aba com o formulário de exclusão aberto: o formulário fecha, e nenhuma das duas contas é excluída
+  ✓ exclusão parcial: a mensagem diz que o progresso na nuvem foi apagado e a conta não; o login e a cópia deste aparelho continuam
+  ✓ exclusão parcial, nova tentativa: o login, a nuvem e a cópia deste aparelho são excluídos
+
+== auditoria independente: tipos, sessão offline e certificados
+  ✓ auditoria regras: recusa v texto na criação [403]
+  ✓ auditoria regras: recusa v zero na criação [403]
+  ✓ auditoria regras: recusa v fracionária na criação [403]
+  ✓ auditoria regras: recusa dados mapa na criação [403]
+  ✓ auditoria regras: recusa t texto na criação [403]
+  ✓ auditoria regras: recusa campo extra na criação [403]
+  ✓ auditoria regras: recusa criação sem v [403]
+  ✓ auditoria regras: recusa criação sem dados [403]
+  ✓ auditoria regras: recusa criação sem t [403]
+  ✓ auditoria regras: atualizado é obrigatório e deve corresponder à hora do servidor
+  ✓ auditoria regras: criação válida aceita; campo extra na atualização e subcoleção do próprio UID recusados
+  ✓ auditoria sessão: progresso inicial confirmado no servidor
+  ✓ auditoria sessão: fechar e reabrir com emuladores indisponíveis preserva o estudo pendente
+  ✓ auditoria sessão: reconexão envia o estudo da sessão persistida sem novo login
+  ✓ auditoria certificados: registro e código preservados ao enviar para o Firestore
+  ✓ auditoria certificados: segundo dispositivo recebe o mesmo código, data e registro
+  ✓ auditoria certificados: gravação do segundo dispositivo mantém certificado e progresso anterior
+  ✓ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=true, nuvem=true]
+  ✓ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail
+  ✓ excluir conta do Google: sem campo de senha, reautentica pela janela do Google e apaga a conta e a nuvem
+
+tudo certo
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== historicos-legado.log =====
+HISTÓRICO LEGADO — não confundir incompatibilidade conhecida com aprovação Firebase.
+
+== dados do curso
+  ✓ 69 aulas, sem id repetido
+  ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+  ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+  ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+  ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+  ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ modalidade normal tem aulas de Inglês
+  ✓ modalidade bct tem aulas de Inglês
+  ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+  ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+  ✓ curso/app.js igual à montagem dos 22 arquivos de curso/app/
+HISTÓRICO LEGADO: critérios originais, transporte desativado; não representa sincronização Firebase.
+
+== regras da nuvem do curso no Claude (web/regras-claude.json; modelo calibrado com o serviço real)
+  ✓ o modelo reproduz os 15 comportamentos confirmados no serviço real
+  ✓ reproduz o vazamento: com as regras de hoje (sem regra para progresso2), um aluno lê e grava o progresso2 de outra conta
+  ✓ as regras propostas e as de reversão declaram progresso e progresso2 e isolam as contas (leitura e gravação)
+  ✓ propostas: o caminho antigo fica só para leitura do aluno; reversão: volta a ser gravável, e o caminho novo continua gravável só pelo próprio aluno
+  ✓ o dono do curso continua lendo e gravando os dois caminhos (moderação e limpeza)
+
+== contas dos flashcards de Matemática (recalculadas)
+  ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+  ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+
+== contas dos flashcards de Física (recalculadas)
+  ✓ 48 cartões de Física: a conta recalculada confere com o verso
+  ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+
+== simulado completo no tempo do edital (4h20)
+  ✓ aluno novo: simulado completo em 4h20
+  ✓ progresso antigo com o padrão de 4h passa a mostrar 4h20
+  ✓ e nada do progresso (notas, cartões, erros, simulados, atividade) muda
+  ✓ sem erro de JavaScript
+  ✓ quem escolheu 4h depois da mudança continua com 4h
+
+== quiz com a quantidade real de questões
+  ✓ plano mostra "meta de 4 acertos em 5" para a aula com 5 questões
+  ✓ e não promete 10 questões
+  ✓ sem erro de JavaScript
+
+== modalidade de Inglês (edital: básico x BCT)
+  ✓ normal: trilha de Inglês com 13 aulas
+  ✓ normal: notas das aulas da outra modalidade continuam guardadas
+  ✓ normal: sem erro de JavaScript
+  ✓ bct: trilha de Inglês com 15 aulas
+  ✓ bct: notas das aulas da outra modalidade continuam guardadas
+  ✓ bct: sem erro de JavaScript
+
+== aulas novas (Física 5.8 do edital e tipos de discurso)
+  ✓ FIS18: trilha da matéria com 18 aulas
+  ✓ FIS18: a aula abre pela trilha
+  ✓ FIS18: quiz com 14 questões
+  ✓ FIS18: notas, cartões, erros, simulados e atividade intactos; "continuar" aponta para a aula; sem erro de JavaScript
+  ✓ POR15: trilha da matéria com 15 aulas
+  ✓ POR15: a aula abre pela trilha
+  ✓ POR15: quiz com 10 questões
+  ✓ POR15: notas, cartões, erros, simulados e atividade intactos; "continuar" aponta para a aula; sem erro de JavaScript
+
+== certificados conquistados antes das aulas novas (FIS18 e POR15)
+  ✓ certificado antigo de Física aparece como conquistado depois da aula nova
+  ✓ certificado antigo de Física com as aulas, a carga horária, a data e o código originais
+  ✓ certificado antigo de Português com as aulas, a carga horária, a data e o código originais
+  ✓ abrir o curso e ver os certificados sem estudar não grava nada
+  ✓ quiz da FIS18 concluído pela tela
+  ✓ registro gravado do certificado antigo: 17 aulas, 46 h, data e código originais
+  ✓ certificado novo de Física exige as 18 aulas (49 h)
+  ✓ notas, cartões, erros e simulados antigos intactos depois de estudar
+  ✓ Física liberada com as aulas atuais e o certificado de 17 aulas ainda na lista
+  ✓ o certificado antigo continua abrindo para reimprimir
+  ✓ sem erro de JavaScript
+  ✓ sem todas as aulas antigas, nenhum certificado antigo de Física
+  ✓ quiz da FIS17 concluído depois da atualização
+  ✓ completar a FIS17 depois da atualização não dá o certificado antigo: falta a FIS18
+  ✓ o certificado antigo de Português do mesmo aluno continua
+  ✓ nota de 80% sem a data de conclusão não basta para o certificado antigo
+  ✓ progresso que já tinha a FIS18 não ganha o certificado antigo de Física
+  ✓ aluno novo com as aulas antigas não tem certificado: faltam FIS18 e POR15
+  ✓ quiz da POR15 concluído pela tela
+  ✓ concluindo a POR15, sai o certificado de Português com 15 aulas
+  ✓ certificado de Inglês (CFS normal) registrado
+  ✓ depois de trocar para o BCT, o registro do certificado normal continua gravado
+  ✓ no BCT, o certificado de Inglês do CFS normal continua aberto para reimprimir
+  ✓ colar outro progresso troca as notas, mas mantém os certificados conquistados
+  ✓ colar um progresso com os mesmos certificados não duplica nenhum
+  ✗ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem
+  ✗ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união
+  ✓ progresso zerado em outro aparelho: a nuvem não traz de volta os certificados apagados
+  ✓ zerar progresso apaga os certificados registrados e marca quando foi zerado
+  ✓ depois de zerar, abrir de novo não recria certificado antigo
+
+== histórico de simulados vindo de outra versão
+  ✓ matéria desconhecida no histórico não quebra a aba Simulados
+
+== versão dos flashcards (cópia do site com os 7 cartões da POR02 na versão 2)
+  ✓ America/Sao_Paulo: sem versão nos dados, nenhum cartão dominado volta antes da hora
+  ✓ America/Sao_Paulo: abrir com cartões em versão nova não altera o progresso gravado
+  ✓ America/Sao_Paulo: no 1º dia voltam só os cartões de desvio 0 (1 de 7)
+  ✓ America/Sao_Paulo: sem estudar, 3 dias depois, ainda voltam 1 (a âncora só fica quando o aluno estuda)
+  ✓ America/Sao_Paulo: ao estudar, a âncora fica no dia local 2026-11-30
+  ✓ America/Sao_Paulo: acerto na versão nova vai para a caixa 3 (volta em 7 dias) e registra a versão vista
+  ✓ America/Sao_Paulo: os cartões ainda não revistos mantêm o histórico intacto
+  ✓ America/Sao_Paulo: os demais voltam distribuídos até o 6º dia (1, 3, 4, 5, 6, 6, 7; esperado 1, 3, 4, 5, 6, 6, 7)
+  ✓ America/Sao_Paulo: depois de revistos, no dia seguinte só vencem os cartões já agendados (1); nenhum se repete fora da data
+  ✓ America/Sao_Paulo: cartão regravado por uma versão antiga do app volta para a revisão da versão nova
+  ✓ America/Sao_Paulo: um cartão que já venceria antes do espalhamento continua vencendo na data original
+  ✓ Asia/Tokyo: sem versão nos dados, nenhum cartão dominado volta antes da hora
+  ✓ Asia/Tokyo: abrir com cartões em versão nova não altera o progresso gravado
+  ✓ Asia/Tokyo: no 1º dia voltam só os cartões de desvio 0 (1 de 7)
+  ✓ Asia/Tokyo: sem estudar, 3 dias depois, ainda voltam 1 (a âncora só fica quando o aluno estuda)
+  ✓ Asia/Tokyo: ao estudar, a âncora fica no dia local 2026-12-01
+  ✓ Asia/Tokyo: acerto na versão nova vai para a caixa 3 (volta em 7 dias) e registra a versão vista
+  ✓ Asia/Tokyo: os cartões ainda não revistos mantêm o histórico intacto
+  ✓ Asia/Tokyo: os demais voltam distribuídos até o 6º dia (1, 3, 4, 5, 6, 6, 7; esperado 1, 3, 4, 5, 6, 6, 7)
+  ✓ Asia/Tokyo: depois de revistos, no dia seguinte só vencem os cartões já agendados (1); nenhum se repete fora da data
+  ✓ Asia/Tokyo: cartão regravado por uma versão antiga do app volta para a revisão da versão nova
+  ✓ Asia/Tokyo: um cartão que já venceria antes do espalhamento continua vencendo na data original
+  ✓ colar progresso leva cartões, versões vistas e âncora
+  ✓ o aparelho que recebeu o progresso mostra os mesmos cartões vencidos que o original
+  ✗ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova
+  ✓ zerar progresso apaga cartões, versões vistas e âncoras
+  ✓ Português: 117 cartões, 100 na versão 2 e 17 sem versão (100/17)
+  ✓ Português: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (19 de 100)
+  ✓ Português: no 1º dia só voltam cartões reformulados, e o acerto os agenda para 7 dias
+  ✓ Português: os 17 cartões mantidos e o registro das aulas ficam intactos
+  ✓ Português: os outros reformulados voltam distribuídos até o 6º dia (16, 30, 45, 56, 70, 81)
+  ✓ Português: cada reformulado volta uma única vez; no 7º dia só vencem os 19 agendados
+  ✓ Inglês: 113 cartões, 87 na versão 2 (86 do Lote 2 e ING14~5) e 26 sem versão
+  ✓ Inglês normal: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (9 de 67)
+  ✓ Inglês normal: sem estudar, a fila não cresce sozinha (9, 9, 9, 9, 9, 9)
+  ✓ Inglês normal: no 1º dia só aparecem cartões de aulas da modalidade
+  ✓ Inglês normal: cartões da outra modalidade e os mantidos ficam intactos
+  ✓ Inglês normal: até o 6º dia voltam todos os demais reformulados da modalidade (58)
+  ✓ Inglês bct: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (11 de 83)
+  ✓ Inglês bct: sem estudar, a fila não cresce sozinha (11, 11, 11, 11, 11, 11)
+  ✓ Inglês bct: no 1º dia só aparecem cartões de aulas da modalidade
+  ✓ Inglês bct: cartões da outra modalidade e os mantidos ficam intactos
+  ✓ Inglês bct: até o 6º dia voltam todos os demais reformulados da modalidade (72)
+  ✓ Matemática: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (14 de 88)
+  ✓ Matemática: no 1º dia só voltam reformulados; os 67 mantidos ficam intactos
+  ✓ Matemática: até o 6º dia voltam os demais reformulados (74)
+  ✓ Física: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (14 de 84)
+  ✓ Física: no 1º dia só voltam reformulados; os 73 mantidos ficam intactos
+  ✓ Física: até o 6º dia voltam os demais reformulados (70)
+
+== flashcards no celular (simulação: toque pelas coordenadas, sem rolagem automática)
+  ✓ 320×568 (todas as matérias): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 320×568 (todas as matérias): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 320×568 (todas as matérias): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 320×568 (todas as matérias): os 518 cartões aparecem com frente e verso completos, iguais aos dados (518 conferidos, 519 telas com o repetido)
+  ✓ 320×568 (todas as matérias): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+  ✓ 360×640 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 360×640 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 360×640 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 360×640 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+  ✓ 360×640 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+  ✓ 390×844 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 390×844 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 390×844 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 390×844 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+  ✓ 390×844 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+  ✓ 1280×800 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 1280×800 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 1280×800 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 1280×800 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+  ✓ 1280×800 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+
+== fonte ampliada (tamanho de fonte padrão do navegador, pelo Chromium)
+  ✓ fonte do navegador em 24 px (150%), 320 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+  ✓ fonte do navegador em 32 px (200%), 320 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+  ✓ fonte do navegador em 32 px (200%), 360 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+
+== segurança: progresso colado com HTML ou script
+  ✓ nenhum script do progresso colado executa (nome, datas do plano, tentativas, caderno de erros, código do certificado)
+  ✓ o nome com sinais de HTML aparece como texto no certificado
+
+== integridade: progresso malformado não trava o app
+  ✓ tipos trocados: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ valores nulos: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ simulado em andamento corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ último resultado corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+
+== integridade: simulado em andamento quando uma questão sai do curso
+  ✓ o simulado continua com as 23 questões que ainda existem e a resposta da 1ª questão é mantida
+  ✓ a entrega registra o simulado com 23 questões e guarda a resposta dada
+
+== integridade: progresso ilegível não é apagado
+  ✓ JSON corrompido: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+  ✓ JSON corrompido: "Descartar" apaga só a cópia
+  ✓ formato de uma versão futura: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+  ✓ formato de uma versão futura: "Descartar" apaga só a cópia
+  ✓ progresso válido: nenhuma cópia e nenhum aviso
+
+== integridade: armazenamento que não grava
+  ✓ o aluno é avisado de que o progresso não está sendo salvo, em Hoje e em Plano › Dados
+  ✓ armazenamento normal: sem aviso, "Progresso salvo neste aparelho"
+
+== sincronização entre aparelhos (nuvem fictícia)
+  ✗ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais
+  ✗ os dois aparelhos convergem para o mesmo progresso — mod: {"ING14":{"best":0.8,"lido":"2026-10-02","tent":1},"POR01":{"best":0.9,"lido":"2026-10-01","tent":2},"POR02":{"best":0.9,"lido":"2026-11-14","ok":"2026-11-14"," ≠ {"ING14":{"best":0.8,"lido":"2026-10-02","tent":1},"MAT01":{"best":0.8,"lido":"2026-11-14","ok":"2026-11-14","tent":1},"POR01":{"best":0.9,"lido":"2026-10-01"," — fc: {"POR01~0":[2,20400],"POR02~0":[1,99999]} ≠ {"MAT01~0":[2,99998],"POR01~0":[2,20400]} — sims: [{"d":"2026-10-03","tipo":"materia","mat":"por","prova":null,"r":{"por":[18,24]},"min":50},{"d":"2026-11-14","tipo":"materia","mat":"por","r":{"por":[20,24]},"m ≠ [{"d":"2026-10-03","tipo":"materia","mat":"por","prova":null,"r":{"por":[18,24]},"min":50},{"d":"2026-11-14","tipo":"materia","mat":"mat","r":{"mat":[15,24]},"m — erros: {"POR01-3":2} ≠ {"FIS01-1":1,"MAT03-2":1,"POR01-3":2} — act: {"2026-11-14":4} ≠ {"2026-11-14":3}
+  ✓ sincronizar de novo sem mudanças não grava nada na nuvem
+  ✗ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota
+  ✗ mesmo cartão nos dois: vale a revisão gravada por último
+  ✗ erro corrigido num aparelho e errado de novo no outro continua no caderno
+  ✗ dois simulados iguais feitos em aparelhos diferentes contam como dois
+  ✗ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica [aulas na nuvem: POR01,ING14]
+  ✗ sem como separar o que veio antes do "Zerar": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje [sem cópia]
+  ✗ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado
+  ✗ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte
+  ✗ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto
+
+== contas no mesmo aparelho e dados do aluno
+TypeError: Cannot read properties of null (reading 'mod')
+    at testarContas (/tmp/eear-audit2-runtime/testes/contas.js:39:16)
+    at async testarNavegador (/tmp/eear-audit2-runtime/testes/plataforma.test.js:296:3)
+    at async /tmp/eear-audit2-runtime/testes/plataforma.test.js:319:3
+
+
+===== homol-app-barreira.log =====
+Firebase: projeto de homologação eear-teste, sincronização ligada
+OK: autoteste da verificação (193 casos)
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+AVISO: build de homologação do Firebase (projeto de teste): serve para testes e não pode ser publicado
+OK: nada restrito em /tmp/eear-audit2-20261114/homol-app
+app em /tmp/eear-audit2-20261114/homol-app: 257 arquivos, 9.7 MB (202 imagens de provas)
+BLOQUEADO /tmp/eear-audit2-20261114/homol-app: build de homologação do Firebase (projeto de teste): não pode ser publicado
+FALHOU: 1 problema(s); não publique
+
+
+===== hosting-autoteste.log =====
+OK: autoteste da verificação (193 casos)
+
+
+===== hosting-contextos.log =====
+✓ canonica-ativa: {"gateExit": 0, "configExecutada": true, "projetoRuntime": "eear-teste", "deveriaAceitar": true}
+✓ canonica-em-script-texto: {"gateExit": 1, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+✓ canonica-em-template-com-comentario: {"gateExit": 1, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+Contexto H02: 0 falha(s). Sem deploy, SDK ou Firebase real.
+
+
+===== hosting-gates.log =====
+✓ artefato e destino de teste: exit=0; esperado=permitir
+✓ destino de produção: exit=1; esperado=recusar
+✓ destino vazio: exit=1; esperado=recusar
+✓ pasta ausente: exit=2; esperado=recusar
+✓ artefato oficial: exit=1; esperado=recusar
+✓ configuração divergente: exit=1; esperado=recusar
+✓ duas configurações literais: exit=1; esperado=recusar
+✓ arquivo proibido pelo verificador de conteúdo: exit=1; esperado=recusar
+✓ configuração apenas em comentário não habilita homologação: exit=1; esperado=recusar
+✓ configuração sobrescrita por script antes do app: exit=1; esperado=recusar
+✓ configuração em comentário JavaScript não habilita homologação: exit=1; esperado=recusar
+✓ configuração em script não executável não habilita homologação: exit=1; esperado=recusar
+Gates: 0 falha(s). Sem deploy; configurações fictícias não executaram SDK.
+
+
+===== hosting-sondas.log =====
+✓ alias padrão aponta ao projeto de teste
+✓ artefatos de homologação em diretório separado
+✓ Hosting declara predeploy (necessário; conteúdo exige auditoria) — sem hook, o CLI não executa o verificador Python
+✓ nenhuma reescrita do app intercepta o handler reservado de OAuth
+✓ build oficial permitido no modo oficial
+✓ build eear-teste aceito só como homologação
+✓ authDomain de outro projeto recusado no build
+✓ projectId de produção recusado no build
+✓ sem-marcador é recusado por --site — exit=1
+✓ projeto-divergente é recusado por --homologacao — exit=1
+✓ marcador em página auxiliar não habilita app oficial como homologação — exit=1
+Hosting: 0 falha(s); nenhuma operação no Firebase real.
+
+
+===== integridade.log =====
+OK: 9401 impressões, mais 2 aprovadas com origem conferida, iguais às fixadas no verificador; o material não está nesta cópia, então não foram refeitas a partir dele
+
+
+===== legado-bloqueio.log =====
+Runtime SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ legado bloqueado, locks=true: três abas, 5/5, BASE antiga recusada, exportação, Zerar+estudo 1/1, reabertura e zero I/O remoto.
+✓ legado bloqueado, locks=false: três abas, 5/5, BASE antiga recusada, exportação, Zerar+estudo 1/1, reabertura e zero I/O remoto.
+✓ legado bloqueado, dois Browser.crash reais: checkpoint confirmado sobrevive, 3/3, sem Web Locks e sem confirmação remota.
+
+
+===== legado-contrato.log =====
+✓ Modelo proposto: B -> A, escritor antigo rejeitado, CAS, união no servidor, ACK perdido idempotente, abort integral e conta excluída. Não habilita o runtime legado.
+
+
+===== lint.log =====
+
+
+===== metadados-limite.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/metadados-limite.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ limite-de-metadados: {"bytesEntrada":910368,"esperado":6002,"atividadeLocal":6002,"atividadeCheckpoint":6002,"atividadeServidor":2,"atividadeReaberta":6002,"recusou":true,"preservou":true,"aviso":"A sincronização com a nuvem parou (a nuvem recusou a gravação). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar)."}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== migracao-2f6.log =====
+Migração independente: 2f6cad6ebba53d0f86319dcada671fe9396f8111 → a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/diario-legado-auditoria.test.js"
+Migração independente: 2f6cad6ebba53d0f86319dcada671fe9396f8111 → a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ diario-legado-tres-abas: {"aceiteAntigo":true,"camposLegados":["seq","bid","base","bseq","ant","ts","st"],"semTs":false,"semAnt":false,"recuperou":true,"contagens":[3,3,3],"reaberto":3,"feito":{"T:base":true,"T:legado":true}}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== migracao-8bd.log =====
+Migração independente: 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b → a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/diario-legado-auditoria.test.js"
+Migração independente: 8bd32d2ca92a408e5cc3b0988b8a4a19e424c42b → a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ diario-legado-tres-abas: {"aceiteAntigo":true,"camposLegados":["seq","bid","base","st"],"semTs":true,"semAnt":true,"recuperou":true,"contagens":[3,3,3],"reaberto":3,"feito":{"T:base":true,"T:legado":true}}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== montagem.log =====
+OK: curso/app.js igual à montagem de curso/app/
+
+
+===== novo-abort-exclusao.log =====
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Exclusão abortada + duas importações identificadas + dois Page.crash: 7/7, base e certificado preservados, nenhuma confirmação falsa de exclusão.
+
+
+===== novo-erros-base-a35.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a636-transferencia-erros.test.js"
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+✓ levar-erro-posterior-corrigido: {"esperado":1,"fonte":1,"local":1,"remoto":1,"reaberto":1,"correcoesObservadas":["o5d33f27a-e0ca-4553-b164-a0670224f57d"],"causalidadeFonte":{"a":{"legado":2,"o3fc8b7f6-31da-44b0-b913-6edc9cb58451":1},"x":{},"l":{"o5d33f27a-e0ca-4553-b164-a0670224f57d":{"legado":true}},"o":{"o3fc8b7f6-31da-44b0-b913-6edc9cb58451":{"o5d33f27a-e0ca-4553-b164-a0670224f57d":true}}},"causalidadeDestino":{"a":{"legado":2,"o8d92aeb8-a689-4ed8-b726-49c3718120f9":1},"x":{},"l":{"o5d33f27a-e0ca-4553-b164-a0670224f57d":{"legado":true}},"o":{"o8d92aeb8-a689-4ed8-b726-49c3718120f9":{"o5d33f27a-e0ca-4553-b164-a0670224f57d":true}}},"aviso":"Progresso salvo na sua conta."}
+PREPARAÇÃO/EXECUÇÃO: AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+2 !== 1
+
+    at /workspace/eear-audit2/testes/a636-transferencia-erros.test.js:37:96 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit2/testes/a636-transferencia-erros.test.js"" exited with code 1
+
+
+===== novo-erros.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a636-transferencia-erros.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✗ levar-erro-posterior-corrigido: {"esperado":1,"fonte":1,"local":3,"remoto":3,"reaberto":3,"correcoesObservadas":["o792ed555-23dd-4394-8ff6-10ef0a458674"],"causalidadeFonte":{"a":{"legado":2,"o2a57a960-5566-4d3d-a970-9c5f9a28eb96":1},"x":{},"l":{"o792ed555-23dd-4394-8ff6-10ef0a458674":{"legado":true}},"o":{"o2a57a960-5566-4d3d-a970-9c5f9a28eb96":{"o792ed555-23dd-4394-8ff6-10ef0a458674":true}}},"causalidadeDestino":{"a":{"legado":2,"o2a57a960-5566-4d3d-a970-9c5f9a28eb96":1},"x":{},"l":{"o792ed555-23dd-4394-8ff6-10ef0a458674":{"legado":true}}},"aviso":"Progresso salvo na sua conta."}
+✓ Controle: importar o MESMO backup preserva a causalidade e mantém exatamente um erro.
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit2/testes/a636-transferencia-erros.test.js"" exited with code 1
+
+
+===== novo-importacoes-base-a35.log =====
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+✓ Controle: repetir sequencialmente o mesmo backup legado preserva exatamente 5.
+PRECONDICAO {"tipo":"legado","abas":2,"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["odd4b67e4-637a-4d85-906c-3aaea86e6cab"]},"diario":[{"k":"missao-eear-v1-diario#od0989418-c5dc-41e8-9627-84f70b590532","id":"od0989418-c5dc-41e8-9627-84f70b590532","act":5,"contribuicoes":{"a":{"od0989418-c5dc-41e8-9627-84f70b590532":3},"x":{}}},{"k":"missao-eear-v1-diario#o047b9169-53e9-4c0b-b52d-0413d3b1f3f9","id":"o047b9169-53e9-4c0b-b52d-0413d3b1f3f9","act":5,"contribuicoes":{"a":{"o047b9169-53e9-4c0b-b52d-0413d3b1f3f9":3},"x":{}}}]}
+✗ importar-mesmos-bytes-legado-2-importacoes-3-abas: {"locks":true,"esperado":5,"atividadeFinal":8,"atividadeReaberta":8,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["odd4b67e4-637a-4d85-906c-3aaea86e6cab"]},"diario":[{"k":"missao-eear-v1-diario#od0989418-c5dc-41e8-9627-84f70b590532","id":"od0989418-c5dc-41e8-9627-84f70b590532","act":5,"contribuicoes":{"a":{"od0989418-c5dc-41e8-9627-84f70b590532":3},"x":{}}},{"k":"missao-eear-v1-diario#o047b9169-53e9-4c0b-b52d-0413d3b1f3f9","id":"o047b9169-53e9-4c0b-b52d-0413d3b1f3f9","act":5,"contribuicoes":{"a":{"o047b9169-53e9-4c0b-b52d-0413d3b1f3f9":3},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"legado","abas":3,"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o16aa8ea0-d55c-421b-9f18-6535a25a0549"]},"diario":[{"k":"missao-eear-v1-diario#o9c8934a2-d3f6-44d2-a2f1-0db18d3686c6","id":"o9c8934a2-d3f6-44d2-a2f1-0db18d3686c6","act":5,"contribuicoes":{"a":{"o9c8934a2-d3f6-44d2-a2f1-0db18d3686c6":3},"x":{}}},{"k":"missao-eear-v1-diario#ob8037b86-7997-4e01-86a7-dfaa99e51f61","id":"ob8037b86-7997-4e01-86a7-dfaa99e51f61","act":5,"contribuicoes":{"a":{"ob8037b86-7997-4e01-86a7-dfaa99e51f61":3},"x":{}}},{"k":"missao-eear-v1-diario#occf16d35-ec57-4b1f-a3da-3774888e5008","id":"occf16d35-ec57-4b1f-a3da-3774888e5008","act":5,"contribuicoes":{"a":{"occf16d35-ec57-4b1f-a3da-3774888e5008":3},"x":{}}}]}
+✗ importar-mesmos-bytes-legado-3-importacoes-4-abas: {"locks":false,"esperado":5,"atividadeFinal":11,"atividadeReaberta":11,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o16aa8ea0-d55c-421b-9f18-6535a25a0549"]},"diario":[{"k":"missao-eear-v1-diario#o9c8934a2-d3f6-44d2-a2f1-0db18d3686c6","id":"o9c8934a2-d3f6-44d2-a2f1-0db18d3686c6","act":5,"contribuicoes":{"a":{"o9c8934a2-d3f6-44d2-a2f1-0db18d3686c6":3},"x":{}}},{"k":"missao-eear-v1-diario#ob8037b86-7997-4e01-86a7-dfaa99e51f61","id":"ob8037b86-7997-4e01-86a7-dfaa99e51f61","act":5,"contribuicoes":{"a":{"ob8037b86-7997-4e01-86a7-dfaa99e51f61":3},"x":{}}},{"k":"missao-eear-v1-diario#occf16d35-ec57-4b1f-a3da-3774888e5008","id":"occf16d35-ec57-4b1f-a3da-3774888e5008","act":5,"contribuicoes":{"a":{"occf16d35-ec57-4b1f-a3da-3774888e5008":3},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"identificado","abas":2,"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o2adeb566-3bb7-4226-9067-c44538dde093"]},"diario":[{"k":"missao-eear-v1-diario#oeefb796a-21b1-4674-8262-889f42ec3029","id":"oeefb796a-21b1-4674-8262-889f42ec3029","act":7,"contribuicoes":{"a":{"o3d6085f8-e1e0-44de-8140-0cede5ea38ce":5},"x":{}}},{"k":"missao-eear-v1-diario#of81872e8-da4e-4c5c-99f1-345927c744f2","id":"of81872e8-da4e-4c5c-99f1-345927c744f2","act":7,"contribuicoes":{"a":{"o3d6085f8-e1e0-44de-8140-0cede5ea38ce":5},"x":{}}}]}
+✓ importar-mesmos-bytes-identificado-2-importacoes-3-abas: {"locks":false,"esperado":7,"atividadeFinal":7,"atividadeReaberta":7,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o2adeb566-3bb7-4226-9067-c44538dde093"]},"diario":[{"k":"missao-eear-v1-diario#oeefb796a-21b1-4674-8262-889f42ec3029","id":"oeefb796a-21b1-4674-8262-889f42ec3029","act":7,"contribuicoes":{"a":{"o3d6085f8-e1e0-44de-8140-0cede5ea38ce":5},"x":{}}},{"k":"missao-eear-v1-diario#of81872e8-da4e-4c5c-99f1-345927c744f2","id":"of81872e8-da4e-4c5c-99f1-345927c744f2","act":7,"contribuicoes":{"a":{"o3d6085f8-e1e0-44de-8140-0cede5ea38ce":5},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+
+
+===== novo-importacoes.log =====
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+PRECONDICAO {"tipo":"legado","abas":2,"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o883ea4d6-da71-4b96-83d0-4c0b985976a1"]},"diario":[{"k":"missao-eear-v1-diario#od2ead709-4776-457d-b144-9c527dfc231e","id":"od2ead709-4776-457d-b144-9c527dfc231e","origem":"importacao","act":5,"contribuicoes":{"a":{"od2ead709-4776-457d-b144-9c527dfc231e":3},"x":{}}},{"k":"missao-eear-v1-diario#o290600ef-d3f5-41a3-9c13-c184f76e03bd","id":"o290600ef-d3f5-41a3-9c13-c184f76e03bd","origem":"importacao","act":5,"contribuicoes":{"a":{"o290600ef-d3f5-41a3-9c13-c184f76e03bd":3},"x":{}}}]}
+✗ importar-mesmos-bytes-legado-2-abas: {"locks":true,"esperado":5,"atividadeFinal":8,"atividadeReaberta":8,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o883ea4d6-da71-4b96-83d0-4c0b985976a1"]},"diario":[{"k":"missao-eear-v1-diario#od2ead709-4776-457d-b144-9c527dfc231e","id":"od2ead709-4776-457d-b144-9c527dfc231e","origem":"importacao","act":5,"contribuicoes":{"a":{"od2ead709-4776-457d-b144-9c527dfc231e":3},"x":{}}},{"k":"missao-eear-v1-diario#o290600ef-d3f5-41a3-9c13-c184f76e03bd","id":"o290600ef-d3f5-41a3-9c13-c184f76e03bd","origem":"importacao","act":5,"contribuicoes":{"a":{"o290600ef-d3f5-41a3-9c13-c184f76e03bd":3},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"legado","abas":3,"prova":{"antes":{"2026-11-14":2},"proposto":null,"recibos":["oca6eb825-b886-4bcf-81eb-82e392738211"]},"diario":[{"k":"missao-eear-v1-diario#o5ffd7edd-8a92-47db-ba0c-dfecf770473b","id":"o5ffd7edd-8a92-47db-ba0c-dfecf770473b","origem":"importacao","act":5,"contribuicoes":{"a":{"o5ffd7edd-8a92-47db-ba0c-dfecf770473b":3},"x":{}}},{"k":"missao-eear-v1-diario#o98fc388f-6419-4918-9ac8-fa5b81935414","id":"o98fc388f-6419-4918-9ac8-fa5b81935414","origem":"importacao","act":5,"contribuicoes":{"a":{"o98fc388f-6419-4918-9ac8-fa5b81935414":3},"x":{}}},{"k":"missao-eear-v1-diario#ob1f32cc6-e672-4a44-906b-907d30305a9d","id":"ob1f32cc6-e672-4a44-906b-907d30305a9d","origem":"importacao","act":5,"contribuicoes":{"a":{"ob1f32cc6-e672-4a44-906b-907d30305a9d":3},"x":{}}}]}
+✗ importar-mesmos-bytes-legado-3-abas: {"locks":false,"esperado":5,"atividadeFinal":11,"atividadeReaberta":11,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-14":2},"proposto":null,"recibos":["oca6eb825-b886-4bcf-81eb-82e392738211"]},"diario":[{"k":"missao-eear-v1-diario#o5ffd7edd-8a92-47db-ba0c-dfecf770473b","id":"o5ffd7edd-8a92-47db-ba0c-dfecf770473b","origem":"importacao","act":5,"contribuicoes":{"a":{"o5ffd7edd-8a92-47db-ba0c-dfecf770473b":3},"x":{}}},{"k":"missao-eear-v1-diario#o98fc388f-6419-4918-9ac8-fa5b81935414","id":"o98fc388f-6419-4918-9ac8-fa5b81935414","origem":"importacao","act":5,"contribuicoes":{"a":{"o98fc388f-6419-4918-9ac8-fa5b81935414":3},"x":{}}},{"k":"missao-eear-v1-diario#ob1f32cc6-e672-4a44-906b-907d30305a9d","id":"ob1f32cc6-e672-4a44-906b-907d30305a9d","origem":"importacao","act":5,"contribuicoes":{"a":{"ob1f32cc6-e672-4a44-906b-907d30305a9d":3},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"identificado","abas":2,"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o8ac06df5-7e5e-4db5-8b5e-3a12c9e0ea31"]},"diario":[{"k":"missao-eear-v1-diario#oc0ac1732-7212-46ed-bcbe-422403bc8f98","id":"oc0ac1732-7212-46ed-bcbe-422403bc8f98","origem":"importacao","act":7,"contribuicoes":{"a":{"ocecd5375-54ff-4c93-a496-8b2393821dbc":5},"x":{}}},{"k":"missao-eear-v1-diario#obe9de515-ec94-4a3c-b176-b58aa7922e38","id":"obe9de515-ec94-4a3c-b176-b58aa7922e38","origem":"importacao","act":7,"contribuicoes":{"a":{"ocecd5375-54ff-4c93-a496-8b2393821dbc":5},"x":{}}}]}
+✓ importar-mesmos-bytes-identificado-2-abas: {"locks":false,"esperado":7,"atividadeFinal":7,"atividadeReaberta":7,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o8ac06df5-7e5e-4db5-8b5e-3a12c9e0ea31"]},"diario":[{"k":"missao-eear-v1-diario#oc0ac1732-7212-46ed-bcbe-422403bc8f98","id":"oc0ac1732-7212-46ed-bcbe-422403bc8f98","origem":"importacao","act":7,"contribuicoes":{"a":{"ocecd5375-54ff-4c93-a496-8b2393821dbc":5},"x":{}}},{"k":"missao-eear-v1-diario#obe9de515-ec94-4a3c-b176-b58aa7922e38","id":"obe9de515-ec94-4a3c-b176-b58aa7922e38","origem":"importacao","act":7,"contribuicoes":{"a":{"ocecd5375-54ff-4c93-a496-8b2393821dbc":5},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+
+
+===== novo-regras-dependencia.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a35-retorno-firebase-antigo.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+✗ exclusao-firebase-anterior: {"candidato":"a35ea9a","produtorAntigo":"2f6cad6ebba53d0f86319dcada671fe9396f8111","docV2Apagado":true,"authExcluidaHTTP":400,"marcadorHTTP":404,"recriou":true,"nomeRestaurado":"Pessoa Fictícia Excluída","feitoRestaurado":{"T:apos-exclusao-legitima":true,"T:privada":true},"avisoAtual":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit2/testes/a35-retorno-firebase-antigo.test.js"" exited with code 1
+✓ Dependência IA04 comprovada: runtime novo sozinho continua vulnerável com regras antigas; controle negativo não é aprovação dessa configuração.
+
+
+===== novos-matriz-integral.log =====
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Controle: repetir sequencialmente o mesmo backup legado preserva exatamente 5.
+PRECONDICAO {"tipo":"legado","abas":2,"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["oa5f124c2-6ef4-4797-845d-05849dbcce7e"]},"diario":[{"k":"missao-eear-v1-diario#oc4c78560-a5bb-47a6-a082-b6952340b32c","id":"oc4c78560-a5bb-47a6-a082-b6952340b32c","origem":"importacao","act":5,"contribuicoes":{"a":{"oc4c78560-a5bb-47a6-a082-b6952340b32c":3},"x":{}}},{"k":"missao-eear-v1-diario#o7ec88d53-d8e6-481d-9014-a038b354834a","id":"o7ec88d53-d8e6-481d-9014-a038b354834a","origem":"importacao","act":5,"contribuicoes":{"a":{"o7ec88d53-d8e6-481d-9014-a038b354834a":3},"x":{}}}]}
+✗ importar-mesmos-bytes-legado-2-importacoes-3-abas: {"locks":true,"esperado":5,"atividadeFinal":8,"atividadeReaberta":8,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["oa5f124c2-6ef4-4797-845d-05849dbcce7e"]},"diario":[{"k":"missao-eear-v1-diario#oc4c78560-a5bb-47a6-a082-b6952340b32c","id":"oc4c78560-a5bb-47a6-a082-b6952340b32c","origem":"importacao","act":5,"contribuicoes":{"a":{"oc4c78560-a5bb-47a6-a082-b6952340b32c":3},"x":{}}},{"k":"missao-eear-v1-diario#o7ec88d53-d8e6-481d-9014-a038b354834a","id":"o7ec88d53-d8e6-481d-9014-a038b354834a","origem":"importacao","act":5,"contribuicoes":{"a":{"o7ec88d53-d8e6-481d-9014-a038b354834a":3},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"legado","abas":3,"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o20766348-5ac8-48f7-9f8b-17d07a851935"]},"diario":[{"k":"missao-eear-v1-diario#o577a3d81-a7ef-4504-b3f6-54cd9bf22f03","id":"o577a3d81-a7ef-4504-b3f6-54cd9bf22f03","origem":"importacao","act":5,"contribuicoes":{"a":{"o577a3d81-a7ef-4504-b3f6-54cd9bf22f03":3},"x":{}}},{"k":"missao-eear-v1-diario#oac23ca5c-f6a7-42d7-8d6a-e3104da7b72b","id":"oac23ca5c-f6a7-42d7-8d6a-e3104da7b72b","origem":"importacao","act":5,"contribuicoes":{"a":{"oac23ca5c-f6a7-42d7-8d6a-e3104da7b72b":3},"x":{}}},{"k":"missao-eear-v1-diario#oca5b8234-dc21-423a-9bfd-d67dd20ed4ad","id":"oca5b8234-dc21-423a-9bfd-d67dd20ed4ad","origem":"importacao","act":5,"contribuicoes":{"a":{"oca5b8234-dc21-423a-9bfd-d67dd20ed4ad":3},"x":{}}}]}
+✗ importar-mesmos-bytes-legado-3-importacoes-4-abas: {"locks":false,"esperado":5,"atividadeFinal":11,"atividadeReaberta":11,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o20766348-5ac8-48f7-9f8b-17d07a851935"]},"diario":[{"k":"missao-eear-v1-diario#o577a3d81-a7ef-4504-b3f6-54cd9bf22f03","id":"o577a3d81-a7ef-4504-b3f6-54cd9bf22f03","origem":"importacao","act":5,"contribuicoes":{"a":{"o577a3d81-a7ef-4504-b3f6-54cd9bf22f03":3},"x":{}}},{"k":"missao-eear-v1-diario#oac23ca5c-f6a7-42d7-8d6a-e3104da7b72b","id":"oac23ca5c-f6a7-42d7-8d6a-e3104da7b72b","origem":"importacao","act":5,"contribuicoes":{"a":{"oac23ca5c-f6a7-42d7-8d6a-e3104da7b72b":3},"x":{}}},{"k":"missao-eear-v1-diario#oca5b8234-dc21-423a-9bfd-d67dd20ed4ad","id":"oca5b8234-dc21-423a-9bfd-d67dd20ed4ad","origem":"importacao","act":5,"contribuicoes":{"a":{"oca5b8234-dc21-423a-9bfd-d67dd20ed4ad":3},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"identificado","abas":2,"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o5e28578d-57c2-4400-acb7-4aaff2d6957f"]},"diario":[{"k":"missao-eear-v1-diario#o0a696de0-373f-4af6-9cee-388f5442d621","id":"o0a696de0-373f-4af6-9cee-388f5442d621","origem":"importacao","act":7,"contribuicoes":{"a":{"o9703c334-4f5e-4cf8-99dc-822751d83095":5},"x":{}}},{"k":"missao-eear-v1-diario#o7e4799bd-ed72-4fe4-a4e8-94c0bc6fda0d","id":"o7e4799bd-ed72-4fe4-a4e8-94c0bc6fda0d","origem":"importacao","act":7,"contribuicoes":{"a":{"o9703c334-4f5e-4cf8-99dc-822751d83095":5},"x":{}}}]}
+✓ importar-mesmos-bytes-identificado-2-importacoes-3-abas: {"locks":false,"esperado":7,"atividadeFinal":7,"atividadeReaberta":7,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-14":2},"proposto":{"2026-11-14":2},"recibos":["o5e28578d-57c2-4400-acb7-4aaff2d6957f"]},"diario":[{"k":"missao-eear-v1-diario#o0a696de0-373f-4af6-9cee-388f5442d621","id":"o0a696de0-373f-4af6-9cee-388f5442d621","origem":"importacao","act":7,"contribuicoes":{"a":{"o9703c334-4f5e-4cf8-99dc-822751d83095":5},"x":{}}},{"k":"missao-eear-v1-diario#o7e4799bd-ed72-4fe4-a4e8-94c0bc6fda0d","id":"o7e4799bd-ed72-4fe4-a4e8-94c0bc6fda0d","origem":"importacao","act":7,"contribuicoes":{"a":{"o9703c334-4f5e-4cf8-99dc-822751d83095":5},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+AUDITORIA a636-importacoes-concorrentes: exit 1
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a636-transferencia-erros.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✗ levar-erro-posterior-corrigido: {"esperado":1,"fonte":1,"local":3,"remoto":3,"reaberto":3,"correcoesObservadas":["o01659b62-61ca-4aaf-b373-b71f40a5fde8"],"causalidadeFonte":{"a":{"legado":2,"o0fe7b689-73d9-4215-9ccd-1eec0a071b88":1},"x":{},"l":{"o01659b62-61ca-4aaf-b373-b71f40a5fde8":{"legado":true}},"o":{"o0fe7b689-73d9-4215-9ccd-1eec0a071b88":{"o01659b62-61ca-4aaf-b373-b71f40a5fde8":true}}},"causalidadeDestino":{"a":{"legado":2,"o0fe7b689-73d9-4215-9ccd-1eec0a071b88":1},"x":{},"l":{"o01659b62-61ca-4aaf-b373-b71f40a5fde8":{"legado":true}}},"aviso":"Progresso salvo na sua conta."}
+✓ Controle: importar o MESMO backup preserva a causalidade e mantém exatamente um erro.
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit2/testes/a636-transferencia-erros.test.js"" exited with code 1
+AUDITORIA a636-transferencia-erros: exit 1
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a636-importacao-dispositivos.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✗ mesmo-backup-dois-dispositivos: {"arquivoSha256":"440c8bfe4a29f5f436c3deee7e3bd337f813fdb1c040de4215450b8cdab60b86","base":2,"atividadeNoArquivo":5,"esperado":5,"remoto":8,"novoDispositivo":8,"aviso":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit2/testes/a636-importacao-dispositivos.test.js"" exited with code 1
+AUDITORIA a636-importacao-dispositivos: exit 1
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a636-sessoes-abas.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ A excluída; duas abas permanecem em B; estudo de B confirmado antes/depois da resposta A; nenhum dado B apagado.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+AUDITORIA a636-sessoes-abas: exit 0
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Exclusão abortada + duas importações identificadas + dois Page.crash: 7/7, base e certificado preservados, nenhuma confirmação falsa de exclusão.
+AUDITORIA a636-abort-exclusao: exit 0
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a35-retorno-firebase-antigo.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+✗ exclusao-firebase-anterior: {"candidato":"a35ea9a","produtorAntigo":"2f6cad6ebba53d0f86319dcada671fe9396f8111","docV2Apagado":true,"authExcluidaHTTP":400,"marcadorHTTP":404,"recriou":true,"nomeRestaurado":"Pessoa Fictícia Excluída","feitoRestaurado":{"T:apos-exclusao-legitima":true,"T:privada":true},"avisoAtual":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit2/testes/a35-retorno-firebase-antigo.test.js"" exited with code 1
+✓ Dependência IA04 comprovada: runtime novo sozinho continua vulnerável com regras antigas; controle negativo não é aprovação dessa configuração.
+AUDITORIA a636-regras-dependencia: exit 0
+Auditoria adicional: 3 executáveis com falhas; nenhum critério foi reduzido.
+
+
+===== operacoes.log =====
+Operações: propriedades de união, repetição, dois resets, 4 produtores/120 alterações e caminhos maliciosos passaram.
+
+
+===== orfaos-9.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/operacoes-suspensas.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ segunda-escrita-30min: {"quantidade":9,"webLocks":false,"eventosStorage":false,"adotou":true,"esperado":11,"observado":11,"local":true,"servidor":true,"reabriu":true}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== persistencia-13.log =====
+F01: alvo /tmp/eear-audit2-runtime, commit a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/f01-abas.test.js"
+F01: alvo /tmp/eear-audit2-runtime, commit a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ dispositivos: {"aceitoA":["T:A","T:base","T:remover"],"aceitoB":["T:B","T:base","T:remover"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ fechar-A: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ fechar-B: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ desmarcar: {"aceitoA":["T:B","T:base"],"aceitoB":["T:B","T:base"],"offline":true,"servidor":true,"paginas":[true]}
+✓ zerar: {"aceitoA":["T:depois-zerar"],"aceitoB":["T:depois-zerar"],"offline":true,"servidor":true,"paginas":[true]}
+✓ certificado: {"aceitoA":["T:B","T:base","T:remover"],"aceitoB":["T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ reconectar: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ zerar-duplo: {"aceitoA":["T:A","T:B"],"aceitoB":["T:A","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+F01: 8/8 cenários passaram; 0 falha(s). Parecer não alterado automaticamente.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE f01-abas: PASSOU
+Noturna: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/noturna-integridade.test.js"
+Noturna: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ sair-apagar: {"dadosAntes":2,"dadosDepois":[],"aposReabrir":0,"residuosIDB":[],"servidorExiste":true,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem."}
+✓ excluir-conta: {"dadosAntes":2,"dadosDepois":[],"aposReabrir":0,"residuosIDB":[],"servidorExiste":false,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos."}
+✓ outra-sessao: {"aceitoOffline":true,"documentoApagado":true,"novoLoginHTTP":400,"outraSessaoAindaConectada":true,"documentoRecriado":false,"nomeRecriado":false,"feito":null}
+✓ diario-corrompido: {"preservadoExato":true,"original":true,"backup":true,"restantes":1,"avisoRecuperacao":0}
+✓ diario-futuro: {"preservadoExato":true,"original":true,"backup":true,"restantes":1,"avisoRecuperacao":0}
+✓ atividade-dispositivos: {"aceitos":{"A":3,"B":3,"simuladosA":0,"simuladosB":0,"registrosIguais":true,"idsDistintos":null},"convergiu":true,"retomou":true,"gravouCache":true,"duravelOffline":true,"esperadoAtividade":4,"atividadeServidor":4,"simuladosServidor":0,"atividadeReaberto":4,"simuladosReaberto":0,"feito":{"T:A-independente":true,"T:B-independente":true,"T:base":true}}
+✓ simulados-iguais: {"aceitos":{"A":3,"B":3,"simuladosA":1,"simuladosB":1,"registrosIguais":false,"idsDistintos":true},"convergiu":true,"retomou":true,"gravouCache":true,"duravelOffline":true,"esperadoAtividade":4,"atividadeServidor":4,"simuladosServidor":2,"atividadeReaberto":4,"simuladosReaberto":2,"feito":{"T:base":true}}
+Noturna: 0 falha(s) em 7 cenários.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE noturna-integridade: PASSOU
+Falhas noturnas: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/noturna-falhas.test.js"
+Falhas noturnas: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ quota-real: {"quota":{"caracteres":5239113,"negou":true},"aceitaNaUI":true,"principal":false,"diario":false,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","alertas":[],"avisou":false,"recuperou":true}
+✓ seis-abas: {"abas":6,"alteracoes":150,"esperado":152,"atividade":152,"marcacoes":150,"convergiu":true,"reabriu":true,"chegou":true,"duracaoMs":6297}
+✓ lider-pausada: {"local":true,"principal":true,"diario":false,"enviouPausada":true,"enviouRetorno":true,"aviso":"Progresso salvo na sua conta.","lider":"A"}
+✓ indexeddb-indisponivel: {"sessaoPersistiuSemIndexedDB":true,"progresso":{"T:base":true,"T:sem-idb":true},"chegou":true}
+Falhas noturnas: 0 falha(s) em 4 cenários.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE noturna-falhas: PASSOU
+Segurança noturna: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/noturna-seguranca.test.js"
+Segurança noturna: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ regras: {"resultados":[{"caso":"próprio get","esperado":200,"observado":200},{"caso":"outro UID get","esperado":403,"observado":403},{"caso":"sem autenticação","esperado":403,"observado":403},{"caso":"listagem","esperado":403,"observado":403},{"caso":"subcoleção","esperado":403,"observado":403},{"caso":"query só do UID próprio continua list","esperado":403,"observado":403},{"caso":"agregação count","esperado":403,"observado":403},{"caso":"batch misto próprio/outro UID","esperado":403,"observado":403}],"batchAtomicoPreservouProprio":true}
+✓ dias: {"campo":"dias","tipoInvalido":"null","erros":[],"acessoDados":1,"tipoPersistido":"object","corpoCaracteres":6899}
+✓ excl: {"campo":"excl","tipoInvalido":"objeto","erros":[],"acessoDados":1,"tipoPersistido":"object","corpoCaracteres":6899}
+✓ nome: {"campo":"nome","tipoInvalido":"objeto","erros":[],"acessoDados":1,"tipoPersistido":"string","corpoCaracteres":6899}
+Segurança noturna: 0 falha(s) em 4 cenários.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE noturna-seguranca: PASSOU
+Confirmação noturna: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/noturna-confirmacao.test.js"
+Confirmação noturna: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ commit-sem-confirmacao: {"confirmarAntesNovoEstudo":false,"commitHTTP":200,"baseAntes":2,"servidorAntes":3,"aceito":true,"voltou":true,"offlineAtividade":3,"chegou":true,"visivel":true,"atividadeFinal":4,"servidorFinal":4,"marcacoesFinais":{"T:ack-interrompido":true,"T:apos-reabrir":true,"T:base":true},"certificado":true}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE noturna-confirmacao: PASSOU
+Durável independente: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/duravel-candidato.test.js"
+Durável independente: alvo a6366a849871db3de3554f28fa1400f10aff0f0c
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ marca: {"aceito":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"z":0},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"oaf5f67e3-a63c-49ee-93e7-055f3313fa25","principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"oaf5f67e3-a63c-49ee-93e7-055f3313fa25","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"z":0,"certs":["DURAVEL-CERT"]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ zerar: {"aceito":{"feito":{},"act":{},"z":1794693500830},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{},"act":{},"certsZ":1794693500830,"certs":[]},"geracao":"oe04f4ff6-9480-45c1-beff-332ff30fd1ca","principal":{"feito":{},"act":{},"certsZ":1794693500830,"certs":[]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{},"act":{},"certsZ":1794693500830,"certs":[]},"geracao":"oe04f4ff6-9480-45c1-beff-332ff30fd1ca","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{},"act":{},"z":1794693500830,"certs":[]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ zerar-estudar: {"aceito":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"z":1794693509112},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"certsZ":1794693509112,"certs":[]},"geracao":"o72ceafcf-1588-4cc6-a86a-4cc7b90590fb","principal":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"certsZ":1794693509112,"certs":[]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"certsZ":1794693509112,"certs":[]},"geracao":"o72ceafcf-1588-4cc6-a86a-4cc7b90590fb","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{"T:novo":true},"act":{"2026-11-14":1},"z":1794693509112,"certs":[]},"depoisLimpeza":null,"segundaPre":null,"recuperouSegunda":null,"segundoEstado":null}
+✓ duas-quedas: {"aceito":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"z":0},"confirmouIDB":true,"antes":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"o3f4f0247-a114-47a0-a3e4-df8f35d1ebb6","principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"antesDoApp":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"o3f4f0247-a114-47a0-a3e4-df8f35d1ebb6","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperou":true,"primeira":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"z":0,"certs":["DURAVEL-CERT"]},"depoisLimpeza":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"o3f4f0247-a114-47a0-a3e4-df8f35d1ebb6","principal":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"segundaPre":{"checkpoint":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3},"certsZ":0,"certs":["DURAVEL-CERT"]},"geracao":"o3f4f0247-a114-47a0-a3e4-df8f35d1ebb6","principal":{"feito":{"T:base":true},"act":{"2026-11-14":2},"certsZ":0,"certs":["DURAVEL-CERT"]},"ls":[],"idb":[]},"recuperouSegunda":true,"segundoEstado":{"feito":{"T:base":true,"T:novo":true},"act":{"2026-11-14":3}}}
+Durável: 0 falha(s) em 4 cenários.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE duravel-candidato: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/operacoes-interrupcao.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+Preparação nativa: dois observadores em oncomplete inativo; barreira IDB concluída sem alterações.
+Ponto nativo: leitura anterior à operação confirmada, {"pronta":"done","feito":{"T:base":true},"id":"firebase:Apor772MtIzjXoSstNEq1ov7cQbr","operacoes":["o1ec4c96b-d790-4fc7-89f5-cf95f027c486"]}
+✓ F13-transacao: {"Baceita":true,"reservaAntes":true,"reservaDepois2500ms":true,"feito":{"T:A-race":true,"T:B-race":true,"T:base":true},"atividade":4,"chegou":true}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE operacoes-interrupcao: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/operacoes-suspensas.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ segunda-escrita-8s: {"quantidade":9,"webLocks":false,"eventosStorage":false,"adotou":true,"esperado":11,"observado":11,"local":true,"servidor":true,"reabriu":true}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE operacoes-suspensas: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/operacoes-falhas.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ transacao-abortada: {"avisou":true,"reserva":true,"recuperou":true,"feito":{"T:abortada":true,"T:base":true}}
+✓ carga-bloqueada: {"bloqueou":true,"feito":{"T:abortada":true,"T:base":true,"T:depois-carga":true}}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE operacoes-falhas: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/operacoes-recuperacao.test.js"
+Preparando autoauditoria de recuperação
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+Abrindo com IndexedDB indisponível
+App carregado
+Importação preparada
+Estudo aceito
+IndexedDB restabelecido
+✓ indexeddb-restabelecido: {"aviso":"Este navegador usa uma cópia de reserva sem proteção contra queda. Exporte em Plano › Dados antes de fechar.","confirmou":true,"reabriu":true}
+✓ checkpoint-corrompido-preservado: {"preservou":true,"aceitou":false,"aviso":"O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados."}
+✓ exclusao-confirmada-elimina-quarentena: {"apagou":true,"cacheLimpo":true}
+✓ importacao-incompativel-preservada: {"importou":false,"preservou":true}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE operacoes-recuperacao: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/operacoes-exclusao-concorrente.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+Exclusão após conferir pendências: {"nova":"ob4f9667f-e9bb-4a2c-9117-e5d59b6b6fb3","anterior":"o6e8e1583-e4f8-4ac1-b472-012e4a4f157a","apagado":true}
+✓ exclusao-apos-ultima-conferencia: {"aceitou":true,"reserva":true,"recuperou":true,"mensagem":"Os dados deste aparelho foram apagados.","feito":{"T:aceita-depois-da-conferencia":true},"atividade":1,"esperado":1}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE operacoes-exclusao-concorrente: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/operacoes-cache-exclusao.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ cache-atrasado-apos-exclusao: {"serializado":true,"confirmouPausada":false,"confirmou":true,"reconciliou":true,"feito":{},"residuos":[]}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE operacoes-cache-exclusao: PASSOU
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ quarentena-apos-exclusao: {"confirmou":true,"copiasPessoais":0}
+GATE quarentena-exclusao: PASSOU
+
+
+===== plataforma.log =====
+
+== dados do curso
+  ✓ 69 aulas, sem id repetido
+  ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+  ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+  ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+  ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+  ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ modalidade normal tem aulas de Inglês
+  ✓ modalidade bct tem aulas de Inglês
+  ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+  ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+  ✓ curso/app.js igual à montagem dos 22 arquivos de curso/app/
+PLATAFORMA OFICIAL: armazenamento e UI locais. Firebase é validado separadamente nos emuladores. Histórico: node testes/historicos-legado.test.js (incompatibilidade conhecida; não executado neste comando).
+
+== contas dos flashcards de Matemática (recalculadas)
+  ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+  ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+
+== contas dos flashcards de Física (recalculadas)
+  ✓ 48 cartões de Física: a conta recalculada confere com o verso
+  ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+
+== simulado completo no tempo do edital (4h20)
+  ✓ aluno novo: simulado completo em 4h20
+  ✓ progresso antigo com o padrão de 4h passa a mostrar 4h20
+  ✓ e nada do progresso (notas, cartões, erros, simulados, atividade) muda
+  ✓ sem erro de JavaScript
+  ✓ quem escolheu 4h depois da mudança continua com 4h
+
+== quiz com a quantidade real de questões
+  ✓ plano mostra "meta de 4 acertos em 5" para a aula com 5 questões
+  ✓ e não promete 10 questões
+  ✓ sem erro de JavaScript
+
+== modalidade de Inglês (edital: básico x BCT)
+  ✓ normal: trilha de Inglês com 13 aulas
+  ✓ normal: notas das aulas da outra modalidade continuam guardadas
+  ✓ normal: sem erro de JavaScript
+  ✓ bct: trilha de Inglês com 15 aulas
+  ✓ bct: notas das aulas da outra modalidade continuam guardadas
+  ✓ bct: sem erro de JavaScript
+
+== aulas novas (Física 5.8 do edital e tipos de discurso)
+  ✓ FIS18: trilha da matéria com 18 aulas
+  ✓ FIS18: a aula abre pela trilha
+  ✓ FIS18: quiz com 14 questões
+  ✓ FIS18: notas, cartões, erros, simulados e atividade intactos; "continuar" aponta para a aula; sem erro de JavaScript
+  ✓ POR15: trilha da matéria com 15 aulas
+  ✓ POR15: a aula abre pela trilha
+  ✓ POR15: quiz com 10 questões
+  ✓ POR15: notas, cartões, erros, simulados e atividade intactos; "continuar" aponta para a aula; sem erro de JavaScript
+
+== certificados conquistados antes das aulas novas (FIS18 e POR15)
+  ✓ certificado antigo de Física aparece como conquistado depois da aula nova
+  ✓ certificado antigo de Física com as aulas, a carga horária, a data e o código originais
+  ✓ certificado antigo de Português com as aulas, a carga horária, a data e o código originais
+  ✓ abrir o curso e ver os certificados sem estudar não grava nada
+  ✓ quiz da FIS18 concluído pela tela
+  ✓ registro gravado do certificado antigo: 17 aulas, 46 h, data e código originais
+  ✓ certificado novo de Física exige as 18 aulas (49 h)
+  ✓ notas, cartões, erros e simulados antigos intactos depois de estudar
+  ✓ Física liberada com as aulas atuais e o certificado de 17 aulas ainda na lista
+  ✓ o certificado antigo continua abrindo para reimprimir
+  ✓ sem erro de JavaScript
+  ✓ sem todas as aulas antigas, nenhum certificado antigo de Física
+  ✓ quiz da FIS17 concluído depois da atualização
+  ✓ completar a FIS17 depois da atualização não dá o certificado antigo: falta a FIS18
+  ✓ o certificado antigo de Português do mesmo aluno continua
+  ✓ nota de 80% sem a data de conclusão não basta para o certificado antigo
+  ✓ progresso que já tinha a FIS18 não ganha o certificado antigo de Física
+  ✓ aluno novo com as aulas antigas não tem certificado: faltam FIS18 e POR15
+  ✓ quiz da POR15 concluído pela tela
+  ✓ concluindo a POR15, sai o certificado de Português com 15 aulas
+  ✓ certificado de Inglês (CFS normal) registrado
+  ✓ depois de trocar para o BCT, o registro do certificado normal continua gravado
+  ✓ no BCT, o certificado de Inglês do CFS normal continua aberto para reimprimir
+  ✓ colar outro progresso troca as notas, mas mantém os certificados conquistados
+  ✓ colar um progresso com os mesmos certificados não duplica nenhum
+  ✓ zerar progresso apaga os certificados registrados e marca quando foi zerado
+  ✓ depois de zerar, abrir de novo não recria certificado antigo
+
+== histórico de simulados vindo de outra versão
+  ✓ matéria desconhecida no histórico não quebra a aba Simulados
+
+== versão dos flashcards (cópia do site com os 7 cartões da POR02 na versão 2)
+  ✓ America/Sao_Paulo: sem versão nos dados, nenhum cartão dominado volta antes da hora
+  ✓ America/Sao_Paulo: abrir com cartões em versão nova não altera o progresso gravado
+  ✓ America/Sao_Paulo: no 1º dia voltam só os cartões de desvio 0 (1 de 7)
+  ✓ America/Sao_Paulo: sem estudar, 3 dias depois, ainda voltam 1 (a âncora só fica quando o aluno estuda)
+  ✓ America/Sao_Paulo: ao estudar, a âncora fica no dia local 2026-11-30
+  ✓ America/Sao_Paulo: acerto na versão nova vai para a caixa 3 (volta em 7 dias) e registra a versão vista
+  ✓ America/Sao_Paulo: os cartões ainda não revistos mantêm o histórico intacto
+  ✓ America/Sao_Paulo: os demais voltam distribuídos até o 6º dia (1, 3, 4, 5, 6, 6, 7; esperado 1, 3, 4, 5, 6, 6, 7)
+  ✓ America/Sao_Paulo: depois de revistos, no dia seguinte só vencem os cartões já agendados (1); nenhum se repete fora da data
+  ✓ America/Sao_Paulo: cartão regravado por uma versão antiga do app volta para a revisão da versão nova
+  ✓ America/Sao_Paulo: um cartão que já venceria antes do espalhamento continua vencendo na data original
+  ✓ Asia/Tokyo: sem versão nos dados, nenhum cartão dominado volta antes da hora
+  ✓ Asia/Tokyo: abrir com cartões em versão nova não altera o progresso gravado
+  ✓ Asia/Tokyo: no 1º dia voltam só os cartões de desvio 0 (1 de 7)
+  ✓ Asia/Tokyo: sem estudar, 3 dias depois, ainda voltam 1 (a âncora só fica quando o aluno estuda)
+  ✓ Asia/Tokyo: ao estudar, a âncora fica no dia local 2026-12-01
+  ✓ Asia/Tokyo: acerto na versão nova vai para a caixa 3 (volta em 7 dias) e registra a versão vista
+  ✓ Asia/Tokyo: os cartões ainda não revistos mantêm o histórico intacto
+  ✓ Asia/Tokyo: os demais voltam distribuídos até o 6º dia (1, 3, 4, 5, 6, 6, 7; esperado 1, 3, 4, 5, 6, 6, 7)
+  ✓ Asia/Tokyo: depois de revistos, no dia seguinte só vencem os cartões já agendados (1); nenhum se repete fora da data
+  ✓ Asia/Tokyo: cartão regravado por uma versão antiga do app volta para a revisão da versão nova
+  ✓ Asia/Tokyo: um cartão que já venceria antes do espalhamento continua vencendo na data original
+  ✓ colar progresso leva cartões, versões vistas e âncora
+  ✓ o aparelho que recebeu o progresso mostra os mesmos cartões vencidos que o original
+  ✓ zerar progresso apaga cartões, versões vistas e âncoras
+  ✓ Português: 117 cartões, 100 na versão 2 e 17 sem versão (100/17)
+  ✓ Português: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (19 de 100)
+  ✓ Português: no 1º dia só voltam cartões reformulados, e o acerto os agenda para 7 dias
+  ✓ Português: os 17 cartões mantidos e o registro das aulas ficam intactos
+  ✓ Português: os outros reformulados voltam distribuídos até o 6º dia (16, 30, 45, 56, 70, 81)
+  ✓ Português: cada reformulado volta uma única vez; no 7º dia só vencem os 19 agendados
+  ✓ Inglês: 113 cartões, 87 na versão 2 (86 do Lote 2 e ING14~5) e 26 sem versão
+  ✓ Inglês normal: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (9 de 67)
+  ✓ Inglês normal: sem estudar, a fila não cresce sozinha (9, 9, 9, 9, 9, 9)
+  ✓ Inglês normal: no 1º dia só aparecem cartões de aulas da modalidade
+  ✓ Inglês normal: cartões da outra modalidade e os mantidos ficam intactos
+  ✓ Inglês normal: até o 6º dia voltam todos os demais reformulados da modalidade (58)
+  ✓ Inglês bct: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (11 de 83)
+  ✓ Inglês bct: sem estudar, a fila não cresce sozinha (11, 11, 11, 11, 11, 11)
+  ✓ Inglês bct: no 1º dia só aparecem cartões de aulas da modalidade
+  ✓ Inglês bct: cartões da outra modalidade e os mantidos ficam intactos
+  ✓ Inglês bct: até o 6º dia voltam todos os demais reformulados da modalidade (72)
+  ✓ Matemática: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (14 de 88)
+  ✓ Matemática: no 1º dia só voltam reformulados; os 67 mantidos ficam intactos
+  ✓ Matemática: até o 6º dia voltam os demais reformulados (74)
+  ✓ Física: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (14 de 84)
+  ✓ Física: no 1º dia só voltam reformulados; os 73 mantidos ficam intactos
+  ✓ Física: até o 6º dia voltam os demais reformulados (70)
+
+== flashcards no celular (simulação: toque pelas coordenadas, sem rolagem automática)
+  ✓ 320×568 (todas as matérias): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 320×568 (todas as matérias): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 320×568 (todas as matérias): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 320×568 (todas as matérias): os 518 cartões aparecem com frente e verso completos, iguais aos dados (518 conferidos, 519 telas com o repetido)
+  ✓ 320×568 (todas as matérias): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+  ✓ 360×640 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 360×640 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 360×640 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 360×640 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+  ✓ 360×640 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+  ✓ 390×844 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 390×844 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 390×844 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 390×844 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+  ✓ 390×844 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+  ✓ 1280×800 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 1280×800 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 1280×800 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 1280×800 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+  ✓ 1280×800 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+
+== fonte ampliada (tamanho de fonte padrão do navegador, pelo Chromium)
+  ✓ fonte do navegador em 24 px (150%), 320 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+  ✓ fonte do navegador em 32 px (200%), 320 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+  ✓ fonte do navegador em 32 px (200%), 360 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+
+== segurança: progresso colado com HTML ou script
+  ✓ nenhum script do progresso colado executa (nome, datas do plano, tentativas, caderno de erros, código do certificado)
+  ✓ o nome com sinais de HTML aparece como texto no certificado
+
+== integridade: progresso malformado não trava o app
+  ✓ tipos trocados: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ valores nulos: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ simulado em andamento corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ último resultado corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+
+== integridade: simulado em andamento quando uma questão sai do curso
+  ✓ o simulado continua com as 23 questões que ainda existem e a resposta da 1ª questão é mantida
+  ✓ a entrega registra o simulado com 23 questões e guarda a resposta dada
+
+== integridade: progresso ilegível não é apagado
+  ✓ JSON corrompido: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+  ✓ JSON corrompido: "Descartar" apaga só a cópia
+  ✓ formato de uma versão futura: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+  ✓ formato de uma versão futura: "Descartar" apaga só a cópia
+  ✓ progresso válido: nenhuma cópia e nenhum aviso
+
+== integridade: armazenamento que não grava
+  ✓ o aluno é avisado de que o progresso não está sendo salvo, em Hoje e em Plano › Dados
+  ✓ armazenamento normal: sem aviso, "Progresso salvo neste aparelho"
+
+== várias abas da mesma conta neste aparelho
+  ✓ duas abas da mesma conta: a marcação da aba que fechou continua no aparelho e as contagens somam sem perder nem dobrar [feito: T:a1,T:apagar,T:b1,T:b2,T:base | atividade: 5 (esperado 5)]
+  ✓ desmarcar numa aba e estudar na outra: a desmarcação não volta e o estudo fica
+  ✓ desmarcar numa aba e estudar na outra (aba suspensa, sem o aviso): a desmarcação não volta e o estudo fica
+  ✓ "Zerar" numa aba: o que existia antes não volta pela outra aba (nem os certificados), e o que ela estudou depois fica [feito: T:b-depois]
+  ✓ certificados: gravações de duas abas mantêm o mesmo registro, data e código
+  ✓ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:a5,T:apagar,T:b5,T:base]
+  ✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]
+  ✓ cópia apagada em outra aba: a aba aberta não regrava o que foi apagado; só o estudo novo fica [feito: T:depois-de-apagar]
+
+== escrita interrompida entre abas (pontos de parada reais do Chromium)
+Preparação nativa: dois observadores em oncomplete inativo; barreira IDB concluída sem alterações.
+Ponto nativo: leitura anterior à operação confirmada, {"pronta":"done","feito":{"T:base":true},"id":"","operacoes":["o8355413f-aea2-4bb2-b87a-b696d3ca2b30"]}
+  ✓ transação interrompida: três abas, B aceita e preservada por mais de 2s; após crash, ambas as marcações e atividade 4 [{"T:A-race":true,"T:B-race":true,"T:base":true}]
+
+== recuperação e exclusão com transação pendente
+
+== escrita interrompida entre abas (pontos de parada reais do Chromium)
+Preparação nativa: dois observadores em oncomplete inativo; barreira IDB concluída sem alterações.
+Ponto nativo: leitura anterior à operação confirmada, {"pronta":"done","feito":{"T:base":true},"id":"","operacoes":["o5e21d686-adee-45aa-b529-bb2b36f87525"]}
+  ✓ transação interrompida: três abas, B aceita e preservada por mais de 2s; após crash, ambas as marcações e atividade 4 [{"T:A-race":true,"T:B-race":true,"T:base":true}]
+  ✓ exclusão concorrente não confirma nem apaga operação aceita fora do checkpoint; após crash, a pendência é recuperada
+
+== queda do navegador inteiro logo depois de estudar (diário durável)
+  ✓ queda do navegador 1200 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:antes-da-queda,T:base]
+  ✓ queda do navegador 300 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:antes-da-queda,T:base]
+  ✓ isolamento: o diário durável de outra conta não é restaurado na conta aberta [cópia: nenhuma; diário da outra conta no localStorage: não]
+
+tudo certo
+
+
+===== preparacao-importacoes-1.log =====
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+PREPARAÇÃO/EXECUÇÃO: AssertionError [ERR_ASSERTION]: Todas as importações aceitas precisam estar reservadas.
+    at /workspace/eear-audit2/testes/a636-importacoes-concorrentes.test.js:32:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+
+===== preparacao-importacoes-2.log =====
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+PREPARAÇÃO/EXECUÇÃO: Error: Não atingiu transação de importação
+    at Timeout._onTimeout (/workspace/eear-audit2/testes/a636-importacoes-concorrentes.test.js:26:77)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7)
+
+
+===== preparacao-sessoes-abas-1.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-independent-a35. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit2/testes/a636-sessoes-abas.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+PREPARAÇÃO/EXECUÇÃO: page.waitForFunction: Timeout 30000ms exceeded.
+    at confirmado (/workspace/eear-audit2/testes/a636-sessoes-abas.test.js:10:29)
+    at /workspace/eear-audit2/testes/a636-sessoes-abas.test.js:14:160 {
+  log: [],
+  name: 'TimeoutError'
+}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit2/testes/a636-sessoes-abas.test.js"" exited with code 1
+
+
+===== sincronia-firebase.log =====
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  emulators: It seems that you are running multiple instances of the emulator suite for project demo-eear-f01. This may result in unexpected behavior.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/tmp/eear-audit2-runtime/testes/sincronia-firebase.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Firebase tem prioridade: zero user/db/hot legados, checkpoint e confirmação remota efetiva.
+✓ Backup antigo explícito, identidade ignorada, união preservada, repetição idempotente, cartões/versões/âncoras/certificados em outro dispositivo.
+✓ Desmarcação, Zerar, remoção de certificados e estudo posterior 1/1 sobrevivem ao servidor e à recuperação em outro dispositivo.
+✓ Três dispositivos sem Web Locks, operações offline e reconexão fora de ordem: exatamente 5/5 no servidor e em cada checkpoint recuperado.
+Runtime SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+
+===== transferencia-algebra.log =====
+✓ Transferência: 5 IDs exatos, repetição, configuração, certificados, Zerar de cada origem, novo estudo e erros retirados.
+
+
+===== verificar-app.log =====
+OK: nada restrito em /tmp/eear-audit2-20261114/build-app
+
+
+===== verificar-site.log =====
+OK: nada restrito em /tmp/eear-audit2-20261114/build-site
+
+
+===== workflows.log =====
+OK: o build e os workflows conferem o conteúdo antes de enviar
