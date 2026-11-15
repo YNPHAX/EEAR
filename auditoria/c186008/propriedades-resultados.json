@@ -1,0 +1,1661 @@
+{
+  "contagem": {
+    "acoes": 30720,
+    "algebra": 1536,
+    "canonicas": 1024,
+    "errosCausais": 512,
+    "sementes": 512
+  },
+  "falhas": [
+    {
+      "minima": [
+        {
+          "backup": {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          "i": 0,
+          "tipo": "importar"
+        },
+        {
+          "backup": {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          "i": 1,
+          "tipo": "importar"
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "tipo": "sincronizar"
+        }
+      ],
+      "propriedade": "idempotencia-canonica",
+      "resultado": {
+        "estados": [
+          {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "_importacoes": {
+                "7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14": true
+              },
+              "_ops": {
+                "c": {
+                  "[\"act\",\"dia\"]": {
+                    "a": {
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": 1,
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": 1
+                    },
+                    "x": {}
+                  }
+                },
+                "n": 1900000000042,
+                "r": {
+                  "[\"act\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"ap\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"aula\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"cfg\",\"_importacoes\",\"7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14\"]": [
+                    1900000000042,
+                    "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                    true
+                  ],
+                  "[\"cfg\",\"certs\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"erros\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"fc\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"feito\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"mod\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"sims\",\"{\\\"d\\\":\\\"2026-11-15\\\",\\\"tipo\\\":\\\"materia\\\",\\\"mat\\\":\\\"por\\\",\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5}#0\"]": [
+                    0,
+                    "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                    {
+                      "d": "2026-11-15",
+                      "mat": "por",
+                      "min": 5,
+                      "prova": null,
+                      "r": {
+                        "por": [
+                          1,
+                          2
+                        ]
+                      },
+                      "tipo": "materia"
+                    }
+                  ],
+                  "[\"sims\",\"{\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5,\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"tipo\\\":\\\"materia\\\",\\\"prova\\\":null}#0\"]": [
+                    0,
+                    "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                    {
+                      "d": "2026-11-15",
+                      "mat": "por",
+                      "min": 5,
+                      "prova": null,
+                      "r": {
+                        "por": [
+                          1,
+                          2
+                        ]
+                      },
+                      "tipo": "materia"
+                    }
+                  ],
+                  "[\"sims\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"t\"]": [
+                    0,
+                    "legado",
+                    0
+                  ],
+                  "[\"v\"]": [
+                    0,
+                    "legado",
+                    1
+                  ]
+                },
+                "s": {},
+                "v": 2
+              },
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              },
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "_importacoes": {
+                "7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14": true
+              },
+              "_ops": {
+                "c": {
+                  "[\"act\",\"dia\"]": {
+                    "a": {
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": 1,
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": 1
+                    },
+                    "x": {}
+                  }
+                },
+                "n": 1900000000042,
+                "r": {
+                  "[\"act\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"ap\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"aula\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"cfg\",\"_importacoes\",\"7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14\"]": [
+                    1900000000042,
+                    "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                    true
+                  ],
+                  "[\"cfg\",\"certs\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"erros\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"fc\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"feito\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"mod\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"sims\",\"{\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5,\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"tipo\\\":\\\"materia\\\",\\\"prova\\\":null}#0\"]": [
+                    0,
+                    "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                    {
+                      "d": "2026-11-15",
+                      "mat": "por",
+                      "min": 5,
+                      "prova": null,
+                      "r": {
+                        "por": [
+                          1,
+                          2
+                        ]
+                      },
+                      "tipo": "materia"
+                    }
+                  ],
+                  "[\"sims\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"t\"]": [
+                    0,
+                    "legado",
+                    0
+                  ],
+                  "[\"v\"]": [
+                    0,
+                    "legado",
+                    1
+                  ]
+                },
+                "s": {},
+                "v": 2
+              },
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          }
+        ],
+        "hash": "7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+        "metadados": [
+          {
+            "c": {
+              "[\"act\",\"dia\"]": {
+                "a": {
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": 1,
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": 1
+                },
+                "x": {}
+              }
+            },
+            "n": 1900000000042,
+            "r": {
+              "[\"act\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"ap\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"aula\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"_importacoes\",\"7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14\"]": [
+                1900000000042,
+                "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                true
+              ],
+              "[\"cfg\",\"certs\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"erros\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"fc\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"feito\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"mod\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"sims\",\"{\\\"d\\\":\\\"2026-11-15\\\",\\\"tipo\\\":\\\"materia\\\",\\\"mat\\\":\\\"por\\\",\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5}#0\"]": [
+                0,
+                "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                {
+                  "d": "2026-11-15",
+                  "mat": "por",
+                  "min": 5,
+                  "prova": null,
+                  "r": {
+                    "por": [
+                      1,
+                      2
+                    ]
+                  },
+                  "tipo": "materia"
+                }
+              ],
+              "[\"sims\",\"{\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5,\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"tipo\\\":\\\"materia\\\",\\\"prova\\\":null}#0\"]": [
+                0,
+                "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                {
+                  "d": "2026-11-15",
+                  "mat": "por",
+                  "min": 5,
+                  "prova": null,
+                  "r": {
+                    "por": [
+                      1,
+                      2
+                    ]
+                  },
+                  "tipo": "materia"
+                }
+              ],
+              "[\"sims\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"t\"]": [
+                0,
+                "legado",
+                0
+              ],
+              "[\"v\"]": [
+                0,
+                "legado",
+                1
+              ]
+            },
+            "s": {},
+            "v": 2
+          },
+          {
+            "c": {
+              "[\"act\",\"dia\"]": {
+                "a": {
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": 1,
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": 1
+                },
+                "x": {}
+              }
+            },
+            "n": 1900000000042,
+            "r": {
+              "[\"act\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"ap\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"aula\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"_importacoes\",\"7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14\"]": [
+                1900000000042,
+                "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                true
+              ],
+              "[\"cfg\",\"certs\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"erros\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"fc\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"feito\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"mod\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"sims\",\"{\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5,\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"tipo\\\":\\\"materia\\\",\\\"prova\\\":null}#0\"]": [
+                0,
+                "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                {
+                  "d": "2026-11-15",
+                  "mat": "por",
+                  "min": 5,
+                  "prova": null,
+                  "r": {
+                    "por": [
+                      1,
+                      2
+                    ]
+                  },
+                  "tipo": "materia"
+                }
+              ],
+              "[\"sims\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"t\"]": [
+                0,
+                "legado",
+                0
+              ],
+              "[\"v\"]": [
+                0,
+                "legado",
+                1
+              ]
+            },
+            "s": {},
+            "v": 2
+          }
+        ]
+      },
+      "seed": 1,
+      "sequencia": [
+        {
+          "backup": {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          "i": 0,
+          "tipo": "importar"
+        },
+        {
+          "backup": {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          "i": 1,
+          "tipo": "importar"
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "tipo": "sincronizar"
+        }
+      ]
+    },
+    {
+      "minima": [
+        {
+          "backup": {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          "i": 0,
+          "tipo": "importar"
+        },
+        {
+          "i": 0,
+          "tipo": "zerar"
+        },
+        {
+          "backup": {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          "i": 1,
+          "tipo": "importar"
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "tipo": "sincronizar"
+        }
+      ],
+      "propriedade": "reset-canonico",
+      "resultado": {
+        "estados": [
+          {
+            "act": {},
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "_importacoes": {
+                "7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14": true
+              },
+              "_ops": {
+                "c": {
+                  "[\"act\",\"dia\"]": {
+                    "a": {
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": 1,
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": 1
+                    },
+                    "x": {
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": true,
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": true
+                    }
+                  }
+                },
+                "n": 1900000000048,
+                "r": {
+                  "[\"act\"]": [
+                    1900000000047,
+                    "e:reset",
+                    {}
+                  ],
+                  "[\"ap\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"aula\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"cfg\",\"_importacoes\",\"7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14\"]": [
+                    1900000000048,
+                    "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                    true
+                  ],
+                  "[\"cfg\",\"certs\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"cfg\",\"certsZ\"]": [
+                    1900000000047,
+                    "e:reset",
+                    1
+                  ],
+                  "[\"erros\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"fc\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"feito\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"mod\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"sims\",\"{\\\"d\\\":\\\"2026-11-15\\\",\\\"tipo\\\":\\\"materia\\\",\\\"mat\\\":\\\"por\\\",\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5}#0\"]": [
+                    1900000000047,
+                    "e:reset"
+                  ],
+                  "[\"sims\",\"{\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5,\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"tipo\\\":\\\"materia\\\",\\\"prova\\\":null}#0\"]": [
+                    0,
+                    "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                    {
+                      "d": "2026-11-15",
+                      "mat": "por",
+                      "min": 5,
+                      "prova": null,
+                      "r": {
+                        "por": [
+                          1,
+                          2
+                        ]
+                      },
+                      "tipo": "materia"
+                    }
+                  ],
+                  "[\"sims\"]": [
+                    1900000000047,
+                    "e:reset",
+                    {}
+                  ],
+                  "[\"t\"]": [
+                    0,
+                    "legado",
+                    0
+                  ],
+                  "[\"v\"]": [
+                    0,
+                    "legado",
+                    1
+                  ]
+                },
+                "s": {},
+                "v": 2
+              },
+              "certs": [],
+              "certsZ": 1
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "_importacoes": {
+                "7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14": true
+              },
+              "_ops": {
+                "c": {
+                  "[\"act\",\"dia\"]": {
+                    "a": {
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": 1,
+                      "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": 1
+                    },
+                    "x": {}
+                  }
+                },
+                "n": 1900000000048,
+                "r": {
+                  "[\"act\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"ap\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"aula\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"cfg\",\"_importacoes\",\"7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14\"]": [
+                    1900000000048,
+                    "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                    true
+                  ],
+                  "[\"cfg\",\"certs\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"erros\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"fc\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"feito\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"mod\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"sims\",\"{\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5,\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"tipo\\\":\\\"materia\\\",\\\"prova\\\":null}#0\"]": [
+                    0,
+                    "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                    {
+                      "d": "2026-11-15",
+                      "mat": "por",
+                      "min": 5,
+                      "prova": null,
+                      "r": {
+                        "por": [
+                          1,
+                          2
+                        ]
+                      },
+                      "tipo": "materia"
+                    }
+                  ],
+                  "[\"sims\"]": [
+                    0,
+                    "legado",
+                    {}
+                  ],
+                  "[\"t\"]": [
+                    0,
+                    "legado",
+                    0
+                  ],
+                  "[\"v\"]": [
+                    0,
+                    "legado",
+                    1
+                  ]
+                },
+                "s": {},
+                "v": 2
+              },
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          }
+        ],
+        "hash": "7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+        "metadados": [
+          {
+            "c": {
+              "[\"act\",\"dia\"]": {
+                "a": {
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": 1,
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": 1
+                },
+                "x": {
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": true,
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": true
+                }
+              }
+            },
+            "n": 1900000000048,
+            "r": {
+              "[\"act\"]": [
+                1900000000047,
+                "e:reset",
+                {}
+              ],
+              "[\"ap\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"aula\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"_importacoes\",\"7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14\"]": [
+                1900000000048,
+                "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                true
+              ],
+              "[\"cfg\",\"certs\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"certsZ\"]": [
+                1900000000047,
+                "e:reset",
+                1
+              ],
+              "[\"erros\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"fc\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"feito\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"mod\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"sims\",\"{\\\"d\\\":\\\"2026-11-15\\\",\\\"tipo\\\":\\\"materia\\\",\\\"mat\\\":\\\"por\\\",\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5}#0\"]": [
+                1900000000047,
+                "e:reset"
+              ],
+              "[\"sims\",\"{\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5,\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"tipo\\\":\\\"materia\\\",\\\"prova\\\":null}#0\"]": [
+                0,
+                "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                {
+                  "d": "2026-11-15",
+                  "mat": "por",
+                  "min": 5,
+                  "prova": null,
+                  "r": {
+                    "por": [
+                      1,
+                      2
+                    ]
+                  },
+                  "tipo": "materia"
+                }
+              ],
+              "[\"sims\"]": [
+                1900000000047,
+                "e:reset",
+                {}
+              ],
+              "[\"t\"]": [
+                0,
+                "legado",
+                0
+              ],
+              "[\"v\"]": [
+                0,
+                "legado",
+                1
+              ]
+            },
+            "s": {},
+            "v": 2
+          },
+          {
+            "c": {
+              "[\"act\",\"dia\"]": {
+                "a": {
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:0": 1,
+                  "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14:1": 1
+                },
+                "x": {}
+              }
+            },
+            "n": 1900000000048,
+            "r": {
+              "[\"act\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"ap\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"aula\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"_importacoes\",\"7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14\"]": [
+                1900000000048,
+                "i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                true
+              ],
+              "[\"cfg\",\"certs\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"erros\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"fc\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"feito\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"mod\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"sims\",\"{\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5,\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"tipo\\\":\\\"materia\\\",\\\"prova\\\":null}#0\"]": [
+                0,
+                "z:i:7713acaa9a620c855fe98c0c13e73c5f3a76059a343b50b3a489e016bf007f14",
+                {
+                  "d": "2026-11-15",
+                  "mat": "por",
+                  "min": 5,
+                  "prova": null,
+                  "r": {
+                    "por": [
+                      1,
+                      2
+                    ]
+                  },
+                  "tipo": "materia"
+                }
+              ],
+              "[\"sims\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"t\"]": [
+                0,
+                "legado",
+                0
+              ],
+              "[\"v\"]": [
+                0,
+                "legado",
+                1
+              ]
+            },
+            "s": {},
+            "v": 2
+          }
+        ]
+      },
+      "seed": 1,
+      "sequencia": [
+        {
+          "backup": {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          "i": 0,
+          "tipo": "importar"
+        },
+        {
+          "i": 0,
+          "tipo": "zerar"
+        },
+        {
+          "backup": {
+            "act": {
+              "dia": 2
+            },
+            "ap": {},
+            "aula": {},
+            "cfg": {
+              "certs": []
+            },
+            "erros": {},
+            "fc": {},
+            "feito": {},
+            "mod": {},
+            "sims": [
+              {
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ],
+            "t": 0,
+            "v": 1
+          },
+          "i": 1,
+          "tipo": "importar"
+        },
+        {
+          "i": 0,
+          "j": 1,
+          "tipo": "sincronizar"
+        }
+      ]
+    },
+    {
+      "A": {
+        "act": {},
+        "ap": {},
+        "aula": {},
+        "cfg": {
+          "_importacoes": {
+            "2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69": true
+          },
+          "_ops": {
+            "c": {
+              "[\"erros\",\"q\"]": {
+                "a": {
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:0": 1,
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:1": 1
+                },
+                "l": {
+                  "e:ZERAR": {
+                    "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:0": true,
+                    "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:1": true
+                  }
+                },
+                "o": {
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:0": {},
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:1": {}
+                },
+                "x": {}
+              }
+            },
+            "n": 1900000023021,
+            "r": {
+              "[\"act\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"ap\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"aula\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"_importacoes\",\"2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69\"]": [
+                1900000023020,
+                "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69",
+                true
+              ],
+              "[\"cfg\",\"certs\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"certsZ\"]": [
+                0,
+                "z:i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69",
+                1e+30
+              ],
+              "[\"erros\"]": [
+                1900000023021,
+                "e:ZERAR",
+                {}
+              ],
+              "[\"fc\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"feito\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"mod\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"sims\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"t\"]": [
+                0,
+                "legado",
+                0
+              ],
+              "[\"v\"]": [
+                0,
+                "legado",
+                1
+              ]
+            },
+            "s": {},
+            "v": 2
+          },
+          "certs": [],
+          "certsZ": 1e+30
+        },
+        "erros": {},
+        "fc": {},
+        "feito": {},
+        "mod": {},
+        "sims": [],
+        "t": 0,
+        "v": 1
+      },
+      "B": {
+        "act": {},
+        "ap": {},
+        "aula": {},
+        "cfg": {
+          "_importacoes": {
+            "2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69": true
+          },
+          "_ops": {
+            "c": {
+              "[\"erros\",\"q\"]": {
+                "a": {
+                  "e:erro-concorrente": 1,
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:0": 1,
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:1": 1
+                },
+                "o": {
+                  "e:erro-concorrente": {},
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:0": {},
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:1": {}
+                },
+                "x": {}
+              }
+            },
+            "n": 1900000023022,
+            "r": {
+              "[\"act\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"ap\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"aula\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"_importacoes\",\"2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69\"]": [
+                1900000023020,
+                "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69",
+                true
+              ],
+              "[\"cfg\",\"certs\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"certsZ\"]": [
+                0,
+                "z:i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69",
+                1e+30
+              ],
+              "[\"erros\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"fc\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"feito\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"mod\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"sims\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"t\"]": [
+                0,
+                "legado",
+                0
+              ],
+              "[\"v\"]": [
+                0,
+                "legado",
+                1
+              ]
+            },
+            "s": {},
+            "v": 2
+          },
+          "certs": [],
+          "certsZ": 1e+30
+        },
+        "erros": {
+          "q": 3
+        },
+        "fc": {},
+        "feito": {},
+        "mod": {},
+        "sims": [],
+        "t": 0,
+        "v": 1
+      },
+      "antes": {
+        "act": {},
+        "ap": {},
+        "aula": {},
+        "cfg": {
+          "certs": [],
+          "certsZ": 1e+30
+        },
+        "erros": {
+          "q": 2
+        },
+        "fc": {},
+        "feito": {},
+        "mod": {},
+        "sims": [],
+        "t": 0,
+        "v": 1
+      },
+      "minimo": [
+        "importar erros=2, certsZ=1e30",
+        "A: Zerar",
+        "B: errar uma vez sem observar A",
+        "sincronizar"
+      ],
+      "propriedade": "reset-marcador-inseguro",
+      "resultado": {
+        "act": {},
+        "ap": {},
+        "aula": {},
+        "cfg": {
+          "_importacoes": {
+            "2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69": true
+          },
+          "_ops": {
+            "c": {
+              "[\"erros\",\"q\"]": {
+                "a": {
+                  "e:erro-concorrente": 1,
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:0": 1,
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:1": 1
+                },
+                "l": {
+                  "e:ZERAR": {
+                    "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:0": true,
+                    "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:1": true
+                  }
+                },
+                "o": {
+                  "e:erro-concorrente": {},
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:0": {},
+                  "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69:1": {}
+                },
+                "x": {}
+              }
+            },
+            "n": 1900000023022,
+            "r": {
+              "[\"act\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"ap\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"aula\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"_importacoes\",\"2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69\"]": [
+                1900000023020,
+                "i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69",
+                true
+              ],
+              "[\"cfg\",\"certs\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"certsZ\"]": [
+                0,
+                "z:i:2af1cde394a9bf758cd8f3038cdf438e79e6fc2a9c08ae45b6b2960994e3aa69",
+                1e+30
+              ],
+              "[\"erros\"]": [
+                1900000023021,
+                "e:ZERAR",
+                {}
+              ],
+              "[\"fc\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"feito\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"mod\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"sims\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"t\"]": [
+                0,
+                "legado",
+                0
+              ],
+              "[\"v\"]": [
+                0,
+                "legado",
+                1
+              ]
+            },
+            "s": {},
+            "v": 2
+          },
+          "certs": [],
+          "certsZ": 1e+30
+        },
+        "erros": {
+          "q": 3
+        },
+        "fc": {},
+        "feito": {},
+        "mod": {},
+        "sims": [],
+        "t": 0,
+        "v": 1
+      },
+      "seed": "0xC186008"
+    }
+  ],
+  "hashEsperado": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+  "sha": "c186008012ba12709fc07c08e36532471a894a8c"
+}

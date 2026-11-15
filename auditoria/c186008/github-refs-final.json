@@ -1,0 +1,382 @@
+[
+  {
+    "ref": "refs/heads/auditoria/firebase-a35ea9a-final",
+    "node_id": "REF_kwDOVVUbMNoAK3JlZnMvaGVhZHMvYXVkaXRvcmlhL2ZpcmViYXNlLWEzNWVhOWEtZmluYWw",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/auditoria/firebase-a35ea9a-final",
+    "object": {
+      "sha": "2db9c15f0aff39eedc92e19785216639951efca2",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/2db9c15f0aff39eedc92e19785216639951efca2"
+    }
+  },
+  {
+    "ref": "refs/heads/auditoria/firebase-a6366a8-segunda",
+    "node_id": "REF_kwDOVVUbMNoALXJlZnMvaGVhZHMvYXVkaXRvcmlhL2ZpcmViYXNlLWE2MzY2YTgtc2VndW5kYQ",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/auditoria/firebase-a6366a8-segunda",
+    "object": {
+      "sha": "9a74db8cb449a72833861419ff4292a05afbae4a",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/9a74db8cb449a72833861419ff4292a05afbae4a"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/auditoria-integracao",
+    "node_id": "REF_kwDOVVUbMNoAJnJlZnMvaGVhZHMvY2xhdWRlL2F1ZGl0b3JpYS1pbnRlZ3JhY2Fv",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/auditoria-integracao",
+    "object": {
+      "sha": "9da6a91393d16b05b27bb0a39e587a072da8e0ff",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/9da6a91393d16b05b27bb0a39e587a072da8e0ff"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/auditoria-plataforma",
+    "node_id": "REF_kwDOVVUbMNoAJnJlZnMvaGVhZHMvY2xhdWRlL2F1ZGl0b3JpYS1wbGF0YWZvcm1h",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/auditoria-plataforma",
+    "object": {
+      "sha": "9feb4a005614ff4d7ae7078e85371f518c55963e",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/9feb4a005614ff4d7ae7078e85371f518c55963e"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/contas-privacidade",
+    "node_id": "REF_kwDOVVUbMNoAJHJlZnMvaGVhZHMvY2xhdWRlL2NvbnRhcy1wcml2YWNpZGFkZQ",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/contas-privacidade",
+    "object": {
+      "sha": "5f2ac9fea2e746751d17930aaf32beccf14c9276",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/5f2ac9fea2e746751d17930aaf32beccf14c9276"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/continuidade-eear",
+    "node_id": "REF_kwDOVVUbMNoAI3JlZnMvaGVhZHMvY2xhdWRlL2NvbnRpbnVpZGFkZS1lZWFy",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/continuidade-eear",
+    "object": {
+      "sha": "926ab581816eb068ea3e71fa8cb6abd4998488dd",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/926ab581816eb068ea3e71fa8cb6abd4998488dd"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/dependencias",
+    "node_id": "REF_kwDOVVUbML5yZWZzL2hlYWRzL2NsYXVkZS9kZXBlbmRlbmNpYXM",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/dependencias",
+    "object": {
+      "sha": "257c88c38efa1197eae07e48aac4990e3ee48757",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/257c88c38efa1197eae07e48aac4990e3ee48757"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/eear-study-hydwqt",
+    "node_id": "REF_kwDOVVUbMNoAI3JlZnMvaGVhZHMvY2xhdWRlL2VlYXItc3R1ZHktaHlkd3F0",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/eear-study-hydwqt",
+    "object": {
+      "sha": "2f6cad6ebba53d0f86319dcada671fe9396f8111",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/2f6cad6ebba53d0f86319dcada671fe9396f8111"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/engenharia-qualidade",
+    "node_id": "REF_kwDOVVUbMNoAJnJlZnMvaGVhZHMvY2xhdWRlL2VuZ2VuaGFyaWEtcXVhbGlkYWRl",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/engenharia-qualidade",
+    "object": {
+      "sha": "5f04d6fa5096c85b3202c77c52f706e495b45f2c",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/5f04d6fa5096c85b3202c77c52f706e495b45f2c"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/etapa2-completude",
+    "node_id": "REF_kwDOVVUbMNoAI3JlZnMvaGVhZHMvY2xhdWRlL2V0YXBhMi1jb21wbGV0dWRl",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/etapa2-completude",
+    "object": {
+      "sha": "7d960fd3e4e68c4f2a88cadf3636525b1963b6c6",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/7d960fd3e4e68c4f2a88cadf3636525b1963b6c6"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/etapa3-flashcards",
+    "node_id": "REF_kwDOVVUbMNoAI3JlZnMvaGVhZHMvY2xhdWRlL2V0YXBhMy1mbGFzaGNhcmRz",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/etapa3-flashcards",
+    "object": {
+      "sha": "bd002228524694b0856b259aff0498d9cdb19a6b",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/bd002228524694b0856b259aff0498d9cdb19a6b"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/flashcards-celular",
+    "node_id": "REF_kwDOVVUbMNoAJHJlZnMvaGVhZHMvY2xhdWRlL2ZsYXNoY2FyZHMtY2VsdWxhcg",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/flashcards-celular",
+    "object": {
+      "sha": "a5340a0de27c1378cba3f3cc6a9def301d602946",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/a5340a0de27c1378cba3f3cc6a9def301d602946"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/hotfix-apostila",
+    "node_id": "REF_kwDOVVUbMNoAIXJlZnMvaGVhZHMvY2xhdWRlL2hvdGZpeC1hcG9zdGlsYQ",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/hotfix-apostila",
+    "object": {
+      "sha": "149ce1c2ba51be8ddf5a842b00978d07455dfd15",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/149ce1c2ba51be8ddf5a842b00978d07455dfd15"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/ingles-modalidades",
+    "node_id": "REF_kwDOVVUbMNoAJHJlZnMvaGVhZHMvY2xhdWRlL2luZ2xlcy1tb2RhbGlkYWRlcw",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/ingles-modalidades",
+    "object": {
+      "sha": "365186a6c010457ad3542e368a1a18d73b9eb8f3",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/365186a6c010457ad3542e368a1a18d73b9eb8f3"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/instrucoes-honestidade-validacao",
+    "node_id": "REF_kwDOVVUbMNoAMnJlZnMvaGVhZHMvY2xhdWRlL2luc3RydWNvZXMtaG9uZXN0aWRhZGUtdmFsaWRhY2Fv",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/instrucoes-honestidade-validacao",
+    "object": {
+      "sha": "ba5f168f458d57c93879b0154e9bb89a1a2dad00",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/ba5f168f458d57c93879b0154e9bb89a1a2dad00"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/integracao-segura",
+    "node_id": "REF_kwDOVVUbMNoAI3JlZnMvaGVhZHMvY2xhdWRlL2ludGVncmFjYW8tc2VndXJh",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/integracao-segura",
+    "object": {
+      "sha": "8eab7622ff0ae547e33ca8a15252af9e9a2a47c0",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/8eab7622ff0ae547e33ca8a15252af9e9a2a47c0"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/lote4-fisica",
+    "node_id": "REF_kwDOVVUbML5yZWZzL2hlYWRzL2NsYXVkZS9sb3RlNC1maXNpY2E",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/lote4-fisica",
+    "object": {
+      "sha": "71c6de1405ceb3d54438d2e840b2f607b0809c7f",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/71c6de1405ceb3d54438d2e840b2f607b0809c7f"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/remover-apostila-atual",
+    "node_id": "REF_kwDOVVUbMNoAKHJlZnMvaGVhZHMvY2xhdWRlL3JlbW92ZXItYXBvc3RpbGEtYXR1YWw",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/remover-apostila-atual",
+    "object": {
+      "sha": "1fc7ee5faaa47070a24ef4c58e360576fa2ad443",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/1fc7ee5faaa47070a24ef4c58e360576fa2ad443"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/revisao-conteudo-eear-2026",
+    "node_id": "REF_kwDOVVUbMNoALHJlZnMvaGVhZHMvY2xhdWRlL3JldmlzYW8tY29udGV1ZG8tZWVhci0yMDI2",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/revisao-conteudo-eear-2026",
+    "object": {
+      "sha": "0e54ce9012e95356484e5d0d83f2731512b153a0",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/0e54ce9012e95356484e5d0d83f2731512b153a0"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/revisao-legal",
+    "node_id": "REF_kwDOVVUbML9yZWZzL2hlYWRzL2NsYXVkZS9yZXZpc2FvLWxlZ2Fs",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/revisao-legal",
+    "object": {
+      "sha": "c4a89119d7abb8f57c34e728162e645586e2e235",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/c4a89119d7abb8f57c34e728162e645586e2e235"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/seguranca-1-link-apk",
+    "node_id": "REF_kwDOVVUbMNoAJnJlZnMvaGVhZHMvY2xhdWRlL3NlZ3VyYW5jYS0xLWxpbmstYXBr",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/seguranca-1-link-apk",
+    "object": {
+      "sha": "9674e00e6fbb66310fc5a3a7c236a2f2eadb5e58",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/9674e00e6fbb66310fc5a3a7c236a2f2eadb5e58"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/seguranca-2-correcao",
+    "node_id": "REF_kwDOVVUbMNoAJnJlZnMvaGVhZHMvY2xhdWRlL3NlZ3VyYW5jYS0yLWNvcnJlY2Fv",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/seguranca-2-correcao",
+    "object": {
+      "sha": "78df4cfe2bb4d5240a125582e96e6cdd8f5bc49a",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/78df4cfe2bb4d5240a125582e96e6cdd8f5bc49a"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/seguranca-2-verificacao-conteudo",
+    "node_id": "REF_kwDOVVUbMNoAMnJlZnMvaGVhZHMvY2xhdWRlL3NlZ3VyYW5jYS0yLXZlcmlmaWNhY2FvLWNvbnRldWRv",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/seguranca-2-verificacao-conteudo",
+    "object": {
+      "sha": "1d00e6549caeb67cdee23dd1c552303ed35fd611",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/1d00e6549caeb67cdee23dd1c552303ed35fd611"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/seguranca-3-permissoes-android",
+    "node_id": "REF_kwDOVVUbMNoAMHJlZnMvaGVhZHMvY2xhdWRlL3NlZ3VyYW5jYS0zLXBlcm1pc3NvZXMtYW5kcm9pZA",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/seguranca-3-permissoes-android",
+    "object": {
+      "sha": "9dbe324925c75a98f85837ddd6a28077acf215fe",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/9dbe324925c75a98f85837ddd6a28077acf215fe"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/seguranca-publicacao-final",
+    "node_id": "REF_kwDOVVUbMNoALHJlZnMvaGVhZHMvY2xhdWRlL3NlZ3VyYW5jYS1wdWJsaWNhY2FvLWZpbmFs",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/seguranca-publicacao-final",
+    "object": {
+      "sha": "17635dd14afbf465b5d4bee74b24af3a3fa5fed3",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/17635dd14afbf465b5d4bee74b24af3a3fa5fed3"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/seguranca-teste-bloqueio",
+    "node_id": "REF_kwDOVVUbMNoAKnJlZnMvaGVhZHMvY2xhdWRlL3NlZ3VyYW5jYS10ZXN0ZS1ibG9xdWVpbw",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/seguranca-teste-bloqueio",
+    "object": {
+      "sha": "2683cd7efb846ef19d7a21d070c2568c0fb1426c",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/2683cd7efb846ef19d7a21d070c2568c0fb1426c"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/sincronia-epoca",
+    "node_id": "REF_kwDOVVUbMNoAIXJlZnMvaGVhZHMvY2xhdWRlL3NpbmNyb25pYS1lcG9jYQ",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/sincronia-epoca",
+    "object": {
+      "sha": "5d3575df985d3125b4c23c795e301de440fad62e",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/5d3575df985d3125b4c23c795e301de440fad62e"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/sincronia-linhagem",
+    "node_id": "REF_kwDOVVUbMNoAJHJlZnMvaGVhZHMvY2xhdWRlL3NpbmNyb25pYS1saW5oYWdlbQ",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/sincronia-linhagem",
+    "object": {
+      "sha": "1993599d088d822f60190d20651cc19911f37414",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/1993599d088d822f60190d20651cc19911f37414"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/sincronia-progresso2",
+    "node_id": "REF_kwDOVVUbMNoAJnJlZnMvaGVhZHMvY2xhdWRlL3NpbmNyb25pYS1wcm9ncmVzc28y",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/sincronia-progresso2",
+    "object": {
+      "sha": "7f425b66d19ba1ef015593797aca4efbd8e29221",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/7f425b66d19ba1ef015593797aca4efbd8e29221"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/sincronia-reversao-segura",
+    "node_id": "REF_kwDOVVUbMNoAK3JlZnMvaGVhZHMvY2xhdWRlL3NpbmNyb25pYS1yZXZlcnNhby1zZWd1cmE",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/sincronia-reversao-segura",
+    "object": {
+      "sha": "a78a6b9bb67676da3d9915453e41a147c9b26b30",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/a78a6b9bb67676da3d9915453e41a147c9b26b30"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/sync-acessibilidade",
+    "node_id": "REF_kwDOVVUbMNoAJXJlZnMvaGVhZHMvY2xhdWRlL3N5bmMtYWNlc3NpYmlsaWRhZGU",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/sync-acessibilidade",
+    "object": {
+      "sha": "08cadd418953cbb0182bdcfbdd32c4aa28d9bfba",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/08cadd418953cbb0182bdcfbdd32c4aa28d9bfba"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/validacao-contas",
+    "node_id": "REF_kwDOVVUbMNoAInJlZnMvaGVhZHMvY2xhdWRlL3ZhbGlkYWNhby1jb250YXM",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/validacao-contas",
+    "object": {
+      "sha": "a4486d686b8cc3a4eb3f6ead52b34789d13968b1",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/a4486d686b8cc3a4eb3f6ead52b34789d13968b1"
+    }
+  },
+  {
+    "ref": "refs/heads/claude/verificacao-final",
+    "node_id": "REF_kwDOVVUbMNoAI3JlZnMvaGVhZHMvY2xhdWRlL3ZlcmlmaWNhY2FvLWZpbmFs",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/claude/verificacao-final",
+    "object": {
+      "sha": "2a128a9cff39e6440c44a5aa2fb9e685ee9ed9b7",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/2a128a9cff39e6440c44a5aa2fb9e685ee9ed9b7"
+    }
+  },
+  {
+    "ref": "refs/heads/codex/auditoria-firebase-eear",
+    "node_id": "REF_kwDOVVUbMNoAKHJlZnMvaGVhZHMvY29kZXgvYXVkaXRvcmlhLWZpcmViYXNlLWVlYXI",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/codex/auditoria-firebase-eear",
+    "object": {
+      "sha": "758beed207fc2196d05573e245fe43f0836dc407",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/758beed207fc2196d05573e245fe43f0836dc407"
+    }
+  },
+  {
+    "ref": "refs/heads/codex/eear-correcao-estrutural",
+    "node_id": "REF_kwDOVVUbMNoAKXJlZnMvaGVhZHMvY29kZXgvZWVhci1jb3JyZWNhby1lc3RydXR1cmFs",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/codex/eear-correcao-estrutural",
+    "object": {
+      "sha": "c186008012ba12709fc07c08e36532471a894a8c",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/c186008012ba12709fc07c08e36532471a894a8c"
+    }
+  },
+  {
+    "ref": "refs/heads/codex/instrucoes-honestidade-validacao",
+    "node_id": "REF_kwDOVVUbMNoAMXJlZnMvaGVhZHMvY29kZXgvaW5zdHJ1Y29lcy1ob25lc3RpZGFkZS12YWxpZGFjYW8",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/codex/instrucoes-honestidade-validacao",
+    "object": {
+      "sha": "ba5f168f458d57c93879b0154e9bb89a1a2dad00",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/ba5f168f458d57c93879b0154e9bb89a1a2dad00"
+    }
+  },
+  {
+    "ref": "refs/heads/codex/revisao-conteudo-eear-2026",
+    "node_id": "REF_kwDOVVUbMNoAK3JlZnMvaGVhZHMvY29kZXgvcmV2aXNhby1jb250ZXVkby1lZWFyLTIwMjY",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/codex/revisao-conteudo-eear-2026",
+    "object": {
+      "sha": "0e54ce9012e95356484e5d0d83f2731512b153a0",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/0e54ce9012e95356484e5d0d83f2731512b153a0"
+    }
+  },
+  {
+    "ref": "refs/heads/main",
+    "node_id": "REF_kwDOVVUbMK9yZWZzL2hlYWRzL21haW4",
+    "url": "https://api.github.com/repos/YNPHAX/EEAR/git/refs/heads/main",
+    "object": {
+      "sha": "7f9ba7f122e315d8bef8dc4db2c6187470a608cd",
+      "type": "commit",
+      "url": "https://api.github.com/repos/YNPHAX/EEAR/git/commits/7f9ba7f122e315d8bef8dc4db2c6187470a608cd"
+    }
+  }
+]

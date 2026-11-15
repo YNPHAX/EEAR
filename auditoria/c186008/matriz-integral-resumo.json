@@ -1,0 +1,28 @@
+[
+  {
+    "grupo": "firebase",
+    "esperados": 11,
+    "executados": 11,
+    "falhas": []
+  },
+  {
+    "grupo": "bloqueadores",
+    "esperados": 2,
+    "executados": 2,
+    "falhas": [
+      "ia05-ia06-integral"
+    ]
+  },
+  {
+    "grupo": "local",
+    "esperados": 19,
+    "executados": 19,
+    "falhas": []
+  },
+  {
+    "grupo": "extras",
+    "esperados": 10,
+    "executados": 10,
+    "falhas": []
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "nome": "bloqueadores-originais",
+    "comando": "node testes/bloqueadores-auditoria.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 401.66,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "ia05-ia06-integral",
+    "comando": "node testes/importacoes-regressoes.test.js",
+    "variaveis": {},
+    "exit": 1,
+    "segundos": 500.65,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  }
+]

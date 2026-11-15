@@ -1,0 +1,27 @@
+[
+  {
+    "repeticao": 1,
+    "exit": 0,
+    "nota": "Log preservado; execu\u00e7\u00e3o isolada passou."
+  },
+  {
+    "repeticao": 2,
+    "exit": 0,
+    "segundos": 6.86
+  },
+  {
+    "repeticao": 3,
+    "exit": 0,
+    "segundos": 6.9
+  },
+  {
+    "repeticao": 4,
+    "exit": 0,
+    "segundos": 6.55
+  },
+  {
+    "repeticao": 5,
+    "exit": 0,
+    "segundos": 6.38
+  }
+]

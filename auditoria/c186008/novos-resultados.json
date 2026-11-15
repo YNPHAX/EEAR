@@ -1,0 +1,26 @@
+{
+  "shaAuditado": "c186008012ba12709fc07c08e36532471a894a8c",
+  "commitTestes": "3443ecbc191066706611bd89d0883ba2f20ea442",
+  "comandos": [
+    {
+      "comando": "node testes/c186-propriedades.test.js",
+      "exit": 1,
+      "resultado": "três propriedades violadas; semente/contraexemplo preservados"
+    },
+    {
+      "comando": "node testes/c186-contraexemplos.test.js",
+      "exit": 1,
+      "resultado": "três violações confirmadas e um controle passou; zero falhas de preparação"
+    },
+    {
+      "comando": "node testes/c186-fluxos.test.js",
+      "exit": 0,
+      "resultado": "6/6 sementes, 117 ações; Web Locks presente/ausente"
+    },
+    {
+      "comando": "eslint curso/app.js curso/app curso/dados web/sw.js testes",
+      "exit": 0,
+      "resultado": "zero avisos/erros incluindo os novos testes"
+    }
+  ]
+}

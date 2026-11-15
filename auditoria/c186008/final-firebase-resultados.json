@@ -1,0 +1,123 @@
+[
+  {
+    "nome": "firebase-53",
+    "comando": "node testes/firebase-emulador.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 207.96,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "persistencia-13",
+    "comando": "node testes/persistencia-regressoes.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 500.94,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "dupla-falha",
+    "comando": "node testes/operacoes-dupla-falha.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 20.81,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "sincronia-firebase",
+    "comando": "node testes/sincronia-firebase.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 42.68,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "f01-riscos",
+    "comando": "node testes/f01-riscos.test.js",
+    "variaveis": {
+      "EEAR_F01_RISCOS": "zerar-nuvem,zerar-unica,suspensa,exclusao-surda,contagens,escrita-interrompida"
+    },
+    "exit": 0,
+    "segundos": 48.61,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "diarios",
+    "comando": "node testes/diarios-auditoria.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 60.5,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "orfaos-9",
+    "comando": "node testes/orfaos-auditoria.test.js",
+    "variaveis": {
+      "EEAR_ORFAOS_CENARIOS": "segunda-escrita-30min",
+      "EEAR_ORFAOS_SEQUENCIAS": "9"
+    },
+    "exit": 0,
+    "segundos": 36.56,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "crash-sem-locks",
+    "comando": "node testes/duravel-candidato.test.js",
+    "variaveis": {
+      "EEAR_DURAVEL_SEM_TRAVAS": "1"
+    },
+    "exit": 0,
+    "segundos": 58.35,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "migracao-8bd",
+    "comando": "node testes/diario-legado-auditoria.test.js",
+    "variaveis": {
+      "EEAR_REPO_LEGADO": "/tmp/eear-8bd32d2"
+    },
+    "exit": 0,
+    "segundos": 31.33,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "migracao-2f6",
+    "comando": "node testes/diario-legado-auditoria.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 32.65,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "metadados-limite",
+    "comando": "node testes/metadados-limite.test.js",
+    "variaveis": {
+      "EEAR_CARGA_ESTADO": "/tmp/eear-propriedades-c186008/estado-limite.json"
+    },
+    "exit": 0,
+    "segundos": 37.52,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  }
+]

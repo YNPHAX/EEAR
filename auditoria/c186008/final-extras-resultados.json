@@ -1,0 +1,140 @@
+[
+  {
+    "nome": "build-site",
+    "comando": [
+      "python3",
+      "web/build.py",
+      "/tmp/eear-propriedades-c186008/site"
+    ],
+    "cwd": "/tmp/eear-audit3-runtime",
+    "exit": 0,
+    "exitEsperado": 0,
+    "segundos": 7.23,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  },
+  {
+    "nome": "validar-site",
+    "comando": [
+      "python3",
+      "-I",
+      "web/verificar_publicacao.py",
+      "verificar",
+      "/tmp/eear-propriedades-c186008/site",
+      "--site"
+    ],
+    "cwd": "/tmp/eear-audit3-runtime",
+    "exit": 0,
+    "exitEsperado": 0,
+    "segundos": 3.5,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  },
+  {
+    "nome": "build-app",
+    "comando": [
+      "python3",
+      "web/build.py",
+      "/tmp/eear-propriedades-c186008/app",
+      "--app"
+    ],
+    "cwd": "/tmp/eear-audit3-runtime",
+    "exit": 0,
+    "exitEsperado": 0,
+    "segundos": 7.86,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  },
+  {
+    "nome": "validar-app",
+    "comando": [
+      "python3",
+      "-I",
+      "web/verificar_publicacao.py",
+      "verificar",
+      "/tmp/eear-propriedades-c186008/app",
+      "--app"
+    ],
+    "cwd": "/tmp/eear-audit3-runtime",
+    "exit": 0,
+    "exitEsperado": 0,
+    "segundos": 3.04,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  },
+  {
+    "nome": "build-origem-d165",
+    "comando": [
+      "python3",
+      "web/build.py",
+      "/tmp/eear-propriedades-c186008/site-d165"
+    ],
+    "cwd": "/tmp/eear-legado-encerramento",
+    "exit": 0,
+    "exitEsperado": 0,
+    "segundos": 6.84,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  },
+  {
+    "nome": "atualizacao-transacional",
+    "comando": [
+      "node",
+      "testes/atualizacao-transacional.test.js",
+      "/tmp/eear-propriedades-c186008/site-d165",
+      "/tmp/eear-propriedades-c186008/site"
+    ],
+    "cwd": "/tmp/eear-audit3-runtime",
+    "exit": 0,
+    "exitEsperado": 0,
+    "segundos": 5.3,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  },
+  {
+    "nome": "build-origem-2f",
+    "comando": [
+      "python3",
+      "web/build.py",
+      "/tmp/eear-propriedades-c186008/site-2f"
+    ],
+    "cwd": "/tmp/eear-2f6cad6",
+    "exit": 0,
+    "exitEsperado": 0,
+    "segundos": 7.04,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  },
+  {
+    "nome": "downgrade-historico",
+    "comando": [
+      "node",
+      "testes/atualizacao.js",
+      "/tmp/eear-propriedades-c186008/site-2f",
+      "/tmp/eear-propriedades-c186008/site"
+    ],
+    "cwd": "/tmp/eear-audit3-runtime",
+    "exit": 1,
+    "exitEsperado": 1,
+    "segundos": 9.07,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  },
+  {
+    "nome": "legado-historico",
+    "comando": [
+      "node",
+      "testes/historicos-legado.test.js"
+    ],
+    "cwd": "/tmp/eear-audit3-runtime",
+    "exit": 1,
+    "exitEsperado": 1,
+    "segundos": 372.07,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  },
+  {
+    "nome": "legado-epoca9",
+    "comando": [
+      "node",
+      "testes/historicos-legado.test.js",
+      "epoca"
+    ],
+    "cwd": "/tmp/eear-audit3-runtime",
+    "exit": 1,
+    "exitEsperado": 1,
+    "segundos": 134.12,
+    "sha256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b"
+  }
+]

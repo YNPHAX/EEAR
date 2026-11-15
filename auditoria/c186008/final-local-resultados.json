@@ -1,0 +1,196 @@
+[
+  {
+    "nome": "montagem",
+    "comando": "python3 -I web/montar_app.py --conferir",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 0.07,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "integridade",
+    "comando": "python3 -I web/verificar_publicacao.py validar",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 0.64,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "workflows",
+    "comando": "python3 -I web/verificar_publicacao.py conferir-workflows",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 0.1,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "lint",
+    "comando": "/tmp/eear-audit-deps/node_modules/.bin/eslint curso/app.js curso/app curso/dados web/sw.js testes",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 5.96,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "hosting-autoteste",
+    "comando": "python3 -I web/verificar_publicacao.py autoteste",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 3.72,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "hosting-sondas",
+    "comando": "python3 testes/hosting-auditoria.py .",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 33.0,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "hosting-gates",
+    "comando": "python3 testes/hosting-gates-auditoria.py .",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 35.56,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "hosting-contextos",
+    "comando": "python3 testes/hosting-contexto-auditoria.py .",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 15.85,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "operacoes",
+    "comando": "node testes/operacoes.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 0.28,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "transferencia-algebra",
+    "comando": "node testes/transferencia-identidades.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 0.06,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "importacao-propriedades",
+    "comando": "node testes/importacoes-propriedades.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 0.1,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "legado-contrato",
+    "comando": "node testes/legado-contrato.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 0.08,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "legado-bloqueio",
+    "comando": "node testes/legado-bloqueio.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 11.91,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "ciclo",
+    "comando": "node testes/ciclo-sincronia.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 8.64,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "plataforma",
+    "comando": "node testes/plataforma.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 351.11,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "cache",
+    "comando": "node testes/cache-restaurado.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 9.81,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "depurador",
+    "comando": "node testes/depurador-transacao.test.js",
+    "variaveis": {},
+    "exit": 0,
+    "segundos": 10.21,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "carga-nucleo",
+    "comando": "node testes/carga-nucleo.test.js",
+    "variaveis": {
+      "EEAR_CARGA_ESTADO": "/tmp/eear-propriedades-c186008/estado-limite.json"
+    },
+    "exit": 0,
+    "segundos": 487.76,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  },
+  {
+    "nome": "carga-navegador",
+    "comando": "node testes/carga-metadados.test.js",
+    "variaveis": {
+      "EEAR_CARGA_SAIDA": "/tmp/eear-propriedades-c186008/carga-medidas.json"
+    },
+    "exit": 0,
+    "segundos": 124.35,
+    "sha256Antes": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "sha256Depois": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+    "arquivosConferidos": 387
+  }
+]
