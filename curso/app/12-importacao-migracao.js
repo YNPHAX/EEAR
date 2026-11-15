@@ -29,13 +29,13 @@
     if (substituir) importado = substituirContadores(meta, importado);
     const m = opUnir(meta, importado);
     const combinado = opEstado(m);
-    const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
-    S = substituir ? opValida(colado.cfg._ops) ? estadoSubstituido(m, importado) : mesclar(c) : opValida(colado.cfg._ops) ? combinado : unirProgresso(null, l, c).st;
+    S = substituir ? estadoSubstituido(m, importado, colado) : combinado;
     dadosContadores(S, m); // não recriar uma operação para números já representados pelos IDs importados
     const certs = S.cfg.certs, recebidas = combinado.cfg._importacoes;
     S.cfg = Object.assign({}, colado.cfg, { certs });
+    ['fcv', 'fcAncora', 'certsZ'].forEach(k => { if (Object.prototype.hasOwnProperty.call(combinado.cfg, k)) S.cfg[k] = opCopiar(combinado.cfg[k]); else delete S.cfg[k]; });
     if (recebidas) S.cfg._importacoes = opCopiar(recebidas); else delete S.cfg._importacoes;
-    S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(colado.cfg.certsZ) || 0);
+    S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(combinado.cfg.certsZ) || 0);
     juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
     loc.meta = m; loc.vista = opCopiar(combinado);
     pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado, idImportacao: hash }); render();

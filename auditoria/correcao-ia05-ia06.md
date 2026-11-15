@@ -1,5 +1,7 @@
 # Correção direcionada IA05 e IA06
 
+> **CANDIDATO AF32954 SUPERADO EM 15/11/2026.** Após a matriz abaixo, uma prova adicional confirmou retorno de marcação/certificado por primeira importação offline atrasada depois de Zerar em outro dispositivo. `testes/importacoes-reset-offline.test.js` preserva a reprodução. A correção atual completa IDs/relógios estáveis também para campos, créditos de certificados e metadados dos cartões, e eleva o envelope a v4 para recusar escritores v2/v3. **A matriz integral do novo runtime ainda está em execução; este relatório abaixo é histórico e não aprova o candidato corrente.**
+
 Branch: `codex/eear-correcao-estrutural`. Runtime final: **`af3295496fe723b95341267f8c98582bba593f48`**.
 Base reprovada: `a6366a849871db3de3554f28fa1400f10aff0f0c`, runtime `5a8965b8f3b1678521601526e412cfe51d1ef02e`.
 Origem das provas: branch `auditoria/firebase-a6366a8-segunda`, commit `9a74db8cb449a72833861419ff4292a05afbae4a`.

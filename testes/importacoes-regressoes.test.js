@@ -9,7 +9,7 @@ const controle = spawnSync(process.execPath, [path.join(__dirname, 'a636-matriz-
 const texto = (controle.stdout || '') + (controle.stderr || ''); process.stdout.write(texto);
 const reproduziu = controle.status === 1 && (texto.match(/^AUDITORIA .*: exit 1$/gm) || []).length === 3 && /"atividadeFinal":8/.test(texto) && /"atividadeFinal":11/.test(texto) && /"local":3,"remoto":3/.test(texto) && /"remoto":8,"novoDispositivo":8/.test(texto) && !texto.includes('PREPARAÇÃO/EXECUÇÃO:');
 console.log('CONTROLE IA05/IA06 a6366a8: ' + (reproduziu ? 'REPRODUZIU' : 'FALHOU')); if (!reproduziu) falhas++;
-for (const nome of ['a636-importacoes-concorrentes','a636-importacao-dispositivos','a636-transferencia-erros','a636-sessoes-abas','a636-abort-exclusao','importacoes-regras-dependencia','importacoes-ciclo','importacoes-offline','importacoes-crash','importacoes-falhas','importacoes-cliente-anterior','importacoes-propriedades']) {
+for (const nome of ['a636-importacoes-concorrentes','a636-importacao-dispositivos','a636-transferencia-erros','a636-sessoes-abas','a636-abort-exclusao','importacoes-regras-dependencia','importacoes-ciclo','importacoes-offline','importacoes-reset-offline','importacoes-crash','importacoes-falhas','importacoes-cliente-anterior','importacoes-propriedades']) {
   const r = spawnSync(process.execPath, [path.join(__dirname, nome + '.test.js')], { env: process.env, stdio: 'inherit' });
   console.log('GATE IA05/IA06 ' + nome + ': ' + (r.status === 0 ? 'PASSOU' : 'FALHOU')); if (r.status !== 0) falhas++;
 }

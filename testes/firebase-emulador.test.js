@@ -145,10 +145,10 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
   console.log('\n== versão futura, regras e exclusão de conta');
   { const C = await aparelho(); await C.conectar('caio@exemplo.test', 'senha-caio-1', true); const uidC = await C.uid(); await marcar(C, 'T:caio1');
     await ate(async () => { const x = await progresso(uidC); return x && x.feito['T:caio1']; });
-    await req(`${DOCS}/alunos/${uidC}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: { v: { integerValue: '4' }, dados: { stringValue: '{"formato":"novo"}' }, t: { integerValue: '1' } } }) });
+    await req(`${DOCS}/alunos/${uidC}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: { v: { integerValue: '5' }, dados: { stringValue: '{"formato":"novo"}' }, t: { integerValue: '1' } } }) });
     await marcar(C, 'T:caio2'); await espera(3500);
     const f = await docAdmin(uidC); await C.plano();
-    const futuraOk = f.v.integerValue === '4' && f.dados.stringValue === '{"formato":"novo"}' && /versão mais nova/.test(await C.p.locator('#sync').innerText()) && (await C.ler('missao-eear-v1@firebase:' + uidC)).feito['T:caio2'];
+    const futuraOk = f.v.integerValue === '5' && f.dados.stringValue === '{"formato":"novo"}' && /versão mais nova/.test(await C.p.locator('#sync').innerText()) && (await C.ler('missao-eear-v1@firebase:' + uidC)).feito['T:caio2'];
     ok(futuraOk, 'documento de uma versão futura: o app não grava por cima, avisa o aluno e o estudo fica no aparelho');
     // documento corrompido (dados ilegíveis): nada é gravado por cima e o app continua funcionando com o progresso local
     await req(`${DOCS}/alunos/${uidC}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: { v: { integerValue: '1' }, dados: { stringValue: '{{{ não é JSON' }, t: { integerValue: '1' } } }) });
@@ -162,8 +162,10 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     const gravaB = await gravarComo(bia.idToken, ana.localId, campos(1, { v: 1 }));
     const extra = await gravarComo(ana.idToken, ana.localId, campos(1, { v: 1 }, { email: { stringValue: 'ana@exemplo.test' } }));
     const escritorV2 = await gravarComo(ana.idToken, ana.localId, campos(2, await progresso(ana.localId)));
-    ok(escritorV2.st === 403, 'regras: escritor v2 anterior à importação idempotente não substitui documento v3');
-    const valido = await gravarComo(ana.idToken, ana.localId, campos(3, await progresso(ana.localId)));
+    ok(escritorV2.st === 403, 'regras: escritor v2 anterior à importação idempotente não substitui documento v4');
+    const escritorV3 = await gravarComo(ana.idToken, ana.localId, campos(3, await progresso(ana.localId)));
+    ok(escritorV3.st === 403, 'regras: escritor v3 sem identidade estável de marcações não substitui documento v4');
+    const valido = await gravarComo(ana.idToken, ana.localId, campos(4, await progresso(ana.localId)));
     await req(`${DOCS}/alunos/${ana.localId}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: campos(4, { v: 4 }) }) });
     const rebaixa = await gravarComo(ana.idToken, ana.localId, campos(1, { v: 1 }));
     const apagaB = await req(`${DOCS}/alunos/${ana.localId}`, { method: 'DELETE', headers: { Authorization: 'Bearer ' + bia.idToken } });

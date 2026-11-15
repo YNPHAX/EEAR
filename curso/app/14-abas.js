@@ -31,7 +31,7 @@
     const conjuntos = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && conjunto(o[id]));
     if (!obj(m) || m.v !== 2 || !Number.isSafeInteger(m.n) || m.n < 0 || !obj(m.r) || !obj(m.c) || !obj(m.s)) return false;
     return Object.keys(m.r).every(k => { const a = m.r[k]; return opCaminho(k) && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string'; })
-      && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
+      && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
       && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && (!a.l || conjuntos(a.l)) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(opCaminho(k)) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
   }
   function opMaximo(p) { return ['mod', 'aula'].includes(p[0]) && p[p.length - 1] === 'best'; }
@@ -61,7 +61,8 @@
     Object.keys(b.s).forEach(k => {
       const y = b.s[k], x = r.s[k] || { a: {}, x: {} };
       Object.keys(y.a).forEach(id => { const a = x.a[id], v = y.a[id]; if (!a || v.d < a.d || (v.d === a.d && JSON.stringify(v) > JSON.stringify(a))) x.a[id] = opCopiar(v); });
-      Object.keys(y.x).forEach(id => { x.x[id] = true; }); r.s[k] = x;
+      Object.keys(y.x).forEach(id => { x.x[id] = true; });
+      if (y.o) { x.o = x.o || {}; Object.keys(y.o).forEach(id => { x.o[id] = Object.assign({}, x.o[id] || {}, y.o[id]); }); } r.s[k] = x;
     });
     Object.keys(b.c).forEach(k => { const y = b.c[k], x = r.c[k] || { a: {}, x: {} }; Object.keys(y.a).forEach(id => { x.a[id] = Math.max(x.a[id] || 0, y.a[id]); }); Object.keys(y.x).forEach(id => { x.x[id] = true; }); ['l', 'o'].forEach(tipo => { if (!y[tipo]) return; x[tipo] = x[tipo] || {}; Object.keys(y[tipo]).forEach(id => { x[tipo][id] = Object.assign({}, x[tipo][id] || {}, y[tipo][id]); }); }); r.c[k] = x; });
     // Tombstones LWW do protótipo v1 continuam cobrindo os valores antigos convertidos.
@@ -85,7 +86,11 @@
       u.c[k] = { a: Object.fromEntries(ids.filter(id => Object.prototype.hasOwnProperty.call(c.a, id)).map(id => [id, c.a[id]])), x: Object.fromEntries(creditos.map(id => [id, true])) };
       if (c.o) u.c[k].o = Object.fromEntries(ids.filter(id => c.o[id]).map(id => [id, opCopiar(c.o[id])]));
     });
-    Object.keys(m.s).forEach(k => { const c = m.s[k]; u.s[k] = { a: Object.fromEntries(Object.keys(c.a).filter(id => !c.x[id]).map(id => [id, opCopiar(c.a[id])])), x: {} }; });
+    Object.keys(m.s).forEach(k => {
+      const c = m.s[k], vivos = Object.keys(c.a).filter(id => !c.x[id]), creditos = Object.keys(c.x).filter(id => Object.keys((c.o || {})[id] || {}).some(x => x.startsWith('@coberto:') && vivos.includes(x.slice(9)))), ids = vivos.concat(creditos.filter(id => !vivos.includes(id)));
+      u.s[k] = { a: Object.fromEntries(ids.filter(id => Object.prototype.hasOwnProperty.call(c.a, id)).map(id => [id, opCopiar(c.a[id])])), x: Object.fromEntries(creditos.map(id => [id, true])) };
+      if (c.o) u.s[k].o = Object.fromEntries(ids.filter(id => c.o[id]).map(id => [id, opCopiar(c.o[id])]));
+    });
     return u;
   }
   function opEstado(m) {

@@ -4,7 +4,7 @@
   let tSave = null;
   function salvar(importado) {
     S.t = Date.now();
-    fixarAncoras();
+    if (!(importado && importado.idImportacao)) fixarAncoras(); // importar não é novo estudo nem cria uma âncora posterior a Zerar
     try { persistir(importado); } catch (e) { gravouLocal = false; } // operação reservada; a confirmação durável é assíncrona e aparece no aviso
     consolidar(); // checkpoint transacional, independente de Web Locks
     clearTimeout(tSave);

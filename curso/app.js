@@ -307,7 +307,7 @@
   let tSave = null;
   function salvar(importado) {
     S.t = Date.now();
-    fixarAncoras();
+    if (!(importado && importado.idImportacao)) fixarAncoras(); // importar não é novo estudo nem cria uma âncora posterior a Zerar
     try { persistir(importado); } catch (e) { gravouLocal = false; } // operação reservada; a confirmação durável é assíncrona e aparece no aviso
     consolidar(); // checkpoint transacional, independente de Web Locks
     clearTimeout(tSave);
@@ -474,9 +474,9 @@
     nuvem.fb = true;
     if (FB.sincronizar !== true) { nuvem.bloqueada = true; syncInfo(); return; }
     const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid);
-    const paraDoc = o => ({ v: 3, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
-    /* Envelope Firebase v3 exige a política de importação idempotente; escritores v1/v2 são recusados pelas regras monotônicas. Uma versão futura (v > 3): devolve só a versão, para a união recusar e nada ser gravado por cima. */
-    const deDoc = x => (!x ? null : Number(x.v) > 3 ? { v: Number(x.v) } : JSON.parse(x.dados));
+    const paraDoc = o => ({ v: 4, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
+    /* Envelope v4 inclui identidade estável também nas marcações/certificados importados. Escritores v1–v3 são recusados pelas regras monotônicas. Versão futura: nada é gravado por cima. */
+    const deDoc = x => (!x ? null : Number(x.v) > 4 ? { v: Number(x.v) } : JSON.parse(x.dados));
     const ref = {
       transacao: f => fs.runTransaction(db, async tx => { const s = await tx.get(doc), novo = f(deDoc(s.exists() ? s.data() : null)); if (novo) tx.set(doc, paraDoc(novo)); })
     };
@@ -1005,7 +1005,7 @@
       <p class="small muted" style="margin:0">Copie o código do progresso aqui e cole no outro aparelho, em Plano › Dados › Colar progresso. Vale entre o site, o app e o link do curso.</p>
       <div class="row"><button class="btn" data-a="expcopiar">Copiar meu progresso</button><button class="btn" data-a="impabrir">Colar progresso</button></div>
       ${pedindo === 'exp' ? `<div class="field"><label for="exp-txt">Selecione e copie o código</label><textarea id="exp-txt" class="codigo" readonly rows="4">${esc(JSON.stringify(S))}</textarea></div>` : ''}
-      ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>O estudo do código será unido ao deste aparelho. Repetir um código não desfaz Zerar nem correções já feitas. Cópias antigas diferentes podem conter atividades sobrepostas; para unir origens independentes com contagens exatas, use códigos exportados pelo app atualizado. As preferências do código serão carregadas.</p><label><input type="checkbox" id="imp-substituir"> Substituir o estudo deste aparelho pelo código, mantendo os certificados conquistados</label><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
+      ${pedindo === 'imp' ? `<div class="field"><label for="imp-txt">Cole aqui o código do outro aparelho</label><textarea id="imp-txt" class="codigo" rows="4"></textarea></div><div class="confirm"><p>O estudo do código será unido ao deste aparelho. Repetir um código não desfaz Zerar nem correções já feitas. Códigos antigos preservam as alterações mais recentes do destino, inclusive ao substituir. Cópias antigas diferentes podem conter atividades sobrepostas; para unir origens independentes com contagens exatas, use códigos exportados pelo app atualizado. As preferências do código serão carregadas.</p><label><input type="checkbox" id="imp-substituir"> Substituir o estudo deste aparelho pelo código, mantendo os certificados conquistados</label><button class="btn sm" data-a="cancelar">Cancelar</button><button class="btn sm pri" data-a="impok">Carregar progresso</button></div>` : ''}
       ${blocoDados()}
       ${msgDados ? `<p class="small" role="status" style="margin:0">${msgDados}</p>` : ''}
       <div class="sync" id="sync"></div></section>`;
@@ -2285,7 +2285,7 @@
     return hashImportacao('eear-importacao-v1\n' + JSON.stringify(ordenar(x)));
   }
   function reciboImportacao(hash) { return JSON.stringify(['cfg', '_importacoes', hash]); }
-  function importacaoRecebida(m, hash) { const r = m.r[reciboImportacao(hash)], pre = 'i:' + hash; return !!(r && r.length === 3 && r[2] === true) || Object.values(m.c).some(c => Object.keys(c.a).some(id => id === pre || id.startsWith(pre + ':'))); }
+  function importacaoRecebida(m, hash) { const r = m.r[reciboImportacao(hash)], pre = 'i:' + hash; return !!(r && r.length === 3 && r[2] === true) || Object.values(m.c).concat(Object.values(m.s)).some(c => Object.keys(c.a).some(id => id === pre || id.startsWith(pre + ':'))); }
   function dadosContadores(st, m) {
     const origem = opPlano(opEstado(m)), campos = opPlano(st);
     [...new Set(Object.keys(campos).concat(Object.keys(m.c)))].forEach(k => {
@@ -2301,6 +2301,21 @@
   function operacoesLegadas(m, st, hash, substituir) {
     const d = opVazio(), campos = opPlano(st); d.n = Math.max(m.n, Date.now()) + 1;
     d.r[reciboImportacao(hash)] = [d.n, 'i:' + hash, true];
+    // Também as marcações/cartões/simulados têm efeito estável. Importar uma cópia antiga
+    // não cria uma edição posterior a um reset: o relógio zero fica abaixo das alterações reais.
+    // Preferências são uma escolha atual da interface; certificados conservam IDs de conjunto.
+    const origem = opSemente(st);
+    Object.keys(origem.r).forEach(k => {
+      const p = opCaminho(k), v = origem.r[k][2], atual = m.r[k];
+      if ((p[0] === 'cfg' && !['fcv', 'fcAncora', 'certsZ'].includes(p[1])) || p[0] === 't' || opContador(p) || (p[0] === 'feito' && v !== true)) return;
+      if (atual && (atual.length === 2 || atual[0] > 0 || JSON.stringify(atual[2]) === JSON.stringify(v))) return; // nada aceito além da alteração observada
+      d.r[k] = [0, 'z:i:' + hash, opCopiar(v)];
+    });
+    Object.keys(origem.s).forEach(k => {
+      const id = 'i:' + hash, atual = m.s[k], c = { a: { [id]: opCopiar(origem.s[k].a.legado) }, x: {} };
+      if (atual && !Object.prototype.hasOwnProperty.call(atual.a, id)) { c.x[id] = true; c.o = { [id]: Object.fromEntries(Object.keys(atual.a).filter(x => !atual.x[x]).map(x => ['@coberto:' + x, true])) }; }
+      d.s[k] = c;
+    });
     let unidades = 0;
     Object.keys(campos).forEach(k => {
       const p = opCaminho(k); if (!p || p.length < 2 || !opContador(p)) return;
@@ -2327,10 +2342,11 @@
     Object.keys(local.c).forEach(k => { const c = local.c[k], preservadas = (origem.c[k] || {}).a || {}; d.c[k] = { a: {}, x: {} }; Object.keys(c.a).forEach(id => { if (!Object.prototype.hasOwnProperty.call(preservadas, id)) d.c[k].x[id] = true; }); });
     return opUnir(origem, d); // as remoções precisam viajar no diário importado, não só na projeção em memória
   }
-  function estadoSubstituido(m, origem) {
+  function estadoSubstituido(m, origem, st) {
     const vista = opCopiar(m);
     // Só campos presentes na origem, mas com as remoções/versões mais novas já observadas no destino.
-    Object.keys(vista.r).forEach(k => { if (opCaminho(k)[0] !== 'cfg' && !Object.prototype.hasOwnProperty.call(origem.r, k)) delete vista.r[k]; });
+    const campos = opPlano(st);
+    Object.keys(vista.r).forEach(k => { if (opCaminho(k)[0] !== 'cfg' && !Object.prototype.hasOwnProperty.call(origem.r, k) && !Object.prototype.hasOwnProperty.call(campos, k)) delete vista.r[k]; });
     return opEstado(vista);
   }
   /* Importação explícita de arquivo/código antigo, independente do transporte de sincronização.
@@ -2364,13 +2380,13 @@
     if (substituir) importado = substituirContadores(meta, importado);
     const m = opUnir(meta, importado);
     const combinado = opEstado(m);
-    const l = opSemMeta(combinado), c = opSemMeta(colado); delete l.cfg.certsZ; delete c.cfg.certsZ;
-    S = substituir ? opValida(colado.cfg._ops) ? estadoSubstituido(m, importado) : mesclar(c) : opValida(colado.cfg._ops) ? combinado : unirProgresso(null, l, c).st;
+    S = substituir ? estadoSubstituido(m, importado, colado) : combinado;
     dadosContadores(S, m); // não recriar uma operação para números já representados pelos IDs importados
     const certs = S.cfg.certs, recebidas = combinado.cfg._importacoes;
     S.cfg = Object.assign({}, colado.cfg, { certs });
+    ['fcv', 'fcAncora', 'certsZ'].forEach(k => { if (Object.prototype.hasOwnProperty.call(combinado.cfg, k)) S.cfg[k] = opCopiar(combinado.cfg[k]); else delete S.cfg[k]; });
     if (recebidas) S.cfg._importacoes = opCopiar(recebidas); else delete S.cfg._importacoes;
-    S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(colado.cfg.certsZ) || 0);
+    S.cfg.certsZ = Math.max(Number(local.cfg.certsZ) || 0, Number(combinado.cfg.certsZ) || 0);
     juntarCerts(S.cfg, local.cfg, null); registrarCerts(S);
     loc.meta = m; loc.vista = opCopiar(combinado);
     pedindo = null; msgDados = substituir ? 'Progresso substituído conforme solicitado; certificados mantidos.' : 'Progresso importado sem apagar o estudo já guardado.'; salvar({ importado, idImportacao: hash }); render();
@@ -2466,7 +2482,7 @@
     const conjuntos = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && conjunto(o[id]));
     if (!obj(m) || m.v !== 2 || !Number.isSafeInteger(m.n) || m.n < 0 || !obj(m.r) || !obj(m.c) || !obj(m.s)) return false;
     return Object.keys(m.r).every(k => { const a = m.r[k]; return opCaminho(k) && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string'; })
-      && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
+      && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
       && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && (!a.l || conjuntos(a.l)) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(opCaminho(k)) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
   }
   function opMaximo(p) { return ['mod', 'aula'].includes(p[0]) && p[p.length - 1] === 'best'; }
@@ -2496,7 +2512,8 @@
     Object.keys(b.s).forEach(k => {
       const y = b.s[k], x = r.s[k] || { a: {}, x: {} };
       Object.keys(y.a).forEach(id => { const a = x.a[id], v = y.a[id]; if (!a || v.d < a.d || (v.d === a.d && JSON.stringify(v) > JSON.stringify(a))) x.a[id] = opCopiar(v); });
-      Object.keys(y.x).forEach(id => { x.x[id] = true; }); r.s[k] = x;
+      Object.keys(y.x).forEach(id => { x.x[id] = true; });
+      if (y.o) { x.o = x.o || {}; Object.keys(y.o).forEach(id => { x.o[id] = Object.assign({}, x.o[id] || {}, y.o[id]); }); } r.s[k] = x;
     });
     Object.keys(b.c).forEach(k => { const y = b.c[k], x = r.c[k] || { a: {}, x: {} }; Object.keys(y.a).forEach(id => { x.a[id] = Math.max(x.a[id] || 0, y.a[id]); }); Object.keys(y.x).forEach(id => { x.x[id] = true; }); ['l', 'o'].forEach(tipo => { if (!y[tipo]) return; x[tipo] = x[tipo] || {}; Object.keys(y[tipo]).forEach(id => { x[tipo][id] = Object.assign({}, x[tipo][id] || {}, y[tipo][id]); }); }); r.c[k] = x; });
     // Tombstones LWW do protótipo v1 continuam cobrindo os valores antigos convertidos.
@@ -2520,7 +2537,11 @@
       u.c[k] = { a: Object.fromEntries(ids.filter(id => Object.prototype.hasOwnProperty.call(c.a, id)).map(id => [id, c.a[id]])), x: Object.fromEntries(creditos.map(id => [id, true])) };
       if (c.o) u.c[k].o = Object.fromEntries(ids.filter(id => c.o[id]).map(id => [id, opCopiar(c.o[id])]));
     });
-    Object.keys(m.s).forEach(k => { const c = m.s[k]; u.s[k] = { a: Object.fromEntries(Object.keys(c.a).filter(id => !c.x[id]).map(id => [id, opCopiar(c.a[id])])), x: {} }; });
+    Object.keys(m.s).forEach(k => {
+      const c = m.s[k], vivos = Object.keys(c.a).filter(id => !c.x[id]), creditos = Object.keys(c.x).filter(id => Object.keys((c.o || {})[id] || {}).some(x => x.startsWith('@coberto:') && vivos.includes(x.slice(9)))), ids = vivos.concat(creditos.filter(id => !vivos.includes(id)));
+      u.s[k] = { a: Object.fromEntries(ids.filter(id => Object.prototype.hasOwnProperty.call(c.a, id)).map(id => [id, opCopiar(c.a[id])])), x: Object.fromEntries(creditos.map(id => [id, true])) };
+      if (c.o) u.s[k].o = Object.fromEntries(ids.filter(id => c.o[id]).map(id => [id, opCopiar(c.o[id])]));
+    });
     return u;
   }
   function opEstado(m) {

@@ -21,7 +21,7 @@
     return hashImportacao('eear-importacao-v1\n' + JSON.stringify(ordenar(x)));
   }
   function reciboImportacao(hash) { return JSON.stringify(['cfg', '_importacoes', hash]); }
-  function importacaoRecebida(m, hash) { const r = m.r[reciboImportacao(hash)], pre = 'i:' + hash; return !!(r && r.length === 3 && r[2] === true) || Object.values(m.c).some(c => Object.keys(c.a).some(id => id === pre || id.startsWith(pre + ':'))); }
+  function importacaoRecebida(m, hash) { const r = m.r[reciboImportacao(hash)], pre = 'i:' + hash; return !!(r && r.length === 3 && r[2] === true) || Object.values(m.c).concat(Object.values(m.s)).some(c => Object.keys(c.a).some(id => id === pre || id.startsWith(pre + ':'))); }
   function dadosContadores(st, m) {
     const origem = opPlano(opEstado(m)), campos = opPlano(st);
     [...new Set(Object.keys(campos).concat(Object.keys(m.c)))].forEach(k => {
@@ -37,6 +37,21 @@
   function operacoesLegadas(m, st, hash, substituir) {
     const d = opVazio(), campos = opPlano(st); d.n = Math.max(m.n, Date.now()) + 1;
     d.r[reciboImportacao(hash)] = [d.n, 'i:' + hash, true];
+    // Também as marcações/cartões/simulados têm efeito estável. Importar uma cópia antiga
+    // não cria uma edição posterior a um reset: o relógio zero fica abaixo das alterações reais.
+    // Preferências são uma escolha atual da interface; certificados conservam IDs de conjunto.
+    const origem = opSemente(st);
+    Object.keys(origem.r).forEach(k => {
+      const p = opCaminho(k), v = origem.r[k][2], atual = m.r[k];
+      if ((p[0] === 'cfg' && !['fcv', 'fcAncora', 'certsZ'].includes(p[1])) || p[0] === 't' || opContador(p) || (p[0] === 'feito' && v !== true)) return;
+      if (atual && (atual.length === 2 || atual[0] > 0 || JSON.stringify(atual[2]) === JSON.stringify(v))) return; // nada aceito além da alteração observada
+      d.r[k] = [0, 'z:i:' + hash, opCopiar(v)];
+    });
+    Object.keys(origem.s).forEach(k => {
+      const id = 'i:' + hash, atual = m.s[k], c = { a: { [id]: opCopiar(origem.s[k].a.legado) }, x: {} };
+      if (atual && !Object.prototype.hasOwnProperty.call(atual.a, id)) { c.x[id] = true; c.o = { [id]: Object.fromEntries(Object.keys(atual.a).filter(x => !atual.x[x]).map(x => ['@coberto:' + x, true])) }; }
+      d.s[k] = c;
+    });
     let unidades = 0;
     Object.keys(campos).forEach(k => {
       const p = opCaminho(k); if (!p || p.length < 2 || !opContador(p)) return;
@@ -63,9 +78,10 @@
     Object.keys(local.c).forEach(k => { const c = local.c[k], preservadas = (origem.c[k] || {}).a || {}; d.c[k] = { a: {}, x: {} }; Object.keys(c.a).forEach(id => { if (!Object.prototype.hasOwnProperty.call(preservadas, id)) d.c[k].x[id] = true; }); });
     return opUnir(origem, d); // as remoções precisam viajar no diário importado, não só na projeção em memória
   }
-  function estadoSubstituido(m, origem) {
+  function estadoSubstituido(m, origem, st) {
     const vista = opCopiar(m);
     // Só campos presentes na origem, mas com as remoções/versões mais novas já observadas no destino.
-    Object.keys(vista.r).forEach(k => { if (opCaminho(k)[0] !== 'cfg' && !Object.prototype.hasOwnProperty.call(origem.r, k)) delete vista.r[k]; });
+    const campos = opPlano(st);
+    Object.keys(vista.r).forEach(k => { if (opCaminho(k)[0] !== 'cfg' && !Object.prototype.hasOwnProperty.call(origem.r, k) && !Object.prototype.hasOwnProperty.call(campos, k)) delete vista.r[k]; });
     return opEstado(vista);
   }
