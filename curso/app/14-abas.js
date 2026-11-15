@@ -10,6 +10,7 @@
   function opMarcadorResetValido(x) { return typeof x === 'number' && Number.isSafeInteger(x) && x >= 0 && x <= 253402300799999; }
   function opValidarReset(st) {
     if (st && st.cfg && Object.prototype.hasOwnProperty.call(st.cfg, 'certsZ') && !opMarcadorResetValido(st.cfg.certsZ)) throw new Error('Marcador de reset inválido ou incompatível. Preserve a cópia para recuperação; nenhum progresso foi substituído.');
+    if (st && Array.isArray(st.sims) && st.sims.some(x => x && Object.prototype.hasOwnProperty.call(x, '_sid') && typeof x._sid !== 'string')) throw new Error('Identidade de simulado incompatível; preserve a cópia para recuperação.');
   }
   function opCaminho(k) {
     try { const p = JSON.parse(k); return Array.isArray(p) && p.length > 0 && p.length < 15 && ['v', 't', 'cfg', 'mod', 'fc', 'erros', 'sims', 'diag', 'feito', 'act', 'ativo', 'ult', 'ap', 'aula', 'ultAula'].includes(p[0]) && p.every(x => typeof x === 'string' && !['__proto__', 'prototype', 'constructor', '_ops'].includes(x)) ? p : null; } catch (e) { return null; }
@@ -20,12 +21,12 @@
     Object.keys(m.r).filter(k => k.startsWith('["sims",')).forEach(k => {
       const p = opCaminho(k), v = m.r[k]; if (!p || p.length !== 2) return;
       // IDs explícitos de simulados modernos não dependem do conteúdo nem da posição.
-      if (v.length === 3 && v[2] && typeof v[2].id === 'string') return;
+      if (v.length === 3 && v[2] && (typeof v[2].id === 'string' || typeof v[2]._sid === 'string')) return;
       const partes = /^(.*)#(0|[1-9][0-9]*)$/.exec(p[1]); if (!partes) return;
       let antigo; try { antigo = JSON.parse(partes[1]); } catch (e) { return; }
       if (!antigo || typeof antigo !== 'object' || Array.isArray(antigo) || typeof antigo.id === 'string') return;
-      const novo = JSON.stringify(['sims', JSON.stringify(opCanonico(antigo)) + '#' + partes[2]]);
-      const valor = v.length === 3 ? [v[0], v[1], opCanonico(v[2])] : v;
+      const sid = '@sim:v1:' + JSON.stringify(opCanonico(antigo)) + '#' + partes[2], novo = JSON.stringify(['sims', sid]);
+      const valor = v.length === 3 ? [v[0], v[1], opCanonico(Object.assign({}, v[2], { _sid: sid }))] : v;
       if (novo === k && JSON.stringify(valor) === JSON.stringify(v)) return;
       trocas.push([k, novo, valor]);
     });
@@ -57,7 +58,7 @@
     const conjunto = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && o[id] === true);
     const conjuntos = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && conjunto(o[id]));
     if (!obj(m) || m.v !== 2 || !Number.isSafeInteger(m.n) || m.n < 0 || !obj(m.r) || !obj(m.c) || !obj(m.s)) return false;
-    return Object.keys(m.r).every(k => { const a = m.r[k]; return opCaminho(k) && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string' && (k !== '["cfg","certsZ"]' || a.length === 2 || opMarcadorResetValido(a[2])); })
+    return Object.keys(m.r).every(k => { const a = m.r[k], p = opCaminho(k); return p && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string' && (k !== '["cfg","certsZ"]' || a.length === 2 || opMarcadorResetValido(a[2])) && (p[0] !== 'sims' || p.length !== 2 || a.length === 2 || !a[2] || !Object.prototype.hasOwnProperty.call(a[2], '_sid') || typeof a[2]._sid === 'string'); })
       && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
       && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && (!a.l || conjuntos(a.l)) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(opCaminho(k)) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
   }
@@ -67,7 +68,10 @@
   function opPlano(st) {
     const s = opCopiar(st), out = {};
     if (s.cfg) delete s.cfg._ops;
-    const lista = (a, certs) => { const r = {}; (a || []).forEach((x, i) => { const id = certs ? certChave(x) : typeof x.id === 'string' ? x.id : JSON.stringify(opCanonico(x)) + '#' + i; r[id] = certs ? x : opCanonico(x); }); return r; };
+    const lista = (a, certs) => { const r = {}; (a || []).forEach((x, i) => {
+      const id = certs ? certChave(x) : typeof x.id === 'string' ? x.id : typeof x._sid === 'string' ? x._sid : '@sim:v1:' + JSON.stringify(opCanonico(x)) + '#' + i;
+      r[id] = certs ? x : opCanonico(Object.assign({}, x, typeof x.id === 'string' || typeof x._sid === 'string' ? {} : { _sid: id }));
+    }); return r; };
     s.sims = lista(s.sims, false); s.cfg.certs = lista(s.cfg.certs, true);
     const andar = (v, p) => {
       if (v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length && !(p[0] === 'sims' && p.length === 2) && !(p[0] === 'cfg' && p[1] === 'certs' && p.length === 3)) Object.keys(v).sort().forEach(k => { if (!['__proto__', 'prototype', 'constructor', '_ops'].includes(k)) andar(v[k], p.concat(k)); });

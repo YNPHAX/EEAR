@@ -10,7 +10,8 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
     const B = await f.pagina(ctx); await f.estado(B);
     const cdp = await ctx.newCDPSession(A); await cdp.send('Debugger.enable');
     const fonte = fs.readFileSync(path.join(alvo, 'curso/app.js'), 'utf8'), linhas = fonte.split('\n');
-    const novo = linhas.findIndex(l => l.includes('transacaoConta(id, (r, t) =>'));
+    const inicio = linhas.findIndex(l => l.includes('function quarentenar('));
+    const novo = linhas.findIndex((l, i) => i > inicio && l.includes('transacaoConta(id, (r, t) =>'));
     const lineNumber = novo >= 0 ? novo : linhas.findIndex(l => l.includes("const t = db.transaction('quarentena', 'readwrite'"));
     if (lineNumber < 0) throw new Error('Revisar ponto antes da gravação tardia da quarentena.');
     const bp = await cdp.send('Debugger.setBreakpointByUrl', { url: new URL('app.js', A.url()).href, lineNumber, condition: 'origem.indexOf("quarentena-tardia") >= 0' });

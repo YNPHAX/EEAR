@@ -26,3 +26,19 @@ const b=base();b.cfg.certsZ=253402300799999;b.erros.q=2;const m=a.opSemente(b),z
 const z=a.opDelta(m,b,zero,'e:RESET',true),novo=copia(b);novo.erros.q=3;const n=a.opDelta(m,b,novo,'e:ERRO');
 assert.strictEqual(a.opEstado(a.opUnir(a.opUnir(m,z),n)).erros.q,1);
 console.log('✓ Migração de aliases e tombstones em ambas as ordens, multiplicidade/IDs/arrays preservados; reset explícito e limites numéricos.');
+
+// A ordem de apresentação não pode renomear operações já persistidas.
+const foraDeOrdem=base();foraDeOrdem.sims=[{...X,d:'2026-11-20'},{...Y,d:'2026-11-01'}];
+const mo=a.opSemente(foraDeOrdem),vista=a.opEstado(mo),zerada=copia(vista);zerada.sims=[];
+assert.strictEqual(a.opEstado(a.opUnir(mo,a.opDelta(mo,vista,zerada,'e:ZEROU-SIM'))).sims.length,0,'Zerar remove também simulados fora da ordem cronológica original');
+
+if(process.env.EEAR_REPO_REPROVADO_IA07){
+ const old={window:{},navigator:{},loc:{},novoEstado:base,mesclar:x=>x,certValido:x=>!!x.c,certChave:x=>x.c};vm.createContext(old);vm.runInContext(fs.readFileSync(require('path').join(process.env.EEAR_REPO_REPROVADO_IA07,'curso/app/14-abas.js'),'utf8')+';this.api={opSemente,opEstado,opDelta,opUnir};',old);
+ const t=old.api,m=t.opSemente(foraDeOrdem),v=t.opEstado(m),z=copia(v);z.sims=[];const antigo=t.opEstado(t.opUnir(m,t.opDelta(m,v,z,'e:ZERO')));assert.strictEqual(antigo.sims.length,2);
+ console.log('CONTROLE NEGATIVO SIM ORDEM c186008: reproduziu 2/0; candidato remove 0/0 com identidades persistidas.');
+}
+
+// O oráculo de formato não ignora IDs nem diferenças semânticas para obter verde.
+const intactos=require('./plataforma-persistencia.js').simuladosIntactos,origem=[X],guardado=copia(a.opEstado(a.opSemente({...base(),sims:origem})).sims);assert(intactos(origem,guardado,false));
+for(const mudar of [s=>s[0]._sid+='errado',s=>s[0].r.por.reverse(),s=>s[0].min++,s=>s.push({...s[0]})]){const outro=copia(guardado);mudar(outro);assert(!intactos(origem,outro,false));}
+assert(!intactos(origem,guardado,true),'Histórico continua literal, sem adaptação do formato');

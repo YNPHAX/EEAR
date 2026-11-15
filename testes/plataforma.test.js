@@ -3,6 +3,7 @@
    Uso (na raiz): node testes/plataforma.test.js        Requer Python 3, Node e o pacote playwright com o Chromium. */
 const fs = require('fs'), os = require('os'), path = require('path'), http = require('http');
 const { execFileSync } = require('child_process');
+const { lerCheckpoint, simuladosIntactos } = require('./plataforma-persistencia.js');
 
 const RAIZ = path.resolve(__dirname, '..');
 const historico = process.env.EEAR_HISTORICO_LEGADO === '1';
@@ -44,9 +45,9 @@ async function testarNavegador(E) {
     await p.goto(srv.url);
     await p.waitForTimeout(250);
     return { ctx, p, erros, aba: async v => { await p.click(`[data-a="tab"][data-v="${v}"]`); await p.waitForTimeout(150); return p.locator('main').innerText(); },
-      salvo: () => p.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1'))) };
+      salvo: () => historico ? p.evaluate(() => JSON.parse(localStorage.getItem('missao-eear-v1'))) : lerCheckpoint(p) };
   }
-  const intactos = (a, d) => ['mod', 'fc', 'erros', 'sims', 'act', 'ultAula'].every(k => require('util').isDeepStrictEqual(a[k], d[k]));
+  const intactos = (a, d) => ['mod', 'fc', 'erros', 'act', 'ultAula'].every(k => require('util').isDeepStrictEqual(a[k], d[k])) && simuladosIntactos(a.sims, d.sims, historico);
 
   // Grupos legados só são acessíveis pelo runner histórico; os critérios originais continuam intactos.
   if (process.env.EEAR_GRUPOS) {
@@ -185,7 +186,7 @@ async function testarNavegador(E) {
       const velho = fis.find(r => r.ids.length === 17), novo = fis.find(r => r.ids.length === 18);
       ok(velho && velho.o === 'anterior' && velho.d === '2026-10-17' && velho.c === 'MTMO-FZKM' && velho.h === 46 && velho.mod === null, 'registro gravado do certificado antigo: 17 aulas, 46 h, data e código originais');
       ok(novo && novo.o === 'curso' && novo.h === 49 && novo.ids.includes('FIS18'), 'certificado novo de Física exige as 18 aulas (49 h)');
-      ok(fisPor.every(id => require('util').isDeepStrictEqual(st.mod[id], antes.mod[id])) && require('util').isDeepStrictEqual([st.fc, st.erros, st.sims], [antes.fc, antes.erros, antes.sims]), 'notas, cartões, erros e simulados antigos intactos depois de estudar');
+      ok(fisPor.every(id => require('util').isDeepStrictEqual(st.mod[id], antes.mod[id])) && require('util').isDeepStrictEqual([st.fc, st.erros], [antes.fc, antes.erros]) && simuladosIntactos(antes.sims, st.sims, historico), 'notas, cartões, erros e simulados antigos intactos depois de estudar');
       const c2 = await card(p, 'fis');
       ok(/liberado/i.test(c2) && /17 aulas/.test(c2), 'Física liberada com as aulas atuais e o certificado de 17 aulas ainda na lista');
       ok(tem(await verCert(p, 'fis', '[data-i]'), ORIGINAL.fis), 'o certificado antigo continua abrindo para reimprimir');
