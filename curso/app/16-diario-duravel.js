@@ -1,6 +1,7 @@
   /* Checkpoint transacional por identidade. Nunca se coleta uma operação com base no cache localStorage.
      A transação readwrite serializa escritores mesmo sem Web Locks. Só oncomplete confirma durabilidade.
      Operações de reserva são imutáveis e só saem após esse checkpoint confirmado. */
+  const leiturasDuraveis = new WeakMap(); let ordemLeituraDuravel = 0;
   function abrirDuravel() {
     if (loc.idb) return loc.idb;
     loc.idb = new Promise((resolve, reject) => {
@@ -17,6 +18,7 @@
     return atual;
   }
   async function transacaoConta(id, editar, permitirCorrompido) {
+    const carga = loc.carga;
     const db = await abrirDuravel();
     return new Promise((resolve, reject) => {
       let t, resultado;
@@ -33,6 +35,9 @@
           try {
             resultado = editar(q.result || null, t);
             if (resultado !== undefined) { if (resultado.meta) { if (!opValida(resultado.meta)) throw new Error('Operação incompatível; checkpoint anterior preservado.'); resultado.st = opEstado(resultado.meta); } s.put(resultado, id); }
+            // Ordem do snapshot dentro da transação, não da entrega posterior da Promise/cache.
+            // Apenas memória: não cria recibos/metadados duráveis nem altera o protocolo do backup.
+            if (resultado && resultado.meta) leiturasDuraveis.set(resultado, { carga, ordem: ++ordemLeituraDuravel });
           }
           catch (e) { resultado = e; t.abort(); }
         };

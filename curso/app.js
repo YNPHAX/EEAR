@@ -132,6 +132,7 @@
     };
   }
   function mesclar(o) {
+    opValidarReset(o);
     const b = novoEstado();
     Object.keys(b).forEach(k => { if (o && Object.prototype.hasOwnProperty.call(o, k)) b[k] = o[k]; });
     b.cfg = Object.assign(novoEstado().cfg, Object.fromEntries(Object.entries((o && o.cfg && typeof o.cfg === 'object') ? o.cfg : {}).filter(([k]) => !['__proto__', 'prototype', 'constructor'].includes(k))));
@@ -279,17 +280,18 @@
   const chave = (k, id) => { const i = id === undefined ? identidade : id; return i ? k + '@' + i : k; };
   /* Lê o progresso da identidade em uso; se for ilegível, guarda uma cópia antes que alguma gravação o cubra. */
   function carregar() {
-    let st = novoEstado(), t = null;
+    let st = novoEstado(), t = null, ilegivel = null;
     try {
       t = localStorage.getItem(chave(LS));
       if (t) {
         let lido = false;
         try { const o = JSON.parse(t); if (o && o.v === 1) { st = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
-        if (!lido) { try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* sem espaço para a cópia */ } t = null; }
+        if (!lido) { ilegivel = t; try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* cópia transacional em abrirAbas */ } t = null; }
       }
-      recuperar = localStorage.getItem(chave(LS_REC));
+      recuperar = localStorage.getItem(chave(LS_REC)) || ilegivel;
       localStorage.removeItem(chave(ABAS_K));
     } catch (e) { /* sem armazenamento local */ }
+    loc.cacheIlegivel = ilegivel ? { id: identidade, texto: ilegivel } : null;
     loc.origem = { texto: t, st: opCopiar(st) }; // projeção normalizada ANTES de incorporar _ops/diários
     try { st = opEstado(metaMigrada(st, lerDiariosDe(identidade))); } catch (e) { /* cópia original permanece exportável */ }
     loc.carregado = false; loc.semIDB = false; loc.pendente = 0; partirDe(t, st); abrirAbas(); // 14-abas.js: diários de abas que fecharam são absorvidos logo depois
@@ -347,7 +349,7 @@
       ep = assinado && typeof o.ep === 'string' ? o.ep : ''; // época da nuvem (08-uniao-nuvem.js)
       lin = assinado ? linhagem(o) : []; // gravações de que a nuvem descende (08-uniao-nuvem.js)
       c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
-      operacional = opValida(c.cfg._ops) && mesmoConteudo(opPlano(c), opPlano(opEstado(c.cfg._ops)));
+      operacional = opValida(c.cfg._ops) && opRepresenta(c, c.cfg._ops);
       /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
          dela), se a nuvem foi gravada por esta versão (uma versão antiga grava o progresso inteiro dela por cima, sem
          trava, e o que ela não tinha pareceria apagado do outro lado) e se é da mesma época da nuvem (um aparelho novo
@@ -474,9 +476,9 @@
     nuvem.fb = true;
     if (FB.sincronizar !== true) { nuvem.bloqueada = true; syncInfo(); return; }
     const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid);
-    const paraDoc = o => ({ v: 4, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
-    /* Envelope v4 inclui identidade estável também nas marcações/certificados importados. Escritores v1–v3 são recusados pelas regras monotônicas. Versão futura: nada é gravado por cima. */
-    const deDoc = x => (!x ? null : Number(x.v) > 4 ? { v: Number(x.v) } : JSON.parse(x.dados));
+    const paraDoc = o => ({ v: 5, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
+    /* Envelope v5 inclui identidade canônica de simulados e reset explícito. Escritores v1–v4 são recusados pelas regras monotônicas após a migração. Versão futura: nada é gravado por cima. */
+    const deDoc = x => (!x ? null : Number(x.v) > 5 ? { v: Number(x.v) } : JSON.parse(x.dados));
     const ref = {
       transacao: f => fs.runTransaction(db, async tx => { const s = await tx.get(doc), novo = f(deDoc(s.exists() ? s.data() : null)); if (novo) tx.set(doc, paraDoc(novo)); })
     };
@@ -1805,7 +1807,7 @@
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
       case 'impok': { const t = document.getElementById('imp-txt'); importarCodigo(t && t.value, !!(document.getElementById('imp-substituir') || {}).checked); break; }
       case 'instalar': if (instalar) { const p = instalar; instalar = null; p.prompt(); p.userChoice.then(() => render(), () => render()); } break;
-      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Math.max(Date.now(), (Number(cfg.certsZ) || 0) + 1); delete S.cfg.fcv; delete S.cfg.fcAncora; pedindo = null; salvar(); go('hoje'); break; }
+      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Math.max(Date.now(), Number(cfg.certsZ) || 0); delete S.cfg.fcv; delete S.cfg.fcAncora; pedindo = null; salvar({ zerar: true }); go('hoje'); break; }
       default: break;
     }
   });
@@ -2281,8 +2283,7 @@
   function identidadeImportacao(o) {
     const x = opSemMeta(o); delete x.t; delete x._abas; delete x.sinc; delete x.ep; delete x.lin;
     if (x.cfg) { delete x.cfg._importacoes; if (o.cfg && opValida(o.cfg._ops)) x.cfg._origemOperacional = opCopiar(opMigrar(o.cfg._ops)); }
-    const ordenar = x => Array.isArray(x) ? x.map(ordenar) : x && typeof x === 'object' ? Object.fromEntries(Object.keys(x).sort().map(k => [k, ordenar(x[k])])) : x;
-    return hashImportacao('eear-importacao-v1\n' + JSON.stringify(ordenar(x)));
+    return hashImportacao('eear-importacao-v1\n' + JSON.stringify(opCanonico(x)));
   }
   function reciboImportacao(hash) { return JSON.stringify(['cfg', '_importacoes', hash]); }
   function importacaoRecebida(m, hash) { const r = m.r[reciboImportacao(hash)], pre = 'i:' + hash; return !!(r && r.length === 3 && r[2] === true) || Object.values(m.c).concat(Object.values(m.s)).some(c => Object.keys(c.a).some(id => id === pre || id.startsWith(pre + ':'))); }
@@ -2299,6 +2300,7 @@
      história observada são tombstones, não uma subtração nem um novo UUID para a mesma diferença.
      e:* identifica alterações desta versão; nunca são consumidas como crédito de história antiga. */
   function operacoesLegadas(m, st, hash, substituir) {
+    opValidarReset(st);
     const d = opVazio(), campos = opPlano(st); d.n = Math.max(m.n, Date.now()) + 1;
     d.r[reciboImportacao(hash)] = [d.n, 'i:' + hash, true];
     // Também as marcações/cartões/simulados têm efeito estável. Importar uma cópia antiga
@@ -2362,11 +2364,12 @@
   function importarCodigo(texto, substituir) {
     let o = null;
     try { o = lerImportacao(texto); } catch (e) { o = null; }
-    if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); return; }
+    if (!o || o.v !== 1) { if (String(texto || '').trim()) quarentenar(String(texto), identidade, 'importacao-ilegivel'); msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho; a entrada foi preservada para recuperação.'; render(); return; }
     // Importar acrescenta estudo; ausência no código antigo não é uma ordem de apagar progresso novo.
-    const local = opCopiar(S), colado = mesclar(o);
+    const local = opCopiar(S); let colado;
+    try { colado = mesclar(o); } catch (e) { quarentenar(String(texto), identidade, 'importacao'); msgDados = e.message + ' A entrada foi preservada para recuperação.'; render(); return; }
     if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); return; }
-    const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
+    const conhecida = opValida(colado.cfg._ops) && opRepresenta(colado, colado.cfg._ops);
     const meta = opMeta(S); let hash;
     try { hash = identidadeImportacao(o); } catch (e) { msgDados = 'Não foi possível identificar este código com segurança. Nada foi alterado; preserve a cópia original.'; render(); return; }
     if (!conhecida && !opValida(colado.cfg._ops) && importacaoRecebida(meta, hash)) { pedindo = null; msgDados = loc.pendente || loc.confirmando || !gravouLocal ? 'Este código já está na fila. Aguarde a confirmação do armazenamento; mantenha a aba aberta.' : 'Este código já foi aplicado. O estudo novo, as correções e o Zerar foram mantidos.'; consolidar(); render(); return; }
@@ -2461,11 +2464,38 @@
   function opCopiar(x) { return JSON.parse(JSON.stringify(x)); }
   function opId() { return 'o' + (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)); }
   function opVazio() { return { v: 2, n: 0, r: {}, c: {}, s: {} }; }
+  function opCanonico(x) { return Array.isArray(x) ? x.map(opCanonico) : x && typeof x === 'object' ? Object.fromEntries(Object.keys(x).sort().map(k => [k, opCanonico(x[k])])) : x; }
+  // certsZ é uma data legada, não um relógio causal. Zero representa ausência nas primeiras versões.
+  function opMarcadorResetValido(x) { return typeof x === 'number' && Number.isSafeInteger(x) && x >= 0 && x <= 253402300799999; }
+  function opValidarReset(st) {
+    if (st && st.cfg && Object.prototype.hasOwnProperty.call(st.cfg, 'certsZ') && !opMarcadorResetValido(st.cfg.certsZ)) throw new Error('Marcador de reset inválido ou incompatível. Preserve a cópia para recuperação; nenhum progresso foi substituído.');
+  }
   function opCaminho(k) {
     try { const p = JSON.parse(k); return Array.isArray(p) && p.length > 0 && p.length < 15 && ['v', 't', 'cfg', 'mod', 'fc', 'erros', 'sims', 'diag', 'feito', 'act', 'ativo', 'ult', 'ap', 'aula', 'ultAula'].includes(p[0]) && p.every(x => typeof x === 'string' && !['__proto__', 'prototype', 'constructor', '_ops'].includes(x)) ? p : null; } catch (e) { return null; }
   }
-  function opMigrar(m) {
-    if (!m || m.v !== 1) return m;
+  function opSimuladosCanonicos(m) {
+    if (!m || !m.r) return m;
+    const trocas = [];
+    Object.keys(m.r).filter(k => k.startsWith('["sims",')).forEach(k => {
+      const p = opCaminho(k), v = m.r[k]; if (!p || p.length !== 2) return;
+      // IDs explícitos de simulados modernos não dependem do conteúdo nem da posição.
+      if (v.length === 3 && v[2] && typeof v[2].id === 'string') return;
+      const partes = /^(.*)#(0|[1-9][0-9]*)$/.exec(p[1]); if (!partes) return;
+      let antigo; try { antigo = JSON.parse(partes[1]); } catch (e) { return; }
+      if (!antigo || typeof antigo !== 'object' || Array.isArray(antigo) || typeof antigo.id === 'string') return;
+      const novo = JSON.stringify(['sims', JSON.stringify(opCanonico(antigo)) + '#' + partes[2]]);
+      const valor = v.length === 3 ? [v[0], v[1], opCanonico(v[2])] : v;
+      if (novo === k && JSON.stringify(valor) === JSON.stringify(v)) return;
+      trocas.push([k, novo, valor]);
+    });
+    if (!trocas.length) return m;
+    const r = Object.assign({}, m.r); trocas.forEach(([k]) => { delete r[k]; });
+    trocas.forEach(([, k, valor]) => { const atual = r[k]; if (!atual || opRegistroDepois(valor, atual)) r[k] = valor; });
+    return Object.assign({}, m, { r });
+  }
+  function opRegistroDepois(a, b) { return a[0] > b[0] || (a[0] === b[0] && (a[1] > b[1] || (a[1] === b[1] && JSON.stringify(a) > JSON.stringify(b)))); }
+  function opMigrar(m, manterSimulados) {
+    if (!m || m.v !== 1) return manterSimulados ? m : opSimuladosCanonicos(m);
     try {
       const u = opCopiar(m); u.v = 2; u.s = {};
       if (!opValida(u)) return null;
@@ -2477,7 +2507,7 @@
         else if (opCertificado(p) && certValido(r[2])) u.s[k] = { a: { [id]: r[2] }, x: {} };
         else return;
         delete u.r[k];
-      }); return u;
+      }); return manterSimulados ? u : opSimuladosCanonicos(u);
     } catch (e) { return null; }
   }
   function opValida(m) {
@@ -2486,7 +2516,7 @@
     const conjunto = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && o[id] === true);
     const conjuntos = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && conjunto(o[id]));
     if (!obj(m) || m.v !== 2 || !Number.isSafeInteger(m.n) || m.n < 0 || !obj(m.r) || !obj(m.c) || !obj(m.s)) return false;
-    return Object.keys(m.r).every(k => { const a = m.r[k]; return opCaminho(k) && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string'; })
+    return Object.keys(m.r).every(k => { const a = m.r[k]; return opCaminho(k) && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string' && (k !== '["cfg","certsZ"]' || a.length === 2 || opMarcadorResetValido(a[2])); })
       && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
       && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && (!a.l || conjuntos(a.l)) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(opCaminho(k)) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
   }
@@ -2496,7 +2526,7 @@
   function opPlano(st) {
     const s = opCopiar(st), out = {};
     if (s.cfg) delete s.cfg._ops;
-    const lista = (a, certs) => { const r = {}; (a || []).forEach((x, i) => { const id = certs ? certChave(x) : typeof x.id === 'string' ? x.id : JSON.stringify(x) + '#' + i; r[id] = x; }); return r; };
+    const lista = (a, certs) => { const r = {}; (a || []).forEach((x, i) => { const id = certs ? certChave(x) : typeof x.id === 'string' ? x.id : JSON.stringify(opCanonico(x)) + '#' + i; r[id] = certs ? x : opCanonico(x); }); return r; };
     s.sims = lista(s.sims, false); s.cfg.certs = lista(s.cfg.certs, true);
     const andar = (v, p) => {
       if (v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length && !(p[0] === 'sims' && p.length === 2) && !(p[0] === 'cfg' && p[1] === 'certs' && p.length === 3)) Object.keys(v).sort().forEach(k => { if (!['__proto__', 'prototype', 'constructor', '_ops'].includes(k)) andar(v[k], p.concat(k)); });
@@ -2506,6 +2536,7 @@
   }
   function opSemMeta(s) { const x = opCopiar(s); if (x.cfg) delete x.cfg._ops; return x; }
   function opSemente(st) {
+    opValidarReset(st);
     const m = opVazio(), f = opPlano(st);
     Object.keys(f).forEach(k => { const p = opCaminho(k); if (!p) return; const v = f[k]; if (opCertificado(p) && certValido(v)) m.s[k] = { a: { legado: v }, x: {} }; else if (opContador(p) && typeof v === 'number' && v >= 0) m.c[k] = { a: { legado: v }, x: {} }; else m.r[k] = [0, 'legado', v]; }); return m;
   }
@@ -2513,7 +2544,7 @@
   function opUnir(a, b) {
     a = opMigrar(a); b = opMigrar(b);
     const r = opCopiar(a); r.n = Math.max(a.n, b.n);
-    Object.keys(b.r).forEach(k => { const x = r.r[k], y = b.r[k]; if (!x || y[0] > x[0] || (y[0] === x[0] && (y[1] > x[1] || (y[1] === x[1] && JSON.stringify(y) > JSON.stringify(x))))) r.r[k] = opCopiar(y); });
+    Object.keys(b.r).forEach(k => { const x = r.r[k], y = b.r[k]; if (!x || opRegistroDepois(y, x)) r.r[k] = opCopiar(y); });
     Object.keys(b.s).forEach(k => {
       const y = b.s[k], x = r.s[k] || { a: {}, x: {} };
       Object.keys(y.a).forEach(id => { const a = x.a[id], v = y.a[id]; if (!a || v.d < a.d || (v.d === a.d && JSON.stringify(v) > JSON.stringify(a))) x.a[id] = opCopiar(v); });
@@ -2549,8 +2580,10 @@
     });
     return u;
   }
-  function opEstado(m) {
-    m = opMigrar(m);
+  function opEstado(m, manterSimulados) {
+    m = opMigrar(m, manterSimulados);
+    const marcador = m.r['["cfg","certsZ"]'];
+    if (marcador && marcador.length === 3 && !opMarcadorResetValido(marcador[2])) throw new Error('Marcador de reset incompatível; a cópia original deve ser preservada.');
     const out = {}, campos = {};
     Object.keys(m.r).forEach(k => { if (m.r[k].length === 3) campos[k] = m.r[k][2]; });
     Object.keys(m.s).forEach(k => { const c = m.s[k], vals = Object.keys(c.a).filter(id => !c.x[id]).map(id => c.a[id]).sort((a, b) => a.d.localeCompare(b.d) || (Number(!a.c) - Number(!b.c)) || JSON.stringify(a).localeCompare(JSON.stringify(b))); if (vals.length) campos[k] = vals[0]; });
@@ -2564,7 +2597,7 @@
     out.sims = Object.values(out.sims || {}).sort((a, b) => String(a.d).localeCompare(String(b.d)) || JSON.stringify(a).localeCompare(JSON.stringify(b)));
     out.cfg._ops = m; return mesclar(out);
   }
-  function opDelta(m, antes, depois, id) {
+  function opDelta(m, antes, depois, id, resetExplicito) {
     m = opMigrar(m);
     const d = opVazio(); d.n = Math.max(m.n, Date.now()) + 1; const a = opPlano(antes), b = opPlano(depois);
     [...new Set(Object.keys(a).concat(Object.keys(b)))].forEach(k => {
@@ -2578,7 +2611,7 @@
         const c = { a: {}, x: {} }, v = Math.max(0, Number(b[k]) || 0), ant = Math.max(0, Number(a[k]) || 0);
         const atual = m.c[k], lidas = Object.fromEntries(Object.keys((atual && atual.l) || {}).map(i => [i, true]));
         if (v > ant) { c.a[id] = opMaximo(p) ? v : v - ant; if (p[0] === 'erros') c.o = { [id]: lidas }; }
-        else if (p[0] === 'erros' && !((depois.cfg.certsZ || 0) > (antes.cfg.certsZ || 0))) {
+        else if (p[0] === 'erros' && !resetExplicito && !((depois.cfg.certsZ || 0) > (antes.cfg.certsZ || 0))) {
           const vistos = {}; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) vistos[i] = true; });
           c.l = { [id]: vistos }; if (v) { c.a[id] = v; c.o = { [id]: Object.assign({}, lidas, { [id]: true }) }; }
         } else { const atual = m.c[k]; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) c.x[i] = true; }); if (v) c.a[id] = v; }
@@ -2587,6 +2620,8 @@
     }); return d;
   }
   function opCombinarEstados(a, b) { return opEstado(opUnir(opMeta(a), opMeta(b))); }
+  // A projeção antiga pode conter dois aliases JSON da mesma origem. Não interpretá-los como uma edição nova.
+  function opRepresenta(st, m) { return mesmoConteudo(opPlano(st), opPlano(opEstado(m))) || mesmoConteudo(opPlano(st), opPlano(opEstado(m, true))); }
   function temTravas() { return !!(navigator.locks && typeof navigator.locks.request === 'function'); }
   function nomeConta() { return identidade || 'sem-conta'; }
   function mesmoConteudo(a, b) { return JSON.stringify(canonico(a)) === JSON.stringify(canonico(b)); }
@@ -2621,6 +2656,9 @@
   }
   function receberDuravel(r, id) {
     if (id !== identidade || !r || !opValida(r.meta)) return;
+    const leitura = leiturasDuraveis.get(r);
+    if (leitura && (leitura.carga !== loc.carga || leitura.ordem < (loc.ultimaLeitura || 0))) return;
+    if (leitura) loc.ultimaLeitura = leitura.ordem;
     if (loc.gen && loc.gen !== r.gen) recuperar = null; // exclusão de outra aba também encerra a cópia de recuperação em memória
     if (r.apagado && loc.gen && loc.gen !== r.gen) { nuvem.ref = null; nuvem.on = false; }
     let m = r.meta;
@@ -2647,15 +2685,24 @@
   function abrirAbas() {
     document.documentElement.dataset.armazenamento = 'carregando'; loc.incompativel = false;
     loc.quarentinas = new Map();
-    clearInterval(loc.timer); loc.ops = []; loc.gen = null; loc.fila = Promise.resolve(); loc.pendente = 0;
-    const id = identidade, st = opCopiar(loc.vista || novoEstado()), diarios = lerDiariosDe(id), origem = loc.origem;
+    clearInterval(loc.timer); loc.ops = []; loc.gen = null; loc.fila = Promise.resolve(); loc.pendente = 0; loc.ultimaLeitura = 0;
+    const id = identidade, st = opCopiar(loc.vista || novoEstado()), diarios = lerDiariosDe(id), origem = loc.origem, ilegivel = loc.cacheIlegivel;
     loc.origem = null; // só a carga em andamento conserva essa comparação temporária
     try { const raw = JSON.parse(localStorage.getItem(chave(LS)) || 'null'); if (raw && raw._abas) st._abas = raw._abas; } catch (e) { /* cache ilegível preservado por carregar */ }
-    loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, r => {
+    loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, (r, t) => {
+      // A cópia recusada e o checkpoint entram no MESMO commit antes de sobrescrever o cache.
+      if (!r || (!r.apagado && !r.encerrado)) {
+        if (ilegivel && ilegivel.id === id) t.objectStore('quarentena').add({ conta: id, origem: 'cache', texto: ilegivel.texto });
+        if (!recuperar) {
+          const carga = loc.carga, q = t.objectStore('quarentena').openCursor(null, 'prev');
+          q.onsuccess = () => { const c = q.result; if (!c) return; if (c.value.conta !== id) { c.continue(); return; } if (id === identidade && carga === loc.carga && !recuperar) recuperar = c.value.texto; };
+        }
+      }
       if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)), legados: Object.fromEntries(diarios.concat(antigos).filter(x => !x.d.delta).map(x => [x.k, x.d.seq])) };
       return aplicarReservas(r, diarios.filter(x => x.d.delta && opValida(x.d.delta)).map(x => x.d));
     })).then(async r => {
       if (id !== identidade) return;
+      if (loc.cacheIlegivel === ilegivel) loc.cacheIlegivel = null;
       // Preserva a abertura sem estudo de um cache antigo cuja normalização não mudou o progresso.
       // A comparação usa a projeção ANTERIOR à recuperação; st já pode conter _ops/diários ausentes do cache bruto.
       if (origem && mesmoConteudo(opPlano(origem.st), opPlano(r.st)) && (!origem.st.cfg._ops || mesmoConteudo(opMeta(origem.st), r.meta))) {
@@ -2667,10 +2714,10 @@
   }
   function persistir(remoto) {
     const id = identidade, antes = loc.vista || novoEstado(), meta = loc.meta || opMeta(antes), oid = 'e:' + opId();
-    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, remoto && remoto.idImportacao ? 'e:i:' + remoto.idImportacao : oid);
+    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, remoto && remoto.idImportacao ? 'e:i:' + remoto.idImportacao : oid, !!(remoto && remoto.zerar));
     if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
-    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: remoto !== true, origem: remoto === true ? 'remoto' : remoto ? 'importacao' : 'local', delta, st: opCopiar(S) };
+    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: remoto !== true, origem: remoto === true ? 'remoto' : remoto && remoto.zerar ? 'reset' : remoto ? 'importacao' : 'local', delta, st: opCopiar(S) };
     loc.ops = (loc.ops || []).concat([o]); loc.pendente = loc.ops.length; loc.confirmando = true;
     // Reserva imutável. Falhar aqui não impede a transação IDB; nenhuma mensagem de confirmação antecipada.
     try { localStorage.setItem(chaveDiario(oid), JSON.stringify(o)); } catch (e) { loc.reservaFalhou = true; }
@@ -2696,6 +2743,7 @@
     });
   }
   function consolidarReserva() {
+    if (loc.cacheIlegivel && loc.cacheIlegivel.id === identidade) { gravouLocal = false; return; } // não destruir a última cópia quando IDB e localStorage falham
     let m = loc.meta || opMeta(S);
     const bruto = (() => { try { return localStorage.getItem(chave(LS)); } catch (e) { return null; } })();
     if (bruto) { const st = estadoDe(bruto); if (st) m = opUnir(m, opMeta(st)); }
@@ -2703,7 +2751,7 @@
     try { localStorage.setItem(chave(LS), JSON.stringify(opEstado(m))); S = opEstado(m); loc.meta = m; loc.vista = opCopiar(S); loc.pendente = 0; gravouLocal = true; } catch (e) { gravouLocal = false; }
   }
   function consolidar() {
-    if (!loc.carregado || loc.lendo) return;
+    if (!loc.carregado || loc.lendo || loc.incompativel) return;
     if (loc.semIDB) {
       consolidarReserva();
       if (!loc.tentando) {
@@ -2781,6 +2829,7 @@
   /* Checkpoint transacional por identidade. Nunca se coleta uma operação com base no cache localStorage.
      A transação readwrite serializa escritores mesmo sem Web Locks. Só oncomplete confirma durabilidade.
      Operações de reserva são imutáveis e só saem após esse checkpoint confirmado. */
+  const leiturasDuraveis = new WeakMap(); let ordemLeituraDuravel = 0;
   function abrirDuravel() {
     if (loc.idb) return loc.idb;
     loc.idb = new Promise((resolve, reject) => {
@@ -2797,6 +2846,7 @@
     return atual;
   }
   async function transacaoConta(id, editar, permitirCorrompido) {
+    const carga = loc.carga;
     const db = await abrirDuravel();
     return new Promise((resolve, reject) => {
       let t, resultado;
@@ -2813,6 +2863,9 @@
           try {
             resultado = editar(q.result || null, t);
             if (resultado !== undefined) { if (resultado.meta) { if (!opValida(resultado.meta)) throw new Error('Operação incompatível; checkpoint anterior preservado.'); resultado.st = opEstado(resultado.meta); } s.put(resultado, id); }
+            // Ordem do snapshot dentro da transação, não da entrega posterior da Promise/cache.
+            // Apenas memória: não cria recibos/metadados duráveis nem altera o protocolo do backup.
+            if (resultado && resultado.meta) leiturasDuraveis.set(resultado, { carga, ordem: ++ordemLeituraDuravel });
           }
           catch (e) { resultado = e; t.abort(); }
         };

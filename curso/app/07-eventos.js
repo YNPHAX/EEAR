@@ -169,7 +169,7 @@
       case 'impabrir': msgDados = ''; pedindo = 'imp'; render(); { const t = document.getElementById('imp-txt'); if (t) t.focus(); } break;
       case 'impok': { const t = document.getElementById('imp-txt'); importarCodigo(t && t.value, !!(document.getElementById('imp-substituir') || {}).checked); break; }
       case 'instalar': if (instalar) { const p = instalar; instalar = null; p.prompt(); p.userChoice.then(() => render(), () => render()); } break;
-      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Math.max(Date.now(), (Number(cfg.certsZ) || 0) + 1); delete S.cfg.fcv; delete S.cfg.fcAncora; pedindo = null; salvar(); go('hoje'); break; }
+      case 'zerarok': { const cfg = S.cfg; S = novoEstado(); S.cfg = cfg; S.cfg.excl = []; S.cfg.certs = []; S.cfg.certsZ = Math.max(Date.now(), Number(cfg.certsZ) || 0); delete S.cfg.fcv; delete S.cfg.fcAncora; pedindo = null; salvar({ zerar: true }); go('hoje'); break; }
       default: break;
     }
   });

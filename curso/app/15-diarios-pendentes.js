@@ -26,6 +26,9 @@
   }
   function receberDuravel(r, id) {
     if (id !== identidade || !r || !opValida(r.meta)) return;
+    const leitura = leiturasDuraveis.get(r);
+    if (leitura && (leitura.carga !== loc.carga || leitura.ordem < (loc.ultimaLeitura || 0))) return;
+    if (leitura) loc.ultimaLeitura = leitura.ordem;
     if (loc.gen && loc.gen !== r.gen) recuperar = null; // exclusão de outra aba também encerra a cópia de recuperação em memória
     if (r.apagado && loc.gen && loc.gen !== r.gen) { nuvem.ref = null; nuvem.on = false; }
     let m = r.meta;
@@ -52,15 +55,24 @@
   function abrirAbas() {
     document.documentElement.dataset.armazenamento = 'carregando'; loc.incompativel = false;
     loc.quarentinas = new Map();
-    clearInterval(loc.timer); loc.ops = []; loc.gen = null; loc.fila = Promise.resolve(); loc.pendente = 0;
-    const id = identidade, st = opCopiar(loc.vista || novoEstado()), diarios = lerDiariosDe(id), origem = loc.origem;
+    clearInterval(loc.timer); loc.ops = []; loc.gen = null; loc.fila = Promise.resolve(); loc.pendente = 0; loc.ultimaLeitura = 0;
+    const id = identidade, st = opCopiar(loc.vista || novoEstado()), diarios = lerDiariosDe(id), origem = loc.origem, ilegivel = loc.cacheIlegivel;
     loc.origem = null; // só a carga em andamento conserva essa comparação temporária
     try { const raw = JSON.parse(localStorage.getItem(chave(LS)) || 'null'); if (raw && raw._abas) st._abas = raw._abas; } catch (e) { /* cache ilegível preservado por carregar */ }
-    loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, r => {
+    loc.carga = legadosDuraveis(id).then(antigos => transacaoConta(id, (r, t) => {
+      // A cópia recusada e o checkpoint entram no MESMO commit antes de sobrescrever o cache.
+      if (!r || (!r.apagado && !r.encerrado)) {
+        if (ilegivel && ilegivel.id === id) t.objectStore('quarentena').add({ conta: id, origem: 'cache', texto: ilegivel.texto });
+        if (!recuperar) {
+          const carga = loc.carga, q = t.objectStore('quarentena').openCursor(null, 'prev');
+          q.onsuccess = () => { const c = q.result; if (!c) return; if (c.value.conta !== id) { c.continue(); return; } if (id === identidade && carga === loc.carga && !recuperar) recuperar = c.value.texto; };
+        }
+      }
       if (!r) return { gen: opId(), meta: metaMigrada(st, diarios.concat(antigos)), legados: Object.fromEntries(diarios.concat(antigos).filter(x => !x.d.delta).map(x => [x.k, x.d.seq])) };
       return aplicarReservas(r, diarios.filter(x => x.d.delta && opValida(x.d.delta)).map(x => x.d));
     })).then(async r => {
       if (id !== identidade) return;
+      if (loc.cacheIlegivel === ilegivel) loc.cacheIlegivel = null;
       // Preserva a abertura sem estudo de um cache antigo cuja normalização não mudou o progresso.
       // A comparação usa a projeção ANTERIOR à recuperação; st já pode conter _ops/diários ausentes do cache bruto.
       if (origem && mesmoConteudo(opPlano(origem.st), opPlano(r.st)) && (!origem.st.cfg._ops || mesmoConteudo(opMeta(origem.st), r.meta))) {
@@ -72,10 +84,10 @@
   }
   function persistir(remoto) {
     const id = identidade, antes = loc.vista || novoEstado(), meta = loc.meta || opMeta(antes), oid = 'e:' + opId();
-    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, remoto && remoto.idImportacao ? 'e:i:' + remoto.idImportacao : oid);
+    let delta = remoto === true && S.cfg && opValida(S.cfg._ops) ? opMeta(S) : opDelta(meta, antes, S, remoto && remoto.idImportacao ? 'e:i:' + remoto.idImportacao : oid, !!(remoto && remoto.zerar));
     if (remoto && typeof remoto === 'object' && opValida(remoto.importado)) delta = opUnir(delta, remoto.importado);
     loc.meta = opUnir(meta, delta); S.cfg._ops = loc.meta; loc.vista = opCopiar(S);
-    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: remoto !== true, origem: remoto === true ? 'remoto' : remoto ? 'importacao' : 'local', delta, st: opCopiar(S) };
+    const o = { v: 2, id: oid, conta: id, gen: loc.gen, local: remoto !== true, origem: remoto === true ? 'remoto' : remoto && remoto.zerar ? 'reset' : remoto ? 'importacao' : 'local', delta, st: opCopiar(S) };
     loc.ops = (loc.ops || []).concat([o]); loc.pendente = loc.ops.length; loc.confirmando = true;
     // Reserva imutável. Falhar aqui não impede a transação IDB; nenhuma mensagem de confirmação antecipada.
     try { localStorage.setItem(chaveDiario(oid), JSON.stringify(o)); } catch (e) { loc.reservaFalhou = true; }
@@ -101,6 +113,7 @@
     });
   }
   function consolidarReserva() {
+    if (loc.cacheIlegivel && loc.cacheIlegivel.id === identidade) { gravouLocal = false; return; } // não destruir a última cópia quando IDB e localStorage falham
     let m = loc.meta || opMeta(S);
     const bruto = (() => { try { return localStorage.getItem(chave(LS)); } catch (e) { return null; } })();
     if (bruto) { const st = estadoDe(bruto); if (st) m = opUnir(m, opMeta(st)); }
@@ -108,7 +121,7 @@
     try { localStorage.setItem(chave(LS), JSON.stringify(opEstado(m))); S = opEstado(m); loc.meta = m; loc.vista = opCopiar(S); loc.pendente = 0; gravouLocal = true; } catch (e) { gravouLocal = false; }
   }
   function consolidar() {
-    if (!loc.carregado || loc.lendo) return;
+    if (!loc.carregado || loc.lendo || loc.incompativel) return;
     if (loc.semIDB) {
       consolidarReserva();
       if (!loc.tentando) {

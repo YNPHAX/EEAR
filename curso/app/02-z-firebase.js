@@ -59,9 +59,9 @@
     nuvem.fb = true;
     if (FB.sincronizar !== true) { nuvem.bloqueada = true; syncInfo(); return; }
     const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid);
-    const paraDoc = o => ({ v: 4, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
-    /* Envelope v4 inclui identidade estável também nas marcações/certificados importados. Escritores v1–v3 são recusados pelas regras monotônicas. Versão futura: nada é gravado por cima. */
-    const deDoc = x => (!x ? null : Number(x.v) > 4 ? { v: Number(x.v) } : JSON.parse(x.dados));
+    const paraDoc = o => ({ v: 5, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
+    /* Envelope v5 inclui identidade canônica de simulados e reset explícito. Escritores v1–v4 são recusados pelas regras monotônicas após a migração. Versão futura: nada é gravado por cima. */
+    const deDoc = x => (!x ? null : Number(x.v) > 5 ? { v: Number(x.v) } : JSON.parse(x.dados));
     const ref = {
       transacao: f => fs.runTransaction(db, async tx => { const s = await tx.get(doc), novo = f(deDoc(s.exists() ? s.data() : null)); if (novo) tx.set(doc, paraDoc(novo)); })
     };

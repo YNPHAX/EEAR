@@ -130,6 +130,7 @@
     };
   }
   function mesclar(o) {
+    opValidarReset(o);
     const b = novoEstado();
     Object.keys(b).forEach(k => { if (o && Object.prototype.hasOwnProperty.call(o, k)) b[k] = o[k]; });
     b.cfg = Object.assign(novoEstado().cfg, Object.fromEntries(Object.entries((o && o.cfg && typeof o.cfg === 'object') ? o.cfg : {}).filter(([k]) => !['__proto__', 'prototype', 'constructor'].includes(k))));

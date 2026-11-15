@@ -162,26 +162,26 @@ if (!process.env.FIRESTORE_EMULATOR_HOST) {
     const gravaB = await gravarComo(bia.idToken, ana.localId, campos(1, { v: 1 }));
     const extra = await gravarComo(ana.idToken, ana.localId, campos(1, { v: 1 }, { email: { stringValue: 'ana@exemplo.test' } }));
     const escritorV2 = await gravarComo(ana.idToken, ana.localId, campos(2, await progresso(ana.localId)));
-    ok(escritorV2.st === 403, 'regras: escritor v2 anterior à importação idempotente não substitui documento v4');
+    ok(escritorV2.st === 403, 'regras: escritor v2 anterior à importação idempotente não substitui documento v5');
     const escritorV3 = await gravarComo(ana.idToken, ana.localId, campos(3, await progresso(ana.localId)));
-    ok(escritorV3.st === 403, 'regras: escritor v3 sem identidade estável de marcações não substitui documento v4');
-    const valido = await gravarComo(ana.idToken, ana.localId, campos(4, await progresso(ana.localId)));
-    await req(`${DOCS}/alunos/${ana.localId}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: campos(4, { v: 4 }) }) });
+    ok(escritorV3.st === 403, 'regras: escritor v3 sem identidade estável de marcações não substitui documento v5');
+    const valido = await gravarComo(ana.idToken, ana.localId, campos(5, await progresso(ana.localId)));
+    await req(`${DOCS}/alunos/${ana.localId}`, { method: 'PATCH', headers: { 'content-type': 'application/json', Authorization: 'Bearer owner' }, body: JSON.stringify({ fields: campos(5, { v: 4 }) }) });
     const rebaixa = await gravarComo(ana.idToken, ana.localId, campos(1, { v: 1 }));
     const apagaB = await req(`${DOCS}/alunos/${ana.localId}`, { method: 'DELETE', headers: { Authorization: 'Bearer ' + bia.idToken } });
     ok(lerB.st === 403 && gravaB.st === 403 && apagaB.st === 403, 'regras: uma conta não lê, não grava e não apaga o documento de outra');
     ok(extra.st === 403 && valido.st === 200, 'regras: campo a mais (e-mail) é recusado; o documento mínimo é aceito');
-    ok(rebaixa.st === 403, 'regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 4)');
+    ok(rebaixa.st === 403, 'regras: um app antigo (v 1) não grava por cima de um documento de versão mais nova (v 5)');
     /* privilégio mínimo: ninguém lista a coleção (nem o próprio aluno), sem login nada passa, outros caminhos são
        recusados, o documento precisa dos 4 campos e tem tamanho máximo */
     const lista = await req(`${DOCS}/alunos`, { headers: { Authorization: 'Bearer ' + ana.idToken } });
     const consulta = await req(`${DOCS}:runQuery`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer ' + ana.idToken }, body: JSON.stringify({ structuredQuery: { from: [{ collectionId: 'alunos' }] } }) });
     const semLogin = await req(`${DOCS}/alunos/${ana.localId}`); // sem o cabeçalho Authorization: visitante sem sessão
-    const semLoginGrava = await req(`${DOCS}:commit`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ writes: [{ update: { name: `projects/${PROJ}/databases/(default)/documents/alunos/${ana.localId}`, fields: campos(4, { v: 4 }) }, updateTransforms: [{ fieldPath: 'atualizado', setToServerValue: 'REQUEST_TIME' }] }] }) });
+    const semLoginGrava = await req(`${DOCS}:commit`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ writes: [{ update: { name: `projects/${PROJ}/databases/(default)/documents/alunos/${ana.localId}`, fields: campos(5, { v: 4 }) }, updateTransforms: [{ fieldPath: 'atualizado', setToServerValue: 'REQUEST_TIME' }] }] }) });
     const outro = await req(`${DOCS}:commit`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer ' + ana.idToken }, body: JSON.stringify({ writes: [{ update: { name: `projects/${PROJ}/databases/(default)/documents/assinaturas/${ana.localId}`, fields: { ativa: { booleanValue: true } } } }] }) });
-    const semT = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '4' }, dados: { stringValue: '{}' } });
-    const grande = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '4' }, dados: { stringValue: 'x'.repeat(900001) }, t: { integerValue: '1' } });
-    const proprioBia = await gravarComo(bia.idToken, bia.localId, campos(4, { v: 1 }));
+    const semT = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '5' }, dados: { stringValue: '{}' } });
+    const grande = await gravarComo(bia.idToken, bia.localId, { v: { integerValue: '5' }, dados: { stringValue: 'x'.repeat(900001) }, t: { integerValue: '1' } });
+    const proprioBia = await gravarComo(bia.idToken, bia.localId, campos(5, { v: 1 }));
     ok(lista.st === 403 && (consulta.st === 403 || (Array.isArray(consulta.j) && consulta.j.some(x => x.error))), `regras: a coleção alunos não pode ser listada nem consultada, nem pelo próprio aluno [lista ${lista.st}, consulta ${consulta.st}]`);
     ok(semLogin.st === 403 && semLoginGrava.st === 403, `regras: sem login, nada é lido nem gravado [leitura ${semLogin.st}, gravação ${semLoginGrava.st}]`);
     ok(outro.st === 403, 'regras: qualquer outro caminho (por exemplo, assinaturas/{uid}) é recusado ao aluno');

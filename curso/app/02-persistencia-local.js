@@ -13,17 +13,18 @@
   const chave = (k, id) => { const i = id === undefined ? identidade : id; return i ? k + '@' + i : k; };
   /* Lê o progresso da identidade em uso; se for ilegível, guarda uma cópia antes que alguma gravação o cubra. */
   function carregar() {
-    let st = novoEstado(), t = null;
+    let st = novoEstado(), t = null, ilegivel = null;
     try {
       t = localStorage.getItem(chave(LS));
       if (t) {
         let lido = false;
         try { const o = JSON.parse(t); if (o && o.v === 1) { st = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
-        if (!lido) { try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* sem espaço para a cópia */ } t = null; }
+        if (!lido) { ilegivel = t; try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* cópia transacional em abrirAbas */ } t = null; }
       }
-      recuperar = localStorage.getItem(chave(LS_REC));
+      recuperar = localStorage.getItem(chave(LS_REC)) || ilegivel;
       localStorage.removeItem(chave(ABAS_K));
     } catch (e) { /* sem armazenamento local */ }
+    loc.cacheIlegivel = ilegivel ? { id: identidade, texto: ilegivel } : null;
     loc.origem = { texto: t, st: opCopiar(st) }; // projeção normalizada ANTES de incorporar _ops/diários
     try { st = opEstado(metaMigrada(st, lerDiariosDe(identidade))); } catch (e) { /* cópia original permanece exportável */ }
     loc.carregado = false; loc.semIDB = false; loc.pendente = 0; partirDe(t, st); abrirAbas(); // 14-abas.js: diários de abas que fecharam são absorvidos logo depois

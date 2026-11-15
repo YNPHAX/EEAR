@@ -17,8 +17,7 @@
   function identidadeImportacao(o) {
     const x = opSemMeta(o); delete x.t; delete x._abas; delete x.sinc; delete x.ep; delete x.lin;
     if (x.cfg) { delete x.cfg._importacoes; if (o.cfg && opValida(o.cfg._ops)) x.cfg._origemOperacional = opCopiar(opMigrar(o.cfg._ops)); }
-    const ordenar = x => Array.isArray(x) ? x.map(ordenar) : x && typeof x === 'object' ? Object.fromEntries(Object.keys(x).sort().map(k => [k, ordenar(x[k])])) : x;
-    return hashImportacao('eear-importacao-v1\n' + JSON.stringify(ordenar(x)));
+    return hashImportacao('eear-importacao-v1\n' + JSON.stringify(opCanonico(x)));
   }
   function reciboImportacao(hash) { return JSON.stringify(['cfg', '_importacoes', hash]); }
   function importacaoRecebida(m, hash) { const r = m.r[reciboImportacao(hash)], pre = 'i:' + hash; return !!(r && r.length === 3 && r[2] === true) || Object.values(m.c).concat(Object.values(m.s)).some(c => Object.keys(c.a).some(id => id === pre || id.startsWith(pre + ':'))); }
@@ -35,6 +34,7 @@
      história observada são tombstones, não uma subtração nem um novo UUID para a mesma diferença.
      e:* identifica alterações desta versão; nunca são consumidas como crédito de história antiga. */
   function operacoesLegadas(m, st, hash, substituir) {
+    opValidarReset(st);
     const d = opVazio(), campos = opPlano(st); d.n = Math.max(m.n, Date.now()) + 1;
     d.r[reciboImportacao(hash)] = [d.n, 'i:' + hash, true];
     // Também as marcações/cartões/simulados têm efeito estável. Importar uma cópia antiga

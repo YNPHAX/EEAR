@@ -44,7 +44,7 @@
       ep = assinado && typeof o.ep === 'string' ? o.ep : ''; // época da nuvem (08-uniao-nuvem.js)
       lin = assinado ? linhagem(o) : []; // gravações de que a nuvem descende (08-uniao-nuvem.js)
       c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
-      operacional = opValida(c.cfg._ops) && mesmoConteudo(opPlano(c), opPlano(opEstado(c.cfg._ops)));
+      operacional = opValida(c.cfg._ops) && opRepresenta(c, c.cfg._ops);
       /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
          dela), se a nuvem foi gravada por esta versão (uma versão antiga grava o progresso inteiro dela por cima, sem
          trava, e o que ela não tinha pareceria apagado do outro lado) e se é da mesma época da nuvem (um aparelho novo

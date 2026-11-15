@@ -7,11 +7,12 @@
   function importarCodigo(texto, substituir) {
     let o = null;
     try { o = lerImportacao(texto); } catch (e) { o = null; }
-    if (!o || o.v !== 1) { msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho.'; render(); return; }
+    if (!o || o.v !== 1) { if (String(texto || '').trim()) quarentenar(String(texto), identidade, 'importacao-ilegivel'); msgDados = 'Esse código não é um progresso do Missão EEAR. Copie de novo no outro aparelho; a entrada foi preservada para recuperação.'; render(); return; }
     // Importar acrescenta estudo; ausência no código antigo não é uma ordem de apagar progresso novo.
-    const local = opCopiar(S), colado = mesclar(o);
+    const local = opCopiar(S); let colado;
+    try { colado = mesclar(o); } catch (e) { quarentenar(String(texto), identidade, 'importacao'); msgDados = e.message + ' A entrada foi preservada para recuperação.'; render(); return; }
     if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); return; }
-    const conhecida = opValida(colado.cfg._ops) && mesmoConteudo(opPlano(colado), opPlano(opEstado(colado.cfg._ops)));
+    const conhecida = opValida(colado.cfg._ops) && opRepresenta(colado, colado.cfg._ops);
     const meta = opMeta(S); let hash;
     try { hash = identidadeImportacao(o); } catch (e) { msgDados = 'Não foi possível identificar este código com segurança. Nada foi alterado; preserve a cópia original.'; render(); return; }
     if (!conhecida && !opValida(colado.cfg._ops) && importacaoRecebida(meta, hash)) { pedindo = null; msgDados = loc.pendente || loc.confirmando || !gravouLocal ? 'Este código já está na fila. Aguarde a confirmação do armazenamento; mantenha a aba aberta.' : 'Este código já foi aplicado. O estudo novo, as correções e o Zerar foram mantidos.'; consolidar(); render(); return; }
