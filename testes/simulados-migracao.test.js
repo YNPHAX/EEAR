@@ -52,3 +52,7 @@ for(const id of ['', 'sim:opaco', '{}#0', 'null#0', '[]#0', JSON.stringify(Y)+'#
 }
 for(const id of ['__proto__','prototype','constructor']){assert.throws(()=>a.opSemente({...base(),sims:[{...X,id}]}));assert.throws(()=>a.opSemente({...base(),sims:[{...X,_sid:id}]}));}
 const inconsistente=a.opVazio();inconsistente.r[JSON.stringify(['sims','outro-id'])]=[0,'ilegivel',{...X,_sid:'id-diferente'}];assert(!a.opValida(inconsistente));
+
+// Copiar o registro não pode invocar o setter de __proto__ nem perder campos JSON.
+const comCampoJSON=JSON.parse('{"d":"2026-11-15","r":{"por":[1,2]},"__proto__":{"dado":"preservado"}}');
+const campoPreservado=a.opEstado(a.opSemente({...base(),sims:[comCampoJSON]})).sims[0];assert(Object.prototype.hasOwnProperty.call(campoPreservado,'__proto__'));assert.deepStrictEqual(copia(campoPreservado.__proto__),{dado:'preservado'});

@@ -2495,7 +2495,7 @@
       let antigo; try { antigo = JSON.parse(partes[1]); } catch (e) { return; }
       if (!antigo || typeof antigo !== 'object' || Array.isArray(antigo) || typeof antigo.id === 'string') return;
       const sid = '@sim:v1:' + JSON.stringify(opCanonico(antigo)) + '#' + partes[2], novo = JSON.stringify(['sims', sid]);
-      const valor = v.length === 3 ? [v[0], v[1], opCanonico(Object.assign({}, v[2], { _sid: sid }))] : v;
+      const valor = v.length === 3 ? [v[0], v[1], opCanonico({ ...v[2], _sid: sid })] : v;
       // Sem o valor original, a chave também pode ser um ID explícito opaco. Conservar AMBOS os tombstones.
       if (v.length === 2 && m.r[novo] && !opRegistroDepois(v, m.r[novo])) return;
       if (novo === k && JSON.stringify(valor) === JSON.stringify(v)) return;
@@ -2541,7 +2541,7 @@
     if (s.cfg) delete s.cfg._ops;
     const lista = (a, certs) => { const r = {}; (a || []).forEach((x, i) => {
       const id = certs ? certChave(x) : typeof x.id === 'string' ? x.id : typeof x._sid === 'string' ? x._sid : '@sim:v1:' + JSON.stringify(opCanonico(x)) + '#' + i;
-      r[id] = certs ? x : opCanonico(Object.assign({}, x, typeof x.id === 'string' || typeof x._sid === 'string' ? {} : { _sid: id }));
+      r[id] = certs ? x : opCanonico(typeof x.id === 'string' || typeof x._sid === 'string' ? x : { ...x, _sid: id });
     }); return r; };
     s.sims = lista(s.sims, false); s.cfg.certs = lista(s.cfg.certs, true);
     const andar = (v, p) => {
