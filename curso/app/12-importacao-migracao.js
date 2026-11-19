@@ -11,7 +11,7 @@
     // Importar acrescenta estudo; ausência no código antigo não é uma ordem de apagar progresso novo.
     const local = opCopiar(S); let colado;
     try { colado = mesclar(o); } catch (e) { quarentenar(String(texto), identidade, 'importacao'); msgDados = e.message + ' A entrada foi preservada para recuperação.'; render(); return; }
-    if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); return; }
+    if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(String(texto), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); return; }
     const conhecida = opValida(colado.cfg._ops) && opRepresenta(colado, colado.cfg._ops);
     const meta = opMeta(S); let hash;
     try { hash = identidadeImportacao(o); } catch (e) { msgDados = 'Não foi possível identificar este código com segurança. Nada foi alterado; preserve a cópia original.'; render(); return; }
@@ -21,7 +21,7 @@
       if (conhecida) importado = opMeta(colado);
       else if (opValida(colado.cfg._ops)) {
         const base = opEstado(colado.cfg._ops);
-        importado = opUnir(opMeta(base), opDelta(opMeta(base), base, colado, 'e:editar:' + hash));
+        importado = opUnir(opMeta(base), opDelta(opMeta(base), base, colado, 'e:editar:' + hash, false));
       } else importado = operacoesLegadas(meta, colado, hash, substituir);
     } catch (e) { msgDados = e.message; render(); return; }
     if (substituir && opValida(colado.cfg._ops) && mesmoConteudo(opUnir(meta, importado), meta)) {

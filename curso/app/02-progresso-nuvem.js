@@ -43,7 +43,8 @@
       assinado = assinaturaOk(o); // sem assinatura válida: gravado (ou alterado) por uma versão antiga do app
       ep = assinado && typeof o.ep === 'string' ? o.ep : ''; // época da nuvem (08-uniao-nuvem.js)
       lin = assinado ? linhagem(o) : []; // gravações de que a nuvem descende (08-uniao-nuvem.js)
-      c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
+      try { c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o)))); } catch (e) { return { incompativel: true }; }
+      if (c.cfg._ops && !opValida(c.cfg._ops)) return { incompativel: true };
       operacional = opValida(c.cfg._ops) && opRepresenta(c, c.cfg._ops);
       /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
          dela), se a nuvem foi gravada por esta versão (uma versão antiga grava o progresso inteiro dela por cima, sem
@@ -73,10 +74,11 @@
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
-    let p = null;
-    const planejar = o => {
+    let p = null, copiaIncompativel;
+    const planejar = (o, bruto) => {
       if (!atual()) return null; // inclusive callbacks repetidos pelo Firestore após troca de conta
       p = planejarUniao(o);
+      copiaIncompativel = p.incompativel ? bruto ?? JSON.stringify(o) : undefined;
       if (!p.gravar) return null;
       p.id = novoIdGravacao(); // esta gravação entra na linhagem; a base, se confirmada, a representa
       return assinar(Object.assign(JSON.parse(JSON.stringify(p.u)), { ep: p.ep, lin: p.lin.concat(p.id).slice(-LIN_MAX) }));
@@ -84,6 +86,10 @@
     if (typeof ref.transacao !== 'function') throw new Error('Sincronização Firebase exige transação.');
     await ref.transacao(planejar);
     if (!atual()) return; // não sobrescreve o cache de outra sessão/abertura nem confirma a leitura dela
+    if (copiaIncompativel !== undefined) {
+      quarentenar(copiaIncompativel, identidade, 'nuvem');
+      nuvem.ref = null; nuvem.on = false; nuvem.erro = 'progresso-incompativel'; render(); return;
+    }
     nuvem.lida = true; // mesmo sem nada a gravar (nuvem e aparelho vazios): a migração do caminho antigo pode seguir
     if (nuvem.conta !== conta0 || !p || p.nada) return;
     if (p.apagado || p.reapareceu) { pausarPorExclusao(ref, p); render(); return; }

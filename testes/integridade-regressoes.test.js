@@ -16,7 +16,7 @@ for(const n of ['c186-propriedades','c186-contraexemplos','crash-observacao']){
 }
 const alvo=path.resolve(process.env.EEAR_REPO_ALVO||path.join(__dirname,'..')),hash=nodeCrypto.createHash('sha256').update(fs.readFileSync(path.join(alvo,'curso/app.js'))).digest('hex');
 assert(!process.env.EEAR_RUNTIME_SHA256||hash===process.env.EEAR_RUNTIME_SHA256,'Runtime não corresponde ao hash explícito.');
-for(const n of ['integridade-propriedades','simulados-migracao','simulados-identidades','integridade-simulados','integridade-fluxos','reset-validacao','reset-cache-quota','simulados-upgrade','crash-observacao','certificado-cache','importacoes-crash']){
+for(const n of ['integridade-propriedades','simulados-migracao','simulados-identidades','integridade-simulados','integridade-fluxos','integridade-dados','reset-validacao','reset-cache-quota','simulados-upgrade','crash-observacao','certificado-cache','importacoes-crash']){
  const r=spawnSync(process.execPath,[path.join(__dirname,n+'.test.js')],{env:{...process.env,EEAR_REPO_ALVO:alvo,EEAR_AUDITORIA_SAIDA:saida,EEAR_RUNTIME_SHA256:hash,EEAR_RESET_SAIDA:path.join(saida,'reset-validacao.json'),EEAR_UPGRADE_SAIDA:path.join(saida,'upgrade.json'),EEAR_CRASH_SAIDA:path.join(saida,'crash.json'),EEAR_RESET_CACHE_SAIDA:path.join(saida,'cache-quota.json'),EEAR_SIM_IDENTIDADES_SAIDA:path.join(saida,'simulados-identidades.json'),EEAR_CERT_CACHE_SAIDA:path.join(saida,'certificado-cache.json')},stdio:'inherit'});
  console.log('GATE IA07/IA08 '+n+': '+(r.status===0?'PASSOU':'FALHOU'));if(r.status!==0)falhas++;
 }

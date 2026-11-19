@@ -8,44 +8,59 @@
   function opCanonico(x) { return Array.isArray(x) ? x.map(opCanonico) : x && typeof x === 'object' ? Object.fromEntries(Object.keys(x).sort().map(k => [k, opCanonico(x[k])])) : x; }
   // certsZ é uma data legada, não um relógio causal. Zero representa ausência nas primeiras versões.
   function opMarcadorResetValido(x) { return typeof x === 'number' && Number.isSafeInteger(x) && x >= 0 && x <= 253402300799999; }
+  function opMarcadorNoEstadoValido(st) { return !st?.cfg || !Object.prototype.hasOwnProperty.call(st.cfg, 'certsZ') || opMarcadorResetValido(st.cfg.certsZ); }
   function opValidarReset(st) {
-    if (st && st.cfg && Object.prototype.hasOwnProperty.call(st.cfg, 'certsZ') && !opMarcadorResetValido(st.cfg.certsZ)) throw new Error('Marcador de reset inválido ou incompatível. Preserve a cópia para recuperação; nenhum progresso foi substituído.');
+    if (!opMarcadorNoEstadoValido(st)) throw new Error('Marcador de reset inválido ou incompatível. Preserve a cópia para recuperação; nenhum progresso foi substituído.');
     if (st && Array.isArray(st.sims) && st.sims.some(x => x && ((Object.prototype.hasOwnProperty.call(x, '_sid') && !opIdSimuladoValido(x._sid)) || (typeof x.id === 'string' && !opIdSimuladoValido(x.id))))) throw new Error('Identidade de simulado incompatível; preserve a cópia para recuperação.');
   }
-  function opIdSimuladoValido(x) { return typeof x === 'string' && !['__proto__', 'prototype', 'constructor'].includes(x); }
+  function opIdSimuladoValido(x) { return typeof x === 'string' && !['__proto__', 'prototype', 'constructor', '_ops'].includes(x); }
+  function opIdSimuladoLegado(x, i) { return '@sim:v1:' + JSON.stringify(opCanonico(x)) + '#' + i; }
+  function opAliasSimuladoLegado(id) {
+    const partes = /^(.*)#(0|[1-9][0-9]*)$/.exec(id); if (!partes) return null;
+    try {
+      const x = JSON.parse(partes[1]);
+      return x && typeof x === 'object' && !Array.isArray(x) && typeof x.id !== 'string' ? opIdSimuladoLegado(x, partes[2]) : null;
+    } catch (e) { return null; }
+  }
   function opRegistroSimuladoValido(p, a) {
-    if (p[0] !== 'sims' || p.length !== 2 || a.length === 2) return true;
+    if (p.length === 1) return a.length === 2 || (!!a[2] && typeof a[2] === 'object' && !Array.isArray(a[2]) && !Object.keys(a[2]).length);
+    if (p.length !== 2 && !(p.length === 3 && ['id', 'legado'].includes(p[1]))) return false;
+    if (a.length === 2) return true;
     const v = a[2]; if (!v || typeof v !== 'object' || Array.isArray(v)) return false;
     if (Object.prototype.hasOwnProperty.call(v, '_sid') && !opIdSimuladoValido(v._sid)) return false;
-    if (typeof v.id === 'string') return opIdSimuladoValido(v.id) && p[1] === v.id;
-    if (typeof v._sid === 'string') return p[1] === v._sid;
-    const partes = /^(.*)#(0|[1-9][0-9]*)$/.exec(p[1]);
-    try { const x = partes && JSON.parse(partes[1]); return !!x && typeof x === 'object' && !Array.isArray(x); } catch (e) { return false; }
+    if (typeof v.id === 'string') return opIdSimuladoValido(v.id) && (p.length === 2 ? p[1] === v.id : p[1] === 'id' && p[2] === v.id);
+    if (typeof v._sid === 'string') return p.length === 2 ? p[1] === v._sid : p[1] === 'legado' && p[2] === v._sid;
+    return p.length === 2 && !!opAliasSimuladoLegado(p[1]);
   }
   function opCaminho(k) {
     try { const p = JSON.parse(k); return Array.isArray(p) && p.length > 0 && p.length < 15 && ['v', 't', 'cfg', 'mod', 'fc', 'erros', 'sims', 'diag', 'feito', 'act', 'ativo', 'ult', 'ap', 'aula', 'ultAula'].includes(p[0]) && p.every(x => typeof x === 'string' && !['__proto__', 'prototype', 'constructor', '_ops'].includes(x)) ? p : null; } catch (e) { return null; }
   }
   function opSimuladosCanonicos(m) {
     if (!m || !m.r) return m;
-    const trocas = [];
+    let r = m.r;
+    const escrever = (tipo, id, valor) => {
+      const k = JSON.stringify(['sims', tipo, id]);
+      if (r[k] && !opRegistroDepois(valor, r[k])) return;
+      if (r === m.r) r = { ...r };
+      r[k] = valor;
+    };
     Object.keys(m.r).filter(k => k.startsWith('["sims",')).forEach(k => {
       const p = opCaminho(k), v = m.r[k]; if (!p || p.length !== 2) return;
-      // IDs explícitos de simulados modernos não dependem do conteúdo nem da posição.
-      if (v.length === 3 && v[2] && (typeof v[2].id === 'string' || typeof v[2]._sid === 'string')) return;
-      const partes = /^(.*)#(0|[1-9][0-9]*)$/.exec(p[1]); if (!partes) return;
-      let antigo; try { antigo = JSON.parse(partes[1]); } catch (e) { return; }
-      if (!antigo || typeof antigo !== 'object' || Array.isArray(antigo) || typeof antigo.id === 'string') return;
-      const sid = '@sim:v1:' + JSON.stringify(opCanonico(antigo)) + '#' + partes[2], novo = JSON.stringify(['sims', sid]);
-      const valor = v.length === 3 ? [v[0], v[1], opCanonico({ ...v[2], _sid: sid })] : v;
-      // Sem o valor original, a chave também pode ser um ID explícito opaco. Conservar AMBOS os tombstones.
-      if (v.length === 2 && m.r[novo] && !opRegistroDepois(v, m.r[novo])) return;
-      if (novo === k && JSON.stringify(valor) === JSON.stringify(v)) return;
-      trocas.push([k, novo, valor, v.length === 2]);
+      const antigo = p[1], sid = opAliasSimuladoLegado(antigo);
+      if (v.length === 2) {
+        // A chave antiga não registrava a origem da identidade. Preservar a barreira original e cobrir ambos os formatos.
+        escrever('id', antigo, v); escrever('legado', sid || antigo, v); return;
+      }
+      const valor = v[2];
+      if (typeof valor.id === 'string') escrever('id', valor.id, [v[0], v[1], opCanonico(valor)]);
+      else if (typeof valor._sid === 'string' || sid !== null) {
+        const id = valor._sid ?? sid;
+        escrever('legado', id, [v[0], v[1], opCanonico({ ...valor, _sid: id })]);
+      } else return;
+      if (r === m.r) r = { ...r };
+      delete r[k];
     });
-    if (!trocas.length) return m;
-    const r = Object.assign({}, m.r); trocas.forEach(([k,,, manter]) => { if (!manter) delete r[k]; });
-    trocas.forEach(([, k, valor]) => { const atual = r[k]; if (!atual || opRegistroDepois(valor, atual)) r[k] = valor; });
-    return Object.assign({}, m, { r });
+    return r === m.r ? m : { ...m, r };
   }
   function opRegistroDepois(a, b) { return a[0] > b[0] || (a[0] === b[0] && (a[1] > b[1] || (a[1] === b[1] && JSON.stringify(a) > JSON.stringify(b)))); }
   function opMigrar(m, manterSimulados) {
@@ -70,9 +85,16 @@
     const conjunto = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && o[id] === true);
     const conjuntos = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && conjunto(o[id]));
     if (!obj(m) || m.v !== 2 || !Number.isSafeInteger(m.n) || m.n < 0 || !obj(m.r) || !obj(m.c) || !obj(m.s)) return false;
-    return Object.keys(m.r).every(k => { const a = m.r[k], p = opCaminho(k); return p && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string' && (k !== '["cfg","certsZ"]' || a.length === 2 || opMarcadorResetValido(a[2])) && opRegistroSimuladoValido(p, a); })
+    const marcador = p => p[0] === 'cfg' && p[1] === 'certsZ';
+    const registroValido = ([k, a]) => {
+      const p = opCaminho(k);
+      if (!p || !Array.isArray(a) || ![2, 3].includes(a.length) || !Number.isSafeInteger(a[0]) || a[0] < 0 || a[0] > m.n || typeof a[1] !== 'string') return false;
+      if (marcador(p)) return k === '["cfg","certsZ"]' && (a.length === 2 || opMarcadorResetValido(a[2]));
+      return p[0] !== 'sims' || (k === JSON.stringify(p) && opRegistroSimuladoValido(p, a));
+    };
+    return Object.entries(m.r).every(registroValido)
       && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
-      && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && (!a.l || conjuntos(a.l)) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(opCaminho(k)) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
+      && Object.keys(m.c).every(k => { const a = m.c[k], p = opCaminho(k); return p && !marcador(p) && p[0] !== 'sims' && obj(a) && obj(a.a) && obj(a.x) && (!a.l || conjuntos(a.l)) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(p) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
   }
   function opMaximo(p) { return ['mod', 'aula'].includes(p[0]) && p[p.length - 1] === 'best'; }
   function opCertificado(p) { return p[0] === 'cfg' && p[1] === 'certs' && p.length === 3; }
@@ -80,13 +102,15 @@
   function opPlano(st) {
     const s = opCopiar(st), out = {};
     if (s.cfg) delete s.cfg._ops;
-    const lista = (a, certs) => { const r = {}; (a || []).forEach((x, i) => {
-      const id = certs ? certChave(x) : typeof x.id === 'string' ? x.id : typeof x._sid === 'string' ? x._sid : '@sim:v1:' + JSON.stringify(opCanonico(x)) + '#' + i;
-      r[id] = certs ? x : opCanonico(typeof x.id === 'string' || typeof x._sid === 'string' ? x : { ...x, _sid: id });
-    }); return r; };
-    s.sims = lista(s.sims, false); s.cfg.certs = lista(s.cfg.certs, true);
+    (s.sims || []).forEach((x, i) => {
+      const explicito = typeof x.id === 'string';
+      const id = explicito ? x.id : x._sid ?? opIdSimuladoLegado(x, i);
+      out[JSON.stringify(['sims', explicito ? 'id' : 'legado', id])] = opCanonico(explicito ? x : { ...x, _sid: id });
+    });
+    if (s.sims && s.sims.length) delete s.sims; else s.sims = {};
+    s.cfg.certs = Object.fromEntries((s.cfg.certs || []).map(x => [certChave(x), x]));
     const andar = (v, p) => {
-      if (v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length && !(p[0] === 'sims' && p.length === 2) && !(p[0] === 'cfg' && p[1] === 'certs' && p.length === 3)) Object.keys(v).sort().forEach(k => { if (!['__proto__', 'prototype', 'constructor', '_ops'].includes(k)) andar(v[k], p.concat(k)); });
+      if (v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length && !(p[0] === 'cfg' && p[1] === 'certs' && p.length === 3)) Object.keys(v).sort().forEach(k => { if (!['__proto__', 'prototype', 'constructor', '_ops'].includes(k)) andar(v[k], p.concat(k)); });
       else out[JSON.stringify(p)] = v;
     };
     Object.keys(s).sort().forEach(k => { if (k !== '_abas' && !['sinc', 'ep', 'lin'].includes(k)) andar(s[k], [k]); }); return out;
@@ -141,20 +165,23 @@
     m = opMigrar(m, manterSimulados);
     const marcador = m.r['["cfg","certsZ"]'];
     if (marcador && marcador.length === 3 && !opMarcadorResetValido(marcador[2])) throw new Error('Marcador de reset incompatível; a cópia original deve ser preservada.');
-    const out = {}, campos = {};
+    const out = {}, campos = {}, simulados = [];
     Object.keys(m.r).forEach(k => { if (m.r[k].length === 3) campos[k] = m.r[k][2]; });
     Object.keys(m.s).forEach(k => { const c = m.s[k], vals = Object.keys(c.a).filter(id => !c.x[id]).map(id => c.a[id]).sort((a, b) => a.d.localeCompare(b.d) || (Number(!a.c) - Number(!b.c)) || JSON.stringify(a).localeCompare(JSON.stringify(b))); if (vals.length) campos[k] = vals[0]; });
     Object.keys(m.c).forEach(k => { const c = m.c[k], ids = opIdsVivos(c); if (ids.length) campos[k] = opMaximo(opCaminho(k)) ? ids.reduce((n, id) => Math.max(n, c.a[id]), 0) : ids.reduce((n, id) => n + c.a[id], 0); });
     Object.keys(m.c).forEach(k => { if (campos[k] !== undefined && (!Number.isFinite(campos[k]) || (!opMaximo(opCaminho(k)) && !Number.isSafeInteger(campos[k])))) throw new Error('Contagem fora do limite seguro; nada foi substituído.'); });
     Object.keys(campos).sort((a, b) => JSON.parse(a).length - JSON.parse(b).length || a.localeCompare(b)).forEach(k => {
-      const p = opCaminho(k); if (!p) return; let o = out;
+      const p = opCaminho(k); if (!p) return;
+      if (p[0] === 'sims') { if (p.length > 1) simulados.push(opCopiar(campos[k])); return; }
+      let o = out;
       p.forEach((v, i) => { if (i === p.length - 1) o[v] = opCopiar(campos[k]); else { if (!o[v] || typeof o[v] !== 'object' || Array.isArray(o[v])) o[v] = {}; o = o[v]; } });
     });
     out.cfg = out.cfg || {}; out.cfg.certs = Object.values(out.cfg.certs || {}).filter(certValido).sort((a, b) => a.t - b.t || certChave(a).localeCompare(certChave(b)));
-    out.sims = Object.values(out.sims || {}).sort((a, b) => String(a.d).localeCompare(String(b.d)) || JSON.stringify(a).localeCompare(JSON.stringify(b)));
+    out.sims = simulados.sort((a, b) => String(a.d).localeCompare(String(b.d)) || JSON.stringify(a).localeCompare(JSON.stringify(b)));
     out.cfg._ops = m; return mesclar(out);
   }
-  function opDelta(m, antes, depois, id, resetExplicito) {
+  // O argumento explícito é obrigatório nas escritas atuais. O padrão interpreta snapshots legados.
+  function opDelta(m, antes, depois, id, resetExplicito = (depois.cfg.certsZ || 0) > (antes.cfg.certsZ || 0)) {
     m = opMigrar(m);
     const d = opVazio(); d.n = Math.max(m.n, Date.now()) + 1; const a = opPlano(antes), b = opPlano(depois);
     [...new Set(Object.keys(a).concat(Object.keys(b)))].forEach(k => {
@@ -168,13 +195,22 @@
         const c = { a: {}, x: {} }, v = Math.max(0, Number(b[k]) || 0), ant = Math.max(0, Number(a[k]) || 0);
         const atual = m.c[k], lidas = Object.fromEntries(Object.keys((atual && atual.l) || {}).map(i => [i, true]));
         if (v > ant) { c.a[id] = opMaximo(p) ? v : v - ant; if (p[0] === 'erros') c.o = { [id]: lidas }; }
-        else if (p[0] === 'erros' && !resetExplicito && !((depois.cfg.certsZ || 0) > (antes.cfg.certsZ || 0))) {
+        else if (p[0] === 'erros' && !resetExplicito) {
           const vistos = {}; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) vistos[i] = true; });
           c.l = { [id]: vistos }; if (v) { c.a[id] = v; c.o = { [id]: Object.assign({}, lidas, { [id]: true }) }; }
         } else { const atual = m.c[k]; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) c.x[i] = true; }); if (v) c.a[id] = v; }
         d.c[k] = c;
       } else d.r[k] = b[k] === undefined ? [d.n, id] : [d.n, id, b[k]];
-    }); return d;
+    });
+    // Uma correção pode ocultar erros sem removê-los. Zerar também cobre essas contribuições observadas.
+    if (resetExplicito) Object.entries(m.c).forEach(([k, atual]) => {
+      if (opCaminho(k)?.[0] !== 'erros') return;
+      const ids = Object.keys(atual.a).filter(i => !atual.x[i]);
+      if (!ids.length) return;
+      const c = d.c[k] || (d.c[k] = { a: {}, x: {} });
+      ids.forEach(i => { c.x[i] = true; });
+    });
+    return d;
   }
   function opCombinarEstados(a, b) { return opEstado(opUnir(opMeta(a), opMeta(b))); }
   // A projeção antiga pode conter dois aliases JSON da mesma origem. Não interpretá-los como uma edição nova.

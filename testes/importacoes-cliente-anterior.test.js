@@ -1,4 +1,4 @@
-/* Versão de transporte: clientes v2/v3 reais leem v5 como futuro, preserva estudo local e não sobrescreve a conta. */
+/* Versão de transporte: clientes v2/v3 reais leem v6 como futuro, preserva estudo local e não sobrescreve a conta. */
 const fs = require('fs'), path = require('path'), assert = require('assert'), fixture = require('./a35-fixture.js');
 const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..')), antigo = process.env.EEAR_REPO_REPROVADO_IA05, anteriorV3 = process.env.EEAR_REPO_CLIENTE_V3;
 (async () => {
@@ -11,7 +11,7 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
     const cred = await f.conta('versao-politica-importacao', { v: 1, t: Date.now(), cfg: { nome: 'Fictícia' }, feito: { 'T:confirmada': true }, act: {} });
     const N = await f.pagina(c); await f.entrar(N, cred.email); await N.waitForFunction(() => document.querySelector('#sync')?.dataset.nuvem === 'confirmado');
     const envelope = async () => { const r = await fetch(`${docs}/alunos/${cred.uid}`, { headers: { Authorization: 'Bearer owner' } }); return r.json(); };
-    const antes = await envelope(); assert.strictEqual(antes.fields.v.integerValue, '5');
+    const antes = await envelope(); assert.strictEqual(antes.fields.v.integerValue, '6');
     for (const [versao, repo] of [[2, antigo], [3, anteriorV3]]) {
     const velha = await fixture.abrir(repo), cv = await velha.contexto();
     try {
@@ -22,9 +22,9 @@ const alvo = path.resolve(process.env.EEAR_REPO_ALVO || path.join(__dirname, '..
     const token = await V.evaluate(async () => { const au = await import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js'); return au.getAuth().currentUser.getIdToken(); });
     const nome = `projects/demo-eear-independent-a35/databases/(default)/documents/alunos/${cred.uid}`;
     const r = await fetch(`${docs}:commit`, { method: 'POST', headers: { 'content-type': 'application/json', Authorization: 'Bearer ' + token }, body: JSON.stringify({ writes: [{ update: { name: nome, fields: { v: { integerValue: String(versao) }, dados: { stringValue: '{}' }, t: { integerValue: '1' } } }, updateTransforms: [{ fieldPath: 'atualizado', setToServerValue: 'REQUEST_TIME' }] }] }) });
-    assert.strictEqual(r.status, 403); const depois = await envelope(); assert.strictEqual(depois.fields.v.integerValue, '5'); assert.strictEqual(depois.fields.dados.stringValue, antes.fields.dados.stringValue);
+    assert.strictEqual(r.status, 403); const depois = await envelope(); assert.strictEqual(depois.fields.v.integerValue, '6'); assert.strictEqual(depois.fields.dados.stringValue, antes.fields.dados.stringValue);
     assert(!(await f.ler(cred.uid)).feito['T:cliente-v' + versao + '-local']); await V.reload(); assert((await velha.estado(V)).feito['T:cliente-v' + versao + '-local']);
-    console.log('✓ Envelope v5 confirmado; cliente v' + versao + ' real avisa versão futura, mantém estudo local e recebe 403 sem alteração remota.');
+    console.log('✓ Envelope v6 confirmado; cliente v' + versao + ' real avisa versão futura, mantém estudo local e recebe 403 sem alteração remota.');
     } finally { await cv.close(); await velha.fechar(); }
     }
   } finally { await c.close(); await f.fechar(); }

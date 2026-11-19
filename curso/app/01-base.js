@@ -157,8 +157,8 @@
        travariam as telas Hoje, Plano e Simulados sem volta: ficam de fora só na memória, como o resto desta função. */
     const obj = x => !!x && typeof x === 'object' && !Array.isArray(x);
     /* Placar de um simulado: matéria → [acertos, total], sempre com total ≥ 1 (como entregar() grava). */
-    const placar = r => { const o = {}; if (obj(r)) Object.keys(r).forEach(k => { const v = r[k]; if (Array.isArray(v) && typeof v[0] === 'number' && typeof v[1] === 'number' && v[1] >= 1) o[k] = v; }); return o; };
-    b.sims = b.sims.filter(obj).map(x => Object.assign({}, x, { r: placar(x.r) })).filter(x => Object.keys(x.r).length);
+    const placar = r => Object.fromEntries(obj(r) ? Object.entries(r).filter(([, v]) => Array.isArray(v) && typeof v[0] === 'number' && typeof v[1] === 'number' && v[1] >= 1) : []);
+    b.sims = b.sims.filter(obj).map(x => ({ ...x, r: placar(x.r) })).filter(x => Object.keys(x.r).length);
     const questoes = a => { // simulado em andamento ou o último entregue: só questões que ainda existem no curso
       ['resp', 'marc', 'perms'].forEach(k => { if (!obj(a[k])) a[k] = {}; });
       a.ids = a.ids.filter(id => typeof id === 'string' && Q[id]);

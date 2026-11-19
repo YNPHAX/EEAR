@@ -1,4 +1,4 @@
-  function canonico(x) { return Array.isArray(x) ? x.map(canonico) : x && typeof x === 'object' ? Object.keys(x).sort().reduce((o, k) => { o[k] = canonico(x[k]); return o; }, {}) : x; }
+  function canonico(x) { return opCanonico(x); }
   /* ---------- união do progresso entre aparelhos ----------
      A nuvem guardava o progresso inteiro do último aparelho que gravou: quem estudava offline em dois aparelhos perdia o
      que fez num deles. Agora cada sincronização une os dois lados em três vias. A base é a última versão que este
@@ -88,7 +88,7 @@
     return r;
   }
   function uSims(bs, ls, cs) { // simulados: une sem duplicar; o mesmo resultado nos dois lados conta uma vez (sem base, a maior contagem)
-    const conta = a => a.reduce((m, x) => { const k = JSON.stringify(x); m[k] = (m[k] || 0) + 1; return m; }, {});
+    const conta = a => a.reduce((m, x) => { const k = JSON.stringify(canonico(x)); m[k] = (m[k] || 0) + 1; return m; }, {});
     const B = conta(bs || []), L = conta(ls), C = conta(cs), out = ls.slice();
     Object.keys(C).forEach(k => { const extra = (bs ? Math.max(L[k] || 0, (L[k] || 0) + C[k] - (B[k] || 0)) : Math.max(L[k] || 0, C[k])) - (L[k] || 0); for (let i = 0; i < extra; i++) out.push(JSON.parse(k)); });
     return out.map(x => [x, JSON.stringify(x)]).sort((a, b) => String(a[0].d).localeCompare(String(b[0].d)) || (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0)).map(x => x[0]);

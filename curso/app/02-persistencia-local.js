@@ -18,7 +18,10 @@
       t = localStorage.getItem(chave(LS));
       if (t) {
         let lido = false;
-        try { const o = JSON.parse(t); if (o && o.v === 1) { st = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
+        try {
+          const o = JSON.parse(t);
+          if (o && o.v === 1 && (!o.cfg || !o.cfg._ops || opValida(o.cfg._ops))) { st = mesclar(o); lido = true; }
+        } catch (e) { /* ilegível */ }
         if (!lido) { ilegivel = t; try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* cópia transacional em abrirAbas */ } t = null; }
       }
       recuperar = localStorage.getItem(chave(LS_REC)) || ilegivel;

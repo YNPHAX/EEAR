@@ -22,6 +22,7 @@
   function motivoErroNuvem(c) {
     return ({
       'permission-denied': 'a nuvem recusou a gravação',
+      'progresso-incompativel': 'o documento remoto contém progresso incompatível',
       invalid_argument: 'a nuvem do curso não permite gravar com o seu acesso',
       unauthenticated: 'a sessão expirou; saia e entre de novo na conta',
       'invalid-argument': 'a nuvem recusou o formato do progresso'

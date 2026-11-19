@@ -26,7 +26,7 @@
         t = db.transaction(['contas', 'quarentena'], 'readwrite', { durability: 'strict' });
         const s = t.objectStore('contas'), q = s.get(id);
         q.onsuccess = () => {
-          if (!permitirCorrompido && q.result && !opValida(q.result.meta)) {
+          if (!permitirCorrompido && q.result && (!opValida(q.result.meta) || !opMarcadorNoEstadoValido(q.result.st))) {
             const texto = JSON.stringify(q.result); t.objectStore('quarentena').add({ conta: id, origem: 'checkpoint', texto });
             resultado = new Error('O progresso durável está ilegível. Nada foi substituído; exporte a cópia de recuperação.'); resultado.code = 'checkpoint-corrompido';
             if (id === identidade) { recuperar = texto; try { localStorage.setItem(chave(LS_REC), texto); } catch (e) { /* a transação preserva a quarentena */ } } return;
@@ -58,11 +58,19 @@
     }, true).catch(() => { if (id === identidade) { gravouLocal = false; syncInfo(); } });
     if (id === identidade) { recuperar = copia; setTimeout(() => { if (id === identidade) render(); }, 0); }
   }
+  function diarioValido(d) {
+    if (!d) return false;
+    if (d.delta) return opValida(d.delta);
+    if (d.st?.v !== 1) return false;
+    try { opValidarReset(d.st); opValidarReset(d.base); }
+    catch (e) { return false; }
+    return [d.st, d.base].every(st => !st?.cfg?._ops || opValida(st.cfg._ops));
+  }
   function lerDiariosDe(id) {
     const pre = chave(DIARIO_K, id) + '#', out = [];
     try { Object.keys(localStorage).filter(k => k.indexOf(pre) === 0).forEach(k => {
       const txt = localStorage.getItem(k); let d = null; try { d = JSON.parse(txt); } catch (e) { /* preservado abaixo */ }
-      if (!d || (!d.delta && (!d.st || d.st.v !== 1))) { quarentenar(txt, id, k); return; }
+      if (!diarioValido(d)) { quarentenar(txt, id, k); return; }
       out.push({ k, txt, d, tab: k.slice(pre.length) });
     }); } catch (e) { /* sem localStorage: IDB continua */ }
     return out;
@@ -78,7 +86,15 @@
         const db = o.result;
         if (novo || !db.objectStoreNames.contains('d')) { db.close(); resolve([]); return; }
         const t = db.transaction('d', 'readonly'), r = t.objectStore('d').openCursor(), out = [], pre = chave(DIARIO_K, id) + '#';
-        r.onsuccess = () => { const c = r.result; if (c) { if (String(c.key).indexOf(pre) === 0) { try { out.push({ k: c.key, txt: c.value, d: JSON.parse(c.value) }); } catch (e) { quarentenar(c.value, id, String(c.key)); } } c.continue(); } };
+        r.onsuccess = () => {
+          const c = r.result; if (!c) return;
+          if (String(c.key).indexOf(pre) === 0) {
+            let d; try { d = JSON.parse(c.value); } catch (e) { /* preservado abaixo */ }
+            if (diarioValido(d)) out.push({ k: c.key, txt: c.value, d });
+            else quarentenar(c.value, id, String(c.key));
+          }
+          c.continue();
+        };
         t.oncomplete = () => { db.close(); resolve(out); }; t.onerror = () => { db.close(); resolve([]); };
       };
     });

@@ -159,8 +159,8 @@
        travariam as telas Hoje, Plano e Simulados sem volta: ficam de fora só na memória, como o resto desta função. */
     const obj = x => !!x && typeof x === 'object' && !Array.isArray(x);
     /* Placar de um simulado: matéria → [acertos, total], sempre com total ≥ 1 (como entregar() grava). */
-    const placar = r => { const o = {}; if (obj(r)) Object.keys(r).forEach(k => { const v = r[k]; if (Array.isArray(v) && typeof v[0] === 'number' && typeof v[1] === 'number' && v[1] >= 1) o[k] = v; }); return o; };
-    b.sims = b.sims.filter(obj).map(x => Object.assign({}, x, { r: placar(x.r) })).filter(x => Object.keys(x.r).length);
+    const placar = r => Object.fromEntries(obj(r) ? Object.entries(r).filter(([, v]) => Array.isArray(v) && typeof v[0] === 'number' && typeof v[1] === 'number' && v[1] >= 1) : []);
+    b.sims = b.sims.filter(obj).map(x => ({ ...x, r: placar(x.r) })).filter(x => Object.keys(x.r).length);
     const questoes = a => { // simulado em andamento ou o último entregue: só questões que ainda existem no curso
       ['resp', 'marc', 'perms'].forEach(k => { if (!obj(a[k])) a[k] = {}; });
       a.ids = a.ids.filter(id => typeof id === 'string' && Q[id]);
@@ -285,7 +285,10 @@
       t = localStorage.getItem(chave(LS));
       if (t) {
         let lido = false;
-        try { const o = JSON.parse(t); if (o && o.v === 1) { st = mesclar(o); lido = true; } } catch (e) { /* ilegível */ }
+        try {
+          const o = JSON.parse(t);
+          if (o && o.v === 1 && (!o.cfg || !o.cfg._ops || opValida(o.cfg._ops))) { st = mesclar(o); lido = true; }
+        } catch (e) { /* ilegível */ }
         if (!lido) { ilegivel = t; try { localStorage.setItem(chave(LS_REC), t); } catch (e) { /* cópia transacional em abrirAbas */ } t = null; }
       }
       recuperar = localStorage.getItem(chave(LS_REC)) || ilegivel;
@@ -348,7 +351,8 @@
       assinado = assinaturaOk(o); // sem assinatura válida: gravado (ou alterado) por uma versão antiga do app
       ep = assinado && typeof o.ep === 'string' ? o.ep : ''; // época da nuvem (08-uniao-nuvem.js)
       lin = assinado ? linhagem(o) : []; // gravações de que a nuvem descende (08-uniao-nuvem.js)
-      c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o))));
+      try { c = mesclar(semAssinatura(JSON.parse(JSON.stringify(o)))); } catch (e) { return { incompativel: true }; }
+      if (c.cfg._ops && !opValida(c.cfg._ops)) return { incompativel: true };
       operacional = opValida(c.cfg._ops) && opRepresenta(c, c.cfg._ops);
       /* A base só vale se for anterior aos dois lados (um progresso colado ou restaurado mais antigo que ela não descende
          dela), se a nuvem foi gravada por esta versão (uma versão antiga grava o progresso inteiro dela por cima, sem
@@ -378,10 +382,11 @@
   async function conciliar(ref) {
     const conta0 = nuvem.conta;
     const atual = () => !saindo && nuvem.ref === ref && nuvem.conta === conta0;
-    let p = null;
-    const planejar = o => {
+    let p = null, copiaIncompativel;
+    const planejar = (o, bruto) => {
       if (!atual()) return null; // inclusive callbacks repetidos pelo Firestore após troca de conta
       p = planejarUniao(o);
+      copiaIncompativel = p.incompativel ? bruto ?? JSON.stringify(o) : undefined;
       if (!p.gravar) return null;
       p.id = novoIdGravacao(); // esta gravação entra na linhagem; a base, se confirmada, a representa
       return assinar(Object.assign(JSON.parse(JSON.stringify(p.u)), { ep: p.ep, lin: p.lin.concat(p.id).slice(-LIN_MAX) }));
@@ -389,6 +394,10 @@
     if (typeof ref.transacao !== 'function') throw new Error('Sincronização Firebase exige transação.');
     await ref.transacao(planejar);
     if (!atual()) return; // não sobrescreve o cache de outra sessão/abertura nem confirma a leitura dela
+    if (copiaIncompativel !== undefined) {
+      quarentenar(copiaIncompativel, identidade, 'nuvem');
+      nuvem.ref = null; nuvem.on = false; nuvem.erro = 'progresso-incompativel'; render(); return;
+    }
     nuvem.lida = true; // mesmo sem nada a gravar (nuvem e aparelho vazios): a migração do caminho antigo pode seguir
     if (nuvem.conta !== conta0 || !p || p.nada) return;
     if (p.apagado || p.reapareceu) { pausarPorExclusao(ref, p); render(); return; }
@@ -476,11 +485,11 @@
     nuvem.fb = true;
     if (FB.sincronizar !== true) { nuvem.bloqueada = true; syncInfo(); return; }
     const fs = conta.api.fs, db = conta.api.db, doc = fs.doc(db, 'alunos', u.uid);
-    const paraDoc = o => ({ v: 5, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
-    /* Envelope v5 inclui identidade canônica de simulados e reset explícito. Escritores v1–v4 são recusados pelas regras monotônicas após a migração. Versão futura: nada é gravado por cima. */
-    const deDoc = x => (!x ? null : Number(x.v) > 5 ? { v: Number(x.v) } : JSON.parse(x.dados));
+    const paraDoc = o => ({ v: 6, dados: JSON.stringify(o), t: o.t || 0, atualizado: fs.serverTimestamp() });
+    /* Envelope v6 distingue IDs explícitos de identidades legadas. Após migrar, a regra monotônica barra escritores v1–v5. */
+    const deDoc = x => (!x ? null : Number(x.v) > 6 ? { v: Number(x.v) } : JSON.parse(x.dados));
     const ref = {
-      transacao: f => fs.runTransaction(db, async tx => { const s = await tx.get(doc), novo = f(deDoc(s.exists() ? s.data() : null)); if (novo) tx.set(doc, paraDoc(novo)); })
+      transacao: f => fs.runTransaction(db, async tx => { const s = await tx.get(doc), dados = s.exists() ? s.data() : null, novo = f(deDoc(dados), dados?.dados); if (novo) tx.set(doc, paraDoc(novo)); })
     };
     sincronizar(ref, id);
   }
@@ -1849,7 +1858,7 @@
     contaIniciar();
   }
   if (hot && typeof hot.ready === 'function') hot.ready(iniciar); else iniciar((hot && hot.data) || {});
-  function canonico(x) { return Array.isArray(x) ? x.map(canonico) : x && typeof x === 'object' ? Object.keys(x).sort().reduce((o, k) => { o[k] = canonico(x[k]); return o; }, {}) : x; }
+  function canonico(x) { return opCanonico(x); }
   /* ---------- união do progresso entre aparelhos ----------
      A nuvem guardava o progresso inteiro do último aparelho que gravou: quem estudava offline em dois aparelhos perdia o
      que fez num deles. Agora cada sincronização une os dois lados em três vias. A base é a última versão que este
@@ -1939,7 +1948,7 @@
     return r;
   }
   function uSims(bs, ls, cs) { // simulados: une sem duplicar; o mesmo resultado nos dois lados conta uma vez (sem base, a maior contagem)
-    const conta = a => a.reduce((m, x) => { const k = JSON.stringify(x); m[k] = (m[k] || 0) + 1; return m; }, {});
+    const conta = a => a.reduce((m, x) => { const k = JSON.stringify(canonico(x)); m[k] = (m[k] || 0) + 1; return m; }, {});
     const B = conta(bs || []), L = conta(ls), C = conta(cs), out = ls.slice();
     Object.keys(C).forEach(k => { const extra = (bs ? Math.max(L[k] || 0, (L[k] || 0) + C[k] - (B[k] || 0)) : Math.max(L[k] || 0, C[k])) - (L[k] || 0); for (let i = 0; i < extra; i++) out.push(JSON.parse(k)); });
     return out.map(x => [x, JSON.stringify(x)]).sort((a, b) => String(a[0].d).localeCompare(String(b[0].d)) || (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0)).map(x => x[0]);
@@ -2368,7 +2377,7 @@
     // Importar acrescenta estudo; ausência no código antigo não é uma ordem de apagar progresso novo.
     const local = opCopiar(S); let colado;
     try { colado = mesclar(o); } catch (e) { quarentenar(String(texto), identidade, 'importacao'); msgDados = e.message + ' A entrada foi preservada para recuperação.'; render(); return; }
-    if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(JSON.stringify(o), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); return; }
+    if (colado.cfg._ops && !opValida(colado.cfg._ops)) { quarentenar(String(texto), identidade, 'importacao'); msgDados = 'O código usa operações incompatíveis ou ilegíveis. A cópia foi preservada para recuperação; nenhum progresso foi substituído.'; render(); return; }
     const conhecida = opValida(colado.cfg._ops) && opRepresenta(colado, colado.cfg._ops);
     const meta = opMeta(S); let hash;
     try { hash = identidadeImportacao(o); } catch (e) { msgDados = 'Não foi possível identificar este código com segurança. Nada foi alterado; preserve a cópia original.'; render(); return; }
@@ -2378,7 +2387,7 @@
       if (conhecida) importado = opMeta(colado);
       else if (opValida(colado.cfg._ops)) {
         const base = opEstado(colado.cfg._ops);
-        importado = opUnir(opMeta(base), opDelta(opMeta(base), base, colado, 'e:editar:' + hash));
+        importado = opUnir(opMeta(base), opDelta(opMeta(base), base, colado, 'e:editar:' + hash, false));
       } else importado = operacoesLegadas(meta, colado, hash, substituir);
     } catch (e) { msgDados = e.message; render(); return; }
     if (substituir && opValida(colado.cfg._ops) && mesmoConteudo(opUnir(meta, importado), meta)) {
@@ -2427,6 +2436,7 @@
   function motivoErroNuvem(c) {
     return ({
       'permission-denied': 'a nuvem recusou a gravação',
+      'progresso-incompativel': 'o documento remoto contém progresso incompatível',
       invalid_argument: 'a nuvem do curso não permite gravar com o seu acesso',
       unauthenticated: 'a sessão expirou; saia e entre de novo na conta',
       'invalid-argument': 'a nuvem recusou o formato do progresso'
@@ -2467,44 +2477,59 @@
   function opCanonico(x) { return Array.isArray(x) ? x.map(opCanonico) : x && typeof x === 'object' ? Object.fromEntries(Object.keys(x).sort().map(k => [k, opCanonico(x[k])])) : x; }
   // certsZ é uma data legada, não um relógio causal. Zero representa ausência nas primeiras versões.
   function opMarcadorResetValido(x) { return typeof x === 'number' && Number.isSafeInteger(x) && x >= 0 && x <= 253402300799999; }
+  function opMarcadorNoEstadoValido(st) { return !st?.cfg || !Object.prototype.hasOwnProperty.call(st.cfg, 'certsZ') || opMarcadorResetValido(st.cfg.certsZ); }
   function opValidarReset(st) {
-    if (st && st.cfg && Object.prototype.hasOwnProperty.call(st.cfg, 'certsZ') && !opMarcadorResetValido(st.cfg.certsZ)) throw new Error('Marcador de reset inválido ou incompatível. Preserve a cópia para recuperação; nenhum progresso foi substituído.');
+    if (!opMarcadorNoEstadoValido(st)) throw new Error('Marcador de reset inválido ou incompatível. Preserve a cópia para recuperação; nenhum progresso foi substituído.');
     if (st && Array.isArray(st.sims) && st.sims.some(x => x && ((Object.prototype.hasOwnProperty.call(x, '_sid') && !opIdSimuladoValido(x._sid)) || (typeof x.id === 'string' && !opIdSimuladoValido(x.id))))) throw new Error('Identidade de simulado incompatível; preserve a cópia para recuperação.');
   }
-  function opIdSimuladoValido(x) { return typeof x === 'string' && !['__proto__', 'prototype', 'constructor'].includes(x); }
+  function opIdSimuladoValido(x) { return typeof x === 'string' && !['__proto__', 'prototype', 'constructor', '_ops'].includes(x); }
+  function opIdSimuladoLegado(x, i) { return '@sim:v1:' + JSON.stringify(opCanonico(x)) + '#' + i; }
+  function opAliasSimuladoLegado(id) {
+    const partes = /^(.*)#(0|[1-9][0-9]*)$/.exec(id); if (!partes) return null;
+    try {
+      const x = JSON.parse(partes[1]);
+      return x && typeof x === 'object' && !Array.isArray(x) && typeof x.id !== 'string' ? opIdSimuladoLegado(x, partes[2]) : null;
+    } catch (e) { return null; }
+  }
   function opRegistroSimuladoValido(p, a) {
-    if (p[0] !== 'sims' || p.length !== 2 || a.length === 2) return true;
+    if (p.length === 1) return a.length === 2 || (!!a[2] && typeof a[2] === 'object' && !Array.isArray(a[2]) && !Object.keys(a[2]).length);
+    if (p.length !== 2 && !(p.length === 3 && ['id', 'legado'].includes(p[1]))) return false;
+    if (a.length === 2) return true;
     const v = a[2]; if (!v || typeof v !== 'object' || Array.isArray(v)) return false;
     if (Object.prototype.hasOwnProperty.call(v, '_sid') && !opIdSimuladoValido(v._sid)) return false;
-    if (typeof v.id === 'string') return opIdSimuladoValido(v.id) && p[1] === v.id;
-    if (typeof v._sid === 'string') return p[1] === v._sid;
-    const partes = /^(.*)#(0|[1-9][0-9]*)$/.exec(p[1]);
-    try { const x = partes && JSON.parse(partes[1]); return !!x && typeof x === 'object' && !Array.isArray(x); } catch (e) { return false; }
+    if (typeof v.id === 'string') return opIdSimuladoValido(v.id) && (p.length === 2 ? p[1] === v.id : p[1] === 'id' && p[2] === v.id);
+    if (typeof v._sid === 'string') return p.length === 2 ? p[1] === v._sid : p[1] === 'legado' && p[2] === v._sid;
+    return p.length === 2 && !!opAliasSimuladoLegado(p[1]);
   }
   function opCaminho(k) {
     try { const p = JSON.parse(k); return Array.isArray(p) && p.length > 0 && p.length < 15 && ['v', 't', 'cfg', 'mod', 'fc', 'erros', 'sims', 'diag', 'feito', 'act', 'ativo', 'ult', 'ap', 'aula', 'ultAula'].includes(p[0]) && p.every(x => typeof x === 'string' && !['__proto__', 'prototype', 'constructor', '_ops'].includes(x)) ? p : null; } catch (e) { return null; }
   }
   function opSimuladosCanonicos(m) {
     if (!m || !m.r) return m;
-    const trocas = [];
+    let r = m.r;
+    const escrever = (tipo, id, valor) => {
+      const k = JSON.stringify(['sims', tipo, id]);
+      if (r[k] && !opRegistroDepois(valor, r[k])) return;
+      if (r === m.r) r = { ...r };
+      r[k] = valor;
+    };
     Object.keys(m.r).filter(k => k.startsWith('["sims",')).forEach(k => {
       const p = opCaminho(k), v = m.r[k]; if (!p || p.length !== 2) return;
-      // IDs explícitos de simulados modernos não dependem do conteúdo nem da posição.
-      if (v.length === 3 && v[2] && (typeof v[2].id === 'string' || typeof v[2]._sid === 'string')) return;
-      const partes = /^(.*)#(0|[1-9][0-9]*)$/.exec(p[1]); if (!partes) return;
-      let antigo; try { antigo = JSON.parse(partes[1]); } catch (e) { return; }
-      if (!antigo || typeof antigo !== 'object' || Array.isArray(antigo) || typeof antigo.id === 'string') return;
-      const sid = '@sim:v1:' + JSON.stringify(opCanonico(antigo)) + '#' + partes[2], novo = JSON.stringify(['sims', sid]);
-      const valor = v.length === 3 ? [v[0], v[1], opCanonico({ ...v[2], _sid: sid })] : v;
-      // Sem o valor original, a chave também pode ser um ID explícito opaco. Conservar AMBOS os tombstones.
-      if (v.length === 2 && m.r[novo] && !opRegistroDepois(v, m.r[novo])) return;
-      if (novo === k && JSON.stringify(valor) === JSON.stringify(v)) return;
-      trocas.push([k, novo, valor, v.length === 2]);
+      const antigo = p[1], sid = opAliasSimuladoLegado(antigo);
+      if (v.length === 2) {
+        // A chave antiga não registrava a origem da identidade. Preservar a barreira original e cobrir ambos os formatos.
+        escrever('id', antigo, v); escrever('legado', sid || antigo, v); return;
+      }
+      const valor = v[2];
+      if (typeof valor.id === 'string') escrever('id', valor.id, [v[0], v[1], opCanonico(valor)]);
+      else if (typeof valor._sid === 'string' || sid !== null) {
+        const id = valor._sid ?? sid;
+        escrever('legado', id, [v[0], v[1], opCanonico({ ...valor, _sid: id })]);
+      } else return;
+      if (r === m.r) r = { ...r };
+      delete r[k];
     });
-    if (!trocas.length) return m;
-    const r = Object.assign({}, m.r); trocas.forEach(([k,,, manter]) => { if (!manter) delete r[k]; });
-    trocas.forEach(([, k, valor]) => { const atual = r[k]; if (!atual || opRegistroDepois(valor, atual)) r[k] = valor; });
-    return Object.assign({}, m, { r });
+    return r === m.r ? m : { ...m, r };
   }
   function opRegistroDepois(a, b) { return a[0] > b[0] || (a[0] === b[0] && (a[1] > b[1] || (a[1] === b[1] && JSON.stringify(a) > JSON.stringify(b)))); }
   function opMigrar(m, manterSimulados) {
@@ -2529,9 +2554,16 @@
     const conjunto = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && o[id] === true);
     const conjuntos = o => obj(o) && Object.keys(o).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && conjunto(o[id]));
     if (!obj(m) || m.v !== 2 || !Number.isSafeInteger(m.n) || m.n < 0 || !obj(m.r) || !obj(m.c) || !obj(m.s)) return false;
-    return Object.keys(m.r).every(k => { const a = m.r[k], p = opCaminho(k); return p && Array.isArray(a) && [2, 3].includes(a.length) && Number.isSafeInteger(a[0]) && a[0] >= 0 && a[0] <= m.n && typeof a[1] === 'string' && (k !== '["cfg","certsZ"]' || a.length === 2 || opMarcadorResetValido(a[2])) && opRegistroSimuladoValido(p, a); })
+    const marcador = p => p[0] === 'cfg' && p[1] === 'certsZ';
+    const registroValido = ([k, a]) => {
+      const p = opCaminho(k);
+      if (!p || !Array.isArray(a) || ![2, 3].includes(a.length) || !Number.isSafeInteger(a[0]) || a[0] < 0 || a[0] > m.n || typeof a[1] !== 'string') return false;
+      if (marcador(p)) return k === '["cfg","certsZ"]' && (a.length === 2 || opMarcadorResetValido(a[2]));
+      return p[0] !== 'sims' || (k === JSON.stringify(p) && opRegistroSimuladoValido(p, a));
+    };
+    return Object.entries(m.r).every(registroValido)
       && Object.keys(m.s).every(k => { const a = m.s[k]; return opCaminho(k) && opCertificado(opCaminho(k)) && obj(a) && obj(a.a) && obj(a.x) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && certValido(a.a[id])) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); })
-      && Object.keys(m.c).every(k => { const a = m.c[k]; return opCaminho(k) && obj(a) && obj(a.a) && obj(a.x) && (!a.l || conjuntos(a.l)) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(opCaminho(k)) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
+      && Object.keys(m.c).every(k => { const a = m.c[k], p = opCaminho(k); return p && !marcador(p) && p[0] !== 'sims' && obj(a) && obj(a.a) && obj(a.x) && (!a.l || conjuntos(a.l)) && (!a.o || conjuntos(a.o)) && Object.keys(a.a).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && Number.isFinite(a.a[id]) && a.a[id] >= 0 && (opMaximo(p) || Number.isSafeInteger(a.a[id]))) && Object.keys(a.x).every(id => !['__proto__', 'constructor', 'prototype'].includes(id) && a.x[id] === true); });
   }
   function opMaximo(p) { return ['mod', 'aula'].includes(p[0]) && p[p.length - 1] === 'best'; }
   function opCertificado(p) { return p[0] === 'cfg' && p[1] === 'certs' && p.length === 3; }
@@ -2539,13 +2571,15 @@
   function opPlano(st) {
     const s = opCopiar(st), out = {};
     if (s.cfg) delete s.cfg._ops;
-    const lista = (a, certs) => { const r = {}; (a || []).forEach((x, i) => {
-      const id = certs ? certChave(x) : typeof x.id === 'string' ? x.id : typeof x._sid === 'string' ? x._sid : '@sim:v1:' + JSON.stringify(opCanonico(x)) + '#' + i;
-      r[id] = certs ? x : opCanonico(typeof x.id === 'string' || typeof x._sid === 'string' ? x : { ...x, _sid: id });
-    }); return r; };
-    s.sims = lista(s.sims, false); s.cfg.certs = lista(s.cfg.certs, true);
+    (s.sims || []).forEach((x, i) => {
+      const explicito = typeof x.id === 'string';
+      const id = explicito ? x.id : x._sid ?? opIdSimuladoLegado(x, i);
+      out[JSON.stringify(['sims', explicito ? 'id' : 'legado', id])] = opCanonico(explicito ? x : { ...x, _sid: id });
+    });
+    if (s.sims && s.sims.length) delete s.sims; else s.sims = {};
+    s.cfg.certs = Object.fromEntries((s.cfg.certs || []).map(x => [certChave(x), x]));
     const andar = (v, p) => {
-      if (v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length && !(p[0] === 'sims' && p.length === 2) && !(p[0] === 'cfg' && p[1] === 'certs' && p.length === 3)) Object.keys(v).sort().forEach(k => { if (!['__proto__', 'prototype', 'constructor', '_ops'].includes(k)) andar(v[k], p.concat(k)); });
+      if (v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length && !(p[0] === 'cfg' && p[1] === 'certs' && p.length === 3)) Object.keys(v).sort().forEach(k => { if (!['__proto__', 'prototype', 'constructor', '_ops'].includes(k)) andar(v[k], p.concat(k)); });
       else out[JSON.stringify(p)] = v;
     };
     Object.keys(s).sort().forEach(k => { if (k !== '_abas' && !['sinc', 'ep', 'lin'].includes(k)) andar(s[k], [k]); }); return out;
@@ -2600,20 +2634,23 @@
     m = opMigrar(m, manterSimulados);
     const marcador = m.r['["cfg","certsZ"]'];
     if (marcador && marcador.length === 3 && !opMarcadorResetValido(marcador[2])) throw new Error('Marcador de reset incompatível; a cópia original deve ser preservada.');
-    const out = {}, campos = {};
+    const out = {}, campos = {}, simulados = [];
     Object.keys(m.r).forEach(k => { if (m.r[k].length === 3) campos[k] = m.r[k][2]; });
     Object.keys(m.s).forEach(k => { const c = m.s[k], vals = Object.keys(c.a).filter(id => !c.x[id]).map(id => c.a[id]).sort((a, b) => a.d.localeCompare(b.d) || (Number(!a.c) - Number(!b.c)) || JSON.stringify(a).localeCompare(JSON.stringify(b))); if (vals.length) campos[k] = vals[0]; });
     Object.keys(m.c).forEach(k => { const c = m.c[k], ids = opIdsVivos(c); if (ids.length) campos[k] = opMaximo(opCaminho(k)) ? ids.reduce((n, id) => Math.max(n, c.a[id]), 0) : ids.reduce((n, id) => n + c.a[id], 0); });
     Object.keys(m.c).forEach(k => { if (campos[k] !== undefined && (!Number.isFinite(campos[k]) || (!opMaximo(opCaminho(k)) && !Number.isSafeInteger(campos[k])))) throw new Error('Contagem fora do limite seguro; nada foi substituído.'); });
     Object.keys(campos).sort((a, b) => JSON.parse(a).length - JSON.parse(b).length || a.localeCompare(b)).forEach(k => {
-      const p = opCaminho(k); if (!p) return; let o = out;
+      const p = opCaminho(k); if (!p) return;
+      if (p[0] === 'sims') { if (p.length > 1) simulados.push(opCopiar(campos[k])); return; }
+      let o = out;
       p.forEach((v, i) => { if (i === p.length - 1) o[v] = opCopiar(campos[k]); else { if (!o[v] || typeof o[v] !== 'object' || Array.isArray(o[v])) o[v] = {}; o = o[v]; } });
     });
     out.cfg = out.cfg || {}; out.cfg.certs = Object.values(out.cfg.certs || {}).filter(certValido).sort((a, b) => a.t - b.t || certChave(a).localeCompare(certChave(b)));
-    out.sims = Object.values(out.sims || {}).sort((a, b) => String(a.d).localeCompare(String(b.d)) || JSON.stringify(a).localeCompare(JSON.stringify(b)));
+    out.sims = simulados.sort((a, b) => String(a.d).localeCompare(String(b.d)) || JSON.stringify(a).localeCompare(JSON.stringify(b)));
     out.cfg._ops = m; return mesclar(out);
   }
-  function opDelta(m, antes, depois, id, resetExplicito) {
+  // O argumento explícito é obrigatório nas escritas atuais. O padrão interpreta snapshots legados.
+  function opDelta(m, antes, depois, id, resetExplicito = (depois.cfg.certsZ || 0) > (antes.cfg.certsZ || 0)) {
     m = opMigrar(m);
     const d = opVazio(); d.n = Math.max(m.n, Date.now()) + 1; const a = opPlano(antes), b = opPlano(depois);
     [...new Set(Object.keys(a).concat(Object.keys(b)))].forEach(k => {
@@ -2627,13 +2664,22 @@
         const c = { a: {}, x: {} }, v = Math.max(0, Number(b[k]) || 0), ant = Math.max(0, Number(a[k]) || 0);
         const atual = m.c[k], lidas = Object.fromEntries(Object.keys((atual && atual.l) || {}).map(i => [i, true]));
         if (v > ant) { c.a[id] = opMaximo(p) ? v : v - ant; if (p[0] === 'erros') c.o = { [id]: lidas }; }
-        else if (p[0] === 'erros' && !resetExplicito && !((depois.cfg.certsZ || 0) > (antes.cfg.certsZ || 0))) {
+        else if (p[0] === 'erros' && !resetExplicito) {
           const vistos = {}; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) vistos[i] = true; });
           c.l = { [id]: vistos }; if (v) { c.a[id] = v; c.o = { [id]: Object.assign({}, lidas, { [id]: true }) }; }
         } else { const atual = m.c[k]; if (atual) Object.keys(atual.a).forEach(i => { if (!atual.x[i]) c.x[i] = true; }); if (v) c.a[id] = v; }
         d.c[k] = c;
       } else d.r[k] = b[k] === undefined ? [d.n, id] : [d.n, id, b[k]];
-    }); return d;
+    });
+    // Uma correção pode ocultar erros sem removê-los. Zerar também cobre essas contribuições observadas.
+    if (resetExplicito) Object.entries(m.c).forEach(([k, atual]) => {
+      if (opCaminho(k)?.[0] !== 'erros') return;
+      const ids = Object.keys(atual.a).filter(i => !atual.x[i]);
+      if (!ids.length) return;
+      const c = d.c[k] || (d.c[k] = { a: {}, x: {} });
+      ids.forEach(i => { c.x[i] = true; });
+    });
+    return d;
   }
   function opCombinarEstados(a, b) { return opEstado(opUnir(opMeta(a), opMeta(b))); }
   // A projeção antiga pode conter dois aliases JSON da mesma origem. Não interpretá-los como uma edição nova.
@@ -2870,7 +2916,7 @@
         t = db.transaction(['contas', 'quarentena'], 'readwrite', { durability: 'strict' });
         const s = t.objectStore('contas'), q = s.get(id);
         q.onsuccess = () => {
-          if (!permitirCorrompido && q.result && !opValida(q.result.meta)) {
+          if (!permitirCorrompido && q.result && (!opValida(q.result.meta) || !opMarcadorNoEstadoValido(q.result.st))) {
             const texto = JSON.stringify(q.result); t.objectStore('quarentena').add({ conta: id, origem: 'checkpoint', texto });
             resultado = new Error('O progresso durável está ilegível. Nada foi substituído; exporte a cópia de recuperação.'); resultado.code = 'checkpoint-corrompido';
             if (id === identidade) { recuperar = texto; try { localStorage.setItem(chave(LS_REC), texto); } catch (e) { /* a transação preserva a quarentena */ } } return;
@@ -2902,11 +2948,19 @@
     }, true).catch(() => { if (id === identidade) { gravouLocal = false; syncInfo(); } });
     if (id === identidade) { recuperar = copia; setTimeout(() => { if (id === identidade) render(); }, 0); }
   }
+  function diarioValido(d) {
+    if (!d) return false;
+    if (d.delta) return opValida(d.delta);
+    if (d.st?.v !== 1) return false;
+    try { opValidarReset(d.st); opValidarReset(d.base); }
+    catch (e) { return false; }
+    return [d.st, d.base].every(st => !st?.cfg?._ops || opValida(st.cfg._ops));
+  }
   function lerDiariosDe(id) {
     const pre = chave(DIARIO_K, id) + '#', out = [];
     try { Object.keys(localStorage).filter(k => k.indexOf(pre) === 0).forEach(k => {
       const txt = localStorage.getItem(k); let d = null; try { d = JSON.parse(txt); } catch (e) { /* preservado abaixo */ }
-      if (!d || (!d.delta && (!d.st || d.st.v !== 1))) { quarentenar(txt, id, k); return; }
+      if (!diarioValido(d)) { quarentenar(txt, id, k); return; }
       out.push({ k, txt, d, tab: k.slice(pre.length) });
     }); } catch (e) { /* sem localStorage: IDB continua */ }
     return out;
@@ -2922,7 +2976,15 @@
         const db = o.result;
         if (novo || !db.objectStoreNames.contains('d')) { db.close(); resolve([]); return; }
         const t = db.transaction('d', 'readonly'), r = t.objectStore('d').openCursor(), out = [], pre = chave(DIARIO_K, id) + '#';
-        r.onsuccess = () => { const c = r.result; if (c) { if (String(c.key).indexOf(pre) === 0) { try { out.push({ k: c.key, txt: c.value, d: JSON.parse(c.value) }); } catch (e) { quarentenar(c.value, id, String(c.key)); } } c.continue(); } };
+        r.onsuccess = () => {
+          const c = r.result; if (!c) return;
+          if (String(c.key).indexOf(pre) === 0) {
+            let d; try { d = JSON.parse(c.value); } catch (e) { /* preservado abaixo */ }
+            if (diarioValido(d)) out.push({ k: c.key, txt: c.value, d });
+            else quarentenar(c.value, id, String(c.key));
+          }
+          c.continue();
+        };
         t.oncomplete = () => { db.close(); resolve(out); }; t.onerror = () => { db.close(); resolve([]); };
       };
     });
