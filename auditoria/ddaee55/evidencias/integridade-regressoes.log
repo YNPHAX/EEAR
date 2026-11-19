@@ -1,0 +1,140 @@
+{"contagem":{"sementes":512,"acoes":30720,"algebra":1536,"errosCausais":512,"canonicas":1024},"falhas":[{"propriedade":"idempotencia-canonica","seed":1,"minimo":["importar","importar","sincronizar"],"estados":[{"sims":2,"act":{"dia":2}},{"sims":1,"act":{"dia":2}}]},{"propriedade":"reset-canonico","seed":1,"minimo":["importar","zerar","importar","sincronizar"],"estados":[{"sims":1,"act":{}},{"sims":1,"act":{"dia":2}}]},{"propriedade":"reset-marcador-inseguro","seed":"0xC186008","minimo":["importar erros=2, certsZ=1e30","A: Zerar","B: errar uma vez sem observar A","sincronizar"],"estados":{"q":3}}]}
+CONTROLE NEGATIVO ORIGINAL c186-propriedades: REPRODUZIU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-properties-c186", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+⚠  It appears you are running in a CI environment. You can avoid downloading the Firestore Emulator repeatedly by caching the /workspace/audit-tools/emulators directory.
+i  firestore: downloading cloud-firestore-emulator-v1.22.0.jar...
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9350.
+i  Running script: node "/workspace/eear-audit/testes/c186-contraexemplos.test.js"
+Runtime publicado SHA256: 115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b
+✗ idempotencia-simulados-canonicos: {"esperado":1,"simuladosNuvem":2,"simuladosNovo":2,"simuladosRecuperados":2,"atividadeNuvem":2,"hashesApp":["f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61"],"simuladosCanonicos":[{"d":"2026-11-15","mat":"por","min":5,"prova":null,"r":{"por":[1,2]},"tipo":"materia"},{"d":"2026-11-15","mat":"por","min":5,"prova":null,"r":{"por":[1,2]},"tipo":"materia"}],"hashesTexto":["bec9f98e0e5a45b33d6ba40078bf7d91d4c4c08be1ec64600783e8402fcd0146","2d6e9e7c6a5afc55cb1e611f88c3f0020c49d25a494f3bda8087d67c3a741471"]}
+✗ reset-simulados-canonicos: {"esperado":0,"simuladosNuvem":1,"simuladosNovo":1,"simuladosRecuperados":1,"atividadeNuvem":0,"hashesApp":["f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61"],"simuladosCanonicos":[{"d":"2026-11-15","mat":"por","min":5,"prova":null,"r":{"por":[1,2]},"tipo":"materia"}],"hashesTexto":["bec9f98e0e5a45b33d6ba40078bf7d91d4c4c08be1ec64600783e8402fcd0146","2d6e9e7c6a5afc55cb1e611f88c3f0020c49d25a494f3bda8087d67c3a741471"]}
+✓ controle-reset-normal: {"marcador":0,"seguro":true,"avanca":true,"resetDepois":1795089313571,"esperado":1,"erroNuvem":1,"erroReaberto":1,"aviso":"Progresso salvo na sua conta."}
+✗ reset-marcador-inseguro: {"marcador":1e+30,"seguro":false,"avanca":false,"resetAntes":1e+30,"resetDepois":1e+30,"esperado":1,"erroNuvem":3,"erroReaberto":3,"aviso":"Progresso salvo na sua conta."}
+Contraexemplos: 3 falha(s), 0 de preparação.
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/testes/c186-contraexemplos.test.js"" exited with code 1
+
+CONTROLE NEGATIVO ORIGINAL c186-contraexemplos: REPRODUZIU
+Runtime publicado SHA256: 115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b
+✓ oncomplete-1: {"preservouUI":true,"preservouCheckpoint":true,"exportacao":1,"checkpoint":1,"reaberto":1,"reservas":0,"indicador":"<div class=\"sync\" id=\"sync\" data-local=\"confirmado\" data-nuvem=\"desligada\">Progresso salvo neste aparelho.</div>"}
+✗ oncomplete-2: {"preservouUI":false,"preservouCheckpoint":true,"exportacao":0,"checkpoint":1,"reaberto":1,"reservas":0,"indicador":"<div class=\"sync\" id=\"sync\" data-local=\"confirmado\" data-nuvem=\"desligada\">Progresso salvo neste aparelho.</div>"}
+CONTROLE NEGATIVO ORIGINAL crash-observacao: REPRODUZIU
+{"contagem":{"sementes":512,"acoes":30720,"algebra":1536,"errosCausais":512,"canonicas":1024},"falhas":[]}
+GATE IA07/IA08 integridade-propriedades: PASSOU
+✓ Migração de aliases e tombstones em ambas as ordens, multiplicidade/IDs/arrays preservados; reset explícito e limites numéricos.
+CONTROLE NEGATIVO SIM ORDEM c186008: reproduziu 2/0; candidato remove 0/0 com identidades persistidas.
+ID OPACO APÓS RESET: {"id":"{\"d\":\"2026-11-15\",\"tipo\":\"materia\",\"mat\":\"por\",\"r\":{\"por\":[1,2]},\"min\":5}#0","esperado":0,"estado":{"act":{},"aula":{},"erros":{},"feito":{},"mod":{},"v":1,"cfg":{"certs":[],"_ops":{"v":2,"n":1795089390501,"r":{"[\"sims\",\"id\",\"{\\\"d\\\":\\\"2026-11-15\\\",\\\"tipo\\\":\\\"materia\\\",\\\"mat\\\":\\\"por\\\",\\\"r\\\":{\\\"por\\\":[1,2]},\\\"min\\\":5}#0\"]":[1795089390501,"e:RESET-OPACO"],"[\"act\"]":[0,"legado",{}],"[\"aula\"]":[0,"legado",{}],"[\"cfg\",\"certs\"]":[0,"legado",{}],"[\"erros\"]":[0,"legado",{}],"[\"feito\"]":[0,"legado",{}],"[\"mod\"]":[0,"legado",{}],"[\"v\"]":[0,"legado",1],"[\"sims\"]":[1795089390501,"e:RESET-OPACO",{}]},"c":{},"s":{}}},"sims":[]}}
+GATE IA07/IA08 simulados-migracao: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-properties-c186", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9350.
+i  Running script: node "/workspace/eear-audit/testes/simulados-identidades.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Simulados fora de ordem não voltam; dois estudos reais idênticos contam 2/2; após Zerar/novo estudo/reimportar fica 1/1, inclusive após crash.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA07/IA08 simulados-identidades: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-properties-c186", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9350.
+i  Running script: node "/workspace/eear-audit/testes/integridade-simulados.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ idempotencia-simulados-canonicos: {"esperado":1,"simuladosNuvem":1,"simuladosNovo":1,"simuladosRecuperados":1,"atividadeNuvem":2,"hashesApp":["f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61"],"simuladosCanonicos":[{"_sid":"@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0","d":"2026-11-15","mat":"por","min":5,"prova":null,"r":{"por":[1,2]},"tipo":"materia"}],"hashesTexto":["bec9f98e0e5a45b33d6ba40078bf7d91d4c4c08be1ec64600783e8402fcd0146","2d6e9e7c6a5afc55cb1e611f88c3f0020c49d25a494f3bda8087d67c3a741471"]}
+✓ reset-simulados-canonicos: {"esperado":0,"simuladosNuvem":0,"simuladosNovo":0,"simuladosRecuperados":0,"atividadeNuvem":0,"hashesApp":["f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61"],"simuladosCanonicos":[],"hashesTexto":["bec9f98e0e5a45b33d6ba40078bf7d91d4c4c08be1ec64600783e8402fcd0146","2d6e9e7c6a5afc55cb1e611f88c3f0020c49d25a494f3bda8087d67c3a741471"]}
+✓ controle-reset-normal: {"marcador":0,"seguro":true,"avanca":true,"resetDepois":1795089484374,"esperado":1,"erroNuvem":1,"erroReaberto":1,"aviso":"Progresso salvo na sua conta."}
+✓ reset-data-limite-sem-incremento: {"marcador":253402300799999,"seguro":true,"avanca":true,"resetAntes":253402300799999,"resetDepois":253402300799999,"esperado":1,"erroNuvem":1,"erroReaberto":1,"aviso":"Progresso salvo na sua conta."}
+Contraexemplos: 0 falha(s), 0 de preparação.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA07/IA08 integridade-simulados: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-properties-c186", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9350.
+i  Running script: node "/workspace/eear-audit/testes/integridade-fluxos.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ seed=1 locks=true ações=17 A=5 B=0; abort/crash, ACK perdido, reset, Levar, reimportar e sessão preservados.
+✓ seed=2 locks=false ações=21 A=9 B=0; abort/crash, ACK perdido, reset, Levar, reimportar e sessão preservados.
+✓ seed=3 locks=true ações=21 A=9 B=0; abort/crash, ACK perdido, reset, Levar, reimportar e sessão preservados.
+✓ seed=4 locks=false ações=20 A=8 B=0; abort/crash, ACK perdido, reset, Levar, reimportar e sessão preservados.
+✓ seed=5 locks=true ações=21 A=9 B=0; abort/crash, ACK perdido, reset, Levar, reimportar e sessão preservados.
+✓ seed=6 locks=false ações=17 A=5 B=0; abort/crash, ACK perdido, reset, Levar, reimportar e sessão preservados.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA07/IA08 integridade-fluxos: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-properties-c186", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9350.
+i  Running script: node "/workspace/eear-audit/testes/integridade-dados.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ campos-e-ids-de-simulados
+✓ marcador-remoto
+✓ marcador-remoto-caminho-alternativo
+✓ zerar-erros-corrigidos
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA07/IA08 integridade-dados: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+DIAGNÓSTICO quarentena incompatível: 17 → 17
+✓ 14 marcadores/JSON inválidos e dois IDs reservados: recusa, cópia integral, checkpoint intacto e recuperação após crash; checkpoint antigo inseguro preservado.
+GATE IA07/IA08 reset-validacao: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Cache antigo inseguro/quota real: {"quarentenaAntes":1,"quarentenaReaberta":1,"originalNoBackup":true,"cacheOriginalMantido":false}
+GATE IA07/IA08 reset-cache-quota: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-properties-c186", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9350.
+i  Running script: node "/workspace/eear-audit/testes/simulados-upgrade.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Upgrade c186: 2→1 simulado, Zerar/reimportar→0; escritores v4/v5 403 sem alteração; atividade nova 1/1 após crash e em outro aparelho.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA07/IA08 simulados-upgrade: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ oncomplete-1: {"preservouUI":true,"preservouCheckpoint":true,"exportacao":1,"checkpoint":1,"reaberto":1,"reservas":0,"indicador":"<div class=\"sync\" id=\"sync\" data-local=\"confirmado\" data-nuvem=\"desligada\">Progresso salvo neste aparelho.</div>"}
+✓ oncomplete-2: {"preservouUI":true,"preservouCheckpoint":true,"exportacao":1,"checkpoint":1,"reaberto":1,"reservas":0,"indicador":"<div class=\"sync\" id=\"sync\" data-local=\"confirmado\" data-nuvem=\"desligada\">Progresso salvo neste aparelho.</div>"}
+GATE IA07/IA08 crash-observacao: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ POR15: cache sem certificado, UI/checkpoint com certificado exato; código/data/15 aulas sobrevivem ao crash. A leitura de localStorage não prova o checkpoint.
+GATE IA07/IA08 certificado-cache: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Dois Browser.crash sem Web Locks: recibo legado, Zerar, tombstones e atividade nova duráveis; reimportação bruta/identificada não duplica nem restaura.
+GATE IA07/IA08 importacoes-crash: PASSOU

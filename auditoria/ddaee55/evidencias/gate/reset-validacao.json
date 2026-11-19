@@ -1,0 +1,522 @@
+[
+  {
+    "literal": "-1",
+    "recusou": true,
+    "preservou": true,
+    "copias": 1
+  },
+  {
+    "literal": "0.5",
+    "recusou": true,
+    "preservou": true,
+    "copias": 2
+  },
+  {
+    "literal": "null",
+    "recusou": true,
+    "preservou": true,
+    "copias": 3
+  },
+  {
+    "literal": "1e30",
+    "recusou": true,
+    "preservou": true,
+    "copias": 4
+  },
+  {
+    "literal": "9007199254740991",
+    "recusou": true,
+    "preservou": true,
+    "copias": 5
+  },
+  {
+    "literal": "9007199254740992",
+    "recusou": true,
+    "preservou": true,
+    "copias": 6
+  },
+  {
+    "literal": "253402300800000",
+    "recusou": true,
+    "preservou": true,
+    "copias": 7
+  },
+  {
+    "literal": "\"123\"",
+    "recusou": true,
+    "preservou": true,
+    "copias": 8
+  },
+  {
+    "literal": "{}",
+    "recusou": true,
+    "preservou": true,
+    "copias": 9
+  },
+  {
+    "literal": "[]",
+    "recusou": true,
+    "preservou": true,
+    "copias": 10
+  },
+  {
+    "literal": "NaN",
+    "recusou": true,
+    "preservou": true,
+    "copias": 11
+  },
+  {
+    "literal": "Infinity",
+    "recusou": true,
+    "preservou": true,
+    "copias": 12
+  },
+  {
+    "literal": "-Infinity",
+    "recusou": true,
+    "preservou": true,
+    "copias": 13
+  },
+  {
+    "literal": "1e309",
+    "recusou": true,
+    "preservou": true,
+    "copias": 14
+  },
+  {
+    "campo": "id",
+    "recusou": true,
+    "preservou": true
+  },
+  {
+    "campo": "_sid",
+    "recusou": true,
+    "preservou": true
+  },
+  {
+    "checkpointAntigoPreservado": true,
+    "indicador": "O progresso não está sendo salvo neste aparelho. Mantenha esta aba aberta e exporte em Plano › Dados.",
+    "checkpoint": {
+      "gen": "o5ed7c793-21d4-4c8c-9e37-0f0e27e4fea5",
+      "meta": {
+        "v": 2,
+        "n": 1795089754095,
+        "r": {
+          "[\"act\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"ap\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"ativo\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"aula\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"cfg\",\"alvo\"]": [
+            1795089754095,
+            "e:i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+            "outra"
+          ],
+          "[\"cfg\",\"certs\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"cfg\",\"cv\"]": [
+            0,
+            "legado",
+            2
+          ],
+          "[\"cfg\",\"dias\"]": [
+            0,
+            "legado",
+            [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          ],
+          "[\"cfg\",\"excl\"]": [
+            0,
+            "legado",
+            []
+          ],
+          "[\"cfg\",\"horas\"]": [
+            0,
+            "legado",
+            3
+          ],
+          "[\"cfg\",\"inicio\"]": [
+            0,
+            "legado",
+            "2026-11-19"
+          ],
+          "[\"cfg\",\"modalidade\"]": [
+            0,
+            "legado",
+            "normal"
+          ],
+          "[\"cfg\",\"prova\"]": [
+            0,
+            "legado",
+            "2026-11-22"
+          ],
+          "[\"cfg\",\"simDia\"]": [
+            0,
+            "legado",
+            0
+          ],
+          "[\"cfg\",\"tempoSim\"]": [
+            0,
+            "legado",
+            260
+          ],
+          "[\"diag\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"erros\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"fc\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"feito\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"mod\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"sims\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"t\"]": [
+            1795089754095,
+            "e:i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+            1795089754094
+          ],
+          "[\"ult\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"ultAula\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"v\"]": [
+            0,
+            "legado",
+            1
+          ],
+          "[\"cfg\",\"nome\"]": [
+            1795089754095,
+            "e:i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+            "Validação Fictícia"
+          ],
+          "[\"cfg\",\"_importacoes\",\"c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682\"]": [
+            1795089754094,
+            "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+            true
+          ],
+          "[\"feito\",\"T:preservada\"]": [
+            0,
+            "z:i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+            true
+          ],
+          "[\"cfg\",\"certsZ\"]": [
+            0,
+            "legado",
+            1e+30
+          ]
+        },
+        "c": {
+          "[\"act\",\"2026-11-19\"]": {
+            "a": {
+              "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:0": 1,
+              "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:1": 1,
+              "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:2": 1,
+              "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:3": 1,
+              "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:4": 1
+            },
+            "x": {}
+          },
+          "[\"erros\",\"POR01-0\"]": {
+            "a": {
+              "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:0": 1,
+              "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:1": 1
+            },
+            "x": {},
+            "o": {
+              "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:0": {},
+              "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:1": {}
+            }
+          }
+        },
+        "s": {}
+      },
+      "legados": {},
+      "st": {
+        "v": 1,
+        "t": 1795089754094,
+        "cfg": {
+          "modalidade": "normal",
+          "alvo": "outra",
+          "prova": "2026-11-22",
+          "inicio": "2026-11-19",
+          "horas": 3,
+          "dias": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "simDia": 0,
+          "tempoSim": 260,
+          "excl": [],
+          "cv": 2,
+          "certs": [],
+          "nome": "Validação Fictícia",
+          "_importacoes": {
+            "c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682": true
+          },
+          "_ops": {
+            "v": 2,
+            "n": 1795089754095,
+            "r": {
+              "[\"act\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"ap\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"ativo\"]": [
+                0,
+                "legado",
+                null
+              ],
+              "[\"aula\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"alvo\"]": [
+                1795089754095,
+                "e:i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+                "outra"
+              ],
+              "[\"cfg\",\"certs\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"cv\"]": [
+                0,
+                "legado",
+                2
+              ],
+              "[\"cfg\",\"dias\"]": [
+                0,
+                "legado",
+                [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              ],
+              "[\"cfg\",\"excl\"]": [
+                0,
+                "legado",
+                []
+              ],
+              "[\"cfg\",\"horas\"]": [
+                0,
+                "legado",
+                3
+              ],
+              "[\"cfg\",\"inicio\"]": [
+                0,
+                "legado",
+                "2026-11-19"
+              ],
+              "[\"cfg\",\"modalidade\"]": [
+                0,
+                "legado",
+                "normal"
+              ],
+              "[\"cfg\",\"prova\"]": [
+                0,
+                "legado",
+                "2026-11-22"
+              ],
+              "[\"cfg\",\"simDia\"]": [
+                0,
+                "legado",
+                0
+              ],
+              "[\"cfg\",\"tempoSim\"]": [
+                0,
+                "legado",
+                260
+              ],
+              "[\"diag\"]": [
+                0,
+                "legado",
+                null
+              ],
+              "[\"erros\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"fc\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"feito\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"mod\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"sims\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"t\"]": [
+                1795089754095,
+                "e:i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+                1795089754094
+              ],
+              "[\"ult\"]": [
+                0,
+                "legado",
+                null
+              ],
+              "[\"ultAula\"]": [
+                0,
+                "legado",
+                null
+              ],
+              "[\"v\"]": [
+                0,
+                "legado",
+                1
+              ],
+              "[\"cfg\",\"nome\"]": [
+                1795089754095,
+                "e:i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+                "Validação Fictícia"
+              ],
+              "[\"cfg\",\"_importacoes\",\"c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682\"]": [
+                1795089754094,
+                "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+                true
+              ],
+              "[\"feito\",\"T:preservada\"]": [
+                0,
+                "z:i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682",
+                true
+              ],
+              "[\"cfg\",\"certsZ\"]": [
+                0,
+                "legado",
+                1e+30
+              ]
+            },
+            "c": {
+              "[\"act\",\"2026-11-19\"]": {
+                "a": {
+                  "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:0": 1,
+                  "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:1": 1,
+                  "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:2": 1,
+                  "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:3": 1,
+                  "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:4": 1
+                },
+                "x": {}
+              },
+              "[\"erros\",\"POR01-0\"]": {
+                "a": {
+                  "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:0": 1,
+                  "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:1": 1
+                },
+                "x": {},
+                "o": {
+                  "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:0": {},
+                  "i:c52b146db01103dc499f8ff65422a120fd1731a1bafc85ace13327961ccb0682:1": {}
+                }
+              }
+            },
+            "s": {}
+          },
+          "certsZ": 1e+30
+        },
+        "mod": {},
+        "fc": {},
+        "erros": {
+          "POR01-0": 2
+        },
+        "sims": [],
+        "diag": null,
+        "feito": {
+          "T:preservada": true
+        },
+        "act": {
+          "2026-11-19": 5
+        },
+        "ativo": null,
+        "ult": null,
+        "ap": {},
+        "aula": {},
+        "ultAula": null
+      },
+      "recibos": {
+        "e:o79c261c8-be77-4b7c-a141-a95a07dcecf8": true
+      },
+      "apagado": false
+    }
+  }
+]

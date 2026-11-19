@@ -1,0 +1,5502 @@
+[
+  {
+    "nome": "idempotencia-simulados-canonicos",
+    "seed": 1,
+    "passou": true,
+    "origemA": {
+      "v": 1,
+      "t": 0,
+      "cfg": {
+        "certs": [],
+        "nome": "Origem canônica fictícia"
+      },
+      "mod": {},
+      "aula": {},
+      "fc": {},
+      "ap": {},
+      "erros": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "feito": {},
+      "sims": [
+        {
+          "d": "2026-11-15",
+          "tipo": "materia",
+          "mat": "por",
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "min": 5
+        }
+      ]
+    },
+    "origemB": {
+      "ap": {},
+      "cfg": {
+        "certs": [],
+        "nome": "Origem canônica fictícia"
+      },
+      "act": {
+        "2026-11-19": 2
+      },
+      "aula": {},
+      "erros": {},
+      "t": 0,
+      "mod": {},
+      "feito": {},
+      "fc": {},
+      "sims": [
+        {
+          "min": 5,
+          "tipo": "materia",
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "d": "2026-11-15",
+          "prova": null,
+          "mat": "por"
+        }
+      ],
+      "v": 1
+    },
+    "aceitoA": {
+      "v": 1,
+      "t": 1795089469448,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089469449,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089469449,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089469448
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089469449,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089469447,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              0,
+              "z:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              {
+                "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {}
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [
+        {
+          "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+          "d": "2026-11-15",
+          "mat": "por",
+          "min": 5,
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "tipo": "materia"
+        }
+      ],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "aceitoB": {
+      "v": 1,
+      "t": 1795089469702,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089469703,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089469703,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089469702
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089469703,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089469701,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              0,
+              "z:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              {
+                "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {}
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [
+        {
+          "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+          "d": "2026-11-15",
+          "mat": "por",
+          "min": 5,
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "tipo": "materia"
+        }
+      ],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "antesReset": null,
+    "nuvem": {
+      "v": 1,
+      "t": 1795089469702,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089469703,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089469703,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089469702
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089469703,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089469701,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              0,
+              "z:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              {
+                "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {}
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [
+        {
+          "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+          "d": "2026-11-15",
+          "mat": "por",
+          "min": 5,
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "tipo": "materia"
+        }
+      ],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null,
+      "ep": "emwnhx67cdwpofi",
+      "lin": [
+        "gmwnhx67c4lz5r0",
+        "gmwnhx7rix7uhfk",
+        "gmwnhx7x604x9cx"
+      ],
+      "sinc": "3l373f.24g"
+    },
+    "novo": {
+      "v": 1,
+      "t": 1795089469702,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089469703,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089469703,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089469702
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089469703,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089469701,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              0,
+              "z:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              {
+                "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {}
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [
+        {
+          "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+          "d": "2026-11-15",
+          "mat": "por",
+          "min": 5,
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "tipo": "materia"
+        }
+      ],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "recuperado": {
+      "v": 1,
+      "t": 1795089469702,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089469703,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089469703,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089469702
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089469703,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089469701,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              0,
+              "z:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              {
+                "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {}
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [
+        {
+          "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+          "d": "2026-11-15",
+          "mat": "por",
+          "min": 5,
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "tipo": "materia"
+        }
+      ],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "sequencia": [
+      "A importar offline",
+      "B importar offline",
+      "A reconectar",
+      "B reconectar",
+      "reabrir/crash"
+    ],
+    "resumo": {
+      "esperado": 1,
+      "simuladosNuvem": 1,
+      "simuladosNovo": 1,
+      "simuladosRecuperados": 1,
+      "atividadeNuvem": 2,
+      "hashesApp": [
+        "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61"
+      ],
+      "simuladosCanonicos": [
+        {
+          "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+          "d": "2026-11-15",
+          "mat": "por",
+          "min": 5,
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "tipo": "materia"
+        }
+      ],
+      "hashesTexto": [
+        "bec9f98e0e5a45b33d6ba40078bf7d91d4c4c08be1ec64600783e8402fcd0146",
+        "2d6e9e7c6a5afc55cb1e611f88c3f0020c49d25a494f3bda8087d67c3a741471"
+      ]
+    }
+  },
+  {
+    "nome": "reset-simulados-canonicos",
+    "seed": 1,
+    "passou": true,
+    "origemA": {
+      "v": 1,
+      "t": 0,
+      "cfg": {
+        "certs": [],
+        "nome": "Origem canônica fictícia"
+      },
+      "mod": {},
+      "aula": {},
+      "fc": {},
+      "ap": {},
+      "erros": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "feito": {},
+      "sims": [
+        {
+          "d": "2026-11-15",
+          "tipo": "materia",
+          "mat": "por",
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "min": 5
+        }
+      ]
+    },
+    "origemB": {
+      "ap": {},
+      "cfg": {
+        "certs": [],
+        "nome": "Origem canônica fictícia"
+      },
+      "act": {
+        "2026-11-19": 2
+      },
+      "aula": {},
+      "erros": {},
+      "t": 0,
+      "mod": {},
+      "feito": {},
+      "fc": {},
+      "sims": [
+        {
+          "min": 5,
+          "tipo": "materia",
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "d": "2026-11-15",
+          "prova": null,
+          "mat": "por"
+        }
+      ],
+      "v": 1
+    },
+    "aceitoA": {
+      "v": 1,
+      "t": 1795089474677,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089474678,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089474678,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089474677
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089474678,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089474675,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              0,
+              "z:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              {
+                "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {}
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [
+        {
+          "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+          "d": "2026-11-15",
+          "mat": "por",
+          "min": 5,
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "tipo": "materia"
+        }
+      ],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "aceitoB": {
+      "v": 1,
+      "t": 1795089478070,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089478072,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089478072,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089478070
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089478072,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089478070,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              0,
+              "z:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              {
+                "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+                "d": "2026-11-15",
+                "mat": "por",
+                "min": 5,
+                "prova": null,
+                "r": {
+                  "por": [
+                    1,
+                    2
+                  ]
+                },
+                "tipo": "materia"
+              }
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {}
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [
+        {
+          "_sid": "@sim:v1:{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}#0",
+          "d": "2026-11-15",
+          "mat": "por",
+          "min": 5,
+          "prova": null,
+          "r": {
+            "por": [
+              1,
+              2
+            ]
+          },
+          "tipo": "materia"
+        }
+      ],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "antesReset": {
+      "v": 1,
+      "t": 1795089476319,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 1795089476319,
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089476320,
+          "r": {
+            "[\"act\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              1795089476319
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089474678,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089474675,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa"
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              1795089476319
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": true,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": true
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null,
+      "ep": "emwnhxaim110qsu",
+      "lin": [
+        "gmwnhxaimds9q17",
+        "gmwnhxciif8i6m7",
+        "gmwnhxds5nmr4hs"
+      ],
+      "sinc": "5obyhd.20y"
+    },
+    "nuvem": {
+      "v": 1,
+      "t": 1795089478070,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 1795089476319,
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089478072,
+          "r": {
+            "[\"act\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089478072,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089478070
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089478072,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089478070,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa"
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              1795089476319
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": true,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": true
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null,
+      "ep": "emwnhxaim110qsu",
+      "lin": [
+        "gmwnhxaimds9q17",
+        "gmwnhxciif8i6m7",
+        "gmwnhxds5nmr4hs",
+        "gmwnhxe4l37ypf5"
+      ],
+      "sinc": "k8uk8t.229"
+    },
+    "novo": {
+      "v": 1,
+      "t": 1795089478070,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 1795089476319,
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089478072,
+          "r": {
+            "[\"act\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089478072,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089478070
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089478072,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089478070,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa"
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              1795089476319
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": true,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": true
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "recuperado": {
+      "v": 1,
+      "t": 1795089478070,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 1795089476319,
+        "nome": "Origem canônica fictícia",
+        "_importacoes": {
+          "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089478072,
+          "r": {
+            "[\"act\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089478072,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              1795089478070
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089478072,
+              "e:i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              "Origem canônica fictícia"
+            ],
+            "[\"cfg\",\"_importacoes\",\"f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61\"]": [
+              1795089478070,
+              "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61",
+              true
+            ],
+            "[\"sims\",\"legado\",\"@sim:v1:{\\\"d\\\":\\\"2026-11-15\\\",\\\"mat\\\":\\\"por\\\",\\\"min\\\":5,\\\"prova\\\":null,\\\"r\\\":{\\\"por\\\":[1,2]},\\\"tipo\\\":\\\"materia\\\"}#0\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa"
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              1795089476320,
+              "e:oe9b1c226-94fe-4baf-8d2b-d5914557adfa",
+              1795089476319
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": 1,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": 1
+              },
+              "x": {
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:0": true,
+                "i:f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61:1": true
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "sequencia": [
+      "A importar",
+      "A Zerar confirmado",
+      "B importar offline",
+      "B reconectar",
+      "reabrir/crash"
+    ],
+    "resumo": {
+      "esperado": 0,
+      "simuladosNuvem": 0,
+      "simuladosNovo": 0,
+      "simuladosRecuperados": 0,
+      "atividadeNuvem": 0,
+      "hashesApp": [
+        "f8a0986fa3986626f17975bc73a949b47f25b82ec98b957b7cac4695d5dadc61"
+      ],
+      "simuladosCanonicos": [],
+      "hashesTexto": [
+        "bec9f98e0e5a45b33d6ba40078bf7d91d4c4c08be1ec64600783e8402fcd0146",
+        "2d6e9e7c6a5afc55cb1e611f88c3f0020c49d25a494f3bda8087d67c3a741471"
+      ]
+    }
+  },
+  {
+    "nome": "controle-reset-normal",
+    "seed": 1,
+    "passou": true,
+    "arquivo": {
+      "v": 1,
+      "cfg": {
+        "nome": "Marcador Fictício",
+        "certsZ": 0
+      },
+      "erros": {
+        "POR01-0": 2
+      },
+      "act": {
+        "2026-11-19": 2
+      }
+    },
+    "inicial": {
+      "v": 1,
+      "t": 1795089481700,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089481701,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089481701,
+              "e:i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              1795089481700
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089481701,
+              "e:i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8\"]": [
+              1795089481699,
+              "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              true
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1
+              },
+              "x": {}
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1
+              },
+              "x": {},
+              "o": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": {},
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 2
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null,
+      "ep": "emwnhxgllygfli1",
+      "lin": [
+        "gmwnhxgll21ntor",
+        "gmwnhxhwf2wxwcw"
+      ],
+      "sinc": "14kphuw.1ub"
+    },
+    "zerado": {
+      "v": 1,
+      "t": 1795089484374,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 1795089484374,
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089484375,
+          "r": {
+            "[\"act\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              1795089484374
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089481701,
+              "e:i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8\"]": [
+              1795089481699,
+              "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              true
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              1795089484374
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1
+              },
+              "x": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": true,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": true
+              }
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1
+              },
+              "x": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": true,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": true
+              },
+              "o": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": {},
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null,
+      "ep": "emwnhxgllygfli1",
+      "lin": [
+        "gmwnhxgll21ntor",
+        "gmwnhxhwf2wxwcw",
+        "gmwnhxjzdnxmyb5"
+      ],
+      "sinc": "z685p5.27h"
+    },
+    "aceito": {
+      "v": 1,
+      "t": 1795089486001,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089486003,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089486003,
+              "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1",
+              1795089486001
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089481701,
+              "e:i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8\"]": [
+              1795089481699,
+              "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              true
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1
+              },
+              "x": {}
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1,
+                "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1": 1
+              },
+              "x": {},
+              "o": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": {},
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": {},
+                "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 3
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "aposCrash": {
+      "v": 1,
+      "t": 1795089486001,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089486003,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089486003,
+              "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1",
+              1795089486001
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089481701,
+              "e:i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8\"]": [
+              1795089481699,
+              "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              true
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1
+              },
+              "x": {}
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1,
+                "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1": 1
+              },
+              "x": {},
+              "o": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": {},
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": {},
+                "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 3
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "nuvem": {
+      "v": 1,
+      "t": 1795089486001,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 1795089484374,
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089486003,
+          "r": {
+            "[\"act\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089486003,
+              "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1",
+              1795089486001
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089481701,
+              "e:i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8\"]": [
+              1795089481699,
+              "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              true
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              1795089484374
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1
+              },
+              "x": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": true,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": true
+              }
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1,
+                "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1": 1
+              },
+              "x": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": true,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": true
+              },
+              "o": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": {},
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": {},
+                "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 1
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null,
+      "ep": "emwnhxgllygfli1",
+      "lin": [
+        "gmwnhxgll21ntor",
+        "gmwnhxhwf2wxwcw",
+        "gmwnhxjzdnxmyb5",
+        "gmwnhxl3zg12zkx"
+      ],
+      "sinc": "smu1zy.2ar"
+    },
+    "reaberto": {
+      "v": 1,
+      "t": 1795089486001,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 1795089484374,
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089486003,
+          "r": {
+            "[\"act\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089486003,
+              "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1",
+              1795089486001
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089481701,
+              "e:i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8\"]": [
+              1795089481699,
+              "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8",
+              true
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              1795089484375,
+              "e:odd4ec32d-e7b6-4321-a7a3-f2a389ab23af",
+              1795089484374
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1
+              },
+              "x": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": true,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": true
+              }
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": 1,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": 1,
+                "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1": 1
+              },
+              "x": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": true,
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": true
+              },
+              "o": {
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:0": {},
+                "i:ad5d617d7dd17cbd766130b589f7e3490399e98d8be3476eb604e9ae7ec12ce8:1": {},
+                "e:o2c12f041-4185-4e8b-8962-57b05f2ddad1": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 1
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "sequencia": [
+      "importar erros=2",
+      "A Zerar",
+      "B errar uma vez offline",
+      "crash e reabrir B",
+      "B reconectar"
+    ],
+    "resumo": {
+      "marcador": 0,
+      "seguro": true,
+      "avanca": true,
+      "resetDepois": 1795089484374,
+      "esperado": 1,
+      "erroNuvem": 1,
+      "erroReaberto": 1,
+      "aviso": "Progresso salvo na sua conta."
+    }
+  },
+  {
+    "nome": "reset-data-limite-sem-incremento",
+    "seed": 1,
+    "passou": true,
+    "arquivo": {
+      "v": 1,
+      "cfg": {
+        "nome": "Marcador Fictício",
+        "certsZ": 253402300799999
+      },
+      "erros": {
+        "POR01-0": 2
+      },
+      "act": {
+        "2026-11-19": 2
+      }
+    },
+    "inicial": {
+      "v": 1,
+      "t": 1795089489356,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 253402300799999,
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089489357,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089489357,
+              "e:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              1795089489356
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089489357,
+              "e:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6\"]": [
+              1795089489353,
+              "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              true
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              0,
+              "z:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              253402300799999
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1
+              },
+              "x": {}
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1
+              },
+              "x": {},
+              "o": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": {},
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 2
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null,
+      "ep": "emwnhxmh6dx26sb",
+      "lin": [
+        "gmwnhxmh6cer6g3",
+        "gmwnhxnucs32pxy"
+      ],
+      "sinc": "1qf1s8o.1y6"
+    },
+    "zerado": {
+      "v": 1,
+      "t": 1795089492083,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 253402300799999,
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089492084,
+          "r": {
+            "[\"act\"]": [
+              1795089492084,
+              "e:oa9238406-b364-4486-92ce-d31cea57be83",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              1795089492084,
+              "e:oa9238406-b364-4486-92ce-d31cea57be83",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089492084,
+              "e:oa9238406-b364-4486-92ce-d31cea57be83",
+              1795089492083
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089489357,
+              "e:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6\"]": [
+              1795089489353,
+              "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              true
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              0,
+              "z:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              253402300799999
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1
+              },
+              "x": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": true,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": true
+              }
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1
+              },
+              "x": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": true,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": true
+              },
+              "o": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": {},
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {},
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null,
+      "ep": "emwnhxmh6dx26sb",
+      "lin": [
+        "gmwnhxmh6cer6g3",
+        "gmwnhxnucs32pxy",
+        "gmwnhxpx4tg8czx"
+      ],
+      "sinc": "u6yr0s.282"
+    },
+    "aceito": {
+      "v": 1,
+      "t": 1795089493780,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 253402300799999,
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089493781,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089493781,
+              "e:oe16f4428-77cd-43d4-bd8f-643b395d9817",
+              1795089493780
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089489357,
+              "e:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6\"]": [
+              1795089489353,
+              "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              true
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              0,
+              "z:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              253402300799999
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1
+              },
+              "x": {}
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1,
+                "e:oe16f4428-77cd-43d4-bd8f-643b395d9817": 1
+              },
+              "x": {},
+              "o": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": {},
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": {},
+                "e:oe16f4428-77cd-43d4-bd8f-643b395d9817": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 3
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "aposCrash": {
+      "v": 1,
+      "t": 1795089493780,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 253402300799999,
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089493781,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089493781,
+              "e:oe16f4428-77cd-43d4-bd8f-643b395d9817",
+              1795089493780
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089489357,
+              "e:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6\"]": [
+              1795089489353,
+              "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              true
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              0,
+              "z:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              253402300799999
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1
+              },
+              "x": {}
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1,
+                "e:oe16f4428-77cd-43d4-bd8f-643b395d9817": 1
+              },
+              "x": {},
+              "o": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": {},
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": {},
+                "e:oe16f4428-77cd-43d4-bd8f-643b395d9817": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 3
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {
+        "2026-11-19": 2
+      },
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "nuvem": {
+      "v": 1,
+      "t": 1795089493780,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 253402300799999,
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089493781,
+          "r": {
+            "[\"act\"]": [
+              1795089492084,
+              "e:oa9238406-b364-4486-92ce-d31cea57be83",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              1795089492084,
+              "e:oa9238406-b364-4486-92ce-d31cea57be83",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089493781,
+              "e:oe16f4428-77cd-43d4-bd8f-643b395d9817",
+              1795089493780
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089489357,
+              "e:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6\"]": [
+              1795089489353,
+              "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              true
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              0,
+              "z:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              253402300799999
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1
+              },
+              "x": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": true,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": true
+              }
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1,
+                "e:oe16f4428-77cd-43d4-bd8f-643b395d9817": 1
+              },
+              "x": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": true,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": true
+              },
+              "o": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": {},
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": {},
+                "e:oe16f4428-77cd-43d4-bd8f-643b395d9817": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 1
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null,
+      "ep": "emwnhxmh6dx26sb",
+      "lin": [
+        "gmwnhxmh6cer6g3",
+        "gmwnhxnucs32pxy",
+        "gmwnhxpx4tg8czx",
+        "gmwnhxrk4781kw0"
+      ],
+      "sinc": "sgw6a0.2bc"
+    },
+    "reaberto": {
+      "v": 1,
+      "t": 1795089493780,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "certsZ": 253402300799999,
+        "nome": "Marcador Fictício",
+        "_importacoes": {
+          "bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089493781,
+          "r": {
+            "[\"act\"]": [
+              1795089492084,
+              "e:oa9238406-b364-4486-92ce-d31cea57be83",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              0,
+              "legado",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              1795089492084,
+              "e:oa9238406-b364-4486-92ce-d31cea57be83",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089493781,
+              "e:oe16f4428-77cd-43d4-bd8f-643b395d9817",
+              1795089493780
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089489357,
+              "e:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              "Marcador Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6\"]": [
+              1795089489353,
+              "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              true
+            ],
+            "[\"cfg\",\"certsZ\"]": [
+              0,
+              "z:i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6",
+              253402300799999
+            ]
+          },
+          "c": {
+            "[\"act\",\"2026-11-19\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1
+              },
+              "x": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": true,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": true
+              }
+            },
+            "[\"erros\",\"POR01-0\"]": {
+              "a": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": 1,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": 1,
+                "e:oe16f4428-77cd-43d4-bd8f-643b395d9817": 1
+              },
+              "x": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": true,
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": true
+              },
+              "o": {
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:0": {},
+                "i:bc865b9ca2e137cc63e544beefdac05a6c1948b4fbf88f4ad2cc103d493494e6:1": {},
+                "e:oe16f4428-77cd-43d4-bd8f-643b395d9817": {}
+              }
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {},
+      "fc": {},
+      "erros": {
+        "POR01-0": 1
+      },
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "sequencia": [
+      "importar erros=2",
+      "A Zerar",
+      "B errar uma vez offline",
+      "crash e reabrir B",
+      "B reconectar"
+    ],
+    "resumo": {
+      "marcador": 253402300799999,
+      "seguro": true,
+      "avanca": true,
+      "resetAntes": 253402300799999,
+      "resetDepois": 253402300799999,
+      "esperado": 1,
+      "erroNuvem": 1,
+      "erroReaberto": 1,
+      "aviso": "Progresso salvo na sua conta."
+    }
+  }
+]

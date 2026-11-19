@@ -1,0 +1,17 @@
+{
+  "name": "auditor-tombstone",
+  "cmd": [
+    "node",
+    "auditoria/ddaee55/teste-tombstone.js"
+  ],
+  "cwd": "/workspace/eear-audit",
+  "env": {
+    "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+  },
+  "exit": 1,
+  "expected": 1,
+  "seconds": 37.67,
+  "utc": "2026-11-19T12:05:06.665478+00:00",
+  "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+}

@@ -1,0 +1,261 @@
+F01: alvo /workspace/eear-audit, commit ddaee558fde26e437696f7b17862b3df1ee7353f
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-audit/testes/f01-abas.test.js"
+F01: alvo /workspace/eear-audit, commit ddaee558fde26e437696f7b17862b3df1ee7353f
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ dispositivos: {"aceitoA":["T:A","T:base","T:remover"],"aceitoB":["T:B","T:base","T:remover"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ fechar-A: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ fechar-B: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ desmarcar: {"aceitoA":["T:B","T:base"],"aceitoB":["T:B","T:base"],"offline":true,"servidor":true,"paginas":[true]}
+✓ zerar: {"aceitoA":["T:depois-zerar"],"aceitoB":["T:depois-zerar"],"offline":true,"servidor":true,"paginas":[true]}
+✓ certificado: {"aceitoA":["T:B","T:base","T:remover"],"aceitoB":["T:B","T:base","T:remover"],"offline":true,"servidor":true,"paginas":[true]}
+✓ reconectar: {"aceitoA":["T:A","T:B","T:base","T:remover"],"aceitoB":["T:A","T:B","T:base","T:remover"],"offline":null,"servidor":true,"paginas":[true,true]}
+✓ zerar-duplo: {"aceitoA":["T:A","T:B"],"aceitoB":["T:A","T:B"],"offline":true,"servidor":true,"paginas":[true]}
+F01: 8/8 cenários passaram; 0 falha(s). Parecer não alterado automaticamente.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE f01-abas: PASSOU
+Noturna: alvo ddaee558fde26e437696f7b17862b3df1ee7353f
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-audit/testes/noturna-integridade.test.js"
+Noturna: alvo ddaee558fde26e437696f7b17862b3df1ee7353f
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ sair-apagar: {"dadosAntes":2,"dadosDepois":[],"aposReabrir":0,"residuosIDB":[],"servidorExiste":true,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem."}
+✓ excluir-conta: {"dadosAntes":2,"dadosDepois":[],"aposReabrir":0,"residuosIDB":[],"servidorExiste":false,"mensagem":"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos."}
+✓ outra-sessao: {"aceitoOffline":true,"documentoApagado":true,"novoLoginHTTP":400,"outraSessaoAindaConectada":true,"documentoRecriado":false,"nomeRecriado":false,"feito":null}
+✓ diario-corrompido: {"preservadoExato":true,"original":true,"backup":true,"restantes":1,"avisoRecuperacao":0}
+✓ diario-futuro: {"preservadoExato":true,"original":true,"backup":true,"restantes":1,"avisoRecuperacao":1}
+✓ atividade-dispositivos: {"aceitos":{"A":3,"B":3,"simuladosA":0,"simuladosB":0,"registrosIguais":true,"idsDistintos":null},"convergiu":true,"retomou":true,"gravouCache":true,"duravelOffline":true,"esperadoAtividade":4,"atividadeServidor":4,"simuladosServidor":0,"atividadeReaberto":4,"simuladosReaberto":0,"feito":{"T:A-independente":true,"T:B-independente":true,"T:base":true}}
+✓ simulados-iguais: {"aceitos":{"A":3,"B":3,"simuladosA":1,"simuladosB":1,"registrosIguais":false,"idsDistintos":true},"convergiu":true,"retomou":true,"gravouCache":true,"duravelOffline":true,"esperadoAtividade":4,"atividadeServidor":4,"simuladosServidor":2,"atividadeReaberto":4,"simuladosReaberto":2,"feito":{"T:base":true}}
+Noturna: 0 falha(s) em 7 cenários.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE noturna-integridade: PASSOU
+Falhas noturnas: alvo ddaee558fde26e437696f7b17862b3df1ee7353f
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-audit/testes/noturna-falhas.test.js"
+Falhas noturnas: alvo ddaee558fde26e437696f7b17862b3df1ee7353f
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ quota-real: {"quota":{"caracteres":5239113,"negou":true},"aceitaNaUI":true,"principal":false,"diario":false,"aviso":"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.","alertas":[],"avisou":false,"recuperou":true}
+✓ seis-abas: {"abas":6,"alteracoes":150,"esperado":152,"atividade":152,"marcacoes":150,"convergiu":true,"reabriu":true,"chegou":true,"duracaoMs":6260}
+✓ lider-pausada: {"local":true,"principal":true,"diario":false,"enviouPausada":true,"enviouRetorno":true,"aviso":"Progresso salvo na sua conta.","lider":"A"}
+✓ indexeddb-indisponivel: {"sessaoPersistiuSemIndexedDB":true,"progresso":{"T:base":true,"T:sem-idb":true},"chegou":true}
+Falhas noturnas: 0 falha(s) em 4 cenários.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE noturna-falhas: PASSOU
+Segurança noturna: alvo ddaee558fde26e437696f7b17862b3df1ee7353f
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-audit/testes/noturna-seguranca.test.js"
+Segurança noturna: alvo ddaee558fde26e437696f7b17862b3df1ee7353f
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ regras: {"resultados":[{"caso":"próprio get","esperado":200,"observado":200},{"caso":"outro UID get","esperado":403,"observado":403},{"caso":"sem autenticação","esperado":403,"observado":403},{"caso":"listagem","esperado":403,"observado":403},{"caso":"subcoleção","esperado":403,"observado":403},{"caso":"query só do UID próprio continua list","esperado":403,"observado":403},{"caso":"agregação count","esperado":403,"observado":403},{"caso":"batch misto próprio/outro UID","esperado":403,"observado":403}],"batchAtomicoPreservouProprio":true}
+✓ dias: {"campo":"dias","tipoInvalido":"null","erros":[],"acessoDados":1,"tipoPersistido":"object","corpoCaracteres":5199}
+✓ excl: {"campo":"excl","tipoInvalido":"objeto","erros":[],"acessoDados":1,"tipoPersistido":"object","corpoCaracteres":5199}
+✓ nome: {"campo":"nome","tipoInvalido":"objeto","erros":[],"acessoDados":1,"tipoPersistido":"string","corpoCaracteres":5199}
+Segurança noturna: 0 falha(s) em 4 cenários.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE noturna-seguranca: PASSOU
+Confirmação noturna: alvo ddaee558fde26e437696f7b17862b3df1ee7353f
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-audit/testes/noturna-confirmacao.test.js"
+Confirmação noturna: alvo ddaee558fde26e437696f7b17862b3df1ee7353f
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/f01-fixture.js:29:18)
+    at /workspace/eear-audit/testes/noturna-confirmacao.test.js:9:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/noturna-confirmacao.test.js:51:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-site-XXXXXX'
+}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/testes/noturna-confirmacao.test.js"" exited with code 1
+GATE noturna-confirmacao: FALHOU
+Durável independente: alvo ddaee558fde26e437696f7b17862b3df1ee7353f
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/f01-fixture.js:17:18)
+    at /workspace/eear-audit/testes/duravel-candidato.test.js:30:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/duravel-candidato.test.js:87:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-emu-XXXXXX'
+}
+GATE duravel-candidato: FALHOU
+FALHA DE PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/f01-fixture.js:17:18)
+    at /workspace/eear-audit/testes/operacoes-interrupcao.test.js:5:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/operacoes-interrupcao.test.js:19:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-emu-XXXXXX'
+}
+GATE operacoes-interrupcao: FALHOU
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/f01-fixture.js:17:18)
+    at /workspace/eear-audit/testes/operacoes-suspensas.test.js:7:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/operacoes-suspensas.test.js:50:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-emu-XXXXXX'
+}
+GATE operacoes-suspensas: FALHOU
+FALHA DE PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/f01-fixture.js:17:18)
+    at /workspace/eear-audit/testes/operacoes-falhas.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/operacoes-falhas.test.js:47:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-emu-XXXXXX'
+}
+GATE operacoes-falhas: FALHOU
+FALHA DE PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/f01-fixture.js:17:18)
+    at /workspace/eear-audit/testes/operacoes-recuperacao.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/operacoes-recuperacao.test.js:69:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-emu-XXXXXX'
+}
+GATE operacoes-recuperacao: FALHOU
+FALHA DE PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/f01-fixture.js:17:18)
+    at /workspace/eear-audit/testes/operacoes-exclusao-concorrente.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/operacoes-exclusao-concorrente.test.js:34:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-emu-XXXXXX'
+}
+GATE operacoes-exclusao-concorrente: FALHOU
+FALHA DE PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/f01-fixture.js:17:18)
+    at /workspace/eear-audit/testes/operacoes-cache-exclusao.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/operacoes-cache-exclusao.test.js:36:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-emu-XXXXXX'
+}
+GATE operacoes-cache-exclusao: FALHOU
+FALHA DE PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/f01-fixture.js:29:18)
+    at /workspace/eear-audit/testes/quarentena-exclusao.test.js:6:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/quarentena-exclusao.test.js:33:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-site-XXXXXX'
+}
+GATE quarentena-exclusao: FALHOU

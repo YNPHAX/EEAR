@@ -1,0 +1,217 @@
+
+== dados do curso
+  ✓ 69 aulas, sem id repetido
+  ✓ toda aula tem matéria, título e teoria; toda questão tem 4 alternativas, gabarito válido e comentário
+  ✓ todo flashcard tem frente e verso, versão opcional válida e só HTML simples
+  ✓ nenhuma questão tem duas alternativas iguais ou com o mesmo valor
+  ✓ todo enunciado que fala em termo "destacado" tem o destaque marcado
+  ✓ CFS 2/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ CFS 1/2025: 96 questões, cada uma com imagem e aula do curso
+  ✓ modalidade normal tem aulas de Inglês
+  ✓ modalidade bct tem aulas de Inglês
+  ✓ só as 67 aulas anteriores ao registro de certificados ficam sem "desde" (novas: POR15, FIS18)
+  ✓ questões oficiais de física moderna ligadas à aula FIS18 (3 de 3)
+  ✓ curso/app.js igual à montagem dos 23 arquivos de curso/app/
+PLATAFORMA OFICIAL: armazenamento e UI locais. Firebase é validado separadamente nos emuladores. Histórico: node testes/historicos-legado.test.js (incompatibilidade conhecida; não executado neste comando).
+
+== contas dos flashcards de Matemática (recalculadas)
+  ✓ 63 cartões de Matemática: a conta recalculada confere com o verso
+  ✓ Matemática: 155 cartões, 88 na versão 2 e 67 sem versão
+
+== contas dos flashcards de Física (recalculadas)
+  ✓ 48 cartões de Física: a conta recalculada confere com o verso
+  ✓ Física: 157 cartões, 84 na versão 2 e 73 sem versão
+
+== simulado completo no tempo do edital (4h20)
+  ✓ aluno novo: simulado completo em 4h20
+  ✓ progresso antigo com o padrão de 4h passa a mostrar 4h20
+  ✓ e nada do progresso (notas, cartões, erros, simulados, atividade) muda
+  ✓ sem erro de JavaScript
+  ✓ quem escolheu 4h depois da mudança continua com 4h
+
+== quiz com a quantidade real de questões
+  ✓ plano mostra "meta de 4 acertos em 5" para a aula com 5 questões
+  ✓ e não promete 10 questões
+  ✓ sem erro de JavaScript
+
+== modalidade de Inglês (edital: básico x BCT)
+  ✓ normal: trilha de Inglês com 13 aulas
+  ✓ normal: notas das aulas da outra modalidade continuam guardadas
+  ✓ normal: sem erro de JavaScript
+  ✓ bct: trilha de Inglês com 15 aulas
+  ✓ bct: notas das aulas da outra modalidade continuam guardadas
+  ✓ bct: sem erro de JavaScript
+
+== aulas novas (Física 5.8 do edital e tipos de discurso)
+  ✓ FIS18: trilha da matéria com 18 aulas
+  ✓ FIS18: a aula abre pela trilha
+  ✓ FIS18: quiz com 14 questões
+  ✓ FIS18: notas, cartões, erros, simulados e atividade intactos; "continuar" aponta para a aula; sem erro de JavaScript
+  ✓ POR15: trilha da matéria com 15 aulas
+  ✓ POR15: a aula abre pela trilha
+  ✓ POR15: quiz com 10 questões
+  ✓ POR15: notas, cartões, erros, simulados e atividade intactos; "continuar" aponta para a aula; sem erro de JavaScript
+
+== certificados conquistados antes das aulas novas (FIS18 e POR15)
+  ✓ certificado antigo de Física aparece como conquistado depois da aula nova
+  ✓ certificado antigo de Física com as aulas, a carga horária, a data e o código originais
+  ✓ certificado antigo de Português com as aulas, a carga horária, a data e o código originais
+  ✓ abrir o curso e ver os certificados sem estudar não grava nada
+  ✓ quiz da FIS18 concluído pela tela
+  ✓ registro gravado do certificado antigo: 17 aulas, 46 h, data e código originais
+  ✓ certificado novo de Física exige as 18 aulas (49 h)
+  ✓ notas, cartões, erros e simulados antigos intactos depois de estudar
+  ✓ Física liberada com as aulas atuais e o certificado de 17 aulas ainda na lista
+  ✓ o certificado antigo continua abrindo para reimprimir
+  ✓ sem erro de JavaScript
+  ✓ sem todas as aulas antigas, nenhum certificado antigo de Física
+  ✓ quiz da FIS17 concluído depois da atualização
+  ✓ completar a FIS17 depois da atualização não dá o certificado antigo: falta a FIS18
+  ✓ o certificado antigo de Português do mesmo aluno continua
+  ✓ nota de 80% sem a data de conclusão não basta para o certificado antigo
+  ✓ progresso que já tinha a FIS18 não ganha o certificado antigo de Física
+  ✓ aluno novo com as aulas antigas não tem certificado: faltam FIS18 e POR15
+  ✓ quiz da POR15 concluído pela tela
+  ✓ concluindo a POR15, sai o certificado de Português com 15 aulas
+  ✓ certificado de Inglês (CFS normal) registrado
+  ✓ depois de trocar para o BCT, o registro do certificado normal continua gravado
+  ✓ no BCT, o certificado de Inglês do CFS normal continua aberto para reimprimir
+  ✓ colar outro progresso troca as notas, mas mantém os certificados conquistados
+  ✓ colar um progresso com os mesmos certificados não duplica nenhum
+  ✓ zerar progresso apaga os certificados registrados e marca quando foi zerado
+  ✓ depois de zerar, abrir de novo não recria certificado antigo
+
+== histórico de simulados vindo de outra versão
+  ✓ matéria desconhecida no histórico não quebra a aba Simulados
+
+== versão dos flashcards (cópia do site com os 7 cartões da POR02 na versão 2)
+  ✓ America/Sao_Paulo: sem versão nos dados, nenhum cartão dominado volta antes da hora
+  ✓ America/Sao_Paulo: abrir com cartões em versão nova não altera o progresso gravado
+  ✓ America/Sao_Paulo: no 1º dia voltam só os cartões de desvio 0 (1 de 7)
+  ✓ America/Sao_Paulo: sem estudar, 3 dias depois, ainda voltam 1 (a âncora só fica quando o aluno estuda)
+  ✓ America/Sao_Paulo: ao estudar, a âncora fica no dia local 2026-11-30
+  ✓ America/Sao_Paulo: acerto na versão nova vai para a caixa 3 (volta em 7 dias) e registra a versão vista
+  ✓ America/Sao_Paulo: os cartões ainda não revistos mantêm o histórico intacto
+  ✓ America/Sao_Paulo: os demais voltam distribuídos até o 6º dia (1, 3, 4, 5, 6, 6, 7; esperado 1, 3, 4, 5, 6, 6, 7)
+  ✓ America/Sao_Paulo: depois de revistos, no dia seguinte só vencem os cartões já agendados (1); nenhum se repete fora da data
+  ✓ America/Sao_Paulo: cartão regravado por uma versão antiga do app volta para a revisão da versão nova
+  ✓ America/Sao_Paulo: um cartão que já venceria antes do espalhamento continua vencendo na data original
+  ✓ Asia/Tokyo: sem versão nos dados, nenhum cartão dominado volta antes da hora
+  ✓ Asia/Tokyo: abrir com cartões em versão nova não altera o progresso gravado
+  ✓ Asia/Tokyo: no 1º dia voltam só os cartões de desvio 0 (1 de 7)
+  ✓ Asia/Tokyo: sem estudar, 3 dias depois, ainda voltam 1 (a âncora só fica quando o aluno estuda)
+  ✓ Asia/Tokyo: ao estudar, a âncora fica no dia local 2026-12-01
+  ✓ Asia/Tokyo: acerto na versão nova vai para a caixa 3 (volta em 7 dias) e registra a versão vista
+  ✓ Asia/Tokyo: os cartões ainda não revistos mantêm o histórico intacto
+  ✓ Asia/Tokyo: os demais voltam distribuídos até o 6º dia (1, 3, 4, 5, 6, 6, 7; esperado 1, 3, 4, 5, 6, 6, 7)
+  ✓ Asia/Tokyo: depois de revistos, no dia seguinte só vencem os cartões já agendados (1); nenhum se repete fora da data
+  ✓ Asia/Tokyo: cartão regravado por uma versão antiga do app volta para a revisão da versão nova
+  ✓ Asia/Tokyo: um cartão que já venceria antes do espalhamento continua vencendo na data original
+  ✓ colar progresso leva cartões, versões vistas e âncora
+  ✓ o aparelho que recebeu o progresso mostra os mesmos cartões vencidos que o original
+  ✓ zerar progresso apaga cartões, versões vistas e âncoras
+  ✓ Português: 117 cartões, 100 na versão 2 e 17 sem versão (100/17)
+  ✓ Português: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (19 de 100)
+  ✓ Português: no 1º dia só voltam cartões reformulados, e o acerto os agenda para 7 dias
+  ✓ Português: os 17 cartões mantidos e o registro das aulas ficam intactos
+  ✓ Português: os outros reformulados voltam distribuídos até o 6º dia (16, 30, 45, 56, 70, 81)
+  ✓ Português: cada reformulado volta uma única vez; no 7º dia só vencem os 19 agendados
+  ✓ Inglês: 113 cartões, 87 na versão 2 (86 do Lote 2 e ING14~5) e 26 sem versão
+  ✓ Inglês normal: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (9 de 67)
+  ✓ Inglês normal: sem estudar, a fila não cresce sozinha (9, 9, 9, 9, 9, 9)
+  ✓ Inglês normal: no 1º dia só aparecem cartões de aulas da modalidade
+  ✓ Inglês normal: cartões da outra modalidade e os mantidos ficam intactos
+  ✓ Inglês normal: até o 6º dia voltam todos os demais reformulados da modalidade (58)
+  ✓ Inglês bct: abrir não altera o progresso antigo e devolve só os reformulados da modalidade de desvio 0 (11 de 83)
+  ✓ Inglês bct: sem estudar, a fila não cresce sozinha (11, 11, 11, 11, 11, 11)
+  ✓ Inglês bct: no 1º dia só aparecem cartões de aulas da modalidade
+  ✓ Inglês bct: cartões da outra modalidade e os mantidos ficam intactos
+  ✓ Inglês bct: até o 6º dia voltam todos os demais reformulados da modalidade (72)
+  ✓ Matemática: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (14 de 88)
+  ✓ Matemática: no 1º dia só voltam reformulados; os 67 mantidos ficam intactos
+  ✓ Matemática: até o 6º dia voltam os demais reformulados (74)
+  ✓ Física: abrir não altera o progresso antigo e devolve só os reformulados de desvio 0 (14 de 84)
+  ✓ Física: no 1º dia só voltam reformulados; os 73 mantidos ficam intactos
+  ✓ Física: até o 6º dia voltam os demais reformulados (70)
+
+== flashcards no celular (simulação: toque pelas coordenadas, sem rolagem automática)
+  ✓ 320×568 (todas as matérias): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 320×568 (todas as matérias): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 320×568 (todas as matérias): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 320×568 (todas as matérias): os 518 cartões aparecem com frente e verso completos, iguais aos dados (518 conferidos, 519 telas com o repetido)
+  ✓ 320×568 (todas as matérias): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+  ✓ 360×640 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 360×640 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 360×640 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 360×640 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+  ✓ 360×640 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+  ✓ 390×844 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 390×844 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 390×844 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 390×844 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+  ✓ 390×844 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+  ✓ 1280×800 (Física): em cada cartão o contador, a barra e "Mostrar resposta" aparecem sem rolar, e o próximo cartão começa no topo
+  ✓ 1280×800 (Física): depois de revelar, o começo da resposta e os botões Errei/Acertei aparecem sem rolar
+  ✓ 1280×800 (Física): sem rolagem lateral, sem texto cortado, com fonte de pelo menos 16 px e com o fim da resposta visível ao rolar
+  ✓ 1280×800 (Física): os 157 cartões aparecem com frente e verso completos, iguais aos dados (157 conferidos, 158 telas com o repetido)
+  ✓ 1280×800 (Física): a sessão termina com 1 erro, todos os cartões ficam gravados no progresso e não há erro de JavaScript
+
+== fonte ampliada (tamanho de fonte padrão do navegador, pelo Chromium)
+  ✓ fonte do navegador em 24 px (150%), 320 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+  ✓ fonte do navegador em 32 px (200%), 320 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+  ✓ fonte do navegador em 32 px (200%), 360 px: o texto acompanha a fonte escolhida e nenhuma das 9 telas rola para o lado
+
+== segurança: progresso colado com HTML ou script
+  ✓ nenhum script do progresso colado executa (nome, datas do plano, tentativas, caderno de erros, código do certificado)
+  ✓ o nome com sinais de HTML aparece como texto no certificado
+
+== integridade: progresso malformado não trava o app
+  ✓ tipos trocados: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ valores nulos: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ simulado em andamento corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+  ✓ último resultado corrompido: as telas abrem sem erro, Plano › Dados continua acessível e abrir não regrava o progresso
+
+== integridade: simulado em andamento quando uma questão sai do curso
+  ✓ o simulado continua com as 23 questões que ainda existem e a resposta da 1ª questão é mantida
+  ✓ a entrega registra o simulado com 23 questões e guarda a resposta dada
+
+== integridade: progresso ilegível não é apagado
+  ✓ JSON corrompido: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+  ✓ JSON corrompido: "Descartar" apaga só a cópia
+  ✓ formato de uma versão futura: uma cópia exata fica guardada antes de qualquer gravação, e a tela Hoje oferece copiá-la
+  ✓ formato de uma versão futura: "Descartar" apaga só a cópia
+  ✓ progresso válido: nenhuma cópia e nenhum aviso
+
+== integridade: armazenamento que não grava
+  ✓ o aluno é avisado de que o progresso não está sendo salvo, em Hoje e em Plano › Dados
+  ✓ armazenamento normal: sem aviso, "Progresso salvo neste aparelho"
+
+== várias abas da mesma conta neste aparelho
+  ✓ duas abas da mesma conta: a marcação da aba que fechou continua no aparelho e as contagens somam sem perder nem dobrar [feito: T:a1,T:apagar,T:b1,T:b2,T:base | atividade: 5 (esperado 5)]
+  ✓ desmarcar numa aba e estudar na outra: a desmarcação não volta e o estudo fica
+  ✓ desmarcar numa aba e estudar na outra (aba suspensa, sem o aviso): a desmarcação não volta e o estudo fica
+  ✓ "Zerar" numa aba: o que existia antes não volta pela outra aba (nem os certificados), e o que ela estudou depois fica [feito: T:b-depois]
+  ✓ certificados: gravações de duas abas mantêm o mesmo registro, data e código
+  ✓ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:a5,T:apagar,T:b5,T:base]
+  ✓ contagens com as duas abas marcando ao mesmo tempo: 42 de 42, todas as marcações [42]
+  ✓ cópia apagada em outra aba: a aba aberta não regrava o que foi apagado; só o estudo novo fica [feito: T:depois-de-apagar]
+
+== escrita interrompida entre abas (pontos de parada reais do Chromium)
+Preparação nativa: dois observadores em oncomplete inativo; barreira IDB concluída sem alterações.
+Ponto nativo: leitura anterior à operação confirmada, {"pronta":"done","feito":{"T:base":true},"id":"","operacoes":["e:oc2159f7d-9230-4e13-8007-9e9c99388dc0"]}
+  ✓ transação interrompida: três abas, B aceita e preservada por mais de 2s; após crash, ambas as marcações e atividade 4 [{"T:A-race":true,"T:B-race":true,"T:base":true}]
+
+== recuperação e exclusão com transação pendente
+
+== escrita interrompida entre abas (pontos de parada reais do Chromium)
+Preparação nativa: dois observadores em oncomplete inativo; barreira IDB concluída sem alterações.
+Ponto nativo: leitura anterior à operação confirmada, {"pronta":"done","feito":{"T:base":true},"id":"","operacoes":["e:of52893fc-e0ab-47b8-bdb7-06b064c62ba8"]}
+  ✓ transação interrompida: três abas, B aceita e preservada por mais de 2s; após crash, ambas as marcações e atividade 4 [{"T:A-race":true,"T:B-race":true,"T:base":true}]
+  ✓ exclusão concorrente não confirma nem apaga operação aceita fora do checkpoint; após crash, a pendência é recuperada
+
+== queda do navegador inteiro logo depois de estudar (diário durável)
+  ✓ queda do navegador 1200 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:antes-da-queda,T:base]
+  ✓ queda do navegador 300 ms depois de marcar: a marcação volta na abertura seguinte e a semente continua [feito: T:antes-da-queda,T:base]
+  ✓ isolamento: o diário durável de outra conta não é restaurado na conta aberta [cópia: nenhuma; diário da outra conta no localStorage: não]
+
+tudo certo

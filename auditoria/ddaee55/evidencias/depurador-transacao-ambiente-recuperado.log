@@ -1,0 +1,2 @@
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Controle: pausa em transação real bloqueou a barreira de outra aba; retomar liberou a fila sem alterar o checkpoint.

@@ -1,0 +1,158 @@
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+✓ marcar-controle, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o95b9ea43-0011-4afd-b50e-dc6ccaf637dc","geracaoNova":"o142be01d-08e0-4abb-ad58-453a5b255528","apagado":true,"ignoradas":["of1dcc8c4-13bb-41b6-a2e9-3415fd9c2303"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o95b9ea43-0011-4afd-b50e-dc6ccaf637dc","id":"o8983060b-cb61-478d-975a-8ee4651722b8"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✗ importacao, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"oca790c76-577b-43bd-af4c-a987aba626b0","geracaoNova":"o2e462b28-ad52-4932-82de-6e1c9f7c14f1","apagado":true,"ignoradas":["o5a5f7b3a-072f-450e-b458-cca894a11c9d"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"oca790c76-577b-43bd-af4c-a987aba626b0","id":"o3d9e9927-a71f-4f48-987d-359a31585d3b"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✗ importacao-sem-crash, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"od5b4e711-6462-45ec-be15-91e00c6daba1","geracaoNova":"o8568fef0-10b6-47ff-a3a2-d75691371515","apagado":true,"ignoradas":["ofe5d5334-3ed5-4c42-aec7-fc9b0f375929"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"od5b4e711-6462-45ec-be15-91e00c6daba1","id":"oeca3fdd1-1b65-4225-94c8-a36d055679ff"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ marcar-controle, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"obde65bc0-ca63-4613-b51e-e26da1bb983f","geracaoNova":"oe0baa366-8b4b-46d8-bd9a-d623f9647f0c","apagado":true,"ignoradas":["o0c728cbf-6018-4423-941c-19a7be9b63be"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"obde65bc0-ca63-4613-b51e-e26da1bb983f","id":"o0fb0e7e2-f730-4525-98cd-da97a710ac5c"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✗ importacao, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o05eaa13f-4cce-4b1a-b13b-a0358410edf6","geracaoNova":"ofbb281a1-dfaa-4edd-a736-6d0b091992ec","apagado":true,"ignoradas":["oe9a731ae-8298-4808-a169-66a4474728c2"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"o05eaa13f-4cce-4b1a-b13b-a0358410edf6","id":"o238cbbff-e2cf-4f9f-b633-0c7ffab01c5f"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✗ importacao-sem-crash, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"oeeb92be6-430e-4537-a767-bfeea841c7da","geracaoNova":"o8396f275-f5c3-46c5-822e-deb64b77e6a5","apagado":true,"ignoradas":["o27195e6e-75b6-498f-b8d8-3e9d88c7ec49"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"oeeb92be6-430e-4537-a767-bfeea841c7da","id":"odbabaa7a-e3ba-4f62-8cb3-db5493bd5133"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+CONTROLE NEGATIVO a35-importacao-exclusao em a35ea9a: REPRODUZIU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a35-contas-adversarial.test.js"
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+✗ levar-operacoes-identificadas: {"anon":2,"contaAntes":2,"esperado":4,"local":2,"remoto":2,"tarefas":{"T:anon1":true,"T:anon2":true,"T:R1":true,"T:R2":true,"T:remota":true},"opsAnon":["o08dda9b7-c294-4731-b9bc-d4920f5d7301","od0e6c4fd-b732-4ee3-8a6c-3dd283d990e0"],"opsContaAntes":["obf44b683-15e0-4a9f-a00e-9f7b46ff84fd","o9147f170-4ba1-44d6-beb2-e236990c08d5"]}
+✓ controle-importacao-ids-preservados: {"esperado":4,"local":4,"remoto":4,"depoisRepetirReabrir":4}
+✗ exclusao-resposta-de-sessao-antiga: {"http":200,"uidA":"msaUW120CDVPBLe47cBZX1RxrlX7","uidB":"1aVirSLjadmDkOPBLybUSzNW1WIg","authAtual":{"uid":null,"local":null},"antesResposta":{"T:B":true},"depois":{},"remotoB":{"T:B":true},"aviso":"Progresso salvo neste aparelho."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/testes/a35-contas-adversarial.test.js"" exited with code 1
+CONTROLE NEGATIVO a35-contas-adversarial em a35ea9a: REPRODUZIU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a35-levar-reimportacao.test.js"
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+✗ levar-3-mais-2: {"esperado":5,"local":3,"servidor":3,"idsAnon":["obdd11c80-1bd6-47c0-899e-ae9bfaa6050c","oa4a63d3f-d76a-4c58-90fe-efc454e12c98","o83311d81-9731-46af-91a4-0f1e4536e3a0"],"idsBase":["o5f0fb608-88f2-4c3c-b335-b06c93b02104","o61c3a293-ae5f-4ea2-adbb-0e8306ae971b"]}
+✗ reimportar-apos-levar: {"esperado":5,"depoisImportar":6,"depoisRepetirReabrir":6,"servidor":6,"aviso":"Progresso salvo na sua conta."}
+✓ controle-importar-diretamente-5-de-5: {"esperado":5,"local":5,"servidor":5}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/testes/a35-levar-reimportacao.test.js"" exited with code 1
+CONTROLE NEGATIVO a35-levar-reimportacao em a35ea9a: REPRODUZIU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a35-retorno-firebase-antigo.test.js"
+Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+✗ exclusao-firebase-anterior: {"candidato":"a35ea9a","produtorAntigo":"2f6cad6ebba53d0f86319dcada671fe9396f8111","docV2Apagado":true,"authExcluidaHTTP":400,"marcadorHTTP":404,"recriou":true,"nomeRestaurado":"Pessoa Fictícia Excluída","feitoRestaurado":{"T:apos-exclusao-legitima":true,"T:privada":true},"avisoAtual":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/testes/a35-retorno-firebase-antigo.test.js"" exited with code 1
+CONTROLE NEGATIVO a35-retorno-firebase-antigo em a35ea9a: REPRODUZIU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ marcar-controle, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o5be87cf6-00c9-45d8-8282-50c85d7b6c8e","geracaoNova":"oc2f6d8d4-bfae-42cf-bc2d-9e483996ece3","apagado":true,"ignoradas":["e:o0c71e397-348e-4423-99bc-fc51b6b020cf"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o5be87cf6-00c9-45d8-8282-50c85d7b6c8e","id":"e:od8e246ea-3a3a-4f49-9518-3fedd50db872"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ importacao, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o7bb3bdcf-25eb-417b-94e8-bcb61d73c1ea","geracaoNova":"oc84c3709-9cde-453e-a99e-2a1c1f2e30b1","apagado":true,"ignoradas":["e:o3a95c248-d8fa-436a-a0da-b259ea1c6a79"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o7bb3bdcf-25eb-417b-94e8-bcb61d73c1ea","id":"e:o3039c221-3190-4a00-847b-57429d9903d5"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ importacao-sem-crash, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o3e2d3743-5937-4a6d-b730-9490409dd73b","geracaoNova":"o454e7d2e-b30b-4e31-9ab1-7e5bd71380a6","apagado":true,"ignoradas":["e:o587daec1-8b5e-4f45-852f-19e25f47d9a6"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o3e2d3743-5937-4a6d-b730-9490409dd73b","id":"e:o589108f4-a0e7-42b2-8cb7-e7f53695dd23"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ marcar-controle, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"ofbcd8964-09a4-4ad5-a4c1-78246e142c85","geracaoNova":"of42f45a1-f687-43d3-9a4c-3754855cbcdb","apagado":true,"ignoradas":["e:o715b5e7e-c4cf-42d0-82e6-01e03c473acd"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"ofbcd8964-09a4-4ad5-a4c1-78246e142c85","id":"e:o1e8dec15-52bb-4698-a8bb-9cceed8ceb41"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ importacao, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"oeffb9cc4-f394-4cb1-b0f0-5ca700b828b2","geracaoNova":"o58e328d7-c0e5-4b52-956f-bf019ddc3759","apagado":true,"ignoradas":["e:o716943c2-a2ad-4dd7-bb2f-73b554d629c0"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"oeffb9cc4-f394-4cb1-b0f0-5ca700b828b2","id":"e:o30b2e256-832f-4ec3-8de3-c97fea47065b"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+✓ importacao-sem-crash, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o9868671e-2d35-4dd2-a609-448c4c78db3a","geracaoNova":"obd5c8d7f-52b3-4bde-aa4c-5139ca1f889c","apagado":true,"ignoradas":["e:o754be0b1-636f-4a48-89ca-df23a3c4cbb4"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o9868671e-2d35-4dd2-a609-448c4c78db3a","id":"e:oc49cacf7-ccb2-461f-b92f-671dd2de832c"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+GATE BLOQUEADOR a35-importacao-exclusao: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a35-contas-adversarial.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ levar-operacoes-identificadas: {"anon":2,"contaAntes":2,"esperado":4,"local":4,"remoto":4,"tarefas":{"T:anon1":true,"T:anon2":true,"T:R1":true,"T:R2":true,"T:remota":true},"opsAnon":["e:o446bdf24-4aad-4f41-98c8-753efc61b099","e:o7787d30b-b99f-4e97-91a7-dd6ee1619131"],"opsContaAntes":["e:occ80b70f-2949-4971-b399-092c4e6c8d46","e:oafc053ed-c7df-417d-a3a5-2f11dbadafcf"]}
+✓ controle-importacao-ids-preservados: {"esperado":4,"local":4,"remoto":4,"depoisRepetirReabrir":4}
+✓ exclusao-resposta-de-sessao-antiga: {"http":200,"uidA":"fQktMUEOcoxxbCv5zyEu0CgzCXcw","uidB":"W736jKJhbt7QRdY3DoU1YkDklc3R","authAtual":{"uid":"W736jKJhbt7QRdY3DoU1YkDklc3R","local":"firebase:W736jKJhbt7QRdY3DoU1YkDklc3R"},"antesResposta":{"T:B":true},"depois":{"T:B":true},"remotoB":{"T:B":true,"T:depois-troca":true},"aviso":"Progresso salvo na sua conta."}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR a35-contas-adversarial: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a35-levar-reimportacao.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ levar-3-mais-2: {"esperado":5,"local":5,"servidor":5,"idsAnon":["e:od96fdad6-39bc-4de5-99f6-99a27b274ff5","e:o820bed0f-249e-4957-9d30-af482e5446ee","e:o4fe9b616-f692-4d2d-855f-48182de4d40a"],"idsBase":["e:o88a2e62c-c0d7-488a-b699-8bd6cc5ca009","e:o5d0277eb-9880-4e21-bbb0-8604513a006a"]}
+✓ reimportar-apos-levar: {"esperado":5,"depoisImportar":5,"depoisRepetirReabrir":5,"servidor":5,"aviso":"Progresso salvo na sua conta."}
+✓ controle-importar-diretamente-5-de-5: {"esperado":5,"local":5,"servidor":5}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR a35-levar-reimportacao: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/exclusao-protocolo.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+✓ Cliente Firebase 2f6cad6: exclusão recusada, Auth e documento preservados; DELETE direto 403. SDK commit recusado
+✓ Exclusão atual completa, tombstone imutável, token antigo 403 em leitura/gravação, reconexão não recria; estudo offline preservado localmente.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR exclusao-protocolo: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/exclusao-auth-atrasada.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Resposta Auth deleteUser atrasada de A não encerra B, não altera seu perfil e não impede novo estudo remoto; cópia A removida.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR exclusao-auth-atrasada: PASSOU
+✓ Transferência: 5 IDs exatos, repetição, configuração, certificados, Zerar de cada origem, novo estudo e erros retirados.
+GATE BLOQUEADOR transferencia-identidades: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/transferencia-crashes.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Levar sem aula, 5/5 após Browser.crash, segunda queda, reimportação e outro dispositivo; sem Web Locks.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE BLOQUEADOR transferencia-crashes: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Diário ambíguo antigo preservado após reabertura, recuperável, sem confirmação falsa; descarte explícito não ressuscita.
+GATE BLOQUEADOR diario-geracao-antiga: PASSOU

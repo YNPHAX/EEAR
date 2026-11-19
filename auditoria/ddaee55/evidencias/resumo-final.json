@@ -1,0 +1,1056 @@
+{
+  "candidate": "ddaee558fde26e437696f7b17862b3df1ee7353f",
+  "runtimeSha256": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "verdict": "REPROVADO PARA HOMOLOGAÇÃO CONTROLADA",
+  "findings": [
+    "A01 - alta, sob entrega adversarial controlada; frequência natural não demonstrada",
+    "A02 - alta, supressão em migração ambígua"
+  ],
+  "visual": "PENDENTE / NÃO APROVADA",
+  "commandCount": 59,
+  "executions": [
+    {
+      "name": "auditor-carga-obsoleta-confirmacao",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-carga-obsoleta.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 1,
+      "expected": 1,
+      "seconds": 22.3,
+      "utc": "2026-11-19T12:11:14.959941+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Tentativa com asserção de instrumentação incorreta; preservada"
+    },
+    {
+      "name": "auditor-carga-obsoleta-final",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-carga-obsoleta.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 1,
+      "expected": 1,
+      "seconds": 15.12,
+      "utc": "2026-11-19T12:13:31.005390+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Infraestrutura da bancada: disco cheio; reexecução separada"
+    },
+    {
+      "name": "auditor-carga-obsoleta-recuperado",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-carga-obsoleta.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 1,
+      "expected": 1,
+      "seconds": 27.1,
+      "utc": "2026-11-19T12:15:28.381818+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "A01: contraexemplo sob entrega controlada"
+    },
+    {
+      "name": "auditor-carga-obsoleta",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-carga-obsoleta.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 1,
+      "expected": 0,
+      "seconds": 68.91,
+      "utc": "2026-11-19T12:10:16.954114+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "A01: contraexemplo sob entrega controlada"
+    },
+    {
+      "name": "auditor-limite-final",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-limite.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 36.57,
+      "utc": "2026-11-19T12:07:51.245162+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "auditor-limite",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-limite.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 1,
+      "expected": 0,
+      "seconds": 28.79,
+      "utc": "2026-11-19T12:05:35.457611+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Oráculo inicial do auditor: bytes confundidos com caracteres"
+    },
+    {
+      "name": "auditor-migracao-crash",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-migracao-crash.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 18.03,
+      "utc": "2026-11-19T11:59:58.899067+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "auditor-propriedades",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-propriedades.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 22.69,
+      "utc": "2026-11-19T11:57:04.650925+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "auditor-tombstone",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-tombstone.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 1,
+      "expected": 1,
+      "seconds": 37.67,
+      "utc": "2026-11-19T12:05:06.665478+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "A02: contraexemplo confirmado (zero em vez de um)"
+    },
+    {
+      "name": "autoteste",
+      "cmd": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "autoteste"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 1.96,
+      "utc": "2026-11-19T11:54:00.503288+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "barreira-app",
+      "cmd": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "verificar",
+        "/workspace/audit-build/app",
+        "--app"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 2.07,
+      "utc": "2026-11-19T11:54:13.000387+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "barreira-web",
+      "cmd": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "verificar",
+        "/workspace/audit-build/site",
+        "--site"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 2.0,
+      "utc": "2026-11-19T11:54:07.022675+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "bloqueadores-auditoria-ambiente-recuperado",
+      "cmd": [
+        "node",
+        "testes/bloqueadores-auditoria.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 302.94,
+      "utc": "2026-11-19T12:26:12.886015+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "bloqueadores-auditoria",
+      "cmd": [
+        "node",
+        "testes/bloqueadores-auditoria.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 1,
+      "expected": 0,
+      "seconds": 0.75,
+      "utc": "2026-11-19T12:13:29.980792+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Infraestrutura da bancada: disco cheio; reexecução separada"
+    },
+    {
+      "name": "build-app",
+      "cmd": [
+        "python3",
+        "web/build.py",
+        "/workspace/audit-build/app",
+        "--app"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 3.91,
+      "utc": "2026-11-19T11:54:10.934754+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "build-web",
+      "cmd": [
+        "python3",
+        "web/build.py",
+        "/workspace/audit-build/site"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 4.24,
+      "utc": "2026-11-19T11:54:05.020055+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "cache-restaurado-ambiente-recuperado",
+      "cmd": [
+        "node",
+        "testes/cache-restaurado.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 7.08,
+      "utc": "2026-11-19T12:33:03.913989+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "cache-restaurado",
+      "cmd": [
+        "node",
+        "testes/cache-restaurado.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 1,
+      "expected": 0,
+      "seconds": 0.03,
+      "utc": "2026-11-19T12:13:31.538505+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Infraestrutura da bancada: disco cheio; reexecução separada"
+    },
+    {
+      "name": "carga-browser",
+      "cmd": [
+        "node",
+        "testes/carga-metadados.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 212.31,
+      "utc": "2026-11-19T12:09:55.545080+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "carga-nucleo",
+      "cmd": [
+        "node",
+        "testes/carga-nucleo.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_CARGA_ESTADO": "/workspace/audit-results/carga-estado.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 665.2,
+      "utc": "2026-11-19T12:06:23.214738+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "ciclo-sincronia",
+      "cmd": [
+        "node",
+        "testes/ciclo-sincronia.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 9.4,
+      "utc": "2026-11-19T11:56:08.191634+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "depurador-transacao-ambiente-recuperado",
+      "cmd": [
+        "node",
+        "testes/depurador-transacao.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 7.08,
+      "utc": "2026-11-19T12:33:10.997310+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "firebase-emulador",
+      "cmd": [
+        "node",
+        "testes/firebase-emulador.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 1,
+      "expected": 0,
+      "seconds": 255.58,
+      "utc": "2026-11-19T12:08:44.476826+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Limitado pela rede: 51 positivas; Google bloqueado"
+    },
+    {
+      "name": "hosting-contexto",
+      "cmd": [
+        "python3",
+        "testes/hosting-contexto-auditoria.py",
+        "/workspace/eear-audit"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 24.04,
+      "utc": "2026-11-19T11:55:33.242530+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "hosting-gates",
+      "cmd": [
+        "python3",
+        "testes/hosting-gates-auditoria.py",
+        "/workspace/eear-audit"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 35.05,
+      "utc": "2026-11-19T11:55:09.199517+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "hosting",
+      "cmd": [
+        "python3",
+        "testes/hosting-auditoria.py",
+        "/workspace/eear-audit"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 21.15,
+      "utc": "2026-11-19T11:54:34.149591+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "importacoes-propriedades",
+      "cmd": [
+        "node",
+        "testes/importacoes-propriedades.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.15,
+      "utc": "2026-11-19T11:55:38.995467+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "importacoes-regressoes-ambiente-recuperado",
+      "cmd": [
+        "node",
+        "testes/importacoes-regressoes.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 359.46,
+      "utc": "2026-11-19T12:32:12.347633+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "importacoes-regressoes",
+      "cmd": [
+        "node",
+        "testes/importacoes-regressoes.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 1,
+      "expected": 0,
+      "seconds": 1.45,
+      "utc": "2026-11-19T12:13:31.431714+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Infraestrutura da bancada: disco cheio; reexecução separada"
+    },
+    {
+      "name": "integridade-regressoes",
+      "cmd": [
+        "node",
+        "testes/integridade-regressoes.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 616.97,
+      "utc": "2026-11-19T12:04:28.891922+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "integridade",
+      "cmd": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "validar"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.2,
+      "utc": "2026-11-19T11:54:00.702067+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "legado-bloqueio",
+      "cmd": [
+        "node",
+        "testes/legado-bloqueio.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 19.73,
+      "utc": "2026-11-19T11:55:58.787838+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "legado-contrato",
+      "cmd": [
+        "node",
+        "testes/legado-contrato.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.06,
+      "utc": "2026-11-19T11:55:39.057813+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "lint",
+      "cmd": [
+        "/workspace/audit-tools/node_modules/.bin/eslint",
+        "curso/app.js",
+        "curso/app",
+        "curso/dados",
+        "web/sw.js",
+        "testes"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 4.75,
+      "utc": "2026-11-19T11:55:37.998301+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "metadados-limite-final",
+      "cmd": [
+        "node",
+        "testes/metadados-limite.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_CARGA_ESTADO": "/workspace/audit-results/carga-estado.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 21.19,
+      "utc": "2026-11-19T12:33:32.188481+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "metadados-limite",
+      "cmd": [
+        "node",
+        "testes/metadados-limite.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_CARGA_ESTADO": "/workspace/audit-results/carga-estado.json"
+      },
+      "exit": 1,
+      "expected": 0,
+      "seconds": 8.91,
+      "utc": "2026-11-19T12:10:04.455656+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Infraestrutura da bancada: porta de emulador ocupada; repetido"
+    },
+    {
+      "name": "montagem",
+      "cmd": [
+        "python3",
+        "-I",
+        "web/montar_app.py",
+        "--conferir"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.02,
+      "utc": "2026-11-19T11:53:58.545707+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "operacoes-dupla-falha-ambiente-recuperado",
+      "cmd": [
+        "node",
+        "testes/operacoes-dupla-falha.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 15.34,
+      "utc": "2026-11-19T12:32:56.832357+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "operacoes-dupla-falha",
+      "cmd": [
+        "node",
+        "testes/operacoes-dupla-falha.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 1,
+      "expected": 0,
+      "seconds": 0.03,
+      "utc": "2026-11-19T12:13:31.503935+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Infraestrutura da bancada: disco cheio; reexecução separada"
+    },
+    {
+      "name": "operacoes",
+      "cmd": [
+        "node",
+        "testes/operacoes.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.76,
+      "utc": "2026-11-19T11:55:38.755748+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "persistencia-regressoes-ambiente-recuperado",
+      "cmd": [
+        "node",
+        "testes/persistencia-regressoes.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 369.99,
+      "utc": "2026-11-19T12:21:09.944907+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "persistencia-regressoes",
+      "cmd": [
+        "node",
+        "testes/persistencia-regressoes.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 1,
+      "expected": 0,
+      "seconds": 284.74,
+      "utc": "2026-11-19T12:13:29.227314+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Infraestrutura da bancada: disco cheio; reexecução separada"
+    },
+    {
+      "name": "plataforma",
+      "cmd": [
+        "node",
+        "testes/plataforma.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 353.82,
+      "utc": "2026-11-19T12:02:02.008228+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "runtime-5b-callback",
+      "cmd": [
+        "node",
+        "testes/crash-observacao.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_REPO_ALVO": "/workspace/eear-old",
+        "EEAR_CRASH_SAIDA": "/workspace/audit-results/runtime-5b/crash.json"
+      },
+      "exit": 1,
+      "expected": 1,
+      "seconds": 26.13,
+      "utc": "2026-11-19T12:07:06.667030+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Controle histórico negativo; conferir sintomas no JSON/log"
+    },
+    {
+      "name": "runtime-5b-carga-obsoleta",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-carga-obsoleta.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_REPO_ALVO": "/workspace/eear-old",
+        "EEAR_RUNTIME_SHA256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/runtime-5b"
+      },
+      "exit": 1,
+      "expected": 1,
+      "seconds": 27.18,
+      "utc": "2026-11-19T12:15:55.566223+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Controle histórico negativo; conferir sintomas no JSON/log"
+    },
+    {
+      "name": "runtime-5b-contraexemplos",
+      "cmd": [
+        "node",
+        "testes/c186-contraexemplos.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_REPO_ALVO": "/workspace/eear-old",
+        "EEAR_RUNTIME_SHA256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/runtime-5b"
+      },
+      "exit": 1,
+      "expected": 1,
+      "seconds": 65.05,
+      "utc": "2026-11-19T12:06:40.504624+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Controle histórico negativo; conferir sintomas no JSON/log"
+    },
+    {
+      "name": "runtime-5b-propriedades",
+      "cmd": [
+        "node",
+        "testes/c186-propriedades.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_REPO_ALVO": "/workspace/eear-old",
+        "EEAR_RUNTIME_SHA256": "115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b",
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/runtime-5b"
+      },
+      "exit": 1,
+      "expected": 1,
+      "seconds": 67.65,
+      "utc": "2026-11-19T12:04:02.945325+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Controle histórico negativo; conferir sintomas no JSON/log"
+    },
+    {
+      "name": "sincronia-firebase-ambiente-recuperado",
+      "cmd": [
+        "node",
+        "testes/sincronia-firebase.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 29.14,
+      "utc": "2026-11-19T12:32:41.486311+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "sincronia-firebase",
+      "cmd": [
+        "node",
+        "testes/sincronia-firebase.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 1,
+      "expected": 0,
+      "seconds": 0.04,
+      "utc": "2026-11-19T12:13:31.471663+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Infraestrutura da bancada: disco cheio; reexecução separada"
+    },
+    {
+      "name": "sintaxe-teste-carga-obsoleta",
+      "cmd": [
+        "node",
+        "--check",
+        "/workspace/eear-audit/auditoria/ddaee55/teste-carga-obsoleta.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.06,
+      "utc": "2026-11-19T12:26:56.123135+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "sintaxe-teste-limite",
+      "cmd": [
+        "node",
+        "--check",
+        "/workspace/eear-audit/auditoria/ddaee55/teste-limite.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.05,
+      "utc": "2026-11-19T12:26:56.303956+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "sintaxe-teste-migracao-crash",
+      "cmd": [
+        "node",
+        "--check",
+        "/workspace/eear-audit/auditoria/ddaee55/teste-migracao-crash.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.04,
+      "utc": "2026-11-19T12:26:56.250916+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "sintaxe-teste-propriedades",
+      "cmd": [
+        "node",
+        "--check",
+        "/workspace/eear-audit/auditoria/ddaee55/teste-propriedades.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.08,
+      "utc": "2026-11-19T12:26:56.207425+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "sintaxe-teste-tombstone",
+      "cmd": [
+        "node",
+        "--check",
+        "/workspace/eear-audit/auditoria/ddaee55/teste-tombstone.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.06,
+      "utc": "2026-11-19T12:26:56.060724+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "sintaxe-teste-visual",
+      "cmd": [
+        "node",
+        "--check",
+        "/workspace/eear-audit/auditoria/ddaee55/teste-visual.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.11,
+      "utc": "2026-11-19T12:26:56.418931+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "transferencia-identidades",
+      "cmd": [
+        "node",
+        "testes/transferencia-identidades.test.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {},
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.09,
+      "utc": "2026-11-19T11:55:38.846634+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "visual-final",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-visual.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 10.69,
+      "utc": "2026-11-19T12:06:17.145593+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "visual",
+      "cmd": [
+        "node",
+        "auditoria/ddaee55/teste-visual.js"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_AUDITORIA_SAIDA": "/workspace/audit-results/independente"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 11.69,
+      "utc": "2026-11-19T12:02:42.968255+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    },
+    {
+      "name": "workflows",
+      "cmd": [
+        "python3",
+        "-I",
+        "web/verificar_publicacao.py",
+        "conferir-workflows"
+      ],
+      "cwd": "/workspace/eear-audit",
+      "env": {
+        "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+      },
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.07,
+      "utc": "2026-11-19T11:54:00.776199+00:00",
+      "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+      "classification": "Passou"
+    }
+  ]
+}

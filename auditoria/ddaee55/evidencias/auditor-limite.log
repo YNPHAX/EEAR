@@ -1,0 +1,19 @@
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-properties-c186", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9350.
+i  Running script: node "/workspace/eear-audit/auditoria/ddaee55/teste-limite.js"
+{"name":"ascii-899999","bytes":899999,"utf16":899999,"expected":200,"status":200}
+{"name":"ascii-900000","bytes":900000,"utf16":900000,"expected":403,"status":403,"error":"PERMISSION_DENIED"}
+{"name":"ascii-900001","bytes":900001,"utf16":900001,"expected":403,"status":403,"error":"PERMISSION_DENIED"}
+{"name":"unicode-899999","bytes":899999,"utf16":450000,"expected":200,"status":200}
+{"name":"unicode-900000","bytes":900000,"utf16":450000,"expected":403,"status":200}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/auditoria/ddaee55/teste-limite.js"" exited with code 1

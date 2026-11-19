@@ -1,0 +1,15 @@
+{
+  "name": "legado-contrato",
+  "cmd": [
+    "node",
+    "testes/legado-contrato.test.js"
+  ],
+  "cwd": "/workspace/eear-audit",
+  "env": {},
+  "exit": 0,
+  "expected": 0,
+  "seconds": 0.06,
+  "utc": "2026-11-19T11:55:39.057813+00:00",
+  "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+}

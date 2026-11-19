@@ -1,0 +1,14 @@
+NÚCLEO {"acoes":1000,"bytesEstado":150368,"bytesMeta":132325,"segundos":3.757}
+NÚCLEO {"acoes":2000,"bytesEstado":302368,"bytesMeta":265325,"segundos":14.042}
+NÚCLEO {"acoes":3000,"bytesEstado":454368,"bytesMeta":398325,"segundos":39.407}
+NÚCLEO {"acoes":4000,"bytesEstado":606368,"bytesMeta":531325,"segundos":65.75}
+NÚCLEO {"acoes":5000,"bytesEstado":758368,"bytesMeta":664325,"segundos":101.942}
+NÚCLEO {"acoes":6000,"bytesEstado":910368,"bytesMeta":797325,"segundos":152.008}
+NÚCLEO {"acoes":7000,"bytesEstado":1062368,"bytesMeta":930325,"segundos":204.501}
+NÚCLEO {"acoes":8000,"bytesEstado":1214368,"bytesMeta":1063325,"segundos":260.924}
+NÚCLEO {"acoes":9000,"bytesEstado":1366368,"bytesMeta":1196325,"segundos":337.528}
+NÚCLEO {"acoes":10000,"bytesEstado":1518371,"bytesMeta":1329326,"segundos":415.759}
+NÚCLEO {"acoes":11000,"bytesEstado":1672371,"bytesMeta":1463326,"segundos":539.149}
+NÚCLEO {"acoes":12000,"bytesEstado":1826371,"bytesMeta":1597326,"segundos":664.517}
+NÚCLEO RESET {"marcas":1,"atividade":1,"bytesEstado":2137837,"bytesMeta":2137651}
+Núcleo: 12.000 operações em lotes, repetição, contagens e reset passaram; primeiro ponto amostrado acima de 900.000: {"acoes":6000,"bytesEstado":910368,"bytesMeta":797325,"segundos":152.008}

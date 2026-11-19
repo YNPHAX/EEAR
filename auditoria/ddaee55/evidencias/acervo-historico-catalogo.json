@@ -1,0 +1,2835 @@
+[
+  {
+    "path": "/workspace/eear-audit/auditoria/a35ea9a-independente-evidencias.txt",
+    "bytes": 136179,
+    "sha256": "257ac33d266086f662981228d545aba08af0ad5672a5975cec43773c775249a6",
+    "lines": 1488,
+    "negativeLines": [
+      {
+        "line": 502,
+        "text": "✗ zerar-estudar: FALHA DE PREPARAÇÃO/EXECUÇÃO: Não comprovou aceitação e commit efetivo do diário novo."
+      },
+      {
+        "line": 1013,
+        "text": "  ✗ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem"
+      },
+      {
+        "line": 1014,
+        "text": "  ✗ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união"
+      },
+      {
+        "line": 1047,
+        "text": "  ✗ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova"
+      },
+      {
+        "line": 1126,
+        "text": "  ✗ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais"
+      },
+      {
+        "line": 1127,
+        "text": "  ✗ os dois aparelhos convergem para o mesmo progresso — mod: {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\"tent\":2},\"POR02\":{\"best\":0.9,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\" ≠ {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"MAT01\":{\"best\":0.8,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\" — fc: {\"POR01~0\":[2,20400],\"POR02~0\":[1,99999]} ≠ {\"MAT01~0\":[2,99998],\"POR01~0\":[2,20400]} — sims: [{\"d\":\"2026-10"
+      },
+      {
+        "line": 1129,
+        "text": "  ✗ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota"
+      },
+      {
+        "line": 1130,
+        "text": "  ✗ mesmo cartão nos dois: vale a revisão gravada por último"
+      },
+      {
+        "line": 1131,
+        "text": "  ✗ erro corrigido num aparelho e errado de novo no outro continua no caderno"
+      },
+      {
+        "line": 1132,
+        "text": "  ✗ dois simulados iguais feitos em aparelhos diferentes contam como dois"
+      },
+      {
+        "line": 1133,
+        "text": "  ✗ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica [aulas na nuvem: POR01,ING14]"
+      },
+      {
+        "line": 1134,
+        "text": "  ✗ sem como separar o que veio antes do \"Zerar\": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje [sem cópia]"
+      },
+      {
+        "line": 1135,
+        "text": "  ✗ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado"
+      },
+      {
+        "line": 1136,
+        "text": "  ✗ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte"
+      },
+      {
+        "line": 1137,
+        "text": "  ✗ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto"
+      },
+      {
+        "line": 1232,
+        "text": "FALHOU: 1 problema(s); não publique"
+      },
+      {
+        "line": 1320,
+        "text": "  ✗ de volta à versão nova: o estudo feito nas duas continua"
+      },
+      {
+        "line": 1343,
+        "text": "✗ importacao: {\"provaCorte\":{\"geracaoAnterior\":\"o38a2d2d2-14fb-42d8-b871-4f9365b0818c\",\"geracaoNova\":\"obfb8a107-37f7-4906-8c5a-ab5b943444b2\",\"apagado\":true,\"ignoradas\":[\"oe2be74e7-bbf5-4aa7-b92a-3a6b451939d6\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o38a2d2d2-14fb-42d8-b871-4f9365b0818c\",\"id\":\"od2e19104-d8f7-4198-b649-bb1faceadf42\"},\"voltou\":false,\"feitoFinal\":{},\"certificado\":false,\"checkpoint\":{},\"restouReserva\":false,\"aviso\":\"P"
+      },
+      {
+        "line": 1349,
+        "text": "✗ importacao, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o1d239d50-ead7-46d2-8418-ad4a01aa49fb\",\"geracaoNova\":\"o6a9f1695-52bb-4ddc-9216-0e557991e5e9\",\"apagado\":true,\"ignoradas\":[\"o0a15eb55-8bca-4287-a9ec-98e32bbeb5a3\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o1d239d50-ead7-46d2-8418-ad4a01aa49fb\",\"id\":\"o42491218-76fc-45c1-ba37-8ad6155dfec9\"},\"voltou\":false,\""
+      },
+      {
+        "line": 1350,
+        "text": "✗ importacao-sem-crash, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"obb0e996a-a47c-4c58-a9b0-f440fbaefcb9\",\"geracaoNova\":\"o9adb84b2-ce5b-461a-ba31-b6115642731e\",\"apagado\":true,\"ignoradas\":[\"o492be75d-15a8-479d-853c-85050b7c1690\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"obb0e996a-a47c-4c58-a9b0-f440fbaefcb9\",\"id\":\"o33729fe1-32f7-4e0c-aac7-5926d6d612ae\"},\"volto"
+      },
+      {
+        "line": 1352,
+        "text": "✗ importacao, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"odabb8449-e8c2-4b66-80d4-d6e87320cd35\",\"geracaoNova\":\"o3968f998-1178-4fb1-9b8d-1856928a4d16\",\"apagado\":true,\"ignoradas\":[\"ocb979bf1-dce9-427c-bceb-626ad4ea3116\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"odabb8449-e8c2-4b66-80d4-d6e87320cd35\",\"id\":\"oea34a2ab-b4aa-4652-bf69-590f09c3e3a9\"},\"voltou\":false,"
+      },
+      {
+        "line": 1353,
+        "text": "✗ importacao-sem-crash, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o760f9ea0-06d7-4c8e-b6bb-6445976d8120\",\"geracaoNova\":\"o09ac7ced-7b8a-4561-a0cf-162471f8bcfe\",\"apagado\":true,\"ignoradas\":[\"of7628bf8-c941-45fd-992f-ba6d307f520d\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o760f9ea0-06d7-4c8e-b6bb-6445976d8120\",\"id\":\"oa771e85b-c3df-48ea-b627-9340687ee675\"},\"volt"
+      },
+      {
+        "line": 1392,
+        "text": "✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:remota\":true},\"opsAnon\":[\"o24838a45-5155-44ca-8330-fb85d1141763\",\"o37a9dbf8-0d41-468d-9194-94bd072caef8\"],\"opsContaAntes\":[\"legado\"]}"
+      },
+      {
+        "line": 1417,
+        "text": "✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:R1\":true,\"T:R2\":true,\"T:remota\":true},\"opsAnon\":[\"o0dd5d8a8-92d9-49c1-bcdd-b0b5bf036595\",\"ob4fe4925-b3e0-4348-8fc0-a6d26da90298\"],\"opsContaAntes\":[\"o5d049d47-b20f-4f53-83d3-5c86397b9731\",\"of1064520-269a-4090-a20b-10b62d026f71\"]}"
+      },
+      {
+        "line": 1418,
+        "text": "✗ exclusao-resposta-de-sessao-antiga: {\"http\":200,\"uidA\":\"UozADZUvIVHBsF8k32rFd58dLxqh\",\"uidB\":\"6AhsNrgxzMbfMIEnVSgjAc2VjXlB\",\"authAtual\":{\"uid\":null,\"local\":null},\"antesResposta\":{\"T:B\":true},\"depois\":{},\"remotoB\":{\"T:B\":true},\"aviso\":\"Progresso salvo neste aparelho.\"}"
+      },
+      {
+        "line": 1437,
+        "text": "✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:R1\":true,\"T:R2\":true,\"T:remota\":true},\"opsAnon\":[\"o4b82bbbb-0337-4d30-9d98-f02cacbaec43\",\"o8f08b7b9-3dbf-47d2-9306-fc0e68c17433\"],\"opsContaAntes\":[\"ob6199a02-cb7f-4304-a3fa-0d6d0457181a\",\"o33a883e6-a18a-46b0-b42e-c9a4bbddd171\"]}"
+      },
+      {
+        "line": 1439,
+        "text": "✗ exclusao-resposta-de-sessao-antiga: {\"http\":200,\"uidA\":\"IOiSEhOqidj8CMoSHGQmH0hv13Bu\",\"uidB\":\"DL7D9Mz8Q4h2hzVeObSNGkih9Zgf\",\"authAtual\":{\"uid\":null,\"local\":null},\"antesResposta\":{\"T:B\":true},\"depois\":{},\"remotoB\":{\"T:B\":true},\"aviso\":\"Progresso salvo neste aparelho.\"}"
+      },
+      {
+        "line": 1459,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 1478,
+        "text": "✗ levar-3-mais-2: {\"esperado\":5,\"local\":3,\"servidor\":3,\"idsAnon\":[\"o45f263f3-83bc-456f-93f4-c9f921447d5d\",\"o432f90f8-942e-410f-b694-20d41171397e\",\"o85e25906-7649-47b2-a092-b7991663e591\"],\"idsBase\":[\"o69e656fc-9114-4b72-95c7-7f1adcafdd3e\",\"o57381018-07cf-4823-ac81-0f78cc68b149\"]}"
+      },
+      {
+        "line": 1479,
+        "text": "✗ reimportar-apos-levar: {\"esperado\":5,\"depoisImportar\":6,\"depoisRepetirReabrir\":6,\"servidor\":6,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/a35ea9a-independente-resultados.json",
+    "bytes": 78282,
+    "sha256": "0cab9231919c159cab6a74985e4f301714ee66b09426cb8bbdd4ebb449d67d93",
+    "lines": 2469,
+    "jsonType": "dict",
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "  \"parecer\": \"REPROVADO\","
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/a6366a8-segunda-evidencias.txt",
+    "bytes": 156271,
+    "sha256": "c72715296c29008a25f13cf4ae5132381ec2b1f6fe71811421315743a168d595",
+    "lines": 1632,
+    "negativeLines": [
+      {
+        "line": 13,
+        "text": "✗ mesmo-backup-dois-dispositivos: {\"arquivoSha256\":\"440c8bfe4a29f5f436c3deee7e3bd337f813fdb1c040de4215450b8cdab60b86\",\"base\":2,\"atividadeNoArquivo\":5,\"esperado\":5,\"remoto\":8,\"novoDispositivo\":8,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 54,
+        "text": "✗ importacao, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o00690efc-a9af-496c-81bb-125cca9d113d\",\"geracaoNova\":\"oe985d414-6c8d-4b34-8af9-ed7aef61c1ad\",\"apagado\":true,\"ignoradas\":[\"o0a7161fd-7934-4a07-b45b-a01c62a1d4c1\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o00690efc-a9af-496c-81bb-125cca9d113d\",\"id\":\"odcd8e180-dba3-4fd6-8cb2-98aedc420cc3\"},\"voltou\":false,\""
+      },
+      {
+        "line": 55,
+        "text": "✗ importacao-sem-crash, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o778364bb-0fc4-4b71-95cb-f7524dd2a8ce\",\"geracaoNova\":\"o01923a9a-3a01-4ae5-be98-7fde4be30266\",\"apagado\":true,\"ignoradas\":[\"o908f37a9-25bc-4467-9568-27e7bebcbe7a\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o778364bb-0fc4-4b71-95cb-f7524dd2a8ce\",\"id\":\"o88d874d8-64e2-47da-8f63-90feb30661c3\"},\"volto"
+      },
+      {
+        "line": 57,
+        "text": "✗ importacao, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"oecd7d14b-7f10-4b36-a4d5-8030ef984733\",\"geracaoNova\":\"o997aa7f8-3e67-4525-8be7-39442c78c662\",\"apagado\":true,\"ignoradas\":[\"o5b90b567-6b9d-41c6-9231-39576cbfbd27\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"oecd7d14b-7f10-4b36-a4d5-8030ef984733\",\"id\":\"o67e6c6e3-969b-4fe6-ad57-2a150cc8cdb1\"},\"voltou\":false,"
+      },
+      {
+        "line": 58,
+        "text": "✗ importacao-sem-crash, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o1a922cd2-d50d-4359-b787-0fea673b121f\",\"geracaoNova\":\"odadb53ff-2147-4174-b971-91e3a662da3c\",\"apagado\":true,\"ignoradas\":[\"oaddea870-86ae-4423-8968-a0c7bcad8590\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o1a922cd2-d50d-4359-b787-0fea673b121f\",\"id\":\"ocadf4446-7279-4eba-9bba-7fdf394c0534\"},\"volt"
+      },
+      {
+        "line": 68,
+        "text": "✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:R1\":true,\"T:R2\":true,\"T:remota\":true},\"opsAnon\":[\"o60776d34-b8a3-4de9-aae1-269057c25ba8\",\"o89f7f226-2b64-47cf-a375-8671a3f3d490\"],\"opsContaAntes\":[\"o35e8c8de-683d-4ee7-93d8-b532fb553207\",\"o78764ce3-a65b-4c41-9a32-40b0f67188f9\"]}"
+      },
+      {
+        "line": 70,
+        "text": "✗ exclusao-resposta-de-sessao-antiga: {\"http\":200,\"uidA\":\"lG9E5vH3fLGMYnegRKFRPS2Um4yO\",\"uidB\":\"CrzuuJGKuP0dcRAY2QIslHRBV8V1\",\"authAtual\":{\"uid\":null,\"local\":null},\"antesResposta\":{\"T:B\":true},\"depois\":{},\"remotoB\":{\"T:B\":true},\"aviso\":\"Progresso salvo neste aparelho.\"}"
+      },
+      {
+        "line": 88,
+        "text": "✗ levar-3-mais-2: {\"esperado\":5,\"local\":3,\"servidor\":3,\"idsAnon\":[\"ob0272d35-8f75-4df5-86b3-4883ce7dfa35\",\"o9fd9a631-ca8d-47cf-a2ea-98e2f67e8e04\",\"o8c1766ee-6cbc-4215-b0fd-8493de1784bc\"],\"idsBase\":[\"oe052a884-4b49-470b-aefb-04f65760d413\",\"ob37f0945-08b4-423a-8037-0092ffd90896\"]}"
+      },
+      {
+        "line": 89,
+        "text": "✗ reimportar-apos-levar: {\"esperado\":5,\"depoisImportar\":6,\"depoisRepetirReabrir\":6,\"servidor\":6,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 109,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 381,
+        "text": "  ✗ de volta à versão nova: o estudo feito nas duas continua"
+      },
+      {
+        "line": 603,
+        "text": "  ✗ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem"
+      },
+      {
+        "line": 604,
+        "text": "  ✗ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união"
+      },
+      {
+        "line": 637,
+        "text": "  ✗ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova"
+      },
+      {
+        "line": 716,
+        "text": "  ✗ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais"
+      },
+      {
+        "line": 717,
+        "text": "  ✗ os dois aparelhos convergem para o mesmo progresso — mod: {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\"tent\":2},\"POR02\":{\"best\":0.9,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\" ≠ {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"MAT01\":{\"best\":0.8,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\" — fc: {\"POR01~0\":[2,20400],\"POR02~0\":[1,99999]} ≠ {\"MAT01~0\":[2,99998],\"POR01~0\":[2,20400]} — sims: [{\"d\":\"2026-10"
+      },
+      {
+        "line": 719,
+        "text": "  ✗ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota"
+      },
+      {
+        "line": 720,
+        "text": "  ✗ mesmo cartão nos dois: vale a revisão gravada por último"
+      },
+      {
+        "line": 721,
+        "text": "  ✗ erro corrigido num aparelho e errado de novo no outro continua no caderno"
+      },
+      {
+        "line": 722,
+        "text": "  ✗ dois simulados iguais feitos em aparelhos diferentes contam como dois"
+      },
+      {
+        "line": 723,
+        "text": "  ✗ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica [aulas na nuvem: POR01,ING14]"
+      },
+      {
+        "line": 724,
+        "text": "  ✗ sem como separar o que veio antes do \"Zerar\": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje [sem cópia]"
+      },
+      {
+        "line": 725,
+        "text": "  ✗ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado"
+      },
+      {
+        "line": 726,
+        "text": "  ✗ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte"
+      },
+      {
+        "line": 727,
+        "text": "  ✗ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto"
+      },
+      {
+        "line": 744,
+        "text": "FALHOU: 1 problema(s); não publique"
+      },
+      {
+        "line": 884,
+        "text": "PREPARAÇÃO/EXECUÇÃO: AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:"
+      },
+      {
+        "line": 915,
+        "text": "✗ levar-erro-posterior-corrigido: {\"esperado\":1,\"fonte\":1,\"local\":3,\"remoto\":3,\"reaberto\":3,\"correcoesObservadas\":[\"o792ed555-23dd-4394-8ff6-10ef0a458674\"],\"causalidadeFonte\":{\"a\":{\"legado\":2,\"o2a57a960-5566-4d3d-a970-9c5f9a28eb96\":1},\"x\":{},\"l\":{\"o792ed555-23dd-4394-8ff6-10ef0a458674\":{\"legado\":true}},\"o\":{\"o2a57a960-5566-4d3d-a970-9c5f9a28eb96\":{\"o792ed555-23dd-4394-8ff6-10ef0a458674\":true}}},\"causalidadeDestino\":{\"a\":{\"legado\":2,\"o2a57a960-5566-4d3d-a970-9c5f9a28eb96\":1},\"x\":{},\"l\":{\"o792ed55"
+      },
+      {
+        "line": 931,
+        "text": "✗ importar-mesmos-bytes-legado-2-importacoes-3-abas: {\"locks\":true,\"esperado\":5,\"atividadeFinal\":8,\"atividadeReaberta\":8,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-14\":2},\"proposto\":{\"2026-11-14\":2},\"recibos\":[\"odd4b67e4-637a-4d85-906c-3aaea86e6cab\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#od0989418-c5dc-41e8-9627-84f70b590532\",\"id\":\"od0989418-c5dc-41e8-9627-84f70b590532\",\"act\":5,\"contribuicoes\":{\"a\":{\"od0989418-c5dc-41e8-9627-84f70b590532\":3},\"x\":{}}},{\"k\":\"missao-eear-v1-"
+      },
+      {
+        "line": 933,
+        "text": "✗ importar-mesmos-bytes-legado-3-importacoes-4-abas: {\"locks\":false,\"esperado\":5,\"atividadeFinal\":11,\"atividadeReaberta\":11,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-14\":2},\"proposto\":{\"2026-11-14\":2},\"recibos\":[\"o16aa8ea0-d55c-421b-9f18-6535a25a0549\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#o9c8934a2-d3f6-44d2-a2f1-0db18d3686c6\",\"id\":\"o9c8934a2-d3f6-44d2-a2f1-0db18d3686c6\",\"act\":5,\"contribuicoes\":{\"a\":{\"o9c8934a2-d3f6-44d2-a2f1-0db18d3686c6\":3},\"x\":{}}},{\"k\":\"missao-eear-"
+      },
+      {
+        "line": 941,
+        "text": "✗ importar-mesmos-bytes-legado-2-abas: {\"locks\":true,\"esperado\":5,\"atividadeFinal\":8,\"atividadeReaberta\":8,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-14\":2},\"proposto\":{\"2026-11-14\":2},\"recibos\":[\"o883ea4d6-da71-4b96-83d0-4c0b985976a1\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#od2ead709-4776-457d-b144-9c527dfc231e\",\"id\":\"od2ead709-4776-457d-b144-9c527dfc231e\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"od2ead709-4776-457d-b144-9c527dfc231e\":3},\"x\":{}}},{\"k\":\"missao-"
+      },
+      {
+        "line": 943,
+        "text": "✗ importar-mesmos-bytes-legado-3-abas: {\"locks\":false,\"esperado\":5,\"atividadeFinal\":11,\"atividadeReaberta\":11,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-14\":2},\"proposto\":null,\"recibos\":[\"oca6eb825-b886-4bcf-81eb-82e392738211\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#o5ffd7edd-8a92-47db-ba0c-dfecf770473b\",\"id\":\"o5ffd7edd-8a92-47db-ba0c-dfecf770473b\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"o5ffd7edd-8a92-47db-ba0c-dfecf770473b\":3},\"x\":{}}},{\"k\":\"missao-eear-v1-d"
+      },
+      {
+        "line": 958,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 974,
+        "text": "✗ importar-mesmos-bytes-legado-2-importacoes-3-abas: {\"locks\":true,\"esperado\":5,\"atividadeFinal\":8,\"atividadeReaberta\":8,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-14\":2},\"proposto\":{\"2026-11-14\":2},\"recibos\":[\"oa5f124c2-6ef4-4797-845d-05849dbcce7e\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#oc4c78560-a5bb-47a6-a082-b6952340b32c\",\"id\":\"oc4c78560-a5bb-47a6-a082-b6952340b32c\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"oc4c78560-a5bb-47a6-a082-b6952340b32c\":3},\"x\":{}}}"
+      },
+      {
+        "line": 976,
+        "text": "✗ importar-mesmos-bytes-legado-3-importacoes-4-abas: {\"locks\":false,\"esperado\":5,\"atividadeFinal\":11,\"atividadeReaberta\":11,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-14\":2},\"proposto\":{\"2026-11-14\":2},\"recibos\":[\"o20766348-5ac8-48f7-9f8b-17d07a851935\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#o577a3d81-a7ef-4504-b3f6-54cd9bf22f03\",\"id\":\"o577a3d81-a7ef-4504-b3f6-54cd9bf22f03\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"o577a3d81-a7ef-4504-b3f6-54cd9bf22f03\":3},\"x\":{"
+      },
+      {
+        "line": 988,
+        "text": "✗ levar-erro-posterior-corrigido: {\"esperado\":1,\"fonte\":1,\"local\":3,\"remoto\":3,\"reaberto\":3,\"correcoesObservadas\":[\"o01659b62-61ca-4aaf-b373-b71f40a5fde8\"],\"causalidadeFonte\":{\"a\":{\"legado\":2,\"o0fe7b689-73d9-4215-9ccd-1eec0a071b88\":1},\"x\":{},\"l\":{\"o01659b62-61ca-4aaf-b373-b71f40a5fde8\":{\"legado\":true}},\"o\":{\"o0fe7b689-73d9-4215-9ccd-1eec0a071b88\":{\"o01659b62-61ca-4aaf-b373-b71f40a5fde8\":true}}},\"causalidadeDestino\":{\"a\":{\"legado\":2,\"o0fe7b689-73d9-4215-9ccd-1eec0a071b88\":1},\"x\":{},\"l\":{\"o01659b6"
+      },
+      {
+        "line": 1007,
+        "text": "✗ mesmo-backup-dois-dispositivos: {\"arquivoSha256\":\"440c8bfe4a29f5f436c3deee7e3bd337f813fdb1c040de4215450b8cdab60b86\",\"base\":2,\"atividadeNoArquivo\":5,\"esperado\":5,\"remoto\":8,\"novoDispositivo\":8,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 1045,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 1553,
+        "text": "PREPARAÇÃO/EXECUÇÃO: AssertionError [ERR_ASSERTION]: Todas as importações aceitas precisam estar reservadas."
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/a6366a8-segunda-resultados.json",
+    "bytes": 173944,
+    "sha256": "c9ee9e14e9c9a21a7b2afd4360606deeaa575636d2483cb4d61072eb71fb4a43",
+    "lines": 4597,
+    "jsonType": "dict",
+    "negativeLines": [
+      {
+        "line": 6,
+        "text": "  \"parecer\": \"REPROVADO para homologação controlada; produção não autorizada\","
+      },
+      {
+        "line": 4596,
+        "text": "  \"comandosOriginais\": \"import os,sys,json,subprocess,time,hashlib\\nfrom pathlib import Path\\nrepo=Path('/tmp/eear-audit2-runtime');out=Path('/tmp/eear-audit2-20261114');g=sys.argv[1]\\nenv=dict(os.environ,NODE_PATH='/tmp/eear-audit-deps/node_modules',PLAYWRIGHT_BROWSERS_PATH='/tmp/eear-audit-browsers',EEAR_FIREBASE_SDK='/tmp/eear-audit-deps/node_modules/firebase',EEAR_FIREBASE_CLI='/tmp/eear-audit-deps/node_modules/.bin/firebase',EEAR_REPO_ALVO=str(repo),EEAR_REPO_LEGADO='/tmp/eear-2f6cad6',EEAR"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/auditoria-consolidada.md",
+    "bytes": 16731,
+    "sha256": "52cd7b9701edba2e2e2cdfdfd7c75bf78e5b14b112844ffcd8b9f8a81009aed5",
+    "lines": 243,
+    "negativeLines": [],
+    "headings": [
+      "# Auditoria consolidada dos PRs #16 a #22 e plano de integração",
+      "## 1. Estado verificado dos PRs",
+      "## 2. Mapa de dependências",
+      "## 3. Problemas encontrados",
+      "### Alta",
+      "### Média",
+      "### Baixa",
+      "### Verificado sem problema",
+      "## 4. Testes executados nesta auditoria",
+      "## 5. Riscos não resolvidos",
+      "## 6. Plano de integração (nenhum merge foi feito)",
+      "## 7. Plano técnico de comercialização",
+      "## 8. Decisões que dependem de autorização humana",
+      "## 9. Recomendação"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/auditoria-independente-a35ea9a.md",
+    "bytes": 22058,
+    "sha256": "b5785909aab75c89eb3356639aad15601bc93152718381674ab7689f49eceb1c",
+    "lines": 281,
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "**Parecer: REPROVADO para avançar à próxima fase de homologação.**"
+      }
+    ],
+    "headings": [
+      "# Auditoria técnica do candidato Firebase a35ea9a",
+      "## Independência e método",
+      "## Identidade dos arquivos testados",
+      "## Achados confirmados",
+      "### IA01 — perda da importação concorrente com exclusão",
+      "### IA02 — Levar para a conta perde identidades e corrompe contagens",
+      "### IA03 — exclusão antiga altera a sessão nova",
+      "### IA04 — exclusão por Firebase anterior permite recriação",
+      "## Suítes originais reexecutadas e limites de conclusão",
+      "## Histórico deliberadamente incompatível",
+      "## CI verificado diretamente",
+      "## Capacidade e riscos restantes",
+      "## Reprodução dos testes novos",
+      "## Condições para nova avaliação"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/consolidacao-firebase-oficial.md",
+    "bytes": 17454,
+    "sha256": "a872b05d91760e9672d3a1184f5e74d2c04425939d852894ac88a99b52b659df",
+    "lines": 173,
+    "negativeLines": [],
+    "headings": [
+      "# Consolidação da sincronização oficial Firebase — validação técnica",
+      "## Resultado e arquitetura",
+      "## Defeitos e limites confirmados",
+      "## Matriz executada",
+      "## Histórico preservado e comparação",
+      "## Exclusão, sessões antigas e confirmações",
+      "## Capacidade, reversão e pendências",
+      "## CI e ocorrências do laboratório"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/contas-e-sincronizacao.md",
+    "bytes": 12296,
+    "sha256": "44385c04ec8ca9d34853efe3c5c9093ed85f77e6f2176d7419d66ad6790e00d2",
+    "lines": 139,
+    "negativeLines": [],
+    "headings": [
+      "# Contas, sincronização e dados do aluno",
+      "## Problemas encontrados e corrigidos",
+      "## Fluxos",
+      "## Link do curso no Claude (nuvem sem transação)",
+      "## Dados antigos",
+      "## Evidências",
+      "## Limitações",
+      "## Ativação (pendências para usar de verdade)"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/continuidade-codex-arquivos.txt",
+    "bytes": 2654,
+    "sha256": "3af5fd8e76cfb5de2e2b02150c036a043ad70423274751249fabedc4018c038b",
+    "lines": 80,
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/continuidade-codex-evidencias.txt",
+    "bytes": 38521,
+    "sha256": "1cb829194d8a1cea38aa333c933fbf8fdcca0f8412d35a4c49befb3a7665be55",
+    "lines": 394,
+    "negativeLines": [
+      {
+        "line": 37,
+        "text": "✗ quarentena-apos-exclusao: {\"confirmou\":true,\"copiasPessoais\":1}"
+      },
+      {
+        "line": 50,
+        "text": "✗ exclusao-apos-ultima-conferencia: {\"aceitou\":true,\"reserva\":true,\"recuperou\":false,\"mensagem\":\"Os dados deste aparelho foram apagados.\",\"feito\":{},\"esperado\":1}"
+      },
+      {
+        "line": 83,
+        "text": "✗ cache-atrasado-apos-exclusao: {\"confirmou\":true,\"reconciliou\":true,\"feito\":{},\"residuos\":[\"missao-eear-v1\"]}"
+      },
+      {
+        "line": 241,
+        "text": "✗ indexeddb-indisponivel: FALHA DE PREPARAÇÃO/EXECUÇÃO: Base inicial não confirmada."
+      },
+      {
+        "line": 242,
+        "text": "GATE noturna-falhas: FALHOU"
+      },
+      {
+        "line": 317,
+        "text": "  ✗ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=false, nuvem=true]"
+      },
+      {
+        "line": 323,
+        "text": "  ✗ colar outro progresso troca as notas, mas mantém os certificados conquistados"
+      },
+      {
+        "line": 324,
+        "text": "  ✗ o simulado continua com as 23 questões que ainda existem e a resposta da 1ª questão é mantida"
+      },
+      {
+        "line": 325,
+        "text": "  ✗ a entrega registra o simulado com 23 questões e guarda a resposta dada"
+      },
+      {
+        "line": 326,
+        "text": "  ✗ app indo para o fundo: o estudo vai para a nuvem sem esperar o intervalo de 1,5 s (-10 ms)"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/continuidade-codex.md",
+    "bytes": 14981,
+    "sha256": "3b87255900caa409c1382e54e32add4fc9ba11ae31ed96f90836ec63e5e3c10a",
+    "lines": 96,
+    "negativeLines": [],
+    "headings": [
+      "# Continuidade de desenvolvimento EEAR — 12–13/11/2026",
+      "## Recuperação do estado real",
+      "## Arquitetura entregue",
+      "## Defeitos reproduzidos durante a implementação",
+      "## Testes e limites das evidências",
+      "### CI verificado",
+      "## Commits e arquivos",
+      "## Riscos e trabalho restante"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/correcao-ia05-ia06-evidencias.txt",
+    "bytes": 394780,
+    "sha256": "f7cbb49e8639a06eb91c2f3d29ff007a6e08429e8bff928064a27ae640e4f3fc",
+    "lines": 4021,
+    "negativeLines": [
+      {
+        "line": 16,
+        "text": "✗ importacao, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o6d379dee-52b2-43c9-beb0-d5a96dbaacc2\",\"geracaoNova\":\"odad687bf-6d97-421c-a588-7dd0982e6994\",\"apagado\":true,\"ignoradas\":[\"o0c3d37b6-088f-4dee-a3bc-786fbb32e812\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o6d379dee-52b2-43c9-beb0-d5a96dbaacc2\",\"id\":\"o7e887749-e002-40b5-8f9b-3feffc78feae\"},\"voltou\":false,\""
+      },
+      {
+        "line": 17,
+        "text": "✗ importacao-sem-crash, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o09863af1-ea42-4ea5-bee5-9172c9578784\",\"geracaoNova\":\"o4647e230-2c4b-44ab-8116-fcdc80f966db\",\"apagado\":true,\"ignoradas\":[\"o8712178b-1e3e-453f-9b04-56fa01b1e93f\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o09863af1-ea42-4ea5-bee5-9172c9578784\",\"id\":\"o9a375324-eb7c-4c03-9ffd-5b53a84f973b\"},\"volto"
+      },
+      {
+        "line": 19,
+        "text": "✗ importacao, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o2bcd24f9-da53-40c3-83c4-4fc92084edb8\",\"geracaoNova\":\"o6db5dfaf-d958-4f9f-9df2-d55aad62c022\",\"apagado\":true,\"ignoradas\":[\"o2be7f9f9-6baf-4804-af76-6c47515a455f\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o2bcd24f9-da53-40c3-83c4-4fc92084edb8\",\"id\":\"o0b1a0752-e6be-4719-8e23-caf3400f34bb\"},\"voltou\":false,"
+      },
+      {
+        "line": 20,
+        "text": "✗ importacao-sem-crash, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o8cc98d34-9705-4d18-b07f-192e258eff17\",\"geracaoNova\":\"od4830253-f179-414d-9dfb-e94033ca1c95\",\"apagado\":true,\"ignoradas\":[\"od6a3cd32-ad3d-468b-abe7-a2910ad8804f\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o8cc98d34-9705-4d18-b07f-192e258eff17\",\"id\":\"oe2d811d9-652b-4187-8317-9448c9df9948\"},\"volt"
+      },
+      {
+        "line": 30,
+        "text": "✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:R1\":true,\"T:R2\":true,\"T:remota\":true},\"opsAnon\":[\"o56015f62-a7a3-4800-8e61-efa8153bc7df\",\"o27db8e9a-5361-4c09-acc3-0932f4ebdb03\"],\"opsContaAntes\":[\"o1fcf4f07-2ebc-4ccf-848d-e5cf95774b23\",\"oae3d28b1-fb48-4b7b-aa2d-58d33bcfdd1b\"]}"
+      },
+      {
+        "line": 32,
+        "text": "✗ exclusao-resposta-de-sessao-antiga: {\"http\":200,\"uidA\":\"SGJ6sfYJavbpbcxauKXoudilnuwg\",\"uidB\":\"Ih8u1H2ddL0kDaKHlFfGepCpx7eS\",\"authAtual\":{\"uid\":null,\"local\":null},\"antesResposta\":{\"T:B\":true},\"depois\":{},\"remotoB\":{\"T:B\":true},\"aviso\":\"Progresso salvo neste aparelho.\"}"
+      },
+      {
+        "line": 50,
+        "text": "✗ levar-3-mais-2: {\"esperado\":5,\"local\":3,\"servidor\":3,\"idsAnon\":[\"o480c0b63-939b-45da-80c1-658800a3c0a4\",\"of38f7ec7-b88c-44df-bf36-77cb6c65bfb0\",\"o5a6409e4-d3cf-4418-b5a5-2267069066aa\"],\"idsBase\":[\"o4c07ac22-c3ba-4188-b3ee-ec169e37a3b3\",\"o175f4193-5e9c-4c99-8c3c-cf35cd5d14c2\"]}"
+      },
+      {
+        "line": 51,
+        "text": "✗ reimportar-apos-levar: {\"esperado\":5,\"depoisImportar\":6,\"depoisRepetirReabrir\":6,\"servidor\":6,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 71,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 705,
+        "text": "2026-11-15T01:16:28.0881189Z   ✗ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito"
+      },
+      {
+        "line": 853,
+        "text": "  ✗ de volta à versão nova: o estudo feito nas duas continua"
+      },
+      {
+        "line": 1021,
+        "text": "  ✗ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito"
+      },
+      {
+        "line": 1117,
+        "text": "✗ importar-mesmos-bytes-legado-2-importacoes-3-abas: {\"locks\":true,\"esperado\":5,\"atividadeFinal\":8,\"atividadeReaberta\":8,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-15\":2},\"proposto\":{\"2026-11-15\":2},\"recibos\":[\"oaac47d5c-26df-4c33-bd6f-132e30890b34\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#of6d03c5f-813e-4b47-bd91-2a6b7d38c432\",\"id\":\"of6d03c5f-813e-4b47-bd91-2a6b7d38c432\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"of6d03c5f-813e-4b47-bd91-2a6b7d38c432\":3},\"x\":{}}}"
+      },
+      {
+        "line": 1119,
+        "text": "✗ importar-mesmos-bytes-legado-3-importacoes-4-abas: {\"locks\":false,\"esperado\":5,\"atividadeFinal\":11,\"atividadeReaberta\":11,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-15\":2},\"proposto\":{\"2026-11-15\":2},\"recibos\":[\"o80e92abe-387f-49ff-a8b8-040e37770881\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#o02e818de-f288-4249-a880-048389c0aac7\",\"id\":\"o02e818de-f288-4249-a880-048389c0aac7\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"o02e818de-f288-4249-a880-048389c0aac7\":3},\"x\":{"
+      },
+      {
+        "line": 1131,
+        "text": "✗ levar-erro-posterior-corrigido: {\"esperado\":1,\"fonte\":1,\"local\":3,\"remoto\":3,\"reaberto\":3,\"correcoesObservadas\":[\"o546945c9-ab22-4c88-8cf9-5968d9115f49\"],\"causalidadeFonte\":{\"a\":{\"legado\":2,\"o377fec30-6b8d-4b52-85b9-30457621d614\":1},\"x\":{},\"l\":{\"o546945c9-ab22-4c88-8cf9-5968d9115f49\":{\"legado\":true}},\"o\":{\"o377fec30-6b8d-4b52-85b9-30457621d614\":{\"o546945c9-ab22-4c88-8cf9-5968d9115f49\":true}}},\"causalidadeDestino\":{\"a\":{\"legado\":2,\"o377fec30-6b8d-4b52-85b9-30457621d614\":1},\"x\":{},\"l\":{\"o546945c"
+      },
+      {
+        "line": 1150,
+        "text": "✗ mesmo-backup-dois-dispositivos: {\"arquivoSha256\":\"01b11e1da22807eb7806581bbc6b9c8051ac2e0ad1dcac2fa8741cea600476b0\",\"base\":2,\"atividadeNoArquivo\":5,\"esperado\":5,\"remoto\":8,\"novoDispositivo\":8,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 1188,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 1271,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 1504,
+        "text": "  ✗ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem"
+      },
+      {
+        "line": 1505,
+        "text": "  ✗ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união"
+      },
+      {
+        "line": 1538,
+        "text": "  ✗ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova"
+      },
+      {
+        "line": 1617,
+        "text": "  ✗ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais"
+      },
+      {
+        "line": 1618,
+        "text": "  ✗ os dois aparelhos convergem para o mesmo progresso — mod: {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\"tent\":2},\"POR02\":{\"best\":0.9,\"lido\":\"2026-11-15\",\"ok\":\"2026-11-15\",\" ≠ {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"MAT01\":{\"best\":0.8,\"lido\":\"2026-11-15\",\"ok\":\"2026-11-15\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\" — fc: {\"POR01~0\":[2,20400],\"POR02~0\":[1,99999]} ≠ {\"MAT01~0\":[2,99998],\"POR01~0\":[2,20400]} — sims: [{\"d\":\"2026-10"
+      },
+      {
+        "line": 1620,
+        "text": "  ✗ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota"
+      },
+      {
+        "line": 1621,
+        "text": "  ✗ mesmo cartão nos dois: vale a revisão gravada por último"
+      },
+      {
+        "line": 1622,
+        "text": "  ✗ erro corrigido num aparelho e errado de novo no outro continua no caderno"
+      },
+      {
+        "line": 1623,
+        "text": "  ✗ dois simulados iguais feitos em aparelhos diferentes contam como dois"
+      },
+      {
+        "line": 1624,
+        "text": "  ✗ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica [aulas na nuvem: POR01,ING14]"
+      },
+      {
+        "line": 1625,
+        "text": "  ✗ sem como separar o que veio antes do \"Zerar\": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje [sem cópia]"
+      },
+      {
+        "line": 1626,
+        "text": "  ✗ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado"
+      },
+      {
+        "line": 1627,
+        "text": "  ✗ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte"
+      },
+      {
+        "line": 1628,
+        "text": "  ✗ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto"
+      },
+      {
+        "line": 2236,
+        "text": "✗ importar-mesmos-bytes-legado-2-importacoes-3-abas: {\"locks\":true,\"esperado\":5,\"atividadeFinal\":8,\"atividadeReaberta\":8,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-14\":2},\"proposto\":{\"2026-11-14\":2},\"recibos\":[\"o8de36f20-1091-4fd7-936f-ff00c8ac201d\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#o6b9002bb-8521-4a5d-bb62-3e9152d06ad3\",\"id\":\"o6b9002bb-8521-4a5d-bb62-3e9152d06ad3\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"o6b9002bb-8521-4a5d-bb62-3e9152d06ad3\":3},\"x\":{}}}"
+      },
+      {
+        "line": 2238,
+        "text": "✗ importar-mesmos-bytes-legado-3-importacoes-4-abas: {\"locks\":false,\"esperado\":5,\"atividadeFinal\":11,\"atividadeReaberta\":11,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-14\":2},\"proposto\":{\"2026-11-14\":2},\"recibos\":[\"oc30eb252-1cb1-48cd-81f8-adaa32d70b5e\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#obab69f56-c6b8-40b1-95cd-8cf5674bd540\",\"id\":\"obab69f56-c6b8-40b1-95cd-8cf5674bd540\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"obab69f56-c6b8-40b1-95cd-8cf5674bd540\":3},\"x\":{"
+      },
+      {
+        "line": 2252,
+        "text": "✗ mesmo-backup-dois-dispositivos: {\"arquivoSha256\":\"440c8bfe4a29f5f436c3deee7e3bd337f813fdb1c040de4215450b8cdab60b86\",\"base\":2,\"atividadeNoArquivo\":5,\"esperado\":5,\"remoto\":8,\"novoDispositivo\":8,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 2272,
+        "text": "✗ levar-erro-posterior-corrigido: {\"esperado\":1,\"fonte\":1,\"local\":3,\"remoto\":3,\"reaberto\":3,\"correcoesObservadas\":[\"o57eff377-5502-43c6-89a3-68a1de3f1365\"],\"causalidadeFonte\":{\"a\":{\"legado\":2,\"o275256ce-5c97-4c9f-88aa-b9a15129ccc2\":1},\"x\":{},\"l\":{\"o57eff377-5502-43c6-89a3-68a1de3f1365\":{\"legado\":true}},\"o\":{\"o275256ce-5c97-4c9f-88aa-b9a15129ccc2\":{\"o57eff377-5502-43c6-89a3-68a1de3f1365\":true}}},\"causalidadeDestino\":{\"a\":{\"legado\":2,\"o275256ce-5c97-4c9f-88aa-b9a15129ccc2\":1},\"x\":{},\"l\":{\"o57eff37"
+      },
+      {
+        "line": 2771,
+        "text": "2026-11-14T23:58:18.1861523Z   ✗ colar outro progresso troca as notas, mas mantém os certificados conquistados"
+      },
+      {
+        "line": 3372,
+        "text": "2026-11-15T00:06:24.4626850Z   ✗ colar outro progresso troca as notas, mas mantém os certificados conquistados"
+      },
+      {
+        "line": 3530,
+        "text": "  throw new AssertionError(obj);"
+      },
+      {
+        "line": 3533,
+        "text": "AssertionError [ERR_ASSERTION]: Contador tombstonado não recria módulo ausente durante Substituir."
+      },
+      {
+        "line": 3567,
+        "text": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:"
+      },
+      {
+        "line": 3592,
+        "text": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:"
+      },
+      {
+        "line": 3612,
+        "text": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:"
+      },
+      {
+        "line": 3637,
+        "text": "AssertionError [ERR_ASSERTION]: A mesma origem já observada e zerada não restaura marcações após importação atrasada offline."
+      },
+      {
+        "line": 3673,
+        "text": "AssertionError [ERR_ASSERTION]: A mesma origem já observada e zerada não restaura marcações após importação atrasada offline."
+      },
+      {
+        "line": 3768,
+        "text": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:"
+      },
+      {
+        "line": 3796,
+        "text": "AssertionError [ERR_ASSERTION]: Preferências da primeira importação precisam estar no checkpoint, além da projeção em memória."
+      },
+      {
+        "line": 3814,
+        "text": "  throw new AssertionError(obj);"
+      },
+      {
+        "line": 3817,
+        "text": "AssertionError [ERR_ASSERTION]: Nota já coberta não volta depois da exclusão concorrente da base."
+      },
+      {
+        "line": 3850,
+        "text": "env=dict(os.environ,EEAR_REPO_REPROVADO_IA05='/tmp/eear-audit2-runtime',EEAR_REPO_CLIENTE_V3='/tmp/eear-ia05-verificado',NODE_PATH='/tmp/eear-audit-deps/node_modules',PLAYWRIGHT_BROWSERS_PATH='/tmp/eear-audit-browsers',EEAR_FIREBASE_SDK='/tmp/eear-audit-deps/node_modules/firebase',EEAR_FIREBASE_CLI='/tmp/eear-audit-deps/node_modules/.bin/firebase',EEAR_REPO_ALVO=str(repo),EEAR_REPO_LEGADO='/tmp/eear-2f6cad6',EEAR_REPO_REPROVADO='/tmp/eear-audit-a35-source')"
+      },
+      {
+        "line": 3980,
+        "text": "repo=Path('/workspace/eear-dev');out=Path('/tmp/eear-ia05-v4');env=dict(os.environ,NODE_PATH='/tmp/eear-audit-deps/node_modules',PLAYWRIGHT_BROWSERS_PATH='/tmp/eear-audit-browsers',EEAR_FIREBASE_SDK='/tmp/eear-audit-deps/node_modules/firebase',EEAR_FIREBASE_CLI='/tmp/eear-audit-deps/node_modules/.bin/firebase',EEAR_REPO_REPROVADO_IA05='/tmp/eear-audit2-runtime',EEAR_REPO_CLIENTE_V3='/tmp/eear-ia05-verificado')"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/correcao-ia05-ia06-resultados.json",
+    "bytes": 201272,
+    "sha256": "789459ce52c6eb491c9a4e05dc62607b932b02f3db4fc7c23be7e3b60827040b",
+    "lines": 4937,
+    "jsonType": "dict",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/correcao-ia05-ia06.md",
+    "bytes": 25316,
+    "sha256": "2c51ad43e004dcd9bb2e79051e8d975f3623abe9afa5ed934ca06526e713b88f",
+    "lines": 193,
+    "negativeLines": [
+      {
+        "line": 181,
+        "text": "Com dependências fora do repositório, preparar checkouts imutáveis a6366a8, a35ea9a, 2f6cad6 e af32954. Definir `NODE_PATH`, `PLAYWRIGHT_BROWSERS_PATH`, `EEAR_FIREBASE_SDK`, `EEAR_FIREBASE_CLI`, `EEAR_REPO_REPROVADO_IA05`, `EEAR_REPO_REPROVADO`, `EEAR_REPO_LEGADO` e `EEAR_REPO_CLIENTE_V3`. Na raiz candidata:"
+      }
+    ],
+    "headings": [
+      "# Correção de IA05 e IA06 — identidade da origem e contexto causal",
+      "## Código efetivamente executado",
+      "## Reproduções antes/depois",
+      "## IA05 — alta: identidade estável para todos os efeitos da cópia",
+      "### Semântica de repetição, reset e origens",
+      "## IA06 — média: observações causais dos erros transferidos",
+      "## Compatibilidade: envelope Firebase v4",
+      "## Testes e resultados",
+      "## Falhas preservadas durante a implementação",
+      "## Negativos históricos mantidos",
+      "## Metadados e capacidade",
+      "## Reversão e riscos remanescentes",
+      "## Commits e CI",
+      "## Evidências e reprodução"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/correcao-legada-d165485.md",
+    "bytes": 17888,
+    "sha256": "a8638155158588fab8a86568ef33b8b576228c383bcb88bd3c6cd154540be2bb",
+    "lines": 209,
+    "negativeLines": [
+      {
+        "line": 7,
+        "text": "**Homologação continua bloqueada / REPROVADO para sincronização legada.** A proteção implementada desliga esse"
+      },
+      {
+        "line": 168,
+        "text": "**REPROVADO para liberar sincronização legada ou anunciar homologação aprovada.** A entrega oferece um bloqueio real"
+      }
+    ],
+    "headings": [
+      "# Correção direcionada da sincronização legada — EEAR",
+      "## Resultado e política implementada",
+      "## Achados, gravidade e correções",
+      "### Commits disponíveis para revisão",
+      "## Reprodução controlada do cenário 9",
+      "## Matriz de validação",
+      "### F01–F13 e N01–N07",
+      "### Verificação de saída de conta no Firebase",
+      "## CI e limites da execução",
+      "## H01–H03 e segurança de publicação",
+      "## Metadados e reversão — pendências separadas",
+      "## Parecer e próximos passos",
+      "## Arquivos alterados em relação à base"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/correcao-legada-evidencias.txt",
+    "bytes": 206564,
+    "sha256": "056acd216a6f487e7d30facca4f32a2a2a85e47b84b0198e65c5df1e8b1831b6",
+    "lines": 1730,
+    "negativeLines": [
+      {
+        "line": 37,
+        "text": "  ✗ ordem confirmada B -> A, sobrescrita antiga e reabertura de B: nuvem preserva todas as marcas"
+      },
+      {
+        "line": 83,
+        "text": "  ✗ ordem confirmada B -> A, sobrescrita antiga e reabertura de B: nuvem preserva todas as marcas"
+      },
+      {
+        "line": 192,
+        "text": "  ✗ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte"
+      },
+      {
+        "line": 246,
+        "text": "  ✗ login com o Google (emulador): entra, sincroniza, e o documento da nuvem não guarda o e-mail"
+      },
+      {
+        "line": 897,
+        "text": "  ✗ de volta à versão nova: o estudo feito nas duas continua"
+      },
+      {
+        "line": 1000,
+        "text": "2026-11-13T18:27:00.5470491Z   ✗ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem"
+      },
+      {
+        "line": 1001,
+        "text": "2026-11-13T18:27:01.2340991Z   ✗ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união"
+      },
+      {
+        "line": 1030,
+        "text": "2026-11-13T18:27:29.8466356Z   ✗ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova"
+      },
+      {
+        "line": 1093,
+        "text": "2026-11-13T18:29:35.6902884Z   ✗ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais"
+      },
+      {
+        "line": 1094,
+        "text": "2026-11-13T18:29:35.6906319Z   ✗ os dois aparelhos convergem para o mesmo progresso — mod: {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\"tent\":2},\"POR02\":{\"best\":0.9,\"lido\":\"2026-11-13\",\"ok\":\"2026-11-13\",\" ≠ {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"MAT01\":{\"best\":0.8,\"lido\":\"2026-11-13\",\"ok\":\"2026-11-13\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\" — fc: {\"POR01~0\":[2,20400],\"POR02~0\":[1,99999]} ≠ {\"MAT01~0\":[2,99998],\"POR01~0\":[2,2"
+      },
+      {
+        "line": 1096,
+        "text": "2026-11-13T18:29:46.7858367Z   ✗ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota"
+      },
+      {
+        "line": 1097,
+        "text": "2026-11-13T18:29:46.7858835Z   ✗ mesmo cartão nos dois: vale a revisão gravada por último"
+      },
+      {
+        "line": 1098,
+        "text": "2026-11-13T18:29:46.7859176Z   ✗ erro corrigido num aparelho e errado de novo no outro continua no caderno"
+      },
+      {
+        "line": 1099,
+        "text": "2026-11-13T18:29:46.7859504Z   ✗ dois simulados iguais feitos em aparelhos diferentes contam como dois"
+      },
+      {
+        "line": 1100,
+        "text": "2026-11-13T18:30:06.3588117Z   ✗ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica [aulas na nuvem: POR01,ING14]"
+      },
+      {
+        "line": 1101,
+        "text": "2026-11-13T18:30:07.4557476Z   ✗ sem como separar o que veio antes do \"Zerar\": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje [sem cópia]"
+      },
+      {
+        "line": 1102,
+        "text": "2026-11-13T18:30:08.1042741Z   ✗ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado"
+      },
+      {
+        "line": 1103,
+        "text": "2026-11-13T18:30:09.3222358Z   ✗ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte"
+      },
+      {
+        "line": 1104,
+        "text": "2026-11-13T18:30:25.2509717Z   ✗ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto"
+      },
+      {
+        "line": 1414,
+        "text": "2026-11-14T02:12:33.7514510Z   ✗ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem"
+      },
+      {
+        "line": 1415,
+        "text": "2026-11-14T02:12:34.4347880Z   ✗ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união"
+      },
+      {
+        "line": 1444,
+        "text": "2026-11-14T02:13:03.0151468Z   ✗ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova"
+      },
+      {
+        "line": 1507,
+        "text": "2026-11-14T02:15:07.3129949Z   ✗ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais"
+      },
+      {
+        "line": 1508,
+        "text": "2026-11-14T02:15:07.3132707Z   ✗ os dois aparelhos convergem para o mesmo progresso — mod: {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\"tent\":2},\"POR02\":{\"best\":0.9,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\" ≠ {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"MAT01\":{\"best\":0.8,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\" — fc: {\"POR01~0\":[2,20400],\"POR02~0\":[1,99999]} ≠ {\"MAT01~0\":[2,99998],\"POR01~0\":[2,2"
+      },
+      {
+        "line": 1510,
+        "text": "2026-11-14T02:15:18.3067844Z   ✗ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota"
+      },
+      {
+        "line": 1511,
+        "text": "2026-11-14T02:15:18.3068394Z   ✗ mesmo cartão nos dois: vale a revisão gravada por último"
+      },
+      {
+        "line": 1512,
+        "text": "2026-11-14T02:15:18.3068698Z   ✗ erro corrigido num aparelho e errado de novo no outro continua no caderno"
+      },
+      {
+        "line": 1513,
+        "text": "2026-11-14T02:15:18.3069010Z   ✗ dois simulados iguais feitos em aparelhos diferentes contam como dois"
+      },
+      {
+        "line": 1514,
+        "text": "2026-11-14T02:15:37.8764725Z   ✗ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica [aulas na nuvem: POR01,ING14]"
+      },
+      {
+        "line": 1515,
+        "text": "2026-11-14T02:15:38.9765585Z   ✗ sem como separar o que veio antes do \"Zerar\": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje [sem cópia]"
+      },
+      {
+        "line": 1516,
+        "text": "2026-11-14T02:15:39.5423911Z   ✗ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado"
+      },
+      {
+        "line": 1517,
+        "text": "2026-11-14T02:15:40.7565673Z   ✗ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte"
+      },
+      {
+        "line": 1518,
+        "text": "2026-11-14T02:15:56.6497116Z   ✗ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto"
+      },
+      {
+        "line": 1525,
+        "text": "2026-11-14T02:12:53.8413483Z   ✗ sair mantendo: a tela volta ao progresso sem conta e a cópia da conta fica guardada à parte"
+      },
+      {
+        "line": 1698,
+        "text": "2026-11-13T19:09:12.1604644Z ✗ zerar-estudar: FALHA DE PREPARAÇÃO/EXECUÇÃO: Não comprovou aceitação e commit efetivo do diário novo."
+      },
+      {
+        "line": 1701,
+        "text": "2026-11-13T19:09:25.7667895Z GATE duravel-candidato: FALHOU"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/correcao-legada-resultados.json",
+    "bytes": 19724,
+    "sha256": "9917db728e1261133d7f8d85ac53cfeae3e58b4f41754e9ad472905c11681ed8",
+    "lines": 662,
+    "jsonType": "dict",
+    "negativeLines": [
+      {
+        "line": 629,
+        "text": "    \"uniao_automatica\": \"FALHOU\","
+      },
+      {
+        "line": 644,
+        "text": "  \"parecer\": \"REPROVADO para liberar sincronização legada; não é aprovação de homologação\","
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/correcao-quatro-bloqueadores-evidencias.txt",
+    "bytes": 332535,
+    "sha256": "a710749cf814558759743f0589b41eee146b14067c1fdc3db640cbd73ab70a40",
+    "lines": 3251,
+    "negativeLines": [
+      {
+        "line": 12,
+        "text": "FALHOU: 1 problema(s); não publique"
+      },
+      {
+        "line": 23,
+        "text": "✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:R1\":true,\"T:R2\":true,\"T:remota\":true},\"opsAnon\":[\"od9e1b419-58e5-47bf-a2b6-dbad2cedfaa1\",\"o503cfd8a-e5e4-4c20-bd83-790b9247d3fd\"],\"opsContaAntes\":[\"o72a0ba61-82a9-4297-808c-f8de2134b761\",\"o653788e1-1237-4d55-86da-a3bc555a8c9e\"]}"
+      },
+      {
+        "line": 25,
+        "text": "✗ exclusao-resposta-de-sessao-antiga: {\"http\":200,\"uidA\":\"HsJFdUvvmiYtNGW20oeLTPg0FYdS\",\"uidB\":\"eqXj0Uza0cgM17IDEglmkPIpA25S\",\"authAtual\":{\"uid\":null,\"local\":null},\"antesResposta\":{\"T:B\":true},\"depois\":{},\"remotoB\":{\"T:B\":true},\"aviso\":\"Progresso salvo neste aparelho.\"}"
+      },
+      {
+        "line": 39,
+        "text": "✗ importacao, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"oc63c2d8c-db46-483f-8808-52798f344cb8\",\"geracaoNova\":\"o48a837b2-de10-463a-864b-37502ea8d76a\",\"apagado\":true,\"ignoradas\":[\"o7c4046aa-bee3-4cdc-9e1d-924b2e026b16\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"oc63c2d8c-db46-483f-8808-52798f344cb8\",\"id\":\"o2e42cb9d-a079-468a-b6a9-9c7fd35337cc\"},\"voltou\":false,\""
+      },
+      {
+        "line": 40,
+        "text": "✗ importacao-sem-crash, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o2b8a7788-bd79-485d-985c-35058d6c303e\",\"geracaoNova\":\"o7398f999-b4ea-43c9-b110-acf1c18955b4\",\"apagado\":true,\"ignoradas\":[\"o674c1562-e8da-4fa4-bec6-63587ac99699\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o2b8a7788-bd79-485d-985c-35058d6c303e\",\"id\":\"o5db581ad-0398-42c8-bb97-80b3f67e57e5\"},\"volto"
+      },
+      {
+        "line": 42,
+        "text": "✗ importacao, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o1388276b-167a-45fc-a05d-a244cd526684\",\"geracaoNova\":\"o52e118e7-f2a5-43d6-ba00-ba5a755325d6\",\"apagado\":true,\"ignoradas\":[\"o783d753d-5356-4181-947f-d7dcff1d6499\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o1388276b-167a-45fc-a05d-a244cd526684\",\"id\":\"od381d2c7-9ece-428f-b6d8-a260ecf8d841\"},\"voltou\":false,"
+      },
+      {
+        "line": 43,
+        "text": "✗ importacao-sem-crash, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"oe1493502-4c18-4691-a329-2710def71dc0\",\"geracaoNova\":\"oef665277-d1fb-4c52-9a48-ce54e960e0c1\",\"apagado\":true,\"ignoradas\":[\"o49334599-9008-41cf-8b31-2fdcd55abcae\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"oe1493502-4c18-4691-a329-2710def71dc0\",\"id\":\"of4180953-8ac3-4b2e-8b46-1be08a9caf3c\"},\"volt"
+      },
+      {
+        "line": 54,
+        "text": "✗ levar-3-mais-2: {\"esperado\":5,\"local\":3,\"servidor\":3,\"idsAnon\":[\"o43b89991-56e8-4ecf-b80b-d204e8652540\",\"o5b121cc2-2c52-479a-8e35-413cdc29e067\",\"o26ed78be-3da9-429c-ab6c-de0ba2917732\"],\"idsBase\":[\"o2e7da864-5067-48df-b7d1-2acedc96e0fd\",\"o6587bb2f-d2ad-4f0c-93da-4cd5371a3b1a\"]}"
+      },
+      {
+        "line": 55,
+        "text": "✗ reimportar-apos-levar: {\"esperado\":5,\"depoisImportar\":6,\"depoisRepetirReabrir\":6,\"servidor\":6,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 76,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 99,
+        "text": "✗ importacao, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"oa48968f7-2571-4241-a261-7033c843c5db\",\"geracaoNova\":\"o80f74417-6641-4993-ba08-03208f2ad900\",\"apagado\":true,\"ignoradas\":[\"o86a00145-72fe-41d4-be31-0de71368d52e\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"oa48968f7-2571-4241-a261-7033c843c5db\",\"id\":\"oafa28142-49e1-4734-aa3c-d83d3f4a4617\"},\"voltou\":false,\""
+      },
+      {
+        "line": 100,
+        "text": "✗ importacao-sem-crash, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o359a50c5-0aa8-4c7b-8c3b-677b4db144c9\",\"geracaoNova\":\"oa3a73a1a-5132-49d0-ae77-2d4225151b4b\",\"apagado\":true,\"ignoradas\":[\"o4c1c8d56-a038-4dd9-9a01-214601704128\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o359a50c5-0aa8-4c7b-8c3b-677b4db144c9\",\"id\":\"o6e7bf198-ea01-46ca-b996-e6107147aab7\"},\"volto"
+      },
+      {
+        "line": 102,
+        "text": "✗ importacao, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o6e449a29-79c9-4123-8ffb-a3a997ced4b8\",\"geracaoNova\":\"ofbd03ee1-88b2-472a-894d-12ab4f548df7\",\"apagado\":true,\"ignoradas\":[\"of8da4b29-2222-4115-b8cf-81c870ae007b\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o6e449a29-79c9-4123-8ffb-a3a997ced4b8\",\"id\":\"o74fe2d07-1ace-4f43-879f-71e00779aff0\"},\"voltou\":false,"
+      },
+      {
+        "line": 103,
+        "text": "✗ importacao-sem-crash, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o9fd39f36-de7b-497a-937f-6ca87a21cd81\",\"geracaoNova\":\"oc53655c9-7c82-4b7a-9547-af07b061a6f7\",\"apagado\":true,\"ignoradas\":[\"oefe54cad-8644-404c-b3b1-7cef3c1c5b08\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o9fd39f36-de7b-497a-937f-6ca87a21cd81\",\"id\":\"o4f000de8-5d0d-466e-9869-93e9c75d5eb4\"},\"volt"
+      },
+      {
+        "line": 113,
+        "text": "✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:R1\":true,\"T:R2\":true,\"T:remota\":true},\"opsAnon\":[\"obac035be-992a-4cf0-9b3e-e22ad5be55aa\",\"o45ea6a71-3a33-45a0-8861-5d96db6baf90\"],\"opsContaAntes\":[\"o659e6a64-c27f-467f-8b61-12f46e803db6\",\"ofa18d249-abc0-4a06-a084-45293a65e010\"]}"
+      },
+      {
+        "line": 115,
+        "text": "✗ exclusao-resposta-de-sessao-antiga: {\"http\":200,\"uidA\":\"2RdG9WvC0QFJvWHqBRXqXZJfMALu\",\"uidB\":\"7fYDjzA6kyLkdW2wAdPC3YRJO0gs\",\"authAtual\":{\"uid\":null,\"local\":null},\"antesResposta\":{\"T:B\":true},\"depois\":{},\"remotoB\":{\"T:B\":true},\"aviso\":\"Progresso salvo neste aparelho.\"}"
+      },
+      {
+        "line": 133,
+        "text": "✗ levar-3-mais-2: {\"esperado\":5,\"local\":3,\"servidor\":3,\"idsAnon\":[\"o55b6ef32-38ed-4099-9b68-5c7915b81f33\",\"obd6e6407-a4e9-4d97-bae3-053a8b65e824\",\"o5b6a6865-a8ce-40ae-8112-09a20c26dc4d\"],\"idsBase\":[\"oeb76e280-abef-4b8b-8b4c-de3a328a3c9c\",\"o983076e8-6f86-43a0-bc81-49ae9311ad15\"]}"
+      },
+      {
+        "line": 134,
+        "text": "✗ reimportar-apos-levar: {\"esperado\":5,\"depoisImportar\":6,\"depoisRepetirReabrir\":6,\"servidor\":6,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 154,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 1054,
+        "text": "2026-11-14T21:08:21.8351843Z \u001b[36;1m  EEAR_FIREBASE_CLI=\"$RUNNER_TEMP/ia/node_modules/.bin/firebase\" EEAR_REPO_REPROVADO=\"$RUNNER_TEMP/ia-reprovado\" \\\u001b[0m"
+      },
+      {
+        "line": 1070,
+        "text": "2026-11-14T21:09:08.6424091Z ✗ importacao, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o7c6858e0-5991-41cb-97cc-7aec74b84685\",\"geracaoNova\":\"o33f3afc8-94f3-4e85-9734-b5cf45e15a5b\",\"apagado\":true,\"ignoradas\":[\"obcc6912b-920b-4e41-8c96-5540d500379b\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o7c6858e0-5991-41cb-97cc-7aec74b84685\",\"id\":\"oa61b37da-bcdd-4cc1-98c5-02"
+      },
+      {
+        "line": 1071,
+        "text": "2026-11-14T21:09:08.6428888Z ✗ importacao-sem-crash, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o5de09a99-1b31-4785-930c-264b3731e37c\",\"geracaoNova\":\"o99528fb2-3ea7-4a96-a2e7-ee362190b13c\",\"apagado\":true,\"ignoradas\":[\"o67373579-139d-442d-a75b-3e86cd9e405e\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o5de09a99-1b31-4785-930c-264b3731e37c\",\"id\":\"od08aff3a-ca19-4e"
+      },
+      {
+        "line": 1073,
+        "text": "2026-11-14T21:09:08.6436832Z ✗ importacao, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"oe12b026f-9abc-40d6-84b5-9336da1821bb\",\"geracaoNova\":\"ob111484f-96b3-4c54-aec8-1487ba9452eb\",\"apagado\":true,\"ignoradas\":[\"o07e1f414-b051-42cc-87ab-34c7624af40c\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"oe12b026f-9abc-40d6-84b5-9336da1821bb\",\"id\":\"o8952b764-14ce-4d2f-9af6-a"
+      },
+      {
+        "line": 1074,
+        "text": "2026-11-14T21:09:08.6440919Z ✗ importacao-sem-crash, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"obdd15d26-efa9-4cb8-ab9e-13c5cfda1ed9\",\"geracaoNova\":\"o9df4eaab-cf00-47ef-808b-b73651a283e5\",\"apagado\":true,\"ignoradas\":[\"of876d0df-f96c-47ee-84b2-9db8d36dcf2f\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"obdd15d26-efa9-4cb8-ab9e-13c5cfda1ed9\",\"id\":\"of84b4451-538d-4"
+      },
+      {
+        "line": 1085,
+        "text": "2026-11-14T21:09:47.7526963Z ✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:R1\":true,\"T:R2\":true,\"T:remota\":true},\"opsAnon\":[\"obe8a7af5-5bc6-408c-aebf-cce9d87c564d\",\"oe1c404b8-4a6b-467b-9330-68c6ee7aa52b\"],\"opsContaAntes\":[\"oc207f34f-fb62-4cc0-93ec-c14e50119a9d\",\"oe9dff159-9ca0-40ec-8a90-7e1c0002e5ef\"]}"
+      },
+      {
+        "line": 1087,
+        "text": "2026-11-14T21:09:47.7530704Z ✗ exclusao-resposta-de-sessao-antiga: {\"http\":200,\"uidA\":\"pf157PgRekfFFcvgf2U8MOF0tGfP\",\"uidB\":\"R4EvU909u70n5QhxNC3wjBAd6eIv\",\"authAtual\":{\"uid\":null,\"local\":null},\"antesResposta\":{\"T:B\":true},\"depois\":{},\"remotoB\":{\"T:B\":true},\"aviso\":\"Progresso salvo neste aparelho.\"}"
+      },
+      {
+        "line": 1105,
+        "text": "2026-11-14T21:10:13.1921858Z ✗ levar-3-mais-2: {\"esperado\":5,\"local\":3,\"servidor\":3,\"idsAnon\":[\"o61b317ff-e8f4-4181-8d39-5a1f959715c6\",\"o94ff71b8-a8bc-4ac0-9edf-dc113d2cf314\",\"of3830230-2312-4173-9b0f-7ba34970d688\"],\"idsBase\":[\"o8e23777e-7b9b-4d45-a584-19b136a5a15e\",\"o2cc2ed38-1cec-4f29-8de1-3607250b15e1\"]}"
+      },
+      {
+        "line": 1106,
+        "text": "2026-11-14T21:10:13.1923675Z ✗ reimportar-apos-levar: {\"esperado\":5,\"depoisImportar\":6,\"depoisRepetirReabrir\":6,\"servidor\":6,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 1125,
+        "text": "2026-11-14T21:10:31.7273557Z ✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 2124,
+        "text": "  ✗ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem"
+      },
+      {
+        "line": 2125,
+        "text": "  ✗ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união"
+      },
+      {
+        "line": 2158,
+        "text": "  ✗ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova"
+      },
+      {
+        "line": 2237,
+        "text": "  ✗ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais"
+      },
+      {
+        "line": 2238,
+        "text": "  ✗ os dois aparelhos convergem para o mesmo progresso — mod: {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\"tent\":2},\"POR02\":{\"best\":0.9,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\" ≠ {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"MAT01\":{\"best\":0.8,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\" — fc: {\"POR01~0\":[2,20400],\"POR02~0\":[1,99999]} ≠ {\"MAT01~0\":[2,99998],\"POR01~0\":[2,20400]} — sims: [{\"d\":\"2026-10"
+      },
+      {
+        "line": 2240,
+        "text": "  ✗ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota"
+      },
+      {
+        "line": 2241,
+        "text": "  ✗ mesmo cartão nos dois: vale a revisão gravada por último"
+      },
+      {
+        "line": 2242,
+        "text": "  ✗ erro corrigido num aparelho e errado de novo no outro continua no caderno"
+      },
+      {
+        "line": 2243,
+        "text": "  ✗ dois simulados iguais feitos em aparelhos diferentes contam como dois"
+      },
+      {
+        "line": 2244,
+        "text": "  ✗ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica [aulas na nuvem: POR01,ING14]"
+      },
+      {
+        "line": 2245,
+        "text": "  ✗ sem como separar o que veio antes do \"Zerar\": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje [sem cópia]"
+      },
+      {
+        "line": 2246,
+        "text": "  ✗ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado"
+      },
+      {
+        "line": 2247,
+        "text": "  ✗ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte"
+      },
+      {
+        "line": 2248,
+        "text": "  ✗ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto"
+      },
+      {
+        "line": 2302,
+        "text": "✗ importacao, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"ode6e2459-ea7a-47b6-9fc4-7ef2020dd81b\",\"geracaoNova\":\"oa5850138-8213-4b50-8836-19bcf4ed2e6c\",\"apagado\":true,\"ignoradas\":[\"o719fdde9-f745-433d-82fc-872667e438b7\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"ode6e2459-ea7a-47b6-9fc4-7ef2020dd81b\",\"id\":\"o02a12004-8a63-4731-a027-c9ef2f81538b\"},\"voltou\":false,\""
+      },
+      {
+        "line": 2303,
+        "text": "✗ importacao-sem-crash, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o77312df7-79eb-4971-aa46-23ea3d7eea5a\",\"geracaoNova\":\"oefac21e6-dbef-4396-8a6c-1ac5a78be972\",\"apagado\":true,\"ignoradas\":[\"oa519ea5b-4ed3-4b9b-8255-2753350fe7f0\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o77312df7-79eb-4971-aa46-23ea3d7eea5a\",\"id\":\"o7f72cc07-6eea-48a8-a3eb-6fb193f8bba3\"},\"volto"
+      },
+      {
+        "line": 2305,
+        "text": "✗ importacao, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"od8c664aa-7dcb-412b-93ab-da1b855c5230\",\"geracaoNova\":\"oed083c7d-83ad-4beb-b516-126d4ab72ea4\",\"apagado\":true,\"ignoradas\":[\"o1524bab2-c2d5-4ee1-aa77-4b62375245fe\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"od8c664aa-7dcb-412b-93ab-da1b855c5230\",\"id\":\"o924db85a-b223-4c9a-894b-4b3abfcd7063\"},\"voltou\":false,"
+      },
+      {
+        "line": 2306,
+        "text": "✗ importacao-sem-crash, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o051d9e56-18ed-44ec-9dcf-b4a8bc2e543f\",\"geracaoNova\":\"oa359a74a-a55e-4918-bc0f-2a424e277c14\",\"apagado\":true,\"ignoradas\":[\"ob1ceb6b4-bd4a-43e8-ba7b-48ede5b5f566\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o051d9e56-18ed-44ec-9dcf-b4a8bc2e543f\",\"id\":\"oadafc38c-e458-401b-8d52-66dd5c3a3131\"},\"volt"
+      },
+      {
+        "line": 2315,
+        "text": "✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:R1\":true,\"T:R2\":true,\"T:remota\":true},\"opsAnon\":[\"offd2d799-2523-4322-a288-72fb6cbd0b77\",\"oc6d4af6b-dde6-4364-9ff6-8117a5a6dce8\"],\"opsContaAntes\":[\"o44ee1172-0e48-46be-83f5-e39618eac39c\",\"oaa8bba43-40d4-4751-87d6-a136cb08596d\"]}"
+      },
+      {
+        "line": 2317,
+        "text": "✗ exclusao-resposta-de-sessao-antiga: {\"http\":200,\"uidA\":\"CINs5ImGFvAPWBGdXrcNc3umc3Vk\",\"uidB\":\"DGlFnwdI5frLkOTXn8ZykPzGbNbL\",\"authAtual\":{\"uid\":null,\"local\":null},\"antesResposta\":{\"T:B\":true},\"depois\":{},\"remotoB\":{\"T:B\":true},\"aviso\":\"Progresso salvo neste aparelho.\"}"
+      },
+      {
+        "line": 2334,
+        "text": "✗ levar-3-mais-2: {\"esperado\":5,\"local\":3,\"servidor\":3,\"idsAnon\":[\"o3a1532c8-fd9a-423d-b8cd-f88a42dfd893\",\"o691cb3b0-3642-4e4c-afd2-b62a4c7c8002\",\"o9908d789-df55-4f41-a67e-1e17faf44b8e\"],\"idsBase\":[\"o2843ee7c-dc53-4528-9b16-c197dda680f0\",\"o99828627-b33d-4064-b41a-14f2e169d5a8\"]}"
+      },
+      {
+        "line": 2335,
+        "text": "✗ reimportar-apos-levar: {\"esperado\":5,\"depoisImportar\":6,\"depoisRepetirReabrir\":6,\"servidor\":6,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 2354,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/correcao-quatro-bloqueadores-resultados.json",
+    "bytes": 128847,
+    "sha256": "c4bbcef04f19f9dfa16036586644ad2fa28bc40245e768694cb723379384f23d",
+    "lines": 3536,
+    "jsonType": "dict",
+    "negativeLines": [
+      {
+        "line": 2209,
+        "text": "  \"comandosMatriz\": \"import subprocess,os,time,json,hashlib,sys\\nfrom pathlib import Path\\nrepo=Path('/workspace/eear-dev'); out=Path('/tmp/eear-ia35-correcao'); grupo=sys.argv[1]\\nenv=os.environ.copy();env.update(NODE_PATH='/tmp/eear-audit-deps/node_modules',PLAYWRIGHT_BROWSERS_PATH='/tmp/eear-audit-browsers',EEAR_FIREBASE_SDK='/tmp/eear-audit-deps/node_modules/firebase',EEAR_FIREBASE_CLI='/tmp/eear-audit-deps/node_modules/.bin/firebase',EEAR_REPO_LEGADO='/tmp/eear-2f6cad6',EEAR_REPO_REPROVADO="
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/correcao-quatro-bloqueadores.md",
+    "bytes": 16192,
+    "sha256": "9ea54aa39974799a37e14fe940ffe49efa04bc6bfccb29f1c1ba66b57491c656",
+    "lines": 171,
+    "negativeLines": [],
+    "headings": [
+      "# Correção dos quatro bloqueadores Firebase",
+      "## Reproduções antes e depois",
+      "### IA01 — aceitação, confirmação e descarte",
+      "### IA02 — identidades e resets",
+      "### IA03 — sessão que iniciou a operação",
+      "### IA04 — mudança explícita do contrato de servidor",
+      "## Matriz e CI",
+      "## Crescimento de metadados",
+      "## Reversão manual e compatibilidade",
+      "## Limitações e pendências"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/engenharia-qualidade.md",
+    "bytes": 10445,
+    "sha256": "18817b17ab6b01dc75664510c8fb72f68124b30a3867a8ce3636666de5fdc335",
+    "lines": 122,
+    "negativeLines": [],
+    "headings": [
+      "# Auditoria de engenharia e qualidade",
+      "## Linha de base",
+      "## Arquitetura (resumo)",
+      "## Achados",
+      "### Achado 6: união implementada (branch `claude/sync-acessibilidade`)",
+      "## Desempenho (medido, sem otimização necessária)",
+      "## Acessibilidade (simulada)",
+      "## Auditoria pedagógica automatizada (somente leitura)",
+      "## Testes adicionados",
+      "## Pendências que dependem do proprietário"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-a6366a8-segunda.md",
+    "bytes": 21278,
+    "sha256": "1ffbc236ef5def78c5a2e2b0d52d87f3257f3858e44228889f3c8148a9049d3e",
+    "lines": 256,
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "**Parecer: REPROVADO para avançar à homologação controlada. Produção não autorizada.**"
+      }
+    ],
+    "headings": [
+      "# Segunda auditoria do candidato Firebase a6366a8",
+      "## Participação do auditor e método",
+      "## Resultado das quatro correções originais",
+      "## Achados novos",
+      "### IA05 — identidade de importação legada não é idempotente sob concorrência",
+      "### IA06 — Levar perde o contexto de uma correção observada",
+      "## Regras IA04: dependência e suficiência demonstrada",
+      "## Matriz original reexecutada",
+      "## Metadados, migração e downgrade",
+      "## Como repetir os contraexemplos",
+      "## CI e escopo do parecer"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-2f6cad6-evidencias.txt",
+    "bytes": 53604,
+    "sha256": "7fc322a6ff74d1e96c0316c16f879ebd7d0388864a35956be77c276c9932687c",
+    "lines": 554,
+    "negativeLines": [
+      {
+        "line": 156,
+        "text": "✗ sair-apagar: {\"dadosAntes\":4,\"dadosDepois\":[{\"chave\":\"missao-eear-v1-diario@firebase:<UID_FICTICIO>#t216188t6mwde9aak\",\"nomeRetido\":true,\"estudoRetido\":true},{\"chave\":\"missao-eear-v1-local-apagado@firebase:<UID_FICTICIO>\",\"nomeRetido\":false,\"estudoRetido\":false}],\"aposReabrir\":2,\"servidorExiste\":true,\"mensagem\":\"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem.\"}"
+      },
+      {
+        "line": 157,
+        "text": "✗ excluir-conta: {\"dadosAntes\":4,\"dadosDepois\":[{\"chave\":\"missao-eear-v1-diario@firebase:<UID_FICTICIO>#t6oh9p4vlmwde9e2s\",\"nomeRetido\":true,\"estudoRetido\":true},{\"chave\":\"missao-eear-v1-local-apagado@firebase:<UID_FICTICIO>\",\"nomeRetido\":false,\"estudoRetido\":false}],\"aposReabrir\":2,\"servidorExiste\":false,\"mensagem\":\"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos.\"}"
+      },
+      {
+        "line": 158,
+        "text": "✗ outra-sessao: {\"aceitoOffline\":true,\"documentoApagado\":true,\"novoLoginHTTP\":400,\"outraSessaoAindaConectada\":true,\"documentoRecriado\":true,\"nomeRecriado\":true,\"feito\":{\"T:base\":true,\"T:offline\":true}}"
+      },
+      {
+        "line": 159,
+        "text": "✗ diario-corrompido: {\"preservadoExato\":false,\"original\":false,\"backup\":false,\"restantes\":0,\"avisoRecuperacao\":0}"
+      },
+      {
+        "line": 161,
+        "text": "✗ atividade-dispositivos: {\"aceitos\":{\"A\":3,\"B\":3,\"simuladosA\":0,\"simuladosB\":0,\"registrosIguais\":true,\"idsDistintos\":null},\"convergiu\":false,\"esperadoAtividade\":4,\"atividadeServidor\":3,\"simuladosServidor\":0,\"atividadeReaberto\":3,\"feito\":{\"T:A-independente\":true,\"T:B-independente\":true,\"T:base\":true}}"
+      },
+      {
+        "line": 162,
+        "text": "✗ simulados-iguais: {\"aceitos\":{\"A\":3,\"B\":3,\"simuladosA\":1,\"simuladosB\":1,\"registrosIguais\":true,\"idsDistintos\":true},\"convergiu\":false,\"esperadoAtividade\":4,\"atividadeServidor\":3,\"simuladosServidor\":2,\"atividadeReaberto\":3,\"feito\":{\"T:base\":true}}"
+      },
+      {
+        "line": 169,
+        "text": "✗ quota-real: {\"quota\":{\"caracteres\":5240741,\"negou\":true},\"aceitaNaUI\":true,\"principal\":false,\"diario\":false,\"aviso\":\"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.\",\"alertas\":[],\"avisou\":false,\"recuperou\":false}"
+      },
+      {
+        "line": 171,
+        "text": "✗ lider-pausada: {\"local\":true,\"principal\":true,\"diario\":true,\"enviouPausada\":false,\"enviouRetorno\":true,\"aviso\":\"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.\",\"lider\":\"A\"}"
+      },
+      {
+        "line": 180,
+        "text": "✗ dias: {\"campo\":\"dias\",\"tipoInvalido\":\"null\",\"erros\":[\"Cannot read properties of null (reading 'indexOf')\"],\"acessoDados\":0,\"tipoPersistido\":\"null\",\"corpoCaracteres\":321}"
+      },
+      {
+        "line": 181,
+        "text": "✗ excl: {\"campo\":\"excl\",\"tipoInvalido\":\"objeto\",\"erros\":[\"object is not iterable (cannot read property Symbol(Symbol.iterator))\"],\"acessoDados\":0,\"tipoPersistido\":\"object\",\"corpoCaracteres\":321}"
+      },
+      {
+        "line": 182,
+        "text": "✗ nome: {\"campo\":\"nome\",\"tipoInvalido\":\"objeto\",\"erros\":[\"(S.cfg.nome || \\\"\\\").trim is not a function\"],\"acessoDados\":1,\"tipoPersistido\":\"object\",\"corpoCaracteres\":7976}"
+      },
+      {
+        "line": 189,
+        "text": "✗ commit-sem-confirmacao: {\"confirmarAntesNovoEstudo\":false,\"commitHTTP\":200,\"baseAntes\":2,\"servidorAntes\":3,\"aceito\":true,\"voltou\":true,\"offlineAtividade\":3,\"chegou\":false,\"visivel\":false,\"atividadeFinal\":5,\"servidorFinal\":5,\"marcacoesFinais\":{\"T:ack-interrompido\":true,\"T:apos-reabrir\":true,\"T:base\":true},\"certificado\":true}"
+      },
+      {
+        "line": 207,
+        "text": "✗ limpeza-concorrente: {\"ponto\":\"depois da última conferência, antes do setItem\",\"webLocks\":false,\"aceitoB\":true,\"persistidoB\":true,\"recibosAntes\":1,\"espelhosAntes\":1,\"limpou\":true,\"limpouIDB\":true,\"limpezaMs\":2457,\"aposLimpeza\":{\"T:base\":true,\"T:B\":true},\"principalA\":{\"T:base\":true,\"T:A\":true},\"recuperou\":false,\"recibosDepois\":0,\"espelhosDepois\":0,\"exportado\":{\"T:base\":true,\"T:A\":true},\"principalD\":{\"T:base\":true,\"T:A\":true},\"servidor\":{\"T:A\":true,\"T:base\":true},\"atividade\":3,\"aviso\":\"Progresso"
+      },
+      {
+        "line": 213,
+        "text": "✗ limpeza-concorrente: {\"ponto\":\"depois da última conferência, antes do setItem\",\"webLocks\":false,\"aceitoB\":true,\"persistidoB\":true,\"recibosAntes\":1,\"espelhosAntes\":1,\"limpou\":true,\"limpouIDB\":true,\"limpezaMs\":2291,\"aposLimpeza\":{\"T:base\":true,\"T:B\":true},\"principalA\":{\"T:base\":true,\"T:A\":true},\"recuperou\":false,\"recibosDepois\":0,\"espelhosDepois\":0,\"exportado\":{\"T:base\":true,\"T:A\":true},\"principalD\":{\"T:base\":true,\"T:A\":true},\"servidor\":{\"T:A\":true,\"T:base\":true},\"atividade\":3,\"aviso\":\"Progresso"
+      },
+      {
+        "line": 228,
+        "text": "✗ segunda-escrita-8s: {\"webLocks\":false,\"eventosStorage\":false,\"oculta\":false,\"relogioControlado\":false,\"quantidade\":9,\"historico\":{\"seq\":9,\"inc\":1,\"ant\":[3,4,5,6,7,8]},\"primeiroAceito\":true,\"diarioSeq\":1,\"novaSeq\":2,\"antesDoPrazo\":true,\"adotou\":true,\"esperaRealMs\":28055,\"antesRetornar\":3,\"esperado\":11,\"UI\":12,\"cache\":12,\"feito\":{\"T:base\":true,\"T:primeiro\":true,\"T:segundo\":true,\"T:seq-3\":true,\"T:seq-4\":true,\"T:seq-5\":true,\"T:seq-6\":true,\"T:seq-7\":true,\"T:seq-8\":true,\"T:seq-9\":true},\"servidor\":12"
+      },
+      {
+        "line": 235,
+        "text": "✗ segunda-escrita-8s: {\"webLocks\":false,\"eventosStorage\":false,\"oculta\":false,\"relogioControlado\":false,\"quantidade\":9,\"historico\":{\"seq\":9,\"inc\":1,\"ant\":[3,4,5,6,7,8]},\"primeiroAceito\":true,\"diarioSeq\":1,\"novaSeq\":2,\"antesDoPrazo\":true,\"adotou\":true,\"esperaRealMs\":27810,\"antesRetornar\":3,\"esperado\":11,\"UI\":12,\"cache\":12,\"feito\":{\"T:base\":true,\"T:primeiro\":true,\"T:segundo\":true,\"T:seq-3\":true,\"T:seq-4\":true,\"T:seq-5\":true,\"T:seq-6\":true,\"T:seq-7\":true,\"T:seq-8\":true,\"T:seq-9\":true},\"servidor\":12"
+      },
+      {
+        "line": 242,
+        "text": "✗ segunda-escrita-8s: {\"webLocks\":false,\"eventosStorage\":false,\"oculta\":false,\"relogioControlado\":false,\"quantidade\":9,\"historico\":{\"seq\":10,\"inc\":2,\"ant\":[4,5,6,7,8,9]},\"primeiroAceito\":true,\"diarioSeq\":2,\"novaSeq\":3,\"antesDoPrazo\":true,\"adotou\":true,\"esperaRealMs\":28003,\"antesRetornar\":3,\"esperado\":11,\"UI\":12,\"cache\":12,\"feito\":{\"T:base\":true,\"T:primeiro\":true,\"T:segundo\":true,\"T:seq-3\":true,\"T:seq-4\":true,\"T:seq-5\":true,\"T:seq-6\":true,\"T:seq-7\":true,\"T:seq-8\":true,\"T:seq-9\":true},\"servidor\":1"
+      },
+      {
+        "line": 283,
+        "text": "✗ zerar-estudar: {\"aceito\":{\"feito\":{\"T:novo\":true},\"act\":{\"2026-11-12\":1},\"z\":1794479537985},\"confirmouIDB\":true,\"antes\":{\"principal\":{\"feito\":{\"T:novo\":true},\"act\":{\"2026-11-12\":1},\"certsZ\":1794479537985,\"certs\":[]},\"ls\":[{\"seq\":3,\"ts\":1794479538002,\"feito\":{\"T:novo\":true},\"baseZ\":1794479537985,\"z\":1794479537985}],\"idb\":[{\"seq\":3,\"ts\":1794479538002,\"feito\":{\"T:novo\":true},\"baseZ\":1794479537985,\"z\":1794479537985}]},\"antesDoApp\":{\"principal\":{\"feito\":{\"T:base\":true},\"act\":{\"2026-11-12\":2},\"certs"
+      },
+      {
+        "line": 284,
+        "text": "✗ duas-quedas: {\"aceito\":{\"feito\":{\"T:base\":true,\"T:novo\":true},\"act\":{\"2026-11-12\":3},\"z\":0},\"confirmouIDB\":true,\"antes\":{\"principal\":{\"feito\":{\"T:base\":true,\"T:novo\":true},\"act\":{\"2026-11-12\":3},\"certsZ\":0,\"certs\":[\"DURAVEL-CERT\"]},\"ls\":[{\"seq\":2,\"ts\":1794479557390,\"feito\":{\"T:base\":true,\"T:novo\":true},\"baseZ\":0,\"z\":0}],\"idb\":[{\"seq\":2,\"ts\":1794479557390,\"feito\":{\"T:base\":true,\"T:novo\":true},\"baseZ\":0,\"z\":0}]},\"antesDoApp\":{\"principal\":{\"feito\":{\"T:base\":true},\"act\":{\"2026-11-12\":2},\"certsZ\":0"
+      },
+      {
+        "line": 291,
+        "text": "✗ zerar-estudar: {\"aceito\":{\"feito\":{\"T:novo\":true},\"act\":{\"2026-11-12\":1},\"z\":1794479795675},\"confirmouIDB\":true,\"antes\":{\"principal\":{\"feito\":{\"T:novo\":true},\"act\":{\"2026-11-12\":1},\"certsZ\":1794479795675,\"certs\":[]},\"ls\":[{\"seq\":3,\"ts\":1794479795703,\"feito\":{\"T:novo\":true},\"baseZ\":1794479795675,\"z\":1794479795675}],\"idb\":[{\"seq\":3,\"ts\":1794479795703,\"feito\":{\"T:novo\":true},\"baseZ\":1794479795675,\"z\":1794479795675}]},\"antesDoApp\":{\"principal\":{\"feito\":{\"T:base\":true},\"act\":{\"2026-11-12\":2},\"certs"
+      },
+      {
+        "line": 292,
+        "text": "✗ duas-quedas: {\"aceito\":{\"feito\":{\"T:base\":true,\"T:novo\":true},\"act\":{\"2026-11-12\":3},\"z\":0},\"confirmouIDB\":true,\"antes\":{\"principal\":{\"feito\":{\"T:base\":true,\"T:novo\":true},\"act\":{\"2026-11-12\":3},\"certsZ\":0,\"certs\":[\"DURAVEL-CERT\"]},\"ls\":[{\"seq\":2,\"ts\":1794479813853,\"feito\":{\"T:base\":true,\"T:novo\":true},\"baseZ\":0,\"z\":0}],\"idb\":[{\"seq\":2,\"ts\":1794479813853,\"feito\":{\"T:base\":true,\"T:novo\":true},\"baseZ\":0,\"z\":0}]},\"antesDoApp\":{\"principal\":{\"feito\":{\"T:base\":true},\"act\":{\"2026-11-12\":2},\"certsZ\":0"
+      },
+      {
+        "line": 346,
+        "text": "✗ canonica-em-script-texto: {\"gateExit\": 0, \"configExecutada\": false, \"projetoRuntime\": null, \"deveriaAceitar\": false}"
+      },
+      {
+        "line": 347,
+        "text": "✗ canonica-em-template-com-comentario: {\"gateExit\": 0, \"configExecutada\": false, \"projetoRuntime\": null, \"deveriaAceitar\": false}"
+      },
+      {
+        "line": 353,
+        "text": "✗ canonica-em-script-texto: {\"gateExit\": 0, \"configExecutada\": false, \"projetoRuntime\": null, \"deveriaAceitar\": false}"
+      },
+      {
+        "line": 354,
+        "text": "✗ canonica-em-template-com-comentario: {\"gateExit\": 0, \"configExecutada\": false, \"projetoRuntime\": null, \"deveriaAceitar\": false}"
+      },
+      {
+        "line": 554,
+        "text": "Parecer do SHA 2f6cad6: REPROVADO. Nenhuma correção do runtime nesta entrega."
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-2f6cad6.md",
+    "bytes": 27222,
+    "sha256": "48b7cbbb6758076d487bdcd77dd47e30e9fc127c3de43a8204211c4f1828fbfd",
+    "lines": 204,
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "**Parecer: REPROVADO para avançar à homologação.** Há perda silenciosa de progresso reproduzível, restauração de progresso apagado após crash, contagens incorretas e falsos aceites da barreira H02. Os oito cenários F01 passaram; os três workflows estão verdes. Esses resultados positivos não abrangem os caminhos que falharam nesta auditoria."
+      },
+      {
+        "line": 204,
+        "text": "**REPROVADO no SHA 2f6cad6.** Há perda silenciosa comprovada e a barreira de homologação ainda aceita artefatos inválidos. Não há autorização técnica para avançar baseada apenas nos oito F01 ou no CI."
+      }
+    ],
+    "headings": [
+      "# Auditoria independente — candidato 2f6cad6",
+      "## Comparação objetiva",
+      "## F13 — Alta — corrida permanece após a última conferência",
+      "## N06 — Alta — crash após Zerar e estudar restaura progresso apagado",
+      "## N07 — Alta — limpeza do espelho elimina a última cópia efetivamente durável",
+      "## F09 — Média — contagens ainda não são exatas",
+      "## H02 — Média — configuração canônica em contexto inerte ainda é aceita",
+      "## N01–N05 — problemas anteriores persistentes",
+      "## Regressões, segurança e limites",
+      "## Testes executados",
+      "## CI do SHA exato",
+      "## Entrega e parecer"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-61e1d32-evidencias.txt",
+    "bytes": 28694,
+    "sha256": "b23787ec433beb8a98a47494f88e5d8ce438d2979bfcbc16eee07113e33275d0",
+    "lines": 551,
+    "negativeLines": [
+      {
+        "line": 78,
+        "text": "✗ sem-web-locks-crash: {\"webLocks\":false,\"interrupcao\":\"Page.crash\",\"duravel\":true,\"vistoEmOutraAba\":1,\"aceitaNaExportacao\":true,\"principalJaContinha\":false,\"ponto\":{\"scriptId\":\"29\",\"lineNumber\":2543,\"columnNumber\":14},\"aposHandlerDeSalvar\":true,\"recuperado\":false,\"chegou\":false,\"exportado\":{\"T:base\":true},\"diariosAntesExcluir\":1,\"ofereceuExcluir\":true,\"diarioDepois\":0,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 79,
+        "text": "✗ exclusao-com-diario-pendente: {\"webLocks\":true,\"aceitaNaExportacao\":true,\"principalJaContinha\":false,\"duraveisAntes\":1,\"avisoAntes\":\"Progresso salvo na sua conta.\",\"ofereceuExcluir\":true,\"duraveisDepois\":0,\"recuperado\":false,\"chegou\":false,\"exportado\":{},\"servidor\":{\"T:base\":true}}"
+      },
+      {
+        "line": 81,
+        "text": "✗ sem-notificacoes: {\"recuperouViva\":false,\"diarios\":1,\"recuperouFria\":true,\"estado\":{\"T:ativa\":true,\"T:base\":true,\"T:orfao\":true}}"
+      },
+      {
+        "line": 167,
+        "text": "✗ configuração apenas em comentário não habilita homologação: exit=0; esperado=recusar"
+      },
+      {
+        "line": 168,
+        "text": "✗ configuração sobrescrita por script antes do app: exit=0; esperado=recusar"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-61e1d32.md",
+    "bytes": 19579,
+    "sha256": "0c533ef61df1b20527845aa303bf23583952bac6095c72c2f9d9d6220573bf68",
+    "lines": 175,
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "**Parecer: REPROVADO.** Os oito cenários F01 passaram sem alteração dos critérios, F08 passou e as contagens verificadas ficaram exatas. Entretanto, reproduzi perda de uma alteração aceita pela UI em dois caminhos adicionais: exclusão local com diário pendente de outra aba, inclusive com Web Locks, e recuperação após crash sem Web Locks. O CI verde não cobre esses caminhos."
+      },
+      {
+        "line": 175,
+        "text": "**REPROVADO enquanto F10/F11 permitirem perda reproduzível de progresso.** Passar nos oito cenários originais é uma evidência positiva e necessária, mas não elimina as perdas independentes demonstradas."
+      }
+    ],
+    "headings": [
+      "# Auditoria independente — 61e1d32",
+      "## Achados confirmados",
+      "### F10 — exclusão local não considera os diários pendentes",
+      "### F11 — fallback sem Web Locks não recupera órfãos",
+      "### F12 — perda de notificações adia recuperação de órfão",
+      "## Oito cenários F01 e F08",
+      "## Arquitetura de diários e teste de interrupção",
+      "## F09, concorrência, suspensão e certificados",
+      "## F02–F07 preservados",
+      "## Hosting H01–H03",
+      "## CI de 61e1d32",
+      "## Reprodução e limites",
+      "## Comparação e entrega"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-8bd32d2-evidencias.txt",
+    "bytes": 30594,
+    "sha256": "66a42065088179c147809155295f39368c588a6e737150553e1f3fc5cc24101a",
+    "lines": 394,
+    "negativeLines": [
+      {
+        "line": 164,
+        "text": "✗ limpeza-concorrente: {\"webLocks\":false,\"aceitoB\":true,\"persistidoB\":true,\"recibosAntes\":1,\"limpou\":true,\"aposLimpeza\":{\"T:base\":true,\"T:B\":true},\"principalA\":{\"T:base\":true,\"T:A\":true},\"recuperou\":false,\"recibosDepois\":0,\"exportado\":{\"T:base\":true,\"T:A\":true},\"principalD\":{\"T:base\":true,\"T:A\":true},\"servidor\":{\"T:A\":true,\"T:base\":true},\"atividade\":3,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 168,
+        "text": "✗ limpeza-concorrente: {\"webLocks\":false,\"aceitoB\":true,\"persistidoB\":true,\"recibosAntes\":1,\"limpou\":true,\"aposLimpeza\":{\"T:base\":true,\"T:B\":true},\"principalA\":{\"T:base\":true,\"T:A\":true},\"recuperou\":false,\"recibosDepois\":0,\"exportado\":{\"T:base\":true,\"T:A\":true},\"principalD\":{\"T:base\":true,\"T:A\":true},\"servidor\":{\"T:A\":true,\"T:base\":true},\"atividade\":3,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 175,
+        "text": "✗ segunda-escrita-8s: {\"webLocks\":false,\"eventosStorage\":false,\"oculta\":false,\"relogioControlado\":false,\"primeiroAceito\":true,\"diarioSeq\":1,\"novaSeq\":2,\"antesDoPrazo\":true,\"adotou\":true,\"esperaRealMs\":27897,\"antesRetornar\":3,\"esperado\":4,\"UI\":5,\"cache\":5,\"feito\":{\"T:base\":true,\"T:primeiro\":true,\"T:segundo\":true},\"servidor\":7,\"reaberto\":7,\"correto\":false,\"nuvemCorreta\":false}"
+      },
+      {
+        "line": 176,
+        "text": "✗ segunda-escrita-30min: FALHA DE PREPARAÇÃO/EXECUÇÃO: browserContext.close: Target page, context or browser has been closed"
+      },
+      {
+        "line": 177,
+        "text": "✗ crash-processo: FALHA DE PREPARAÇÃO/EXECUÇÃO: browser.newContext: Target page, context or browser has been closed"
+      },
+      {
+        "line": 185,
+        "text": "✗ segunda-escrita-8s: {\"webLocks\":false,\"eventosStorage\":false,\"oculta\":false,\"relogioControlado\":false,\"primeiroAceito\":true,\"diarioSeq\":1,\"novaSeq\":2,\"antesDoPrazo\":true,\"adotou\":true,\"esperaRealMs\":28122,\"antesRetornar\":3,\"esperado\":4,\"UI\":5,\"cache\":5,\"feito\":{\"T:base\":true,\"T:primeiro\":true,\"T:segundo\":true},\"servidor\":7,\"reaberto\":7,\"correto\":false,\"nuvemCorreta\":false}"
+      },
+      {
+        "line": 186,
+        "text": "✗ segunda-escrita-30min: {\"webLocks\":false,\"eventosStorage\":false,\"oculta\":true,\"relogioControlado\":true,\"primeiroAceito\":true,\"diarioSeq\":1,\"novaSeq\":2,\"antesDoPrazo\":true,\"adotou\":true,\"esperaRealMs\":25360,\"antesRetornar\":3,\"esperado\":4,\"UI\":5,\"cache\":5,\"feito\":{\"T:base\":true,\"T:primeiro\":true,\"T:segundo\":true},\"servidor\":7,\"reaberto\":7,\"correto\":false,\"nuvemCorreta\":false}"
+      },
+      {
+        "line": 187,
+        "text": "✗ crash-processo: FALHA DE PREPARAÇÃO/EXECUÇÃO: locator.inputValue: Timeout 30000ms exceeded."
+      },
+      {
+        "line": 196,
+        "text": "✗ crash-processo: {\"interrupcao\":\"Browser.crash\",\"perfilPersistente\":true,\"esperaAntesCrash\":1200,\"aceitaNaUI\":true,\"diarioLegivel\":true,\"ofereceuExcluir\":false,\"principalAntes\":{\"T:base\":true},\"preApp\":{\"principalPresente\":false,\"diarios\":0,\"diarioContinhaMarcacao\":false},\"recuperou\":false,\"chegou\":false,\"estado\":{}}"
+      },
+      {
+        "line": 251,
+        "text": "✗ configuração em comentário JavaScript não habilita homologação: exit=0; esperado=recusar"
+      },
+      {
+        "line": 252,
+        "text": "✗ configuração em script não executável não habilita homologação: exit=0; esperado=recusar"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-8bd32d2.md",
+    "bytes": 20751,
+    "sha256": "8bc1ad2fe87ba0a4c65a78615f3fa51b4ec387ec3d2b4738582e46e5f3b9efe3",
+    "lines": 178,
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "**REPROVADO para avançar à homologação.** Os oito cenários F01 e as reproduções anteriores de F10–F12 passaram. Entretanto, um teste adicional reproduziu perda silenciosa de progresso sem Web Locks, repetida em uma segunda execução. Também houve duplicação de contagens no retorno de aba considerada órfã e dois falsos aceites adicionais de H02. Os três workflows do candidato estão verdes."
+      },
+      {
+        "line": 178,
+        "text": "Foram acrescentados testes independentes e documentação na branch Codex. Não apliquei correções de produção nem incorporei o runtime do Claude. **Parecer final: REPROVADO.**"
+      }
+    ],
+    "headings": [
+      "# Auditoria independente — 8bd32d2",
+      "## Achados que impedem aprovação",
+      "### F13 — limpeza prematura permite perda silenciosa sem Web Locks",
+      "### F09 residual — retorno de aba viva reaplica contribuição anterior",
+      "### Segurança dos prazos de detecção",
+      "### H02 — dois novos falsos aceites em scripts inertes",
+      "### Queda do processo inteiro — limite de durabilidade do armazenamento",
+      "## Regressões que passaram",
+      "## Hosting H01/H03 e CI",
+      "## Reprodução, evidências e limites",
+      "## Entrega"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-b2a369b-evidencias.txt",
+    "bytes": 19106,
+    "sha256": "9f88425dbc25029bfb5641671991d89cafaab57d82338557a15089689d1c00d1",
+    "lines": 268,
+    "negativeLines": [
+      {
+        "line": 5,
+        "text": "Parecer: REPROVADO. Apenas emuladores; nenhum deploy ou Firebase real."
+      },
+      {
+        "line": 28,
+        "text": "✗ zerar: {\"aceitoA\":[\"T:depois-zerar\"],\"aceitoB\":[\"T:depois-zerar\"],\"offline\":true,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 31,
+        "text": "✗ zerar-duplo: {\"aceitoA\":[\"T:A\",\"T:B\"],\"aceitoB\":[\"T:A\",\"T:B\"],\"offline\":true,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 37,
+        "text": "✗ zerar-nuvem: {\"aceito\":{\"t\":1794413833751,\"certsZ\":1794413833725,\"certs\":[],\"feito\":{\"T:depois\":true},\"act\":{\"2026-11-11\":1}},\"offline\":{\"t\":1794413833751,\"certsZ\":1794413833725,\"certs\":[],\"feito\":{\"T:depois\":true},\"act\":{\"2026-11-11\":1}},\"servidor\":{\"t\":1794413833751,\"certsZ\":1794413833725,\"certs\":[],\"feito\":{},\"act\":{\"2026-11-11\":1}},\"antesReabrir\":{\"t\":1794413833751,\"certsZ\":1794413833725,\"certs\":[],\"feito\":{},\"act\":{\"2026-11-11\":1}},\"aviso\":\"Progresso salvo na sua conta.\",\"reaberto\":{\"t\":1"
+      },
+      {
+        "line": 39,
+        "text": "✗ exclusao-surda: {\"removido\":true,\"restaurado\":{\"t\":1794413857389,\"certsZ\":0,\"certs\":[\"RISCO-CERT\"],\"feito\":{\"T:base\":true,\"T:novo\":true},\"act\":{\"2026-11-11\":3}}}"
+      },
+      {
+        "line": 40,
+        "text": "✗ contagens: {\"esperado\":62,\"A\":49,\"B\":49,\"cache\":49,\"marcacoes\":61}"
+      },
+      {
+        "line": 41,
+        "text": "✗ escrita-interrompida: {\"BconfirmadaAntesDeFechar\":true,\"aposFecharAmbas\":{\"t\":1794413861088,\"certsZ\":0,\"certs\":[\"RISCO-CERT\"],\"feito\":{\"T:base\":true,\"T:A-race\":true},\"act\":{\"2026-11-11\":3}},\"breakpointAposSetItem\":true}"
+      },
+      {
+        "line": 47,
+        "text": "✗ zerar-unica: {\"aceito\":{\"t\":1794413995160,\"certsZ\":1794413995152,\"certs\":[],\"feito\":{\"T:depois\":true},\"act\":{\"2026-11-11\":1}},\"offline\":{\"t\":1794413995160,\"certsZ\":1794413995152,\"certs\":[],\"feito\":{\"T:depois\":true},\"act\":{\"2026-11-11\":1}},\"servidor\":{\"t\":1794413995160,\"certsZ\":1794413995152,\"certs\":[],\"feito\":{},\"act\":{\"2026-11-11\":1}},\"antesReabrir\":{\"t\":1794413995160,\"certsZ\":1794413995152,\"certs\":[],\"feito\":{},\"act\":{\"2026-11-11\":1}},\"aviso\":\"Progresso salvo na sua conta.\",\"reaberto\":{\"t\":1"
+      },
+      {
+        "line": 48,
+        "text": "✗ contagens: {\"esperado\":62,\"A\":38,\"B\":38,\"cache\":38,\"marcacoes\":61}"
+      },
+      {
+        "line": 54,
+        "text": "✗ zerar-unica: {\"aceito\":{\"t\":1794414095922,\"certsZ\":1794414095914,\"certs\":[],\"feito\":{\"T:depois\":true},\"act\":{\"2026-11-11\":1}},\"offline\":{\"t\":1794414095922,\"certsZ\":1794414095914,\"certs\":[],\"feito\":{\"T:depois\":true},\"act\":{\"2026-11-11\":1}},\"servidor\":{\"t\":1794414095922,\"certsZ\":1794414095914,\"certs\":[],\"feito\":{},\"act\":{\"2026-11-11\":1}},\"antesReabrir\":{\"t\":1794414095922,\"certsZ\":1794414095914,\"certs\":[],\"feito\":{},\"act\":{\"2026-11-11\":1}},\"aviso\":\"Progresso salvo na sua conta.\",\"reaberto\":{\"t\":1"
+      },
+      {
+        "line": 142,
+        "text": "✗ Hosting declara predeploy (necessário; conteúdo exige auditoria) — sem hook, o CLI não executa o verificador Python"
+      },
+      {
+        "line": 149,
+        "text": "✗ projeto-divergente é recusado por --homologacao — exit=0"
+      },
+      {
+        "line": 150,
+        "text": "✗ marcador em página auxiliar não habilita app oficial como homologação — exit=0"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-b2a369b.md",
+    "bytes": 14958,
+    "sha256": "017c9da75613826f34d8e373993730f685bd1f971a6ce9e00211a3dc82d38c22",
+    "lines": 150,
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "**REPROVADO.** Há perda de progresso reproduzida após “Zerar” e em uma janela real de leitura/escrita concorrente no `localStorage`. A matriz independente terminou em **6/8**, sem alteração dos testes ou de seus critérios. H01–H03 também permanecem abertos."
+      },
+      {
+        "line": 150,
+        "text": "**Conclusão final: REPROVADO.** A correção melhora a preservação em vários cenários, mas não fecha as janelas demonstradas nem preserva o estudo posterior a “Zerar”. Contagens e Hosting também exigem revisão. Não há base técnica para aprovação com ressalvas enquanto essas perdas confirmadas permanecerem."
+      }
+    ],
+    "headings": [
+      "# Parecer independente final — b2a369b",
+      "## Oito cenários obrigatórios, sem enfraquecimento",
+      "## F08 — Alta — estudo posterior a “Zerar” é apagado na sincronização",
+      "## F01 residual — Alta — leitura/união/escrita não é transacional",
+      "## F09 — Média — contagens incorretas sob concorrência real",
+      "## Cópia apagada e abas suspensas",
+      "## F02–F07 após o merge",
+      "## H01–H03 reavaliados",
+      "## CI dos commits solicitados",
+      "## Testes executados e limites"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-ce548dd-evidencias.txt",
+    "bytes": 11967,
+    "sha256": "910f16f32cb05b2bfdaa90267d2cd2ef06f23e240194b739cebd513a76903351",
+    "lines": 147,
+    "negativeLines": [
+      {
+        "line": 23,
+        "text": "✗ Hosting tem gate automático predeploy (projeto efetivo e conteúdo) — sem hook, o CLI não executa o verificador Python"
+      },
+      {
+        "line": 29,
+        "text": "✗ sem-marcador é recusado por --site — exit=0"
+      },
+      {
+        "line": 30,
+        "text": "✗ projeto-divergente é recusado por --homologacao — exit=0"
+      },
+      {
+        "line": 31,
+        "text": "✗ marcador em página auxiliar não habilita app oficial como homologação — exit=0"
+      },
+      {
+        "line": 82,
+        "text": "✗ fechar-A: {\"aceitoA\":[\"T:base\",\"T:remover\",\"T:A\"],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:B\"],\"paginas\":[null]}"
+      },
+      {
+        "line": 83,
+        "text": "✗ fechar-B: {\"aceitoA\":[\"T:base\",\"T:remover\",\"T:A\"],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:B\"],\"paginas\":[null]}"
+      },
+      {
+        "line": 84,
+        "text": "✗ desmarcar: {\"aceitoA\":[\"T:base\"],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:B\"],\"offline\":false,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 85,
+        "text": "✗ zerar: {\"aceitoA\":[],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:depois-zerar\"],\"offline\":false,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 86,
+        "text": "✗ certificado: {\"aceitoA\":[\"T:base\",\"T:remover\"],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:B\"],\"offline\":false,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 88,
+        "text": "✗ zerar-duplo: {\"aceitoA\":[\"T:A\"],\"aceitoB\":[\"T:B\"],\"paginas\":[null]}"
+      },
+      {
+        "line": 95,
+        "text": "✗ fechar-A: {\"aceitoA\":[\"T:base\",\"T:remover\",\"T:A\"],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:B\"],\"offline\":false,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 96,
+        "text": "✗ fechar-B: {\"aceitoA\":[\"T:base\",\"T:remover\",\"T:A\"],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:B\"],\"offline\":false,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 97,
+        "text": "✗ desmarcar: page.waitForSelector: Timeout 30000ms exceeded."
+      },
+      {
+        "line": 98,
+        "text": "✗ zerar: {\"aceitoA\":[],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:depois-zerar\"],\"offline\":false,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 99,
+        "text": "✗ certificado: {\"aceitoA\":[\"T:base\",\"T:remover\"],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:B\"],\"offline\":false,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 101,
+        "text": "✗ zerar-duplo: {\"aceitoA\":[\"T:A\"],\"aceitoB\":[\"T:B\"],\"offline\":false,\"servidor\":false,\"paginas\":[false]}"
+      },
+      {
+        "line": 108,
+        "text": "✗ desmarcar: {\"aceitoA\":[\"T:base\"],\"aceitoB\":[\"T:base\",\"T:remover\",\"T:B\"],\"offline\":false,\"servidor\":false,\"paginas\":[false]}"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-ce548dd.md",
+    "bytes": 13571,
+    "sha256": "de8d1a20964a76abff20f59f80c73526ecc8e5a78f8e25e6cc05fbd63ba64a8c",
+    "lines": 119,
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "Atualização posterior: [parecer final independente de b2a369b](firebase-codex-b2a369b.md). A correção foi recebida e testada; o parecer continua **REPROVADO**."
+      },
+      {
+        "line": 7,
+        "text": "**Parecer mantido: REPROVADO.** Esta etapa não é a auditoria final da correção de F01. Aguarda-se o commit do Claude que a implementará; a aprovação dependerá dos testes independentes e da preservação de F02–F07."
+      },
+      {
+        "line": 119,
+        "text": "Até essa validação, o parecer permanece **REPROVADO**, sem autorização para merge, deploy ou publicação de regras."
+      }
+    ],
+    "headings": [
+      "# Auditoria complementar — Hosting e preparação de F01",
+      "## Escopo e preservação",
+      "## Achados sobre Hosting e barreiras",
+      "### H01 — Média — deploy do Hosting sem gate automático",
+      "### H02 — Média — `--homologacao` aceita rótulo sem validar ambiente efetivo",
+      "### H03 — Baixa — política `no-cache` não cobre a URL raiz",
+      "### F05 continua aplicável ao snapshot do Claude",
+      "## Isolamento e OAuth",
+      "## Barreiras oficiais e CI",
+      "## Suíte adicional de F01 preparada",
+      "## Próxima auditoria"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-evidencias.txt",
+    "bytes": 25422,
+    "sha256": "149f7c469c97eb8062557613dc53fa34f28213c855060df3b6e1ae7a4eacd7b0",
+    "lines": 413,
+    "negativeLines": [
+      {
+        "line": 25,
+        "text": "ciclo-original.log: SHA256=14e3ff238c127c351db46f58f5e1affaea8d526d4aaec343743327b3aa8f7113 passam=0 falhas=3; última linha=['✗ saida: {\"preservou\":false}']"
+      },
+      {
+        "line": 27,
+        "text": "publicacao-regressao-original.log: SHA256=44c11f5436bd3bc2801cd9a84fec708009744281458ce7f121c843c554ce4914 passam=0 falhas=0; última linha=['FALHOU: 5 de 180 casos do autoteste']"
+      },
+      {
+        "line": 34,
+        "text": "✗ recusa: {\"erro\":\"permission-denied\",\"ativa\":false,\"enviadoA\":null,\"enviadoB\":null}"
+      },
+      {
+        "line": 35,
+        "text": "✗ callback: {\"erro\":\"\",\"ativa\":true,\"enviadoA\":{\"T:B\":true},\"enviadoB\":{\"T:B\":true}}"
+      },
+      {
+        "line": 36,
+        "text": "✗ saida: {\"preservou\":false}"
+      },
+      {
+        "line": 44,
+        "text": "AUTOTESTE FALHOU: [FALHA] [outros] projeto de teste sem marcador (site): esperado 1, obtido 0"
+      },
+      {
+        "line": 45,
+        "text": "AUTOTESTE FALHOU: [FALHA] [outros] projeto de teste com marcador falso (app): esperado 1, obtido 0"
+      },
+      {
+        "line": 46,
+        "text": "AUTOTESTE FALHOU: [FALHA] [outros] configuração de teste em JavaScript separado (site): esperado 1, obtido 0"
+      },
+      {
+        "line": 47,
+        "text": "AUTOTESTE FALHOU: [FALHA] [outros] configuração de teste em JavaScript separado (APK): esperado 1, obtido 0"
+      },
+      {
+        "line": 48,
+        "text": "AUTOTESTE FALHOU: [FALHA] [outros] marcador em JavaScript separado (APK): esperado 1, obtido 0"
+      },
+      {
+        "line": 49,
+        "text": "FALHOU: 5 de 180 casos do autoteste"
+      },
+      {
+        "line": 55,
+        "text": "2026-11-11T05:22:47.8671354Z   ✗ página fechando: o envio antecipado não começa (o estudo fica no aparelho e segue o caminho normal)"
+      },
+      {
+        "line": 221,
+        "text": "  ✗ SONDA abas offline: preservar ambas as marcações após fechar a primeira [cache=false, nuvem=false]"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-noturna-8bd32d2-evidencias.txt",
+    "bytes": 17287,
+    "sha256": "3575cf0c0d531500c29fed3bd58644409a5a82fca1177b3c0e1f7ca405593bc4",
+    "lines": 195,
+    "negativeLines": [
+      {
+        "line": 59,
+        "text": "✗ sair-apagar: {\"dadosAntes\":4,\"dadosDepois\":[{\"chave\":\"missao-eear-v1-diario@firebase:<UID_FICTICIO>#talon3yzzmwcyrrh0\",\"nomeRetido\":true,\"estudoRetido\":true}],\"aposReabrir\":1,\"servidorExiste\":true,\"mensagem\":\"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Você saiu. O progresso da conta foi apagado deste aparelho e continua na nuvem.\"}"
+      },
+      {
+        "line": 60,
+        "text": "✗ excluir-conta: {\"dadosAntes\":4,\"dadosDepois\":[{\"chave\":\"missao-eear-v1-diario@firebase:<UID_FICTICIO>#t1mdyd9jtmwcyru6o\",\"nomeRetido\":true,\"estudoRetido\":true}],\"aposReabrir\":1,\"servidorExiste\":false,\"mensagem\":\"estimativa: o edital ainda não saiu estimativa: o edital ainda não saiu Sua conta, o progresso dela na nuvem e a cópia dela neste aparelho foram excluídos.\"}"
+      },
+      {
+        "line": 61,
+        "text": "✗ outra-sessao: {\"aceitoOffline\":true,\"documentoApagado\":true,\"novoLoginHTTP\":400,\"outraSessaoAindaConectada\":true,\"documentoRecriado\":true,\"nomeRecriado\":true,\"feito\":{\"T:base\":true,\"T:offline\":true}}"
+      },
+      {
+        "line": 62,
+        "text": "✗ diario-corrompido: {\"preservadoExato\":false,\"original\":false,\"backup\":false,\"restantes\":0,\"avisoRecuperacao\":0}"
+      },
+      {
+        "line": 64,
+        "text": "✗ atividade-dispositivos: {\"aceitos\":{\"A\":3,\"B\":3,\"simuladosA\":0,\"simuladosB\":0,\"registrosIguais\":true,\"idsDistintos\":null},\"convergiu\":false,\"esperadoAtividade\":4,\"atividadeServidor\":3,\"simuladosServidor\":0,\"atividadeReaberto\":3,\"feito\":{\"T:A-independente\":true,\"T:B-independente\":true,\"T:base\":true}}"
+      },
+      {
+        "line": 65,
+        "text": "✗ simulados-iguais: {\"aceitos\":{\"A\":3,\"B\":3,\"simuladosA\":1,\"simuladosB\":1,\"registrosIguais\":true,\"idsDistintos\":true},\"convergiu\":false,\"esperadoAtividade\":4,\"atividadeServidor\":3,\"simuladosServidor\":2,\"atividadeReaberto\":3,\"feito\":{\"T:base\":true}}"
+      },
+      {
+        "line": 72,
+        "text": "✗ quota-real: {\"quota\":{\"caracteres\":5240778,\"negou\":true},\"aceitaNaUI\":true,\"principal\":false,\"diario\":false,\"aviso\":\"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.\",\"alertas\":[],\"avisou\":false,\"recuperou\":false}"
+      },
+      {
+        "line": 74,
+        "text": "✗ lider-pausada: {\"local\":true,\"principal\":false,\"diario\":true,\"enviouPausada\":false,\"enviouRetorno\":true,\"aviso\":\"Progresso salvo neste aparelho. Outra aba do curso, aberta nesta conta, envia o progresso para a nuvem.\",\"lider\":\"A\"}"
+      },
+      {
+        "line": 83,
+        "text": "✗ dias: {\"campo\":\"dias\",\"tipoInvalido\":\"null\",\"erros\":[\"Cannot read properties of null (reading 'indexOf')\"],\"acessoDados\":0,\"tipoPersistido\":\"null\",\"corpoCaracteres\":321}"
+      },
+      {
+        "line": 84,
+        "text": "✗ excl: {\"campo\":\"excl\",\"tipoInvalido\":\"objeto\",\"erros\":[\"object is not iterable (cannot read property Symbol(Symbol.iterator))\"],\"acessoDados\":0,\"tipoPersistido\":\"object\",\"corpoCaracteres\":321}"
+      },
+      {
+        "line": 85,
+        "text": "✗ nome: {\"campo\":\"nome\",\"tipoInvalido\":\"objeto\",\"erros\":[\"(S.cfg.nome || \\\"\\\").trim is not a function\"],\"acessoDados\":1,\"tipoPersistido\":\"object\",\"corpoCaracteres\":7976}"
+      },
+      {
+        "line": 92,
+        "text": "✗ commit-sem-confirmacao: {\"confirmarAntesNovoEstudo\":false,\"commitHTTP\":200,\"baseAntes\":2,\"servidorAntes\":3,\"aceito\":true,\"voltou\":true,\"offlineAtividade\":3,\"chegou\":false,\"visivel\":false,\"atividadeFinal\":5,\"servidorFinal\":5,\"marcacoesFinais\":{\"T:ack-interrompido\":true,\"T:apos-reabrir\":true,\"T:base\":true},\"certificado\":true}"
+      },
+      {
+        "line": 141,
+        "text": "✗ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:base,T:apagar,T:b5]"
+      },
+      {
+        "line": 149,
+        "text": "  ✗ duas gravações quase juntas (uma aba leu a chave atrasada): a outra aba percebe e une de volta, sem perder nada [feito: T:base,T:apagar,T:b5]"
+      },
+      {
+        "line": 183,
+        "text": "try{for(let i=1;i<=3;i++){console.log('RODADA '+i+' — módulo inalterado do candidato');await require(path.join(alvo,'testes/abas.js'))({b,srv:{url},base,ok:(p,m)=>{console.log((p?'✓ ':'✗ ')+m);if(!p)falhas++;}});}}finally{await b.close();await new Promise(r=>srv.close(r));}console.log('Falhas de asserção: '+falhas);process.exitCode=falhas?1:0;})().catch(e=>{console.error(e);process.exitCode=1;});"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex-noturna-8bd32d2.md",
+    "bytes": 24832,
+    "sha256": "5f60a95b6a07e6f91aa236b340be6931177cc879641f70b05685e8921448fbad",
+    "lines": 215,
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "**Parecer da base auditada: REPROVADO.** Esta rodada encontrou perda silenciosa sob quota real de armazenamento, resíduos locais depois de exclusões confirmadas, recriação de documento por outra sessão após exclusão da conta no emulador, falhas persistentes de validação de entrada e contagens incorretas entre dispositivos e após interrupção da confirmação de gravação. Nenhuma correção paralela do Claude é considerada auditada ou aprovada por este relatório."
+      },
+      {
+        "line": 177,
+        "text": "| Módulo de abas do candidato, isolado e inalterado, 3 rodadas | **23 passaram, 1 falhou**, mesma asserção intermitente |"
+      },
+      {
+        "line": 215,
+        "text": "As fases foram cobertas com revisão, testes locais e documentação. Permanecem limitações de plataforma/produção explicitadas acima; elas não foram usadas para ocultar as falhas reproduzíveis do app. **Parecer final de 8bd32d2: REPROVADO.**"
+      }
+    ],
+    "headings": [
+      "# Auditoria noturna independente — base 8bd32d2",
+      "## Cobertura das fases",
+      "## Achados novos",
+      "### N01 — perda silenciosa com quota real, inclusive com Web Locks",
+      "### N02 — diário pessoal permanece depois de apagar deste aparelho ou excluir a conta",
+      "### N03 — outra sessão recria o documento depois de excluir a conta",
+      "### N04 — configuração malformada é persistida e quebra a recuperação pela UI",
+      "### N05 — diário ilegível é apagado sem quarentena",
+      "## F09 ampliado — subcontagem entre dispositivos independentes",
+      "### F09 após perda da confirmação de um commit real",
+      "## Controles positivos e limites operacionais",
+      "## Segurança de UID e regras",
+      "## Testes, evidências e reprodução",
+      "## Recomendações e parecer"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-codex.md",
+    "bytes": 20993,
+    "sha256": "f2ea430fa77e3cf6f502bd0df9f0cf9473fcc666659f8e204bd8801994b3f232",
+    "lines": 183,
+    "negativeLines": [
+      {
+        "line": 3,
+        "text": "Parecer mais recente: [auditoria final independente de b2a369b](firebase-codex-b2a369b.md) — **REPROVADO**, com novas reproduções de perda de progresso."
+      },
+      {
+        "line": 5,
+        "text": "Atualização posterior: [Hosting em ce548dd, CI confirmado e preparação do gate de F01](firebase-codex-ce548dd.md). O parecer continua REPROVADO."
+      },
+      {
+        "line": 9,
+        "text": "**Parecer: REPROVADO para aprovação da integração em homologação.** Há perda de progresso reproduzida entre abas offline ainda não corrigida (F01). As correções desta auditoria reduzem outros riscos, mas não eliminam esse bloqueador. Testes exploratórios com contas fictícias podem continuar; isto não é autorização para publicar site, APK ou regras."
+      }
+    ],
+    "headings": [
+      "# Auditoria independente da integração Firebase — EEAR",
+      "## Escopo e integridade da revisão",
+      "## Achados",
+      "### F01 — Alta — perda silenciosa entre abas offline (ABERTO)",
+      "### F02 — Alta — resposta após saída da página sobrescreve cache (CORRIGIDO)",
+      "### F03 — Alta — callback de transação usa estado de outra sessão (CORRIGIDO)",
+      "### F04 — Média — erro atrasado desliga sincronização da nova conta (CORRIGIDO)",
+      "### F05 — Média — barreira de homologação dependia só de marcador em HTML (CORRIGIDO)",
+      "### F06 — Baixa — descrição incorreta de dados pessoais (COMENTÁRIOS CORRIGIDOS)",
+      "### F07 — Média — fixture de emulador herdava configuração externa (CORRIGIDO)",
+      "## Regras do Firestore",
+      "## Autenticação, reconexão e arquitetura",
+      "## Testes e comparação antes/depois",
+      "## Workflows e cadeia de PRs #27–#31",
+      "## Commits disponíveis para revisão",
+      "## Pendências que impedem uma aprovação ampla"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-homologacao.md",
+    "bytes": 34186,
+    "sha256": "4126508067050d52ef0abfd04691e15c534026c8bab350bb2d62ff909d7167b7",
+    "lines": 378,
+    "negativeLines": [
+      {
+        "line": 190,
+        "text": "- **Reprodução** (sonda do Codex no emulador, merge `553ff01`, antes da correção): `✗ SONDA abas offline … [cache=false,"
+      },
+      {
+        "line": 220,
+        "text": "`f01-abas.test.js` 6 de 8 (`zerar` e `zerar-duplo` falham); `f01-riscos.test.js`: `zerar-nuvem` ✗, `zerar-unica` ✗,"
+      },
+      {
+        "line": 221,
+        "text": "`exclusao-surda` ✗, `contagens` ✗ (58 de 62), `escrita-interrompida` ✗, `suspensa` ✓; `hosting-auditoria.py`: 3 falhas."
+      },
+      {
+        "line": 247,
+        "text": "   O rastro de uma falha intermitente (contagem 37 a 41 de 42) mostrou a causa: no Chromium, uma aba pode ler a chave"
+      },
+      {
+        "line": 311,
+        "text": "Reprodução no `8bd32d2` com os testes do Codex, sem alteração: `concorrencia-fallback.test.js` ✗ (F13: B some depois"
+      }
+    ],
+    "headings": [
+      "# Firebase: homologação no projeto `eear-teste`",
+      "## 1. O que já existia (não reimplementado)",
+      "## 2. O que esta branch acrescenta",
+      "## 3. Testes (sem serviço real)",
+      "## 4. Hosting e login com o Google (configuração para o iPhone)",
+      "## 5. Regras do Firestore a publicar",
+      "## 6. Duas contas fictícias e o isolamento",
+      "## 7. O que o dono faz no console (cada passo é operação no serviço real)",
+      "## 8. Roteiro de aprovação (real)",
+      "## 9. Resposta à auditoria do Codex (`auditoria/firebase-codex.md`)",
+      "### 9.1 F01: primeira correção (substituída na seção 9.2)",
+      "### 9.2 Segunda rodada (`auditoria/firebase-codex-b2a369b.md`, que reprovou `b2a369b`)",
+      "### 9.3 Terceira rodada (`auditoria/firebase-codex-61e1d32.md`, que reprovou `61e1d32`)",
+      "### 9.4 Quarta rodada (`auditoria/firebase-codex-8bd32d2.md`, que reprovou `8bd32d2`)",
+      "## 10. Riscos pendentes (investigados; nada disso está resolvido)"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-oficial-evidencias.txt",
+    "bytes": 380768,
+    "sha256": "b92dc2b6f0ce6559e92f1a4875b985bb7ccc4bf58a268cd5b6f3e9b533ce282f",
+    "lines": 4016,
+    "negativeLines": [
+      {
+        "line": 1163,
+        "text": "  ✗ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem"
+      },
+      {
+        "line": 1164,
+        "text": "  ✗ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união"
+      },
+      {
+        "line": 1197,
+        "text": "  ✗ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova"
+      },
+      {
+        "line": 1276,
+        "text": "  ✗ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais"
+      },
+      {
+        "line": 1277,
+        "text": "  ✗ os dois aparelhos convergem para o mesmo progresso — mod: {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\"tent\":2},\"POR02\":{\"best\":0.9,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\" ≠ {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"MAT01\":{\"best\":0.8,\"lido\":\"2026-11-14\",\"ok\":\"2026-11-14\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\" — fc: {\"POR01~0\":[2,20400],\"POR02~0\":[1,99999]} ≠ {\"MAT01~0\":[2,99998],\"POR01~0\":[2,20400]} — sims: [{\"d\":\"2026-10"
+      },
+      {
+        "line": 1279,
+        "text": "  ✗ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota"
+      },
+      {
+        "line": 1280,
+        "text": "  ✗ mesmo cartão nos dois: vale a revisão gravada por último"
+      },
+      {
+        "line": 1281,
+        "text": "  ✗ erro corrigido num aparelho e errado de novo no outro continua no caderno"
+      },
+      {
+        "line": 1282,
+        "text": "  ✗ dois simulados iguais feitos em aparelhos diferentes contam como dois"
+      },
+      {
+        "line": 1283,
+        "text": "  ✗ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica [aulas na nuvem: POR01,ING14]"
+      },
+      {
+        "line": 1284,
+        "text": "  ✗ sem como separar o que veio antes do \"Zerar\": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje [sem cópia]"
+      },
+      {
+        "line": 1285,
+        "text": "  ✗ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado"
+      },
+      {
+        "line": 1286,
+        "text": "  ✗ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte"
+      },
+      {
+        "line": 1287,
+        "text": "  ✗ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto"
+      },
+      {
+        "line": 1483,
+        "text": "  ✗ de volta à versão nova: o estudo feito nas duas continua"
+      },
+      {
+        "line": 1497,
+        "text": "  ✗ na versão anterior: o progresso antigo abre e o aluno marca uma tarefa e revisa um cartão"
+      },
+      {
+        "line": 1500,
+        "text": "  ✗ na versão nova: aulas, notas, cartões, erros, tarefas, simulados e o nome continuam iguais"
+      },
+      {
+        "line": 1512,
+        "text": "  ✗ reversão: cópia do estudo legado preservada em quarentena e oferecida pela interface"
+      },
+      {
+        "line": 2202,
+        "text": "2026-11-14T13:31:22.6480513Z GATE operacoes-interrupcao: FALHOU"
+      },
+      {
+        "line": 3778,
+        "text": "GATE f01-abas: FALHOU"
+      },
+      {
+        "line": 3796,
+        "text": "GATE noturna-integridade: FALHOU"
+      },
+      {
+        "line": 3814,
+        "text": "GATE noturna-falhas: FALHOU"
+      },
+      {
+        "line": 3832,
+        "text": "GATE noturna-seguranca: FALHOU"
+      },
+      {
+        "line": 3850,
+        "text": "GATE noturna-confirmacao: FALHOU"
+      },
+      {
+        "line": 3868,
+        "text": "GATE duravel-candidato: FALHOU"
+      },
+      {
+        "line": 3885,
+        "text": "GATE operacoes-interrupcao: FALHOU"
+      },
+      {
+        "line": 3902,
+        "text": "GATE operacoes-suspensas: FALHOU"
+      },
+      {
+        "line": 3919,
+        "text": "GATE operacoes-falhas: FALHOU"
+      },
+      {
+        "line": 3936,
+        "text": "GATE operacoes-recuperacao: FALHOU"
+      },
+      {
+        "line": 3953,
+        "text": "GATE operacoes-exclusao-concorrente: FALHOU"
+      },
+      {
+        "line": 3970,
+        "text": "GATE operacoes-cache-exclusao: FALHOU"
+      },
+      {
+        "line": 3982,
+        "text": "✗ build eear-teste aceito só como homologação"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-oficial-resultados.json",
+    "bytes": 52569,
+    "sha256": "cd1e54db3209e8a2a06c70b5b9e7982a27af95e33e13d8939e1b448fb7795cc3",
+    "lines": 1897,
+    "jsonType": "dict",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/firebase-transporte-oficial.md",
+    "bytes": 12426,
+    "sha256": "e0714caa8326d54670bbca56e4e32d215c622201a7b72a89171823e5775df6d0",
+    "lines": 106,
+    "negativeLines": [],
+    "headings": [
+      "# Transporte oficial Firebase, persistência e migração",
+      "## Inventário e separação",
+      "## Política de testes: sem equivalência falsa",
+      "## Migração de usuários antigos",
+      "## Confirmações, segurança e limites"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/flashcards-celular.md",
+    "bytes": 3152,
+    "sha256": "9a30e2b553c3af723e54a3c6b8ed5a7b8b00a886b99e825b7bfd13d13d046985",
+    "lines": 63,
+    "negativeLines": [],
+    "headings": [
+      "# Flashcards em telas pequenas: auditoria e correção",
+      "## Como foi medido",
+      "## Problemas encontrados (antes)",
+      "## Correção",
+      "## Depois",
+      "## Limitações"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/integracao-segura.md",
+    "bytes": 20603,
+    "sha256": "60d61213d6bd034c96f6b18b4f6544bd33929100f936c0b9aac26f7b0108fc3d",
+    "lines": 272,
+    "negativeLines": [],
+    "headings": [
+      "# Preparação segura para a integração",
+      "## 1. Auditoria dos Lotes 0 a 3",
+      "## 2. Exclusão do progresso na nuvem do curso no Claude",
+      "## 3. Integração e publicação",
+      "## 4. Versões antigas e novas no mesmo progresso",
+      "## 5. Testes e CI",
+      "## 6. Riscos que continuam"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/lgpd-auditoria-tecnica.md",
+    "bytes": 6403,
+    "sha256": "f50ba789856158a87e538a0b468f12132be8b6001e336e2bc1791a621258a2ee",
+    "lines": 62,
+    "negativeLines": [],
+    "headings": [
+      "# Auditoria técnica de privacidade (LGPD)",
+      "## Dados tratados hoje (versão gratuita, sem conta ativa)",
+      "## Dados previstos com a conta ligada (Firebase, hoje desligado)",
+      "## Riscos e medidas recomendadas",
+      "## Bases legais (hipóteses para revisão)",
+      "## Limitações deste levantamento"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/lote4-fisica-amostra.md",
+    "bytes": 14544,
+    "sha256": "fed3d2e1009f0c65f5f33aa0b45177ea3bf5764367c17e126b73595f2060f8a3",
+    "lines": 193,
+    "negativeLines": [],
+    "headings": [
+      "# Lote 4 — flashcards de Física: auditoria e amostra para aprovação",
+      "## Auditoria dos 157 cartões (18 aulas)",
+      "## Amostra (12 cartões de 12 aulas, todos com versão 2)",
+      "## Escopo final proposto (85 cartões distintos, todos com versão 2)",
+      "### A. Diretos demais: 48 cartões (incluem a correção conceitual de FIS02~0)",
+      "### B. Erro conceitual: 1 cartão",
+      "### C. Fórmulas que ganham aplicação: 36 cartões (FIS04~2 e FIS06~5 também ganham as hipóteses que faltam)",
+      "## Conferências feitas para este escopo",
+      "## Testes previstos na implementação",
+      "## Implementação (2026-11-08, branch `claude/lote4-fisica`)"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/mapa-app-js.md",
+    "bytes": 4036,
+    "sha256": "9b3829eed0a9f25c30836bbbaad4ce75d05f0293b53371e572314dd1bd6d62fe",
+    "lines": 66,
+    "negativeLines": [],
+    "headings": [
+      "# Mapa do `curso/app.js` e plano de divisão",
+      "## Estrutura",
+      "## Divisão feita (sem mudar o que é publicado)"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/plano-monetizacao.md",
+    "bytes": 8568,
+    "sha256": "f6a8317ad12eaf7f37becc0f946b8272860f7093870aa860271e730c7a269f0e",
+    "lines": 105,
+    "negativeLines": [],
+    "headings": [
+      "# Preparação para a versão paga: análise técnica e plano",
+      "## Estado atual (verificado no código)",
+      "## O que uma versão paga exige",
+      "## Riscos",
+      "## Conteúdo pago em arquivos estáticos: por que não funciona",
+      "## Pontos técnicos levantados na auditoria de 2026-11-08",
+      "## Custos e escala (estimativa, a confirmar com os preços vigentes)",
+      "## Plano por fases (cada uma depende de autorização)"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/revisao-questoes.md",
+    "bytes": 13088,
+    "sha256": "e0f62d3181230a141a215fb34371b4b0501ea31f27d8a70a947eb4e225a11da3",
+    "lines": 156,
+    "negativeLines": [],
+    "headings": [
+      "# Revisão das questões do curso (Etapa 2)",
+      "## 1. As 642 questões que já existiam",
+      "### Matemática (200)",
+      "### Física (170)",
+      "### Português (140)",
+      "### Inglês (132)",
+      "## 2. As 47 questões escritas nesta etapa",
+      "## 3. Verificação automática",
+      "## 4. Correções aplicadas",
+      "## 5. Questões oficiais ligadas a outra aula",
+      "## 6. Limitações"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/sincronizacao-legada.md",
+    "bytes": 12555,
+    "sha256": "7b96fea83c93b6d895608077496e743d63493357c6f00a67aec1d28dded2b5fb",
+    "lines": 156,
+    "negativeLines": [],
+    "headings": [
+      "# Sincronização legada: bloqueio de integridade e contrato necessário",
+      "## Decisão desta rodada",
+      "## Reprodução da falha alta",
+      "## Por que o cliente não pode garantir esse backend",
+      "## Comportamento implementado",
+      "### Defeito adicional reproduzido durante a matriz",
+      "## Proposta de backend — não executada",
+      "## Critério e bloqueio de liberação",
+      "## Metadados — acompanhamento separado",
+      "## Reversão manual — acompanhamento separado",
+      "## Preparação e prova do teste Firebase"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/transicao-codex.md",
+    "bytes": 6716,
+    "sha256": "21efd16df023a9ccc81871eab200264a7360ba354fb37b1eda80e94f32a5f7af",
+    "lines": 44,
+    "negativeLines": [],
+    "headings": [
+      "# Continuidade de desenvolvimento — 12/11/2026",
+      "## Estado recuperado",
+      "## Invariantes da implementação",
+      "## Implementação em andamento",
+      "## Correções encontradas na autoauditoria"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/validacao-10f631e-evidencias.txt",
+    "bytes": 160364,
+    "sha256": "13dc67ce6164ab7c31992b8b57ac55619d2278745aceaed4a516a160732d9d8e",
+    "lines": 1361,
+    "negativeLines": [
+      {
+        "line": 231,
+        "text": "  ✗ página fechando: nada é enviado depois de pagehide, nem pelo intervalo pendente (o estudo fica no aparelho)"
+      },
+      {
+        "line": 640,
+        "text": "✗ exclusao-surda: {\"removido\":false,\"restaurado\":{\"t\":1794585112465,\"certsZ\":0,\"certs\":[\"RISCO-CERT\"],\"feito\":{\"T:base\":true,\"T:novo\":true},\"act\":{\"2026-11-13\":3}}}"
+      },
+      {
+        "line": 679,
+        "text": "✗ retorno-8s: FALHA DE PREPARAÇÃO/EXECUÇÃO: Não adotou exatamente uma vez a operação já aceita."
+      },
+      {
+        "line": 741,
+        "text": "  ✗ página fechando: nada é enviado depois de pagehide, nem pelo intervalo pendente (o estudo fica no aparelho)"
+      },
+      {
+        "line": 784,
+        "text": "  ✗ de volta à versão nova: o estudo feito nas duas continua"
+      },
+      {
+        "line": 1222,
+        "text": "2026-11-13T16:38:38.7203924Z   ✗ sem rede, gravação da versão antiga no meio e aparelho fechado com gravação pendente: ao reconectar e ao reabrir, nada se perde [nuvem: T:b1,T:base,T:fecha,T:off,T:v1,T:v2]"
+      },
+      {
+        "line": 1304,
+        "text": "  ✗ ordem confirmada B -> A, sobrescrita antiga e reabertura de B: nuvem preserva todas as marcas"
+      },
+      {
+        "line": 1331,
+        "text": "  ✗ ordem confirmada B -> A, sobrescrita antiga e reabertura de B: nuvem preserva todas as marcas"
+      },
+      {
+        "line": 1358,
+        "text": "  ✗ ordem confirmada B -> A, sobrescrita antiga e reabertura de B: nuvem preserva todas as marcas"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/validacao-10f631e-resultados.json",
+    "bytes": 30896,
+    "sha256": "6f7f1f14d6fedd1078f9a6309fb06d77365bc5da849c02402c48f23d3a347318",
+    "lines": 1029,
+    "jsonType": "dict",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/validacao-10f631e.md",
+    "bytes": 18786,
+    "sha256": "67154571d9d40359ff984ea1f0da4376be19c6499ecd81f65fbbfc32ddea54a4",
+    "lines": 143,
+    "negativeLines": [],
+    "headings": [
+      "# Validação concluída do candidato EEAR 10f631e",
+      "## SHA e correspondência com o código publicado",
+      "## Workflows dos dois SHAs solicitados",
+      "## Matriz executada",
+      "### Mapeamento F01–F13 e N01–N07",
+      "## Falhas investigadas sem reduzir critérios",
+      "## Crescimento dos metadados",
+      "### Navegador real: quatro abas, sem Web Locks e sem eventos storage",
+      "### Complemento do núcleo, distinto do teste de navegador",
+      "## Restrições remanescentes",
+      "## Artefatos e reprodução"
+    ]
+  },
+  {
+    "path": "/workspace/eear-audit/auditoria/verificacao-final.md",
+    "bytes": 14430,
+    "sha256": "949d700eed35b3aed261bfd6afb638f101ad879ca6923c31b186f8a7027d18ca",
+    "lines": 258,
+    "negativeLines": [],
+    "headings": [
+      "# Verificação final antes da integração",
+      "## 1. Cadeia de commits",
+      "## 2. Caminhos de publicação",
+      "## 3. Configurações que o proprietário precisa aplicar",
+      "## 4. Testes integrados finais",
+      "## 5. Exclusão da nuvem com versões antigas",
+      "## 6. Contraste do cronograma",
+      "## 7. Checklist de homologação (depende de serviço real, navegador ou aparelho)",
+      "## 8. Recomendação",
+      "## 9. Evidências desta verificação"
+    ]
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/carga-medidas.json",
+    "bytes": 6675,
+    "sha256": "16becd5aace65e41f8f9ea4b9c28a2ec4839886cf6a3dcfc6656c771d5a04de6",
+    "lines": 281,
+    "jsonType": "dict",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/contraexemplos-resultados.json",
+    "bytes": 141109,
+    "sha256": "c1c6f1f2f724918c35f65a298da48b7996f3a88e466e6b8657f918d49812a699",
+    "lines": 5706,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/crash-original-repeticoes.json",
+    "bytes": 370,
+    "sha256": "bc475741c8aab7252727888f0b7008f3e50516186f33e436365a85c9cd8a51e7",
+    "lines": 27,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/evidencias.txt",
+    "bytes": 170782,
+    "sha256": "97b335c6d84dfa0e0b0c4850436a1b4de701ba7fa3181a93ee9516ee621e30c7",
+    "lines": 1722,
+    "negativeLines": [
+      {
+        "line": 532,
+        "text": "✗ importacao, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o2c42dfc3-11b8-4d1d-8219-8250c1da61d2\",\"geracaoNova\":\"o9c0c691c-f563-4f2e-8135-c50aefe176a9\",\"apagado\":true,\"ignoradas\":[\"oc0d36e26-70a6-4912-a709-01031bd8cee3\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o2c42dfc3-11b8-4d1d-8219-8250c1da61d2\",\"id\":\"o3f440329-7336-49d4-8122-58458ebb61ec\"},\"voltou\":false,\""
+      },
+      {
+        "line": 533,
+        "text": "✗ importacao-sem-crash, locks=true: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o2a4c22a8-25a3-4c55-ae7c-e5feebf6e79c\",\"geracaoNova\":\"o58fd685c-d7de-45fe-b714-fb38ddf6f489\",\"apagado\":true,\"ignoradas\":[\"o4893eeb5-8cba-459a-a5ec-82517b2bddc8\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o2a4c22a8-25a3-4c55-ae7c-e5feebf6e79c\",\"id\":\"o3a0ff0ba-6ed7-4abb-8357-d2f732309321\"},\"volto"
+      },
+      {
+        "line": 535,
+        "text": "✗ importacao, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"oa2385b43-c59c-466d-90b6-72d0e555e6b8\",\"geracaoNova\":\"o4e50daf1-703e-4be4-9451-d222de455bce\",\"apagado\":true,\"ignoradas\":[\"o1504619f-3d43-45cc-9f78-27b815a17d72\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"oa2385b43-c59c-466d-90b6-72d0e555e6b8\",\"id\":\"of53b43ff-902d-4173-aa15-d81c2a5cf20a\"},\"voltou\":false,"
+      },
+      {
+        "line": 536,
+        "text": "✗ importacao-sem-crash, locks=false: {\"recuperacao\":{\"copias\":0,\"lsRec\":null},\"ignoradaExplicitamente\":false,\"provaCorte\":{\"geracaoAnterior\":\"o11488d42-788d-4fda-a584-aec3b5c697f5\",\"geracaoNova\":\"oe9f62071-308d-4fc2-92e8-9913e9dc3710\",\"apagado\":true,\"ignoradas\":[\"o5956eeec-ac44-4283-9068-4d46244af513\"]},\"aceito\":{\"T:base\":true,\"T:posterior-corte\":true},\"atividadeAceita\":3,\"antesCrash\":{\"local\":false,\"gen\":\"o11488d42-788d-4fda-a584-aec3b5c697f5\",\"id\":\"o3169e740-8112-422e-8c87-079f99105fe1\"},\"volt"
+      },
+      {
+        "line": 546,
+        "text": "✗ levar-operacoes-identificadas: {\"anon\":2,\"contaAntes\":2,\"esperado\":4,\"local\":2,\"remoto\":2,\"tarefas\":{\"T:anon1\":true,\"T:anon2\":true,\"T:R1\":true,\"T:R2\":true,\"T:remota\":true},\"opsAnon\":[\"o67e8c957-fe5f-416c-8ba0-b14851f0301e\",\"o2fa83b93-5407-459c-91cb-658d9bb144df\"],\"opsContaAntes\":[\"o0555d691-170d-4d2f-a2f4-ed9552df09d2\",\"oc55d00b8-0d5b-4f1d-bfe0-c1c07554ff37\"]}"
+      },
+      {
+        "line": 548,
+        "text": "✗ exclusao-resposta-de-sessao-antiga: {\"http\":200,\"uidA\":\"G9FfSGDM2cI4DfISrkG6FDS0JowR\",\"uidB\":\"G4J88HTr9S68ry70LuJnOMCQrFbi\",\"authAtual\":{\"uid\":null,\"local\":null},\"antesResposta\":{\"T:B\":true},\"depois\":{},\"remotoB\":{\"T:B\":true},\"aviso\":\"Progresso salvo neste aparelho.\"}"
+      },
+      {
+        "line": 566,
+        "text": "✗ levar-3-mais-2: {\"esperado\":5,\"local\":3,\"servidor\":3,\"idsAnon\":[\"o1262025f-367d-4289-8646-c4792cb6071e\",\"o6833f6d2-c344-4a9a-b182-4d22eb17d547\",\"o5c5f9ec8-766e-4577-9f69-6295adf08a8c\"],\"idsBase\":[\"o837aa1da-45ab-41ec-b5fe-700168beaad8\",\"of40781fd-4921-4c74-b346-e0071d4cea91\"]}"
+      },
+      {
+        "line": 567,
+        "text": "✗ reimportar-apos-levar: {\"esperado\":5,\"depoisImportar\":6,\"depoisRepetirReabrir\":6,\"servidor\":6,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 587,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 702,
+        "text": "✗ importar-mesmos-bytes-legado-2-importacoes-3-abas: {\"locks\":true,\"esperado\":5,\"atividadeFinal\":8,\"atividadeReaberta\":8,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-15\":2},\"proposto\":{\"2026-11-15\":2},\"recibos\":[\"oe349c2e1-087e-431d-917b-8aff66164e1f\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#o0a798463-b69a-4554-98bc-faec5d90be54\",\"id\":\"o0a798463-b69a-4554-98bc-faec5d90be54\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"o0a798463-b69a-4554-98bc-faec5d90be54\":3},\"x\":{}}}"
+      },
+      {
+        "line": 704,
+        "text": "✗ importar-mesmos-bytes-legado-3-importacoes-4-abas: {\"locks\":false,\"esperado\":5,\"atividadeFinal\":11,\"atividadeReaberta\":11,\"certificado\":[\"BACKUP-REPETIDO-A636\"],\"prova\":{\"antes\":{\"2026-11-15\":2},\"proposto\":null,\"recibos\":[\"o9a687836-3983-4715-ba34-18f309ffcaf9\"]},\"diario\":[{\"k\":\"missao-eear-v1-diario#obd049267-f419-4374-bf82-a7e7a67730e6\",\"id\":\"obd049267-f419-4374-bf82-a7e7a67730e6\",\"origem\":\"importacao\",\"act\":5,\"contribuicoes\":{\"a\":{\"obd049267-f419-4374-bf82-a7e7a67730e6\":3},\"x\":{}}},{\"k\":\"mi"
+      },
+      {
+        "line": 716,
+        "text": "✗ levar-erro-posterior-corrigido: {\"esperado\":1,\"fonte\":1,\"local\":3,\"remoto\":3,\"reaberto\":3,\"correcoesObservadas\":[\"oe86f93c3-0c90-4d0b-961a-c95494b19f2f\"],\"causalidadeFonte\":{\"a\":{\"legado\":2,\"o30a98e1e-f409-4ece-bc3a-0e1fc684ee0d\":1},\"x\":{},\"l\":{\"oe86f93c3-0c90-4d0b-961a-c95494b19f2f\":{\"legado\":true}},\"o\":{\"o30a98e1e-f409-4ece-bc3a-0e1fc684ee0d\":{\"oe86f93c3-0c90-4d0b-961a-c95494b19f2f\":true}}},\"causalidadeDestino\":{\"a\":{\"legado\":2,\"o30a98e1e-f409-4ece-bc3a-0e1fc684ee0d\":1},\"x\":{},\"l\":{\"oe86f93c"
+      },
+      {
+        "line": 735,
+        "text": "✗ mesmo-backup-dois-dispositivos: {\"arquivoSha256\":\"01b11e1da22807eb7806581bbc6b9c8051ac2e0ad1dcac2fa8741cea600476b0\",\"base\":2,\"atividadeNoArquivo\":5,\"esperado\":5,\"remoto\":8,\"novoDispositivo\":8,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 773,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 856,
+        "text": "✗ exclusao-firebase-anterior: {\"candidato\":\"a35ea9a\",\"produtorAntigo\":\"2f6cad6ebba53d0f86319dcada671fe9396f8111\",\"docV2Apagado\":true,\"authExcluidaHTTP\":400,\"marcadorHTTP\":404,\"recriou\":true,\"nomeRestaurado\":\"Pessoa Fictícia Excluída\",\"feitoRestaurado\":{\"T:apos-exclusao-legitima\":true,\"T:privada\":true},\"avisoAtual\":\"Progresso salvo na sua conta.\"}"
+      },
+      {
+        "line": 909,
+        "text": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:"
+      },
+      {
+        "line": 922,
+        "text": "GATE IA05/IA06 importacoes-crash: FALHOU"
+      },
+      {
+        "line": 1379,
+        "text": "  ✗ de volta à versão nova: o estudo feito nas duas continua"
+      },
+      {
+        "line": 1475,
+        "text": "  ✗ nuvem mais nova sem os certificados deste aparelho: eles ficam e voltam para a nuvem"
+      },
+      {
+        "line": 1476,
+        "text": "  ✗ aparelho mais novo sem os certificados da nuvem: recebe os da nuvem e grava a união"
+      },
+      {
+        "line": 1509,
+        "text": "  ✗ sincronização simulada: cartões e versões vêm juntos da nuvem mais nova"
+      },
+      {
+        "line": 1588,
+        "text": "  ✗ estudo offline nos dois aparelhos: aulas, cartões, simulados e atividade dos dois ficam; o erro corrigido sai; os dois aparelhos e a nuvem terminam iguais"
+      },
+      {
+        "line": 1589,
+        "text": "  ✗ os dois aparelhos convergem para o mesmo progresso — mod: {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\"tent\":2},\"POR02\":{\"best\":0.9,\"lido\":\"2026-11-15\",\"ok\":\"2026-11-15\",\" ≠ {\"ING14\":{\"best\":0.8,\"lido\":\"2026-10-02\",\"tent\":1},\"MAT01\":{\"best\":0.8,\"lido\":\"2026-11-15\",\"ok\":\"2026-11-15\",\"tent\":1},\"POR01\":{\"best\":0.9,\"lido\":\"2026-10-01\",\" — fc: {\"POR01~0\":[2,20400],\"POR02~0\":[1,99999]} ≠ {\"MAT01~0\":[2,99998],\"POR01~0\":[2,20400]} — sims: [{\"d\":\"2026-10"
+      },
+      {
+        "line": 1591,
+        "text": "  ✗ mesma aula nos dois: as tentativas somam (2 + 1 + 1) e vale a melhor nota"
+      },
+      {
+        "line": 1592,
+        "text": "  ✗ mesmo cartão nos dois: vale a revisão gravada por último"
+      },
+      {
+        "line": 1593,
+        "text": "  ✗ erro corrigido num aparelho e errado de novo no outro continua no caderno"
+      },
+      {
+        "line": 1594,
+        "text": "  ✗ dois simulados iguais feitos em aparelhos diferentes contam como dois"
+      },
+      {
+        "line": 1595,
+        "text": "  ✗ zerar num aparelho apaga o que existia antes; a aula estudada offline no outro depois disso fica [aulas na nuvem: POR01,ING14]"
+      },
+      {
+        "line": 1596,
+        "text": "  ✗ sem como separar o que veio antes do \"Zerar\": o progresso deste aparelho vira cópia de recuperação, oferecida na tela Hoje [sem cópia]"
+      },
+      {
+        "line": 1597,
+        "text": "  ✗ nuvem de uma versão mais nova: nada é gravado por cima, o progresso local fica e o aluno é avisado"
+      },
+      {
+        "line": 1598,
+        "text": "  ✗ outra conta no mesmo aparelho: vê só o próprio progresso, nada da conta anterior vai para a nuvem dela, e o da conta anterior fica intacto à parte"
+      },
+      {
+        "line": 1599,
+        "text": "  ✗ duas gravações falham por falta de rede: a terceira chega e o progresso local fica intacto"
+      },
+      {
+        "line": 1660,
+        "text": "✗ idempotencia-simulados-canonicos: {\"esperado\":1,\"simuladosNuvem\":2,\"simuladosNovo\":2,\"simuladosRecuperados\":2,\"atividadeNuvem\":2,\"hashesApp\":[\"094e9eaf375b582367fdf21f2e00ac7ec9c051f3d36b7cacf4f88ff6f8249287\"],\"simuladosCanonicos\":[{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"},{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}],\"hashesTexto\":[\"389dda6d6c094b997989af4eec8bc9853d0d70bc8502e0149e95ee57f3c9d94d\",\"08e491ba"
+      },
+      {
+        "line": 1661,
+        "text": "✗ reset-simulados-canonicos: {\"esperado\":0,\"simuladosNuvem\":1,\"simuladosNovo\":1,\"simuladosRecuperados\":1,\"atividadeNuvem\":0,\"hashesApp\":[\"094e9eaf375b582367fdf21f2e00ac7ec9c051f3d36b7cacf4f88ff6f8249287\"],\"simuladosCanonicos\":[{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}],\"hashesTexto\":[\"389dda6d6c094b997989af4eec8bc9853d0d70bc8502e0149e95ee57f3c9d94d\",\"08e491ba301607cdaa0b3680359511a61e2ee82d9e3c0070421aa48d06a713f7\"]}"
+      },
+      {
+        "line": 1663,
+        "text": "✗ reset-marcador-inseguro: {\"marcador\":1e+30,\"seguro\":false,\"avanca\":false,\"resetAntes\":1e+30,\"resetDepois\":1e+30,\"esperado\":1,\"erroNuvem\":3,\"erroReaberto\":3,\"aviso\":\"Progresso salvo na sua conta.\"}"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/executar.py",
+    "bytes": 1112,
+    "sha256": "a1e0ba6ab2266b6cee2beb8a60266ea715c47f90396ed32fb229faf3f81d3329",
+    "lines": 15,
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/extras.py",
+    "bytes": 1984,
+    "sha256": "a58bffdcab9319980830e12b3af1fbe144289b64a15102a9acb0c3b0abc2ef11",
+    "lines": 22,
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/final-bloqueadores-resultados.json",
+    "bytes": 744,
+    "sha256": "ced7570a5a09616a997910877cbe9018a53e2ccec2b07671fde59e0c610a1c2c",
+    "lines": 22,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/final-extras-resultados.json",
+    "bytes": 3499,
+    "sha256": "7f56eee66480c9f7eff68b979818a8ea059b78b442bf6a8602f0952d61a30c58",
+    "lines": 140,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/final-firebase-resultados.json",
+    "bytes": 4331,
+    "sha256": "432de5ed367e239498815b1a148ed3820db700c099c496ce881b5b3bf859bd6a",
+    "lines": 123,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/final-local-resultados.json",
+    "bytes": 7050,
+    "sha256": "37adfa691d5a40d5148216c88adb92bbafa0e056ce97964d7c11ac52d8483c54",
+    "lines": 196,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/fluxos-resultados.json",
+    "bytes": 448258,
+    "sha256": "2618459c05411666bd2f7b72cb2398fe403829f8d9d62298520e9b867cbf6919",
+    "lines": 17738,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/github-proveniencia.json",
+    "bytes": 276636,
+    "sha256": "0e22edcba4ef1531477273b1aeb92e2a2297286396b0ca717861b14385ee4677",
+    "lines": 6387,
+    "jsonType": "dict",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/github-refs-final.json",
+    "bytes": 17454,
+    "sha256": "c5a87995d5d02f80b351d636ff750e22b21ba0811a9b15ada1fb9e35e7c3c9b9",
+    "lines": 382,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/github-runtime-testes-falha.log",
+    "bytes": 50280,
+    "sha256": "eca34434c07f23a3b9dfac329f54f3dd81fd075656722e7b6520f8d6682be6c0",
+    "lines": 507,
+    "negativeLines": [
+      {
+        "line": 442,
+        "text": "2026-11-15T01:16:28.0881189Z   ✗ regras: documento sem um dos campos ou com o progresso acima do limite é recusado; o documento mínimo da própria conta é aceito"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/github-runtime-tree.json",
+    "bytes": 136859,
+    "sha256": "470187dbd957b59cb7ec48c0168b2d5107028b212b09282646fa16d29bde490b",
+    "lines": 3750,
+    "jsonType": "dict",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/lint-auditoria.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lines": 0,
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/manifesto-evidencias.json",
+    "bytes": 3332,
+    "sha256": "81f1cd61e448d02e8a20e8a84bd9b9b6ec54b52ac66456f0bda6764678cfe4f6",
+    "lines": 112,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/matriz-integral-resumo.json",
+    "bytes": 407,
+    "sha256": "8d7834250702c241176284c711aff6bdd1fd1afb33accb5e8a22ef0852ac4154",
+    "lines": 28,
+    "jsonType": "list",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/matriz.py",
+    "bytes": 4432,
+    "sha256": "19483c3dd53bad554269f94c19e9b6f26bde352b68f98522a0053eb5651a7b25",
+    "lines": 25,
+    "negativeLines": [
+      {
+        "line": 4,
+        "text": "env=dict(os.environ,EEAR_REPO_REPROVADO_IA05='/tmp/eear-audit2-runtime',EEAR_REPO_CLIENTE_V3='/tmp/eear-ia05-verificado',NODE_PATH='/tmp/eear-audit-deps/node_modules',PLAYWRIGHT_BROWSERS_PATH='/tmp/eear-audit-browsers',EEAR_FIREBASE_SDK='/tmp/eear-audit-deps/node_modules/firebase',EEAR_FIREBASE_CLI='/tmp/eear-audit-deps/node_modules/.bin/firebase',EEAR_REPO_ALVO=str(repo),EEAR_REPO_LEGADO='/tmp/eear-2f6cad6',EEAR_REPO_REPROVADO='/tmp/eear-audit-a35-source')"
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/novos-resultados.json",
+    "bytes": 839,
+    "sha256": "481de7586bcbae205ac16ef2bfb4a2110849a330ce13dd038954c7d73f1a6068",
+    "lines": 26,
+    "jsonType": "dict",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/preparacoes-anteriores.txt",
+    "bytes": 776445,
+    "sha256": "f3dac7c432b0718952094bef2c2f067e70a0e4cafd8565952abdfa3eb6f2f495",
+    "lines": 31853,
+    "negativeLines": [
+      {
+        "line": 2937,
+        "text": "✗ idempotencia-simulados-canonicos: {\"esperado\":1,\"simuladosNuvem\":2,\"simuladosNovo\":2,\"simuladosRecuperados\":2,\"atividadeNuvem\":2,\"hashesApp\":[\"094e9eaf375b582367fdf21f2e00ac7ec9c051f3d36b7cacf4f88ff6f8249287\"],\"simuladosCanonicos\":[{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"},{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}],\"hashesTexto\":[\"389dda6d6c094b997989af4eec8bc9853d0d70bc8502e0149e95ee57f3c9d94d\",\"08e491ba"
+      },
+      {
+        "line": 2938,
+        "text": "✗ reset-simulados-canonicos: {\"esperado\":0,\"simuladosNuvem\":1,\"simuladosNovo\":1,\"simuladosRecuperados\":1,\"atividadeNuvem\":0,\"hashesApp\":[\"094e9eaf375b582367fdf21f2e00ac7ec9c051f3d36b7cacf4f88ff6f8249287\"],\"simuladosCanonicos\":[{\"d\":\"2026-11-15\",\"mat\":\"por\",\"min\":5,\"prova\":null,\"r\":{\"por\":[1,2]},\"tipo\":\"materia\"}],\"hashesTexto\":[\"389dda6d6c094b997989af4eec8bc9853d0d70bc8502e0149e95ee57f3c9d94d\",\"08e491ba301607cdaa0b3680359511a61e2ee82d9e3c0070421aa48d06a713f7\"]}"
+      },
+      {
+        "line": 3947,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 4956,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 5965,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 6995,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 8025,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 9006,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 9018,
+        "text": "✗ seed=1 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 9027,
+        "text": "✗ seed=2 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 9036,
+        "text": "✗ seed=3 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 9045,
+        "text": "✗ seed=4 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 9054,
+        "text": "✗ seed=5 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 9063,
+        "text": "✗ seed=6 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 10851,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 12650,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 14449,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 16271,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 18093,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 19862,
+        "text": "    \"erro\": \"AssertionError [ERR_ASSERTION]: false == true\\n    at /workspace/eear-audit3/testes/c186-fluxos.test.js:18:118\""
+      },
+      {
+        "line": 19874,
+        "text": "✗ seed=1 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 19883,
+        "text": "✗ seed=2 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 19892,
+        "text": "✗ seed=3 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 19901,
+        "text": "✗ seed=4 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 19910,
+        "text": "✗ seed=5 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 19919,
+        "text": "✗ seed=6 AssertionError [ERR_ASSERTION]: false == true"
+      },
+      {
+        "line": 31825,
+        "text": "✗ seed=1 page.waitForFunction: Timeout 30000ms exceeded."
+      },
+      {
+        "line": 31832,
+        "text": "✗ seed=3 page.waitForFunction: Timeout 30000ms exceeded."
+      },
+      {
+        "line": 31839,
+        "text": "✗ seed=5 page.waitForFunction: Timeout 30000ms exceeded."
+      }
+    ],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/propriedades-resultados.json",
+    "bytes": 45939,
+    "sha256": "7ac4028c06ef3295f46e8d60ed76ff43e1acfc25acd795f253ecf8bd8550969c",
+    "lines": 1661,
+    "jsonType": "dict",
+    "negativeLines": [],
+    "headings": []
+  },
+  {
+    "path": "/workspace/eear-prev-audit/auditoria/c186008/runtime-manifesto.json",
+    "bytes": 88993,
+    "sha256": "fd3bf8b208155854b53486b39539d37827bdd8abaff10f43189868aa973ab417",
+    "lines": 2329,
+    "jsonType": "dict",
+    "negativeLines": [],
+    "headings": []
+  }
+]

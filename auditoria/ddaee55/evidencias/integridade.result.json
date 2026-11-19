@@ -1,0 +1,19 @@
+{
+  "name": "integridade",
+  "cmd": [
+    "python3",
+    "-I",
+    "web/verificar_publicacao.py",
+    "validar"
+  ],
+  "cwd": "/workspace/eear-audit",
+  "env": {
+    "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+  },
+  "exit": 0,
+  "expected": 0,
+  "seconds": 0.2,
+  "utc": "2026-11-19T11:54:00.702067+00:00",
+  "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+}

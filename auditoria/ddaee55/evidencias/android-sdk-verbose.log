@@ -1,0 +1,55 @@
+Info: Parsing legacy package: /workspace/audit-tools/android-sdk/cmdline-tools/19.0
+Info: Parsing legacy package: /workspace/audit-tools/android-sdk/cmdline-tools/latest
+                                                                                Info: IOException: https://dl.google.com/android/repository/addons_list-6.xml
+                                                                                Info: java.nio.file.NoSuchFileException: /home/agent/.android/cache/sdkbin-1_d2c7e9a3-addons_list-6_xml
+                                                                                Info: IOException: https://dl.google.com/android/repository/addons_list-5.xml
+                                                                                Info: java.nio.file.NoSuchFileException: /home/agent/.android/cache/sdkbin-1_d2b9d222-addons_list-5_xml
+                                                                                Info: IOException: https://dl.google.com/android/repository/addons_list-4.xml
+                                                                                Info: java.nio.file.NoSuchFileException: /home/agent/.android/cache/sdkbin-1_d2abbaa1-addons_list-4_xml
+                                                                                Info: IOException: https://dl.google.com/android/repository/addons_list-3.xml
+                                                                                Info: java.nio.file.NoSuchFileException: /home/agent/.android/cache/sdkbin-1_d29da320-addons_list-3_xml
+                                                                                Info: IOException: https://dl.google.com/android/repository/addons_list-2.xml
+                                                                                Info: java.nio.file.NoSuchFileException: /home/agent/.android/cache/sdkbin-1_d28f8b9f-addons_list-2_xml
+                                                                                Info: IOException: https://dl.google.com/android/repository/addons_list-1.xml
+                                                                                Info: java.nio.file.NoSuchFileException: /home/agent/.android/cache/sdkbin-1_d281741e-addons_list-1_xml
+                                                                                Warning: Failed to download any source lists!
+                                                                                Warning: IO exception while downloading manifest
+java.nio.file.NoSuchFileException: /home/agent/.android/cache/sdkbin-1_b7518f9e-repository2-3_xml
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:261)
+	at java.base/java.nio.file.spi.FileSystemProvider.newOutputStream(FileSystemProvider.java:482)
+	at java.base/java.nio.file.Files.newOutputStream(Files.java:228)
+	at com.android.sdklib.repository.legacy.FileOp.newFileOutputStream(FileOp.java:151)
+	at com.android.sdklib.repository.legacy.FileOp.newFileOutputStream(FileOp.java:133)
+	at com.android.sdklib.repository.legacy.remote.internal.DownloadCache.downloadAndCache(DownloadCache.java:660)
+	at com.android.sdklib.repository.legacy.remote.internal.DownloadCache.openCachedUrl(DownloadCache.java:554)
+	at com.android.sdklib.repository.legacy.LegacyDownloader.downloadAndStream(LegacyDownloader.java:82)
+	at com.android.repository.impl.manager.RemoteRepoLoaderImpl.lambda$fetchPackages$0(RemoteRepoLoaderImpl.java:140)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+                                                                                Warning: IO exception while downloading manifest
+java.nio.file.NoSuchFileException: /home/agent/.android/cache/sdkbin-1_b743781d-repository2-2_xml
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:261)
+	at java.base/java.nio.file.spi.FileSystemProvider.newOutputStream(FileSystemProvider.java:482)
+	at java.base/java.nio.file.Files.newOutputStream(Files.java:228)
+	at com.android.sdklib.repository.legacy.FileOp.newFileOutputStream(FileOp.java:151)
+	at com.android.sdklib.repository.legacy.FileOp.newFileOutputStream(FileOp.java:133)
+	at com.android.sdklib.repository.legacy.remote.internal.DownloadCache.downloadAndCache(DownloadCache.java:660)
+	at com.android.sdklib.repository.legacy.remote.internal.DownloadCache.openCachedUrl(DownloadCache.java:554)
+	at com.android.sdklib.repository.legacy.LegacyDownloader.downloadAndStream(LegacyDownloader.java:82)
+	at com.android.repository.impl.manager.RemoteRepoLoaderImpl.lambda$fetchPackages$0(RemoteRepoLoaderImpl.java:140)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+                                                                                Warning: Still waiting for package manifests to be fetched remotely.
+                                                                                Warning: Failed to find package 'platforms;android-36'

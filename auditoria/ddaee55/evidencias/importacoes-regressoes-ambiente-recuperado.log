@@ -1,0 +1,227 @@
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Controle: repetir sequencialmente o mesmo backup legado preserva exatamente 5.
+PRECONDICAO {"tipo":"legado","abas":2,"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["o89bcbeb6-a823-4336-a058-daa114619bfd"]},"diario":[{"k":"missao-eear-v1-diario#o2bec71a3-efda-4b8b-9ff3-9ccec854d9ae","id":"o2bec71a3-efda-4b8b-9ff3-9ccec854d9ae","origem":"importacao","act":5,"contribuicoes":{"a":{"o2bec71a3-efda-4b8b-9ff3-9ccec854d9ae":3},"x":{}}},{"k":"missao-eear-v1-diario#o2c860fc7-e4ef-43b9-949c-5f88c806a58e","id":"o2c860fc7-e4ef-43b9-949c-5f88c806a58e","origem":"importacao","act":5,"contribuicoes":{"a":{"o2c860fc7-e4ef-43b9-949c-5f88c806a58e":3},"x":{}}}]}
+✗ importar-mesmos-bytes-legado-2-importacoes-3-abas: {"locks":true,"esperado":5,"atividadeFinal":8,"atividadeReaberta":8,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["o89bcbeb6-a823-4336-a058-daa114619bfd"]},"diario":[{"k":"missao-eear-v1-diario#o2bec71a3-efda-4b8b-9ff3-9ccec854d9ae","id":"o2bec71a3-efda-4b8b-9ff3-9ccec854d9ae","origem":"importacao","act":5,"contribuicoes":{"a":{"o2bec71a3-efda-4b8b-9ff3-9ccec854d9ae":3},"x":{}}},{"k":"missao-eear-v1-diario#o2c860fc7-e4ef-43b9-949c-5f88c806a58e","id":"o2c860fc7-e4ef-43b9-949c-5f88c806a58e","origem":"importacao","act":5,"contribuicoes":{"a":{"o2c860fc7-e4ef-43b9-949c-5f88c806a58e":3},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"legado","abas":3,"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["oa540ee73-5ba0-49d0-8d72-0aed91c718d8"]},"diario":[{"k":"missao-eear-v1-diario#of35487a5-7a36-4cc7-93fe-ac7ef5b6a311","id":"of35487a5-7a36-4cc7-93fe-ac7ef5b6a311","origem":"importacao","act":5,"contribuicoes":{"a":{"of35487a5-7a36-4cc7-93fe-ac7ef5b6a311":3},"x":{}}},{"k":"missao-eear-v1-diario#o62800094-aef4-4037-b89e-d0526e485b56","id":"o62800094-aef4-4037-b89e-d0526e485b56","origem":"importacao","act":5,"contribuicoes":{"a":{"o62800094-aef4-4037-b89e-d0526e485b56":3},"x":{}}},{"k":"missao-eear-v1-diario#od1cdf053-d5af-4374-bba7-4cedd104263f","id":"od1cdf053-d5af-4374-bba7-4cedd104263f","origem":"importacao","act":5,"contribuicoes":{"a":{"od1cdf053-d5af-4374-bba7-4cedd104263f":3},"x":{}}}]}
+✗ importar-mesmos-bytes-legado-3-importacoes-4-abas: {"locks":false,"esperado":5,"atividadeFinal":11,"atividadeReaberta":11,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["oa540ee73-5ba0-49d0-8d72-0aed91c718d8"]},"diario":[{"k":"missao-eear-v1-diario#of35487a5-7a36-4cc7-93fe-ac7ef5b6a311","id":"of35487a5-7a36-4cc7-93fe-ac7ef5b6a311","origem":"importacao","act":5,"contribuicoes":{"a":{"of35487a5-7a36-4cc7-93fe-ac7ef5b6a311":3},"x":{}}},{"k":"missao-eear-v1-diario#o62800094-aef4-4037-b89e-d0526e485b56","id":"o62800094-aef4-4037-b89e-d0526e485b56","origem":"importacao","act":5,"contribuicoes":{"a":{"o62800094-aef4-4037-b89e-d0526e485b56":3},"x":{}}},{"k":"missao-eear-v1-diario#od1cdf053-d5af-4374-bba7-4cedd104263f","id":"od1cdf053-d5af-4374-bba7-4cedd104263f","origem":"importacao","act":5,"contribuicoes":{"a":{"od1cdf053-d5af-4374-bba7-4cedd104263f":3},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"identificado","abas":2,"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["odd8b1376-8ffc-460d-bd71-52760f7a9a94"]},"diario":[{"k":"missao-eear-v1-diario#o8e3951c7-27bd-4dd4-8549-1508eb87f957","id":"o8e3951c7-27bd-4dd4-8549-1508eb87f957","origem":"importacao","act":7,"contribuicoes":{"a":{"o47416464-27f0-43a8-b560-0c4270c388cf":5},"x":{}}},{"k":"missao-eear-v1-diario#oc79ba623-90c4-44ec-b9d0-cad51356d4a0","id":"oc79ba623-90c4-44ec-b9d0-cad51356d4a0","origem":"importacao","act":7,"contribuicoes":{"a":{"o47416464-27f0-43a8-b560-0c4270c388cf":5},"x":{}}}]}
+✓ importar-mesmos-bytes-identificado-2-importacoes-3-abas: {"locks":false,"esperado":7,"atividadeFinal":7,"atividadeReaberta":7,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["odd8b1376-8ffc-460d-bd71-52760f7a9a94"]},"diario":[{"k":"missao-eear-v1-diario#o8e3951c7-27bd-4dd4-8549-1508eb87f957","id":"o8e3951c7-27bd-4dd4-8549-1508eb87f957","origem":"importacao","act":7,"contribuicoes":{"a":{"o47416464-27f0-43a8-b560-0c4270c388cf":5},"x":{}}},{"k":"missao-eear-v1-diario#oc79ba623-90c4-44ec-b9d0-cad51356d4a0","id":"oc79ba623-90c4-44ec-b9d0-cad51356d4a0","origem":"importacao","act":7,"contribuicoes":{"a":{"o47416464-27f0-43a8-b560-0c4270c388cf":5},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+AUDITORIA a636-importacoes-concorrentes: exit 1
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a636-transferencia-erros.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✗ levar-erro-posterior-corrigido: {"esperado":1,"fonte":1,"local":3,"remoto":3,"reaberto":3,"correcoesObservadas":["obcec2f29-2f0e-4104-9d33-252e4f3efc7c"],"causalidadeFonte":{"a":{"legado":2,"o8e5392f2-fa1c-4301-95cb-f6d7c7a63914":1},"x":{},"l":{"obcec2f29-2f0e-4104-9d33-252e4f3efc7c":{"legado":true}},"o":{"o8e5392f2-fa1c-4301-95cb-f6d7c7a63914":{"obcec2f29-2f0e-4104-9d33-252e4f3efc7c":true}}},"causalidadeDestino":{"a":{"legado":2,"o8e5392f2-fa1c-4301-95cb-f6d7c7a63914":1},"x":{},"l":{"obcec2f29-2f0e-4104-9d33-252e4f3efc7c":{"legado":true}}},"aviso":"Progresso salvo neste aparelho."}
+✓ Controle: importar o MESMO backup preserva a causalidade e mantém exatamente um erro.
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/testes/a636-transferencia-erros.test.js"" exited with code 1
+AUDITORIA a636-transferencia-erros: exit 1
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a636-importacao-dispositivos.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✗ mesmo-backup-dois-dispositivos: {"arquivoSha256":"6907d62851513d40b9e9159dc2f9c00c9a718a050143e1427f755f836dc483c1","base":2,"atividadeNoArquivo":5,"esperado":5,"remoto":8,"novoDispositivo":8,"aviso":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/testes/a636-importacao-dispositivos.test.js"" exited with code 1
+AUDITORIA a636-importacao-dispositivos: exit 1
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a636-sessoes-abas.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ A excluída; duas abas permanecem em B; estudo de B confirmado antes/depois da resposta A; nenhum dado B apagado.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+AUDITORIA a636-sessoes-abas: exit 0
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Exclusão abortada + duas importações identificadas + dois Page.crash: 7/7, base e certificado preservados, nenhuma confirmação falsa de exclusão.
+AUDITORIA a636-abort-exclusao: exit 0
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a35-retorno-firebase-antigo.test.js"
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+✗ exclusao-firebase-anterior: {"candidato":"a35ea9a","produtorAntigo":"2f6cad6ebba53d0f86319dcada671fe9396f8111","docV2Apagado":true,"authExcluidaHTTP":400,"marcadorHTTP":404,"recriou":true,"nomeRestaurado":"Pessoa Fictícia Excluída","feitoRestaurado":{"T:apos-exclusao-legitima":true,"T:privada":true},"avisoAtual":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/testes/a35-retorno-firebase-antigo.test.js"" exited with code 1
+✓ Dependência IA04 comprovada: runtime novo sozinho continua vulnerável com regras antigas; controle negativo não é aprovação dessa configuração.
+AUDITORIA a636-regras-dependencia: exit 0
+Auditoria adicional: 3 executáveis com falhas; nenhum critério foi reduzido.
+CONTROLE IA05/IA06 a6366a8: REPRODUZIU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Controle: repetir sequencialmente o mesmo backup legado preserva exatamente 5.
+PRECONDICAO {"tipo":"legado","abas":2,"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["e:o94b1e98a-33a3-4f6f-9f01-87edd5c0ae54"]},"diario":[{"k":"missao-eear-v1-diario#e:o103790fd-e06f-42a1-9a9c-f868b2eb82fc","id":"e:o103790fd-e06f-42a1-9a9c-f868b2eb82fc","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}},{"k":"missao-eear-v1-diario#e:o31b770d2-d76b-4c78-9300-7030551b614f","id":"e:o31b770d2-d76b-4c78-9300-7030551b614f","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}}]}
+✓ importar-mesmos-bytes-legado-2-importacoes-3-abas: {"locks":true,"esperado":5,"atividadeFinal":5,"atividadeReaberta":5,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["e:o94b1e98a-33a3-4f6f-9f01-87edd5c0ae54"]},"diario":[{"k":"missao-eear-v1-diario#e:o103790fd-e06f-42a1-9a9c-f868b2eb82fc","id":"e:o103790fd-e06f-42a1-9a9c-f868b2eb82fc","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}},{"k":"missao-eear-v1-diario#e:o31b770d2-d76b-4c78-9300-7030551b614f","id":"e:o31b770d2-d76b-4c78-9300-7030551b614f","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"legado","abas":3,"prova":{"antes":{"2026-11-19":2},"proposto":null,"recibos":["e:o906bf011-0117-48ac-8624-1d17aa562e72"]},"diario":[{"k":"missao-eear-v1-diario#e:o95aa4309-6340-4415-b83f-00ec357faba3","id":"e:o95aa4309-6340-4415-b83f-00ec357faba3","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}},{"k":"missao-eear-v1-diario#e:ob2ff22e4-34c8-4c04-a3b2-34ac50a2ad2a","id":"e:ob2ff22e4-34c8-4c04-a3b2-34ac50a2ad2a","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}},{"k":"missao-eear-v1-diario#e:odf5087e7-163e-4979-bde6-85751df8d0a5","id":"e:odf5087e7-163e-4979-bde6-85751df8d0a5","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}}]}
+✓ importar-mesmos-bytes-legado-3-importacoes-4-abas: {"locks":false,"esperado":5,"atividadeFinal":5,"atividadeReaberta":5,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-19":2},"proposto":null,"recibos":["e:o906bf011-0117-48ac-8624-1d17aa562e72"]},"diario":[{"k":"missao-eear-v1-diario#e:o95aa4309-6340-4415-b83f-00ec357faba3","id":"e:o95aa4309-6340-4415-b83f-00ec357faba3","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}},{"k":"missao-eear-v1-diario#e:ob2ff22e4-34c8-4c04-a3b2-34ac50a2ad2a","id":"e:ob2ff22e4-34c8-4c04-a3b2-34ac50a2ad2a","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}},{"k":"missao-eear-v1-diario#e:odf5087e7-163e-4979-bde6-85751df8d0a5","id":"e:odf5087e7-163e-4979-bde6-85751df8d0a5","origem":"importacao","act":5,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":true,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":true},"o":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:0":true},"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":{"@coberto:i:1ca3189a1e4d61d11660e2a848cb93feb5177f68b80ef7f51aa6a6dcefe2bcd6:1":true}}}}],"aviso":"Progresso salvo neste aparelho."}
+PRECONDICAO {"tipo":"identificado","abas":2,"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["e:o1413a362-9164-4a2f-9efb-b63e491dbe0a"]},"diario":[{"k":"missao-eear-v1-diario#e:o9c174aa5-a326-40a5-9133-2cbe9aa6cd05","id":"e:o9c174aa5-a326-40a5-9133-2cbe9aa6cd05","origem":"importacao","act":7,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{}}},{"k":"missao-eear-v1-diario#e:o42024b01-754c-44f2-8a8f-34f86294f1a7","id":"e:o42024b01-754c-44f2-8a8f-34f86294f1a7","origem":"importacao","act":7,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{}}}]}
+✓ importar-mesmos-bytes-identificado-2-importacoes-3-abas: {"locks":false,"esperado":7,"atividadeFinal":7,"atividadeReaberta":7,"certificado":["BACKUP-REPETIDO-A636"],"prova":{"antes":{"2026-11-19":2},"proposto":{"2026-11-19":2},"recibos":["e:o1413a362-9164-4a2f-9efb-b63e491dbe0a"]},"diario":[{"k":"missao-eear-v1-diario#e:o9c174aa5-a326-40a5-9133-2cbe9aa6cd05","id":"e:o9c174aa5-a326-40a5-9133-2cbe9aa6cd05","origem":"importacao","act":7,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{}}},{"k":"missao-eear-v1-diario#e:o42024b01-754c-44f2-8a8f-34f86294f1a7","id":"e:o42024b01-754c-44f2-8a8f-34f86294f1a7","origem":"importacao","act":7,"contribuicoes":{"a":{"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:0":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:1":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:2":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:3":1,"i:c87b8def614a1e0e733234d71b435b64904b83e46d62fd0501e830ef41c8a9a4:4":1},"x":{}}}],"aviso":"Progresso salvo neste aparelho."}
+GATE IA05/IA06 a636-importacoes-concorrentes: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a636-importacao-dispositivos.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ mesmo-backup-dois-dispositivos: {"arquivoSha256":"6907d62851513d40b9e9159dc2f9c00c9a718a050143e1427f755f836dc483c1","base":2,"atividadeNoArquivo":5,"esperado":5,"remoto":5,"novoDispositivo":5,"aviso":"Progresso salvo na sua conta."}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA05/IA06 a636-importacao-dispositivos: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a636-transferencia-erros.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ levar-erro-posterior-corrigido: {"esperado":1,"fonte":1,"local":1,"remoto":1,"reaberto":1,"correcoesObservadas":["e:o6f00f13f-086c-4c9e-a709-3246285d7ed2"],"causalidadeFonte":{"a":{"legado":2,"e:o99bf7015-107d-4cb1-99b4-4afd1fc6a047":1},"x":{},"l":{"e:o6f00f13f-086c-4c9e-a709-3246285d7ed2":{"legado":true}},"o":{"e:o99bf7015-107d-4cb1-99b4-4afd1fc6a047":{"e:o6f00f13f-086c-4c9e-a709-3246285d7ed2":true}}},"causalidadeDestino":{"a":{"legado":2,"e:o99bf7015-107d-4cb1-99b4-4afd1fc6a047":1},"x":{},"l":{"e:o6f00f13f-086c-4c9e-a709-3246285d7ed2":{"legado":true}},"o":{"e:o99bf7015-107d-4cb1-99b4-4afd1fc6a047":{"e:o6f00f13f-086c-4c9e-a709-3246285d7ed2":true}}},"aviso":"Progresso salvo neste aparelho."}
+✓ Controle: importar o MESMO backup preserva a causalidade e mantém exatamente um erro.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA05/IA06 a636-transferencia-erros: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a636-sessoes-abas.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ A excluída; duas abas permanecem em B; estudo de B confirmado antes/depois da resposta A; nenhum dado B apagado.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA05/IA06 a636-sessoes-abas: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Exclusão abortada + duas importações identificadas + dois Page.crash: 7/7, base e certificado preservados, nenhuma confirmação falsa de exclusão.
+GATE IA05/IA06 a636-abort-exclusao: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/a35-retorno-firebase-antigo.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+✗ exclusao-firebase-anterior: {"candidato":"a35ea9a","produtorAntigo":"2f6cad6ebba53d0f86319dcada671fe9396f8111","docV2Apagado":true,"authExcluidaHTTP":400,"marcadorHTTP":404,"recriou":true,"nomeRestaurado":"Pessoa Fictícia Excluída","feitoRestaurado":{"T:apos-exclusao-legitima":true,"T:privada":true},"avisoAtual":"Progresso salvo na sua conta."}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/testes/a35-retorno-firebase-antigo.test.js"" exited with code 1
+✓ Dependência IA04 comprovada: runtime novo sozinho continua vulnerável com regras antigas; controle negativo não é aprovação dessa configuração.
+GATE IA05/IA06 importacoes-regras-dependencia: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Mesmo backup bruto/identificado/editado, atividade nova, Zerar posterior e reabertura: nenhum estudo apagado volta.
+✓ Zerar antes da primeira importação: a cópia inédita entra uma vez, com 5/5.
+✓ Origens independentes 3+5=8; repetição inversa não duplica; após Zerar ficam só as duas atividades novas.
+✓ Limite explícito de 10.000 unidades históricas: recusa antes da mutação, sem truncamento nem confirmação falsa.
+✓ Substituir não recria módulos ausentes por causa de contadores tombstonados; reabertura preserva a substituição.
+✓ Substituir origem identificada com atividade inédita após Zerar mantém só a atividade legítima; repetir e reabrir não restaura a observada.
+GATE IA05/IA06 importacoes-ciclo: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/importacoes-offline.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Bases 2/4 + mesmo backup 5 + estudo novo: 6/6 após reconexão inversa, repetição e terceiro dispositivo.
+✓ Levar conserva cobertura/recibo; Zerar + reimportar mantém somente estudo novo; contas A/B isoladas.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA05/IA06 importacoes-offline: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/importacoes-reset-offline.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+PROVA RESET/ORIGEM: {"zerado":{"feito":{},"act":{},"certs":[]},"remoto":{"feito":{},"act":{},"certs":[]},"reaberto":{"feito":{},"act":{},"certs":[]},"mensagem":"Progresso salvo na sua conta."}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA05/IA06 importacoes-reset-offline: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Dois Browser.crash sem Web Locks: recibo legado, Zerar, tombstones e atividade nova duráveis; reimportação bruta/identificada não duplica nem restaura.
+GATE IA05/IA06 importacoes-crash: PASSOU
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ Importação sob quota/abort: repetição pendente não confirma falsamente; recupera mesmos IDs e 5/5 após reabrir.
+GATE IA05/IA06 importacoes-falhas: PASSOU
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9250.
+i  Running script: node "/workspace/eear-audit/testes/importacoes-cliente-anterior.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+Runtime publicado SHA256: ce6d1069f0cfc46bc2b447b6c2535a1d062a9bf59c7f1d221dcbbde96d15950f
+✓ Envelope v6 confirmado; cliente v2 real avisa versão futura, mantém estudo local e recebe 403 sem alteração remota.
+Runtime publicado SHA256: 4513e7687ed23de02138c6b57494b98f8bb38d666c8346f5af44d9c181c99541
+✓ Envelope v6 confirmado; cliente v3 real avisa versão futura, mantém estudo local e recebe 403 sem alteração remota.
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+GATE IA05/IA06 importacoes-cliente-anterior: PASSOU
+✓ SHA-256, unidades estáveis, bases distintas, repetição, estudo novo, reset, limite e causalidade de erros.
+✓ Transferência conserva créditos de migração sem propagar Zerar da outra origem.
+✓ Correção após Levar, repetição, erro concorrente 2/2 e erro posterior 1/1.
+GATE IA05/IA06 importacoes-propriedades: PASSOU

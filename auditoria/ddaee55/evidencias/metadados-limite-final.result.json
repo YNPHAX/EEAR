@@ -1,0 +1,17 @@
+{
+  "name": "metadados-limite-final",
+  "cmd": [
+    "node",
+    "testes/metadados-limite.test.js"
+  ],
+  "cwd": "/workspace/eear-audit",
+  "env": {
+    "EEAR_CARGA_ESTADO": "/workspace/audit-results/carga-estado.json"
+  },
+  "exit": 0,
+  "expected": 0,
+  "seconds": 21.19,
+  "utc": "2026-11-19T12:33:32.188481+00:00",
+  "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+}

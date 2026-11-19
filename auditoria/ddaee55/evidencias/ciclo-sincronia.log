@@ -1,0 +1,3 @@
+✓ recusa: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ callback: {"erro":"","ativa":true,"enviadoA":null,"enviadoB":{"T:B":true}}
+✓ saida: {"preservou":true}

@@ -1,0 +1,2806 @@
+{
+  "ui": {
+    "v": 1,
+    "t": 1795089859300,
+    "cfg": {
+      "modalidade": "normal",
+      "alvo": "outra",
+      "prova": "2026-11-22",
+      "inicio": "2026-11-19",
+      "horas": 3,
+      "dias": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "simDia": 0,
+      "tempoSim": 260,
+      "excl": [],
+      "cv": 2,
+      "certs": [
+        {
+          "s": "por",
+          "mod": null,
+          "ids": [
+            "POR01",
+            "POR02",
+            "POR03",
+            "POR04",
+            "POR05",
+            "POR06",
+            "POR07",
+            "POR08",
+            "POR09",
+            "POR10",
+            "POR11",
+            "POR12",
+            "POR13",
+            "POR14",
+            "POR15"
+          ],
+          "h": 39,
+          "d": "2026-11-19",
+          "c": "8Q93-9OLX",
+          "o": "curso",
+          "t": 1795089859300
+        }
+      ],
+      "nome": "Certificado Fictício",
+      "_importacoes": {
+        "e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": true
+      },
+      "_ops": {
+        "v": 2,
+        "n": 1795089859301,
+        "r": {
+          "[\"act\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909"
+          ],
+          "[\"ap\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"ativo\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"aula\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"cfg\",\"alvo\"]": [
+            1795089859094,
+            "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "outra"
+          ],
+          "[\"cfg\",\"certs\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909"
+          ],
+          "[\"cfg\",\"cv\"]": [
+            0,
+            "legado",
+            2
+          ],
+          "[\"cfg\",\"dias\"]": [
+            0,
+            "legado",
+            [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          ],
+          "[\"cfg\",\"excl\"]": [
+            0,
+            "legado",
+            []
+          ],
+          "[\"cfg\",\"horas\"]": [
+            0,
+            "legado",
+            3
+          ],
+          "[\"cfg\",\"inicio\"]": [
+            0,
+            "legado",
+            "2026-11-19"
+          ],
+          "[\"cfg\",\"modalidade\"]": [
+            0,
+            "legado",
+            "normal"
+          ],
+          "[\"cfg\",\"prova\"]": [
+            0,
+            "legado",
+            "2026-11-22"
+          ],
+          "[\"cfg\",\"simDia\"]": [
+            0,
+            "legado",
+            0
+          ],
+          "[\"cfg\",\"tempoSim\"]": [
+            0,
+            "legado",
+            260
+          ],
+          "[\"diag\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"erros\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"fc\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"feito\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"mod\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"sims\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"t\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            1795089859300
+          ],
+          "[\"ult\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"ultAula\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"v\"]": [
+            0,
+            "legado",
+            1
+          ],
+          "[\"cfg\",\"nome\"]": [
+            1795089859094,
+            "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "Certificado Fictício"
+          ],
+          "[\"cfg\",\"_importacoes\",\"e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670\"]": [
+            1795089859090,
+            "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            true
+          ],
+          "[\"mod\",\"POR01\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR02\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR03\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR04\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR05\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR06\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR07\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR08\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR09\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR10\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR11\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR12\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR13\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR14\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR15\",\"last\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            1
+          ],
+          "[\"mod\",\"POR15\",\"lido\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            "2026-11-19"
+          ],
+          "[\"mod\",\"POR15\",\"ok\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            "2026-11-19"
+          ],
+          "[\"mod\",\"POR15\",\"quando\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            "2026-11-19"
+          ]
+        },
+        "c": {
+          "[\"mod\",\"POR01\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR01\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR02\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR02\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR03\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR03\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR04\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR04\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR05\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR05\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR06\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR06\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR07\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR07\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR08\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR08\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR09\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR09\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR10\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR10\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR11\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR11\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR12\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR12\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR13\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR13\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR14\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR14\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"act\",\"2026-11-19\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR15\",\"best\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR15\",\"tent\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+            },
+            "x": {}
+          }
+        },
+        "s": {
+          "[\"cfg\",\"certs\",\"por||POR01,POR02,POR03,POR04,POR05,POR06,POR07,POR08,POR09,POR10,POR11,POR12,POR13,POR14,POR15\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": {
+                "s": "por",
+                "mod": null,
+                "ids": [
+                  "POR01",
+                  "POR02",
+                  "POR03",
+                  "POR04",
+                  "POR05",
+                  "POR06",
+                  "POR07",
+                  "POR08",
+                  "POR09",
+                  "POR10",
+                  "POR11",
+                  "POR12",
+                  "POR13",
+                  "POR14",
+                  "POR15"
+                ],
+                "h": 39,
+                "d": "2026-11-19",
+                "c": "8Q93-9OLX",
+                "o": "curso",
+                "t": 1795089859300
+              }
+            },
+            "x": {}
+          }
+        }
+      }
+    },
+    "mod": {
+      "POR01": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR02": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR03": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR04": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR05": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR06": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR07": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR08": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR09": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR10": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR11": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR12": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR13": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR14": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR15": {
+        "best": 1,
+        "last": 1,
+        "lido": "2026-11-19",
+        "ok": "2026-11-19",
+        "quando": "2026-11-19",
+        "tent": 1
+      }
+    },
+    "fc": {},
+    "erros": {},
+    "sims": [],
+    "diag": null,
+    "feito": {},
+    "act": {
+      "2026-11-19": 1
+    },
+    "ativo": null,
+    "ult": null,
+    "ap": {},
+    "aula": {},
+    "ultAula": null
+  },
+  "armazenamento": {
+    "checkpoint": {
+      "gen": "o36628d79-a7af-4890-8aca-364f87409a0e",
+      "meta": {
+        "v": 2,
+        "n": 1795089859301,
+        "r": {
+          "[\"act\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909"
+          ],
+          "[\"ap\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"ativo\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"aula\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"cfg\",\"alvo\"]": [
+            1795089859094,
+            "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "outra"
+          ],
+          "[\"cfg\",\"certs\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909"
+          ],
+          "[\"cfg\",\"cv\"]": [
+            0,
+            "legado",
+            2
+          ],
+          "[\"cfg\",\"dias\"]": [
+            0,
+            "legado",
+            [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          ],
+          "[\"cfg\",\"excl\"]": [
+            0,
+            "legado",
+            []
+          ],
+          "[\"cfg\",\"horas\"]": [
+            0,
+            "legado",
+            3
+          ],
+          "[\"cfg\",\"inicio\"]": [
+            0,
+            "legado",
+            "2026-11-19"
+          ],
+          "[\"cfg\",\"modalidade\"]": [
+            0,
+            "legado",
+            "normal"
+          ],
+          "[\"cfg\",\"prova\"]": [
+            0,
+            "legado",
+            "2026-11-22"
+          ],
+          "[\"cfg\",\"simDia\"]": [
+            0,
+            "legado",
+            0
+          ],
+          "[\"cfg\",\"tempoSim\"]": [
+            0,
+            "legado",
+            260
+          ],
+          "[\"diag\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"erros\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"fc\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"feito\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"mod\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"sims\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"t\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            1795089859300
+          ],
+          "[\"ult\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"ultAula\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"v\"]": [
+            0,
+            "legado",
+            1
+          ],
+          "[\"cfg\",\"nome\"]": [
+            1795089859094,
+            "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "Certificado Fictício"
+          ],
+          "[\"cfg\",\"_importacoes\",\"e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670\"]": [
+            1795089859090,
+            "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            true
+          ],
+          "[\"mod\",\"POR01\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR02\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR03\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR04\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR05\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR06\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR07\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR08\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR09\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR10\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR11\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR12\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR13\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR14\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR15\",\"last\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            1
+          ],
+          "[\"mod\",\"POR15\",\"lido\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            "2026-11-19"
+          ],
+          "[\"mod\",\"POR15\",\"ok\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            "2026-11-19"
+          ],
+          "[\"mod\",\"POR15\",\"quando\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            "2026-11-19"
+          ]
+        },
+        "c": {
+          "[\"mod\",\"POR01\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR01\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR02\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR02\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR03\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR03\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR04\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR04\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR05\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR05\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR06\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR06\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR07\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR07\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR08\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR08\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR09\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR09\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR10\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR10\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR11\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR11\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR12\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR12\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR13\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR13\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR14\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR14\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"act\",\"2026-11-19\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR15\",\"best\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR15\",\"tent\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+            },
+            "x": {}
+          }
+        },
+        "s": {
+          "[\"cfg\",\"certs\",\"por||POR01,POR02,POR03,POR04,POR05,POR06,POR07,POR08,POR09,POR10,POR11,POR12,POR13,POR14,POR15\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": {
+                "s": "por",
+                "mod": null,
+                "ids": [
+                  "POR01",
+                  "POR02",
+                  "POR03",
+                  "POR04",
+                  "POR05",
+                  "POR06",
+                  "POR07",
+                  "POR08",
+                  "POR09",
+                  "POR10",
+                  "POR11",
+                  "POR12",
+                  "POR13",
+                  "POR14",
+                  "POR15"
+                ],
+                "h": 39,
+                "d": "2026-11-19",
+                "c": "8Q93-9OLX",
+                "o": "curso",
+                "t": 1795089859300
+              }
+            },
+            "x": {}
+          }
+        }
+      },
+      "legados": {},
+      "st": {
+        "v": 1,
+        "t": 1795089859300,
+        "cfg": {
+          "modalidade": "normal",
+          "alvo": "outra",
+          "prova": "2026-11-22",
+          "inicio": "2026-11-19",
+          "horas": 3,
+          "dias": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "simDia": 0,
+          "tempoSim": 260,
+          "excl": [],
+          "cv": 2,
+          "certs": [
+            {
+              "s": "por",
+              "mod": null,
+              "ids": [
+                "POR01",
+                "POR02",
+                "POR03",
+                "POR04",
+                "POR05",
+                "POR06",
+                "POR07",
+                "POR08",
+                "POR09",
+                "POR10",
+                "POR11",
+                "POR12",
+                "POR13",
+                "POR14",
+                "POR15"
+              ],
+              "h": 39,
+              "d": "2026-11-19",
+              "c": "8Q93-9OLX",
+              "o": "curso",
+              "t": 1795089859300
+            }
+          ],
+          "nome": "Certificado Fictício",
+          "_importacoes": {
+            "e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": true
+          },
+          "_ops": {
+            "v": 2,
+            "n": 1795089859301,
+            "r": {
+              "[\"act\"]": [
+                1795089859301,
+                "e:o2413343d-d975-4028-a84c-869bdb971909"
+              ],
+              "[\"ap\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"ativo\"]": [
+                0,
+                "legado",
+                null
+              ],
+              "[\"aula\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"cfg\",\"alvo\"]": [
+                1795089859094,
+                "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "outra"
+              ],
+              "[\"cfg\",\"certs\"]": [
+                1795089859301,
+                "e:o2413343d-d975-4028-a84c-869bdb971909"
+              ],
+              "[\"cfg\",\"cv\"]": [
+                0,
+                "legado",
+                2
+              ],
+              "[\"cfg\",\"dias\"]": [
+                0,
+                "legado",
+                [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ]
+              ],
+              "[\"cfg\",\"excl\"]": [
+                0,
+                "legado",
+                []
+              ],
+              "[\"cfg\",\"horas\"]": [
+                0,
+                "legado",
+                3
+              ],
+              "[\"cfg\",\"inicio\"]": [
+                0,
+                "legado",
+                "2026-11-19"
+              ],
+              "[\"cfg\",\"modalidade\"]": [
+                0,
+                "legado",
+                "normal"
+              ],
+              "[\"cfg\",\"prova\"]": [
+                0,
+                "legado",
+                "2026-11-22"
+              ],
+              "[\"cfg\",\"simDia\"]": [
+                0,
+                "legado",
+                0
+              ],
+              "[\"cfg\",\"tempoSim\"]": [
+                0,
+                "legado",
+                260
+              ],
+              "[\"diag\"]": [
+                0,
+                "legado",
+                null
+              ],
+              "[\"erros\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"fc\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"feito\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"mod\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"sims\"]": [
+                0,
+                "legado",
+                {}
+              ],
+              "[\"t\"]": [
+                1795089859301,
+                "e:o2413343d-d975-4028-a84c-869bdb971909",
+                1795089859300
+              ],
+              "[\"ult\"]": [
+                0,
+                "legado",
+                null
+              ],
+              "[\"ultAula\"]": [
+                0,
+                "legado",
+                null
+              ],
+              "[\"v\"]": [
+                0,
+                "legado",
+                1
+              ],
+              "[\"cfg\",\"nome\"]": [
+                1795089859094,
+                "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "Certificado Fictício"
+              ],
+              "[\"cfg\",\"_importacoes\",\"e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670\"]": [
+                1795089859090,
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                true
+              ],
+              "[\"mod\",\"POR01\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR02\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR03\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR04\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR05\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR06\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR07\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR08\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR09\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR10\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR11\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR12\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR13\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR14\",\"ok\"]": [
+                0,
+                "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+                "2026-10-01"
+              ],
+              "[\"mod\",\"POR15\",\"last\"]": [
+                1795089859301,
+                "e:o2413343d-d975-4028-a84c-869bdb971909",
+                1
+              ],
+              "[\"mod\",\"POR15\",\"lido\"]": [
+                1795089859301,
+                "e:o2413343d-d975-4028-a84c-869bdb971909",
+                "2026-11-19"
+              ],
+              "[\"mod\",\"POR15\",\"ok\"]": [
+                1795089859301,
+                "e:o2413343d-d975-4028-a84c-869bdb971909",
+                "2026-11-19"
+              ],
+              "[\"mod\",\"POR15\",\"quando\"]": [
+                1795089859301,
+                "e:o2413343d-d975-4028-a84c-869bdb971909",
+                "2026-11-19"
+              ]
+            },
+            "c": {
+              "[\"mod\",\"POR01\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR01\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR02\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR02\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR03\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR03\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR04\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR04\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR05\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR05\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR06\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR06\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR07\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR07\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR08\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR08\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR09\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR09\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR10\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR10\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR11\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR11\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR12\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR12\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR13\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR13\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR14\",\"best\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR14\",\"tent\"]": {
+                "a": {
+                  "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+                },
+                "x": {}
+              },
+              "[\"act\",\"2026-11-19\"]": {
+                "a": {
+                  "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR15\",\"best\"]": {
+                "a": {
+                  "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+                },
+                "x": {}
+              },
+              "[\"mod\",\"POR15\",\"tent\"]": {
+                "a": {
+                  "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+                },
+                "x": {}
+              }
+            },
+            "s": {
+              "[\"cfg\",\"certs\",\"por||POR01,POR02,POR03,POR04,POR05,POR06,POR07,POR08,POR09,POR10,POR11,POR12,POR13,POR14,POR15\"]": {
+                "a": {
+                  "e:o2413343d-d975-4028-a84c-869bdb971909": {
+                    "s": "por",
+                    "mod": null,
+                    "ids": [
+                      "POR01",
+                      "POR02",
+                      "POR03",
+                      "POR04",
+                      "POR05",
+                      "POR06",
+                      "POR07",
+                      "POR08",
+                      "POR09",
+                      "POR10",
+                      "POR11",
+                      "POR12",
+                      "POR13",
+                      "POR14",
+                      "POR15"
+                    ],
+                    "h": 39,
+                    "d": "2026-11-19",
+                    "c": "8Q93-9OLX",
+                    "o": "curso",
+                    "t": 1795089859300
+                  }
+                },
+                "x": {}
+              }
+            }
+          }
+        },
+        "mod": {
+          "POR01": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR02": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR03": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR04": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR05": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR06": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR07": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR08": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR09": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR10": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR11": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR12": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR13": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR14": {
+            "best": 0.9,
+            "ok": "2026-10-01",
+            "tent": 1
+          },
+          "POR15": {
+            "best": 1,
+            "last": 1,
+            "lido": "2026-11-19",
+            "ok": "2026-11-19",
+            "quando": "2026-11-19",
+            "tent": 1
+          }
+        },
+        "fc": {},
+        "erros": {},
+        "sims": [],
+        "diag": null,
+        "feito": {},
+        "act": {
+          "2026-11-19": 1
+        },
+        "ativo": null,
+        "ult": null,
+        "ap": {},
+        "aula": {},
+        "ultAula": null
+      },
+      "recibos": {
+        "e:o15d9a291-41d6-4780-9ce7-fc26a16e79cc": true,
+        "e:oa1b73ad1-1ff4-4e95-87d4-9b1b29e984f0": true,
+        "e:ofe06b8c9-bb9d-4925-a2ca-def9f63aa139": true,
+        "e:ofbf75845-4e7d-4ca0-8e08-6a8f3d6b0d72": true,
+        "e:of2b48d01-332f-47b6-ab20-f3a315d350c9": true,
+        "e:odec21e77-e4db-4236-ad2d-ca64251a9282": true,
+        "e:o597a7060-b8a6-44c1-93bc-88ae3f533af1": true,
+        "e:oce2923ec-d164-4d0b-a239-cdd159326ec7": true,
+        "e:o682b55a5-bd82-4440-a9fa-a141ba3093d8": true,
+        "e:o3c24e355-ac9b-4c14-95e0-a48ca2d6a092": true,
+        "e:of8716e11-961f-48b2-9d40-0ec6ff5c6832": true,
+        "e:o2413343d-d975-4028-a84c-869bdb971909": true
+      },
+      "apagado": false
+    },
+    "cache": {
+      "v": 1,
+      "t": 1795089859292,
+      "cfg": {
+        "modalidade": "normal",
+        "alvo": "outra",
+        "prova": "2026-11-22",
+        "inicio": "2026-11-19",
+        "horas": 3,
+        "dias": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "simDia": 0,
+        "tempoSim": 260,
+        "excl": [],
+        "cv": 2,
+        "certs": [],
+        "nome": "Certificado Fictício",
+        "_importacoes": {
+          "e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": true
+        },
+        "_ops": {
+          "v": 2,
+          "n": 1795089859293,
+          "r": {
+            "[\"act\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ap\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"ativo\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"aula\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"alvo\"]": [
+              1795089859094,
+              "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "outra"
+            ],
+            "[\"cfg\",\"certs\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"cfg\",\"cv\"]": [
+              0,
+              "legado",
+              2
+            ],
+            "[\"cfg\",\"dias\"]": [
+              0,
+              "legado",
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ],
+            "[\"cfg\",\"excl\"]": [
+              0,
+              "legado",
+              []
+            ],
+            "[\"cfg\",\"horas\"]": [
+              0,
+              "legado",
+              3
+            ],
+            "[\"cfg\",\"inicio\"]": [
+              0,
+              "legado",
+              "2026-11-19"
+            ],
+            "[\"cfg\",\"modalidade\"]": [
+              0,
+              "legado",
+              "normal"
+            ],
+            "[\"cfg\",\"prova\"]": [
+              0,
+              "legado",
+              "2026-11-22"
+            ],
+            "[\"cfg\",\"simDia\"]": [
+              0,
+              "legado",
+              0
+            ],
+            "[\"cfg\",\"tempoSim\"]": [
+              0,
+              "legado",
+              260
+            ],
+            "[\"diag\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"erros\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"fc\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"feito\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"mod\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"sims\"]": [
+              0,
+              "legado",
+              {}
+            ],
+            "[\"t\"]": [
+              1795089859293,
+              "e:of8716e11-961f-48b2-9d40-0ec6ff5c6832",
+              1795089859292
+            ],
+            "[\"ult\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"ultAula\"]": [
+              0,
+              "legado",
+              null
+            ],
+            "[\"v\"]": [
+              0,
+              "legado",
+              1
+            ],
+            "[\"cfg\",\"nome\"]": [
+              1795089859094,
+              "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "Certificado Fictício"
+            ],
+            "[\"cfg\",\"_importacoes\",\"e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670\"]": [
+              1795089859090,
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              true
+            ],
+            "[\"mod\",\"POR01\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR02\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR03\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR04\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR05\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR06\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR07\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR08\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR09\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR10\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR11\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR12\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR13\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ],
+            "[\"mod\",\"POR14\",\"ok\"]": [
+              0,
+              "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+              "2026-10-01"
+            ]
+          },
+          "c": {
+            "[\"mod\",\"POR01\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR01\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR02\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR02\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR03\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR03\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR04\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR04\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR05\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR05\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR06\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR06\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR07\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR07\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR08\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR08\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR09\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR09\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR10\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR10\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR11\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR11\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR12\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR12\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR13\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR13\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR14\",\"best\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+              },
+              "x": {}
+            },
+            "[\"mod\",\"POR14\",\"tent\"]": {
+              "a": {
+                "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+              },
+              "x": {}
+            }
+          },
+          "s": {}
+        }
+      },
+      "mod": {
+        "POR01": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR02": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR03": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR04": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR05": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR06": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR07": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR08": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR09": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR10": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR11": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR12": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR13": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        },
+        "POR14": {
+          "best": 0.9,
+          "ok": "2026-10-01",
+          "tent": 1
+        }
+      },
+      "fc": {},
+      "erros": {},
+      "sims": [],
+      "diag": null,
+      "feito": {},
+      "act": {},
+      "ativo": null,
+      "ult": null,
+      "ap": {},
+      "aula": {},
+      "ultAula": null
+    },
+    "reservas": [],
+    "indicador": "<div class=\"sync\" id=\"sync\" data-local=\"confirmado\" data-nuvem=\"desligada\">Progresso salvo neste aparelho.</div>"
+  },
+  "reaberto": {
+    "v": 1,
+    "t": 1795089859300,
+    "cfg": {
+      "modalidade": "normal",
+      "alvo": "outra",
+      "prova": "2026-11-22",
+      "inicio": "2026-11-19",
+      "horas": 3,
+      "dias": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "simDia": 0,
+      "tempoSim": 260,
+      "excl": [],
+      "cv": 2,
+      "certs": [
+        {
+          "s": "por",
+          "mod": null,
+          "ids": [
+            "POR01",
+            "POR02",
+            "POR03",
+            "POR04",
+            "POR05",
+            "POR06",
+            "POR07",
+            "POR08",
+            "POR09",
+            "POR10",
+            "POR11",
+            "POR12",
+            "POR13",
+            "POR14",
+            "POR15"
+          ],
+          "h": 39,
+          "d": "2026-11-19",
+          "c": "8Q93-9OLX",
+          "o": "curso",
+          "t": 1795089859300
+        }
+      ],
+      "nome": "Certificado Fictício",
+      "_importacoes": {
+        "e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": true
+      },
+      "_ops": {
+        "v": 2,
+        "n": 1795089859301,
+        "r": {
+          "[\"act\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909"
+          ],
+          "[\"ap\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"ativo\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"aula\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"cfg\",\"alvo\"]": [
+            1795089859094,
+            "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "outra"
+          ],
+          "[\"cfg\",\"certs\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909"
+          ],
+          "[\"cfg\",\"cv\"]": [
+            0,
+            "legado",
+            2
+          ],
+          "[\"cfg\",\"dias\"]": [
+            0,
+            "legado",
+            [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          ],
+          "[\"cfg\",\"excl\"]": [
+            0,
+            "legado",
+            []
+          ],
+          "[\"cfg\",\"horas\"]": [
+            0,
+            "legado",
+            3
+          ],
+          "[\"cfg\",\"inicio\"]": [
+            0,
+            "legado",
+            "2026-11-19"
+          ],
+          "[\"cfg\",\"modalidade\"]": [
+            0,
+            "legado",
+            "normal"
+          ],
+          "[\"cfg\",\"prova\"]": [
+            0,
+            "legado",
+            "2026-11-22"
+          ],
+          "[\"cfg\",\"simDia\"]": [
+            0,
+            "legado",
+            0
+          ],
+          "[\"cfg\",\"tempoSim\"]": [
+            0,
+            "legado",
+            260
+          ],
+          "[\"diag\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"erros\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"fc\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"feito\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"mod\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"sims\"]": [
+            0,
+            "legado",
+            {}
+          ],
+          "[\"t\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            1795089859300
+          ],
+          "[\"ult\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"ultAula\"]": [
+            0,
+            "legado",
+            null
+          ],
+          "[\"v\"]": [
+            0,
+            "legado",
+            1
+          ],
+          "[\"cfg\",\"nome\"]": [
+            1795089859094,
+            "e:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "Certificado Fictício"
+          ],
+          "[\"cfg\",\"_importacoes\",\"e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670\"]": [
+            1795089859090,
+            "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            true
+          ],
+          "[\"mod\",\"POR01\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR02\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR03\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR04\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR05\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR06\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR07\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR08\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR09\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR10\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR11\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR12\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR13\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR14\",\"ok\"]": [
+            0,
+            "z:i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670",
+            "2026-10-01"
+          ],
+          "[\"mod\",\"POR15\",\"last\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            1
+          ],
+          "[\"mod\",\"POR15\",\"lido\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            "2026-11-19"
+          ],
+          "[\"mod\",\"POR15\",\"ok\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            "2026-11-19"
+          ],
+          "[\"mod\",\"POR15\",\"quando\"]": [
+            1795089859301,
+            "e:o2413343d-d975-4028-a84c-869bdb971909",
+            "2026-11-19"
+          ]
+        },
+        "c": {
+          "[\"mod\",\"POR01\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR01\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR02\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR02\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR03\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR03\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR04\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR04\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR05\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR05\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR06\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR06\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR07\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR07\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR08\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR08\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR09\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR09\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR10\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR10\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR11\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR11\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR12\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR12\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR13\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR13\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR14\",\"best\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670": 0.9
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR14\",\"tent\"]": {
+            "a": {
+              "i:e7944bba865c7787ff78ea831ebcd0c836fe1feb95d3b21b1f5ea0efc908b670:0": 1
+            },
+            "x": {}
+          },
+          "[\"act\",\"2026-11-19\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR15\",\"best\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+            },
+            "x": {}
+          },
+          "[\"mod\",\"POR15\",\"tent\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": 1
+            },
+            "x": {}
+          }
+        },
+        "s": {
+          "[\"cfg\",\"certs\",\"por||POR01,POR02,POR03,POR04,POR05,POR06,POR07,POR08,POR09,POR10,POR11,POR12,POR13,POR14,POR15\"]": {
+            "a": {
+              "e:o2413343d-d975-4028-a84c-869bdb971909": {
+                "s": "por",
+                "mod": null,
+                "ids": [
+                  "POR01",
+                  "POR02",
+                  "POR03",
+                  "POR04",
+                  "POR05",
+                  "POR06",
+                  "POR07",
+                  "POR08",
+                  "POR09",
+                  "POR10",
+                  "POR11",
+                  "POR12",
+                  "POR13",
+                  "POR14",
+                  "POR15"
+                ],
+                "h": 39,
+                "d": "2026-11-19",
+                "c": "8Q93-9OLX",
+                "o": "curso",
+                "t": 1795089859300
+              }
+            },
+            "x": {}
+          }
+        }
+      }
+    },
+    "mod": {
+      "POR01": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR02": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR03": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR04": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR05": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR06": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR07": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR08": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR09": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR10": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR11": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR12": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR13": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR14": {
+        "best": 0.9,
+        "ok": "2026-10-01",
+        "tent": 1
+      },
+      "POR15": {
+        "best": 1,
+        "last": 1,
+        "lido": "2026-11-19",
+        "ok": "2026-11-19",
+        "quando": "2026-11-19",
+        "tent": 1
+      }
+    },
+    "fc": {},
+    "erros": {},
+    "sims": [],
+    "diag": null,
+    "feito": {},
+    "act": {
+      "2026-11-19": 1
+    },
+    "ativo": null,
+    "ult": null,
+    "ap": {},
+    "aula": {},
+    "ultAula": null
+  }
+}

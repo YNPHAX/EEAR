@@ -1,0 +1,13 @@
+✓ artefato e destino de teste: exit=0; esperado=permitir
+✓ destino de produção: exit=1; esperado=recusar
+✓ destino vazio: exit=1; esperado=recusar
+✓ pasta ausente: exit=2; esperado=recusar
+✓ artefato oficial: exit=1; esperado=recusar
+✓ configuração divergente: exit=1; esperado=recusar
+✓ duas configurações literais: exit=1; esperado=recusar
+✓ arquivo proibido pelo verificador de conteúdo: exit=1; esperado=recusar
+✓ configuração apenas em comentário não habilita homologação: exit=1; esperado=recusar
+✓ configuração sobrescrita por script antes do app: exit=1; esperado=recusar
+✓ configuração em comentário JavaScript não habilita homologação: exit=1; esperado=recusar
+✓ configuração em script não executável não habilita homologação: exit=1; esperado=recusar
+Gates: 0 falha(s). Sem deploy; configurações fictícias não executaram SDK.

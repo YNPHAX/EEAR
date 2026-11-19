@@ -1,0 +1,1078 @@
+{
+  "hashEsperado": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "seeds": [
+    {
+      "seed": 2802327590,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802335509,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802343428,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802351347,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802359266,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802367185,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802375104,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802383023,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802390942,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802398861,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802406780,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802414699,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802422618,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802430537,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802438456,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802446375,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802454294,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802462213,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802470132,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802478051,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802485970,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802493889,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802501808,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802509727,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802517646,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802525565,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802533484,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802541403,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802549322,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802557241,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802565160,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802573079,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802580998,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802588917,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802596836,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802604755,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802612674,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802620593,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802628512,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802636431,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802644350,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802652269,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802660188,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802668107,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802676026,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802683945,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802691864,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802699783,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802707702,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802715621,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802723540,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802731459,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802739378,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802747297,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802755216,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802763135,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802771054,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802778973,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802786892,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802794811,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802802730,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802810649,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802818568,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802826487,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802834406,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802842325,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802850244,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802858163,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802866082,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802874001,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802881920,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802889839,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802897758,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802905677,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802913596,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802921515,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802929434,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802937353,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802945272,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802953191,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802961110,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802969029,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802976948,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802984867,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2802992786,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803000705,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803008624,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803016543,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803024462,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803032381,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803040300,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803048219,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803056138,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803064057,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803071976,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803079895,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803087814,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803095733,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803103652,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803111571,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803119490,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803127409,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803135328,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803143247,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803151166,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803159085,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803167004,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803174923,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803182842,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803190761,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803198680,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803206599,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803214518,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803222437,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803230356,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803238275,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803246194,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803254113,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803262032,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803269951,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803277870,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803285789,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803293708,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803301627,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803309546,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803317465,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803325384,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803333303,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803341222,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803349141,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803357060,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803364979,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803372898,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803380817,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803388736,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803396655,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803404574,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803412493,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803420412,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803428331,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803436250,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803444169,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803452088,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803460007,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803467926,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803475845,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803483764,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803491683,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803499602,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803507521,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803515440,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803523359,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803531278,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803539197,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803547116,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803555035,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803562954,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803570873,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803578792,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803586711,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803594630,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803602549,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803610468,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803618387,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803626306,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803634225,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803642144,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803650063,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803657982,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803665901,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803673820,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803681739,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803689658,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803697577,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803705496,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803713415,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803721334,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803729253,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803737172,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803745091,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803753010,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803760929,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803768848,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803776767,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803784686,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803792605,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803800524,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803808443,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803816362,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803824281,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803832200,
+      "steps": 96,
+      "pass": true
+    },
+    {
+      "seed": 2803840119,
+      "steps": 96,
+      "pass": true
+    }
+  ],
+  "markers": [
+    {
+      "name": "absent",
+      "value": "undefined",
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "name": "zero",
+      "value": "0",
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "name": "negative-zero",
+      "value": "0",
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "name": "one",
+      "value": "1",
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "name": "max-date",
+      "value": "253402300799999",
+      "expected": true,
+      "accepted": true
+    },
+    {
+      "name": "above-date",
+      "value": "253402300800000",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "below-safe",
+      "value": "9007199254740990",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "max-safe",
+      "value": "9007199254740991",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "above-safe",
+      "value": "9007199254740992",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "1e30",
+      "value": "1e+30",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "negative",
+      "value": "-1",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "fraction",
+      "value": "0.5",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "numeric-string",
+      "value": "123",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "null",
+      "value": "null",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "object",
+      "value": "[object Object]",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "array",
+      "value": "",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "NaN",
+      "value": "NaN",
+      "expected": false,
+      "accepted": false
+    },
+    {
+      "name": "Infinity",
+      "value": "Infinity",
+      "expected": false,
+      "accepted": false
+    }
+  ],
+  "failures": [],
+  "canonical": 192,
+  "arrays": 192
+}

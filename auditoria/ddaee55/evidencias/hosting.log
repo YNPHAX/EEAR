@@ -1,0 +1,12 @@
+✓ alias padrão aponta ao projeto de teste
+✓ artefatos de homologação em diretório separado
+✓ Hosting declara predeploy (necessário; conteúdo exige auditoria) — sem hook, o CLI não executa o verificador Python
+✓ nenhuma reescrita do app intercepta o handler reservado de OAuth
+✓ build oficial permitido no modo oficial
+✓ build eear-teste aceito só como homologação
+✓ authDomain de outro projeto recusado no build
+✓ projectId de produção recusado no build
+✓ sem-marcador é recusado por --site — exit=1
+✓ projeto-divergente é recusado por --homologacao — exit=1
+✓ marcador em página auxiliar não habilita app oficial como homologação — exit=1
+Hosting: 0 falha(s); nenhuma operação no Firebase real.

@@ -1,0 +1,16 @@
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-properties-c186", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9350.
+i  Running script: node "/workspace/eear-audit/auditoria/ddaee55/teste-carga-obsoleta.js"
+Runtime publicado SHA256: 115d8af1fef7b82da3a006103512bfd6ac0897b5b43ba8eaf3b3962ed1c0cf9b
+{"first":"carregando","second":"carregando","prematureReady":true,"holdsRemaining":1,"visibleTask":true,"finalTask":false}
+⚠  Script exited unsuccessfully (code 1)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator
+
+Error: Script "node "/workspace/eear-audit/auditoria/ddaee55/teste-carga-obsoleta.js"" exited with code 1

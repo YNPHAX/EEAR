@@ -1,0 +1,98 @@
+✔ Adding native android project in android in 123.97ms
+✔ add in 124.71ms
+✔ Copying web assets from www to android/app/src/main/assets/public in 103.89ms
+✔ Creating capacitor.config.json in android/app/src/main/assets in 404.21μs
+✔ copy android in 113.26ms
+✔ Updating Android plugins in 435.98μs
+✔ update android in 67.96ms
+✔ Syncing Gradle in 4.23ms
+[success] android platform added!
+Follow the Developer Workflow guide to get building:
+https://capacitorjs.com/docs/basics/workflow
+[log] xml(load) at /workspace/eear-android-copy/app/android/app/src/main/AndroidManifest.xml
+[log] xml(load) Found root namespaces in XML file: http://schemas.android.com/apk/res/android
+Generating assets for android
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-ldpi/ic_launcher.png (766 B)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-mdpi/ic_launcher.png (1.33 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-hdpi/ic_launcher.png (2.5 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png (3.42 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png (5.63 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png (7.78 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-ldpi/ic_launcher_round.png (1.64 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png (2.24 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png (3.22 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png (4.12 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png (6.1 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png (8.21 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-ldpi/ic_launcher_foreground.png (748 B)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png (1.05 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png (1.58 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png (2.08 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png (2.95 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png (3.75 KB)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-ldpi/ic_launcher_background.png (148 B)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-mdpi/ic_launcher_background.png (176 B)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-hdpi/ic_launcher_background.png (213 B)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xhdpi/ic_launcher_background.png (285 B)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_background.png (432 B)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_background.png (559 B)
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+CREATE android icon /workspace/eear-android-copy/app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable/splash.png (5.12 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-ldpi/splash.png (3.38 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-mdpi/splash.png (4.91 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-hdpi/splash.png (8.24 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-xhdpi/splash.png (14.63 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-xxhdpi/splash.png (20.5 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-xxxhdpi/splash.png (28.17 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-ldpi/splash.png (3.51 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-mdpi/splash.png (5.12 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-hdpi/splash.png (8.65 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-xhdpi/splash.png (15.27 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-xxhdpi/splash.png (21.24 KB)
+CREATE android splash /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-xxxhdpi/splash.png (29.06 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-night/splash.png (3.38 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-night-ldpi/splash.png (3.38 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-night-mdpi/splash.png (4.91 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-night-hdpi/splash.png (8.24 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-night-xhdpi/splash.png (14.63 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-night-xxhdpi/splash.png (20.5 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-land-night-xxxhdpi/splash.png (28.17 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-night-ldpi/splash.png (3.51 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-night-mdpi/splash.png (5.12 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-night-hdpi/splash.png (8.65 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-night-xhdpi/splash.png (15.27 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-night-xxhdpi/splash.png (21.24 KB)
+CREATE android splash-dark /workspace/eear-android-copy/app/android/app/src/main/res/drawable-port-night-xxxhdpi/splash.png (29.06 KB)
+
+
+Totals:
+android: 74 generated, 394.68 KB total
+✔ Copying web assets from www to android/app/src/main/assets/public in 110.48ms
+✔ Creating capacitor.config.json in android/app/src/main/assets in 4.68ms
+✔ copy android in 172.82ms
+✔ Updating Android plugins in 551.60μs
+✔ update android in 42.23ms
+[info] Sync finished in 0.227s

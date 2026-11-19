@@ -1,0 +1,143 @@
+[
+  {
+    "width": 320,
+    "height": 568,
+    "theme": "light",
+    "overflow": false,
+    "tokens": {
+      "--bg": "#F3F1EC",
+      "--ink": "#0C0C0C",
+      "--accent": "#C8102E",
+      "--surface": "#FFFFFF",
+      "--muted": "#5F5B54",
+      "--ok": "#19744A",
+      "--bad": "#A8201A"
+    },
+    "links": [
+      {
+        "text": "Termos de uso",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(255, 255, 255)",
+        "contrast": 5.883276112656104
+      },
+      {
+        "text": "Política de privacidade",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(255, 255, 255)",
+        "contrast": 5.883276112656104
+      },
+      {
+        "text": "suporteinphax@gmail.com",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(243, 241, 236)",
+        "contrast": 5.212101279773025
+      },
+      {
+        "text": "Política de privacidade",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(243, 241, 236)",
+        "contrast": 5.212101279773025
+      },
+      {
+        "text": "Termos de uso",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(243, 241, 236)",
+        "contrast": 5.212101279773025
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "theme": "dark",
+    "overflow": false,
+    "tokens": {
+      "--bg": "#0C0C0C",
+      "--ink": "#EFEAE0",
+      "--accent": "#FF4D5A",
+      "--surface": "#151515",
+      "--muted": "#A39E94",
+      "--ok": "#46C98A",
+      "--bad": "#FF7466"
+    },
+    "links": [
+      {
+        "text": "Termos de uso",
+        "fg": "rgb(255, 77, 90)",
+        "bg": "rgb(21, 21, 21)",
+        "contrast": 5.618518882049646
+      },
+      {
+        "text": "Política de privacidade",
+        "fg": "rgb(255, 77, 90)",
+        "bg": "rgb(21, 21, 21)",
+        "contrast": 5.618518882049646
+      },
+      {
+        "text": "suporteinphax@gmail.com",
+        "fg": "rgb(255, 77, 90)",
+        "bg": "rgb(12, 12, 12)",
+        "contrast": 6.018636706075529
+      },
+      {
+        "text": "Política de privacidade",
+        "fg": "rgb(255, 77, 90)",
+        "bg": "rgb(12, 12, 12)",
+        "contrast": 6.018636706075529
+      },
+      {
+        "text": "Termos de uso",
+        "fg": "rgb(255, 77, 90)",
+        "bg": "rgb(12, 12, 12)",
+        "contrast": 6.018636706075529
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "height": 900,
+    "theme": "light",
+    "overflow": false,
+    "tokens": {
+      "--bg": "#F3F1EC",
+      "--ink": "#0C0C0C",
+      "--accent": "#C8102E",
+      "--surface": "#FFFFFF",
+      "--muted": "#5F5B54",
+      "--ok": "#19744A",
+      "--bad": "#A8201A"
+    },
+    "links": [
+      {
+        "text": "Termos de uso",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(255, 255, 255)",
+        "contrast": 5.883276112656104
+      },
+      {
+        "text": "Política de privacidade",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(255, 255, 255)",
+        "contrast": 5.883276112656104
+      },
+      {
+        "text": "suporteinphax@gmail.com",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(243, 241, 236)",
+        "contrast": 5.212101279773025
+      },
+      {
+        "text": "Política de privacidade",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(243, 241, 236)",
+        "contrast": 5.212101279773025
+      },
+      {
+        "text": "Termos de uso",
+        "fg": "rgb(200, 16, 46)",
+        "bg": "rgb(243, 241, 236)",
+        "contrast": 5.212101279773025
+      }
+    ]
+  }
+]

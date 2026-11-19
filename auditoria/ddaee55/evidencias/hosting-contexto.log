@@ -1,0 +1,4 @@
+✓ canonica-ativa: {"gateExit": 0, "configExecutada": true, "projetoRuntime": "eear-teste", "deveriaAceitar": true}
+✓ canonica-em-script-texto: {"gateExit": 1, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+✓ canonica-em-template-com-comentario: {"gateExit": 1, "configExecutada": false, "projetoRuntime": null, "deveriaAceitar": false}
+Contexto H02: 0 falha(s). Sem deploy, SDK ou Firebase real.

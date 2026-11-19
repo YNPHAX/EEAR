@@ -1,0 +1,4 @@
+Runtime SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ legado bloqueado, locks=true: três abas, 5/5, BASE antiga recusada, exportação, Zerar+estudo 1/1, reabertura e zero I/O remoto.
+✓ legado bloqueado, locks=false: três abas, 5/5, BASE antiga recusada, exportação, Zerar+estudo 1/1, reabertura e zero I/O remoto.
+✓ legado bloqueado, dois Browser.crash reais: checkpoint confirmado sobrevive, 3/3, sem Web Locks e sem confirmação remota.

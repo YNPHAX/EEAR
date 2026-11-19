@@ -1,0 +1,13 @@
+{
+  "primeiro": {
+    "bytes": 13528629,
+    "sha256": "3639517e4a857ff38ed238828dfb20684df8ac8f1a254eb92d1567f5d3815e3d",
+    "runtimeSha256": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+  },
+  "repetido": {
+    "bytes": 13528629,
+    "sha256": "3639517e4a857ff38ed238828dfb20684df8ac8f1a254eb92d1567f5d3815e3d",
+    "runtimeSha256": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+  },
+  "apkIdentico": true
+}

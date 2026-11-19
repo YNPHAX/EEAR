@@ -1,0 +1,14 @@
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-eear-f01", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator was started in standard edition.
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: node "/workspace/eear-audit/testes/metadados-limite.test.js"
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+✓ limite-de-metadados: {"bytesEntrada":910368,"esperado":6002,"atividadeLocal":6002,"atividadeCheckpoint":6002,"atividadeServidor":2,"atividadeReaberta":6002,"recusou":true,"preservou":true,"aviso":"A sincronização com a nuvem parou (a nuvem recusou a gravação). O seu progresso continua salvo neste aparelho e nada foi apagado; ele vai para a conta quando a sincronização voltar a funcionar (abra o app de novo para tentar)."}
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator

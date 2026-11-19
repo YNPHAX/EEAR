@@ -1,0 +1,10 @@
+{
+  "initial": "ENOSPC during system-image extraction; original test failures retained and full affected suites rerun",
+  "secondAttempt": "Refused extraction before writing after checking ZIP directory sizes",
+  "imageUncompressedBytes": 4471331979,
+  "freeBeforeExtractionBytes": 4187467776,
+  "emulatorUncompressedBytes": 904690874,
+  "firstNativeLaunch": false,
+  "secondNativeLaunch": false,
+  "note": "Compressed image removed after refusal; no device installed or executed"
+}

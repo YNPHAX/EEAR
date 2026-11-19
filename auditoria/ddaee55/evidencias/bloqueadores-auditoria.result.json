@@ -1,0 +1,15 @@
+{
+  "name": "bloqueadores-auditoria",
+  "cmd": [
+    "node",
+    "testes/bloqueadores-auditoria.test.js"
+  ],
+  "cwd": "/workspace/eear-audit",
+  "env": {},
+  "exit": 1,
+  "expected": 0,
+  "seconds": 0.75,
+  "utc": "2026-11-19T12:13:29.980792+00:00",
+  "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+}

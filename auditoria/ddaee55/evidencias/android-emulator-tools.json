@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://dl.google.com/android/repository/emulator-linux_x64-16916650.zip",
+    "sha1": "4fabd9f4550607092819d4e39811e2cb8694135c",
+    "uncompressed": 904690874,
+    "freeBeforeExtraction": 5394055168,
+    "target": "/workspace/audit-tools/android-sdk/emulator"
+  },
+  {
+    "url": "https://dl.google.com/android/repository/sys-img/android/x86_64-32_r02.zip",
+    "sha1": "238452e27d6854d153b6ed119fa783189598eac4",
+    "uncompressed": 4471331979,
+    "freeBeforeExtraction": 4187467776,
+    "target": "/workspace/audit-tools/android-sdk/system-images/android-32/default/x86_64"
+  }
+]

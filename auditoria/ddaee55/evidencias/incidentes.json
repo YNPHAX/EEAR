@@ -1,0 +1,81 @@
+[
+  {
+    "id": "ambiente-inicial",
+    "type": "preparacao",
+    "observed": "download_file requires a ready execution workspace",
+    "action": "wait_for_environment; then download succeeded"
+  },
+  {
+    "id": "npm-cache",
+    "type": "preparacao",
+    "observed": "ENOENT mkdir /home/agent/.npm/_cacache in read-only home",
+    "action": "npm_config_cache set inside /workspace; install succeeded"
+  },
+  {
+    "id": "android-cwd",
+    "type": "preparacao",
+    "observed": "python3 could not open app/web/build.py; exit 2",
+    "action": "Correct relative path to ../web/build.py from app/; no build had started"
+  },
+  {
+    "id": "sdk-cli",
+    "type": "preparacao",
+    "observed": "Latest CLI tried read-only bin directory; older sdkmanager tried /home/agent/.android/cache",
+    "action": "Verified official SDK archives/checksums extracted into workspace; original CLI logs retained"
+  },
+  {
+    "id": "gradle-environment",
+    "type": "infraestrutura",
+    "observed": [
+      "Connection refused without proxy",
+      "JAVA_COMPILER missing from installed Java runtime",
+      "PKIX error in downloaded JDK through proxy"
+    ],
+    "action": "Explicit proxy, full JDK and installed system truststore; build and clean rebuild succeeded with identical APK"
+  },
+  {
+    "id": "limite-porta",
+    "type": "infraestrutura-da-bancada",
+    "observed": "metadados-limite collided with F01 emulator auth port",
+    "action": "Original failure retained; final sequential repetition scheduled after Firebase suites"
+  },
+  {
+    "id": "avd-disco",
+    "type": "infraestrutura-da-bancada",
+    "observed": "Auditor preparation of AVD system image exhausted executor filesystem; interrupted pending suites with ENOSPC",
+    "action": "Removed only tool downloads/incomplete extraction; preserved all logs; repeated all affected complete suites"
+  },
+  {
+    "id": "avd-guarda",
+    "type": "cobertura-bloqueada",
+    "observed": {
+      "imageBytes": 4471331979,
+      "freeBytes": 4187467776
+    },
+    "action": "Second preparation refused extraction before writing; no native APK executions"
+  },
+  {
+    "id": "limite-oraculo",
+    "type": "teste-novo-do-auditor",
+    "observed": "Expected Unicode 900000 bytes to be refused; observed 200 because rule size() is character-based",
+    "action": "Preserved initial source and results; corrected only new auditor oracle; ASCII negative boundaries and document byte limit separately verified"
+  },
+  {
+    "id": "callback-inatividade",
+    "type": "instrumentacao-nova-do-auditor",
+    "observed": "Requesting objectStore after transaction finished produced InvalidStateError; an initial instrumentation assertion expected TransactionInactiveError",
+    "action": "Preserved attempt; captured object store during transaction and verified get after commit throws TransactionInactiveError; behavioral counterexample repeated"
+  },
+  {
+    "id": "tema-capturas",
+    "type": "preparacao",
+    "observed": "Initial theme assignment could race application initialization",
+    "action": "Initial captures retained; final capture waits local load and stabilizes media/theme before sampling contrast"
+  },
+  {
+    "id": "google",
+    "type": "limitacao-externa",
+    "observed": "apis.google.com inaccessible; Google emulator popup did not open",
+    "action": "Original CI=true failure retained; 51 local positive checks, two Google cases without positive local evidence; exact-SHA CI logs separately retained"
+  }
+]

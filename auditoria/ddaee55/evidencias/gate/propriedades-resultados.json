@@ -1,0 +1,12 @@
+{
+  "contagem": {
+    "acoes": 30720,
+    "algebra": 1536,
+    "canonicas": 1024,
+    "errosCausais": 512,
+    "sementes": 512
+  },
+  "falhas": [],
+  "hashEsperado": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "sha": "árvore de trabalho explicitamente testada"
+}

@@ -1,0 +1,589 @@
+﻿2026-11-19T03:42:36.3089391Z Current runner version: '2.338.2'
+2026-11-19T03:42:36.3116717Z ##[group]Runner Image Provisioner
+2026-11-19T03:42:36.3117740Z Hosted Compute Agent
+2026-11-19T03:42:36.3118651Z Version: 20261103.629
+2026-11-19T03:42:36.3119530Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-19T03:42:36.3120408Z Build Date: 2026-11-03T17:26:59Z
+2026-11-19T03:42:36.3121262Z Worker ID: {c8edc2a6-7a3a-43f8-b7da-e1625c0a8c2c}
+2026-11-19T03:42:36.3122114Z Region: eastus2
+2026-11-19T03:42:36.3122774Z Cloud: Azure
+2026-11-19T03:42:36.3123526Z ##[endgroup]
+2026-11-19T03:42:36.3125414Z ##[group]Operating System
+2026-11-19T03:42:36.3126292Z Ubuntu
+2026-11-19T03:42:36.3126979Z 26.04.1
+2026-11-19T03:42:36.3127777Z LTS
+2026-11-19T03:42:36.3128621Z ##[endgroup]
+2026-11-19T03:42:36.3129311Z ##[group]Runner Image
+2026-11-19T03:42:36.3130155Z Image: ubuntu-26.04
+2026-11-19T03:42:36.3130852Z Version: 20261111.196.1
+2026-11-19T03:42:36.3132573Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261111.196/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-19T03:42:36.3134602Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261111.196
+2026-11-19T03:42:36.3135933Z ##[endgroup]
+2026-11-19T03:42:36.3137244Z ##[group]GITHUB_TOKEN Permissions
+2026-11-19T03:42:36.3140254Z Contents: read
+2026-11-19T03:42:36.3140967Z Metadata: read
+2026-11-19T03:42:36.3141667Z ##[endgroup]
+2026-11-19T03:42:36.3143965Z Secret source: Actions
+2026-11-19T03:42:36.3145167Z Cache mode: write
+2026-11-19T03:42:36.3146071Z Prepare workflow directory
+2026-11-19T03:42:36.3501614Z Prepare all required actions
+2026-11-19T03:42:36.3556749Z Getting action download info
+2026-11-19T03:42:36.5277965Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-19T03:42:36.6331036Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-19T03:42:36.7410658Z Download action repository 'actions/setup-java@v4' (SHA:cf277c60eb25467037889841efdb72551f06f6c3)
+2026-11-19T03:42:37.1370443Z Complete job name: bloqueadores-auditoria
+2026-11-19T03:42:37.2057513Z ##[group]Run actions/checkout@v4
+2026-11-19T03:42:37.2058170Z with:
+2026-11-19T03:42:37.2058676Z   persist-credentials: false
+2026-11-19T03:42:37.2059103Z   repository: YNPHAX/EEAR
+2026-11-19T03:42:37.2062320Z   token: ***
+2026-11-19T03:42:37.2062748Z   ssh-strict: true
+2026-11-19T03:42:37.2063111Z   ssh-user: git
+2026-11-19T03:42:37.2063451Z   clean: true
+2026-11-19T03:42:37.2063810Z   sparse-checkout-cone-mode: true
+2026-11-19T03:42:37.2064230Z   fetch-depth: 1
+2026-11-19T03:42:37.2064571Z   fetch-tags: false
+2026-11-19T03:42:37.2064927Z   show-progress: true
+2026-11-19T03:42:37.2065285Z   lfs: false
+2026-11-19T03:42:37.2065610Z   submodules: false
+2026-11-19T03:42:37.2065964Z   set-safe-directory: true
+2026-11-19T03:42:37.2066363Z   allow-unsafe-pr-checkout: false
+2026-11-19T03:42:37.2066924Z ##[endgroup]
+2026-11-19T03:42:37.4433407Z Syncing repository: YNPHAX/EEAR
+2026-11-19T03:42:37.4435606Z ##[group]Getting Git version info
+2026-11-19T03:42:37.4436531Z Working directory is '/home/runner/work/EEAR/EEAR'
+2026-11-19T03:42:37.4437743Z [command]/usr/bin/git version
+2026-11-19T03:42:37.4453364Z git version 2.56.1
+2026-11-19T03:42:37.4468589Z ##[endgroup]
+2026-11-19T03:42:37.4479074Z Temporarily overriding HOME='/home/runner/work/_temp/8d5daea5-7010-47cf-b3bb-4df18ec84ff6' before making global git config changes
+2026-11-19T03:42:37.4480203Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-19T03:42:37.4482457Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/EEAR/EEAR
+2026-11-19T03:42:37.4548847Z Deleting the contents of '/home/runner/work/EEAR/EEAR'
+2026-11-19T03:42:37.4551858Z ##[group]Initializing the repository
+2026-11-19T03:42:37.4556136Z [command]/usr/bin/git init /home/runner/work/EEAR/EEAR
+2026-11-19T03:42:37.4677870Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-19T03:42:37.4679763Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-19T03:42:37.4681694Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-19T03:42:37.4682930Z hint: call:
+2026-11-19T03:42:37.4683746Z hint:
+2026-11-19T03:42:37.4684732Z hint: 	git config --global init.defaultBranch <name>
+2026-11-19T03:42:37.4685515Z hint:
+2026-11-19T03:42:37.4686210Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-19T03:42:37.4687314Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-19T03:42:37.4688364Z hint:
+2026-11-19T03:42:37.4688847Z hint: 	git branch -m <name>
+2026-11-19T03:42:37.4689396Z hint:
+2026-11-19T03:42:37.4690136Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-19T03:42:37.4691078Z Initialized empty Git repository in /home/runner/work/EEAR/EEAR/.git/
+2026-11-19T03:42:37.4699260Z [command]/usr/bin/git remote add origin https://github.com/YNPHAX/EEAR
+2026-11-19T03:42:37.4761303Z ##[endgroup]
+2026-11-19T03:42:37.4762359Z ##[group]Disabling automatic garbage collection
+2026-11-19T03:42:37.4764432Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-19T03:42:37.4795221Z ##[endgroup]
+2026-11-19T03:42:37.4796126Z ##[group]Setting up auth
+2026-11-19T03:42:37.4801073Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-19T03:42:37.4832892Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-19T03:42:37.5212391Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-19T03:42:37.5242468Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-19T03:42:37.5476422Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-19T03:42:37.5504530Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-19T03:42:37.5734741Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-19T03:42:37.5769583Z ##[endgroup]
+2026-11-19T03:42:37.5770342Z ##[group]Fetching the repository
+2026-11-19T03:42:37.5777046Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ddaee558fde26e437696f7b17862b3df1ee7353f:refs/remotes/origin/codex/eear-correcao-estrutural
+2026-11-19T03:42:38.1942992Z From https://github.com/YNPHAX/EEAR
+2026-11-19T03:42:38.1946364Z  * [new ref]         ddaee558fde26e437696f7b17862b3df1ee7353f -> origin/codex/eear-correcao-estrutural
+2026-11-19T03:42:38.1950176Z ##[endgroup]
+2026-11-19T03:42:38.1951574Z ##[group]Determining the checkout info
+2026-11-19T03:42:38.1953275Z ##[endgroup]
+2026-11-19T03:42:38.1954597Z [command]/usr/bin/git sparse-checkout disable
+2026-11-19T03:42:38.2002200Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-19T03:42:38.2029669Z ##[group]Checking out the ref
+2026-11-19T03:42:38.2033980Z [command]/usr/bin/git checkout --progress --force -B codex/eear-correcao-estrutural refs/remotes/origin/codex/eear-correcao-estrutural
+2026-11-19T03:42:38.2644709Z Switched to a new branch 'codex/eear-correcao-estrutural'
+2026-11-19T03:42:38.2648846Z branch 'codex/eear-correcao-estrutural' set up to track 'origin/codex/eear-correcao-estrutural'.
+2026-11-19T03:42:38.2657873Z ##[endgroup]
+2026-11-19T03:42:38.2698479Z [command]/usr/bin/git log -1 --format=%H
+2026-11-19T03:42:38.2719544Z ddaee558fde26e437696f7b17862b3df1ee7353f
+2026-11-19T03:42:38.2727873Z ##[group]Removing auth
+2026-11-19T03:42:38.2730896Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-19T03:42:38.2757472Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-19T03:42:38.2993904Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-19T03:42:38.3013465Z http.https://github.com/.extraheader
+2026-11-19T03:42:38.3020493Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-19T03:42:38.3052960Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-19T03:42:38.3281676Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-19T03:42:38.3308827Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-19T03:42:38.3532706Z ##[endgroup]
+2026-11-19T03:42:38.3958352Z ##[group]Run actions/setup-node@v4
+2026-11-19T03:42:38.3977631Z with:
+2026-11-19T03:42:38.3978402Z   node-version: 22
+2026-11-19T03:42:38.3979152Z   always-auth: false
+2026-11-19T03:42:38.3979886Z   check-latest: false
+2026-11-19T03:42:38.3988036Z   token: ***
+2026-11-19T03:42:38.3988913Z ##[endgroup]
+2026-11-19T03:42:38.5190043Z (node:2269) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-19T03:42:38.5192533Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+2026-11-19T03:42:38.5194063Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-19T03:42:38.5195870Z ##[group]Environment details
+2026-11-19T03:42:38.8384884Z node: v22.23.4
+2026-11-19T03:42:38.8386203Z npm: 10.9.9
+2026-11-19T03:42:38.8386572Z yarn: 1.22.22
+2026-11-19T03:42:38.8387796Z ##[endgroup]
+2026-11-19T03:42:38.8565862Z ##[group]Run actions/setup-java@v4
+2026-11-19T03:42:38.8566248Z with:
+2026-11-19T03:42:38.8566581Z   distribution: temurin
+2026-11-19T03:42:38.8566918Z   java-version: 21
+2026-11-19T03:42:38.8567236Z   java-package: jdk
+2026-11-19T03:42:38.8567559Z   check-latest: false
+2026-11-19T03:42:38.8567892Z   server-id: github
+2026-11-19T03:42:38.8568347Z   server-username: GITHUB_ACTOR
+2026-11-19T03:42:38.8568716Z   server-password: GITHUB_TOKEN
+2026-11-19T03:42:38.8569080Z   overwrite-settings: true
+2026-11-19T03:42:38.8569429Z   job-status: success
+2026-11-19T03:42:38.8571786Z   token: ***
+2026-11-19T03:42:38.8572102Z ##[endgroup]
+2026-11-19T03:42:38.9958961Z ##[warning]setup-java v4 is deprecated and will no longer receive updates. Please migrate to actions/setup-java@v5.
+2026-11-19T03:42:38.9965485Z ##[group]Installed distributions
+2026-11-19T03:42:38.9997163Z Resolved Java 21.0.13+9 from tool-cache
+2026-11-19T03:42:38.9998048Z Setting Java 21.0.13+9 as the default
+2026-11-19T03:42:39.0002732Z (node:2301) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-19T03:42:39.0004251Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-19T03:42:39.0005534Z Creating toolchains.xml for JDK version 21 from temurin
+2026-11-19T03:42:39.0058977Z Writing to /home/runner/.m2/toolchains.xml
+2026-11-19T03:42:39.0059676Z 
+2026-11-19T03:42:39.0060107Z Java configuration:
+2026-11-19T03:42:39.0060783Z   Distribution: temurin
+2026-11-19T03:42:39.0061418Z   Version: 21.0.13+9
+2026-11-19T03:42:39.0062238Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.13-9/x64
+2026-11-19T03:42:39.0062833Z 
+2026-11-19T03:42:39.0063430Z ##[endgroup]
+2026-11-19T03:42:39.0067252Z Creating settings.xml with server-id: github
+2026-11-19T03:42:39.0098447Z Writing to /home/runner/.m2/settings.xml
+2026-11-19T03:42:39.0248684Z ##[group]Run npm install --prefix "$RUNNER_TEMP/ia" --no-save --no-audit --no-fund firebase-tools@15.35.0 firebase@12.19.0 playwright@1.63.0
+2026-11-19T03:42:39.0249725Z [36;1mnpm install --prefix "$RUNNER_TEMP/ia" --no-save --no-audit --no-fund firebase-tools@15.35.0 firebase@12.19.0 playwright@1.63.0[0m
+2026-11-19T03:42:39.0250710Z [36;1m"$RUNNER_TEMP/ia/node_modules/.bin/playwright" install --with-deps chromium[0m
+2026-11-19T03:42:39.0308180Z shell: /usr/bin/bash -e {0}
+2026-11-19T03:42:39.0309090Z env:
+2026-11-19T03:42:39.0309917Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.13-9/x64
+2026-11-19T03:42:39.0311074Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.13-9/x64
+2026-11-19T03:42:39.0312093Z ##[endgroup]
+2026-11-19T03:42:53.1712126Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+2026-11-19T03:42:54.0431790Z npm warn deprecated json-ptr@3.1.1: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+2026-11-19T03:42:54.3722176Z npm warn deprecated uuid@9.0.1: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+2026-11-19T03:42:54.5033433Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-19T03:42:58.9374630Z 
+2026-11-19T03:42:58.9375323Z added 688 packages in 20s
+2026-11-19T03:42:59.3754453Z Installing dependencies...
+2026-11-19T03:42:59.3809388Z Switching to root user to install dependencies...
+2026-11-19T03:42:59.4675720Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-19T03:42:59.4979665Z Hit:2 http://azure.archive.ubuntu.com/ubuntu resolute InRelease
+2026-11-19T03:42:59.5004359Z Get:3 http://azure.archive.ubuntu.com/ubuntu resolute-updates InRelease [137 kB]
+2026-11-19T03:42:59.5064068Z Get:4 http://azure.archive.ubuntu.com/ubuntu resolute-backports InRelease [137 kB]
+2026-11-19T03:42:59.5081067Z Get:6 https://packages.microsoft.com/ubuntu/26.04/prod resolute InRelease [3964 B]
+2026-11-19T03:42:59.5099214Z Get:5 http://azure.archive.ubuntu.com/ubuntu resolute-security InRelease [137 kB]
+2026-11-19T03:42:59.5385246Z Get:7 http://azure.archive.ubuntu.com/ubuntu resolute-updates/main amd64v3 Packages [875 kB]
+2026-11-19T03:42:59.5576206Z Get:8 http://azure.archive.ubuntu.com/ubuntu resolute-updates/main Translation-en [196 kB]
+2026-11-19T03:42:59.5590224Z Get:9 http://azure.archive.ubuntu.com/ubuntu resolute-updates/universe amd64v3 Packages [393 kB]
+2026-11-19T03:42:59.5617585Z Get:10 http://azure.archive.ubuntu.com/ubuntu resolute-updates/universe Translation-en [124 kB]
+2026-11-19T03:42:59.5711181Z Get:11 https://packages.microsoft.com/ubuntu/26.04/prod resolute/main arm64 Packages [151 kB]
+2026-11-19T03:42:59.5761050Z Get:12 https://packages.microsoft.com/ubuntu/26.04/prod resolute/main amd64 Packages [165 kB]
+2026-11-19T03:42:59.5838594Z Get:13 http://azure.archive.ubuntu.com/ubuntu resolute-security/main amd64v3 Packages [721 kB]
+2026-11-19T03:42:59.5853553Z Get:14 http://azure.archive.ubuntu.com/ubuntu resolute-security/main Translation-en [158 kB]
+2026-11-19T03:42:59.5869905Z Get:15 http://azure.archive.ubuntu.com/ubuntu resolute-security/universe amd64v3 Packages [222 kB]
+2026-11-19T03:42:59.5883047Z Get:16 http://azure.archive.ubuntu.com/ubuntu resolute-security/universe Translation-en [72.7 kB]
+2026-11-19T03:42:59.5919883Z Get:17 http://azure.archive.ubuntu.com/ubuntu resolute-security/restricted amd64v3 Packages [590 kB]
+2026-11-19T03:42:59.5934734Z Get:18 http://azure.archive.ubuntu.com/ubuntu resolute-security/restricted Translation-en [122 kB]
+2026-11-19T03:43:02.5660751Z Fetched 4206 kB in 0s (13.4 MB/s)
+2026-11-19T03:43:03.0943362Z Reading package lists...
+2026-11-19T03:43:03.1167119Z Reading package lists...
+2026-11-19T03:43:03.2539849Z Building dependency tree...
+2026-11-19T03:43:03.2545429Z Reading state information...
+2026-11-19T03:43:03.2843170Z libasound2t64 is already the newest version (1.2.15.3-1ubuntu1.1).
+2026-11-19T03:43:03.2844272Z libasound2t64 set to manually installed.
+2026-11-19T03:43:03.2844803Z libatk-bridge2.0-0t64 is already the newest version (2.60.4-0ubuntu0.1).
+2026-11-19T03:43:03.2845320Z libatk-bridge2.0-0t64 set to manually installed.
+2026-11-19T03:43:03.2845823Z libatk1.0-0t64 is already the newest version (2.60.4-0ubuntu0.1).
+2026-11-19T03:43:03.2846274Z libatk1.0-0t64 set to manually installed.
+2026-11-19T03:43:03.2846774Z libatspi2.0-0t64 is already the newest version (2.60.4-0ubuntu0.1).
+2026-11-19T03:43:03.2847248Z libatspi2.0-0t64 set to manually installed.
+2026-11-19T03:43:03.2847787Z libcairo2 is already the newest version (1.18.4-3).
+2026-11-19T03:43:03.2848392Z libcairo2 set to manually installed.
+2026-11-19T03:43:03.2848880Z libcups2t64 is already the newest version (2.4.16-1ubuntu1.3).
+2026-11-19T03:43:03.2849341Z libcups2t64 set to manually installed.
+2026-11-19T03:43:03.2849795Z libdbus-1-3 is already the newest version (1.16.2-2ubuntu4).
+2026-11-19T03:43:03.2850259Z libdbus-1-3 set to manually installed.
+2026-11-19T03:43:03.2850656Z libdrm2 is already the newest version (2.4.131-1).
+2026-11-19T03:43:03.2851091Z libdrm2 set to manually installed.
+2026-11-19T03:43:03.2851518Z libgbm1 is already the newest version (26.0.8-1ubuntu0.3).
+2026-11-19T03:43:03.2851945Z libgbm1 set to manually installed.
+2026-11-19T03:43:03.2852400Z libglib2.0-0t64 is already the newest version (2.88.0-1ubuntu0.1).
+2026-11-19T03:43:03.2852849Z libglib2.0-0t64 set to manually installed.
+2026-11-19T03:43:03.2853325Z libnspr4 is already the newest version (2:4.38.2-1ubuntu1).
+2026-11-19T03:43:03.2853754Z libnspr4 set to manually installed.
+2026-11-19T03:43:03.2854186Z libnss3 is already the newest version (2:3.120-1ubuntu2.2).
+2026-11-19T03:43:03.2854619Z libnss3 set to manually installed.
+2026-11-19T03:43:03.2855044Z libpango-1.0-0 is already the newest version (1.57.0-1).
+2026-11-19T03:43:03.2855474Z libpango-1.0-0 set to manually installed.
+2026-11-19T03:43:03.2855966Z libx11-6 is already the newest version (2:1.8.13-1ubuntu0.1).
+2026-11-19T03:43:03.2856405Z libx11-6 set to manually installed.
+2026-11-19T03:43:03.2856833Z libxcb1 is already the newest version (1.17.0-2ubuntu1).
+2026-11-19T03:43:03.2857296Z libxcb1 set to manually installed.
+2026-11-19T03:43:03.2857740Z libxcomposite1 is already the newest version (1:0.4.6-1build1).
+2026-11-19T03:43:03.2858360Z libxcomposite1 set to manually installed.
+2026-11-19T03:43:03.2858806Z libxdamage1 is already the newest version (1:1.1.7-1).
+2026-11-19T03:43:03.2859217Z libxdamage1 set to manually installed.
+2026-11-19T03:43:03.2859665Z libxext6 is already the newest version (2:1.3.4-1build3).
+2026-11-19T03:43:03.2860097Z libxext6 set to manually installed.
+2026-11-19T03:43:03.2860547Z libxfixes3 is already the newest version (1:6.0.0-2build2).
+2026-11-19T03:43:03.2860974Z libxfixes3 set to manually installed.
+2026-11-19T03:43:03.2861402Z libxkbcommon0 is already the newest version (1.13.1-1).
+2026-11-19T03:43:03.2861823Z libxkbcommon0 set to manually installed.
+2026-11-19T03:43:03.2862296Z libxrandr2 is already the newest version (2:1.5.4-1build1).
+2026-11-19T03:43:03.2862726Z libxrandr2 set to manually installed.
+2026-11-19T03:43:03.2863166Z xvfb is already the newest version (2:21.1.22-1ubuntu1.3).
+2026-11-19T03:43:03.2863727Z fonts-noto-color-emoji is already the newest version (2.051-1build1).
+2026-11-19T03:43:03.2864308Z libfontconfig1 is already the newest version (2.17.1-3ubuntu1).
+2026-11-19T03:43:03.2864771Z libfontconfig1 set to manually installed.
+2026-11-19T03:43:03.2865272Z libfreetype6 is already the newest version (2.14.2+dfsg-1ubuntu0.2).
+2026-11-19T03:43:03.2865749Z libfreetype6 set to manually installed.
+2026-11-19T03:43:03.2866235Z fonts-liberation is already the newest version (1:2.1.5-3build1).
+2026-11-19T03:43:03.2866965Z fonts-liberation set to manually installed.
+2026-11-19T03:43:03.3305372Z Solving dependencies...
+2026-11-19T03:43:03.4066387Z The following additional packages will be installed:
+2026-11-19T03:43:03.4066998Z   xfonts-encodings xfonts-utils
+2026-11-19T03:43:03.4070552Z Recommended packages:
+2026-11-19T03:43:03.4070919Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-11-19T03:43:03.4234993Z The following NEW packages will be installed:
+2026-11-19T03:43:03.4235641Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-11-19T03:43:03.4239530Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-11-19T03:43:03.4239845Z   xfonts-utils
+2026-11-19T03:43:03.4414472Z 0 upgraded, 9 newly installed, 0 to remove and 32 not upgraded.
+2026-11-19T03:43:03.4414991Z Need to get 21.9 MB of archives.
+2026-11-19T03:43:03.4415345Z After this operation, 80.2 MB of additional disk space will be used.
+2026-11-19T03:43:03.4415781Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-19T03:43:03.4900204Z Get:2 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-ipafont-gothic all 00303-23ubuntu1 [3703 kB]
+2026-11-19T03:43:03.6730628Z Get:3 http://azure.archive.ubuntu.com/ubuntu resolute/main amd64v3 fonts-freefont-ttf all 20211204+svn4273-4build1 [5656 kB]
+2026-11-19T03:43:03.7359710Z Get:4 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-tlwg-loma-otf all 1:0.7.3-1build1 [106 kB]
+2026-11-19T03:43:03.8379071Z Get:5 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-unifont all 1:16.0.04-1build1 [3169 kB]
+2026-11-19T03:43:03.8741458Z Get:6 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 fonts-wqy-zenhei all 0.9.45-8build1 [7863 kB]
+2026-11-19T03:43:03.9392890Z Get:7 http://azure.archive.ubuntu.com/ubuntu resolute/main amd64v3 xfonts-encodings all 1:1.0.5-0ubuntu3 [576 kB]
+2026-11-19T03:43:03.9610030Z Get:8 http://azure.archive.ubuntu.com/ubuntu resolute/main amd64v3 xfonts-utils amd64 1:7.7+7build1 [97.3 kB]
+2026-11-19T03:43:03.9799400Z Get:9 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 xfonts-cyrillic all 1:1.0.5+nmu1build1 [384 kB]
+2026-11-19T03:43:04.0004456Z Get:10 http://azure.archive.ubuntu.com/ubuntu resolute/universe amd64v3 xfonts-scalable all 1:1.0.3-1.3build1 [304 kB]
+2026-11-19T03:43:04.2792012Z Fetched 21.9 MB in 1s (38.2 MB/s)
+2026-11-19T03:43:04.3276868Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-11-19T03:43:04.3479146Z (Reading database ... 
+2026-11-19T03:43:04.3479770Z (Reading database ... 5%
+2026-11-19T03:43:04.3480102Z (Reading database ... 10%
+2026-11-19T03:43:04.3480418Z (Reading database ... 15%
+2026-11-19T03:43:04.3480716Z (Reading database ... 20%
+2026-11-19T03:43:04.3481022Z (Reading database ... 25%
+2026-11-19T03:43:04.3481276Z (Reading database ... 30%
+2026-11-19T03:43:04.3481527Z (Reading database ... 35%
+2026-11-19T03:43:04.3481744Z (Reading database ... 40%
+2026-11-19T03:43:04.3481947Z (Reading database ... 45%
+2026-11-19T03:43:04.3482167Z (Reading database ... 50%
+2026-11-19T03:43:04.4452472Z (Reading database ... 55%
+2026-11-19T03:43:04.5981829Z (Reading database ... 60%
+2026-11-19T03:43:04.7587885Z (Reading database ... 65%
+2026-11-19T03:43:04.9011707Z (Reading database ... 70%
+2026-11-19T03:43:05.1041199Z (Reading database ... 75%
+2026-11-19T03:43:05.2044395Z (Reading database ... 80%
+2026-11-19T03:43:05.4070001Z (Reading database ... 85%
+2026-11-19T03:43:05.5532685Z (Reading database ... 90%
+2026-11-19T03:43:05.7231734Z (Reading database ... 95%
+2026-11-19T03:43:05.7232140Z (Reading database ... 100%
+2026-11-19T03:43:05.7232680Z (Reading database ... 213946 files and directories currently installed.)
+2026-11-19T03:43:05.7274547Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-23ubuntu1_all.deb ...
+2026-11-19T03:43:05.7409633Z Unpacking fonts-ipafont-gothic (00303-23ubuntu1) ...
+2026-11-19T03:43:05.8408478Z Selecting previously unselected package fonts-freefont-ttf.
+2026-11-19T03:43:05.8532724Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-4build1_all.deb ...
+2026-11-19T03:43:05.8537720Z Unpacking fonts-freefont-ttf (20211204+svn4273-4build1) ...
+2026-11-19T03:43:05.9645933Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-11-19T03:43:05.9770513Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1build1_all.deb ...
+2026-11-19T03:43:05.9775894Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1build1) ...
+2026-11-19T03:43:05.9964628Z Selecting previously unselected package fonts-unifont.
+2026-11-19T03:43:06.0094076Z Preparing to unpack .../3-fonts-unifont_1%3a16.0.04-1build1_all.deb ...
+2026-11-19T03:43:06.0099706Z Unpacking fonts-unifont (1:16.0.04-1build1) ...
+2026-11-19T03:43:06.3245724Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-11-19T03:43:06.3372433Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8build1_all.deb ...
+2026-11-19T03:43:06.3496595Z Unpacking fonts-wqy-zenhei (0.9.45-8build1) ...
+2026-11-19T03:43:06.7385798Z Selecting previously unselected package xfonts-encodings.
+2026-11-19T03:43:06.7510348Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu3_all.deb ...
+2026-11-19T03:43:06.7517915Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu3) ...
+2026-11-19T03:43:06.7776124Z Selecting previously unselected package xfonts-utils.
+2026-11-19T03:43:06.7893835Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+7build1_amd64v3.deb ...
+2026-11-19T03:43:07.1561165Z Unpacking xfonts-utils (1:7.7+7build1) ...
+2026-11-19T03:43:07.1852740Z Selecting previously unselected package xfonts-cyrillic.
+2026-11-19T03:43:07.1976352Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1build1_all.deb ...
+2026-11-19T03:43:07.1981715Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1build1) ...
+2026-11-19T03:43:07.2240875Z Selecting previously unselected package xfonts-scalable.
+2026-11-19T03:43:07.2360289Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3build1_all.deb ...
+2026-11-19T03:43:07.2365562Z Unpacking xfonts-scalable (1:1.0.3-1.3build1) ...
+2026-11-19T03:43:07.2783404Z Setting up fonts-wqy-zenhei (0.9.45-8build1) ...
+2026-11-19T03:43:07.4083742Z Setting up fonts-freefont-ttf (20211204+svn4273-4build1) ...
+2026-11-19T03:43:07.4097683Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1build1) ...
+2026-11-19T03:43:07.4112479Z Setting up xfonts-encodings (1:1.0.5-0ubuntu3) ...
+2026-11-19T03:43:07.4126744Z Setting up fonts-ipafont-gothic (00303-23ubuntu1) ...
+2026-11-19T03:43:07.4180091Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-11-19T03:43:07.4191845Z Setting up fonts-unifont (1:16.0.04-1build1) ...
+2026-11-19T03:43:07.4205078Z Setting up xfonts-utils (1:7.7+7build1) ...
+2026-11-19T03:43:07.4250337Z Setting up xfonts-cyrillic (1:1.0.5+nmu1build1) ...
+2026-11-19T03:43:07.4624335Z Setting up xfonts-scalable (1:1.0.3-1.3build1) ...
+2026-11-19T03:43:07.5266473Z Processing triggers for man-db (2.13.1-1build1) ...
+2026-11-19T03:43:07.5283248Z Not building database; man-db/auto-update is not 'true'.
+2026-11-19T03:43:07.5295668Z Processing triggers for fontconfig (2.17.1-3ubuntu1) ...
+2026-11-19T03:43:08.0991849Z 
+2026-11-19T03:43:08.0992384Z Running kernel seems to be up-to-date.
+2026-11-19T03:43:08.1074846Z 
+2026-11-19T03:43:08.1075156Z Restarting services...
+2026-11-19T03:43:08.1075355Z 
+2026-11-19T03:43:08.1075639Z Service restarts being deferred:
+2026-11-19T03:43:08.1077505Z  systemctl restart hosted-compute-agent.service
+2026-11-19T03:43:08.1077791Z 
+2026-11-19T03:43:08.1078566Z No containers need to be restarted.
+2026-11-19T03:43:08.1078807Z 
+2026-11-19T03:43:08.1079112Z No user sessions are running outdated binaries.
+2026-11-19T03:43:08.1079384Z 
+2026-11-19T03:43:08.1079745Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-11-19T03:43:08.8805959Z Downloading Chrome for Testing 153.0.8010.12 (playwright chromium v1243) from https://cdn.playwright.dev/builds/cft/153.0.8010.12/linux64/chrome-linux64.zip
+2026-11-19T03:43:09.2010100Z |                                                                                |   0% of 186.8 MiB
+2026-11-19T03:43:09.3188566Z |■■■■■■■■                                                                        |  10% of 186.8 MiB
+2026-11-19T03:43:09.3797411Z |■■■■■■■■■■■■■■■■                                                                |  20% of 186.8 MiB
+2026-11-19T03:43:09.4185842Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 186.8 MiB
+2026-11-19T03:43:09.4668967Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 186.8 MiB
+2026-11-19T03:43:09.5086180Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 186.8 MiB
+2026-11-19T03:43:09.5637979Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 186.8 MiB
+2026-11-19T03:43:09.6160877Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 186.8 MiB
+2026-11-19T03:43:09.6603971Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 186.8 MiB
+2026-11-19T03:43:09.7018582Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 186.8 MiB
+2026-11-19T03:43:09.7426162Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 186.8 MiB
+2026-11-19T03:43:11.6213123Z Chrome for Testing 153.0.8010.12 (playwright chromium v1243) downloaded to /home/runner/.cache/ms-playwright/chromium-1243
+2026-11-19T03:43:11.6215393Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2026-11-19T03:43:11.9536853Z |                                                                                |   0% of 2.3 MiB
+2026-11-19T03:43:11.9645108Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2026-11-19T03:43:11.9692696Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2026-11-19T03:43:11.9825708Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2026-11-19T03:43:11.9902642Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2026-11-19T03:43:12.0142653Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2026-11-19T03:43:12.0620989Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2026-11-19T03:43:12.0710743Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2026-11-19T03:43:12.0802986Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2026-11-19T03:43:12.0851155Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2026-11-19T03:43:12.0852238Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2026-11-19T03:43:12.1317609Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2026-11-19T03:43:12.1320449Z Downloading Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) from https://cdn.playwright.dev/builds/cft/153.0.8010.12/linux64/chrome-headless-shell-linux64.zip
+2026-11-19T03:43:12.4423346Z |                                                                                |   0% of 114.3 MiB
+2026-11-19T03:43:12.5312707Z |■■■■■■■■                                                                        |  10% of 114.3 MiB
+2026-11-19T03:43:12.5710359Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.3 MiB
+2026-11-19T03:43:12.6037000Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.3 MiB
+2026-11-19T03:43:12.6385314Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.3 MiB
+2026-11-19T03:43:12.6632382Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.3 MiB
+2026-11-19T03:43:12.6929958Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.3 MiB
+2026-11-19T03:43:12.7199057Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.3 MiB
+2026-11-19T03:43:12.7424925Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.3 MiB
+2026-11-19T03:43:12.7719221Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.3 MiB
+2026-11-19T03:43:12.7960607Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.3 MiB
+2026-11-19T03:43:14.1350166Z Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1243
+2026-11-19T03:43:14.1644171Z ##[group]Run git fetch --no-tags origin a35ea9a769c150e561dfbde3205525b96bbfbfe7 2f6cad6ebba53d0f86319dcada671fe9396f8111
+2026-11-19T03:43:14.1644897Z [36;1mgit fetch --no-tags origin a35ea9a769c150e561dfbde3205525b96bbfbfe7 2f6cad6ebba53d0f86319dcada671fe9396f8111[0m
+2026-11-19T03:43:14.1645517Z [36;1mgit worktree add --detach "$RUNNER_TEMP/ia-reprovado" a35ea9a769c150e561dfbde3205525b96bbfbfe7[0m
+2026-11-19T03:43:14.1646014Z [36;1mgit worktree add --detach "$RUNNER_TEMP/ia-legado" 2f6cad6ebba53d0f86319dcada671fe9396f8111[0m
+2026-11-19T03:43:14.1646528Z [36;1mNODE_PATH="$RUNNER_TEMP/ia/node_modules" EEAR_FIREBASE_SDK="$RUNNER_TEMP/ia/node_modules/firebase" \[0m
+2026-11-19T03:43:14.1647087Z [36;1m  EEAR_FIREBASE_CLI="$RUNNER_TEMP/ia/node_modules/.bin/firebase" EEAR_REPO_REPROVADO="$RUNNER_TEMP/ia-reprovado" \[0m
+2026-11-19T03:43:14.1647615Z [36;1m  EEAR_REPO_LEGADO="$RUNNER_TEMP/ia-legado" node testes/bloqueadores-auditoria.test.js[0m
+2026-11-19T03:43:14.1694126Z shell: /usr/bin/bash -e {0}
+2026-11-19T03:43:14.1694433Z env:
+2026-11-19T03:43:14.1694796Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.13-9/x64
+2026-11-19T03:43:14.1695361Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.13-9/x64
+2026-11-19T03:43:14.1695830Z ##[endgroup]
+2026-11-19T03:43:14.9115303Z From https://github.com/YNPHAX/EEAR
+2026-11-19T03:43:14.9115742Z  * branch            a35ea9a769c150e561dfbde3205525b96bbfbfe7 -> FETCH_HEAD
+2026-11-19T03:43:14.9116164Z  * branch            2f6cad6ebba53d0f86319dcada671fe9396f8111 -> FETCH_HEAD
+2026-11-19T03:43:14.9135828Z Preparing worktree (detached HEAD a35ea9a)
+2026-11-19T03:43:14.9607128Z HEAD is now at a35ea9a Documenta consolidação Firebase, validação completa e limites de migração
+2026-11-19T03:43:14.9632429Z Preparing worktree (detached HEAD 2f6cad6)
+2026-11-19T03:43:15.0075058Z HEAD is now at 2f6cad6 Documentação da rodada 8bd32d2: F13, F09 residual, H02, durabilidade e riscos restantes
+2026-11-19T03:43:58.6634476Z Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+2026-11-19T03:43:58.6639305Z ✓ marcar-controle, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o27d0ba74-3e33-47c6-974e-1e85bbcd17eb","geracaoNova":"ob9da02d1-72f5-4678-8f7e-67f6f4f165f8","apagado":true,"ignoradas":["o95009c54-b49b-4f89-82e8-64253cf2fe5a"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o27d0ba74-3e33-47c6-974e-1e85bbcd17eb","id":"o7d9f81ad-4c74-4a53-8e4d-02c08eff014e"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:43:58.6643713Z ✗ importacao, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"ob217b76f-1194-4c7d-b9d0-7aacbf8aa0d2","geracaoNova":"o2b9bb56a-3d18-4572-91cf-9013ab26b4ff","apagado":true,"ignoradas":["o35c28a22-b1fb-4273-8a3a-6ee05249ac1e"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"ob217b76f-1194-4c7d-b9d0-7aacbf8aa0d2","id":"o53038608-5d3c-47d4-8589-9a6c81441b28"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:43:58.6647940Z ✗ importacao-sem-crash, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o32712b78-4007-40fe-8273-4e5d91c21ade","geracaoNova":"od6e71795-9a45-47ff-a9b2-33995b7129ec","apagado":true,"ignoradas":["o8a3c5855-d292-4b52-a864-e980b9fc96d6"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"o32712b78-4007-40fe-8273-4e5d91c21ade","id":"o8079409a-fbb5-480d-92b0-4cf7d89ed6a0"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:43:58.6652260Z ✓ marcar-controle, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o61751653-a64e-419d-bd6f-8f1c395d3a52","geracaoNova":"o6eda8a6b-66f8-483e-82fc-05a373767482","apagado":true,"ignoradas":["ocbc7dff2-aa86-482a-b5d8-2bb97001fb34"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o61751653-a64e-419d-bd6f-8f1c395d3a52","id":"o977f7f20-2774-4316-b7b1-2bc8a2ff5b26"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:43:58.6656228Z ✗ importacao, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o8e972ec3-7590-4598-9055-57de5a04efa4","geracaoNova":"o8e1ed4cc-ef26-40d0-ae48-092040de4ef9","apagado":true,"ignoradas":["obfa2460e-ecb1-489a-82c3-28c16a99214e"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"o8e972ec3-7590-4598-9055-57de5a04efa4","id":"of05c13f4-5ee7-4b3a-9233-adf3fa653d89"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:43:58.6660532Z ✗ importacao-sem-crash, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"ode915bbf-f5e1-4a6d-8b20-c5608a001012","geracaoNova":"o81b27551-043d-4bd3-bed7-d9bfebcb97f0","apagado":true,"ignoradas":["ocbcfb1c1-6964-4444-8e7b-2fdda7ccb771"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":false,"gen":"ode915bbf-f5e1-4a6d-8b20-c5608a001012","id":"of4ebd1e9-23e9-472f-b0bb-61de28fab6e8"},"voltou":false,"feitoFinal":{},"certificado":false,"checkpoint":{},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:43:58.6662315Z CONTROLE NEGATIVO a35-importacao-exclusao em a35ea9a: REPRODUZIU
+2026-11-19T03:44:36.8802084Z [36m[1mi  emulators:[22m[39m Starting emulators: auth, firestore
+2026-11-19T03:44:36.8803765Z [36m[1mi  emulators:[22m[39m Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+2026-11-19T03:44:36.8805565Z [33m[1m⚠ [22m[39m It appears you are running in a CI environment. You can avoid downloading the Firestore Emulator repeatedly by caching the /home/runner/.cache/firebase/emulators directory.
+2026-11-19T03:44:36.8806406Z [36m[1mi  firestore:[22m[39m downloading cloud-firestore-emulator-v1.22.0.jar...
+2026-11-19T03:44:36.8806981Z [36m[1mi  firestore:[22m[39m Firestore Emulator logging to [1mfirestore-debug.log[22m
+2026-11-19T03:44:36.8807592Z [32m[1m✔  firestore:[22m[39m Firestore Emulator was started in standard edition.
+2026-11-19T03:44:36.8808442Z [32m[1m✔  firestore:[22m[39m Firestore Emulator UI websocket is running on 9250.
+2026-11-19T03:44:36.8809177Z [36m[1mi [22m[39m Running script: [1mnode "/home/runner/work/EEAR/EEAR/testes/a35-contas-adversarial.test.js"[22m
+2026-11-19T03:44:36.8809808Z Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+2026-11-19T03:44:36.8811407Z ✗ levar-operacoes-identificadas: {"anon":2,"contaAntes":2,"esperado":4,"local":2,"remoto":2,"tarefas":{"T:anon1":true,"T:anon2":true,"T:R1":true,"T:R2":true,"T:remota":true},"opsAnon":["o1696695d-ba76-4e70-8033-677ff849a451","o8873c1e6-5b38-47ef-9341-affee1ec5a21"],"opsContaAntes":["od6318fec-5446-4e48-ad0c-4e9bbc80e36f","of8bbd845-583c-4c98-8d6c-c29799b5a403"]}
+2026-11-19T03:44:36.8812705Z ✓ controle-importacao-ids-preservados: {"esperado":4,"local":4,"remoto":4,"depoisRepetirReabrir":4}
+2026-11-19T03:44:36.8814243Z ✗ exclusao-resposta-de-sessao-antiga: {"http":200,"uidA":"xL0uo9KmCLVaXdMVQQFc5gVU0okp","uidB":"dm80gpYCOPrVj8gdZuZAE5sR1uaa","authAtual":{"uid":null,"local":null},"antesResposta":{"T:B":true},"depois":{},"remotoB":{"T:B":true},"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:44:36.8815174Z [33m[1m⚠ [22m[39m Script exited unsuccessfully (code 1)
+2026-11-19T03:44:36.8815569Z [36m[1mi  emulators:[22m[39m Shutting down emulators.
+2026-11-19T03:44:36.8815946Z [36m[1mi  firestore:[22m[39m Stopping Firestore Emulator
+2026-11-19T03:44:36.8816317Z [36m[1mi  auth:[22m[39m Stopping Authentication Emulator
+2026-11-19T03:44:36.8816659Z [36m[1mi  hub:[22m[39m Stopping emulator hub
+2026-11-19T03:44:36.8816998Z [36m[1mi  logging:[22m[39m Stopping Logging Emulator
+2026-11-19T03:44:36.8817171Z 
+2026-11-19T03:44:36.8817653Z [1m[31mError:[39m[22m Script "[1mnode "/home/runner/work/EEAR/EEAR/testes/a35-contas-adversarial.test.js"[22m" exited with code 1
+2026-11-19T03:44:36.8818014Z 
+2026-11-19T03:44:36.8818352Z CONTROLE NEGATIVO a35-contas-adversarial em a35ea9a: REPRODUZIU
+2026-11-19T03:45:00.8301683Z [36m[1mi  emulators:[22m[39m Starting emulators: auth, firestore
+2026-11-19T03:45:00.8303162Z [36m[1mi  emulators:[22m[39m Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+2026-11-19T03:45:00.8304596Z [36m[1mi  firestore:[22m[39m Firestore Emulator logging to [1mfirestore-debug.log[22m
+2026-11-19T03:45:00.8305187Z [32m[1m✔  firestore:[22m[39m Firestore Emulator was started in standard edition.
+2026-11-19T03:45:00.8305735Z [32m[1m✔  firestore:[22m[39m Firestore Emulator UI websocket is running on 9250.
+2026-11-19T03:45:00.8306408Z [36m[1mi [22m[39m Running script: [1mnode "/home/runner/work/EEAR/EEAR/testes/a35-levar-reimportacao.test.js"[22m
+2026-11-19T03:45:00.8307017Z Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+2026-11-19T03:45:00.8308619Z ✗ levar-3-mais-2: {"esperado":5,"local":3,"servidor":3,"idsAnon":["oe1c5d02f-636e-4b90-a754-cad4550530da","od64cac1d-d945-4b1c-8f42-3ec7a7154d0a","ode16e28c-2beb-4230-8870-add79306b5b7"],"idsBase":["o87b8188c-e305-437a-9f59-61847f9e114f","oc0db45ce-0636-48e7-9d28-78059e53c041"]}
+2026-11-19T03:45:00.8310129Z ✗ reimportar-apos-levar: {"esperado":5,"depoisImportar":6,"depoisRepetirReabrir":6,"servidor":6,"aviso":"Progresso salvo na sua conta."}
+2026-11-19T03:45:00.8310824Z ✓ controle-importar-diretamente-5-de-5: {"esperado":5,"local":5,"servidor":5}
+2026-11-19T03:45:00.8311291Z [33m[1m⚠ [22m[39m Script exited unsuccessfully (code 1)
+2026-11-19T03:45:00.8311663Z [36m[1mi  emulators:[22m[39m Shutting down emulators.
+2026-11-19T03:45:00.8312058Z [36m[1mi  firestore:[22m[39m Stopping Firestore Emulator
+2026-11-19T03:45:00.8312430Z [36m[1mi  auth:[22m[39m Stopping Authentication Emulator
+2026-11-19T03:45:00.8312765Z [36m[1mi  hub:[22m[39m Stopping emulator hub
+2026-11-19T03:45:00.8313118Z [36m[1mi  logging:[22m[39m Stopping Logging Emulator
+2026-11-19T03:45:00.8313301Z 
+2026-11-19T03:45:00.8313832Z [1m[31mError:[39m[22m Script "[1mnode "/home/runner/work/EEAR/EEAR/testes/a35-levar-reimportacao.test.js"[22m" exited with code 1
+2026-11-19T03:45:00.8314472Z CONTROLE NEGATIVO a35-levar-reimportacao em a35ea9a: REPRODUZIU
+2026-11-19T03:45:18.4717709Z [36m[1mi  emulators:[22m[39m Starting emulators: auth, firestore
+2026-11-19T03:45:18.4719617Z [36m[1mi  emulators:[22m[39m Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+2026-11-19T03:45:18.4721063Z [36m[1mi  firestore:[22m[39m Firestore Emulator logging to [1mfirestore-debug.log[22m
+2026-11-19T03:45:18.4721973Z [32m[1m✔  firestore:[22m[39m Firestore Emulator was started in standard edition.
+2026-11-19T03:45:18.4722808Z [32m[1m✔  firestore:[22m[39m Firestore Emulator UI websocket is running on 9250.
+2026-11-19T03:45:18.4725628Z [36m[1mi [22m[39m Running script: [1mnode "/home/runner/work/EEAR/EEAR/testes/a35-retorno-firebase-antigo.test.js"[22m
+2026-11-19T03:45:18.4726453Z Runtime publicado SHA256: 124a9084d0a8ac02179df1a42134f075b3ee72cddb78e0bcaf4c351e31ea9f48
+2026-11-19T03:45:18.4727017Z Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+2026-11-19T03:45:18.4729020Z ✗ exclusao-firebase-anterior: {"candidato":"a35ea9a","produtorAntigo":"2f6cad6ebba53d0f86319dcada671fe9396f8111","docV2Apagado":true,"authExcluidaHTTP":400,"marcadorHTTP":404,"recriou":true,"nomeRestaurado":"Pessoa Fictícia Excluída","feitoRestaurado":{"T:apos-exclusao-legitima":true,"T:privada":true},"avisoAtual":"Progresso salvo na sua conta."}
+2026-11-19T03:45:18.4730237Z [33m[1m⚠ [22m[39m Script exited unsuccessfully (code 1)
+2026-11-19T03:45:18.4730620Z [36m[1mi  emulators:[22m[39m Shutting down emulators.
+2026-11-19T03:45:18.4731137Z [36m[1mi  firestore:[22m[39m Stopping Firestore Emulator
+2026-11-19T03:45:18.4731537Z [36m[1mi  auth:[22m[39m Stopping Authentication Emulator
+2026-11-19T03:45:18.4731879Z [36m[1mi  hub:[22m[39m Stopping emulator hub
+2026-11-19T03:45:18.4732235Z [36m[1mi  logging:[22m[39m Stopping Logging Emulator
+2026-11-19T03:45:18.4732424Z 
+2026-11-19T03:45:18.4733288Z [1m[31mError:[39m[22m Script "[1mnode "/home/runner/work/EEAR/EEAR/testes/a35-retorno-firebase-antigo.test.js"[22m" exited with code 1
+2026-11-19T03:45:18.4733871Z CONTROLE NEGATIVO a35-retorno-firebase-antigo em a35ea9a: REPRODUZIU
+2026-11-19T03:45:22.3435325Z Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+2026-11-19T03:45:24.7202521Z ✓ marcar-controle, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o92619b13-6cdc-4344-a274-21714e4a06af","geracaoNova":"o5cf5ade5-3725-4dfa-bc47-6d4ce22edc42","apagado":true,"ignoradas":["e:o3acfe13f-3568-438e-82bf-5d8df0345756"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o92619b13-6cdc-4344-a274-21714e4a06af","id":"e:o0b256be6-f776-4659-8882-342571d717af"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:45:26.7733850Z ✓ importacao, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o1358093e-6ce1-4dc0-b262-2df2326256b4","geracaoNova":"o4b10298c-61c8-432b-8513-c10d4329b7b3","apagado":true,"ignoradas":["e:o0c397294-5558-43b3-bc55-e30051180ca9"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o1358093e-6ce1-4dc0-b262-2df2326256b4","id":"e:o8e906b35-4878-4913-8aec-3c37b36919f6"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:45:27.6980756Z ✓ importacao-sem-crash, locks=true: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o4c324973-d3c4-4060-a0ca-80a0bbd461f2","geracaoNova":"odacd3966-f913-4007-832c-3eb6a09d8799","apagado":true,"ignoradas":["e:ocb552e15-5d38-486e-ba80-9ec1c2442f26"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o4c324973-d3c4-4060-a0ca-80a0bbd461f2","id":"e:of752005d-4dc9-41a4-acff-396e719b139b"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:45:30.0080983Z ✓ marcar-controle, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o3b7a998c-121d-4939-9220-a05aade58470","geracaoNova":"o75f1510a-fa5c-487a-87ce-473fbe2bd321","apagado":true,"ignoradas":["e:oe8bc7a8b-fca9-48c1-ad12-48ca9ee4314b"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o3b7a998c-121d-4939-9220-a05aade58470","id":"e:o6ff290d1-1cc6-414b-a52c-05e753a57c00"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:45:32.4097262Z ✓ importacao, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o341f9b01-c02b-4a9f-ade7-f22c1977549e","geracaoNova":"odf18340c-c456-44ad-ab3e-6c6b67382216","apagado":true,"ignoradas":["e:o4a2e7a6f-70de-4d32-85f6-f414c90fdb80"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o341f9b01-c02b-4a9f-ade7-f22c1977549e","id":"e:o34cff937-409c-4b82-8697-13bcec7e2766"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:45:33.6049447Z ✓ importacao-sem-crash, locks=false: {"recuperacao":{"copias":0,"lsRec":null},"ignoradaExplicitamente":false,"provaCorte":{"geracaoAnterior":"o65c48b85-4306-4d44-a1e8-df0c7587d84d","geracaoNova":"o07b6f618-f569-46ea-a903-c666017b1599","apagado":true,"ignoradas":["e:oeeff09b5-8472-482f-8e3f-264c8efb1871"]},"aceito":{"T:base":true,"T:posterior-corte":true},"atividadeAceita":3,"antesCrash":{"local":true,"gen":"o65c48b85-4306-4d44-a1e8-df0c7587d84d","id":"e:o8a25e614-107c-4e73-9d76-28dabef51c2c"},"voltou":true,"feitoFinal":{"T:posterior-corte":true},"atividadeFinal":1,"certificado":true,"checkpoint":{"T:posterior-corte":true},"restouReserva":false,"aviso":"Progresso salvo neste aparelho."}
+2026-11-19T03:45:33.6607513Z GATE BLOQUEADOR a35-importacao-exclusao: PASSOU
+2026-11-19T03:45:34.5998405Z [36m[1mi  emulators:[22m[39m Starting emulators: auth, firestore
+2026-11-19T03:45:34.6000357Z [36m[1mi  emulators:[22m[39m Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+2026-11-19T03:45:34.6153976Z [36m[1mi  firestore:[22m[39m Firestore Emulator logging to [1mfirestore-debug.log[22m
+2026-11-19T03:45:35.6225385Z [32m[1m✔  firestore:[22m[39m Firestore Emulator was started in standard edition.
+2026-11-19T03:45:35.6229048Z [32m[1m✔  firestore:[22m[39m Firestore Emulator UI websocket is running on 9250.
+2026-11-19T03:45:39.9794094Z [36m[1mi [22m[39m Running script: [1mnode "/home/runner/work/EEAR/EEAR/testes/a35-contas-adversarial.test.js"[22m
+2026-11-19T03:45:43.8636686Z Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+2026-11-19T03:45:49.1326189Z ✓ levar-operacoes-identificadas: {"anon":2,"contaAntes":2,"esperado":4,"local":4,"remoto":4,"tarefas":{"T:anon1":true,"T:anon2":true,"T:R1":true,"T:R2":true,"T:remota":true},"opsAnon":["e:o94116b89-6c68-4628-8499-495744e3a959","e:o395eb04c-d411-40b1-bbde-f54044a45df3"],"opsContaAntes":["e:o5847439e-a9bf-4762-a966-c70aed3a9246","e:o1c92bd45-dba7-4f22-830b-414bb806199d"]}
+2026-11-19T03:45:52.5834945Z ✓ controle-importacao-ids-preservados: {"esperado":4,"local":4,"remoto":4,"depoisRepetirReabrir":4}
+2026-11-19T03:46:04.9084980Z ✓ exclusao-resposta-de-sessao-antiga: {"http":200,"uidA":"w8z8rIIRmKMMukaOYnuAJR3i0xQY","uidB":"OeODg51vNO1qPNhehyMtC08f9DuN","authAtual":{"uid":"OeODg51vNO1qPNhehyMtC08f9DuN","local":"firebase:OeODg51vNO1qPNhehyMtC08f9DuN"},"antesResposta":{"T:B":true},"depois":{"T:B":true},"remotoB":{"T:B":true,"T:depois-troca":true},"aviso":"Progresso salvo na sua conta."}
+2026-11-19T03:46:08.0657593Z [32m[1m✔ [22m[39m Script exited successfully (code 0)
+2026-11-19T03:46:08.5671288Z [36m[1mi  emulators:[22m[39m Shutting down emulators.
+2026-11-19T03:46:08.5673761Z [36m[1mi  firestore:[22m[39m Stopping Firestore Emulator
+2026-11-19T03:46:08.9094626Z [36m[1mi  auth:[22m[39m Stopping Authentication Emulator
+2026-11-19T03:46:08.9096858Z [36m[1mi  hub:[22m[39m Stopping emulator hub
+2026-11-19T03:46:08.9100477Z [36m[1mi  logging:[22m[39m Stopping Logging Emulator
+2026-11-19T03:46:08.9432422Z GATE BLOQUEADOR a35-contas-adversarial: PASSOU
+2026-11-19T03:46:09.8801688Z [36m[1mi  emulators:[22m[39m Starting emulators: auth, firestore
+2026-11-19T03:46:09.8803628Z [36m[1mi  emulators:[22m[39m Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+2026-11-19T03:46:09.8954887Z [36m[1mi  firestore:[22m[39m Firestore Emulator logging to [1mfirestore-debug.log[22m
+2026-11-19T03:46:10.9026751Z [32m[1m✔  firestore:[22m[39m Firestore Emulator was started in standard edition.
+2026-11-19T03:46:10.9027578Z [32m[1m✔  firestore:[22m[39m Firestore Emulator UI websocket is running on 9250.
+2026-11-19T03:46:15.2339416Z [36m[1mi [22m[39m Running script: [1mnode "/home/runner/work/EEAR/EEAR/testes/a35-levar-reimportacao.test.js"[22m
+2026-11-19T03:46:19.0968975Z Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+2026-11-19T03:46:26.2963575Z ✓ levar-3-mais-2: {"esperado":5,"local":5,"servidor":5,"idsAnon":["e:oa5ec5ff9-7045-4baf-9435-234e3e943593","e:o73d9e5d0-b60a-4e3d-8ccb-302eb6d63e18","e:o1a12a45a-7f5b-469b-bf1d-a924dadd871c"],"idsBase":["e:o46d3fd8e-4d1d-43a8-afb4-6aec0bfa7e75","e:o3823b1ad-9e48-463c-9957-24a5c0af3010"]}
+2026-11-19T03:46:29.6990577Z ✓ reimportar-apos-levar: {"esperado":5,"depoisImportar":5,"depoisRepetirReabrir":5,"servidor":5,"aviso":"Progresso salvo na sua conta."}
+2026-11-19T03:46:31.6151687Z ✓ controle-importar-diretamente-5-de-5: {"esperado":5,"local":5,"servidor":5}
+2026-11-19T03:46:31.6866897Z [32m[1m✔ [22m[39m Script exited successfully (code 0)
+2026-11-19T03:46:32.1882882Z [36m[1mi  emulators:[22m[39m Shutting down emulators.
+2026-11-19T03:46:32.1885632Z [36m[1mi  firestore:[22m[39m Stopping Firestore Emulator
+2026-11-19T03:46:32.5303118Z [36m[1mi  auth:[22m[39m Stopping Authentication Emulator
+2026-11-19T03:46:32.5306703Z [36m[1mi  hub:[22m[39m Stopping emulator hub
+2026-11-19T03:46:32.5309767Z [36m[1mi  logging:[22m[39m Stopping Logging Emulator
+2026-11-19T03:46:32.5631268Z GATE BLOQUEADOR a35-levar-reimportacao: PASSOU
+2026-11-19T03:46:33.5085248Z [36m[1mi  emulators:[22m[39m Starting emulators: auth, firestore
+2026-11-19T03:46:33.5087041Z [36m[1mi  emulators:[22m[39m Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+2026-11-19T03:46:33.5248760Z [36m[1mi  firestore:[22m[39m Firestore Emulator logging to [1mfirestore-debug.log[22m
+2026-11-19T03:46:34.5314761Z [32m[1m✔  firestore:[22m[39m Firestore Emulator was started in standard edition.
+2026-11-19T03:46:34.5315596Z [32m[1m✔  firestore:[22m[39m Firestore Emulator UI websocket is running on 9250.
+2026-11-19T03:46:38.8457369Z [36m[1mi [22m[39m Running script: [1mnode "/home/runner/work/EEAR/EEAR/testes/exclusao-protocolo.test.js"[22m
+2026-11-19T03:46:42.7345693Z Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+2026-11-19T03:46:46.8412897Z Runtime publicado SHA256: 8bc7352d0d852deed12abfd701e7e9e6783e4d4cede7961c598383185fd737ef
+2026-11-19T03:46:48.7881628Z ✓ Cliente Firebase 2f6cad6: exclusão recusada, Auth e documento preservados; DELETE direto 403. SDK commit recusado
+2026-11-19T03:46:49.5796067Z ✓ Exclusão atual completa, tombstone imutável, token antigo 403 em leitura/gravação, reconexão não recria; estudo offline preservado localmente.
+2026-11-19T03:46:49.6604275Z [32m[1m✔ [22m[39m Script exited successfully (code 0)
+2026-11-19T03:46:50.1611380Z [36m[1mi  emulators:[22m[39m Shutting down emulators.
+2026-11-19T03:46:50.1614355Z [36m[1mi  firestore:[22m[39m Stopping Firestore Emulator
+2026-11-19T03:46:50.5018837Z [36m[1mi  auth:[22m[39m Stopping Authentication Emulator
+2026-11-19T03:46:50.5022719Z [36m[1mi  hub:[22m[39m Stopping emulator hub
+2026-11-19T03:46:50.5026553Z [36m[1mi  logging:[22m[39m Stopping Logging Emulator
+2026-11-19T03:46:50.5411017Z GATE BLOQUEADOR exclusao-protocolo: PASSOU
+2026-11-19T03:46:51.4806500Z [36m[1mi  emulators:[22m[39m Starting emulators: auth, firestore
+2026-11-19T03:46:51.4808525Z [36m[1mi  emulators:[22m[39m Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+2026-11-19T03:46:51.4962789Z [36m[1mi  firestore:[22m[39m Firestore Emulator logging to [1mfirestore-debug.log[22m
+2026-11-19T03:46:52.5050107Z [32m[1m✔  firestore:[22m[39m Firestore Emulator was started in standard edition.
+2026-11-19T03:46:52.5065701Z [32m[1m✔  firestore:[22m[39m Firestore Emulator UI websocket is running on 9250.
+2026-11-19T03:46:56.7703622Z [36m[1mi [22m[39m Running script: [1mnode "/home/runner/work/EEAR/EEAR/testes/exclusao-auth-atrasada.test.js"[22m
+2026-11-19T03:47:00.6389340Z Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+2026-11-19T03:47:05.3385425Z ✓ Resposta Auth deleteUser atrasada de A não encerra B, não altera seu perfil e não impede novo estudo remoto; cópia A removida.
+2026-11-19T03:47:17.4206849Z [32m[1m✔ [22m[39m Script exited successfully (code 0)
+2026-11-19T03:47:17.9216055Z [36m[1mi  emulators:[22m[39m Shutting down emulators.
+2026-11-19T03:47:17.9218697Z [36m[1mi  firestore:[22m[39m Stopping Firestore Emulator
+2026-11-19T03:47:18.2633139Z [36m[1mi  auth:[22m[39m Stopping Authentication Emulator
+2026-11-19T03:47:18.2635753Z [36m[1mi  hub:[22m[39m Stopping emulator hub
+2026-11-19T03:47:18.2639752Z [36m[1mi  logging:[22m[39m Stopping Logging Emulator
+2026-11-19T03:47:18.2963394Z GATE BLOQUEADOR exclusao-auth-atrasada: PASSOU
+2026-11-19T03:47:18.3324388Z ✓ Transferência: 5 IDs exatos, repetição, configuração, certificados, Zerar de cada origem, novo estudo e erros retirados.
+2026-11-19T03:47:18.3355703Z GATE BLOQUEADOR transferencia-identidades: PASSOU
+2026-11-19T03:47:19.4835505Z [36m[1mi  emulators:[22m[39m Starting emulators: auth, firestore
+2026-11-19T03:47:19.4839008Z [36m[1mi  emulators:[22m[39m Detected demo project ID "demo-eear-independent-a35", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+2026-11-19T03:47:19.5019372Z [36m[1mi  firestore:[22m[39m Firestore Emulator logging to [1mfirestore-debug.log[22m
+2026-11-19T03:47:20.5092894Z [32m[1m✔  firestore:[22m[39m Firestore Emulator was started in standard edition.
+2026-11-19T03:47:20.5094209Z [32m[1m✔  firestore:[22m[39m Firestore Emulator UI websocket is running on 9250.
+2026-11-19T03:47:24.8339910Z [36m[1mi [22m[39m Running script: [1mnode "/home/runner/work/EEAR/EEAR/testes/transferencia-crashes.test.js"[22m
+2026-11-19T03:47:28.9508676Z Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+2026-11-19T03:47:37.0953189Z ✓ Levar sem aula, 5/5 após Browser.crash, segunda queda, reimportação e outro dispositivo; sem Web Locks.
+2026-11-19T03:47:37.1794983Z [32m[1m✔ [22m[39m Script exited successfully (code 0)
+2026-11-19T03:47:37.6808621Z [36m[1mi  emulators:[22m[39m Shutting down emulators.
+2026-11-19T03:47:37.6810904Z [36m[1mi  firestore:[22m[39m Stopping Firestore Emulator
+2026-11-19T03:47:38.0212084Z [36m[1mi  auth:[22m[39m Stopping Authentication Emulator
+2026-11-19T03:47:38.0215145Z [36m[1mi  hub:[22m[39m Stopping emulator hub
+2026-11-19T03:47:38.0218564Z [36m[1mi  logging:[22m[39m Stopping Logging Emulator
+2026-11-19T03:47:38.0894314Z GATE BLOQUEADOR transferencia-crashes: PASSOU
+2026-11-19T03:47:42.0371114Z Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+2026-11-19T03:47:43.5476408Z ✓ Diário ambíguo antigo preservado após reabertura, recuperável, sem confirmação falsa; descarte explícito não ressuscita.
+2026-11-19T03:47:43.5934814Z GATE BLOQUEADOR diario-geracao-antiga: PASSOU
+2026-11-19T03:47:43.6078399Z Post job cleanup.
+2026-11-19T03:47:43.7162132Z (node:5573) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-19T03:47:43.7163171Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-19T03:47:43.7332537Z Post job cleanup.
+2026-11-19T03:47:43.8368079Z (node:5582) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-19T03:47:43.8368997Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-19T03:47:43.8536953Z Post job cleanup.
+2026-11-19T03:47:43.9293797Z [command]/usr/bin/git version
+2026-11-19T03:47:43.9328945Z git version 2.56.1
+2026-11-19T03:47:43.9359239Z Temporarily overriding HOME='/home/runner/work/_temp/3c0f2314-b903-49b7-b1e3-d38c75f93bcf' before making global git config changes
+2026-11-19T03:47:43.9360486Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-19T03:47:43.9363272Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/EEAR/EEAR
+2026-11-19T03:47:43.9398911Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-19T03:47:43.9428525Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-19T03:47:43.9686432Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-19T03:47:43.9718760Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-19T03:47:43.9995073Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-19T03:47:44.0026246Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-19T03:47:44.0393448Z Cleaning up orphan processes
+2026-11-19T03:47:44.0728322Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-java@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

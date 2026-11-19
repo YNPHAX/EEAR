@@ -1,0 +1,322 @@
+AUDITORIA a636-importacoes-concorrentes: exit 1
+AUDITORIA a636-transferencia-erros: exit 1
+AUDITORIA a636-importacao-dispositivos: exit 1
+AUDITORIA a636-sessoes-abas: exit 1
+AUDITORIA a636-abort-exclusao: exit 1
+AUDITORIA a636-regras-dependencia: exit 1
+Auditoria adicional: 6 executáveis com falhas; nenhum critério foi reduzido.
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/f01-fixture.js:29:18)
+    at /workspace/eear-audit/testes/a636-importacoes-concorrentes.test.js:7:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-importacoes-concorrentes.test.js:56:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-site-XXXXXX'
+}
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/a35-fixture.js:19:18)
+    at /workspace/eear-audit/testes/a636-transferencia-erros.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-transferencia-erros.test.js:41:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-emu-XXXXXX'
+}
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/a35-fixture.js:19:18)
+    at /workspace/eear-audit/testes/a636-importacao-dispositivos.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-importacao-dispositivos.test.js:22:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-emu-XXXXXX'
+}
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/a35-fixture.js:19:18)
+    at /workspace/eear-audit/testes/a636-sessoes-abas.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-sessoes-abas.test.js:33:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-emu-XXXXXX'
+}
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/a35-fixture.js:31:18)
+    at /workspace/eear-audit/testes/a636-abort-exclusao.test.js:6:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-abort-exclusao.test.js:33:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-site-XXXXXX'
+}
+node:fs:3144
+  return binding.mkdtemp(prefix, options.encoding);
+                 ^
+
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a636-regras-antigas-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-regras-dependencia.test.js:6:16)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a636-regras-antigas-XXXXXX'
+}
+
+Node.js v24.22.1
+CONTROLE IA05/IA06 a6366a8: FALHOU
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/f01-fixture.js:29:18)
+    at /workspace/eear-audit/testes/a636-importacoes-concorrentes.test.js:7:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-importacoes-concorrentes.test.js:56:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-site-XXXXXX'
+}
+GATE IA05/IA06 a636-importacoes-concorrentes: FALHOU
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/a35-fixture.js:19:18)
+    at /workspace/eear-audit/testes/a636-importacao-dispositivos.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-importacao-dispositivos.test.js:22:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-emu-XXXXXX'
+}
+GATE IA05/IA06 a636-importacao-dispositivos: FALHOU
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/a35-fixture.js:19:18)
+    at /workspace/eear-audit/testes/a636-transferencia-erros.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-transferencia-erros.test.js:41:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-emu-XXXXXX'
+}
+GATE IA05/IA06 a636-transferencia-erros: FALHOU
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/a35-fixture.js:19:18)
+    at /workspace/eear-audit/testes/a636-sessoes-abas.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-sessoes-abas.test.js:33:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-emu-XXXXXX'
+}
+GATE IA05/IA06 a636-sessoes-abas: FALHOU
+PREPARAÇÃO/EXECUÇÃO: Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/a35-fixture.js:31:18)
+    at /workspace/eear-audit/testes/a636-abort-exclusao.test.js:6:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/a636-abort-exclusao.test.js:33:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-site-XXXXXX'
+}
+GATE IA05/IA06 a636-abort-exclusao: FALHOU
+node:fs:3144
+  return binding.mkdtemp(prefix, options.encoding);
+                 ^
+
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a636-regras-antigas-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.<anonymous> (/workspace/eear-audit/testes/importacoes-regras-dependencia.test.js:7:16)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a636-regras-antigas-XXXXXX'
+}
+
+Node.js v24.22.1
+GATE IA05/IA06 importacoes-regras-dependencia: FALHOU
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/a35-fixture.js:31:18)
+    at /workspace/eear-audit/testes/importacoes-ciclo.test.js:5:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/importacoes-ciclo.test.js:55:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-site-XXXXXX'
+}
+GATE IA05/IA06 importacoes-ciclo: FALHOU
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/a35-fixture.js:19:18)
+    at /workspace/eear-audit/testes/importacoes-offline.test.js:5:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/importacoes-offline.test.js:31:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-emu-XXXXXX'
+}
+GATE IA05/IA06 importacoes-offline: FALHOU
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/a35-fixture.js:19:18)
+    at /workspace/eear-audit/testes/importacoes-reset-offline.test.js:5:14
+    at Object.<anonymous> (/workspace/eear-audit/testes/importacoes-reset-offline.test.js:26:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-emu-XXXXXX'
+}
+GATE IA05/IA06 importacoes-reset-offline: FALHOU
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/a35-fixture.js:31:18)
+    at /workspace/eear-audit/testes/importacoes-crash.test.js:5:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/importacoes-crash.test.js:24:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-site-XXXXXX'
+}
+GATE IA05/IA06 importacoes-crash: FALHOU
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/a35-fixture.js:31:18)
+    at /workspace/eear-audit/testes/importacoes-falhas.test.js:5:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/importacoes-falhas.test.js:25:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-site-XXXXXX'
+}
+GATE IA05/IA06 importacoes-falhas: FALHOU
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-a35-emu-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.emular (/workspace/eear-audit/testes/a35-fixture.js:19:18)
+    at /workspace/eear-audit/testes/importacoes-cliente-anterior.test.js:6:15
+    at Object.<anonymous> (/workspace/eear-audit/testes/importacoes-cliente-anterior.test.js:31:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-a35-emu-XXXXXX'
+}
+GATE IA05/IA06 importacoes-cliente-anterior: FALHOU
+✓ SHA-256, unidades estáveis, bases distintas, repetição, estudo novo, reset, limite e causalidade de erros.
+✓ Transferência conserva créditos de migração sem propagar Zerar da outra origem.
+✓ Correção após Levar, repetição, erro concorrente 2/2 e erro posterior 1/1.
+GATE IA05/IA06 importacoes-propriedades: PASSOU

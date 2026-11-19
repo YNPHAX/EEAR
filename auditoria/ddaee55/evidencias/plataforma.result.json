@@ -1,0 +1,15 @@
+{
+  "name": "plataforma",
+  "cmd": [
+    "node",
+    "testes/plataforma.test.js"
+  ],
+  "cwd": "/workspace/eear-audit",
+  "env": {},
+  "exit": 0,
+  "expected": 0,
+  "seconds": 353.82,
+  "utc": "2026-11-19T12:02:02.008228+00:00",
+  "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+}

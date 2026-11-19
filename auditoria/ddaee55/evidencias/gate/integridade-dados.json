@@ -1,0 +1,134 @@
+[
+  {
+    "nome": "campos-e-ids-de-simulados",
+    "explicito": [
+      {
+        "__proto__": {
+          "dado": 1
+        },
+        "d": "2026-11-15",
+        "detalhes": [
+          false,
+          null
+        ],
+        "id": "@sim:v1:{\"__proto__\":{\"dado\":1},\"d\":\"2026-11-15\",\"detalhes\":[false,null],\"mat\":\"por\",\"r\":{\"__proto__\":[1,2],\"por\":[1,2,0]},\"tipo\":\"materia\"}#0",
+        "mat": "por",
+        "r": {
+          "__proto__": [
+            1,
+            2
+          ],
+          "por": [
+            1,
+            2,
+            0
+          ]
+        },
+        "tipo": "materia"
+      }
+    ],
+    "aposReset": [
+      {
+        "__proto__": {
+          "dado": 1
+        },
+        "_sid": "@sim:v1:{\"__proto__\":{\"dado\":1},\"d\":\"2026-11-15\",\"detalhes\":[false,null],\"mat\":\"por\",\"r\":{\"__proto__\":[1,2],\"por\":[1,2,0]},\"tipo\":\"materia\"}#0",
+        "d": "2026-11-15",
+        "detalhes": [
+          false,
+          null
+        ],
+        "mat": "por",
+        "r": {
+          "__proto__": [
+            1,
+            2
+          ],
+          "por": [
+            1,
+            2,
+            0
+          ]
+        },
+        "tipo": "materia"
+      }
+    ],
+    "reaberto": [
+      {
+        "__proto__": {
+          "dado": 1
+        },
+        "_sid": "@sim:v1:{\"__proto__\":{\"dado\":1},\"d\":\"2026-11-15\",\"detalhes\":[false,null],\"mat\":\"por\",\"r\":{\"__proto__\":[1,2],\"por\":[1,2,0]},\"tipo\":\"materia\"}#0",
+        "d": "2026-11-15",
+        "detalhes": [
+          false,
+          null
+        ],
+        "mat": "por",
+        "r": {
+          "__proto__": [
+            1,
+            2
+          ],
+          "por": [
+            1,
+            2,
+            0
+          ]
+        },
+        "tipo": "materia"
+      }
+    ],
+    "aposReimportar": [
+      {
+        "__proto__": {
+          "dado": 1
+        },
+        "_sid": "@sim:v1:{\"__proto__\":{\"dado\":1},\"d\":\"2026-11-15\",\"detalhes\":[false,null],\"mat\":\"por\",\"r\":{\"__proto__\":[1,2],\"por\":[1,2,0]},\"tipo\":\"materia\"}#0",
+        "d": "2026-11-15",
+        "detalhes": [
+          false,
+          null
+        ],
+        "mat": "por",
+        "r": {
+          "__proto__": [
+            1,
+            2
+          ],
+          "por": [
+            1,
+            2,
+            0
+          ]
+        },
+        "tipo": "materia"
+      }
+    ],
+    "passou": true
+  },
+  {
+    "nome": "marcador-remoto",
+    "avisou": true,
+    "copiaIntegral": true,
+    "preservouServidor": true,
+    "preservouLocal": true,
+    "passou": true
+  },
+  {
+    "nome": "marcador-remoto-caminho-alternativo",
+    "avisou": true,
+    "copiaIntegral": true,
+    "preservouServidor": true,
+    "preservouLocal": true,
+    "passou": true
+  },
+  {
+    "nome": "zerar-erros-corrigidos",
+    "corrigidos": {},
+    "offline": 3,
+    "nuvem": 1,
+    "reaberto": 1,
+    "passou": true
+  }
+]

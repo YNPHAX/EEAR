@@ -1,0 +1,15 @@
+{
+  "name": "ciclo-sincronia",
+  "cmd": [
+    "node",
+    "testes/ciclo-sincronia.test.js"
+  ],
+  "cwd": "/workspace/eear-audit",
+  "env": {},
+  "exit": 0,
+  "expected": 0,
+  "seconds": 9.4,
+  "utc": "2026-11-19T11:56:08.191634+00:00",
+  "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+}

@@ -1,0 +1,16 @@
+Error: ENOSPC: no space left on device, mkdtemp '/tmp/eear-f01-site-XXXXXX'
+    at Object.mkdtempSync (node:fs:3144:18)
+    at Object.abrir (/workspace/eear-audit/testes/f01-fixture.js:29:18)
+    at /workspace/eear-audit/testes/cache-restaurado.test.js:6:27
+    at Object.<anonymous> (/workspace/eear-audit/testes/cache-restaurado.test.js:37:3)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'mkdtemp',
+  path: '/tmp/eear-f01-site-XXXXXX'
+}

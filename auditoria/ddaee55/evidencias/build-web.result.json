@@ -1,0 +1,18 @@
+{
+  "name": "build-web",
+  "cmd": [
+    "python3",
+    "web/build.py",
+    "/workspace/audit-build/site"
+  ],
+  "cwd": "/workspace/eear-audit",
+  "env": {
+    "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+  },
+  "exit": 0,
+  "expected": 0,
+  "seconds": 4.24,
+  "utc": "2026-11-19T11:54:05.020055+00:00",
+  "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+}

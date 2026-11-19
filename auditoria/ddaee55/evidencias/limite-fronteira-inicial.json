@@ -1,0 +1,39 @@
+[
+  {
+    "name": "ascii-899999",
+    "bytes": 899999,
+    "utf16": 899999,
+    "expected": 200,
+    "status": 200
+  },
+  {
+    "name": "ascii-900000",
+    "bytes": 900000,
+    "utf16": 900000,
+    "expected": 403,
+    "status": 403,
+    "error": "PERMISSION_DENIED"
+  },
+  {
+    "name": "ascii-900001",
+    "bytes": 900001,
+    "utf16": 900001,
+    "expected": 403,
+    "status": 403,
+    "error": "PERMISSION_DENIED"
+  },
+  {
+    "name": "unicode-899999",
+    "bytes": 899999,
+    "utf16": 450000,
+    "expected": 200,
+    "status": 200
+  },
+  {
+    "name": "unicode-900000",
+    "bytes": 900000,
+    "utf16": 450000,
+    "expected": 403,
+    "status": 200
+  }
+]

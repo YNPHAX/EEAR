@@ -1,0 +1,24 @@
+{
+  "node": "v24.22.1",
+  "javaTest": "openjdk version \"21.0.13\" 2026-10-20\nOpenJDK Runtime Environment (build 21.0.13+9-1-deb13u2-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.13+9-1-deb13u2-Debian, mixed mode, sharing)",
+  "jdkAndroid": "openjdk version \"21.0.13.1\" 2026-11-17 LTS\nOpenJDK Runtime Environment Temurin-21.0.13.1+2 (build 21.0.13.1+2-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.13.1+2 (build 21.0.13.1+2-LTS, mixed mode, sharing)",
+  "androidSdk": {
+    "platform": {
+      "url": "https://dl.google.com/android/repository/platform-36_r02.zip",
+      "sha1": "2c1a80dd4d9f7d0e6dd336ec603d9b5c55a6f576"
+    },
+    "buildTools": {
+      "url": "https://dl.google.com/android/repository/build-tools_r35_linux.zip",
+      "sha1": "2cfaa0bbb2336e9ec18ed3ecea84fa2e2af607bc"
+    }
+  },
+  "jdkDownload": {
+    "name": "OpenJDK21U-jdk_x64_linux_hotspot_21.0.13.1_2.tar.gz",
+    "sha256": "bb8a93f9ae6e7a693b2b721e85dbeff26ae1a77447985a8d7afcdd9c7cf6222e",
+    "source": "GitHub adoptium/temurin21-binaries releases/latest"
+  },
+  "appLockSha256": "f8fe7ee02276166558165ef35edb64862769942c0e742ab5e98edb4a33a328fe",
+  "apkNativeRuns": 0,
+  "nativeBlocked": "AVD image preparation exhausted executor filesystem before installation; no device or /dev/kvm available",
+  "candidate": "ddaee558fde26e437696f7b17862b3df1ee7353f"
+}

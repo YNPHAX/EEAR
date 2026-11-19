@@ -1,0 +1,2 @@
+80ec60b9cf3162aff3c141c4af80653e418efe51	refs/heads/auditoria/firebase-c186008-propriedades
+ddaee558fde26e437696f7b17862b3df1ee7353f	refs/heads/codex/eear-correcao-estrutural

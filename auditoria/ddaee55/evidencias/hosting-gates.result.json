@@ -1,0 +1,18 @@
+{
+  "name": "hosting-gates",
+  "cmd": [
+    "python3",
+    "testes/hosting-gates-auditoria.py",
+    "/workspace/eear-audit"
+  ],
+  "cwd": "/workspace/eear-audit",
+  "env": {
+    "EEAR_FIREBASE_CONFIG": "/workspace/audit-results/null.json"
+  },
+  "exit": 0,
+  "expected": 0,
+  "seconds": 35.05,
+  "utc": "2026-11-19T11:55:09.199517+00:00",
+  "before": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d",
+  "after": "e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d"
+}

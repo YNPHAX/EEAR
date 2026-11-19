@@ -1,0 +1,4 @@
+Runtime publicado SHA256: e29b24880ea17f7973ca9bbb82694bee2d1c88bae7df684a15fcc3d6ab326a4d
+DIAGNÓSTICO cache-restaurado: {"preparado":{"idb":3,"cache":2,"metaPreservada":true},"atualizou":true,"atividadeCache":3,"atividadeExportada":3,"marcaCache":true,"marcaExportada":true}
+✓ recuperação regrava o cache antigo sem alterar o checkpoint confirmado.
+✓ abrir certificado legado sem estudar preserva exatamente o cache original.
